@@ -6,4 +6,8 @@ export const SETTINGS = {
   ], // English and spanish
   LOCALE_COOKIE: "language",
   DAYS_LOCALE_SAVED: 366,
-}
+};
+
+export const ROUTES = {
+  ROOT: "/",
+};

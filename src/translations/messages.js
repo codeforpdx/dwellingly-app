@@ -17,5 +17,12 @@ export const COMMON = defineMessages( {
   APP_TITLE: {
     id: "components.example.app.title",
     defaultMessage: "JOIN Messenger",
-  }
+  },
+} );
+
+export const FORMS = defineMessages( {
+  TITLE: {
+    id: "forms.title",
+    defaultMessage: "My form",
+  },
 } );

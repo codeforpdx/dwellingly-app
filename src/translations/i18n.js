@@ -1,8 +1,8 @@
+import { addLocaleData } from "react-intl";
 import enLocaleData from "react-intl/locale-data/en";
 import esLocaleData from "react-intl/locale-data/es";
 import enTranslationMessages from "./en.json";
 import esTranslationMessages from "./es.json";
-import { addLocaleData } from "react-intl";
 import { SETTINGS } from "../constants/constants";
 
 addLocaleData( [
@@ -24,7 +24,7 @@ export const formatTranslationMessages = ( locale, messages ) => {
 
 export const appLocales = [
   "en", // US English
-  "es" // Spanish
+  "es", // Spanish
 ];
 
 export const translationMessages = {
