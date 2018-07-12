@@ -1,19 +1,34 @@
-import React, { Component } from 'react';
-import logo from '../../assets/images/logo.svg';
-import './App.scss';
+import React from "react";
+import { intlShape, injectIntl } from "react-intl";
+import { COMMON } from "../../translations/messages";
+import logo from "../../assets/images/logo.svg";
+import "./App.scss";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">JOIN Messenger</h1>
-        </header>
-        <p>This is the application for JOIN</p>
-      </div>
-    );
-  }
-}
+export const App = ( { intl } ) => {
+  const year = new Date();
+  const currentYear = year.getFullYear();
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={ logo } className="App-logo" alt="logo" />
+        <h1 className="App-title">
+          { intl.formatMessage( COMMON.APP_TITLE ) }
+          &nbsp;for&nbsp;
+          { currentYear }
+        </h1>
+      </header>
+      <p>
+        { intl.formatMessage( COMMON.QUESTION ) }
+      </p>
+      <p>
+        { intl.formatMessage( COMMON.ANSWER ) }
+      </p>
+    </div>
+  );
+};
 
-export default App;
+App.propTypes = {
+  intl: intlShape.isRequired,
+};
+
+export default injectIntl( App );
