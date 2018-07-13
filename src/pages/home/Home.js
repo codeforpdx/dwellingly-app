@@ -9,6 +9,7 @@ const Home = () => (
       <Link to="/">
         Home
       </Link>
+      &nbsp;
       <Link to="/counter">
         Conter
       </Link>
