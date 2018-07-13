@@ -11,7 +11,7 @@ const Home = () => (
       </Link>
       &nbsp;
       <Link to="/counter">
-        Conter
+        Counter
       </Link>
     </header>
     <main>
