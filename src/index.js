@@ -1,12 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import { IntlProvider } from "react-intl";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
+
 import { translationMessages } from "./translations/i18n";
 import { SETTINGS } from "./constants/constants";
-import "./index.css";
-import AppComponent from "./components/app/App";
+import store, { history } from "./store";
 import { getCookie, setCookie } from "./utils";
 import registerServiceWorker from "./registerServiceWorker";
+
+// CSS
+import "./index.css";
+
+// Components, if any
+
+// Pages
+import Home from "./pages/home/Home";
 
 // get and validate language
 const lang = getCookie( "language" );
@@ -23,7 +34,11 @@ ReactDOM.render(
     locale={ validLang }
     messages={ translationMessages[ validLang ] }
   >
-    <AppComponent />
+    <Provider store={ store }>
+      <ConnectedRouter history={ history }>
+        <Home />
+      </ConnectedRouter>
+    </Provider>
   </IntlProvider>, document.getElementById( "root" ),
 );
 registerServiceWorker();
