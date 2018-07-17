@@ -22,6 +22,10 @@ export const COMMON = defineMessages( {
 
 /* Counting messages */
 export const COUNTER = defineMessages( {
+  LABEL: {
+    id: "counting.label",
+    defaultMessage: "Count",
+  },
   DOWN: {
     id: "counting.down",
     defaultMessage: "Deincrement",

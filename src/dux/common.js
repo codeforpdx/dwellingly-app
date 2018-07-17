@@ -1,8 +1,8 @@
 // Actions
-export const INCREMENT_REQUESTED = "counter/INCREMENT_REQUESTED";
-export const INCREMENT = "counter/INCREMENT";
-export const DECREMENT_REQUESTED = "counter/DECREMENT_REQUESTED";
-export const DECREMENT = "counter/DECREMENT";
+export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED';
+export const INCREMENT = 'counter/INCREMENT';
+export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED';
+export const DECREMENT = 'counter/DECREMENT';
 
 // Initial State
 const initialState = {
@@ -12,8 +12,8 @@ const initialState = {
 };
 
 // Reducer
-export default ( state = initialState, action ) => {
-  switch ( action.type ) {
+export default (state = initialState, action) => {
+  switch (action.type) {
     case INCREMENT_REQUESTED:
       return {
         ...state,
@@ -46,18 +46,24 @@ export default ( state = initialState, action ) => {
 };
 
 // Synchronous functions
-export function increment() {
-  console.log( "go up" );
-  return {
-    type: INCREMENT,
-  };
-}
+export const increment = () => (dispatch) => {
+  dispatch({
+    type: INCREMENT_REQUESTED,
+  });
 
-export function decrement() {
-  console.log( "go down" );
-  return {
+  dispatch({
+    type: INCREMENT,
+  });
+};
+
+export const decrement = () => (dispatch) => {
+  dispatch({
+    type: DECREMENT_REQUESTED,
+  });
+
+  dispatch({
     type: DECREMENT,
-  };
-}
+  });
+};
 
 // Asynchronous functions
