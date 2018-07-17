@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
 import { translationMessages } from './translations/i18n';
-import { ROUTES, SETTINGS } from './constants/constants';
+import { SETTINGS } from './constants/constants';
 import store, { history } from './store';
 import { getCookie, setCookie } from './utils';
 import registerServiceWorker from './registerServiceWorker';
@@ -28,7 +28,6 @@ if (!validLang) {
   validLang = SETTINGS.DEFAULT_LOCALE;
 }
 
-console.log(ROUTES.ROOT);
 // Render the thing!
 ReactDOM.render(
   <IntlProvider
