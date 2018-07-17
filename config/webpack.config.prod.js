@@ -174,6 +174,7 @@ module.exports = {
                     loader: require.resolve('style-loader'),
                     options: {
                       hmr: false,
+                      localIdentName: '[local]',
                     },
                   },
                   use: [
@@ -223,7 +224,7 @@ module.exports = {
                       modules: true,
                       sourceMap: true,
                       importLoaders: 2,
-                      localIdentName: '[local]__[hash:base64:5]'
+                      localIdentName: '[local]'
                     }
                   },
                 'sass-loader'
