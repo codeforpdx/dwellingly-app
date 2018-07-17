@@ -35,3 +35,11 @@ export const COUNTER = defineMessages( {
     defaultMessage: "Increment",
   },
 } );
+
+/* 404/unknown strings */
+export const UNKNOWN_PAGE_MESSAGES = defineMessages( {
+  DESCRIPTION: {
+    id: "unknown.description",
+    defaultMessage: "Answer unclear. Try again later.",
+  },
+} );
