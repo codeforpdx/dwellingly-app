@@ -20,9 +20,18 @@ export const COMMON = defineMessages( {
   },
 } );
 
-export const FORMS = defineMessages( {
-  TITLE: {
-    id: "forms.title",
-    defaultMessage: "My form",
+/* Counting messages */
+export const COUNTER = defineMessages( {
+  LABEL: {
+    id: "counting.label",
+    defaultMessage: "Count",
+  },
+  DOWN: {
+    id: "counting.down",
+    defaultMessage: "Deincrement",
+  },
+  UP: {
+    id: "counting.up",
+    defaultMessage: "Increment",
   },
 } );
