@@ -1,11 +1,10 @@
 {
   "name": "join-messenger-app",
+  "description": "Communication tool for JOIN staff and property managers.",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy": "now && now alias",
     "start": "node scripts/start.js",
-    "now-start": "serve -s ./build",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "precommit": "pretty-quick --staged"
@@ -13,6 +12,7 @@
   "devDependencies": {
     "prettier": "1.13.7"
   },
+  "license": "MIT",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
