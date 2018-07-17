@@ -1,6 +1,6 @@
 # JOIN Messenger App - CRA variant
 
-Based on `create-react-app`, with some modifications that require ejection.
+Based on `create-react-app`, with some modifications that require ejection from the standard CRA framework.
 
 - [Available Scripts](#available-scripts)
   - [npm start](#npm-start)
@@ -22,8 +22,8 @@ You will also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](#running-tests) for more information.
+Launches the test runner in the interactive watch mode.
+
 
 ### `npm run build`
 
@@ -33,7 +33,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
-See the section about [deployment](#deployment) for more information.
 
 ## Modifications
 
@@ -43,3 +42,7 @@ Incldes the following
 - Sass
 - eslint-config-airbnb
 - react-intl
+- redux
+- routing
+- redux-router
+
