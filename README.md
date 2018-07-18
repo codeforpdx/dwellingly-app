@@ -7,7 +7,6 @@ Based on `create-react-app`, with some modifications that require ejection from 
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
 
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -34,6 +33,47 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 
+## Directory structure
+_build_ 
+This is where the deployed HTML, CSS, and JS show up when running `npm run build`. This folder is not saved in Git.
+
+_config_
+Holds all of the configuration files for webpack, the environment, and any polyfills for the site
+
+_functions_
+Stores Firebase functions! Not sure if we'll use this. Also note this has its own _node_modules_ subfolder that needs separate installation!
+
+_public_ 
+The source HTML file, manifest file, and favicon. These files get moved to the _build_ folder as part of the build process.
+
+_scripts_
+The ejected build, start, and test scripts from Create React App. Do not delete
+
+_src_
+All of the code for the application!
+
+_src/assets_
+Any images or fonts will go here
+
+_src/components_
+Small, presentational components that shouldn't have much in the way of logic
+
+_src/constants_
+Any constant for the site, all here in one place
+
+_src/dux_
+All of the Redux reducers for the site, presented here in "dux" format
+
+_src/firebase_
+Files related to Google Firebase integration.
+
+_src/pages_
+All of the pages for the site
+
+_src/translations_
+Translation-related files for internationalization.
+
+
 ## Modifications
 
 Why is this different than the bog standard CRA application?
@@ -42,7 +82,6 @@ Incldes the following
 - Sass
 - eslint-config-airbnb
 - react-intl
-- redux
-- routing
-- redux-router
+- react-redux
+- react-router-redux
 
