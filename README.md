@@ -34,43 +34,43 @@ Your app is ready to be deployed!
 
 
 ## Directory structure
-_build_ 
+_build_<br/>
 This is where the deployed HTML, CSS, and JS show up when running `npm run build`. This folder is not saved in Git.
 
-_config_
+_config_<br/>
 Holds all of the configuration files for webpack, the environment, and any polyfills for the site
 
-_functions_
+_functions_<br/>
 Stores Firebase functions! Not sure if we'll use this. Also note this has its own _node_modules_ subfolder that needs separate installation!
 
-_public_ 
+_public_<br/> 
 The source HTML file, manifest file, and favicon. These files get moved to the _build_ folder as part of the build process.
 
-_scripts_
+_scripts_<br/>
 The ejected build, start, and test scripts from Create React App. Do not delete
 
-_src_
+_src_<br/>
 All of the code for the application!
 
-_src/assets_
+_src/assets_<br/>
 Any images or fonts will go here
 
-_src/components_
+_src/components_<br/>
 Small, presentational components that shouldn't have much in the way of logic
 
-_src/constants_
+_src/constants_<br/>
 Any constant for the site, all here in one place
 
-_src/dux_
+_src/dux_<br/>
 All of the Redux reducers for the site, presented here in "dux" format
 
-_src/firebase_
+_src/firebase_<br/>
 Files related to Google Firebase integration.
 
-_src/pages_
+_src/pages_<br/>
 All of the pages for the site
 
-_src/translations_
+_src/translations_<br/>
 Translation-related files for internationalization.
 
 
