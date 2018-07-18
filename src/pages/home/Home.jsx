@@ -5,18 +5,24 @@ import AppComponent from '../../components/app/App';
 import HeaderComponent from '../../components/header/Header';
 
 import CounterPage from '../tally/Tally';
+import LoginPage from '../login/Login';
+import SignupPage from '../signup/Signup';
 import UnknownPage from '../unknown/Unknown';
+
+import './Home.scss';
 
 const Home = () => (
   <div className="home">
     <HeaderComponent />
-    <main>
+    <div className="joinContent">
       <Switch>
         <Route exact path={ROUTES.ROOT} component={AppComponent} />
+        <Route exact path={ROUTES.LOGIN} component={LoginPage} />
+        <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
         <Route exact path={ROUTES.COUNTING} component={CounterPage} />
         <Route component={UnknownPage} />
       </Switch>
-    </main>
+    </div>
   </div>
 );
 

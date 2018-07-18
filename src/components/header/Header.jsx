@@ -1,17 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { intlShape, injectIntl } from 'react-intl';
+import { NAVIGATION } from '../../translations/messages';
 import { ROUTES } from '../../constants/constants';
+import './Header.scss';
 
-const Header = () => (
+
+const Header = ({ intl }) => (
   <header className="appHeader">
-    <Link to={ROUTES.ROOT}>
-      Home
-    </Link>
-    &nbsp;
-    <Link to={ROUTES.COUNTING}>
-      Counter
-    </Link>
+    <div className="headerSection headerNav">
+      <Link to={ROUTES.ROOT}>
+        {intl.formatMessage(NAVIGATION.HOME)}
+      </Link>
+      &nbsp;
+      <Link to={ROUTES.COUNTING}>
+        {intl.formatMessage(NAVIGATION.COUNTER)}
+      </Link>
+    </div>
+    <div className="headerSection headerLogin">
+      <Link to={ROUTES.LOGIN}>
+        {intl.formatMessage(NAVIGATION.LOGIN)}
+      </Link>
+      &nbsp;
+      <Link to={ROUTES.SIGNUP}>
+        {intl.formatMessage(NAVIGATION.SIGNUP)}
+      </Link>
+    </div>
   </header>
 );
 
-export default Header;
+Header.propTypes = {
+  intl: intlShape.isRequired,
+};
+
+export default injectIntl(Header);

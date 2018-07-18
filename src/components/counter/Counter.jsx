@@ -18,8 +18,11 @@ const Counter = ({
 }) => (
   <div>
     <h1>
-      Count count count
+      { intl.formatMessage(COUNTER.LABEL) }
     </h1>
+    <p>
+      { intl.formatMessage(COUNTER.HEADER) }
+    </p>
     <p>
       { intl.formatMessage(COUNTER.LABEL) }
       &nbsp;

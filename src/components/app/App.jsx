@@ -1,5 +1,7 @@
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../constants/constants';
 import { COMMON } from '../../translations/messages';
 import logo from '../../assets/images/logo.svg';
 import './App.scss';
@@ -23,6 +25,9 @@ export const App = ({ intl }) => {
       <p>
         { intl.formatMessage(COMMON.ANSWER) }
       </p>
+      <Link to={ROUTES.SIGNUP}>
+        Sign up
+      </Link>
     </div>
   );
 };
