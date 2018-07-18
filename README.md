@@ -50,10 +50,10 @@ _scripts_<br/>
 The ejected build, start, and test scripts from Create React App. Do not delete
 
 _src_<br/>
-All of the code for the application!
+All of the code for the application! Subfolders are described below.
 
 _src/assets_<br/>
-Any images or fonts will go here
+All images and font files for the application, including favicons and other application images.
 
 _src/components_<br/>
 Small, presentational components that shouldn't have much in the way of logic
