@@ -2,28 +2,29 @@
   "short_name": "Messenger",
   "name": "JOIN Messenger Application",
   "icons": [{
-    "src": "assets/images/amplified-128x128.png",
+    "src": "static/media/amplified-128x128.png",
     "sizes": "128x128",
     "type": "image/png"
   }, {
-    "src": "assets/images/amplified-144x144.png",
+    "src": "static/media/amplified-144x144.png",
     "sizes": "144x144",
     "type": "image/png"
   }, {
-    "src": "assets/images/amplified-152x152.png",
+    "src": "static/media/amplified-152x152.png",
     "sizes": "152x152",
     "type": "image/png"
   }, {
-    "src": "assets/images/amplified-192x192.png",
+    "src": "static/media/amplified-192x192.png",
     "sizes": "192x192",
     "type": "image/png"
   }, {
-    "src": "assets/images/amplified-256x256.png",
+    "src": "static/media/amplified-256x256.png",
     "sizes": "256x256",
     "type": "image/png"
   }],
   "start_url": "./index.html",
+  "orientation": "portrait",
   "display": "standalone",
   "background_color": "#A871FF",
-  "theme_color": "#4D4D4D",
+  "theme_color": "#4D4D4D"
 }
