@@ -1,6 +1,6 @@
 # JOIN Messenger App - CRA variant
 
-Based on `create-react-app`, with some modifications that require ejection from the standard CRA framework.
+Based on `create-react-app` (https://github.com/facebook/create-react-app), with some modifications that require ejection from the standard CRA framework.
 
 - [Available Scripts](#available-scripts)
   - [start](#npm-start)
