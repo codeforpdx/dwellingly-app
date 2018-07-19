@@ -1,10 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import firebase from 'firebase';
 
 import { ROUTES } from '../../constants/constants';
 import AppComponent from '../../components/app/App';
 import HeaderComponent from '../../components/header/Header';
+import UserControls from '../../components/user-controls/UserControls';
 
 import CounterPage from '../tally/Tally';
 import LoginPage from '../login/Login';
@@ -14,24 +14,8 @@ import UnknownPage from '../unknown/Unknown';
 import './Home.scss';
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      userId: null,
-    };
-  }
-
   componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        console.log('we got user!');
-        console.log(user);
-        this.setState({ userId: user.email });
-      } else {
-        // No user is signed in.
-      }
-    });
+    console.log('is this thing on?');
   }
 
   render() {
@@ -39,14 +23,7 @@ class Home extends React.Component {
       <div className="home">
         <HeaderComponent />
         <div className="joinContent">
-          { this.state.userId
-            && (
-              <span>
-                Hello,&nbsp;
-                { this.state.userId }
-              </span>
-            )
-          }
+          <UserControls />
           <Switch>
             <Route exact path={ROUTES.ROOT} component={AppComponent} />
             <Route exact path={ROUTES.LOGIN} component={LoginPage} />

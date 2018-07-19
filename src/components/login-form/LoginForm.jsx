@@ -3,9 +3,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
 import { FORMS } from '../../translations/messages';
 
-import './SignUpForm.scss';
-
-class SignUpForm extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +13,6 @@ class SignUpForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      passwordConfirm: '',
       submit: false,
       error: null,
     };
@@ -38,22 +35,18 @@ class SignUpForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ submit: true });
-    auth.doCreateUserWithEmailAndPassword(this.state.email, this.state.password);
+    auth.doSignInWithEmailAndPassword(this.state.email, this.state.password);
   }
 
   render() {
     const { intl } = this.props;
-    // There should be some better password rules, let's burn that bridge when we come to it...
-    const passwordsDoNotMatch = this.state.password
-      && this.state.passwordConfirm
-      && this.state.password !== this.state.passwordConfirm;
 
-    const disableForm = (this.state.email === '' || !this.state.password || !this.state.passwordConfirm || passwordsDoNotMatch);
+    const disableForm = (this.state.email === '' || !this.state.password);
 
     return (
       <div className="dashboard">
         <h2>
-          Create account using email address
+          Login with email and password
         </h2>
         <form name="loginEmail" method="POST" onSubmit={this.handleSubmit} className="signupForm">
           <label htmlFor="email">
@@ -64,10 +57,6 @@ class SignUpForm extends React.Component {
             Password
             <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange} />
           </label>
-          <label htmlFor="passwordConfirm">
-            Confirm Password
-            <input name="passwordConfirm" type="password" value={this.state.passwordConfirm} onChange={this.handleInputChange} />
-          </label>
           { this.state.submit }
           <input
             type="submit"
@@ -75,13 +64,6 @@ class SignUpForm extends React.Component {
             disabled={disableForm}
           />
         </form>
-        { passwordsDoNotMatch
-          && (
-            <p>
-              Please make sure your passwords match
-            </p>
-          )
-        }
         { this.state.error
           && (
           <p>
@@ -94,8 +76,8 @@ class SignUpForm extends React.Component {
   }
 }
 
-SignUpForm.propTypes = {
+LoginForm.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(SignUpForm);
+export default injectIntl(LoginForm);

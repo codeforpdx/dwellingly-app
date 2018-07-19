@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
+import { auth } from '../../firebase';
 import { NAVIGATION } from '../../translations/messages';
 import { ROUTES } from '../../constants/constants';
 import './Header.scss';
-
 
 const Header = ({ intl }) => (
   <header className="appHeader">
@@ -25,6 +25,9 @@ const Header = ({ intl }) => (
       <Link to={ROUTES.SIGNUP}>
         {intl.formatMessage(NAVIGATION.SIGNUP)}
       </Link>
+      <button type="button" onClick={auth.doSignOut}>
+        Logout
+      </button>
     </div>
   </header>
 );
