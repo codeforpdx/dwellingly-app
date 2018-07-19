@@ -23,11 +23,9 @@ class UserControls extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('we got user!');
         this.setState({ userId: user.email, activeUser: true });
         this.props.setUser(user);
       } else {
-        console.log('no user here');
         this.setState({ userId: null, activeUser: false });
         this.props.clearUser();
       }

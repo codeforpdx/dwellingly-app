@@ -63,7 +63,6 @@ export const createUser = user => (dispatch) => {
 };
 
 export const setUser = user => (dispatch) => {
-  console.log(user);
   dispatch({
     type: FETCHING_USER_DATA,
     isFetchingDataFromFirebase: true,
