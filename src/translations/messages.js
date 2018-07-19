@@ -68,6 +68,14 @@ export const NAVIGATION = defineMessages( {
   },
 } );
 
+/* User-related messages */
+export const USER = defineMessages( {
+  HELLO: {
+    id: "user.hello",
+    defaultMessage: "Hello",
+  },
+} );
+
 /* 404/unknown strings */
 export const UNKNOWN_PAGE_MESSAGES = defineMessages( {
   DESCRIPTION: {
