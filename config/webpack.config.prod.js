@@ -3,6 +3,7 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
+var CopyWebpackPlugin = require( "copy-webpack-plugin" );
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -174,6 +175,7 @@ module.exports = {
                     loader: require.resolve('style-loader'),
                     options: {
                       hmr: false,
+                      localIdentName: '[local]',
                     },
                   },
                   use: [
@@ -223,7 +225,7 @@ module.exports = {
                       modules: true,
                       sourceMap: true,
                       importLoaders: 2,
-                      localIdentName: '[local]__[hash:base64:5]'
+                      localIdentName: '[local]'
                     }
                   },
                 'sass-loader'
@@ -311,6 +313,9 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
+    new CopyWebpackPlugin( [
+      { from: paths.appSrc + "/assets/manifest/", to: "static/media/" },
+      ] ),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
     new SWPrecacheWebpackPlugin({

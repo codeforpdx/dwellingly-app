@@ -10,4 +10,8 @@ export const SETTINGS = {
 
 export const ROUTES = {
   ROOT: '/',
+  SIGNUP: '/signup',
+  LOGIN: '/login',
+  DASHBOARD: '/dashboard',
+  COUNTING: '/counting',
 };

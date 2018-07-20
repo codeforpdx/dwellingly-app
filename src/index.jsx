@@ -11,6 +11,7 @@ import store, { history } from './store';
 import { getCookie, setCookie } from './utils';
 import registerServiceWorker from './registerServiceWorker';
 
+
 // CSS
 import './index.css';
 

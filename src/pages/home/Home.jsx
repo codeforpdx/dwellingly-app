@@ -1,24 +1,39 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+
+import { ROUTES } from '../../constants/constants';
 import AppComponent from '../../components/app/App';
-import CounterComponent from '../../components/counter/Counter';
+import HeaderComponent from '../../components/header/Header';
+import UserControls from '../../components/user-controls/UserControls';
 
-const Home = () => (
-  <div className="home">
-    <header>
-      <Link to="/">
-        Home
-      </Link>
-      &nbsp;
-      <Link to="/counter">
-        Counter
-      </Link>
-    </header>
-    <main>
-      <Route exact path="/" component={AppComponent} />
-      <Route exact path="/counter" component={CounterComponent} />
-    </main>
-  </div>
-);
+import CounterPage from '../tally/Tally';
+import LoginPage from '../login/Login';
+import SignupPage from '../signup/Signup';
+import UnknownPage from '../unknown/Unknown';
 
+import './Home.scss';
+
+class Home extends React.Component {
+  componentDidMount() {
+    console.log('is this thing on?');
+  }
+
+  render() {
+    return (
+      <div className="home">
+        <HeaderComponent />
+        <div className="joinContent">
+          <UserControls />
+          <Switch>
+            <Route exact path={ROUTES.ROOT} component={AppComponent} />
+            <Route exact path={ROUTES.LOGIN} component={LoginPage} />
+            <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
+            <Route exact path={ROUTES.COUNTING} component={CounterPage} />
+            <Route component={UnknownPage} />
+          </Switch>
+        </div>
+      </div>
+    );
+  }
+}
 export default Home;
