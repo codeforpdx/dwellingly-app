@@ -1,6 +1,22 @@
 {
-  "components.example.answer": "Debido a la Nueva Crueldad.",
+  "components.example.answer": "A causa de la nueva crueldad",
   "components.example.app.title": "JOIN Mensajero",
   "components.example.hello-world": "Hola",
-  "components.example.question": "¿Por que la gallina cruzo la calle?"
+  "components.example.question": "¿Por qué el pollo cruzó la calle?",
+
+  "counting.down": "Decrement",
+  "counting.header": "Aquí hay una pequeña muestra que debe mostrar cómo funciona Redux en la aplicación. Es solo una prueba.",
+  "counting.label": "Count",
+  "counting.up": "Incremento",
+
+  "form.button.submit": "Enviar",
+
+  "navigation.counter": "Contando",
+  "navigation.home": "Inicio",
+  "navigation.login": "Iniciar sesión",
+  "navigation.signup": "Registrarse",
+
+  "unknown.description": "Respuesta confusa. Inténtelo más tarde.",
+
+  "user.hello": "Hola"
 }

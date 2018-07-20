@@ -2,9 +2,21 @@
   "components.example.answer": "Because of the New Cruelty.",
   "components.example.app.title": "JOIN Messenger",
   "components.example.hello-world": "Hello",
-  "components.example.example.question": "Why did the chicken cross the road?",
+  "components.example.question": "Why did the chicken cross the road?",
 
   "counting.down": "Decrement",
-  "counting.title": "Count",
-  "counting.up": "Increment"
+  "counting.header": "Here is a small sample that should show how Redux works in the app. It is only a test.",
+  "counting.label": "Count",
+  "counting.up": "Increment",
+
+  "form.button.submit": "Submit",
+
+  "navigation.counter": "Counting",
+  "navigation.home": "Home",
+  "navigation.login": "Login",
+  "navigation.signup": "Signup",
+
+  "unknown.description": "Answer unclear. Try again later.",
+
+  "user.hello": "Hello"
 }
