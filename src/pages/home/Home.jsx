@@ -13,27 +13,20 @@ import UnknownPage from '../unknown/Unknown';
 
 import './Home.scss';
 
-class Home extends React.Component {
-  componentDidMount() {
-    console.log('is this thing on?');
-  }
+const Home = () => (
+  <div className="home">
+    <HeaderComponent />
+    <div className="joinContent">
+      <UserControls />
+      <Switch>
+        <Route exact path={ROUTES.ROOT} component={AppComponent} />
+        <Route exact path={ROUTES.LOGIN} component={LoginPage} />
+        <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
+        <Route exact path={ROUTES.COUNTING} component={CounterPage} />
+        <Route component={UnknownPage} />
+      </Switch>
+    </div>
+  </div>
+);
 
-  render() {
-    return (
-      <div className="home">
-        <HeaderComponent />
-        <div className="joinContent">
-          <UserControls />
-          <Switch>
-            <Route exact path={ROUTES.ROOT} component={AppComponent} />
-            <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-            <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
-            <Route exact path={ROUTES.COUNTING} component={CounterPage} />
-            <Route component={UnknownPage} />
-          </Switch>
-        </div>
-      </div>
-    );
-  }
-}
 export default Home;
