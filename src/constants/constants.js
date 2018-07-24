@@ -10,6 +10,7 @@ export const SETTINGS = {
 
 export const ROUTES = {
   ROOT: '/',
+  ADMIN: '/admin',
   SIGNUP: '/signup',
   LOGIN: '/login',
   DASHBOARD: '/dashboard',
