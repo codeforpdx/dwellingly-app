@@ -1,5 +1,8 @@
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
+
+import EmergencyList from '../../components/emergency/EmergencyList';
+
 import { ADMIN } from '../../translations/messages';
 
 
@@ -16,8 +19,9 @@ class Administration extends React.Component {
           Administration
         </p>
         <button type="button">
-          {intl.formatMessage(ADMIN.EMERGENCY_NUMS_SHOW)}
+          {intl.formatMessage(ADMIN.EMERGENCY_NUMS_CREATE)}
         </button>
+        <EmergencyList />
       </div>
     );
   }

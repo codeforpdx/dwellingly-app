@@ -22,6 +22,10 @@ export const COMMON = defineMessages( {
 
 /* Administration strings */
 export const ADMIN = defineMessages( {
+  EMERGENCY_NUMS_CREATE: {
+    id: "admin.emergencyNum.hide",
+    defaultMessage: "Create Emergency Numbers",
+  },
   EMERGENCY_NUMS_HIDE: {
     id: "admin.emergencyNum.hide",
     defaultMessage: "Hide Emergency Numbers",
