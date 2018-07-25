@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import EmergencyNumber from './EmergencyNumber';
+import './Emergency.scss';
 
 class EmergencyList extends React.Component {
   componentWillMount() {

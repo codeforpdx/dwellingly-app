@@ -7,12 +7,16 @@ const EmergencyNumber = ({ emergency }) => (
       {emergency.title}
     </div>
     <div className="emergencyNumber">
-      {emergency.number01}
+      <a href={`tel:${emergency.number01}`}>
+        {emergency.number01}
+      </a>
     </div>
-    {emergency.number02
+    {emergency.number02 !== null
       && (
       <div className="emergencyNumber">
-        {emergency.number02}
+        <a href={`tel:${emergency.number02}`}>
+          {emergency.number02}
+        </a>
       </div>
       )
     }
