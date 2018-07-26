@@ -11,7 +11,7 @@ const EmergencyNumber = ({ emergency }) => (
         {emergency.number01}
       </a>
     </div>
-    {emergency.number02 !== null
+    {emergency.number02 !== null && emergency.number02 !== ''
       && (
       <div className="emergencyNumber">
         <a href={`tel:${emergency.number02}`}>
