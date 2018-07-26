@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import { ROUTES } from '../../constants/constants';
 import { FORMS } from '../../translations/messages';
 
 class FormCreateEmergencyNumber extends React.Component {
@@ -64,6 +67,7 @@ class FormCreateEmergencyNumber extends React.Component {
         }
       }
     `;
+    const successRoute = ROUTES.ADMIN;
 
     return (
       <div className="dashboard">
@@ -95,6 +99,7 @@ class FormCreateEmergencyNumber extends React.Component {
             variables={{
               title, number01, number02, sortOrder,
             }}
+            onCompleted={() => this.props.history.push(successRoute)}
           >
             {
               createEmergencyNumber => (
@@ -122,6 +127,14 @@ class FormCreateEmergencyNumber extends React.Component {
 
 FormCreateEmergencyNumber.propTypes = {
   intl: intlShape.isRequired,
+  history: PropTypes.shape({
+    name: PropTypes.string,
+    push: PropTypes.func,
+  }),
 };
 
-export default injectIntl(FormCreateEmergencyNumber);
+FormCreateEmergencyNumber.defaultProps = {
+  history: null,
+};
+
+export default withRouter(injectIntl(FormCreateEmergencyNumber));
