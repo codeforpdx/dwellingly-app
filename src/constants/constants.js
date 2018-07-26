@@ -11,6 +11,7 @@ export const SETTINGS = {
 export const ROUTES = {
   ROOT: '/',
   ADMIN: '/admin',
+  ADMIN_EMERGENCY: '/admin/emergency',
   SIGNUP: '/signup',
   LOGIN: '/login',
   DASHBOARD: '/dashboard',

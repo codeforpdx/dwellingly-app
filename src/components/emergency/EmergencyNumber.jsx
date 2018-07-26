@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const EmergencyNumber = ({ emergency }) => (
-  <div className="emergencyNumberRow" key={`number-${emergency.id}`}>
+  <div className="emergencyNumberRow" key={`row-${emergency.id}`}>
     <div className="emergencyTitle">
       {emergency.title}
     </div>

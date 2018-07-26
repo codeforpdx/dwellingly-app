@@ -41,6 +41,7 @@ class UserControls extends React.Component {
               { this.props.intl.formatMessage(USER.HELLO) }
               &nbsp;
               { this.state.userId }
+              <br />
               { this.props.user.email }
             </span>
           )
