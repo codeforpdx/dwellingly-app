@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import PropertyManagerHome from './PropertyManagerHome';
+import UserControls from '../../components/user-controls/UserControls';
 import { ROLES, ROUTES } from '../../constants/constants';
 
 import { dummyUser } from '../../data';
@@ -37,6 +38,7 @@ class Home extends Component {
           />
         )}
         {user.role === ROLES.STAFF && <Redirect to={ROUTES.TICKETS} />}
+        <UserControls />
       </div>
     );
   }

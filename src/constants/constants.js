@@ -6,6 +6,8 @@ export const SETTINGS = {
 };
 
 export const ROUTES = {
+  ADMIN: '/admin',
+  ADMIN_EMERGENCY: '/admin/emergency',
   CLOSED_TICKETS: '/tickets/closed',
   DASHBOARD: '/dashboard',
   EMERGENCY: '/emergency',

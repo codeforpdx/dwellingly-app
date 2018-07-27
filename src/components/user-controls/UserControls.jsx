@@ -35,12 +35,13 @@ class UserControls extends React.Component {
   render() {
     return (
       <div>
-        { this.state.userId
+        { this.props.user
           && (
             <span>
               { this.props.intl.formatMessage(USER.HELLO) }
               &nbsp;
               { this.state.userId }
+              <br />
               { this.props.user.email }
             </span>
           )

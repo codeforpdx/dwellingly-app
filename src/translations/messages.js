@@ -20,6 +20,21 @@ export const COMMON = defineMessages({
   }
 });
 
+export const ADMIN = defineMessages( {
+  EMERGENCY_NUMS_CREATE: {
+    id: "admin.emergencyNum.hide",
+    defaultMessage: "Create Emergency Numbers",
+  },
+  EMERGENCY_NUMS_HIDE: {
+    id: "admin.emergencyNum.hide",
+    defaultMessage: "Hide Emergency Numbers",
+  },
+  EMERGENCY_NUMS_SHOW: {
+    id: "admin.emergencyNum.show",
+    defaultMessage: "Show Emergency Numbers",
+  },
+} );
+
 /* Form messages */
 export const FORMS = defineMessages({
   SUBMIT: {
