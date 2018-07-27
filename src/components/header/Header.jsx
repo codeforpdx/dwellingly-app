@@ -1,39 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { intlShape, injectIntl } from 'react-intl';
-import { auth } from '../../firebase';
-import { NAVIGATION } from '../../translations/messages';
-import { ROUTES } from '../../constants/constants';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import './Header.scss';
 
-const Header = ({ intl }) => (
-  <header className="appHeader">
-    <div className="headerSection headerNav">
-      <Link to={ROUTES.ROOT}>
-        {intl.formatMessage(NAVIGATION.HOME)}
-      </Link>
-      &nbsp;
-      <Link to={ROUTES.COUNTING}>
-        {intl.formatMessage(NAVIGATION.COUNTER)}
-      </Link>
-    </div>
-    <div className="headerSection headerLogin">
-      <Link to={ROUTES.LOGIN}>
-        {intl.formatMessage(NAVIGATION.LOGIN)}
-      </Link>
-      &nbsp;
-      <Link to={ROUTES.SIGNUP}>
-        {intl.formatMessage(NAVIGATION.SIGNUP)}
-      </Link>
-      <button type="button" onClick={auth.doSignOut}>
-        Logout
-      </button>
-    </div>
-  </header>
-);
+class Header extends Component {
+  static Label({ label, type, children }) {
+    return (
+      <div className={`hero__wrapper${type && ` hero__wrapper--${type}`}`}>
+        {label && <h2>{label}</h2>}
+        {children && children()}
+      </div>
+    );
+  }
+
+  render() {
+    const { label, type, variants, children } = this.props;
+    const variantClasses =
+      variants && variants.length > 0
+        ? variants.map(variant => `hero--${variant}`).join(' ')
+        : '';
+    return (
+      <header className={`hero ${variantClasses}`}>
+        {label && type && <Header.Label label={label} type={type} />}
+        {children && children(...this.props)}
+      </header>
+    );
+  }
+}
 
 Header.propTypes = {
-  intl: intlShape.isRequired,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  children: PropTypes.func.isRequired,
+  variants: PropTypes.arrayOf(PropTypes.string)
 };
 
-export default injectIntl(Header);
+Header.defaultProps = {
+  label: undefined,
+  type: undefined,
+  variants: undefined
+};
+
+export default Header;

@@ -1,0 +1,91 @@
+
+/* V A R I A B L E S */
+// colors
+$color__gray--lightest: #f3f3f3 !default;
+$color__gray--light: #eeeeee !default;
+$color__gray--border: #dddddd !default;
+$color__gray--medium: #858585 !default;
+$color__gray--dark: #555555 !default;
+$color__blue: #4ca1ff !default;
+$color__blue--dark: #003c71 !default;
+$color__green: #4cd964 !default;
+$color__yellow: #ffbd3b !default;
+$color__red: #ff5556 !default;
+$color__red--dark: #ed2e2f !default;
+$color__white: #ffffff !default;
+$color__black: #171719 !default;
+$color__gradient--blue: linear-gradient(180deg, #6d8dff 0%, #4cb9ef 100%)
+  !default;
+$color__gradient--nav: linear-gradient(180deg, #6d8dff 0%, #4cb9ef 100%)
+  !default;
+$color__gradient--yellow: linear-gradient(180deg, #ffaa55 0%, #ffbd3b 100%)
+  !default;
+$color__gradient--red: linear-gradient(to top, #ff7c5b 0%, #ed4c4c 100%)
+  !default;
+// text/typography
+
+// widths
+$border-radius: 8px;
+$border-radius--btn: 20px;
+$border-radius--card: 10px;
+$ticket__cutout-border--size: 4px;
+$ticket__cutout-border--radius: 10px;
+$ticket__cutout-size--height: 12px;
+$ticket__cutout-size--width: 6px;
+// media queries
+
+/* end variables */
+
+/* F U N C T I O N S */
+@function emify($target, $context) {
+  @return ($target/$context) * 1em;
+}
+/* end functions */
+
+/* M I X I N S */
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+@mixin dialog_shadow {
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+@mixin ticket_cutout($position) {
+  #{$position}: -$ticket__cutout-size--width;
+  &::after {
+    background: rgba(0, 0, 0, 0);
+    border: $ticket__cutout-border--size solid $color__white;
+    border-radius: $ticket__cutout-border--radius;
+    content: "";
+    height: $ticket__cutout-size--height;
+    position: absolute;
+    #{$position}: -$ticket__cutout-border--radius;
+    top: -$ticket__cutout-border--size;
+    width: $ticket__cutout-size--height;
+  }
+}
+
+@mixin flex_align($position) {
+  align-items: center;
+  display: flex;
+  justify-content: $position;
+}
+
+@mixin hidden_scrolling {
+  box-sizing: content-box;
+  overflow-y: scroll;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* end mixins */

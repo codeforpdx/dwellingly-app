@@ -1,0 +1,35 @@
+@import "../../constants/constants.scss";
+
+/* S E A R C H */
+/* ==================================================== */
+.search {
+  background: rgba(255, 255, 255, 0.5);
+  color: $color__gray--medium;
+  min-height: 3em;
+  padding: 0.5em 1em;
+
+  &__wrapper {
+    @include flex_align(center);
+    background: $color__white;
+    border-radius: $border-radius;
+    height: 2em;
+    width: 100%;
+
+    .icon {
+      color: inherit;
+      margin-right: 0.25rem;
+    }
+  }
+
+  input {
+    transition: width 0.1s ease-out;
+    padding: 0.25em 0;
+    width: 67px;
+
+    &:focus,
+    .active {
+      width: calc(100% - 2em);
+    }
+  }
+}
+/* end search */
