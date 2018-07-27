@@ -7,13 +7,13 @@ import { Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import Authorization from './components/authorization/Authorization';
-import PrivateRoute from './components/authorization/PrivateRoute';
 
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import Authorization from './components/authorization/Authorization';
+import PrivateRoute from './components/authorization/PrivateRoute';
 
 // LOCAL STUFF
 import { translationMessages } from './translations/i18n';
@@ -40,12 +40,12 @@ import Tickets from './pages/tickets/Tickets';
 
 // Apollo setup
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000',
+  uri: 'http://localhost:4000'
 });
 
 const client = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 });
 
 // Set up cookie stuff for translation
@@ -71,7 +71,10 @@ ReactDOM.render(
             <Navigation type="desktop" desktopOnly />
             <Switch>
               <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
-              <PrivateRoute path={ROUTES.ADMIN_EMERGENCY} component={AdminUser(EmergencyNumbers)} />
+              <PrivateRoute
+                path={ROUTES.ADMIN_EMERGENCY}
+                component={AdminUser(EmergencyNumbers)}
+              />
               <PrivateRoute path={ROUTES.SETTINGS} exact component={Settings} />
               <PrivateRoute
                 path={ROUTES.OUT_OF_OFFICE}
