@@ -1,11 +1,21 @@
 {
-   "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "node": true
   },
   "rules": {
-      "no-shadow": "off",
-      "react/destructuring-assignment": "off",
-    }
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "no-shadow": "off",
+    "react/destructuring-assignment": "off",
+    "react/prefer-stateless-function": 0
+  }
 }

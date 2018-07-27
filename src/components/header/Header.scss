@@ -1,7 +1,108 @@
-header.appHeader{
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  width: 100%;
+@import "../../constants/constants.scss";
+
+/* H E R O - H E A D E R S */
+/* ==================================================== */
+.hero {
+  background-image: $color__gradient--blue;
+  color: $color--white;
+  position: relative;
+  text-align: center;
+
+  & .actions {
+    font-size: emify(14, 16);
+    position: absolute;
+    text-transform: uppercase;
+    width: 100%;
+
+    .action {
+      height: emify(50, 14);
+      line-height: emify(50, 14);
+      padding: 0 1rem;
+      position: absolute;
+      right: 0;
+
+      &--left {
+        left: 0;
+        right: unset;
+      }
+    }
+
+    .icon {
+      font-size: 1.5em;
+      vertical-align: middle;
+    }
+  }
+
+  &__wrapper {
+    &--basic {
+      @include flex_align(center);
+      font-size: emify(14, 16);
+      min-height: emify(50, 14);
+
+      h2 {
+        font-size: emify(20, 16);
+      }
+    }
+
+    &--contact {
+      padding: 1.5em 1em;
+
+      h1 {
+        line-height: emify(36, 24);
+        margin-bottom: 0.5em;
+
+        .icon {
+          margin-right: 0.25em;
+          transform: translateY(-2px);
+          vertical-align: middle;
+        }
+      }
+
+      a {
+        color: $color__white;
+      }
+
+      p {
+        line-height: 1em;
+        margin: 0.25em 0;
+
+        &.secondary {
+          font-weight: 500;
+        }
+      }
+    }
+
+    &__actions {
+      margin-top: 0.5em;
+      position: initial;
+      .btn {
+        background: rgba(255, 255, 255, 0.15);
+        font-size: emify(14, 16);
+        margin: 0.5rem 0.25rem 0;
+        min-width: emify(144, 14);
+      }
+
+      .icon {
+        font-size: 1em;
+        transform: translateY(1px);
+
+        &--commentOutline {
+          // transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  &__wrapper + .hero__wrapper--contact {
+    padding-top: 0;
+  }
+
+  &--form {
+    background-image: $color__gradient--yellow;
+  }
+
+  &--tenant {
+    background-image: $color__gradient--red;
+  }
 }
+/* end hero/headers */

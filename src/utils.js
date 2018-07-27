@@ -30,3 +30,24 @@ export function getCookie( cname ) {
 export function clearCookie( name ) {
   document.cookie = `${ name }=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
+
+// Format Date so it can be read by a datetime input
+export function formatDatepickerDate(date) {
+  const month = date.getMonth() + 1;
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const newDate = `${date.getFullYear()}-${
+    month < 10 ? "0" + month : month
+  }-${date.getDate()}T${hours < 10 ? "0" + hours : hours}:${
+    minutes < 10 ? "0" + minutes : minutes
+  }`;
+  return newDate;
+}
+
+// Format phone number href value (so that user's can tap to call)
+export function formatPhoneNumber(number) {
+  return `tel:+${(/^1/g.test(number) ? number : `1${number}`).replace(
+    /-/g,
+    ""
+  )}`;
+}

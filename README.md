@@ -3,9 +3,9 @@
 Based on `create-react-app` (https://github.com/facebook/create-react-app), with some modifications that require ejection from the standard CRA framework.
 
 - [Available Scripts](#available-scripts)
-  - [start](#npm-start)
-  - [test](#npm-test)
-  - [build](#npm-run-build)
+  - start
+  - test
+  - build
 
 ## Requirements
 Developing this site requires terminal access and installation of Node.js and Yarn.

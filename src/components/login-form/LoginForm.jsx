@@ -1,30 +1,33 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
+import { Input } from '../input/Input';
 import { FORMS } from '../../translations/messages';
 
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleError = this.handleError.bind(this);
+
     this.state = {
       email: '',
       password: '',
       submit: false,
-      error: null,
+      error: null
     };
   }
 
-  handleInputChange(event) {
+  handleChange(event) {
     const { target } = event;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const { name } = target;
 
     this.setState({
-      [name]: value,
+      [name]: value
     });
   }
 
@@ -40,44 +43,67 @@ class LoginForm extends React.Component {
 
   render() {
     const { intl } = this.props;
-
-    const disableForm = (this.state.email === '' || !this.state.password);
+    const { email, password, submit, error } = this.state;
+    const disableForm = email === '' || !password;
 
     return (
-      <div className="dashboard">
-        <h2>
-          Login with email and password
-        </h2>
-        <form name="loginEmail" method="POST" onSubmit={this.handleSubmit} className="signupForm">
-          <label htmlFor="email">
-            Email
-            <input name="email" type="email" value={this.state.email} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="password">
-            Password
-            <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange} />
-          </label>
-          { this.state.submit }
-          <input
-            type="submit"
-            value={intl.formatMessage(FORMS.SUBMIT)}
-            disabled={disableForm}
-          />
+      <section className="main">
+        <form
+          name="loginEmail"
+          method="POST"
+          onSubmit={this.handleSubmit}
+          className="signupForm">
+          <fieldset>
+            <Input
+              id="login-email"
+              label="Email"
+              name="email"
+              onChange={this.handleChange}
+              placeholder="Email Address"
+              type="email"
+              value={email}
+              variants={['full']}
+            />
+            <Input
+              id="login-password"
+              label="Password"
+              name="password"
+              onChange={this.handleChange}
+              placeholder="Password"
+              type="password"
+              value={password}
+              variants={['full']}
+            />
+          </fieldset>
+          <div className="form-meta">
+            <button
+              className="btn btn--lg btn--strong btn--block"
+              disabled={disableForm && submit}
+              type="submit">
+              {intl.formatMessage(FORMS.SUBMIT)}
+            </button>
+            <br />
+            <br />
+            <Link to="/forgot-password">Forgot Password</Link>
+            <br />
+            <br />
+            <br />
+            <button
+              type="button"
+              className="btn btn--lg btn--strong btn--block"
+              onClick={auth.doSignInWithGoogle}>
+              Login With Google
+            </button>
+          </div>
         </form>
-        { this.state.error
-          && (
-          <p>
-            {this.state.error}
-          </p>
-          )
-        }
-      </div>
+        {error && <p>{error}</p>}
+      </section>
     );
   }
 }
 
 LoginForm.propTypes = {
-  intl: intlShape.isRequired,
+  intl: intlShape.isRequired
 };
 
 export default injectIntl(LoginForm);
