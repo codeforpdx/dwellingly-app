@@ -1,6 +1,7 @@
 // REACT
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, Switch } from 'react-router-dom';
 
 // REDUX, I18N, and OTHER STUFF
 import { IntlProvider } from 'react-intl';
@@ -14,19 +15,22 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 // LOCAL STUFF
 import { translationMessages } from './translations/i18n';
-import { SETTINGS } from './constants/constants';
+import { SETTINGS, ROUTES } from './constants/constants';
 import store, { history } from './store';
 import { getCookie, setCookie } from './utils';
 import registerServiceWorker from './registerServiceWorker';
 
-
 // CSS
-import './index.css';
+import './index.scss';
 
 // Components, if any
 
 // Pages
+import Admin from './pages/admin/Admin';
+import EmergencyNumbers from './pages/admin/EmergencyNumbers';
+import Emergency from './pages/emergency/Emergency';
 import Home from './pages/home/Home';
+import Login from './pages/login/Login';
 
 // Apollo setup
 const httpLink = createHttpLink({
@@ -56,10 +60,17 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Home />
+          <Switch>
+            <Route path={ROUTES.EMERGENCY} component={Emergency} />
+            <Route path={ROUTES.ADMIN_EMERGENCY} component={EmergencyNumbers} />
+            <Route path={ROUTES.LOGIN} component={Login} />
+            <Route path={ROUTES.ADMIN} component={Admin} />
+            <Route path={ROUTES.ROOT} component={Home} />
+          </Switch>
         </ConnectedRouter>
       </Provider>
     </ApolloProvider>
-  </IntlProvider>, document.getElementById('root'),
+  </IntlProvider>,
+  document.getElementById('root')
 );
 registerServiceWorker();
