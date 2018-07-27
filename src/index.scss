@@ -110,6 +110,7 @@ a {
     color: $color__white;
     display: inline-block;
     height: emify(32, 16);
+    // max-width: 25em;
     padding: 0 1rem;
     text-align: center;
     text-transform: inherit;
@@ -192,6 +193,15 @@ time {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  text-align: center;
+
+  @media screen and (min-width: $mq--desktop) {
+    .navigation + & {
+      position: absolute;
+      right: 0;
+      width: calc(100% - #{$width__nav});
+    }
+  }
 
   .main {
     flex-grow: 2;
@@ -199,6 +209,17 @@ time {
 
   &--light {
     background: $color__gray--light;
+  }
+}
+
+.width-wrapper {
+  max-width: $width__wrapper;
+  position: relative;
+  width: 100%;
+
+  @media screen and (min-width: $width__wrapper) {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
@@ -418,6 +439,7 @@ time {
     list-style: none;
     margin: 0;
     padding: 0;
+    text-align: left;
   }
 
   .tab {

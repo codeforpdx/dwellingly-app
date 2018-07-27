@@ -46,7 +46,7 @@ class PropertyManagerHome extends Component {
               </Header.Label>
 
               <nav className="tabs">
-                <ul>
+                <ul className="width-wrapper">
                   <li className="tab">
                     <NavLink
                       exact
@@ -75,7 +75,7 @@ class PropertyManagerHome extends Component {
           )}
         </Header>
 
-        <section className="main">
+        <section className="main width-wrapper">
           <Route
             exact
             path={ROUTES.ROOT}

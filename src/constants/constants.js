@@ -20,6 +20,12 @@ export const ROUTES = {
   TICKETS: '/tickets'
 };
 
+export const ROLES = {
+  ADMIN: 'admin',
+  STAFF: 'staff',
+  PROPERTY_MANAGER: 'property-manager'
+};
+
 export const CARD_TYPES = {
   CLOSED: 'closed',
   FORM: 'form',

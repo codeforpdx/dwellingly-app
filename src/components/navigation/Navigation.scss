@@ -8,6 +8,12 @@
   width: 100%;
   z-index: 100;
 
+  &--desktop {
+    display: none;
+    left: 0;
+    width: $width__nav;
+  }
+
   a {
     @include flex_align(space-between);
     color: $color__white;
@@ -24,13 +30,13 @@
 
   &__groups {
     @include hidden_scrolling;
-    background-image: $color__gradient--blue;
+    background-image: $color__gradient--nav;
     color: $color__white;
     height: 100vh;
     margin: 0;
     position: absolute;
     right: 0;
-    width: 15em;
+    width: $width__nav;
 
     dl {
       margin: 0;
@@ -72,6 +78,17 @@
       font-size: 1.25em;
       margin-right: 0.5em;
     }
+  }
+}
+
+@media only screen and (min-width: $mq--desktop) {
+  .menu--desktop {
+    display: block;
+  }
+
+  .menu--mobile,
+  button.menu__btn {
+    display: none;
   }
 }
 /* end menu */
