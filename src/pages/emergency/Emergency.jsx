@@ -16,7 +16,7 @@ class Emergency extends Component {
       <div className="page">
         <Header>
           {() => (
-            <div>
+            <div className="width-wrapper">
               <Navigation />
               <div className="actions">
                 <button
@@ -32,7 +32,7 @@ class Emergency extends Component {
           )}
         </Header>
 
-        <section className="main">
+        <section className="main width-wrapper">
           <div className="message message--light">
             <p>
               In the event of a life-threatening emergency with your JOIN

@@ -83,7 +83,7 @@ function InputContent({
   return inputContent;
 }
 
-class Input extends Component {
+export default class Input extends Component {
   render() {
     const { blockClass, type, variants } = this.props;
 

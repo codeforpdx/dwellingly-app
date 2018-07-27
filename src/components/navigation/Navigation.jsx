@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { Link, NavLink } from 'react-router-dom';
+import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
-import { ROUTES } from '../../constants/constants';
-import { NAVIGATION } from '../../translations/messages';
 
 import './Navigation.scss';
+import { ROLES } from '../../constants/constants';
+
+import { dummyUser } from '../../data';
 
 class Navigation extends Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class Navigation extends Component {
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
 
     this.state = {
-      showMenu: false
+      showMenu: false,
+      user: dummyUser
     };
   }
 
@@ -23,101 +26,50 @@ class Navigation extends Component {
   }
 
   render() {
-    const { intl } = this.props;
-    return (
-      <div>
-        {!this.state.showMenu && (
-          <div className="actions">
-            <button
-              type="button"
-              aria-label="Show Menu"
-              className="menu__btn action action--right"
-              onClick={this.handleToggleMenu}>
-              <Icon icon="menu" />
-            </button>
-          </div>
-        )}
-
-        {this.state.showMenu && (
-          <nav className="menu" aria-expanded={this.state.showMenu}>
-            <button
-              type="button"
-              aria-label="Close Menu"
-              className="menu__bg"
-              onClick={this.handleToggleMenu}
-            />
-            <div className="menu__groups">
-              <dl>
+    const { desktopOnly, intl } = this.props;
+    const { showMenu, user } = this.state;
+    if (user.role !== ROLES.PROPERTY_MANAGER) {
+      return (
+        <div className="navigation">
+          {desktopOnly && (
+            <NavigationContent intl={intl} type="desktop" user={user} />
+          )}
+          {!showMenu &&
+            !desktopOnly && (
+              <div className="actions">
                 <button
-                  className="menu__close-btn"
-                  onClick={this.handleToggleMenu}
-                  type="button">
-                  <Icon icon="close" />
+                  type="button"
+                  aria-label="Show Menu"
+                  className="menu__btn action action--right"
+                  onClick={this.handleToggleMenu}>
+                  <Icon icon="menu" />
                 </button>
-                <dt className="menu__label">
-                  <Icon icon="userOutline" />Tara Mckenzie
-                </dt>
-                <dd>
-                  <NavLink
-                    to={ROUTES.OUT_OF_OFFICE}
-                    activeClassName="menu__link--active">
-                    <strong>Out of Office</strong>
-                    <span>Off</span>
-                  </NavLink>
-                  <NavLink
-                    to={ROUTES.SETTINGS}
-                    activeClassName="menu__link--active">
-                    <strong>Settings</strong>
-                  </NavLink>
-                </dd>
-                <dt className="menu__label">
-                  <Icon icon="ticketOutline" />Tickets
-                </dt>
-                <dd>
-                  <Link to={ROUTES.TICKETS}>
-                    <strong>Open</strong>
-                    <span>1</span>
-                  </Link>
-                  <Link to={ROUTES.CLOSED_TICKETS}>
-                    <strong>Closed</strong>
-                    <span>3</span>
-                  </Link>
-                </dd>
-                <dt className="menu__label">
-                  <Icon icon="notebookOutline" />Directory
-                </dt>
-                <dd>
-                  <Link to={ROUTES.TENANTS}>
-                    <strong>Tenants</strong>
-                  </Link>
-                  <Link to={ROUTES.PROPERTY_MANAGERS}>
-                    <strong>Property Managers</strong>
-                  </Link>
-                </dd>
-                <dt className="menu__label">
-                  <Icon icon="commentOutline" />Links for Demo
-                </dt>
-                <dd>
-                  <Link to={ROUTES.ROOT}>
-                    <strong>{intl.formatMessage(NAVIGATION.HOME)}</strong>
-                    <span>Property Manager</span>
-                  </Link>
-                  <Link to={ROUTES.TICKETS}>
-                    <strong>Home</strong>
-                    <span>JOIN Staff</span>
-                  </Link>
-                </dd>
-              </dl>
-            </div>
-          </nav>
-        )}
-      </div>
-    );
+              </div>
+            )}
+
+          {showMenu &&
+            !desktopOnly && (
+              <NavigationContent
+                handleToggleMenu={this.handleToggleMenu}
+                intl={intl}
+                user={user}
+              />
+            )}
+        </div>
+      );
+    }
+
+    return null;
   }
 }
 
 Navigation.propTypes = {
+  desktopOnly: PropTypes.bool,
   intl: intlShape.isRequired
+};
+
+Navigation.defaultProps = {
+  desktopOnly: false
 };
 
 export default injectIntl(Navigation);

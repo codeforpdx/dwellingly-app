@@ -27,13 +27,13 @@ class Toggle extends Component {
     const { blockClass, id, label } = this.props;
     return (
       <div className="inline-input">
-        <label htmlFor={id}>
+        <label htmlFor={id} className="inline-input__toggle">
           <span className={`${blockClass}__label`}>{label}</span>
-          <div className="inline-input__toggle">
+          <div className="switch">
             <input type="checkbox" checked={this.state.toggle} id={id} />
             <button
               aria-label="Checkbox toggle"
-              className="inline-input__toggle__btn"
+              className="switch__btn"
               onClick={this.handleToggle}
               type="button"
             />

@@ -16,15 +16,14 @@ $color__white: #ffffff !default;
 $color__black: #171719 !default;
 $color__gradient--blue: linear-gradient(180deg, #6d8dff 0%, #4cb9ef 100%)
   !default;
-$color__gradient--nav: linear-gradient(180deg, #6d8dff 0%, #4cb9ef 100%)
+$color__gradient--nav: linear-gradient(180deg, #4cb9ef 0%, #6d8dff 100%)
   !default;
 $color__gradient--yellow: linear-gradient(180deg, #ffaa55 0%, #ffbd3b 100%)
   !default;
 $color__gradient--red: linear-gradient(to top, #ff7c5b 0%, #ed4c4c 100%)
   !default;
 // text/typography
-
-// widths
+// measurements
 $border-radius: 8px;
 $border-radius--btn: 20px;
 $border-radius--card: 10px;
@@ -32,8 +31,10 @@ $ticket__cutout-border--size: 4px;
 $ticket__cutout-border--radius: 10px;
 $ticket__cutout-size--height: 12px;
 $ticket__cutout-size--width: 6px;
+$width__nav: 15em;
+$width__wrapper: 800px;
 // media queries
-
+$mq--desktop: 1200px;
 /* end variables */
 
 /* F U N C T I O N S */

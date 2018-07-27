@@ -26,16 +26,15 @@ class SearchForm extends Component {
   }
 
   render() {
-    const { searchTerm } = this.state;
     return (
       <form action="" className="search" onSubmit={this.handleSearch}>
-        <div className="search__wrapper">
+        <div className="search__wrapper width-wrapper">
           <Icon icon="search" />
           <input
             type="search"
             placeholder="Search"
             onChange={this.handleChange}
-            value={searchTerm}
+            value={this.state.searchTerm}
           />
         </div>
       </form>

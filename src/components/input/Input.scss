@@ -19,7 +19,7 @@
   }
 
   /* BUTTON */
-  &__btn {
+  &__button {
     text-align: center;
     width: 100%;
 
@@ -76,20 +76,18 @@
     padding: 0.25em 0;
     width: 100%;
 
-    &--full {
-      label {
-        @include flex_align(space-between);
-      }
+    label {
+      @include flex_align(space-between);
+    }
 
-      .inline-input__label {
-        display: inline-block;
-        padding-right: 1em;
-        width: 30%;
-      }
-      
-      input {
-        width: 70%;
-      }
+    .inline-input__label {
+      display: inline-block;
+      padding-right: 1em;
+      width: 30%;
+    }
+    
+    input {
+      width: 70%;
     }
   }
 
@@ -99,70 +97,76 @@
 
     input {
       font-weight: inherit;
+      width: auto;
     }
   }
 
   /* "TOGGLE" CHECKBOX */
   &__toggle {
+    @include flex_align(space-between);
     padding: 0.5rem 0;
-    input[type="checkbox"],
-    input[type="radio"] {
-      display: none;
+    width: 100%;
+  }
+}
 
-      &:checked + .inline-input__toggle__btn {
-        background: $color__green;
-        border-color: $color__green;
+// SWITCH
+.switch {
+  input[type="checkbox"] {
+    display: none;
 
-        &::after {
-          left: 1.5em;
-        }
-
-        &:active {
-          &::after {
-            margin-left: -0.5em;
-          }
-        }
-      }
-    }
-
-    &__btn {
-      background: $color__white;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 2em;
-      display: block;
-      font-size: 1em;
-      height: 2em;
-      position: relative;
-      text-indent: -9999em;
-      transition: background 0.2s ease, border 0.2s ease;
-      width: 3.5em;
+    &:checked + .switch__btn {
+      background: $color__green;
+      border-color: $color__green;
 
       &::after {
-        background: $color__white;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 1.5em;
-        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.1),
-          0 3px 1px rgba(0, 0, 0, 0.05);
-        content: "";
-        display: block;
-        height: calc(2em - 2px);
-        left: -1px;
-        padding: 0;
-        position: absolute;
-        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        top: -1px;
-        width: calc(2em - 2px);
-        z-index: 1;
-      }
-
-      &:hover::after {
-        will-change: padding;
+        left: 1.5em;
       }
 
       &:active {
         &::after {
-          padding-right: 0.5em;
+          margin-left: -0.5em;
         }
+      }
+    }
+  }
+
+  &__btn {
+    background: $color__white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2em;
+    display: block;
+    font-size: 1em;
+    height: 2em;
+    position: relative;
+    text-indent: -9999em;
+    transition: background 0.2s ease, border 0.2s ease;
+    width: 3.5em;
+
+    &::after {
+      background: $color__white;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 1.5em;
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.1),
+        0 3px 1px rgba(0, 0, 0, 0.05);
+      content: "";
+      display: block;
+      height: calc(2em - 2px);
+      left: -1px;
+      padding: 0;
+      position: absolute;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      top: -1px;
+      width: calc(2em - 2px);
+      z-index: 1;
+    }
+
+    &:hover::after {
+      will-change: padding;
+    }
+
+    &:active {
+      &::after {
+        padding-right: 0.5em;
       }
     }
   }
