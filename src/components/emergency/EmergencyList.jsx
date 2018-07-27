@@ -13,7 +13,7 @@ class EmergencyList extends React.Component {
   render() {
     const EMERGENCYNUM_QUERY = gql`
       {
-        emergencyNumbers {
+        emergencyNumbers(orderBy: sortOrder_ASC) {
           id
           title
           number01

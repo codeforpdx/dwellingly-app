@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateEmergencyNumberForm from '../../components/forms/CreateEmergencyNumber';
+import CreateEmergencyNumberForm from '../../components/forms/EmergencyNumberCreate';
 
 class EmergencyList extends React.Component {
   constructor(props) {
