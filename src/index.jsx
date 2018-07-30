@@ -40,7 +40,7 @@ import Tickets from './pages/tickets/Tickets';
 
 // Apollo setup
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
+  uri: SETTINGS.APOLLO_SERVER
 });
 
 const client = new ApolloClient({
