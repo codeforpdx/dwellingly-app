@@ -22,18 +22,11 @@ class EmergencyList extends React.Component {
         }
       }
     `;
-    // <h2>
-    //   Emergency List
-    // </h2>
     return (
       <div className="emergencyNumberList">
-        <div className="emergencyImmediate">
-          <p className="emergencyImmediateStatement">In an event of a life-threatening emergency with your JOIN tenants, please dial 911.</p>
-          <button className="emergencyNumberButton" type="button">
-            <Icon icon="phone" />
-            <span className="emergencyNumberStatic">911</span>
-          </button>
-        </div>
+        <h2>
+          Emergency List
+        </h2>
         <Query query={EMERGENCYNUM_QUERY}>
           { ({ loading, error, data }) => {
             if (loading) {
