@@ -1,9 +1,49 @@
+.emergencyNumberList {
+  & .emergencyImmediate {
+    background-color: #ebebec;
+    padding: 20px;
+    & .emergencyImmediateStatement {
+      margin-bottom: 10px;
+      line-height: 1.2;
+      font-size: 14px;
+      letter-spacing: -0.3px;
+    }
+    & .emergencyNumberButton {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      background-color: #fc575a;
+      border-radius: 80px;
+      width: 100px;
+      height: 35px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 20px;
+      & .emergencyNumberStatic {
+        letter-spacing: 1.3px;
+      }
+    }
+  }
+}
 .emergencyNumberRow {
   display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+  font-size: 14px;
+  &:last-child {
+    border-bottom: none;
+  }
+  & .emergencyNumberContainer {
+    display: flex;
+  }
   & .emergencyTitle {
-    min-width: 300px;
+    // min-width: 300px;
   }
   & .emergencyNumber {
     margin-right: 10px;
+    a {
+      font-weight: 600;
+    }
   }
 }
