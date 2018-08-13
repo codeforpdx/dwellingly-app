@@ -6,20 +6,22 @@ const EmergencyNumber = ({ emergency }) => (
     <div className="emergencyTitle">
       {emergency.title}
     </div>
-    <div className="emergencyNumber">
-      <a href={`tel:${emergency.number01}`}>
-        {emergency.number01}
-      </a>
-    </div>
-    {emergency.number02 !== null && emergency.number02 !== ''
-      && (
+    <div className="emergencyNumberContainer">
       <div className="emergencyNumber">
-        <a href={`tel:${emergency.number02}`}>
-          {emergency.number02}
+        <a href={`tel:${emergency.number01}`}>
+          {emergency.number01}
         </a>
       </div>
-      )
-    }
+      {emergency.number02 !== null && emergency.number02 !== ''
+        && (
+        <div className="emergencyNumber">
+          |&nbsp;&nbsp;&nbsp;<a href={`tel:${emergency.number02}`}>
+            {emergency.number02}
+          </a>
+        </div>
+        )
+      }
+    </div>
   </div>
 );
 
