@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import Icon from '../icon/Icon';
 
 import EmergencyNumber from './EmergencyNumber';
 import './Emergency.scss';
@@ -21,12 +22,18 @@ class EmergencyList extends React.Component {
         }
       }
     `;
-
+    // <h2>
+    //   Emergency List
+    // </h2>
     return (
       <div className="emergencyNumberList">
-        <h2>
-          Emergency List
-        </h2>
+        <div className="emergencyImmediate">
+          <p className="emergencyImmediateStatement">In an event of a life-threatening emergency with your JOIN tenants, please dial 911.</p>
+          <button className="emergencyNumberButton" type="button">
+            <Icon icon="phone" />
+            <span className="emergencyNumberStatic">911</span>
+          </button>
+        </div>
         <Query query={EMERGENCYNUM_QUERY}>
           { ({ loading, error, data }) => {
             if (loading) {
