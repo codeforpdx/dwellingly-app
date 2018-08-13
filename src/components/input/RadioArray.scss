@@ -1,0 +1,41 @@
+@import "../../constants/constants.scss";
+
+// RADIO-ARRAY
+.radio-array {
+  @include flex_align(center);
+  font-weight: 500;
+  margin: 1em;
+  text-align: center;
+
+  label {
+    position: relative;
+  }
+
+  input[type="radio"] {
+    // display: none;
+    opacity: 0;
+    position: absolute;
+  }
+
+  input:checked + .radio-array__option {
+    background: $color__yellow;
+    color: $color__white;
+    font-weight: 700;
+  }
+
+  &__wrapper {
+    border: 1px solid $color__yellow;
+    border-radius: 2em;
+  }
+
+  &__option {
+    border-radius: 2em;
+    cursor: pointer;
+    display: inline-block;
+    height: 2em;
+    line-height: 2em;
+    min-width: 5em;
+    padding: 0 0.5em;
+    transition: background 0.2s ease-in-out, color 0.1s ease-in-out;
+  }
+}

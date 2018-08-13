@@ -1,39 +1,52 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-
-import { ROUTES } from '../../constants/constants';
-import AppComponent from '../../components/app/App';
-import HeaderComponent from '../../components/header/Header';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import PropertyManagerHome from './PropertyManagerHome';
 import UserControls from '../../components/user-controls/UserControls';
+import { ROLES, ROUTES } from '../../constants/constants';
 
-import CounterPage from '../tally/Tally';
-import LoginPage from '../login/Login';
-import SignupPage from '../signup/Signup';
-import UnknownPage from '../unknown/Unknown';
+import { dummyUser } from '../../data';
 
-import './Home.scss';
+class Home extends Component {
+  constructor(props) {
+    super(props);
 
-class Home extends React.Component {
+    this.tenants = [];
+    this.properties = [];
+
+    this.state = {
+      user: dummyUser
+    };
+  }
+
   componentDidMount() {
-    console.log('is this thing on?');
+    window.scrollTo(0, 0);
   }
 
   render() {
+    const { match } = this.props;
+    const { user } = this.state;
     return (
-      <div className="home">
-        <HeaderComponent />
-        <div className="joinContent">
-          <UserControls />
-          <Switch>
-            <Route exact path={ROUTES.ROOT} component={AppComponent} />
-            <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-            <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
-            <Route exact path={ROUTES.COUNTING} component={CounterPage} />
-            <Route component={UnknownPage} />
-          </Switch>
-        </div>
+      // do check agains user roles
+      <div>
+        {user.role === ROLES.PROPERTY_MANAGER && (
+          <PropertyManagerHome
+            match={match}
+            tenants={this.tenants}
+            properties={this.properties}
+            user={user}
+          />
+        )}
+        {user.role === ROLES.STAFF && <Redirect to={ROUTES.TICKETS} />}
+        {user.role === ROLES.ADMIN && <Redirect to={ROUTES.ADMIN} />}
+        <UserControls />
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  match: PropTypes.shape({}).isRequired
+};
+
 export default Home;

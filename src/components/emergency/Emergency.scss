@@ -1,0 +1,9 @@
+.emergencyNumberRow {
+  display: flex;
+  & .emergencyTitle {
+    min-width: 300px;
+  }
+  & .emergencyNumber {
+    margin-right: 10px;
+  }
+}

@@ -6,7 +6,7 @@ export const USER_ERROR = 'user/USER_ERROR';
 
 // Initial State
 const initialState = {
-  user: [],
+  user: {},
   isFetchingDataFromFirebase: false,
   error: null,
 };
@@ -83,6 +83,6 @@ export const clearUser = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
     isFetchingDataFromFirebase: false,
-    user: [],
+    user: null,
   });
 };

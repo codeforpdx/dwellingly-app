@@ -1,0 +1,620 @@
+@import "./constants/constants.scss";
+@import url("https://use.typekit.net/atu1wus.css");
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+/* D E F A U L T S */
+/* ==================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $color__white;
+  color: $color__black;
+  font-family: "proxima-nova", helvetica, sans-serif;
+  font-kerning: normal;
+  font-size: 16px;
+  font-weight: 300;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga";
+  -sm-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5em;
+  min-width: emify(320, 16);
+  overflow-y: scroll;
+  text-rendering: optimizeLegibility;
+}
+
+form {
+  margin: 0;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  background: $color__white;
+  border: none;
+  color: inherit;
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  width: auto;
+
+  &[type="tel"],
+  &[type="text"],
+  &[type="email"],
+  &[type="password"] {
+    line-height: 1.5em;
+    padding: 0.5em;
+  }
+}
+
+textarea {
+  border: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 1em;
+  resize: none;
+  width: calc(100% - 2em);
+}
+
+button,
+a {
+  background: none;
+  border: none;
+  color: $color__blue;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &.action {
+    color: inherit;
+    display: inline-block;
+    height: 1.5em;
+    line-height: 1.5em;
+    text-transform: inherit;
+
+    &--strong {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+
+  &.btn {
+    background: darken($color__blue, 8%);
+    border-radius: $border-radius--btn;
+    color: $color__white;
+    display: inline-block;
+    height: emify(32, 16);
+    // max-width: 25em;
+    padding: 0 1rem;
+    text-align: center;
+    text-transform: inherit;
+    vertical-align: middle;
+
+    .icon {
+      margin-right: 0.5em;
+      margin-left: -0.25em;
+    }
+
+    &--strong {
+      font-weight: 700;
+      text-transform: uppercase;
+
+      &[href^="tel:"] {
+        font-weight: 700;
+        letter-spacing: 0.1em;
+
+        .icon {
+          margin-right: 0.25em;
+        }
+      }
+    }
+
+    &--lg {
+      font-size: 1rem;
+      height: emify(36, 16);
+      line-height: emify(36, 16);
+    }
+
+    &--urgent {
+      background: $color__red;
+    }
+
+    &--block {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+// specifically styling for TELEPHONE numbers!
+a[href^="tel:"] {
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 400;
+  line-height: 1em;
+  letter-spacing: emify(0.07, 16);
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h4 {
+  color: $color__gray--medium;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+time {
+  display: block;
+  line-height: 1em;
+}
+
+.page {
+  align-content: stretch;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+
+  @media screen and (min-width: $mq--desktop) {
+    .navigation + & {
+      position: absolute;
+      right: 0;
+      width: calc(100% - #{$width__nav});
+    }
+  }
+
+  .main {
+    flex-grow: 2;
+  }
+
+  &--light {
+    background: $color__gray--light;
+  }
+}
+
+.width-wrapper {
+  max-width: $width__wrapper;
+  position: relative;
+  width: 100%;
+
+  @media screen and (min-width: $width__wrapper) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.container {
+  @include clearfix;
+  &--left {
+    float: left;
+  }
+
+  &--right {
+    float: right;
+    text-align: right;
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+.pbr {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+
+.ptr {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.meta {
+  color: $color__gray--medium;
+}
+
+.small {
+  font-size: emify(14, 16);
+  line-height: 1.5rem;
+}
+
+.title {
+  color: $color__blue--dark;
+  font-weight: 500;
+}
+
+.status {
+  text-transform: uppercase;
+
+  &--low,
+  &--med {
+    color: $color__blue--dark;
+  }
+
+  &--high {
+    color: $color__red--dark;
+  }
+}
+
+.progress {
+  color: $color__yellow;
+  font-weight: 700;
+  letter-spacing: emify(1, 16);
+  margin-bottom: emify(8, 16);
+}
+/* end defaults */
+
+// FORM-META
+.form-meta {
+  @include clearfix;
+  border-top: 1px solid $color__gray--border;
+  padding: 1em;
+
+  p {
+    font-size: emify(14, 16);
+    line-height: 1.25em;
+  }
+
+  a, button {
+    clear: both;
+    float: left;
+    line-height: 2em;
+  }
+}
+/* end form-meta */
+
+/* CONTACT-QUICK-LINKS */
+.contact-quick-links {
+  @include flex_align(space-between);
+  font-size: emify(14, 16);
+  font-weight: 500;
+  margin: 0 auto;
+  width: emify(240, 14);
+
+  .icon {
+    background: $color__white;
+    border: 0.1em solid $color__white;
+    border-radius: 50%;
+    color: $color__blue;
+    font-size: 2.25rem;
+    line-height: unset;
+    margin-bottom: 0.25rem;
+    padding: 0.125em;
+
+    &--users {
+      svg {
+        transform: translateY(0.15em);
+      }
+    }
+  }
+
+  &__link {
+    color: $color__white;
+    width: emify(80, 14);
+
+    span:not(.icon) {
+      display: block;
+    }
+  }
+}
+/* end contact-quick-links */
+
+/* MESSAGE */
+.message {
+  @include flex_align(space-between);
+  background: $color__white;
+  color: $color__black;
+  font-size: emify(14, 16);
+  line-height: 1.25em;
+  min-height: emify(58, 14);
+  padding: 0.75rem 1rem;
+  text-align: left;
+
+  p {
+    margin: 0;
+  }
+
+  .btn--lg {
+    min-width: 7em;
+  }
+
+  &--light {
+    background: $color__gray--light;
+    color: $color__gray--dark;
+  }
+}
+/* end message */
+
+.msgbox {
+  background: $color__gray--light;
+  border-radius: $border-radius;
+  padding: 0.5rem 1rem;
+
+  .count {
+    font-weight: 500;
+    line-height: 1.25em;
+  }
+
+  p {
+    line-height: 1.25em;
+    margin: 0;
+
+    & + p {
+      margin-top: 1rem;
+    }
+  }
+
+  &--inline {
+    @include flex_align(space-between);
+    font-size: emify(14, 16);
+    margin-top: 0.5rem;
+  }
+
+  &--highlighted {
+    background: rgba($color__blue, 0.2);
+  }
+}
+
+/* M O D A L */
+/* ==================================================== */
+.modal {
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  left: 0;
+  // padding: 0.5rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+  .card {
+    @include hidden_scrolling;
+    // height: 100%;
+    height: calc(100% - 1rem);
+    margin: 0;
+    padding: 0.5rem;
+    position: relative;
+    // width: calc(100% - 1rem);
+
+    .card__top,
+    .card__bottom {
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+/* end modal */
+
+/* T A B S */
+/* ==================================================== */
+.tabs {
+  @include flex_align(space-between);
+  background: $color__white;
+  border-bottom: 1px solid $color__gray--border;
+  min-height: emify(40, 16);
+  padding: 0 1rem;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .tab {
+    display: inline-block;
+    margin-right: 1rem;
+    padding: 0;
+
+    strong {
+      font-weight: inherit;
+    }
+
+    a,
+    button {
+      border-bottom: 3px solid transparent;
+      color: $color__gray--medium;
+      display: block;
+      font-size: emify(14, 16);
+      font-weight: inherit;
+      margin-bottom: -2px;
+      padding: 0.875em 0.25em 0.2em 0.25em;
+
+      .icon {
+        font-size: 1.25em;
+        margin-right: 0.25em;
+        transform: translateY(-0.1em);
+      }
+
+      &.tab--active {
+        border-color: $color__blue;
+        color: $color__blue;
+
+        strong {
+          font-weight: 700;
+        }
+      }
+    }
+
+    &__count {
+      display: inline-block;
+      margin-left: 0.25em;
+    }
+
+    &__link {
+      .icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  &--icon-heavy {
+    font-size: emify(14, 16);
+
+    .tab {
+      a,
+      button {
+        padding: 0.75rem 0.25rem;
+      }
+    }
+  }
+
+  &--dark {
+    background: $color__gray--light;
+
+    .tab {
+      a,
+      button {
+        color: $color__gray--dark;
+
+        &.tab--active {
+          color: $color__blue;
+
+          strong {
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+
+  &--centered {
+    @include flex_align(center);
+  }
+
+  &--no-border {
+    border-bottom: 0;
+
+    .tab {
+      a,
+      button {
+        border: 0;
+      }
+    }
+  }
+
+  &--space-between {
+    ul {
+      @include flex_align(space-between);
+      width: 100%;
+
+      .tab {
+        margin: 0;
+      }
+    }
+  }
+}
+/* end tabs */
+
+
+/* C O N T A C T - G R O U P */
+/* ==================================================== */
+.contact-group {
+  font-size: emify(14, 16);
+  position: relative;
+  width: 100%;
+
+  &__title,
+  .title {
+    line-height: 1.75em;
+    margin: 0;
+
+    .icon {
+      margin-right: 0.25em;
+    }
+  }
+
+  &__meta {
+    text-align: right;
+
+    .status {
+      line-height: 1.25rem;
+      margin-top: 0.25rem;
+    }
+  }
+
+  &__flag {
+    color: $color__red--dark;
+
+    .icon {
+      font-size: 1.5em;
+    }
+  }
+
+  p {
+    line-height: 1.25em;
+    margin: 0;
+  }
+
+  &__status {
+    background: $color__yellow;
+    height: calc(100% + 2rem);
+    left: -1.5rem;
+    position: absolute;
+    top: -1rem;
+    width: emify(10, 16);
+
+    &--high {
+      background: $color__red--dark;
+    }
+  }
+
+  &--basic {
+    .contact-group__title,
+    .title {
+      font-size: 1rem;
+      line-height: 1em;
+      margin: 0;
+    }
+
+    .contact-group__status {
+      border-radius: 50%;
+      height: 0.8rem;
+      left: -1.125rem;
+      top: 0;
+      width: 0.8rem;
+    }
+  }
+}
+/* end contact-group */

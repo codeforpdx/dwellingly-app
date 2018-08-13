@@ -1,0 +1,94 @@
+@import "../../constants/constants.scss";
+
+/* MENU */
+.menu {
+  height: 100vh;
+  position: fixed;
+  text-align: left;
+  width: 100%;
+  z-index: 100;
+
+  &--desktop {
+    display: none;
+    left: 0;
+    width: $width__nav;
+  }
+
+  a {
+    @include flex_align(space-between);
+    color: $color__white;
+    // font-weight: 500;
+    padding: 0.25em 1.5em;
+  }
+
+  &__bg {
+    background-color: rgba(37, 37, 37, 0.7);
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+  }
+
+  &__groups {
+    @include hidden_scrolling;
+    background-image: $color__gradient--nav;
+    color: $color__white;
+    height: 100vh;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    width: $width__nav;
+
+    dl {
+      margin: 0;
+      padding: 3em 0;
+    }
+
+    dd {
+      margin: 0 0 1em 0;
+    }
+  }
+
+  &__close-btn {
+    color: $color__white;
+    font-size: 1.3125em;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  &__logged-in-user-avatar {
+    border: 1px solid $color__white;
+    border-radius: 50%;
+    height: 2.5rem;
+    left: 1rem;
+    overflow: hidden;
+    position: absolute;
+    top: 1rem;
+    width: 2.5rem;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__label {
+    padding: 1em 1.5em 0.5em 1.5em;
+
+    .icon {
+      font-size: 1.25em;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+@media only screen and (min-width: $mq--desktop) {
+  .menu--desktop {
+    display: block;
+  }
+
+  .menu--mobile,
+  button.menu__btn {
+    display: none;
+  }
+}
+/* end menu */
