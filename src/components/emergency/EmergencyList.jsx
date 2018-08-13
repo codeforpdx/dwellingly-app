@@ -1,7 +1,6 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Icon from '../icon/Icon';
 
 import EmergencyNumber from './EmergencyNumber';
 import './Emergency.scss';
