@@ -49,7 +49,7 @@ import { dummyUser } from './data';
 
 // Apollo setup
 const httpLink = createHttpLink({
-  uri: 'https://my-app-kxybtzpvrq.now.sh'
+  uri: SETTINGS.APOLLO_SERVER
 });
 
 const client = new ApolloClient({
