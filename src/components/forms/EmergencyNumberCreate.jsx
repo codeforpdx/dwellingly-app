@@ -5,6 +5,8 @@ import { intlShape, injectIntl } from 'react-intl';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import './EmergencyNumberForm.scss';
+
 import { ROUTES } from '../../constants/constants';
 import { FORMS } from '../../translations/messages';
 
@@ -74,23 +76,31 @@ class FormCreateEmergencyNumber extends React.Component {
         <h2>
           Create Emergency Number
         </h2>
-        <form name="createEmergencyNumber" method="POST" onSubmit={this.handleSubmit} className="form">
-          <label htmlFor="title">
-            Title
-            <input name="title" type="text" value={this.state.title} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="number01">
-            Number
-            <input name="number01" type="text" value={this.state.number01} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="number02">
-            Secondary Number
-            <input name="number02" type="text" value={this.state.number02} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="sortOrder">
-            Sort Order
-            <input name="sortOrder" type="number" value={this.state.sortOrder} onChange={this.handleInputChange} />
-          </label>
+        <form className="createEmergencyNumberForm form" name="createEmergencyNumber" method="POST" onSubmit={this.handleSubmit}>
+          <div className="input inline-input">
+            <label htmlFor="title">
+              <span className="inline-input__label">Title</span>
+              <input name="title" type="text" value={this.state.title} onChange={this.handleInputChange} />
+            </label>
+          </div>
+          <div className="input inline-input">
+            <label htmlFor="number01">
+              <span className="inline-input__label">Number</span>
+              <input name="number01" type="text" value={this.state.number01} onChange={this.handleInputChange} />
+            </label>
+          </div>
+          <div className="input inline-input">
+            <label htmlFor="number02">
+              <span className="inline-input__label">Secondary Number</span>
+              <input name="number02" type="text" value={this.state.number02} onChange={this.handleInputChange} />
+            </label>
+          </div>
+          <div className="input inline-input">
+            <label htmlFor="sortOrder">
+              <span className="inline-input__label">Sort Order</span>
+              <input name="sortOrder" type="number" value={this.state.sortOrder} onChange={this.handleInputChange} />
+            </label>
+          </div>
 
           { this.state.submit }
 
@@ -103,12 +113,12 @@ class FormCreateEmergencyNumber extends React.Component {
           >
             {
               createEmergencyNumber => (
-                <input
+                <button
                   type="submit"
-                  value={intl.formatMessage(FORMS.SUBMIT)}
+                  className="btn btn--lg btn--strong"
                   disabled={disableForm}
                   onClick={createEmergencyNumber}
-                />
+                >{intl.formatMessage(FORMS.SUBMIT)}</button>
               )
             }
           </Mutation>
