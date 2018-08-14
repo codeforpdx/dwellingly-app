@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Card from '../cardx/Card';
+import Card from '../card/Card';
 import Icon from '../icon/Icon';
 import { CARD_TYPES } from '../../constants/constants';
 import { formatDateFromString } from '../../utils';
