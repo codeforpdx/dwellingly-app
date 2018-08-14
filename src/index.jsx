@@ -30,17 +30,26 @@ import Navigation from './components/navigation/Navigation';
 
 // Pages
 import Admin from './pages/admin/Admin';
+import Archive from './pages/tenant-details/Archive';
 import EmergencyNumbers from './pages/admin/EmergencyNumbers';
 import Emergency from './pages/emergency/Emergency';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import OutOfOffice from './pages/settings/OutOfOffice';
+import PropertyDetails from './pages/property-details/PropertyDetails';
+import PropertyManagers from './pages/property-managers/PropertyManagers';
+import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
 import Settings from './pages/settings/Settings';
+import Tenants from './pages/tenants/Tenants';
+import TenantDetails from './pages/tenant-details/TenantDetails';
 import Tickets from './pages/tickets/Tickets';
+
+// mock data
+import { dummyUser } from './data';
 
 // Apollo setup
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
+  uri: 'https://my-app-kxybtzpvrq.now.sh'
 });
 
 const client = new ApolloClient({
@@ -60,6 +69,7 @@ if (!validLang) {
 // const PropertyManagerUser = Authorization([ROLES.ADMIN, ROLES.PROPERTY_MANAGER]);
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
+const userRole = dummyUser.role || '';
 
 // Render the thing!
 ReactDOM.render(
@@ -67,7 +77,7 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div>
+          <div className={`app ${userRole}`}>
             <Navigation type="desktop" desktopOnly />
             <Switch>
               <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
@@ -81,11 +91,37 @@ ReactDOM.render(
                 component={StaffUser(OutOfOffice)}
               />
               <PrivateRoute
+                path={`${ROUTES.PROPERTIES}/:id`}
+                component={PropertyDetails}
+              />
+              <PrivateRoute
+                path={`${ROUTES.PROPERTY_MANAGERS}/:id`}
+                component={StaffUser(PropertyManagerDetails)}
+              />
+              <PrivateRoute
+                path={ROUTES.PROPERTY_MANAGERS}
+                component={StaffUser(PropertyManagers)}
+              />
+              <PrivateRoute
+                path={`${ROUTES.TENANTS}/all`}
+                exact
+                component={Tenants}
+              />
+              <PrivateRoute
+                path={`${ROUTES.TENANTS}/:id/archive`}
+                component={Archive}
+              />
+              <PrivateRoute
+                path={`${ROUTES.TENANTS}/:id`}
+                component={TenantDetails}
+              />
+              <PrivateRoute path={ROUTES.TENANTS} component={Tenants} />
+              <PrivateRoute
                 path={ROUTES.TICKETS}
                 component={StaffUser(Tickets)}
               />
-              <Route path={ROUTES.LOGIN} component={Login} />
               <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
+              <Route path={ROUTES.LOGIN} component={Login} />
               <PrivateRoute path={ROUTES.ROOT} component={Home} />
             </Switch>
           </div>

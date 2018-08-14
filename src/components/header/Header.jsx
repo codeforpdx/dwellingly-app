@@ -14,13 +14,16 @@ class Header extends Component {
   }
 
   render() {
-    const { label, type, variants, children } = this.props;
+    const { label, type, variant, variants, children } = this.props;
     const variantClasses =
       variants && variants.length > 0
         ? variants.map(variant => `hero--${variant}`).join(' ')
         : '';
     return (
-      <header className={`hero ${variantClasses}`}>
+      <header
+        className={`hero ${
+          variant ? `hero--${variant}` : ''
+        } ${variantClasses}`}>
         {label && type && <Header.Label label={label} type={type} />}
         {children && children(...this.props)}
       </header>
@@ -31,13 +34,16 @@ class Header extends Component {
 Header.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.func,
+  variant: PropTypes.string,
   variants: PropTypes.arrayOf(PropTypes.string)
 };
 
 Header.defaultProps = {
+  children: undefined,
   label: undefined,
   type: undefined,
+  variant: undefined,
   variants: undefined
 };
 

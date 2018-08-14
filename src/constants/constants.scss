@@ -81,8 +81,8 @@ $mq--desktop: 1200px;
 
 @mixin hidden_scrolling {
   box-sizing: content-box;
-  overflow-y: scroll;
-  overflow: -moz-scrollbars-none;
+  overflow-y: auto;
+  // overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {

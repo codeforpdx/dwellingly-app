@@ -51,7 +51,7 @@ class Notes extends Component {
 
 Notes.propTypes = {
   action: PropTypes.element,
-  notes: PropTypes.arrayOf(),
+  notes: PropTypes.arrayOf(PropTypes.shape({})),
   summary: PropTypes.bool
 };
 

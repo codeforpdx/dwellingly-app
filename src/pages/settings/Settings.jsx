@@ -62,7 +62,7 @@ class Settings extends Component {
       <form action="" onSubmit={this.handleSubmit} className="page">
         <Header variants={['form']}>
           {() => (
-            <div className="width-wrapper">
+            <div>
               <div className="actions">
                 <button
                   type="button"
@@ -74,7 +74,7 @@ class Settings extends Component {
                 <button
                   type="submit"
                   aria-label="Save"
-                  className="action action--strong action--right disabled"
+                  className="action action--strong action--right"
                   disabled>
                   Save
                 </button>

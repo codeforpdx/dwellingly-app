@@ -80,7 +80,11 @@ class PropertyManagerHome extends Component {
             exact
             path={ROUTES.ROOT}
             component={() => (
-              <List match={match} url={ROUTES.TENANTS} items={tenants} />
+              <List
+                match={match}
+                url={`${ROUTES.TENANTS}/:id/ongoing`}
+                items={tenants}
+              />
             )}
           />
           <Route

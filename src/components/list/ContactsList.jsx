@@ -8,21 +8,29 @@ function ContactsList({ items }) {
       {items &&
         items.length > 0 &&
         items.map(item => {
-          const { id, name, numbers } = item;
+          const { id, title, number01, number02 } = item;
           return (
             <div
               key={id}
               className="list-group__item list-group__item--contact">
-              <p>{name}</p>
+              <p>{title}</p>
               <p className="list-group__contact-numbers">
-                {numbers.map(number => (
+                {number01 && (
                   <a
-                    key={number}
+                    key={number01}
                     className="list-group__contact-number"
-                    href={formatPhoneNumber(number)}>
-                    {number}
+                    href={formatPhoneNumber(number01)}>
+                    {number01}
                   </a>
-                ))}
+                )}
+                {number02 && (
+                  <a
+                    key={number02}
+                    className="list-group__contact-number"
+                    href={formatPhoneNumber(number02)}>
+                    {number02}
+                  </a>
+                )}
               </p>
             </div>
           );

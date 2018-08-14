@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import SearchForm from '../../components/search-form/SearchForm';
-import TicketsList from '../../components/list/TicketsList';
-import Icon from '../../components/icon/Icon';
+import List from '../../components/list/List';
 
 // mock data
-import { tickets } from '../../data';
+import { tenants } from '../../data';
+import { ROUTES } from '../../constants/constants';
 
-class Tickets extends Component {
+class Tenants extends Component {
   constructor(props) {
     super(props);
 
     this.handleSearch = this.handleSearch.bind(this);
 
-    this.tickets = tickets;
+    this.tenants = tenants;
   }
 
   componentDidMount() {
@@ -25,46 +25,35 @@ class Tickets extends Component {
 
   handleSearch(event) {
     if (event) event.preventDefault();
-    // do stuff
     return this;
   }
 
   render() {
     const { match } = this.props;
-    const { tickets } = this;
+    const { tenants } = this;
     return (
       <div className="page">
-        <Header>
+        <Header className="hero">
           {() => (
             <div>
               <Navigation />
-              <Header.Label label="Tickets" type="basic" />
+              <Header.Label label="Tenant Directory" type="basic" />
               <SearchForm onSubmit={this.handleSearch} />
-              <nav className="tabs tabs--dark tabs--no-border tabs--space-between tabs--icon-heavy">
+              <nav className="tabs tabs--centered">
                 <ul className="width-wrapper">
                   <li className="tab">
-                    <NavLink to={match.url} activeClassName="tab--active">
-                      <strong>
-                        <Icon icon="calendar" />By Date
-                      </strong>
+                    <NavLink
+                      to={ROUTES.TENANTS}
+                      exact
+                      activeClassName="tab--active">
+                      <strong>My Tenants</strong>
                     </NavLink>
                   </li>
                   <li className="tab">
                     <NavLink
-                      to={`${match.url}?sort=status`}
+                      to={`${ROUTES.TENANTS}/all`}
                       activeClassName="tab--active">
-                      <strong>
-                        <Icon icon="checkbox" />By Status
-                      </strong>
-                    </NavLink>
-                  </li>
-                  <li className="tab">
-                    <NavLink
-                      to={`${match.url}?sort=flagged`}
-                      activeClassName="tab--active">
-                      <strong>
-                        <Icon icon="flagOutline" />Flagged
-                      </strong>
+                      <strong>All Tenants</strong>
                     </NavLink>
                   </li>
                 </ul>
@@ -74,15 +63,37 @@ class Tickets extends Component {
         </Header>
 
         <section className="main width-wrapper">
-          <TicketsList items={tickets} />
+          <Route
+            path={ROUTES.TENANTS}
+            exact
+            component={() => (
+              <List
+                match={match}
+                url={`${ROUTES.TENANTS}/:id/ongoing`}
+                items={tenants}
+              />
+            )}
+          />
+          <Route
+            path={`${ROUTES.TENANTS}/all`}
+            component={() => (
+              <List
+                match={match}
+                url={`${ROUTES.TENANTS}/:id/ongoing`}
+                exact
+                items={tenants}
+                showStaff
+              />
+            )}
+          />
         </section>
       </div>
     );
   }
 }
 
-Tickets.propTypes = {
+Tenants.propTypes = {
   match: PropTypes.shape({}).isRequired
 };
 
-export default Tickets;
+export default Tenants;

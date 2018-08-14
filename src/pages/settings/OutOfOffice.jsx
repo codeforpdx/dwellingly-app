@@ -51,7 +51,7 @@ class OutOfOffice extends Component {
       <form action="" onSubmit={this.handleSubmit} className="page">
         <Header variants={['form']}>
           {() => (
-            <div className="width-wrapper">
+            <div>
               <div className="actions">
                 <button
                   type="button"

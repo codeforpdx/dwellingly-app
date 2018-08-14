@@ -19,6 +19,7 @@ function TicketsList({ items }) {
             urgency,
             flagged
           } = item;
+          const sentDate = sent;
           return (
             <Link key={id} to={`tickets/${id}`} className="list-group__item">
               <div className="contact-group">
@@ -39,15 +40,13 @@ function TicketsList({ items }) {
                 <p>Sender: {sender.name}</p>
 
                 <div className="contact-group__meta ptr">
-                  <time
-                    className="meta"
-                    dateTime={sent.toLocaleDateString('es-US')}>
-                    {sent.toLocaleDateString('en-US')}
+                  <time className="meta" dateTime={sentDate}>
+                    {sentDate}
                   </time>
                   {status && <p className="status progress">{status}</p>}
                 </div>
 
-                {flagged && (
+                {Boolean(flagged) && (
                   <div className="contact-group__flag pbr">
                     <Icon icon="flag" />
                   </div>
@@ -75,7 +74,7 @@ TicketsList.propTypes = {
       sent: PropTypes.string,
       status: PropTypes.string,
       urgency: PropTypes.string,
-      flagged: PropTypes.bool
+      flagged: PropTypes.string
     })
   )
 };

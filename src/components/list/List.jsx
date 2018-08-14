@@ -16,10 +16,12 @@ function List({ url, items, className, showStaff, showNumber, history }) {
           const { id, name, address, number, status, staff } = item;
           // have to "cheat" here and use a button instead of link because of nested <a> tags (phone number)
           const ElementNodeName = url ? 'button' : 'div';
+          const urlPath =
+            url.indexOf(':id') !== -1 ? url.replace(':id', id) : `${url}/${id}`;
           return (
             <ElementNodeName
               key={id}
-              onClick={() => (url ? history.push(`${url}/${id}`) : null)}
+              onClick={() => (url ? history.push(urlPath) : null)}
               className="list-group__item list-group__item--basic">
               <div className="contact-group contact-group--basic">
                 {status && (
