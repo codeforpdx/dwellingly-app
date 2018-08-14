@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Icon from '../icon/Icon';
+
 const EmergencyNumberStatic = (props) => {
   const { emergency } = props;
   return (
-    <div onClick={props.onEditingNumber} role="presentation">
+    <div>
       <div className="emergencyNumberRow" key={`row-${emergency.id}`}>
         <div className="emergencyTitle">
           {!props.doneEditing ? emergency.title : props.newTitle}
@@ -24,6 +26,9 @@ const EmergencyNumberStatic = (props) => {
             </div>
             )
           }
+          <div className="emergencyNumberEditButton" onClick={props.onEditingNumber} role="presentation">
+            <Icon icon="pencil" />
+          </div>
         </div>
       </div>
     </div>
