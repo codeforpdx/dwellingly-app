@@ -17,6 +17,9 @@
   & .emergencyTitle {
     // min-width: 300px;
   }
+  & .emergencyNumberEditButton {
+    cursor: pointer;
+  }
   & .emergencyNumber {
     margin-right: 10px;
     a {
