@@ -18,13 +18,12 @@ class EmergencyNumber extends Component {
     this.handleSavingNewEmergencyNumber = this.handleSavingNewEmergencyNumber.bind(this);
   }
 
-  handleEditingNumber(prevState) {
-    this.setState({ editing: !prevState.editing })
+  handleEditingNumber() {
+    this.setState(prevState => ({ editing: !prevState.editing }))
   }
 
-  handleSavingNewEmergencyNumber(prevState) {
-    this.setState({ doneEditing: !prevState.doneEditing })
-    this.setState({ editing: !prevState.editing })
+  handleSavingNewEmergencyNumber() {
+    this.setState(prevState => ({ doneEditing: !prevState.doneEditing }))
   }
 
   handleChangedNumberField(e) {
@@ -37,7 +36,7 @@ class EmergencyNumber extends Component {
   render() {
     const { emergency } = this.props;
     return (
-      <div onClick={this.handleEditingNumber} role="presentation">
+      <div>
       {
         !this.state.editing ?
           <EmergencyNumberStatic
@@ -45,7 +44,8 @@ class EmergencyNumber extends Component {
             doneEditing={this.state.doneEditing}
             newTitle={this.state.title}
             newNumber01={this.state.number01}
-            newNumber02={this.state.number02} /> :
+            newNumber02={this.state.number02}
+            onEditingNumber={this.handleEditingNumber} /> :
           <EmergencyNumberEdit
             id={emergency.id}
             title={emergency.title}
