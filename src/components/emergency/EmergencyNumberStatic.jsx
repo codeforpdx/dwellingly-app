@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const EmergencyNumberStatic = (props) => {
   const { emergency } = props;
   return (
-    <div>
+    <div onClick={props.onEditingNumber} role="presentation">
       <div className="emergencyNumberRow" key={`row-${emergency.id}`}>
         <div className="emergencyTitle">
           {!props.doneEditing ? emergency.title : props.newTitle}
@@ -35,6 +35,7 @@ EmergencyNumberStatic.propTypes = {
   newTitle: PropTypes.string.isRequired,
   newNumber01: PropTypes.string.isRequired,
   newNumber02: PropTypes.string.isRequired,
+  onEditingNumber: PropTypes.func.isRequired,
   emergency: PropTypes.shape({
     title: PropTypes.string.isRequired,
     number01: PropTypes.string.isRequired,
