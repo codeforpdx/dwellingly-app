@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import Card from '../card/Card';
+import Card from '../cardx/Card';
 import Notes from '../notes/Notes';
 import { CARD_TYPES, STATUS_OPTIONS } from '../../constants/constants';
 import { formatPhoneNumber, backURL, formatDateFromString } from '../../utils';
