@@ -8,10 +8,6 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import Authorization from './components/authorization/Authorization';
 import PrivateRoute from './components/authorization/PrivateRoute';
 
@@ -38,15 +34,6 @@ import OutOfOffice from './pages/settings/OutOfOffice';
 import Settings from './pages/settings/Settings';
 import Tickets from './pages/tickets/Tickets';
 
-// Apollo setup
-const httpLink = createHttpLink({
-  uri: SETTINGS.APOLLO_SERVER
-});
-
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache()
-});
 
 // Set up cookie stuff for translation
 const lang = getCookie('language');
@@ -64,34 +51,32 @@ const AdminUser = Authorization([ROLES.ADMIN]);
 // Render the thing!
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <div>
-            <Navigation type="desktop" desktopOnly />
-            <Switch>
-              <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
-              <PrivateRoute
-                path={ROUTES.ADMIN_EMERGENCY}
-                component={AdminUser(EmergencyNumbers)}
-              />
-              <PrivateRoute path={ROUTES.SETTINGS} exact component={Settings} />
-              <PrivateRoute
-                path={ROUTES.OUT_OF_OFFICE}
-                component={StaffUser(OutOfOffice)}
-              />
-              <PrivateRoute
-                path={ROUTES.TICKETS}
-                component={StaffUser(Tickets)}
-              />
-              <Route path={ROUTES.LOGIN} component={Login} />
-              <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
-              <PrivateRoute path={ROUTES.ROOT} component={Home} />
-            </Switch>
-          </div>
-        </ConnectedRouter>
-      </Provider>
-    </ApolloProvider>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <div>
+          <Navigation type="desktop" desktopOnly />
+          <Switch>
+            <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
+            <PrivateRoute
+              path={ROUTES.ADMIN_EMERGENCY}
+              component={AdminUser(EmergencyNumbers)}
+            />
+            <PrivateRoute path={ROUTES.SETTINGS} exact component={Settings} />
+            <PrivateRoute
+              path={ROUTES.OUT_OF_OFFICE}
+              component={StaffUser(OutOfOffice)}
+            />
+            <PrivateRoute
+              path={ROUTES.TICKETS}
+              component={StaffUser(Tickets)}
+            />
+            <Route path={ROUTES.LOGIN} component={Login} />
+            <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
+            <PrivateRoute path={ROUTES.ROOT} component={Home} />
+          </Switch>
+        </div>
+      </ConnectedRouter>
+    </Provider>
   </IntlProvider>,
   document.getElementById('root')
 );

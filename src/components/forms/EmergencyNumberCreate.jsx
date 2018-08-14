@@ -1,11 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 
-import { ROUTES } from '../../constants/constants';
 import { FORMS } from '../../translations/messages';
 
 class FormCreateEmergencyNumber extends React.Component {
@@ -47,27 +44,9 @@ class FormCreateEmergencyNumber extends React.Component {
 
   render() {
     const { intl } = this.props;
-    const {
-      title, number01, number02, sortOrder,
-    } = this.state;
-    const disableForm = (title === '' || !number01);
 
-    const POST_MUTATION = gql`
-      mutation createEmergencyNum(
-        $title: String!,
-        $number01: String!,
-        $number02: String,
-        $sortOrder: Int,
-      ) {
-        createEmergencyNum(title: $title, number01: $number01, number02: $number02, sortOrder: $sortOrder) {
-          title
-          number01
-          number02
-          sortOrder
-        }
-      }
-    `;
-    const successRoute = ROUTES.ADMIN;
+    const disableForm = (this.state.title === '' || !this.state.number01);
+
 
     return (
       <div className="dashboard">
@@ -93,25 +72,12 @@ class FormCreateEmergencyNumber extends React.Component {
           </label>
 
           { this.state.submit }
-
-          <Mutation
-            mutation={POST_MUTATION}
-            variables={{
-              title, number01, number02, sortOrder,
-            }}
-            onCompleted={() => this.props.history.push(successRoute)}
-          >
-            {
-              createEmergencyNumber => (
                 <input
                   type="submit"
                   value={intl.formatMessage(FORMS.SUBMIT)}
                   disabled={disableForm}
-                  onClick={createEmergencyNumber}
+                  onClick={this.handleSubmit}
                 />
-              )
-            }
-          </Mutation>
         </form>
         { this.state.error
           && (
@@ -127,14 +93,7 @@ class FormCreateEmergencyNumber extends React.Component {
 
 FormCreateEmergencyNumber.propTypes = {
   intl: intlShape.isRequired,
-  history: PropTypes.shape({
-    name: PropTypes.string,
-    push: PropTypes.func,
-  }),
 };
 
-FormCreateEmergencyNumber.defaultProps = {
-  history: null,
-};
 
 export default withRouter(injectIntl(FormCreateEmergencyNumber));
