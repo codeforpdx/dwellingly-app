@@ -1,9 +1,29 @@
+.emergencyNumberList {
+  max-width: 800px;
+  margin: auto;
+}
 .emergencyNumberRow {
   display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+  font-size: 14px;
+  &:last-child {
+    border-bottom: none;
+  }
+  & .emergencyNumberContainer {
+    display: flex;
+  }
   & .emergencyTitle {
-    min-width: 300px;
+    // min-width: 300px;
+  }
+  & .emergencyNumberEditButton {
+    cursor: pointer;
   }
   & .emergencyNumber {
     margin-right: 10px;
+    a {
+      font-weight: 600;
+    }
   }
 }

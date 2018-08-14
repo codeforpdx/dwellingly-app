@@ -21,7 +21,6 @@ class EmergencyList extends React.Component {
         }
       }
     `;
-
     return (
       <div className="emergencyNumberList">
         <h2>
