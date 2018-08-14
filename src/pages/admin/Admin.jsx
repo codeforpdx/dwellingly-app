@@ -19,10 +19,12 @@ class Administration extends React.Component {
         <p>
           Administration
         </p>
+        <div>
+          <EmergencyList />
+        </div>
         <Link to={ROUTES.ADMIN_EMERGENCY}>
           {intl.formatMessage(ADMIN.EMERGENCY_NUMS_CREATE)}
         </Link>
-        <EmergencyList />
       </div>
     );
   }
