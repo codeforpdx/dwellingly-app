@@ -41,5 +41,6 @@ export const CARD_TYPES = {
 export const STATUS_OPTIONS = {
   NEW: 'New',
   IN_PROGRESS: 'In Progress',
-  RESOLVED: 'Resolved'
+  RESOLVED: 'Resolved',
+  CLOSED: 'Closed'
 };

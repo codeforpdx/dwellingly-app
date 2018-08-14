@@ -55,6 +55,7 @@ input {
   &[type="tel"],
   &[type="text"],
   &[type="email"],
+  &[type="number"],
   &[type="password"] {
     line-height: 1.5em;
     padding: 0.5em;
@@ -86,7 +87,8 @@ a {
   padding: 0;
   text-decoration: none;
 
-  &.disabled {
+  &.disabled,
+  &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
@@ -188,20 +190,17 @@ time {
   line-height: 1em;
 }
 
+.app {
+  display: flex;
+}
+
 .page {
   align-content: stretch;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   text-align: center;
-
-  @media screen and (min-width: $mq--desktop) {
-    .navigation + & {
-      position: absolute;
-      right: 0;
-      width: calc(100% - #{$width__nav});
-    }
-  }
+  width: 100%;
 
   .main {
     flex-grow: 2;
@@ -400,20 +399,34 @@ time {
 /* M O D A L */
 /* ==================================================== */
 .modal {
-  background: rgba(0, 0, 0, 0.5);
-  height: 100%;
-  left: 0;
-  // padding: 0.5rem;
+  height: 100vh;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 
+  &__bg {
+    background: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  @media screen and (min-width: $mq--desktop) {
+    width: calc(100% - #{$width__nav});
+
+    @at-root .property-manager & {
+      width: 100%;
+    }
+  }
+
   .card {
     @include hidden_scrolling;
     // height: 100%;
-    height: calc(100% - 1rem);
-    margin: 0;
+    max-height: calc(100% - 1rem);
     padding: 0.5rem;
     position: relative;
     // width: calc(100% - 1rem);
@@ -434,6 +447,10 @@ time {
   border-bottom: 1px solid $color__gray--border;
   min-height: emify(40, 16);
   padding: 0 1rem;
+
+  & > div {
+    @include flex_align(space-between);
+  }
 
   ul {
     list-style: none;
@@ -520,7 +537,9 @@ time {
   }
 
   &--centered {
-    @include flex_align(center);
+    ul {
+      text-align: center;
+    }
   }
 
   &--no-border {

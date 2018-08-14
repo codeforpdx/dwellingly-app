@@ -103,11 +103,11 @@ class Card extends Component {
   }
 
   render() {
-    const { types, status } = this.props;
+    const { className, types, status } = this.props;
     const typesClasses =
-      types.length > 0 ? types.map(type => `card--${type}`).join(' ') : null;
+      types.length > 0 ? types.map(type => `card--${type}`).join(' ') : '';
     return (
-      <div className={`card ${typesClasses}`}>
+      <div className={`card ${typesClasses} ${className}`}>
         {React.Children.map(this.props.children, child =>
           React.cloneElement(child, {
             types,
@@ -120,13 +120,18 @@ class Card extends Component {
 }
 
 Card.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element
+  ]),
+  className: PropTypes.string,
   status: PropTypes.string,
   types: PropTypes.arrayOf(PropTypes.string)
 };
 
 Card.defaultProps = {
   children: undefined,
+  className: '',
   status: undefined,
   types: []
 };

@@ -23,7 +23,8 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})])
+    .isRequired,
   location: PropTypes.shape({})
 };
 
