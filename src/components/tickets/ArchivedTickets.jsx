@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../card/Card';
+import Card from '../Card/Card';
 import Icon from '../icon/Icon';
 import { CARD_TYPES } from '../../constants/constants';
 import { formatDateFromString } from '../../utils';
