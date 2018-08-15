@@ -35,6 +35,7 @@ import EmergencyNumbers from './pages/admin/EmergencyNumbers';
 import Emergency from './pages/emergency/Emergency';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
+import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
@@ -110,6 +111,11 @@ ReactDOM.render(
               <PrivateRoute
                 path={`${ROUTES.TENANTS}/:id/archive`}
                 component={Archive}
+              />
+              <PrivateRoute
+                path={`${ROUTES.TENANTS}/:id/issue`}
+                exact
+                component={StaffUser(NewIssueForm)}
               />
               <PrivateRoute
                 path={`${ROUTES.TENANTS}/:id`}
