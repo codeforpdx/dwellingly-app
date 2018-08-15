@@ -11,10 +11,10 @@ class NewIssueForm extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmittingIssueDescription = this.handleSubmittingIssueDescription.bind(this);
     this.handleChangingIssueType = this.handleChangingIssueType.bind(this);
     this.handleMovingToNextIssueStep = this.handleMovingToNextIssueStep.bind(this);
     this.handleSavingNote = this.handleSavingNote.bind(this);
+    this.handleAddingNote = this.handleAddingNote.bind(this);
 
     this.issueOptions = [
       { unpaidRent: 'Unpaid Rent' },
@@ -27,8 +27,8 @@ class NewIssueForm extends Component {
     ];
 
     this.state = {
-      issueDescriptionDone: false,
       issueNoteDone: false,
+      issueAddingNote: false,
       issueChangeType: false,
       issueNextStep: false,
       issueUrgancyStepDone: false,
@@ -36,20 +36,22 @@ class NewIssueForm extends Component {
     };
   }
 
-  handleSubmittingIssueDescription() {
-    this.setState({ issueDescriptionDone: true})
-  }
-
   handleChangingIssueType() {
+    this.setState({ issueUrgancyStepDone: false })
     this.setState(prevState => ({ issueNextStep: !prevState.issueNextStep }))
   }
 
+  handleAddingNote() {
+    this.setState(prevState => ({ issueAddingNote: !prevState.issueAddingNote }))
+  }
+
   handleSavingNote() {
-    this.setState(prevState => ({ issueNoteDone: !prevState.issueNoteDone }));
+    this.handleAddingNote()
+    this.setState(prevState => ({ issueNoteDone: !prevState.issueNoteDone }))
   }
 
   handleMovingToNextIssueStep() {
-    if(this.state.issueDescriptionDone && this.state.issueNextStep) {
+    if(this.state.issueNextStep) {
       this.setState({ issueUrgancyStepDone: true })
     } else {
       this.setState({ issueNextStep: true })
@@ -74,6 +76,7 @@ class NewIssueForm extends Component {
             <div>
               <div className="actions">
                 {
+                  // Left Side Header Buttons
                   !this.state.issueChangeType && !this.state.issueNextStep ?
                     <button
                       type="button"
@@ -94,14 +97,8 @@ class NewIssueForm extends Component {
                   null
                 }
                 {
-                  !this.state.issueDescriptionDone ?
-                    <button
-                      type="button"
-                      aria-label="Done"
-                      className="action action--strong action--right"
-                      onClick={this.handleSubmittingIssueDescription}>
-                      Done
-                    </button> :
+                  // Right Side Header Buttons
+                  !this.state.issueUrgancyStepDone || this.state.issueUrgancyStepDone && !this.state.issueAddingNote ?
                     <button
                       type="button"
                       aria-label="Next"
@@ -109,7 +106,20 @@ class NewIssueForm extends Component {
                       onClick={this.handleMovingToNextIssueStep}
                       disabled={!this.state.issue}>
                       Next
-                    </button>
+                    </button> :
+                  null
+                }
+                {
+                  this.state.issueAddingNote ?
+                    <button
+                      type="button"
+                      aria-label="Next"
+                      className="action action--strong action--right"
+                      onClick={this.handleSavingNote}
+                      disabled={!this.state.issue}>
+                      Save
+                    </button> :
+                  null
                 }
               </div>
               <Header.Label label="New Issue" type="basic" />
@@ -119,17 +129,7 @@ class NewIssueForm extends Component {
 
         <section className="main width-wrapper">
           {
-            !this.state.issueDescriptionDone ?
-              <fieldset>
-                <div className="message message--light">
-                  <p>Please tell us why you are opening a new issue.</p>
-                </div>
-                <textarea rows="8" />
-              </fieldset> :
-            null
-          }
-          {
-            this.state.issueDescriptionDone && !this.state.issueNextStep ?
+           !this.state.issueNextStep ?
               <fieldset>
                 <div className="message message--light">
                   <p>
@@ -191,19 +191,29 @@ class NewIssueForm extends Component {
             null
           }
           {
-            this.state.issueUrgancyStepDone ?
+            this.state.issueUrgancyStepDone && !this.state.issueAddingNote ?
               <fieldset>
                 <div className="message message--light">
                   <p>
                     <strong>Step 3: Add attachments</strong>
                   </p>
                 </div>
-                <Input type="button" onClick={() => {}}>
+                <Input type="button" onClick={() => {this.handleAddingNote()}}>
                   Add Note
                 </Input>
                 <Input type="button" url="/tickets">
                   Add Photo
                 </Input>
+              </fieldset> :
+              null
+          }
+          {
+            this.state.issueAddingNote ?
+              <fieldset>
+                <div className="message message--light">
+                  <p>Note Demo</p>
+                </div>
+                <textarea placeholder="Add a note..." rows="8" />
               </fieldset> :
               null
           }
