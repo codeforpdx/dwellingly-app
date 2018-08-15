@@ -1,6 +1,7 @@
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
+// import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
 import EmergencyList from '../../components/emergency/EmergencyList';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
@@ -41,6 +42,7 @@ class Administration extends React.Component {
         </Header>
 
         <section className="main width-wrapper">
+          {/* <EmergencyContactsList /> */}
           <EmergencyList />
         </section>
       </div>
