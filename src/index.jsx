@@ -36,6 +36,7 @@ import Emergency from './pages/emergency/Emergency';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import OutOfOffice from './pages/settings/OutOfOffice';
+import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
@@ -122,6 +123,7 @@ ReactDOM.render(
               />
               <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
               <Route path={ROUTES.LOGIN} component={Login} />
+              <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
               <PrivateRoute path={ROUTES.ROOT} component={Home} />
             </Switch>
           </div>
