@@ -3,19 +3,35 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Card from '../card/Card';
 import Notes from '../notes/Notes';
-import { CARD_TYPES, STATUS_OPTIONS } from '../../constants/constants';
+import { CARD_TYPES, ROLES, STATUS_OPTIONS } from '../../constants/constants';
 import { formatPhoneNumber, backURL, formatDateFromString } from '../../utils';
 
 // mock data
-import { tickets } from '../../data';
+import { dummyUser, tickets } from '../../data';
 
 class TicketModal extends Component {
   constructor(props) {
     super(props);
 
+    this.isUserPropertyManager = this.isUserPropertyManager.bind(this);
+    this.toggleFlag = this.toggleFlag.bind(this);
+
+    this.userRole = dummyUser.role;
     this.ticket = tickets.find(
       ({ id }) => id === this.props.match.params.ticket
     );
+
+    this.state = {
+      flagged: this.ticket ? Boolean(this.ticket.flagged) : false
+    };
+  }
+
+  isUserPropertyManager() {
+    return this.userRole === ROLES.PROPERTY_MANAGER;
+  }
+
+  toggleFlag() {
+    this.setState(({ flagged }) => ({ flagged: !flagged }));
   }
 
   render() {
@@ -32,6 +48,9 @@ class TicketModal extends Component {
     } = this.ticket;
     const sentDate = formatDateFromString(sent);
     const backUrl = backURL(match.url);
+    const ticketType = this.isUserPropertyManager()
+      ? [CARD_TYPES.LARGE, CARD_TYPES.TICKET]
+      : [CARD_TYPES.LARGE, CARD_TYPES.STATUS];
 
     const reopenButton = (
       <button type="button" className="btn btn--strong" onClick={() => {}}>
@@ -57,16 +76,15 @@ class TicketModal extends Component {
                 history.push(backUrl);
               }}
             />
-            <Card
-              className="width-wrapper"
-              types={[CARD_TYPES.LARGE, CARD_TYPES.TICKET]}
-              status={status}>
+            <Card className="width-wrapper" types={ticketType} status={status}>
               <Card.Top>
                 <Card.Header
                   label={issue}
                   close={() => {
                     history.push(backUrl);
                   }}
+                  isFlagged={this.state.flagged}
+                  toggleFlag={this.toggleFlag}
                 />
                 <Card.Content>
                   <div className="card__contact container">

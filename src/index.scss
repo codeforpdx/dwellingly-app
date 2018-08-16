@@ -425,6 +425,7 @@ time {
 
   .card {
     @include hidden_scrolling;
+    box-shadow: none;
     // height: 100%;
     max-height: calc(100% - 1rem);
     padding: 0.5rem;

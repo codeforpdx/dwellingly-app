@@ -9,7 +9,7 @@ import ClosedTickets from '../../components/tickets/ClosedTickets';
 import TicketModal from '../../components/modal/TicketModal';
 
 // mock data
-import { archives, tenants, tickets } from '../../data';
+import { tenants, tickets } from '../../data';
 
 class TenantDetails extends Component {
   constructor(props) {
@@ -33,6 +33,13 @@ class TenantDetails extends Component {
     const { match } = this.props;
     const { tenant } = this;
     const { name, address, staff } = tenant;
+
+    // TODO: Replace with proper query to DB for CLOSED tickets
+    const closedTickets = tickets.filter(({ status }) => status === 'Closed');
+
+    // TODO: Replace with proper query to DB for ONGOING tickets
+    const ongoingTickets = tickets.filter(({ status }) => status !== 'Closed');
+
     return (
       <div className="page page--light">
         {tenant && (
@@ -123,7 +130,7 @@ class TenantDetails extends Component {
                   path={`${match.path}/closed`}
                   component={() => (
                     <ClosedTickets
-                      archives={archives}
+                      archives={closedTickets}
                       moveToArchive={this.handleMoveToArchive}
                       match={match}
                     />
@@ -132,17 +139,13 @@ class TenantDetails extends Component {
                 <Route
                   path={`${match.path}/ongoing`}
                   component={() => (
-                    <OngoingTickets match={match} tickets={tickets} />
+                    <OngoingTickets match={match} tickets={ongoingTickets} />
                   )}
                 />
               </div>
             </section>
             <Route
-              path={`${match.path}/ongoing/:ticket`}
-              component={TicketModal}
-            />
-            <Route
-              path={`${match.path}/closed/:ticket`}
+              path={`${match.path}/:status/:ticket`}
               component={TicketModal}
             />
           </div>

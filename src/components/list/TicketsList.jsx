@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Icon from '../icon/Icon';
 
-function TicketsList({ items }) {
+function TicketsList({ items, match }) {
   return (
     <div className="list-group">
       {items &&
@@ -21,7 +21,10 @@ function TicketsList({ items }) {
           } = item;
           const sentDate = sent;
           return (
-            <Link key={id} to={`tickets/${id}`} className="list-group__item">
+            <Link
+              key={id}
+              to={`${match.path}/${id}`}
+              className="list-group__item">
               <div className="contact-group">
                 {status &&
                   urgency && (
@@ -65,6 +68,7 @@ function TicketsList({ items }) {
 }
 
 TicketsList.propTypes = {
+  match: PropTypes.shape({}),
   items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -80,7 +84,8 @@ TicketsList.propTypes = {
 };
 
 TicketsList.defaultProps = {
+  match: '',
   items: []
 };
 
-export default TicketsList;
+export default withRouter(TicketsList);

@@ -33,7 +33,9 @@ function StaffMenu({ handleToggleMenu, type, user }) {
         <Icon icon="ticketOutline" />Tickets
       </dt>
       <dd>
-        <NavLink to={ROUTES.TICKETS} activeClassName="menu__link--active">
+        <NavLink
+          to={`${ROUTES.TICKETS}/open`}
+          activeClassName="menu__link--active">
           <strong>Open</strong>
           <span>1</span>
         </NavLink>

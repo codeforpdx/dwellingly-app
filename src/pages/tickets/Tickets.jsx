@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import SearchForm from '../../components/search-form/SearchForm';
 import TicketsList from '../../components/list/TicketsList';
+import TicketModal from '../../components/modal/TicketModal';
 import Icon from '../../components/icon/Icon';
 
 // mock data
@@ -32,6 +33,13 @@ class Tickets extends Component {
   render() {
     const { match } = this.props;
     const { tickets } = this;
+
+    // TODO: Replace with proper query to DB for CLOSED tickets
+    const closedTickets = tickets.filter(({ status }) => status === 'Closed');
+
+    // TODO: Replace with proper query to DB for OPEN tickets
+    const openTickets = tickets.filter(({ status }) => status !== 'Closed');
+
     return (
       <div className="page">
         <Header>
@@ -74,8 +82,23 @@ class Tickets extends Component {
         </Header>
 
         <section className="main width-wrapper">
-          <TicketsList items={tickets} />
+          <Route
+            path={`${match.path}/open`}
+            component={() => <TicketsList items={openTickets} match={match} />}
+          />
+          <Route
+            path={`${match.path}/closed`}
+            component={() => (
+              <TicketsList items={closedTickets} match={match} />
+            )}
+          />
         </section>
+
+        <Route
+          path={`${match.path}/:status/:ticket`}
+          exact
+          component={TicketModal}
+        />
       </div>
     );
   }

@@ -2,9 +2,9 @@ import { ROLES } from './constants/constants';
 
 export const dummyUser = {
   name: 'Tara Mckenzie',
-  // role: ROLES.PROPERTY_MANAGER,
+  role: ROLES.PROPERTY_MANAGER,
   // role: ROLES.STAFF,
-  role: ROLES.ADMIN,
+  // role: ROLES.ADMIN,
   username: 'tmckenzie',
   email: 'taramckenzie@pm.com',
   phone: '503-823-3333'
@@ -320,5 +320,41 @@ export const tickets = [
     status: 'In Progress',
     flagged: 'true', // mimicing what's likely to come from the database...
     notes: []
+  },
+  {
+    id: 'A-0000000-0003',
+    issue: 'Property Damage',
+    tenant: {
+      name: 'Megan Collins'
+    },
+    sender: {
+      name: 'Tara Mckenzie'
+    },
+    sent: Date.parse(new Date('2017/12/19')),
+    status: 'Closed'
+  },
+  {
+    id: 'A-0000000-0002',
+    issue: 'Compliment',
+    tenant: {
+      name: 'Megan Collins'
+    },
+    sender: {
+      name: 'Tara Mckenzie'
+    },
+    sent: Date.parse(new Date('2017/12/19')),
+    status: 'Closed'
+  },
+  {
+    id: 'A-0000000-0001',
+    issue: 'Neighbor Disputes',
+    tenant: {
+      name: 'Andrew Wiggins'
+    },
+    sender: {
+      name: 'Tara Mckenzie'
+    },
+    sent: Date.parse(new Date('2017/11/02')),
+    status: 'Closed'
   }
 ];
