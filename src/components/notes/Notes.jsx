@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MessageBox from '../MessageBox/MessageBox';
 
 import './Notes.scss';
 
@@ -32,14 +33,9 @@ class Notes extends Component {
                       {note.sent}
                     </time>
                   </div>
-                  <div
-                    className={`msgbox${
-                      note.name === 'Tara Mckenzie'
-                        ? ' msgbox--highlighted'
-                        : ''
-                    }`}>
-                    {note.message.split('\n').map(i => <p>{i}</p>)}
-                  </div>
+                  <MessageBox
+                    user={note.name}
+                    message={note.message} />
                 </div>
               ))}
           </div>
