@@ -15,6 +15,7 @@ class NewIssueForm extends Component {
     this.handleMovingToNextIssueStep = this.handleMovingToNextIssueStep.bind(this);
     this.handleSavingNote = this.handleSavingNote.bind(this);
     this.handleAddingNote = this.handleAddingNote.bind(this);
+    this.handleGoingBack = this.handleGoingBack.bind(this);
 
     this.issueOptions = [
       { unpaidRent: 'Unpaid Rent' },
@@ -37,8 +38,15 @@ class NewIssueForm extends Component {
   }
 
   handleChangingIssueType() {
-    this.setState({ issueUrgancyStepDone: false })
     this.setState(prevState => ({ issueNextStep: !prevState.issueNextStep }))
+  }
+
+  handleGoingBack() {
+    if(this.state.issueNextStep && this.state.issueUrgancyStepDone) {
+      this.setState({ issueUrgancyStepDone: false })
+    } else {
+      this.setState({ issueNextStep: false })
+    }
   }
 
   handleAddingNote() {
@@ -91,7 +99,7 @@ class NewIssueForm extends Component {
                     type="button"
                     aria-label="Back"
                     className="action action--strong action--left"
-                    onClick={this.handleChangingIssueType}>
+                    onClick={this.handleGoingBack}>
                     Back
                   </button> :
                   null
