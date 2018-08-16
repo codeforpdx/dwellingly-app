@@ -5,16 +5,19 @@ import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import RadioArray from '../../components/input/RadioArray';
 // import MessageBox from '../../components/MessageBox/MessageBox';
+import Icon from '../../components/icon/Icon';
 import Card from '../../components/Card/Card';
 import { CARD_TYPES } from '../../constants/constants';
 import { backURL } from '../../utils';
 
 
-// import { dummyUser } from '../../data';
+import { tenants } from '../../data';
 
 class NewIssueForm extends Component {
   constructor(props) {
     super(props);
+
+    this.tenant = tenants.find(({ id }) => id === this.props.match.params.id);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleChangingIssueType = this.handleChangingIssueType.bind(this);
@@ -36,7 +39,7 @@ class NewIssueForm extends Component {
 
     this.state = {
       issueNote: '',
-      issueNoteDone: false,
+      // issueNoteDone: false,
       issueAddingAttachments: false,
       issueAddingNote: false,
       issueChangeType: false,
@@ -51,7 +54,7 @@ class NewIssueForm extends Component {
   }
 
   handleGoingBack() {
-    if(this.state.issueAddingAttachments && !this.state.issueNoteDone) {
+    if(this.state.issueAddingAttachments) {
       this.setState(prevState => ({ issueAddingAttachments: !prevState.issueAddingAttachments }))
     } else if (this.state.issueNextStep && this.state.issueUrgancyStepDone) {
       this.setState({ issueUrgancyStepDone: false });
@@ -73,11 +76,11 @@ class NewIssueForm extends Component {
 
   handleSavingNote() {
     this.handleAddingNote();
-    this.setState(prevState => ({ issueNoteDone: !prevState.issueNoteDone }));
+    // this.setState(prevState => ({ issueNoteDone: !prevState.issueNoteDone }));
   }
 
   handleMovingToNextIssueStep() {
-    if(this.state.issueNote.length > 0) {
+    if(this.state.issueNote.length > 0 && this.state.issueUrgancyStepDone) {
       this.setState({ issueAddingAttachments: true })
     } else if (this.state.issueNextStep) {
       this.setState({ issueUrgancyStepDone: true });
@@ -97,63 +100,119 @@ class NewIssueForm extends Component {
   }
 
   render() {
+    const { tenant } = this;
+    const { name, address, staff } = tenant;
     const { match } = this.props;
-    const backUrl = backURL(match.url, 'ongoing')
+    const backUrl = backURL(match.url, 'ongoing');
     return (
       <div className={!this.state.issueAddingAttachments ? "page" : "page page--light"}>
-        <Header variant="form">
-          {() => (
-            <div>
-              <div className="actions">
-                {// Left Side Header Buttons
-                  !this.state.issueChangeType && !this.state.issueNextStep ?
-                    <Link
-                      title="Cancel Issue"
-                      className="action action--strong action--left"
-                      to={backUrl}>
-                      Cancel
-                    </Link> :
-                    null
-                }
-                {this.state.issueNextStep ?
-                  <button
-                    type="button"
-                    aria-label="Back"
-                    className="action action--strong action--left"
-                    onClick={this.handleGoingBack}>
-                    Back
-                  </button> :
-                  null
-                }
-                {// Right Side Header Buttons
-                  !this.state.issueUrgancyStepDone || this.state.issueUrgancyStepDone && !this.state.issueAddingNote ?
-                    <button
-                      type="button"
-                      aria-label="Next"
-                      className="action action--strong action--right"
-                      onClick={this.handleMovingToNextIssueStep}
-                      disabled={!this.state.issue}>
-                      Next
-                    </button> :
-                  null
-                }
-                {
-                  this.state.issueAddingNote ?
-                    <button
-                      type="button"
-                      aria-label="Next"
-                      className="action action--strong action--right"
-                      onClick={this.handleSavingNote}
-                      disabled={!this.state.issue}>
-                      Save
-                    </button> :
-                  null
-                }
+          <Header variant="form">
+            {() => (
+              <div>
+              {!this.state.issueAddingAttachments ?
+                <div>
+                  <div className="actions">
+                    {// Left Side Header Buttons
+                      !this.state.issueChangeType && !this.state.issueNextStep ?
+                        <Link
+                          title="Cancel Issue"
+                          className="action action--strong action--left"
+                          to={backUrl}>
+                          Cancel
+                        </Link> :
+                        null
+                    }
+                    {this.state.issueNextStep ?
+                      <button
+                        type="button"
+                        aria-label="Back"
+                        className="action action--strong action--left"
+                        onClick={this.handleGoingBack}>
+                        Back
+                      </button> :
+                      null
+                    }
+                    {// Right Side Header Buttons
+                      !this.state.issueUrgancyStepDone ||
+                      this.state.issueUrgancyStepDone &&
+                      !this.state.issueAddingNote &&
+                      !this.state.issueAddingAttachments ?
+                        <button
+                          type="button"
+                          aria-label="Next"
+                          className="action action--strong action--right"
+                          onClick={this.handleMovingToNextIssueStep}
+                          disabled={!this.state.issue}>
+                          Next
+                        </button> :
+                      null
+                    }
+                    {
+                      this.state.issueAddingNote ?
+                        <button
+                          type="button"
+                          aria-label="Next"
+                          className="action action--strong action--right"
+                          onClick={this.handleSavingNote}
+                          disabled={!this.state.issue}>
+                          Save
+                        </button> :
+                      null
+                    }
+                  </div>
+                  <Header.Label label="New Issue" type="basic" />
+                </div> :
+                <div>
+                  {tenant && (
+                    <div>
+                      <div className="actions">
+                        {this.state.issueNextStep ?
+                          <button
+                            type="button"
+                            aria-label="Back"
+                            className="action action--strong action--left"
+                            onClick={this.handleGoingBack}>
+                            Back
+                          </button> :
+                          null
+                        }
+                        {this.state.issueAddingAttachments ?
+                          <Link
+                            to={backUrl}
+                            className="action action--strong action--right">
+                            Send
+                          </Link> :
+                          null
+                        }
+                      </div>
+                      <Header.Label type="contact">
+                        {() => (
+                          <div>
+                            <h1>
+                              {name}
+                            </h1>
+                            <p className="secondary">{address}</p>
+                            {staff && (
+                              <p>
+                                JOIN Staff:{' '}
+                                {staff.map(
+                                  ({ name }, index) =>
+                                    `${name}${
+                                      index !== staff.length - 1 ? ', ' : ''
+                                    }`
+                                )}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </Header.Label>
+                    </div>
+                  )}
+                </div>
+              }
               </div>
-              <Header.Label label="New Issue" type="basic" />
-            </div>
-          )}
-        </Header>
+            )}
+          </Header>
 
         <section className="main width-wrapper">
           {!this.state.issueNextStep ? (
@@ -250,9 +309,21 @@ class NewIssueForm extends Component {
              <Card types={[CARD_TYPES.FORM]}>
                <Card.Content>
                  <div className="card__summary">
-                   <p className="title">{this.state.issue}</p>
-                   <p className="title">Urgancy Level <span>{this.state.urgency}</span></p>
-                   <p className="msgbox">{this.state.issueNote}</p>
+                   <p className="title padding--1em">
+                     {this.state.issue}
+                     <Icon icon="pencil" />
+                   </p>
+                   <p className="title padding--1em">
+                     Urgancy Level
+                     <span className="">{this.state.urgency}</span>
+                     <Icon icon="pencil" />
+                   </p>
+                   <div>
+                     <p className="msgbox">
+                       {this.state.issueNote}
+                     </p>
+                     <Icon icon="pencil" />
+                   </div>
                  </div>
                </Card.Content>
              </Card>
@@ -266,7 +337,10 @@ class NewIssueForm extends Component {
 
 NewIssueForm.propTypes = {
   match: PropTypes.shape({
-    url: PropTypes.string
+    url: PropTypes.string,
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
   }).isRequired
 }
 
