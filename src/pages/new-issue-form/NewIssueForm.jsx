@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import RadioArray from '../../components/input/RadioArray';
 import MessageBox from '../../components/MessageBox/MessageBox';
+import { backURL } from '../../utils';
 
 
 // import { dummyUser } from '../../data';
@@ -13,9 +16,7 @@ class NewIssueForm extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleChangingIssueType = this.handleChangingIssueType.bind(this);
-    this.handleMovingToNextIssueStep = this.handleMovingToNextIssueStep.bind(
-      this
-    );
+    this.handleMovingToNextIssueStep = this.handleMovingToNextIssueStep.bind(this);
     this.handleSavingNote = this.handleSavingNote.bind(this);
     this.handleAddingNote = this.handleAddingNote.bind(this);
     this.handleGoingBack = this.handleGoingBack.bind(this);
@@ -89,6 +90,8 @@ class NewIssueForm extends Component {
   }
 
   render() {
+    const { match } = this.props;
+    const backUrl = backURL(match.url, 'ongoing')
     return (
       <div className="page">
         <Header variant="form">
@@ -97,12 +100,12 @@ class NewIssueForm extends Component {
               <div className="actions">
                 {// Left Side Header Buttons
                   !this.state.issueChangeType && !this.state.issueNextStep ?
-                    <button
-                      type="button"
-                      aria-label="Cancel"
-                      className="action action--strong action--left">
+                    <Link
+                      title="Cancel Issue"
+                      className="action action--strong action--left"
+                      to={backUrl}>
                       Cancel
-                    </button> :
+                    </Link> :
                     null
                 }
                 {this.state.issueNextStep ?
@@ -213,9 +216,9 @@ class NewIssueForm extends Component {
               </div>
               {
                 this.state.issueNote.length > 0 ?
-                <div className="padding--1em">
-                  <MessageBox message={this.state.issueNote} />
-                </div> :
+                  <div className="padding--1em">
+                    <MessageBox message={this.state.issueNote} />
+                  </div> :
                   <Input type="button" onClick={() => {this.handleAddingNote()}}>
                     Add Note
                   </Input>
@@ -237,6 +240,12 @@ class NewIssueForm extends Component {
       </div>
     );
   }
+}
+
+NewIssueForm.propTypes = {
+  match: PropTypes.shape({
+    url: PropTypes.string
+  }).isRequired
 }
 
 export default NewIssueForm;
