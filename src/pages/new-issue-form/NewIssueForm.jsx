@@ -16,6 +16,7 @@ class NewIssueForm extends Component {
     this.handleSavingNote = this.handleSavingNote.bind(this);
     this.handleAddingNote = this.handleAddingNote.bind(this);
     this.handleGoingBack = this.handleGoingBack.bind(this);
+    this.handleNoteInput = this.handleNoteInput.bind(this);
 
     this.issueOptions = [
       { unpaidRent: 'Unpaid Rent' },
@@ -28,6 +29,7 @@ class NewIssueForm extends Component {
     ];
 
     this.state = {
+      issueNote: '',
       issueNoteDone: false,
       issueAddingNote: false,
       issueChangeType: false,
@@ -51,6 +53,11 @@ class NewIssueForm extends Component {
 
   handleAddingNote() {
     this.setState(prevState => ({ issueAddingNote: !prevState.issueAddingNote }))
+  }
+
+  handleNoteInput(event) {
+    const { target } = event
+    this.setState({ issueNote: target.value })
   }
 
   handleSavingNote() {
@@ -83,8 +90,7 @@ class NewIssueForm extends Component {
           {() => (
             <div>
               <div className="actions">
-                {
-                  // Left Side Header Buttons
+                {// Left Side Header Buttons
                   !this.state.issueChangeType && !this.state.issueNextStep ?
                     <button
                       type="button"
@@ -104,8 +110,7 @@ class NewIssueForm extends Component {
                   </button> :
                   null
                 }
-                {
-                  // Right Side Header Buttons
+                {// Right Side Header Buttons
                   !this.state.issueUrgancyStepDone || this.state.issueUrgancyStepDone && !this.state.issueAddingNote ?
                     <button
                       type="button"
@@ -206,9 +211,17 @@ class NewIssueForm extends Component {
                     <strong>Step 3: Add attachments</strong>
                   </p>
                 </div>
-                <Input type="button" onClick={() => {this.handleAddingNote()}}>
-                  Add Note
-                </Input>
+                {
+                  this.state.issueNote.length > 0 ?
+                    <div className="">
+                      <div className="msgbox">
+                        <p>{this.state.issueNote}</p>
+                      </div>
+                    </div> :
+                    <Input type="button" onClick={() => {this.handleAddingNote()}}>
+                      Add Note
+                    </Input>
+                }
                 <Input type="button" url="/tickets">
                   Add Photo
                 </Input>
@@ -221,7 +234,7 @@ class NewIssueForm extends Component {
                 <div className="message message--light">
                   <p>Note Demo</p>
                 </div>
-                <textarea placeholder="Add a note..." rows="8" />
+                <textarea placeholder="Add a note..." rows="8" onChange={this.handleNoteInput} />
               </fieldset> :
               null
           }
