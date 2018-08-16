@@ -13,6 +13,7 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   EMERGENCY: '/emergency',
   LOGIN: '/login',
+  PRIVACY: '/privacy-policy',
   PROPERTIES: '/properties',
   PROPERTY_MANAGERS: '/property-managers',
   OUT_OF_OFFICE: '/settings/out-of-office',
@@ -20,6 +21,7 @@ export const ROUTES = {
   SETTINGS: '/settings',
   SIGNUP: '/signup',
   TENANTS: '/tenants',
+  TERMS_CONDITIONS: '/terms-conditions',
   TICKETS: '/tickets'
 };
 

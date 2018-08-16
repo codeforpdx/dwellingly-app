@@ -59,6 +59,46 @@ export const NAVIGATION = defineMessages({
   }
 });
 
+/* Privacy policy messages */
+export const PRIVACY = defineMessages({
+  TITLE: {
+    id: 'privacy.title',
+    defaultMessage: 'JOIN Privacy Policy'
+  },
+  ABOUT_POLICY: {
+    id: 'privacy.paragaraph_01',
+    defaultMessage: 'This Privacy Policy describes how your personal information is collected, used, and shared when you use https://messenger.joinpdx.org (the “Site”).',
+  },
+  HEADER_INFO: {
+    id: 'privacy.header_info1',
+    defaultMessage: 'PERSONAL INFORMATION WE COLLECT',
+  },
+  CONTENT_INFO_01: {
+    id: 'privacy.content_info_01',
+    defaultMessage: 'When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products that you view, what websites or search terms referred you to the Site, and information about how you interact with the Site. We refer to this automatically-collected information as “Device Information.”',
+  },
+  CONTENT_INFO_02: {
+    id: 'privacy.content_info_02',
+    defaultMessage: 'We collect Device Information using the following technologies:',
+  },
+  CONTENT_INFO_03: {
+    id: 'privacy.content_info_03',
+    defaultMessage: 'When we talk about “Personal Information” in this Privacy Policy, we are talking both about Device Information and Order Information.',
+  },
+});
+
+/* Terms-conditions messages */
+export const TERMS = defineMessages({
+  TITLE: {
+    id: 'terms.title',
+    defaultMessage: 'Terms and Conditions'
+  },
+  PARAGRAPH_01: {
+    id: 'terms.paragaraph_01',
+    defaultMessage: 'There are some terms and conditions and we will have them once we talk to a lawyer',
+  }
+});
+
 /* User-related messages */
 export const USER = defineMessages({
   HELLO: {

@@ -43,6 +43,7 @@ import PropertyManagerDetails from './pages/property-manager-details/PropertyMan
 import Settings from './pages/settings/Settings';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
+import TermsConditions from './pages/terms-conditions/TermsConditions';
 import Tickets from './pages/tickets/Tickets';
 
 // mock data
@@ -124,6 +125,7 @@ ReactDOM.render(
               <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
               <Route path={ROUTES.LOGIN} component={Login} />
               <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
+              <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
               <PrivateRoute path={ROUTES.ROOT} component={Home} />
             </Switch>
           </div>
