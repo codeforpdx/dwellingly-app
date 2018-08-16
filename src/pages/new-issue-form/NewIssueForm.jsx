@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import RadioArray from '../../components/input/RadioArray';
-import MessageBox from '../../components/MessageBox/MessageBox';
+// import MessageBox from '../../components/MessageBox/MessageBox';
+import Card from '../../components/Card/Card';
+import { CARD_TYPES } from '../../constants/constants';
 import { backURL } from '../../utils';
 
 
@@ -35,6 +37,7 @@ class NewIssueForm extends Component {
     this.state = {
       issueNote: '',
       issueNoteDone: false,
+      issueAddingAttachments: false,
       issueAddingNote: false,
       issueChangeType: false,
       issueNextStep: false,
@@ -48,7 +51,9 @@ class NewIssueForm extends Component {
   }
 
   handleGoingBack() {
-    if (this.state.issueNextStep && this.state.issueUrgancyStepDone) {
+    if(this.state.issueAddingAttachments && !this.state.issueNoteDone) {
+      this.setState(prevState => ({ issueAddingAttachments: !prevState.issueAddingAttachments }))
+    } else if (this.state.issueNextStep && this.state.issueUrgancyStepDone) {
       this.setState({ issueUrgancyStepDone: false });
     } else {
       this.setState({ issueNextStep: false });
@@ -72,7 +77,9 @@ class NewIssueForm extends Component {
   }
 
   handleMovingToNextIssueStep() {
-    if (this.state.issueNextStep) {
+    if(this.state.issueNote.length > 0) {
+      this.setState({ issueAddingAttachments: true })
+    } else if (this.state.issueNextStep) {
       this.setState({ issueUrgancyStepDone: true });
     } else {
       this.setState({ issueNextStep: true });
@@ -93,7 +100,7 @@ class NewIssueForm extends Component {
     const { match } = this.props;
     const backUrl = backURL(match.url, 'ongoing')
     return (
-      <div className="page">
+      <div className={!this.state.issueAddingAttachments ? "page" : "page page--light"}>
         <Header variant="form">
           {() => (
             <div>
@@ -207,14 +214,17 @@ class NewIssueForm extends Component {
               />
             </fieldset>
           ) : null}
-          {this.state.issueUrgancyStepDone && !this.state.issueAddingNote ? (
+          {this.state.issueUrgancyStepDone &&
+           !this.state.issueAddingNote &&
+           !this.state.issueAddingAttachments ? (
             <fieldset>
               <div className="message message--light">
                 <p>
-                  <strong>Step 3: Add attachments</strong>
+                  <strong>Step 3: Add Note</strong>
                 </p>
               </div>
-              {
+              <textarea placeholder="Add a note..." rows="8" value={this.state.issueNote} onChange={this.handleNoteInput} autoFocus />
+              {/*
                 this.state.issueNote.length > 0 ?
                   <div className="padding--1em">
                     <MessageBox message={this.state.issueNote} />
@@ -222,20 +232,32 @@ class NewIssueForm extends Component {
                   <Input type="button" onClick={() => {this.handleAddingNote()}}>
                     Add Note
                   </Input>
-              }
               <Input type="button" url="/tickets">
                 Add Photo
               </Input>
+            */ }
             </fieldset>
           ) : null}
-          {this.state.issueAddingNote ? (
+          {/* this.state.issueAddingNote ? (
             <fieldset>
-              <div className="message message--light">
-                <p>Note Demo</p>
-              </div>
-              <textarea placeholder="Add a note..." rows="8" onChange={this.handleNoteInput} />
+              <textarea placeholder="Add a note..." rows="8" onChange={this.handleNoteInput} autoFocus />
             </fieldset>
-          ) : null}
+          ) : null */}
+          {this.state.issueUrgancyStepDone &&
+           this.state.issueNote.length > 0 &&
+           this.state.issueAddingAttachments ?
+           <div className="padding--1em">
+             <Card types={[CARD_TYPES.FORM]}>
+               <Card.Content>
+                 <div className="card__summary">
+                   <p className="title">{this.state.issue}</p>
+                   <p className="title">Urgancy Level <span>{this.state.urgency}</span></p>
+                   <p className="msgbox">{this.state.issueNote}</p>
+                 </div>
+               </Card.Content>
+             </Card>
+           </div>
+          : null}
         </section>
       </div>
     );
