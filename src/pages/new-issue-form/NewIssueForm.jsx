@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import RadioArray from '../../components/input/RadioArray';
+import MessageBox from '../../components/MessageBox/MessageBox';
+
 
 // import { dummyUser } from '../../data';
 
@@ -213,11 +215,9 @@ class NewIssueForm extends Component {
                 </div>
                 {
                   this.state.issueNote.length > 0 ?
-                    <div className="">
-                      <div className="msgbox">
-                        <p>{this.state.issueNote}</p>
-                      </div>
-                    </div> :
+                  <div className="padding--1em">
+                    <MessageBox message={this.state.issueNote} />
+                  </div> :
                     <Input type="button" onClick={() => {this.handleAddingNote()}}>
                       Add Note
                     </Input>
