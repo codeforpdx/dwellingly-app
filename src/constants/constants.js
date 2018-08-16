@@ -3,7 +3,12 @@ export const SETTINGS = {
   VALID_LOCALES: ['en', 'es'], // English and spanish
   LOCALE_COOKIE: 'language',
   DAYS_LOCALE_SAVED: 366,
-  APOLLO_SERVER: 'https://my-app-kxybtzpvrq.now.sh' // ZEIT: 'https://my-app-kxybtzpvrq.now.sh' | LOCALHOST:  'http://localhost:4000'
+
+  APOLLO_SERVER: 'https://my-app-kxybtzpvrq.now.sh', // ZEIT: 'https://my-app-kxybtzpvrq.now.sh' | LOCALHOST:  'http://localhost:4000'
+
+  ORGANIZATION: 'JOIN',
+  DOMAIN: 'messenger.joinpdx.org',
+  CONTACT_EMAIL: 'info@joinpdx.org',
 };
 
 export const ROUTES = {
