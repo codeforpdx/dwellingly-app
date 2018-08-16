@@ -202,8 +202,18 @@ time {
   text-align: center;
   width: 100%;
 
+  & > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
   .main {
     flex-grow: 2;
+
+    &--white {
+      background: $color__white;
+    }
   }
 
   &--light {

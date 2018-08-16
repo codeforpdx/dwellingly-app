@@ -1,3 +1,5 @@
+export const SITE_URL = 'http://localhost:3000';
+
 export const SETTINGS = {
   DEFAULT_LOCALE: 'en', // locale cookie values must be lowercase
   VALID_LOCALES: ['en', 'es'], // English and spanish

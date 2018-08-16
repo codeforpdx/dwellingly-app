@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import Icon from '../icon/Icon';
+import { formatDateFromString } from '../../utils';
 
 function TicketsList({ items, match }) {
   return (
@@ -19,7 +20,7 @@ function TicketsList({ items, match }) {
             urgency,
             flagged
           } = item;
-          const sentDate = sent;
+          const sentDate = formatDateFromString(sent);
           return (
             <Link
               key={id}
@@ -75,7 +76,7 @@ TicketsList.propTypes = {
       issue: PropTypes.string,
       tenant: PropTypes.shape({}),
       sender: PropTypes.shape({}),
-      sent: PropTypes.string,
+      sent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       status: PropTypes.string,
       urgency: PropTypes.string,
       flagged: PropTypes.string

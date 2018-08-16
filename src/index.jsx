@@ -39,6 +39,7 @@ import OutOfOffice from './pages/settings/OutOfOffice';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
+import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyManagerTenantsDirectory';
 import Settings from './pages/settings/Settings';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
@@ -93,6 +94,11 @@ ReactDOM.render(
               <PrivateRoute
                 path={`${ROUTES.PROPERTIES}/:id`}
                 component={PropertyDetails}
+              />
+              <PrivateRoute
+                path={`${ROUTES.PROPERTY_MANAGERS}/:id/tenants`}
+                exact
+                component={StaffUser(PropertyManagerTenantsDirectory)}
               />
               <PrivateRoute
                 path={`${ROUTES.PROPERTY_MANAGERS}/:id`}
