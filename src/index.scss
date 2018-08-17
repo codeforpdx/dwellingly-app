@@ -270,6 +270,7 @@ time {
 
 .status {
   text-transform: uppercase;
+  font-weight: 300;
 
   &--low,
   &--med {
@@ -374,6 +375,7 @@ time {
   background: $color__gray--light;
   border-radius: $border-radius;
   padding: 0.5rem 1rem;
+  font-weight: 300;
 
   .count {
     font-weight: 500;
