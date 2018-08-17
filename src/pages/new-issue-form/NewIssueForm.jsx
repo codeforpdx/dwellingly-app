@@ -25,6 +25,7 @@ class NewIssueForm extends Component {
     this.handleGoingBack = this.handleGoingBack.bind(this);
     this.handleNoteInput = this.handleNoteInput.bind(this);
     this.handleEditingSummary = this.handleEditingSummary.bind(this);
+    this.handleSendingIssue = this.handleSendingIssue.bind(this);
 
     this.issueOptions = [
       { unpaidRent: 'Unpaid Rent' },
@@ -38,6 +39,7 @@ class NewIssueForm extends Component {
 
     this.state = {
       step: 'issueType',
+      issueSent: false,
       issueNote: '',
       urgency: 'low'
     };
@@ -56,6 +58,13 @@ class NewIssueForm extends Component {
     } else {
       this.setState({ step: 'issueType' })
     }
+  }
+
+  handleSendingIssue() {
+    this.setState(prevState => ({ issueSent: !prevState.issueSent }));
+    setTimeout(() => {
+      window.location.replace(this.props.match.url, 'ongoing');
+    }, 1000)
   }
 
   handleNoteInput(event) {
@@ -158,11 +167,13 @@ class NewIssueForm extends Component {
                           null
                         }
                         {this.state.step === 'summary' ?
-                          <Link
-                            to={backUrl}
-                            className="action action--strong action--right">
+                          <button
+                            type="button"
+                            aria-label="Send"
+                            className="action action--strong action--right"
+                            onClick={this.handleSendingIssue}>
                             Send
-                          </Link> :
+                          </button> :
                           null
                         }
                       </div>
@@ -330,6 +341,11 @@ class NewIssueForm extends Component {
            </div>
           : null}
         </section>
+        {this.state.issueSent ?
+          <div className={!this.state.issueSent ? "newIssueSentSuccess" : "newIssueSentSuccess .success"}>
+            <Icon icon="checkbox" />
+          </div>
+          : null}
       </div>
     );
   }

@@ -27,3 +27,34 @@
     }
   }
 }
+.newIssueSentSuccess {
+  height: 80px;
+  padding: 20px;
+  font-size: 3em;
+  background-color: lightgreen;
+  width: calc(100% - 1em);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  &.success {
+    animation: fade 2s linear;
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
