@@ -10,6 +10,7 @@ import Card from '../../components/Card/Card';
 import { CARD_TYPES } from '../../constants/constants';
 import { backURL } from '../../utils';
 
+import './NewIssueForm.scss';
 
 import { tenants } from '../../data';
 
@@ -20,12 +21,10 @@ class NewIssueForm extends Component {
     this.tenant = tenants.find(({ id }) => id === this.props.match.params.id);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangingIssueType = this.handleChangingIssueType.bind(this);
     this.handleMovingToNextIssueStep = this.handleMovingToNextIssueStep.bind(this);
-    this.handleSavingNote = this.handleSavingNote.bind(this);
-    this.handleAddingNote = this.handleAddingNote.bind(this);
     this.handleGoingBack = this.handleGoingBack.bind(this);
     this.handleNoteInput = this.handleNoteInput.bind(this);
+    this.handleEditingSummary = this.handleEditingSummary.bind(this);
 
     this.issueOptions = [
       { unpaidRent: 'Unpaid Rent' },
@@ -38,35 +37,25 @@ class NewIssueForm extends Component {
     ];
 
     this.state = {
+      step: 'issueType',
       issueNote: '',
-      // issueNoteDone: false,
-      issueAddingAttachments: false,
-      issueAddingNote: false,
-      issueChangeType: false,
-      issueNextStep: false,
-      issueUrgancyStepDone: false,
       urgency: 'low'
     };
   }
 
-  handleChangingIssueType() {
-    this.setState(prevState => ({ issueNextStep: !prevState.issueNextStep }));
+  handleEditingSummary(event) {
+    const { currentTarget } = event;
+    this.setState({ step: `${currentTarget.id}` })
   }
 
   handleGoingBack() {
-    if(this.state.issueAddingAttachments) {
-      this.setState(prevState => ({ issueAddingAttachments: !prevState.issueAddingAttachments }))
-    } else if (this.state.issueNextStep && this.state.issueUrgancyStepDone) {
-      this.setState({ issueUrgancyStepDone: false });
+    if(this.state.step === 'summary') {
+      this.setState({ step: 'attachments' })
+    } else if (this.state.step === 'attachments') {
+      this.setState({ step: 'urgancy' });
     } else {
-      this.setState({ issueNextStep: false });
+      this.setState({ step: 'issueType' })
     }
-  }
-
-  handleAddingNote() {
-    this.setState(prevState => ({
-      issueAddingNote: !prevState.issueAddingNote
-    }));
   }
 
   handleNoteInput(event) {
@@ -74,18 +63,13 @@ class NewIssueForm extends Component {
     this.setState({ issueNote: target.value })
   }
 
-  handleSavingNote() {
-    this.handleAddingNote();
-    // this.setState(prevState => ({ issueNoteDone: !prevState.issueNoteDone }));
-  }
-
   handleMovingToNextIssueStep() {
-    if(this.state.issueNote.length > 0 && this.state.issueUrgancyStepDone) {
-      this.setState({ issueAddingAttachments: true })
-    } else if (this.state.issueNextStep) {
-      this.setState({ issueUrgancyStepDone: true });
+    if(this.state.step === 'issueType') {
+      this.setState({ step: 'urgancy' })
+    } else if(this.state.step === 'urgancy') {
+      this.setState({ step: 'attachments' })
     } else {
-      this.setState({ issueNextStep: true });
+      this.setState({ step: 'summary' })
     }
   }
 
@@ -105,15 +89,15 @@ class NewIssueForm extends Component {
     const { match } = this.props;
     const backUrl = backURL(match.url, 'ongoing');
     return (
-      <div className={!this.state.issueAddingAttachments ? "page" : "page page--light"}>
+      <div className={this.state.step !== 'summary' ? "page" : "page page--light"}>
           <Header variant="form">
             {() => (
               <div>
-              {!this.state.issueAddingAttachments ?
+              {this.state.step !== 'summary' ?
                 <div>
                   <div className="actions">
                     {// Left Side Header Buttons
-                      !this.state.issueChangeType && !this.state.issueNextStep ?
+                      this.state.step === 'issueType' ?
                         <Link
                           title="Cancel Issue"
                           className="action action--strong action--left"
@@ -122,7 +106,7 @@ class NewIssueForm extends Component {
                         </Link> :
                         null
                     }
-                    {this.state.issueNextStep ?
+                    {this.state.step !== 'issueType' ?
                       <button
                         type="button"
                         aria-label="Back"
@@ -133,10 +117,7 @@ class NewIssueForm extends Component {
                       null
                     }
                     {// Right Side Header Buttons
-                      !this.state.issueUrgancyStepDone ||
-                      this.state.issueUrgancyStepDone &&
-                      !this.state.issueAddingNote &&
-                      !this.state.issueAddingAttachments ?
+                      this.state.step !== 'summary' ?
                         <button
                           type="button"
                           aria-label="Next"
@@ -147,8 +128,8 @@ class NewIssueForm extends Component {
                         </button> :
                       null
                     }
-                    {
-                      this.state.issueAddingNote ?
+                    { /*
+                      this.state.step  ?
                         <button
                           type="button"
                           aria-label="Next"
@@ -158,7 +139,7 @@ class NewIssueForm extends Component {
                           Save
                         </button> :
                       null
-                    }
+                    */ }
                   </div>
                   <Header.Label label="New Issue" type="basic" />
                 </div> :
@@ -166,7 +147,7 @@ class NewIssueForm extends Component {
                   {tenant && (
                     <div>
                       <div className="actions">
-                        {this.state.issueNextStep ?
+                        { this.state.step === 'summary' ?
                           <button
                             type="button"
                             aria-label="Back"
@@ -176,7 +157,7 @@ class NewIssueForm extends Component {
                           </button> :
                           null
                         }
-                        {this.state.issueAddingAttachments ?
+                        {this.state.step === 'summary' ?
                           <Link
                             to={backUrl}
                             className="action action--strong action--right">
@@ -215,7 +196,7 @@ class NewIssueForm extends Component {
           </Header>
 
         <section className="main width-wrapper">
-          {!this.state.issueNextStep ? (
+          {this.state.step === 'issueType' ? (
             <fieldset>
               <div className="message message--light">
                 <p>
@@ -239,7 +220,7 @@ class NewIssueForm extends Component {
               })}
             </fieldset>
           ) : null}
-          {this.state.issueNextStep && !this.state.issueUrgancyStepDone ? (
+          {this.state.step === 'urgancy' ? (
             <fieldset>
               <div className="message message--light">
                 <p>
@@ -273,9 +254,7 @@ class NewIssueForm extends Component {
               />
             </fieldset>
           ) : null}
-          {this.state.issueUrgancyStepDone &&
-           !this.state.issueAddingNote &&
-           !this.state.issueAddingAttachments ? (
+          {this.state.step === 'attachments' ? (
             <fieldset>
               <div className="message message--light">
                 <p>
@@ -302,27 +281,46 @@ class NewIssueForm extends Component {
               <textarea placeholder="Add a note..." rows="8" onChange={this.handleNoteInput} autoFocus />
             </fieldset>
           ) : null */}
-          {this.state.issueUrgancyStepDone &&
-           this.state.issueNote.length > 0 &&
-           this.state.issueAddingAttachments ?
-           <div className="padding--1em">
+          {this.state.step === 'summary' ?
+           <div className="newIssueSummary padding--1em">
              <Card types={[CARD_TYPES.FORM]}>
                <Card.Content>
                  <div className="card__summary">
-                   <p className="title padding--1em">
-                     {this.state.issue}
-                     <Icon icon="pencil" />
-                   </p>
-                   <p className="title padding--1em">
-                     Urgancy Level
-                     <span className="">{this.state.urgency}</span>
-                     <Icon icon="pencil" />
-                   </p>
-                   <div>
-                     <p className="msgbox">
+                   <div className="newIssueSummaryInfo padding--1em">
+                     <span className="newIssueTitle title">{this.state.issue}</span>
+                     <span
+                       className="newIssueSummaryEdit"
+                       onClick={this.handleEditingSummary}
+                       role="presentation"
+                       id="issueType">
+                       <Icon icon="pencil" />
+                     </span>
+                   </div>
+                   <div className="newIssueSummaryInfo padding--1em">
+                     <span className="newIssueTitle title">Urgancy Level</span>
+                     <span
+                       className={this.state.urgency === "high" ? "status status--high" : "status"}>
+                       {this.state.urgency}
+                     </span>
+                     <span
+                       className="newIssueSummaryEdit"
+                       onClick={this.handleEditingSummary}
+                       role="presentation"
+                       id="urgancy">
+                       <Icon icon="pencil" />
+                     </span>
+                   </div>
+                   <div className="newIssueSummaryInfo padding--1em">
+                     <span className="newIssueTitle msgbox">
                        {this.state.issueNote}
-                     </p>
-                     <Icon icon="pencil" />
+                     </span>
+                     <span
+                       className="newIssueSummaryEdit"
+                       onClick={this.handleEditingSummary}
+                       role="presentation"
+                       id="attachments">
+                       <Icon icon="pencil" />
+                     </span>
                    </div>
                  </div>
                </Card.Content>
