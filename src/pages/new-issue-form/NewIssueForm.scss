@@ -1,0 +1,26 @@
+@import '../../constants/constants.scss';
+.newIssueSummary {
+  & .card__content {
+    padding: 0;
+  }
+  & .newIssueSummaryInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid $color__gray--border;
+    &:last-child {
+      border-bottom: none;
+    }
+    & .newIssueTitle {
+      flex: 4;
+    }
+    & .newIssueSummaryEdit {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      flex: 1;
+      color: $color__red
+    }
+  }
+}
