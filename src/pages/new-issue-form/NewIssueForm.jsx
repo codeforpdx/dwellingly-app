@@ -297,11 +297,13 @@ class NewIssueForm extends Component {
                      </span>
                    </div>
                    <div className="newIssueSummaryInfo padding--1em">
-                     <span className="newIssueTitle title">Urgancy Level</span>
-                     <span
-                       className={this.state.urgency === "high" ? "status status--high" : "status"}>
-                       {this.state.urgency}
-                     </span>
+                     <div className="newIssueTitle">
+                       <span className="title">Urgancy Level</span>
+                       <span
+                         className={this.state.urgency === "high" ? "status status--high" : "status"}>
+                         {this.state.urgency}
+                       </span>
+                     </div>
                      <span
                        className="newIssueSummaryEdit"
                        onClick={this.handleEditingSummary}
@@ -312,7 +314,7 @@ class NewIssueForm extends Component {
                    </div>
                    <div className="newIssueSummaryInfo padding--1em">
                      <span className="newIssueTitle msgbox">
-                       {this.state.issueNote}
+                       {this.state.issueNote.split('\n').map(i => <p>{i}</p>)}
                      </span>
                      <span
                        className="newIssueSummaryEdit"
