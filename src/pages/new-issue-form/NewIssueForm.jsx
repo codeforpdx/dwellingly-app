@@ -63,7 +63,7 @@ class NewIssueForm extends Component {
   handleSendingIssue() {
     this.setState(prevState => ({ issueSent: !prevState.issueSent }));
     setTimeout(() => {
-      window.location.replace(this.props.match.url, 'ongoing');
+      backURL(this.props.match.url, 'ongoing');
     }, 1000)
   }
 
