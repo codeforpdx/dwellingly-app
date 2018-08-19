@@ -61,9 +61,10 @@ class NewIssueForm extends Component {
   }
 
   handleSendingIssue() {
+    const { history, match } = this.props;
     this.setState(prevState => ({ issueSent: !prevState.issueSent }));
     setTimeout(() => {
-      backURL(this.props.match.url, 'ongoing');
+      history.push(backURL(match.url, 'ongoing'))
     }, 1000)
   }
 
@@ -352,6 +353,7 @@ class NewIssueForm extends Component {
 }
 
 NewIssueForm.propTypes = {
+  history: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({
     url: PropTypes.string,
     params: PropTypes.shape({
