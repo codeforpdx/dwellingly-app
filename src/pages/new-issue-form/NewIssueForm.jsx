@@ -65,7 +65,7 @@ class NewIssueForm extends Component {
     this.setState(prevState => ({ issueSent: !prevState.issueSent }));
     setTimeout(() => {
       history.push(backURL(match.url, 'ongoing'))
-    }, 1000)
+    }, 2100)
   }
 
   handleNoteInput(event) {

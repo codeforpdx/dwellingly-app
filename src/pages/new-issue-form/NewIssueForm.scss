@@ -28,10 +28,11 @@
   }
 }
 .newIssueSentSuccess {
-  height: 80px;
+  height: 140px;
   padding: 20px;
-  font-size: 3em;
-  background-color: lightgreen;
+  font-size: 5em;
+  color: $color__blue;
+  background-color: $color__white;
   width: calc(100% - 1em);
   border-radius: 10px;
   display: flex;
@@ -39,22 +40,22 @@
   align-items: center;
   margin: auto;
   position: absolute;
-  top: 50%;
+  top: 30%;
   right: 0;
   left: 0;
-  &.success {
-    animation: fade 2s linear;
-  }
-}
-
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
+  animation: fade 2.2s linear;
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }
 }
