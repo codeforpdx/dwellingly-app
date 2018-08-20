@@ -17,7 +17,19 @@ export const COMMON = defineMessages({
   APP_TITLE: {
     id: 'components.example.app.title',
     defaultMessage: 'JOIN Messenger'
-  }
+  },
+  CONJUNCTION_AND: {
+    id: 'common.conjunction_and',
+    defaultMessage: 'and',
+  },
+  CONJUNCTION_BUT: {
+    id: 'common.conjunction_but',
+    defaultMessage: 'but',
+  },
+  CONJUNCTION_OR: {
+    id: 'common.conjunction_or',
+    defaultMessage: 'or',
+  },
 });
 
 export const ADMIN = defineMessages( {
@@ -37,11 +49,46 @@ export const ADMIN = defineMessages( {
 
 /* Form messages */
 export const FORMS = defineMessages({
+  EMAIL_LABEL: {
+    id: 'form.email.label',
+    defaultMessage: 'Email'    
+  },
+  EMAIL_PLACEHOLDER: {
+    id: 'form.email.placeholder',
+    defaultMessage: 'email address (i.e., email@example.com)'    
+  },
+  ERROR_MATCH_PASSWORD: {
+    id: 'form.error.match_password',
+    defaultMessage: 'Please make sure your passwords match.'    
+  },
+  PASSWORD_LABEL: {
+    id: 'form.password.label',
+    defaultMessage: 'Password'    
+  },
+  PASSWORD_PLACEHOLDER: {
+    id: 'form.password.placeholder',
+    defaultMessage: 'your password'    
+  },
+  PASSWORD_CONFIRM_LABEL: {
+    id: 'form.password_confirm.label',
+    defaultMessage: 'Confirm Password'    
+  },
+  PASSWORD_CONFIRM_PLACEHOLDER: {
+    id: 'form.password_confirm.placeholder',
+    defaultMessage: 'confirm your password'    
+  },
   SUBMIT: {
     id: 'form.button.submit',
     defaultMessage: 'Submit'
   }
 });
+
+export const LOGIN = defineMessages({
+  LABEL_GOOGLE_LOGIN: {
+    id: 'login.label.google_login',
+    defaultMessage: 'Login with Google',
+  },
+})
 
 /* Navigation messages */
 export const NAVIGATION = defineMessages({
@@ -153,7 +200,36 @@ export const PRIVACY = defineMessages({
     id: 'privacy.title',
     defaultMessage: '{org} Privacy Policy'
   },
+  TITLE_STANDALONE: {
+    id: 'privacy.title.standalone',
+    defaultMessage: 'Privacy Policy'
+  },
 });
+
+/* SIGNUP messages */
+export const SIGNUP = defineMessages({
+  CREATE_ACCOUNT_EMAIL: {
+    id: 'signup.title',
+    defaultMessage: 'Create an account using and email and password',
+  },
+  CREATE_ACCOUNT_GOOGLE: {
+    id: 'signup.title',
+    defaultMessage: 'Use your Google account',
+  },
+  INSTRUCTIONS: {
+    id: 'signup.instructions',
+    defaultMessage: 'By creating an account, you acknowledge that you have read our ',
+  },
+  INSTRUCTIONS_GOOGLE: {
+    id: 'signup.instructions.google',
+    defaultMessage: 'Sign up using your Google account',
+  },
+  TITLE: {
+    id: 'signup.title',
+    defaultMessage: 'Create an Account for {org} {appname}',
+  },
+});
+
 
 /* Terms-conditions messages */
 export const TERMS = defineMessages({
@@ -163,8 +239,24 @@ export const TERMS = defineMessages({
   },
   PARAGRAPH_01: {
     id: 'terms.paragaraph_01',
-    defaultMessage: 'There are some terms and conditions and we will have them once we talk to a lawyer',
-  }
+    defaultMessage: 'There are some terms and conditions and we will have them once we talk to a lawyer!',
+  },
+  PARAGRAPH_02: {
+    id: 'terms.paragaraph_02',
+    defaultMessage: 'Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea. Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.',
+  },
+  PARAGRAPH_03: {
+    id: 'terms.paragaraph_03',
+    defaultMessage: 'Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley jícama salsify.',
+  },
+  PARAGRAPH_04: {
+    id: 'terms.paragaraph_04',
+    defaultMessage: 'Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut jícama green bean celtuce collard greens avocado quandong fennel gumbo black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd. Gumbo kakadu plum komatsuna black-eyed pea green bean zucchini gourd winter purslane silver beet rock melon radish asparagus spinach.',
+  },
+  PARAGRAPH_05: {
+    id: 'terms.paragaraph_05',
+    defaultMessage: 'Soko radicchio bunya nuts gram dulse silver beet parsnip napa cabbage lotus root sea lettuce brussels sprout cabbage. Catsear cauliflower garbanzo yarrow salsify chicory garlic bell pepper napa cabbage lettuce tomato kale arugula melon sierra leone bologi rutabaga tigernut. Sea lettuce gumbo grape kale kombu cauliflower salsify kohlrabi okra sea lettuce broccoli celery lotus root carrot winter purslane turnip greens garlic. Jícama garlic courgette coriander radicchio plantain scallion cauliflower fava bean desert raisin spring onion chicory bunya nuts. Sea lettuce water spinach gram fava bean leek dandelion silver beet eggplant bush tomato.',
+  },
 });
 
 /* User-related messages */

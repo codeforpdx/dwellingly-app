@@ -11,6 +11,7 @@ function InputContent({
   children,
   id, // identifier for use with htmlFor and key properties
   label,
+  maxLength, // maximum length
   model, // value of key in state
   name, // name of input
   onChange, // passes along the onChange function through props
@@ -25,6 +26,7 @@ function InputContent({
       <span className={`${blockClass}__label`}>{label}</span>
       <input
         id={id}
+        maxLength={maxLength || 200}
         name={name}
         onChange={onChange}
         placeholder={placeholder}

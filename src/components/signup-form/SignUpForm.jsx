@@ -1,7 +1,8 @@
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
+import Input from '../input/Input';
 import { auth } from '../../firebase';
-import { FORMS } from '../../translations/messages';
+import { SIGNUP, FORMS } from '../../translations/messages';
 
 import './SignUpForm.scss';
 
@@ -16,7 +17,6 @@ class SignUpForm extends React.Component {
       email: '',
       password: '',
       passwordConfirm: '',
-      submit: false,
       error: null,
     };
   }
@@ -37,7 +37,6 @@ class SignUpForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ submit: true });
     auth.doCreateUserWithEmailAndPassword(this.state.email, this.state.password);
   }
 
@@ -53,35 +52,57 @@ class SignUpForm extends React.Component {
     return (
       <div className="dashboard">
         <h2>
-          Create account using email address
+          {intl.formatMessage(SIGNUP.CREATE_ACCOUNT_EMAIL)}
         </h2>
         <form name="loginEmail" method="POST" onSubmit={this.handleSubmit} className="signupForm">
-          <label htmlFor="email">
-            Email
-            <input name="email" type="email" value={this.state.email} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="password">
-            Password
-            <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="passwordConfirm">
-            Confirm Password
-            <input name="passwordConfirm" type="password" value={this.state.passwordConfirm} onChange={this.handleInputChange} />
-          </label>
-          { this.state.submit }
-          <input
+          <fieldset>
+            <Input
+              id="signup-email"
+              label={intl.formatMessage(FORMS.EMAIL_LABEL)}
+              name="email"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.EMAIL_PLACEHOLDER)}
+              type="email"
+              value={this.state.email}
+              variants={['full']}
+            />
+            <Input
+              id="signup-password"
+              label={intl.formatMessage(FORMS.PASSWORD_LABEL)}
+              name="password"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.PASSWORD_PLACEHOLDER)}
+              type="password"
+              value={this.state.password}
+              variants={['full']}
+            />
+            <Input
+              id="signup-password-confirm"
+              label={intl.formatMessage(FORMS.PASSWORD_CONFIRM_LABEL)}
+              name="passwordConfirm"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.PASSWORD_CONFIRM_PLACEHOLDER)}
+              type="password"
+              value={this.state.passwordConfirm}
+              variants={['full']}
+            />
+          </fieldset>
+          { passwordsDoNotMatch
+            && (
+              <p>
+                {intl.formatMessage(FORMS.ERROR_MATCH_PASSWORD)}
+              </p>
+            )
+          }
+          <button
+            className="btn btn--strong"
             type="submit"
-            value={intl.formatMessage(FORMS.SUBMIT)}
             disabled={disableForm}
-          />
+          >
+            {intl.formatMessage(FORMS.SUBMIT)}
+          </button>
         </form>
-        { passwordsDoNotMatch
-          && (
-            <p>
-              Please make sure your passwords match
-            </p>
-          )
-        }
+
         { this.state.error
           && (
           <p>

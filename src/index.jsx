@@ -41,6 +41,7 @@ import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
 import Settings from './pages/settings/Settings';
+import Signup from './pages/signup/Signup';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
 import TermsConditions from './pages/terms-conditions/TermsConditions';
@@ -125,6 +126,7 @@ ReactDOM.render(
               <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
               <Route path={ROUTES.LOGIN} component={Login} />
               <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
+              <Route path={ROUTES.SIGNUP} component={Signup} />
               <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
               <PrivateRoute path={ROUTES.ROOT} component={Home} />
             </Switch>

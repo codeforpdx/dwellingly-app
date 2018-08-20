@@ -7,6 +7,7 @@ export const SETTINGS = {
   APOLLO_SERVER: 'https://my-app-kxybtzpvrq.now.sh', // ZEIT: 'https://my-app-kxybtzpvrq.now.sh' | LOCALHOST:  'http://localhost:4000'
 
   ORGANIZATION: 'JOIN',
+  APP_NAME: 'Messenger',
   DOMAIN: 'messenger.joinpdx.org',
   CONTACT_EMAIL: 'info@joinpdx.org',
 };

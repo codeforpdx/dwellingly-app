@@ -5,7 +5,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
 // import { Input } from '../input/Input';
 import Input from '../input/Input';
-import { fakeAuth } from '../../utils';
+// import { fakeAuth } from '../../utils';
 import { FORMS } from '../../translations/messages';
 
 class LoginForm extends React.Component {
@@ -42,10 +42,10 @@ class LoginForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ submit: true });
-    // auth.doSignInWithEmailAndPassword(this.state.email, this.state.password);
-    fakeAuth.authenticate(() => {
-      this.setState({ redirectToReferrer: true });
-    });
+    auth.doSignInWithEmailAndPassword(this.state.email, this.state.password);
+    // fakeAuth.authenticate(() => {
+    //  this.setState({ redirectToReferrer: true });
+    // });
   }
 
   render() {
@@ -60,6 +60,7 @@ class LoginForm extends React.Component {
 
     return (
       <section className="main width-wrapper">
+        <h2>Login with email and password</h2>
         <form
           name="loginEmail"
           method="POST"
@@ -90,16 +91,15 @@ class LoginForm extends React.Component {
           <div className="form-meta">
             <button
               className="btn btn--lg btn--strong btn--block"
-              disabled={disableForm && this.state.submit}
+              disabled={disableForm && !this.state.submit}
               type="submit">
               {intl.formatMessage(FORMS.SUBMIT)}
             </button>
             <br />
             <br />
             <Link to="/forgot-password">Forgot Password</Link>
-            <br />
-            <br />
-            <br />
+            <div className="separator">OR</div>
+            <h2>Login with Google</h2>
             <button
               type="button"
               className="btn btn--lg btn--strong btn--block"

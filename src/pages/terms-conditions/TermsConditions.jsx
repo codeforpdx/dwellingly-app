@@ -17,6 +17,10 @@ const TermsConditions = ({intl}) => (
     <section className="main width-wrapper">
       <div className="textblock">
         <p>{intl.formatMessage(TERMS.PARAGRAPH_01)}</p>
+        <p>{intl.formatMessage(TERMS.PARAGRAPH_02)}</p>
+        <p>{intl.formatMessage(TERMS.PARAGRAPH_03)}</p>
+        <p>{intl.formatMessage(TERMS.PARAGRAPH_04)}</p>
+        <p>{intl.formatMessage(TERMS.PARAGRAPH_05)}</p>
       </div>
     </section>
   </div>
