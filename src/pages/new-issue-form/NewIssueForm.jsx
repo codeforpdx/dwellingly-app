@@ -299,62 +299,56 @@ class NewIssueForm extends Component {
              <Card types={[CARD_TYPES.FORM]}>
                <Card.Content>
                  <div className="card__summary">
-                   <div className="newIssueSummaryInfo padding--1em">
-                     <span className="newIssueTitle title">{this.state.issue}</span>
-                     <span
-                       className="newIssueSummaryEdit"
-                       onClick={this.handleEditingSummary}
-                       role="presentation"
-                       id="issueType">
-                       <Icon icon="pencil" />
-                     </span>
-                   </div>
-                   <div className="newIssueSummaryInfo padding--1em">
-                     <div className="newIssueTitle">
-                       <span className="title">Urgancy Level</span>
-                       <span
-                         className={this.state.urgency === "high" ? "status status--high" : "status"}>
-                         {this.state.urgency}
-                       </span>
-                     </div>
-                     <span
-                       className="newIssueSummaryEdit"
-                       onClick={this.handleEditingSummary}
-                       role="presentation"
-                       id="urgancy">
-                       <Icon icon="pencil" />
-                     </span>
-                   </div>
-                   <div className="newIssueSummaryInfo padding--1em">
-                     <span className="newIssueTitle msgbox">
-                       {this.state.issueNote.split('\n').map(i => <p>{i}</p>)}
-                     </span>
-                     <span
-                       className="newIssueSummaryEdit"
-                       onClick={this.handleEditingSummary}
-                       role="presentation"
-                       id="attachments">
-                       <Icon icon="pencil" />
-                     </span>
-                   </div>
+                   {!this.state.issueSent ?
+                     <div>
+                       <div className="newIssueSummaryInfo padding--1em">
+                         <span className="newIssueTitle title">{this.state.issue}</span>
+                         <span
+                           className="newIssueSummaryEdit"
+                           onClick={this.handleEditingSummary}
+                           role="presentation"
+                           id="issueType">
+                           <Icon icon="pencil" />
+                         </span>
+                       </div>
+                       <div className="newIssueSummaryInfo padding--1em">
+                         <div className="newIssueTitle">
+                           <span className="title">Urgancy Level</span>
+                           <span
+                             className={this.state.urgency === "high" ? "status status--high" : "status"}>
+                             {this.state.urgency}
+                           </span>
+                         </div>
+                         <span
+                           className="newIssueSummaryEdit"
+                           onClick={this.handleEditingSummary}
+                           role="presentation"
+                           id="urgancy">
+                           <Icon icon="pencil" />
+                         </span>
+                       </div>
+                       <div className="newIssueSummaryInfo padding--1em">
+                         <span className="newIssueTitle msgbox">
+                           {this.state.issueNote.split('\n').map(i => <p>{i}</p>)}
+                         </span>
+                         <span
+                           className="newIssueSummaryEdit"
+                           onClick={this.handleEditingSummary}
+                           role="presentation"
+                           id="attachments">
+                           <Icon icon="pencil" />
+                         </span>
+                       </div>
+                     </div> :
+                     <div className={!this.state.issueSent ? "newIssueSent error" : "newIssueSent success"}>
+                       {!this.state.issueSentError ? <Icon icon="checkbox" /> : <Icon icon="close" />}
+                       <p className="issueStatusText">{this.state.issueSent ? "Sent!" : "Error!"}</p>
+                     </div>}
                  </div>
                </Card.Content>
              </Card>
-           </div>
-          : null}
+           </div> : null}
         </section>
-        {this.state.issueSent ?
-          <div className={!this.state.issueSent ? "newIssueSent" : "newIssueSent success"}>
-            <Icon icon="checkbox" />
-            <p className="issueStatusText">Sent!</p>
-          </div>
-        : null}
-        {this.state.issueSentError ?
-          <div className={this.state.issueSentError ? "newIssueSent error" : null}>
-            <Icon icon="close" />
-            <p className="issueStatusText">Error!</p>
-          </div>
-        : null}
       </div>
     );
   }

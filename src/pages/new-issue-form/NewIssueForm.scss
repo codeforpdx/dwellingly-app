@@ -28,11 +28,8 @@
   }
 }
 .newIssueSent {
-  height: 180px;
-  width: calc(100% - 1em);
-  max-width: $width__wrapper;
   padding: 30px;
-  font-size: 5em;
+  font-size: 4.5em;
   background-color: $color__white;
   border-radius: 10px;
   display: flex;
@@ -54,7 +51,7 @@
   }
   & .issueStatusText  {
     margin-top: 2rem;
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   @keyframes fade {
     0% {
