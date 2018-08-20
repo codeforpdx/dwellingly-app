@@ -38,7 +38,6 @@
   align-items: center;
   margin: auto;
   position: absolute;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   top: 30%;
   right: 0;
   left: 0;
@@ -50,7 +49,7 @@
     color: $color__red;
   }
   & .issueStatusText  {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     font-size: 2.5rem;
   }
   @keyframes fade {

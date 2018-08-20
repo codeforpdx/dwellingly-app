@@ -207,7 +207,6 @@ class NewIssueForm extends Component {
               </div>
             )}
           </Header>
-
         <section className="main width-wrapper">
           {this.state.step === 'issueType' ? (
             <fieldset>
@@ -275,25 +274,8 @@ class NewIssueForm extends Component {
                 </p>
               </div>
               <textarea placeholder="Add a note..." rows="8" value={this.state.issueNote} onChange={this.handleNoteInput} autoFocus />
-              {/*
-                this.state.issueNote.length > 0 ?
-                  <div className="padding--1em">
-                    <MessageBox message={this.state.issueNote} />
-                  </div> :
-                  <Input type="button" onClick={() => {this.handleAddingNote()}}>
-                    Add Note
-                  </Input>
-              <Input type="button" url="/tickets">
-                Add Photo
-              </Input>
-            */ }
             </fieldset>
           ) : null}
-          {/* this.state.issueAddingNote ? (
-            <fieldset>
-              <textarea placeholder="Add a note..." rows="8" onChange={this.handleNoteInput} autoFocus />
-            </fieldset>
-          ) : null */}
           {this.state.step === 'summary' ?
            <div className="newIssueSummary padding--1em">
              <Card types={[CARD_TYPES.FORM]}>
