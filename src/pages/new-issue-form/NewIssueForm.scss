@@ -28,30 +28,36 @@
   }
 }
 .newIssueSentSuccess {
-  height: 140px;
-  padding: 20px;
+  height: 180px;
+  padding: 30px;
   font-size: 5em;
   color: $color__blue;
   background-color: $color__white;
   width: calc(100% - 1em);
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
   position: absolute;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   top: 30%;
   right: 0;
   left: 0;
-  animation: fade 2.2s linear;
+  animation: fade 1.2s linear;
+  p  {
+    margin-top: 2rem;
+    font-size: 3rem;
+  }
   @keyframes fade {
     0% {
       opacity: 0;
     }
-    25% {
+    15% {
       opacity: 1;
     }
-    50% {
+    80% {
       opacity: 1;
     }
     100% {

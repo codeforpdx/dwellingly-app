@@ -65,7 +65,7 @@ class NewIssueForm extends Component {
     this.setState(prevState => ({ issueSent: !prevState.issueSent }));
     setTimeout(() => {
       history.push(backURL(match.url, 'ongoing'))
-    }, 2100)
+    }, 1100)
   }
 
   handleNoteInput(event) {
@@ -345,6 +345,7 @@ class NewIssueForm extends Component {
         {this.state.issueSent ?
           <div className={!this.state.issueSent ? "newIssueSentSuccess" : "newIssueSentSuccess .success"}>
             <Icon icon="checkbox" />
+            <p>Sent!</p>
           </div>
           : null}
       </div>
