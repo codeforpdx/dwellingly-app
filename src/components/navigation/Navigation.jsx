@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
+import UserControls from '../user-controls/UserControls';
 import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
 
@@ -31,6 +32,7 @@ class Navigation extends Component {
     if (user.role !== ROLES.PROPERTY_MANAGER) {
       return (
         <div className="navigation">
+          <UserControls />
           {desktopOnly && (
             <NavigationContent intl={intl} type="desktop" user={user} />
           )}
