@@ -1,15 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import Header from '../header/Header';
 import Input from '../input/Input';
-
-import './EmergencyNumberForm.scss';
 import { ROUTES } from '../../constants/constants';
 import { FORMS } from '../../translations/messages';
+
+import './EmergencyNumberForm.scss';
 
 class FormCreateEmergencyNumber extends React.Component {
   static handleSubmit(event) {
@@ -48,30 +45,8 @@ class FormCreateEmergencyNumber extends React.Component {
 
   render() {
     const { intl } = this.props;
-    const { title, number01, number02, sortOrder } = this.state;
-    const disableForm = title === '' || !number01;
 
-    const POST_MUTATION = gql`
-      mutation createEmergencyNum(
-        $title: String!
-        $number01: String!
-        $number02: String
-        $sortOrder: Int
-      ) {
-        createEmergencyNum(
-          title: $title
-          number01: $number01
-          number02: $number02
-          sortOrder: $sortOrder
-        ) {
-          title
-          number01
-          number02
-          sortOrder
-        }
-      }
-    `;
-    const successRoute = ROUTES.ADMIN;
+    const disableForm = (this.state.title === '' || !this.state.number01);
 
     return (
       <form
@@ -86,25 +61,6 @@ class FormCreateEmergencyNumber extends React.Component {
                 <Link to="/" className="action action--strong action--left">
                   Cancel
                 </Link>
-                <Mutation
-                  mutation={POST_MUTATION}
-                  variables={{
-                    title,
-                    number01,
-                    number02,
-                    sortOrder
-                  }}
-                  onCompleted={() => this.props.history.push(successRoute)}>
-                  {createEmergencyNumber => (
-                    <button
-                      className="action action--strong action--right"
-                      type="submit"
-                      disabled={disableForm}
-                      onClick={createEmergencyNumber}>
-                      {intl.formatMessage(FORMS.SUBMIT)}
-                    </button>
-                  )}
-                </Mutation>
               </div>
               <Header.Label label="Create Emergency Number" type="basic" />
             </div>
@@ -146,26 +102,20 @@ class FormCreateEmergencyNumber extends React.Component {
               value={this.state.sortOrder}
             />
           </fieldset>
-          {this.state.submit}
+          {
+            createEmergencyNumber => (
+              <button
+                type="submit"
+                className="action action--strong action--right"
+                disabled={disableForm}
+                onClick={createEmergencyNumber}
+              >
+                {intl.formatMessage(FORMS.SUBMIT)}
+              </button>
+            )
+          }
 
-          <Mutation
-            mutation={POST_MUTATION}
-            variables={{
-              title, number01, number02, sortOrder,
-            }}
-            onCompleted={() => this.props.history.push(successRoute)}
-          >
-            {
-              createEmergencyNumber => (
-                <button
-                  type="submit"
-                  className="btn btn--lg btn--strong"
-                  disabled={disableForm}
-                  onClick={createEmergencyNumber}
-                >{intl.formatMessage(FORMS.SUBMIT)}</button>
-              )
-            }
-          </Mutation>
+          { this.state.submit }
           { this.state.error
             && (
             <div className="form-meta">
@@ -183,14 +133,7 @@ class FormCreateEmergencyNumber extends React.Component {
 
 FormCreateEmergencyNumber.propTypes = {
   intl: intlShape.isRequired,
-  history: PropTypes.shape({
-    name: PropTypes.string,
-    push: PropTypes.func
-  })
 };
 
-FormCreateEmergencyNumber.defaultProps = {
-  history: null
-};
 
 export default withRouter(injectIntl(FormCreateEmergencyNumber));
