@@ -27,13 +27,13 @@
     }
   }
 }
-.newIssueSentSuccess {
+.newIssueSent {
   height: 180px;
+  width: calc(100% - 1em);
+  max-width: $width__wrapper;
   padding: 30px;
   font-size: 5em;
-  color: $color__blue;
   background-color: $color__white;
-  width: calc(100% - 1em);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -46,7 +46,13 @@
   right: 0;
   left: 0;
   animation: fade 1.2s linear;
-  p  {
+  &.success {
+    color: $color__green;
+  }
+  &.error {
+    color: $color__red;
+  }
+  & .issueStatusText  {
     margin-top: 2rem;
     font-size: 3rem;
   }
@@ -54,7 +60,7 @@
     0% {
       opacity: 0;
     }
-    15% {
+    12% {
       opacity: 1;
     }
     80% {

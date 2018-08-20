@@ -40,6 +40,7 @@ class NewIssueForm extends Component {
     this.state = {
       step: 'issueType',
       issueSent: false,
+      issueSentError: false,
       issueNote: '',
       urgency: 'low'
     };
@@ -343,11 +344,17 @@ class NewIssueForm extends Component {
           : null}
         </section>
         {this.state.issueSent ?
-          <div className={!this.state.issueSent ? "newIssueSentSuccess" : "newIssueSentSuccess .success"}>
+          <div className={!this.state.issueSent ? "newIssueSent" : "newIssueSent success"}>
             <Icon icon="checkbox" />
-            <p>Sent!</p>
+            <p className="issueStatusText">Sent!</p>
           </div>
-          : null}
+        : null}
+        {this.state.issueSentError ?
+          <div className={this.state.issueSentError ? "newIssueSent error" : null}>
+            <Icon icon="close" />
+            <p className="issueStatusText">Error!</p>
+          </div>
+        : null}
       </div>
     );
   }
