@@ -6,7 +6,7 @@ import Input from '../../components/input/Input';
 import RadioArray from '../../components/input/RadioArray';
 // import MessageBox from '../../components/MessageBox/MessageBox';
 import Icon from '../../components/icon/Icon';
-import Card from '../../components/Card/Card';
+import Card from '../../components/card/Card';
 import { CARD_TYPES } from '../../constants/constants';
 import { backURL } from '../../utils';
 
