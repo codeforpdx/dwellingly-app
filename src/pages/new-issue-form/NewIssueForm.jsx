@@ -139,18 +139,6 @@ class NewIssueForm extends Component {
                         </button> :
                       null
                     }
-                    { /*
-                      this.state.step  ?
-                        <button
-                          type="button"
-                          aria-label="Next"
-                          className="action action--strong action--right"
-                          onClick={this.handleSavingNote}
-                          disabled={!this.state.issue}>
-                          Save
-                        </button> :
-                      null
-                    */ }
                   </div>
                   <Header.Label label="New Issue" type="basic" />
                 </div> :
