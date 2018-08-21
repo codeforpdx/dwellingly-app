@@ -315,6 +315,7 @@ class NewIssueForm extends Component {
                      <div className={!this.state.issueSent ? "newIssueSent error" : "newIssueSent success"}>
                        {!this.state.issueSentError ? <Icon icon="checkbox" /> : <Icon icon="close" />}
                        <p className="issueStatusText">{this.state.issueSent ? "Sent!" : "Error!"}</p>
+                       <p className="issueStatusMessage">Message status goes here. Lorem ipsum dolar set</p>
                        {!this.state.issueSentError ?
                        <button
                          type="button"
