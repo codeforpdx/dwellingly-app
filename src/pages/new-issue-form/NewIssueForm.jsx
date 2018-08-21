@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import RadioArray from '../../components/input/RadioArray';
-// import MessageBox from '../../components/MessageBox/MessageBox';
 import Icon from '../../components/icon/Icon';
 import Card from '../../components/card/Card';
 import { CARD_TYPES } from '../../constants/constants';
@@ -26,6 +25,7 @@ class NewIssueForm extends Component {
     this.handleNoteInput = this.handleNoteInput.bind(this);
     this.handleEditingSummary = this.handleEditingSummary.bind(this);
     this.handleSendingIssue = this.handleSendingIssue.bind(this);
+    this.handleAcceptingSentSummary = this.handleAcceptingSentSummary.bind(this);
 
     this.issueOptions = [
       { unpaidRent: 'Unpaid Rent' },
@@ -62,11 +62,12 @@ class NewIssueForm extends Component {
   }
 
   handleSendingIssue() {
-    const { history, match } = this.props;
     this.setState(prevState => ({ issueSent: !prevState.issueSent }));
-    setTimeout(() => {
-      history.push(backURL(match.url, 'ongoing'))
-    }, 1100)
+  }
+
+  handleAcceptingSentSummary() {
+    const { history, match } = this.props;
+    history.push(backURL(match.url, 'ongoing'))
   }
 
   handleNoteInput(event) {
@@ -146,25 +147,24 @@ class NewIssueForm extends Component {
                   {tenant && (
                     <div>
                       <div className="actions">
-                        { this.state.step === 'summary' ?
-                          <button
-                            type="button"
-                            aria-label="Back"
-                            className="action action--strong action--left"
-                            onClick={this.handleGoingBack}>
-                            Back
-                          </button> :
-                          null
-                        }
                         {this.state.step === 'summary' &&
                         !this.state.issueSent ?
-                          <button
-                            type="button"
-                            aria-label="Send"
-                            className="action action--strong action--right"
-                            onClick={this.handleSendingIssue}>
-                            Send
-                          </button> :
+                          <div>
+                            <button
+                              type="button"
+                              aria-label="Back"
+                              className="action action--strong action--left"
+                              onClick={this.handleGoingBack}>
+                              Back
+                            </button>
+                            <button
+                              type="button"
+                              aria-label="Send"
+                              className="action action--strong action--right"
+                              onClick={this.handleSendingIssue}>
+                              Send
+                            </button>
+                          </div> :
                           null
                         }
                       </div>
@@ -270,7 +270,8 @@ class NewIssueForm extends Component {
              <Card types={[CARD_TYPES.FORM]}>
                <Card.Content>
                  <div className="card__summary">
-                   {!this.state.issueSent ?
+                   {!this.state.issueSent &&
+                    !this.state.issueSentError ?
                      <div>
                        <div className="newIssueSummaryInfo padding--1em">
                          <span className="newIssueTitle title">{this.state.issue}</span>
@@ -314,6 +315,19 @@ class NewIssueForm extends Component {
                      <div className={!this.state.issueSent ? "newIssueSent error" : "newIssueSent success"}>
                        {!this.state.issueSentError ? <Icon icon="checkbox" /> : <Icon icon="close" />}
                        <p className="issueStatusText">{this.state.issueSent ? "Sent!" : "Error!"}</p>
+                       {!this.state.issueSentError ?
+                       <button
+                         type="button"
+                         className="btn btn--strong summaryButton"
+                         onClick={this.handleAcceptingSentSummary}>
+                         Ok
+                       </button> :
+                       <button
+                         type="button"
+                         className="btn btn--strong btn--urgent summaryButton"
+                         onClick={this.handleAcceptingSentSummary}>
+                         Retry
+                       </button>}
                      </div>}
                  </div>
                </Card.Content>

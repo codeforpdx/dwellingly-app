@@ -29,7 +29,7 @@
 }
 .newIssueSent {
   padding: 30px;
-  font-size: 4.5em;
+  font-size: 4em;
   background-color: $color__white;
   border-radius: 10px;
   display: flex;
@@ -41,29 +41,27 @@
   top: 30%;
   right: 0;
   left: 0;
-  animation: fade 1.2s linear;
+  animation: fade 1s linear;
   &.success {
-    color: $color__green;
+    color: $color__blue;
   }
   &.error {
     color: $color__red;
   }
   & .issueStatusText  {
-    margin-top: 1.5rem;
-    font-size: 2.5rem;
+    margin-top: .5rem;
+    font-size: 2rem;
+  }
+  & .summaryButton {
+    font-size: 1rem;
+    margin-top: .5rem;
   }
   @keyframes fade {
     0% {
       opacity: 0;
     }
-    12% {
-      opacity: 1;
-    }
-    80% {
-      opacity: 1;
-    }
     100% {
-      opacity: 0;
+      opacity: 1;
     }
   }
 }
