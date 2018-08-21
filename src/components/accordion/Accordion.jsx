@@ -24,46 +24,48 @@ class Accordion extends Component {
         {this.state.accordionOpen ?
           <div className="accordion__body">
             <table>
-              <tr>
-                <td>Tenant Name</td>
-                <td>Meerkat Manor</td>
-                <td>Outreach Name</td>
-                <td>
-                  <select>
-                    <option>Retention Name</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Tenant Name</td>
-                <td>Meerkat Manor</td>
-                <td>Outreach Name</td>
-                <td>
-                  <select>
-                    <option>Retention Name</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Tenant Name</td>
-                <td>Meerkat Manor</td>
-                <td>Outreach Name</td>
-                <td>
-                  <select>
-                    <option>Retention Name</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Tenant Name</td>
-                <td>Meerkat Manor</td>
-                <td>Outreach Name</td>
-                <td>
-                  <select>
-                    <option>Retention Name</option>
-                  </select>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Tenant Name</td>
+                  <td>Meerkat Manor<br/> Property Manager Name</td>
+                  <td>Outreach Name</td>
+                  <td>
+                    <select>
+                      <option>Retention Name</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tenant Name</td>
+                  <td>Meerkat Manor<br/> Property Manager Name</td>
+                  <td>Outreach Name</td>
+                  <td>
+                    <select>
+                      <option>Retention Name</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tenant Name</td>
+                  <td>Meerkat Manor<br/> Property Manager Name</td>
+                  <td>Outreach Name</td>
+                  <td>
+                    <select>
+                      <option>Retention Name</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tenant Name</td>
+                  <td>Meerkat Manor<br/> Property Manager Name</td>
+                  <td>Outreach Name</td>
+                  <td>
+                    <select>
+                      <option>Retention Name</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         : null}
