@@ -2,9 +2,10 @@ import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 // import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
-import EmergencyList from '../../components/emergency/EmergencyList';
+// import EmergencyList from '../../components/emergency/EmergencyList';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
+import Tile from '../../components/tile/Tile';
 import Icon from '../../components/icon/Icon';
 import { ROUTES } from '../../constants/constants';
 import { ADMIN } from '../../translations/messages';
@@ -42,9 +43,31 @@ class Administration extends React.Component {
         </Header>
 
         <section className="main width-wrapper">
-          {/* <EmergencyContactsList /> */}
-          <EmergencyList />
+          <h1>Admin Dashboard</h1>
+          <div className="admin__tiles">
+            <Tile
+              title="Open Tickets"
+              newTicketCount="4"
+              unreadTicketCount="2" />
+            <div className="admin__tile padding--1em">
+              <div className="admin__tile--heading">
+                <h3>Reports</h3>
+                <Icon icon="arrowRight" />
+              </div>
+            </div>
+            <div className="admin__tile padding--1em">
+              <div className="admin__tile--heading">
+                <h3>New PMs</h3>
+                <Icon icon="arrowRight" />
+              </div>
+            </div>
+          </div>
         </section>
+
+        {/* <section className="main width-wrapper">
+          <EmergencyContactsList />
+          <EmergencyList />
+        </section> */}
       </div>
     );
   }
