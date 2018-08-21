@@ -13,8 +13,14 @@ class Tile extends Component {
           <Icon icon="arrowRight" />
         </div>
         <div className="admin__tile--body">
-          <h3><span>{newTicketCount}</span> <span className="count--type">NEW</span></h3>
-          <p><span>{unreadTicketCount}</span> <span className="count--type">Unseen for 24 hours</span></p>
+          <div className="admin__tile--body-inner">
+            <h3><span>{newTicketCount}</span> <span className="count--type">NEW</span></h3>
+            <p><span>{unreadTicketCount}</span> <span className="count--type">Unseen for 24 hours</span></p>
+          </div>
+          <div className="admin__tile--body-inner">
+            <h3><span>{newTicketCount}</span> <span className="count--type">NEW</span></h3>
+            <p><span>{unreadTicketCount}</span> <span className="count--type">Unseen for 24 hours</span></p>
+          </div>
         </div>
       </div>
     )
