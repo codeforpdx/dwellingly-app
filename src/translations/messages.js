@@ -88,6 +88,10 @@ export const LOGIN = defineMessages({
     id: 'login.label.google_login',
     defaultMessage: 'Login with Google',
   },
+  LABEL_LOGOUT: {
+    id: 'login.logout',
+    defaultMessage: 'Logout',
+  },
 })
 
 /* Navigation messages */

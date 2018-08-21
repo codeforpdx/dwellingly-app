@@ -32,9 +32,11 @@ class Navigation extends Component {
     if (user.role !== ROLES.PROPERTY_MANAGER) {
       return (
         <div className="navigation">
-          <UserControls />
           {desktopOnly && (
-            <NavigationContent intl={intl} type="desktop" user={user} />
+            <div className="frontmatter">
+              <NavigationContent intl={intl} type="desktop" user={user} />
+              <UserControls type="desktop" />
+            </div>
           )}
           {!showMenu &&
             !desktopOnly && (

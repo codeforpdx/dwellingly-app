@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
 import SignupFormComponent from '../../components/signup-form/SignUpForm';
-import LoginWithGoogle from '../../components/login-form/LoginWithGoogle';
+import LoginWithGoogle from '../../components/login/LoginWithGoogle';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import { COMMON, PRIVACY, SIGNUP, TERMS } from '../../translations/messages';

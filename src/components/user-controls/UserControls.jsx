@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Cookies from 'universal-cookie';
 import firebase from 'firebase/app';
+import Logout from '../login/LogoutButton';
 import 'firebase/auth';
 import { USER } from '../../translations/messages';
+
+import './UserControls.scss';
 
 import {
   setUser,
@@ -23,35 +28,53 @@ class UserControls extends React.Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
+      const cookies = new Cookies();
+      const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
       if (user) {
         this.setState({ userId: user.email, activeUser: true });
         this.props.setUser(user);
+        const cookieExist = cookies.get('messengerUser');
+        if (!cookieExist) {
+          cookies.set(
+            'messengerUser', 
+            user.email,
+            { path: '/', expires: cookieExpiration,  }
+          );
+        }
       } else {
         this.setState({ userId: null, activeUser: false });
         this.props.clearUser();
+        cookies.remove('messengerUser');
       }
     });
   }
 
   render() {
     return (
-      <div>
+      <div className="user-controls">
         { this.props.user
+          && this.props.haveUser
           && (
-            <span>
+            <span className="user-id">
               { this.props.intl.formatMessage(USER.HELLO) }
               &nbsp;
               { this.state.userId }
               <br />
               { this.props.user.email }
+              <Logout />
             </span>
           )
         }
         { !this.state.activeUser
           && (
-            <span>
-              No user
-            </span>
+            <ul className="no-user">
+              <li>
+                <Link to="/signup">Signup</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            </ul>
           )
         }
       </div>
@@ -61,6 +84,7 @@ class UserControls extends React.Component {
 
 const mapStateToProps = ({ user }) => ({
   user: user.user,
+  haveUser: user.haveUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -75,6 +99,7 @@ UserControls.propTypes = {
     account_source: PropTypes.string,
     id: PropTypes.string,
   }),
+  haveUser: PropTypes.bool.isRequired,
   setUser: PropTypes.func.isRequired,
   clearUser: PropTypes.func.isRequired,
 };

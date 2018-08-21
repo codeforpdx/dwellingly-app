@@ -1,6 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import {
+  addError,
+} from '../dux/user';
+
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // Sign Up a user with email address and password
@@ -12,6 +16,7 @@ export function doCreateUserWithEmailAndPassword(email, password) {
     )
     .catch((error) => {
       // Handle Errors here.
+      addError(error);
       console.log(error);
     });
 }
@@ -23,6 +28,7 @@ export function doSignInWithEmailAndPassword(email, password) {
     .catch((error) => {
       // Handle Errors here.
       console.log(error.code, error.message);
+      return addError(error);
     });
 }
 
@@ -45,6 +51,7 @@ export function doSignInWithGoogle() {
     // The firebase.auth.AuthCredential type that was used.
     const { credential } = error.credential;
     console.log(errorCode, errorMessage, email, credential);
+    addError(error);
     // ...
   });
 }
