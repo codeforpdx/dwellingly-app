@@ -156,7 +156,8 @@ class NewIssueForm extends Component {
                           </button> :
                           null
                         }
-                        {this.state.step === 'summary' ?
+                        {this.state.step === 'summary' &&
+                        !this.state.issueSent ?
                           <button
                             type="button"
                             aria-label="Send"
