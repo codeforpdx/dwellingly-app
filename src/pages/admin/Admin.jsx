@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import Tile from '../../components/tile/Tile';
+import Accordion from '../../components/accordion/Accordion';
 import Icon from '../../components/icon/Icon';
 import { ROUTES } from '../../constants/constants';
 import { ADMIN } from '../../translations/messages';
@@ -58,6 +59,7 @@ class Administration extends React.Component {
               newTicketCount="4"
               unreadTicketCount="2" />
           </div>
+          <Accordion />
         </section>
 
         {/* <section className="main width-wrapper">
