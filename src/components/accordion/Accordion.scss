@@ -1,0 +1,32 @@
+@import "../../constants/constants.scss";
+
+.admin__accordion {
+  & .accordion__label {
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    background-color: $color__gray--light;
+    font-weight: 600;
+  }
+  & .accordion__body {
+    table {
+      border-spacing: 0;
+      box-sizing: border-box;
+      position: relative;
+      table-layout: fixed;
+      text-align: left;
+      width: 100%;
+      td {
+        border-bottom: 1px solid $color__gray--border;
+        padding: 1em 0;
+        select {
+          width: 100%;
+          height: 35px;
+          font-size: .9em;
+          font-weight: 100;
+          background: $color__white;
+        }
+      }
+    }
+  }
+}
