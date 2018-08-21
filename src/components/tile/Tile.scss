@@ -3,6 +3,7 @@
 .admin {
   &__tiles {
     display: flex;
+    margin: 3em 0;
   }
   &__tile {
     flex: 1;
@@ -27,7 +28,7 @@
       flex-direction: column;
       padding: 1em;
       &-inner {
-        border-bottom: 1px solid $color__gray--dark;
+        border-bottom: 1px solid $color__gray--border;
         margin-bottom: 1em;
         h3,
         p {
