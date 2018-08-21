@@ -49,18 +49,14 @@ class Administration extends React.Component {
               title="Open Tickets"
               newTicketCount="4"
               unreadTicketCount="2" />
-            <div className="admin__tile padding--1em">
-              <div className="admin__tile--heading">
-                <h3>Reports</h3>
-                <Icon icon="arrowRight" />
-              </div>
-            </div>
-            <div className="admin__tile padding--1em">
-              <div className="admin__tile--heading">
-                <h3>New PMs</h3>
-                <Icon icon="arrowRight" />
-              </div>
-            </div>
+            <Tile
+              title="Reports"
+              newTicketCount="4"
+              unreadTicketCount="2" />
+            <Tile
+              title="New PMs"
+              newTicketCount="4"
+              unreadTicketCount="2" />
           </div>
         </section>
 
