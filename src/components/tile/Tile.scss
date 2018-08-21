@@ -1,0 +1,35 @@
+@import '../../constants/constants.scss';
+
+.admin {
+  &__tiles {
+    display: flex;
+  }
+  &__tile {
+    flex: 1;
+    margin: 0 1rem;
+    padding: 1em;
+    background-color: $color__gray--lightest;
+    &--heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &--body {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      padding: 1em;
+      h3,
+      p {
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+        margin-bottom: .5em;
+        .count--type {
+          padding-left: 1em;
+          flex: 2;
+        }
+      }
+    }
+  }
+}
