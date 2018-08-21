@@ -19,7 +19,7 @@ class Administration extends React.Component {
   render() {
     const { intl } = this.props;
     return (
-      <div className="admin page">
+      <div className="admin page page--light">
         <Header>
           {() => (
             <div>
@@ -43,25 +43,30 @@ class Administration extends React.Component {
           )}
         </Header>
 
-        <section className="main width-wrapper">
-          <h1>Admin Dashboard</h1>
-          <div className="admin__tiles">
-            <Tile
-              title="Open Tickets"
-              newTicketCount="4"
-              unreadTicketCount="2" />
-            <Tile
-              title="Reports"
-              newTicketCount="4"
-              unreadTicketCount="2" />
-            <Tile
-              title="New PMs"
-              newTicketCount="4"
-              unreadTicketCount="2" />
+        <section className="main">
+          <div className="width-wrapper">
+            <h1>Admin Dashboard</h1>
+            <div className="admin__tiles">
+              <Tile
+                title="Open Tickets"
+                newTicketCount="4"
+                unreadTicketCount="2" />
+              <Tile
+                title="Reports"
+                newTicketCount="4"
+                unreadTicketCount="2" />
+              <Tile
+                title="New PMs"
+                newTicketCount="4"
+                unreadTicketCount="2" />
+            </div>
           </div>
-          <Accordion />
         </section>
-
+        <section className="main main--white">
+          <div className="width-wrapper">
+            <Accordion />
+          </div>
+        </section>
         {/* <section className="main width-wrapper">
           <EmergencyContactsList />
           <EmergencyList />
