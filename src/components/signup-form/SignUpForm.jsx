@@ -116,13 +116,15 @@ class SignUpForm extends React.Component {
               </p>
             )
           }
-          <button
-            className="btn btn--strong"
-            type="submit"
-            disabled={disableForm}
-          >
-            {intl.formatMessage(FORMS.SUBMIT)}
-          </button>
+          <div className="form-meta">
+            <button
+              className="btn btn--strong"
+              type="submit"
+              disabled={disableForm}
+            >
+              {intl.formatMessage(FORMS.CREATE_ACCOUNT)}
+            </button>
+          </div>
         </form>
 
         { this.state.error

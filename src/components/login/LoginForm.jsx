@@ -6,7 +6,7 @@ import { auth } from '../../firebase';
 // import { Input } from '../input/Input';
 import Input from '../input/Input';
 // import { fakeAuth } from '../../utils';
-import { FORMS } from '../../translations/messages';
+import { FORMS, LOGIN } from '../../translations/messages';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -59,8 +59,8 @@ class LoginForm extends React.Component {
     }
 
     return (
-      <section className="main width-wrapper">
-        <h2>Login with email and password</h2>
+      <section className="width-wrapper">
+        <h2>{intl.formatMessage(LOGIN.INSTRUCTIONS_EMAIL)}</h2>
         <form
           name="loginEmail"
           method="POST"
@@ -69,20 +69,20 @@ class LoginForm extends React.Component {
           <fieldset>
             <Input
               id="login-email"
-              label="Email"
+              label={intl.formatMessage(FORMS.EMAIL_LABEL)}
               name="email"
               onChange={this.handleChange}
-              placeholder="Email Address"
+              placeholder={intl.formatMessage(FORMS.EMAIL_PLACEHOLDER)}
               type="email"
               value={this.state.email}
               variants={['full']}
             />
             <Input
               id="login-password"
-              label="Password"
+              label={intl.formatMessage(FORMS.PASSWORD_LABEL)}
               name="password"
               onChange={this.handleChange}
-              placeholder="Password"
+              placeholder={intl.formatMessage(FORMS.PASSWORD_PLACEHOLDER)}
               type="password"
               value={this.state.password}
               variants={['full']}
@@ -90,22 +90,14 @@ class LoginForm extends React.Component {
           </fieldset>
           <div className="form-meta">
             <button
-              className="btn btn--lg btn--strong btn--block"
+              className="btn btn--strong"
               disabled={disableForm && !this.state.submit}
               type="submit">
-              {intl.formatMessage(FORMS.SUBMIT)}
+              {intl.formatMessage(FORMS.LOGIN)}
             </button>
             <br />
             <br />
             <Link to="/forgot-password">Forgot Password</Link>
-            <div className="separator">OR</div>
-            <h2>Login with Google</h2>
-            <button
-              type="button"
-              className="btn btn--lg btn--strong btn--block"
-              onClick={auth.doSignInWithGoogle}>
-              Login With Google
-            </button>
           </div>
         </form>
         {this.state.error && <p>{this.state.error}</p>}

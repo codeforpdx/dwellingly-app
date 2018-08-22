@@ -283,6 +283,14 @@ time {
   }
 }
 
+.separator {
+  margin: 1rem 0;
+}
+
+.allCaps {
+  text-transform: uppercase;
+}
+
 .progress {
   color: $color__yellow;
   font-weight: 700;

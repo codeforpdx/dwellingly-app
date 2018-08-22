@@ -3,11 +3,14 @@
     text-align: left;
   }
 
-  & .signup-conditions {
-    margin: 2rem 0 1rem 1rem;
+  & .signup--google {
+    margin: 2rem 0 0;
+    & h2 {
+      margin: 0 0 1rem 1rem;
+    }
   }
 
-  & .instructions--google {
-    margin: 0 0 1rem 1rem;
+  & .signup-conditions {
+    margin: 2rem 0 1rem 1rem;
   }
 }
