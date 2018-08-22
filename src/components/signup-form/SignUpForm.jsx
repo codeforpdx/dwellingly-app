@@ -15,6 +15,8 @@ class SignUpForm extends React.Component {
     this.handleError = this.handleError.bind(this);
     this.state = {
       email: '',
+      firstName: '',
+      lastName: '',
       password: '',
       passwordConfirm: '',
       error: null,
@@ -50,12 +52,32 @@ class SignUpForm extends React.Component {
     const disableForm = (this.state.email === '' || !this.state.password || !this.state.passwordConfirm || passwordsDoNotMatch);
 
     return (
-      <div className="dashboard">
-        <h2>
+      <div className="form form--signin">
+        <h2 className="align-left">
           {intl.formatMessage(SIGNUP.CREATE_ACCOUNT_EMAIL)}
         </h2>
         <form name="loginEmail" method="POST" onSubmit={this.handleSubmit} className="signupForm">
           <fieldset>
+            <Input
+              id="signup-firstName"
+              label={intl.formatMessage(FORMS.NAME_FIRST_LABEL)}
+              name="firstName"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.NAME_FIRST_PLACEHOLDER)}
+              type="text"
+              value={this.state.firstName}
+              variants={['full']}
+            />
+            <Input
+              id="signup-lastName"
+              label={intl.formatMessage(FORMS.NAME_LAST_LABEL)}
+              name="lastName"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.NAME_LAST_PLACEHOLDER)}
+              type="text"
+              value={this.state.lastName}
+              variants={['full']}
+            />
             <Input
               id="signup-email"
               label={intl.formatMessage(FORMS.EMAIL_LABEL)}

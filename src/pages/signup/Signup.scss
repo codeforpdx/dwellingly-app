@@ -1,0 +1,13 @@
+.page--signin {
+  & .align-left {
+    text-align: left;
+  }
+
+  & .signup-conditions {
+    margin: 2rem 0 1rem 1rem;
+  }
+
+  & .instructions--google {
+    margin: 0 0 1rem 1rem;
+  }
+}

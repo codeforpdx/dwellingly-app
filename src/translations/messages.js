@@ -61,6 +61,22 @@ export const FORMS = defineMessages({
     id: 'form.error.match_password',
     defaultMessage: 'Please make sure your passwords match.'    
   },
+  NAME_FIRST_LABEL: {
+    id: 'form.nameFirst.label',
+    defaultMessage: 'First Name'    
+  },
+  NAME_FIRST_PLACEHOLDER: {
+    id: 'form.nameFirst.placeholder',
+    defaultMessage: 'your first name'    
+  },
+  NAME_LAST_LABEL: {
+    id: 'form.nameLast.label',
+    defaultMessage: 'Last Name'    
+  },
+  NAME_LAST_PLACEHOLDER: {
+    id: 'form.nameLast.placeholder',
+    defaultMessage: 'your last name'    
+  },
   PASSWORD_LABEL: {
     id: 'form.password.label',
     defaultMessage: 'Password'    
@@ -214,7 +230,7 @@ export const PRIVACY = defineMessages({
 export const SIGNUP = defineMessages({
   CREATE_ACCOUNT_EMAIL: {
     id: 'signup.title',
-    defaultMessage: 'Create an account using and email and password',
+    defaultMessage: 'Sign up using and email and password',
   },
   CREATE_ACCOUNT_GOOGLE: {
     id: 'signup.title',

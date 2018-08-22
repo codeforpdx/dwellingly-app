@@ -8,8 +8,10 @@ import Navigation from '../../components/navigation/Navigation';
 import { COMMON, PRIVACY, SIGNUP, TERMS } from '../../translations/messages';
 import { SETTINGS } from '../../constants/constants';
 
+import './Signup.scss';
+
 const Signup = ({intl}) => (
-  <div className="page">
+  <div className="page page--signin">
     <Header>
       {() => (
         <div>
@@ -22,12 +24,12 @@ const Signup = ({intl}) => (
     </Header>
     <section className="main width-wrapper">
     <SignupFormComponent />
-      <p className="align-left">{intl.formatMessage(SIGNUP.INSTRUCTIONS)} <Link to="/terms-conditions">{intl.formatMessage(TERMS.TITLE)}</Link> {intl.formatMessage(COMMON.CONJUNCTION_AND)} <Link to="/privacy-policy">{intl.formatMessage(PRIVACY.TITLE_STANDALONE)}</Link>.</p>
+      <p className="signup-conditions align-left">{intl.formatMessage(SIGNUP.INSTRUCTIONS)} <Link to="/terms-conditions">{intl.formatMessage(TERMS.TITLE)}</Link> {intl.formatMessage(COMMON.CONJUNCTION_AND)} <Link to="/privacy-policy">{intl.formatMessage(PRIVACY.TITLE_STANDALONE)}</Link>.</p>
     </section>
-    <section  className="main width-wrapper">
-      <p>
+    <section className="main width-wrapper">
+      <h2 className="instructions--google align-left">
         {intl.formatMessage(SIGNUP.INSTRUCTIONS_GOOGLE)}
-      </p>
+      </h2>
       <LoginWithGoogle />
     </section>
   </div>
