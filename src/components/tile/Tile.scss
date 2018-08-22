@@ -3,13 +3,14 @@
 .admin {
   &__tiles {
     display: flex;
+    justify-content: space-between;
     margin: 3em 0;
   }
   &__tile {
     flex: 1;
     margin: 0 1rem;
     padding: 1em;
-    background-color: $color__gray--lightest;
+    // background-color: $color__gray--lightest;
     &:first-child {
       margin-left: 0;
     }
