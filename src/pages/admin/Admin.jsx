@@ -1,15 +1,16 @@
 import React from 'react';
-import { intlShape, injectIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
+// import { intlShape, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
+// import { Link } from 'react-router-dom';
 // import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
 // import EmergencyList from '../../components/emergency/EmergencyList';
-import Header from '../../components/header/Header';
-import Navigation from '../../components/navigation/Navigation';
+// import Header from '../../components/header/Header';
+// import Navigation from '../../components/navigation/Navigation';
 import Tile from '../../components/tile/Tile';
 import Accordion from '../../components/accordion/Accordion';
-import Icon from '../../components/icon/Icon';
-import { TILE_TYPES, ROUTES } from '../../constants/constants';
-import { ADMIN } from '../../translations/messages';
+// import Icon from '../../components/icon/Icon';
+// import { ROUTES } from '../../constants/constants';
+// import { ADMIN } from '../../translations/messages';
 
 class Administration extends React.Component {
   componentDidMount() {
@@ -17,10 +18,10 @@ class Administration extends React.Component {
   }
 
   render() {
-    const { intl } = this.props;
+    // const { intl } = this.props;
     return (
       <div className="admin page page--light">
-        <Header>
+        {/* <Header>
           {() => (
             <div>
               <Navigation />
@@ -41,13 +42,13 @@ class Administration extends React.Component {
               </nav>
             </div>
           )}
-        </Header>
+        </Header> */}
 
         <section className="main">
           <div className="width-wrapper">
-            <h1>Admin Dashboard</h1>
+            <h1 className="admin--header">Admin Dashboard</h1>
             <div className="admin__tiles">
-              <Tile types={[TILE_TYPES.TICKETS]}>
+              <Tile>
                 <Tile.Top title="Open Tickets"/>
                 <Tile.Content>
                   <Tile.Inner>
@@ -55,7 +56,7 @@ class Administration extends React.Component {
                     <p><span className="count--number">2</span> <span className="count--type count--time">Unseen for 24 hours</span></p>
                   </Tile.Inner>
                   <Tile.Inner>
-                    <h3><span className="count--number">34</span> <span className="count--type">COMPLIMENTS</span></h3>
+                    <h3><span className="count--number">34</span> <span className="count--type">IN PROGRESS</span></h3>
                     <p><span className="count--number">2</span> <span className="count--type count--time">Still in progress for 1 week</span></p>
                   </Tile.Inner>
                 </Tile.Content>
@@ -64,7 +65,7 @@ class Administration extends React.Component {
                 <Tile.Top title="Reports" />
                 <Tile.Content>
                   <Tile.Inner>
-                    <h3><span className="count--number">4</span> <span className="count--type">NEW</span></h3>
+                    <h3><span className="count--number">4</span> <span className="count--type">COMPLIMENTS</span></h3>
                     <p><span className="count--type count--time">in the last week</span></p>
                   </Tile.Inner>
                   <Tile.Inner>
@@ -89,6 +90,8 @@ class Administration extends React.Component {
         <section className="main main--white">
           <div className="width-wrapper">
             <Accordion />
+            <Accordion />
+            <Accordion />
           </div>
         </section>
         {/* <section className="main width-wrapper">
@@ -101,7 +104,7 @@ class Administration extends React.Component {
 }
 
 Administration.propTypes = {
-  intl: intlShape.isRequired
+  // intl: intlShape.isRequired
 };
 
 export default injectIntl(Administration);
