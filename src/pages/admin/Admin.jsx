@@ -115,19 +115,19 @@ class Administration extends React.Component {
             <Accordion>
               <Accordion.Label
                 label="New Retention Assignments (4)"
-                onToggle={() => this.handleClosingAccordion(this.state[0])} />
+                onToggle={() => this.handleClosingAccordion("accordion01")} />
               <Accordion.Table hidden={this.state.accordion01}/>
             </Accordion>
             <Accordion>
               <Accordion.Label
                 label="Requests For Access"
-                onToggle={() => this.handleClosingAccordion(this.state[1])} />
+                onToggle={() => this.handleClosingAccordion("accordion02")} />
               <Accordion.List hidden={this.state.accordion02} />
             </Accordion>
             <Accordion>
               <Accordion.Label
                 label="Tenants Ready To Archive"
-                onToggle={() => this.handleClosingAccordion(this.state[2])} />
+                onToggle={() => this.handleClosingAccordion("accordion03")} />
               <Accordion.Select hidden={this.state.accordion03} />
             </Accordion>
           </div>
