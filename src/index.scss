@@ -209,10 +209,21 @@ time {
   }
 
   .main {
-    flex-grow: 2;
-
+    // flex-grow: 2;
     &--white {
       background: $color__white;
+    }
+  }
+
+  &.admin {
+    .main {
+      & .admin--header {
+        text-align: left;
+        margin-top: 1em;
+      }
+      &--white {
+        height: 100%;
+      }
     }
   }
 
