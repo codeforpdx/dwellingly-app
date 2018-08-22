@@ -13,8 +13,20 @@ import Accordion from '../../components/accordion/Accordion';
 // import { ADMIN } from '../../translations/messages';
 
 class Administration extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      accordionOpen: true
+    }
+    this.handleClosingAccordion = this.handleClosingAccordion.bind(this);
+  }
+
   componentDidMount() {
     window.scrollTo(0, 0);
+  }
+
+  handleClosingAccordion() {
+    this.setState(prevState => ({ accordionOpen: !prevState.accordionOpen }))
   }
 
   render() {
@@ -78,9 +90,18 @@ class Administration extends React.Component {
                 <Tile.Top title="New PMs" />
                 <Tile.Content>
                   <Tile.Inner>
-                    <p><span>Today</span><span className="count--time">Property Manager Name</span></p>
-                    <p><span>02/04</span><span className="count--time">Property Manager Name</span></p>
-                    <p><span>01/14</span><span className="count--time">Property Manager Name</span></p>
+                    <p>
+                      <span>Today</span>
+                      <span className="count--time">Property Manager Name</span>
+                    </p>
+                    <p>
+                      <span>02/04</span>
+                      <span className="count--time">Property Manager Name</span>
+                    </p>
+                    <p>
+                      <span>01/14</span>
+                      <span className="count--time">Property Manager Name</span>
+                    </p>
                   </Tile.Inner>
                 </Tile.Content>
               </Tile>
@@ -89,9 +110,15 @@ class Administration extends React.Component {
         </section>
         <section className="main main--white">
           <div className="width-wrapper">
-            <Accordion />
-            <Accordion />
-            <Accordion />
+            <Accordion>
+              <Accordion.Label label="New Retention Assignments (4)" onToggle={() => this.handleClosingAccordion()}/>
+              <Accordion.Table hidden={this.state.accordionOpen}/>
+            </Accordion>
+            <Accordion>
+              <Accordion.Label label="Requests For Access" onToggle={() => this.handleClosingAccordion()}/>
+              <Accordion.List />
+            </Accordion>
+            <Accordion/>
           </div>
         </section>
         {/* <section className="main width-wrapper">
