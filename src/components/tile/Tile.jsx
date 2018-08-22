@@ -5,26 +5,34 @@ import Card from '../card/Card';
 import './Tile.scss';
 
 class Tile extends Component {
+  static Top({ title }) {
+    return (
+      <div className="admin__tile--heading">
+        <h3>{title}</h3>
+        <Icon icon="arrowRight"/>
+      </div>
+    )
+  }
+
+  static Content({ children }) {
+    return <div className="admin__tile--body">{children}</div>
+  }
+
+  static Inner({ children }) {
+    return <div className="admin__tile--body-inner">{children}</div>
+  }
+
   render() {
-    const { title, newTicketCount, unreadTicketCount } = this.props;
+    const { types } = this.props;
     return (
       <Card>
         <Card.Content>
-          <div className="admin__tile padding--1em">
-            <div className="admin__tile--heading">
-              <h3>{title}</h3>
-              <Icon icon="arrowRight" />
-            </div>
-            <div className="admin__tile--body">
-              <div className="admin__tile--body-inner">
-                <h3><span>{newTicketCount}</span> <span className="count--type">NEW</span></h3>
-                <p><span>{unreadTicketCount}</span> <span className="count--type">Unseen for 24 hours</span></p>
-              </div>
-              <div className="admin__tile--body-inner">
-                <h3><span>{newTicketCount}</span> <span className="count--type">NEW</span></h3>
-                <p><span>{unreadTicketCount}</span> <span className="count--type">Unseen for 24 hours</span></p>
-              </div>
-            </div>
+          <div className="admin__tile">
+            {React.Children.map(this.props.children, child =>
+              React.cloneElement(child, {
+                types
+              })
+            )}
           </div>
         </Card.Content>
       </Card>
@@ -33,9 +41,16 @@ class Tile extends Component {
 }
 
 Tile.propTypes = {
-  title: PropTypes.string.isRequired,
-  newTicketCount: PropTypes.string.isRequired,
-  unreadTicketCount: PropTypes.string.isRequired
+  types: PropTypes.arrayOf(PropTypes.string),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element
+  ])
+}
+
+Tile.defaultProps = {
+  children: undefined,
+  types: []
 }
 
 export default Tile

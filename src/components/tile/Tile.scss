@@ -6,17 +6,18 @@
     justify-content: space-between;
     margin: 3em 0;
   }
-  &__tile {
+  & .card {
     flex: 1;
-    margin: 0 1rem;
-    padding: 1em;
-    // background-color: $color__gray--lightest;
+    margin: 0 1em;
     &:first-child {
       margin-left: 0;
     }
     &:last-child {
       margin-right: 0;
     }
+  }
+  &__tile {
+    flex: 1;
     &--heading {
       display: flex;
       justify-content: space-between;
@@ -27,7 +28,7 @@
       display: flex;
       justify-content: space-between;
       flex-direction: column;
-      padding: 1em;
+      padding: .6em;
       &-inner {
         border-bottom: 1px solid $color__gray--border;
         margin-bottom: 1em;
@@ -37,9 +38,14 @@
           justify-content: space-between;
           text-align: left;
           margin-bottom: .5em;
-          .count--type {
-            padding-left: 1em;
+          & .count--number {
+            padding-right: .8em;
+          }
+          & .count--type {
             flex: 2;
+          }
+          & .count--time {
+            font-size: .8em;
           }
         }
       }
