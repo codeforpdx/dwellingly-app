@@ -16,7 +16,9 @@ class Administration extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      accordionOpen: true
+      accordion01: false,
+      accordion02: true,
+      accordion03: true
     }
     this.handleClosingAccordion = this.handleClosingAccordion.bind(this);
   }
@@ -26,7 +28,7 @@ class Administration extends React.Component {
   }
 
   handleClosingAccordion() {
-    this.setState(prevState => ({ accordionOpen: !prevState.accordionOpen }))
+    this.setState(prevState => ({ accordion01: !prevState.accordion01 }))
   }
 
   render() {
@@ -112,13 +114,16 @@ class Administration extends React.Component {
           <div className="width-wrapper">
             <Accordion>
               <Accordion.Label label="New Retention Assignments (4)" onToggle={() => this.handleClosingAccordion()}/>
-              <Accordion.Table hidden={this.state.accordionOpen}/>
+              <Accordion.Table hidden={this.state.accordion01}/>
             </Accordion>
             <Accordion>
               <Accordion.Label label="Requests For Access" onToggle={() => this.handleClosingAccordion()}/>
-              <Accordion.List />
+              <Accordion.List hidden={this.state.accordion02} />
             </Accordion>
-            <Accordion/>
+            <Accordion>
+              <Accordion.Label label="Tenants Ready To Archive" onToggle={() => this.handleClosingAccordion()} />
+              <Accordion.Select hidden={this.state.accordion03} />
+            </Accordion>
           </div>
         </section>
         {/* <section className="main width-wrapper">
