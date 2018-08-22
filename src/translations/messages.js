@@ -49,6 +49,10 @@ export const ADMIN = defineMessages( {
 
 /* Form messages */
 export const FORMS = defineMessages({
+  CREATE_ACCOUNT: {
+    id: 'form.create_account',
+    defaultMessage: 'Create account'    
+  },
   EMAIL_LABEL: {
     id: 'form.email.label',
     defaultMessage: 'Email'    
@@ -60,6 +64,10 @@ export const FORMS = defineMessages({
   ERROR_MATCH_PASSWORD: {
     id: 'form.error.match_password',
     defaultMessage: 'Please make sure your passwords match.'    
+  },
+  LOGIN: {
+    id: 'form.login',
+    defaultMessage: 'Login'    
   },
   NAME_FIRST_LABEL: {
     id: 'form.nameFirst.label',
@@ -107,6 +115,22 @@ export const LOGIN = defineMessages({
   LABEL_LOGOUT: {
     id: 'login.logout',
     defaultMessage: 'Logout',
+  },
+  INSTRUCTIONS: {
+    id: 'login.instructions.legal',
+    defaultMessage: 'Use of your account is subject to our ',
+  },
+  INSTRUCTIONS_EMAIL: {
+    id: 'login.instructions.email',
+    defaultMessage: 'Login with email and password',
+  },
+  INSTRUCTIONS_GOOGLE: {
+    id: 'login.instructions.google',
+    defaultMessage: 'Login with a Google account',
+  },
+  TITLE: {
+    id: 'login.title',
+    defaultMessage: '{org} {appname} Login',
   },
 })
 
@@ -229,11 +253,11 @@ export const PRIVACY = defineMessages({
 /* SIGNUP messages */
 export const SIGNUP = defineMessages({
   CREATE_ACCOUNT_EMAIL: {
-    id: 'signup.title',
-    defaultMessage: 'Sign up using and email and password',
+    id: 'signup.create_email',
+    defaultMessage: 'Sign up using an email and password',
   },
   CREATE_ACCOUNT_GOOGLE: {
-    id: 'signup.title',
+    id: 'signup.create_google',
     defaultMessage: 'Use your Google account',
   },
   INSTRUCTIONS: {
@@ -242,7 +266,7 @@ export const SIGNUP = defineMessages({
   },
   INSTRUCTIONS_GOOGLE: {
     id: 'signup.instructions.google',
-    defaultMessage: 'Sign up using your Google account',
+    defaultMessage: 'Sign up using a Google account',
   },
   TITLE: {
     id: 'signup.title',
