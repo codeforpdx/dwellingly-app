@@ -8,7 +8,7 @@ import Navigation from '../../components/navigation/Navigation';
 import Tile from '../../components/tile/Tile';
 import Accordion from '../../components/accordion/Accordion';
 import Icon from '../../components/icon/Icon';
-import { ROUTES } from '../../constants/constants';
+import { TILE_TYPES, ROUTES } from '../../constants/constants';
 import { ADMIN } from '../../translations/messages';
 
 class Administration extends React.Component {
@@ -47,18 +47,42 @@ class Administration extends React.Component {
           <div className="width-wrapper">
             <h1>Admin Dashboard</h1>
             <div className="admin__tiles">
-              <Tile
-                title="Open Tickets"
-                newTicketCount="4"
-                unreadTicketCount="2" />
-              <Tile
-                title="Reports"
-                newTicketCount="4"
-                unreadTicketCount="2" />
-              <Tile
-                title="New PMs"
-                newTicketCount="4"
-                unreadTicketCount="2" />
+              <Tile types={[TILE_TYPES.TICKETS]}>
+                <Tile.Top title="Open Tickets"/>
+                <Tile.Content>
+                  <Tile.Inner>
+                    <h3><span className="count--number">4</span> <span className="count--type">NEW</span></h3>
+                    <p><span className="count--number">2</span> <span className="count--type count--time">Unseen for 24 hours</span></p>
+                  </Tile.Inner>
+                  <Tile.Inner>
+                    <h3><span className="count--number">34</span> <span className="count--type">COMPLIMENTS</span></h3>
+                    <p><span className="count--number">2</span> <span className="count--type count--time">Still in progress for 1 week</span></p>
+                  </Tile.Inner>
+                </Tile.Content>
+              </Tile>
+              <Tile>
+                <Tile.Top title="Reports" />
+                <Tile.Content>
+                  <Tile.Inner>
+                    <h3><span className="count--number">4</span> <span className="count--type">NEW</span></h3>
+                    <p><span className="count--type count--time">in the last week</span></p>
+                  </Tile.Inner>
+                  <Tile.Inner>
+                    <h3><span className="count--number">12</span> <span className="count--type">CLOSED TICKETS</span></h3>
+                    <p><span className="count--type count--time">in the last week</span></p>
+                  </Tile.Inner>
+                </Tile.Content>
+              </Tile>
+              <Tile>
+                <Tile.Top title="New PMs" />
+                <Tile.Content>
+                  <Tile.Inner>
+                    <p><span>Today</span><span className="count--time">Property Manager Name</span></p>
+                    <p><span>02/04</span><span className="count--time">Property Manager Name</span></p>
+                    <p><span>01/14</span><span className="count--time">Property Manager Name</span></p>
+                  </Tile.Inner>
+                </Tile.Content>
+              </Tile>
             </div>
           </div>
         </section>
