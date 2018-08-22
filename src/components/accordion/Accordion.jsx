@@ -67,6 +67,7 @@ class Accordion extends Component {
                 </tr>
               </tbody>
             </table>
+            <button type="button" className="btn btn--lg">Save Assignments</button>
           </div>
         : null}
       </div>
