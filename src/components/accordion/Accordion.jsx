@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Icon from '../icon/Icon'
 // import { ACCORDION_TYPES } from '../../constants/constants';
 
 import './Accordion.scss';
@@ -69,96 +70,108 @@ class Accordion extends Component {
     )
   }
 
-  static List() {
+  static List({ hidden }) {
     return (
-      <div className="accordion__list">
-        <div className="accordion__list--item">
-          <ul>
-            <li>Property Manager Name</li>
-            <li>propertymanager@email.com</li>
-            <li>(555)123-1234</li>
-          </ul>
-          <p>Capuchin Court, Gibbon Gardens</p>
-          <button type="button" className="btn">Add</button>
+      <div>
+        {!hidden ?
+        <div className="accordion__list">
+          <div className="accordion__list--item">
+            <ul>
+              <li>Property Manager Name</li>
+              <li>propertymanager@email.com</li>
+              <li>(555)123-1234</li>
+            </ul>
+            <p>Capuchin Court, Gibbon Gardens</p>
+            <button type="button" className="btn">Add</button>
+          </div>
+          <div className="accordion__list--item">
+            <ul>
+              <li>Property Manager Name</li>
+              <li>propertymanager@email.com</li>
+              <li>(555)123-1234</li>
+            </ul>
+            <p>Capuchin Court, Gibbon Gardens</p>
+            <button type="button" className="btn">Add</button>
+          </div>
+          <div className="accordion__list--item">
+            <ul>
+              <li>Property Manager Name</li>
+              <li>propertymanager@email.com</li>
+              <li>(555)123-1234</li>
+            </ul>
+            <p>Capuchin Court, Gibbon Gardens</p>
+            <button type="button" className="btn">Add</button>
+          </div>
         </div>
-        <div className="accordion__list--item">
-          <ul>
-            <li>Property Manager Name</li>
-            <li>propertymanager@email.com</li>
-            <li>(555)123-1234</li>
-          </ul>
-          <p>Capuchin Court, Gibbon Gardens</p>
-          <button type="button" className="btn">Add</button>
-        </div>
-        <div className="accordion__list--item">
-          <ul>
-            <li>Property Manager Name</li>
-            <li>propertymanager@email.com</li>
-            <li>(555)123-1234</li>
-          </ul>
-          <p>Capuchin Court, Gibbon Gardens</p>
-          <button type="button" className="btn">Add</button>
-        </div>
+        : null}
       </div>
     )
   }
 
-  static Select() {
+  static Select({ hidden }) {
     return (
-      <div className="accordion__select">
-        <table>
-          <tbody>
-            <tr>
-              <td><input type="checkbox" /> Tenant Name</td>
-              <td>01/31/2017</td>
-              <td>
-                Building Name<br/>
-                Property Manager Name
-              </td>
-              <td>
-                3 issues<br/>
-                1 compliment
-              </td>
-              <td><em>*1 open ticket</em></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /> Tenant Name</td>
-              <td>01/31/2017</td>
-              <td>
-                Building Name<br/>
-                Property Manager Name
-              </td>
-              <td>
-                0 issues
-              </td>
-              <td><em>&nbsp;</em></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /> Tenant Name</td>
-              <td>01/31/2017</td>
-              <td>
-                Building Name<br/>
-                Property Manager Name
-              </td>
-              <td>
-                0 issues
-              </td>
-              <td><em>&nbsp;</em></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /> Tenant Name</td>
-              <td>01/31/2017</td>
-              <td>
-                Building Name<br/>
-                Property Manager Name
-              </td>
-              <td>
-                0 issues
-              </td>
-              <td><em>&nbsp;</em></td>
-            </tr>
-          </tbody>
-        </table>
+      <div>
+        {!hidden ?
+        <div className="accordion__select">
+          <table>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" /> Tenant Name</td>
+                <td>01/31/2017</td>
+                <td>
+                  Building Name<br/>
+                  Property Manager Name
+                </td>
+                <td>
+                  3 issues<br/>
+                  1 compliment
+                </td>
+                <td><em>*1 open ticket</em></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /> Tenant Name</td>
+                <td>01/31/2017</td>
+                <td>
+                  Building Name<br/>
+                  Property Manager Name
+                </td>
+                <td>
+                  0 issues
+                </td>
+                <td><em>&nbsp;</em></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /> Tenant Name</td>
+                <td>01/31/2017</td>
+                <td>
+                  Building Name<br/>
+                  Property Manager Name
+                </td>
+                <td>
+                  0 issues
+                </td>
+                <td><em>&nbsp;</em></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /> Tenant Name</td>
+                <td>01/31/2017</td>
+                <td>
+                  Building Name<br/>
+                  Property Manager Name
+                </td>
+                <td>
+                  0 issues
+                </td>
+                <td><em>&nbsp;</em></td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="btn--group">
+            <button type="button" className="btn"><Icon icon="archive"/> Archive</button>
+            <button type="button" className="btn btn--alt">Extend</button>
+          </div>
+        </div>
+        : null}
       </div>
     )
   }
