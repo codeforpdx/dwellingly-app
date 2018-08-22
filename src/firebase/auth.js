@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-
+import store from '../store';
 import {
   addError,
 } from '../dux/user';
@@ -16,7 +16,7 @@ export function doCreateUserWithEmailAndPassword(email, password) {
     )
     .catch((error) => {
       // Handle Errors here.
-      addError(error);
+      store.dispatch(addError(error));
       console.log(error);
     });
 }
@@ -28,7 +28,7 @@ export function doSignInWithEmailAndPassword(email, password) {
     .catch((error) => {
       // Handle Errors here.
       console.log(error.code, error.message);
-      return addError(error);
+      store.dispatch(addError(error));
     });
 }
 
@@ -51,7 +51,7 @@ export function doSignInWithGoogle() {
     // The firebase.auth.AuthCredential type that was used.
     const { credential } = error.credential;
     console.log(errorCode, errorMessage, email, credential);
-    addError(error);
+    store.dispatch(addError(error));
     // ...
   });
 }
