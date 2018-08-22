@@ -27,8 +27,8 @@ class Administration extends React.Component {
     window.scrollTo(0, 0);
   }
 
-  handleClosingAccordion() {
-    this.setState(prevState => ({ accordion01: !prevState.accordion01 }))
+  handleClosingAccordion(currentSelected) {
+    this.setState(prevState => ({ [currentSelected]: !prevState[currentSelected] }))
   }
 
   render() {
@@ -113,15 +113,21 @@ class Administration extends React.Component {
         <section className="main main--white">
           <div className="width-wrapper">
             <Accordion>
-              <Accordion.Label label="New Retention Assignments (4)" onToggle={() => this.handleClosingAccordion()}/>
+              <Accordion.Label
+                label="New Retention Assignments (4)"
+                onToggle={() => this.handleClosingAccordion(this.state[0])} />
               <Accordion.Table hidden={this.state.accordion01}/>
             </Accordion>
             <Accordion>
-              <Accordion.Label label="Requests For Access" onToggle={() => this.handleClosingAccordion()}/>
+              <Accordion.Label
+                label="Requests For Access"
+                onToggle={() => this.handleClosingAccordion(this.state[1])} />
               <Accordion.List hidden={this.state.accordion02} />
             </Accordion>
             <Accordion>
-              <Accordion.Label label="Tenants Ready To Archive" onToggle={() => this.handleClosingAccordion()} />
+              <Accordion.Label
+                label="Tenants Ready To Archive"
+                onToggle={() => this.handleClosingAccordion(this.state[2])} />
               <Accordion.Select hidden={this.state.accordion03} />
             </Accordion>
           </div>
