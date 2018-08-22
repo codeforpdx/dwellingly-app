@@ -143,6 +143,10 @@ a {
       line-height: emify(36, 16);
     }
 
+    &--alt {
+      background: $color__green;
+    }
+
     &--urgent {
       background: $color__red;
     }
