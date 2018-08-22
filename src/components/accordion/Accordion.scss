@@ -1,7 +1,10 @@
 @import "../../constants/constants.scss";
 
 .admin__accordion {
-  margin-top: 3rem;
+  &:first-child {
+    margin-top: 3rem;
+  }
+  margin-top: 1em;
   & .accordion__label {
     text-align: left;
     width: 100%;
@@ -9,8 +12,9 @@
     background-color: $color__gray--light;
     font-weight: 600;
     cursor: pointer;
+    user-select: none;
   }
-  & .accordion__body {
+  & .accordion__table {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -35,6 +39,22 @@
     }
     button {
       margin: 1em 0;
+    }
+  }
+  & .accordion__list {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    & .accordion__list--item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      & ul {
+        padding: 0;
+        list-style: none;
+        text-align: left;
+      }
     }
   }
 }
