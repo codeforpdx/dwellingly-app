@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import firebase from 'firebase/app';
-import Logout from '../login/LogoutButton';
+import LogoutButton from '../login/LogoutButton';
 import 'firebase/auth';
 import { USER } from '../../translations/messages';
 
@@ -61,7 +61,7 @@ class UserControls extends React.Component {
               { this.state.userId }
               <br />
               { this.props.user.email }
-              <Logout />
+              <LogoutButton />
             </span>
           )
         }

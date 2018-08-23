@@ -1,18 +1,36 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'whatwg-fetch';
 import store from '../store';
+import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
+
+// REDUCERS
 import {
   addError,
 } from '../dux/user';
 
+
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // Sign Up a user with email address and password
-export function doCreateUserWithEmailAndPassword(email, password) {
+export function doCreateUserWithEmailAndPassword(firstName, lastName, email, password) {
   console.log('creating user:', email, password);
   firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(
-      console.log('user created'),
+    .then((response) => {
+        console.log(response)
+        fetch( ENDPOINTS.USER, {
+          method: HTTP_METHODS.POST,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            uid: response.user.uid,
+          })
+        })
+      }
     )
     .catch((error) => {
       // Handle Errors here.

@@ -39,7 +39,12 @@ class SignUpForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    auth.doCreateUserWithEmailAndPassword(this.state.email, this.state.password);
+    auth.doCreateUserWithEmailAndPassword(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.email,
+      this.state.password
+    );
   }
 
   render() {

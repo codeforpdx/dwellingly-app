@@ -1,7 +1,7 @@
 // Actions
 export const FETCHING_USER_DATA = 'user/FETCHING_USER_DATA';
 export const LOGIN = 'user/LOGIN';
-export const LOGOUT = 'user/LOGOUT';
+export const NO_USER = 'user/NO_USER';
 export const ADD_ERROR = 'user/ADD_ERROR';
 export const CLEAR_ERROR = 'user/CLEAR_ERROR';
 
@@ -31,10 +31,11 @@ export default (state = initialState, action) => {
         haveUser: action.haveUser,
       };
 
-    case LOGOUT:
+    case NO_USER:
       return {
         ...state,
         user: action.user,
+        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
         haveUser: action.haveUser,
       };
 
@@ -59,14 +60,16 @@ export default (state = initialState, action) => {
   }
 };
 
-// Synchronous functions
-export const createUser = user => (dispatch) => {
+// Sychronous functions
+export const startCallToFirebase = () => (dispatch) => {
   dispatch({
     type: FETCHING_USER_DATA,
     isFetchingDataFromFirebase: true,
     haveUser: false,
-  });
+  });  
+}
 
+export const createUser = user => (dispatch) => {
   dispatch({
     type: LOGIN,
     isFetchingDataFromFirebase: false,
@@ -80,15 +83,10 @@ export const createUser = user => (dispatch) => {
 };
 
 export const setUser = user => (dispatch) => {
-  dispatch({
-    type: FETCHING_USER_DATA,
-    isFetchingDataFromFirebase: true,
-    haveUser: false,
-  });
-
+  console.log('setting user:', user );
   dispatch({
     type: LOGIN,
-    isFetchingDataFromFirebase: false,
+    isFetchingDataFromFirebase: true,
     haveUser: true,
     user: {
       email: user.email,
@@ -100,7 +98,7 @@ export const setUser = user => (dispatch) => {
 
 export const clearUser = () => (dispatch) => {
   dispatch({
-    type: LOGOUT,
+    type: NO_USER,
     isFetchingDataFromFirebase: false,
     haveUser: false,
     user: null,
