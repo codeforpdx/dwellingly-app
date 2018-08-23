@@ -8,6 +8,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
+import Cookies from 'universal-cookie';
 import Authorization from './components/authorization/Authorization';
 import PrivateRoute from './components/authorization/PrivateRoute';
 
@@ -15,7 +16,7 @@ import PrivateRoute from './components/authorization/PrivateRoute';
 import { translationMessages } from './translations/i18n';
 import { SETTINGS, ROUTES, ROLES } from './constants/constants';
 import store, { history } from './store';
-import { getCookie, setCookie } from './utils';
+
 import registerServiceWorker from './registerServiceWorker';
 
 // CSS
@@ -47,11 +48,12 @@ import Tickets from './pages/tickets/Tickets';
 import { dummyUser } from './data';
 
 // Set up cookie stuff for translation
-const lang = getCookie('language');
+const cookies = new Cookies();
+const lang = cookies.get('language')
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
 if (!validLang) {
-  setCookie('language', SETTINGS.DEFAULT_LOCALE, SETTINGS.DAYS_LOCALE_SAVED);
+  cookies.set('language', SETTINGS.DEFAULT_LOCALE, SETTINGS.DAYS_LOCALE_SAVED);
   validLang = SETTINGS.DEFAULT_LOCALE;
 }
 
