@@ -66,12 +66,24 @@ class Administration extends React.Component {
                 <Tile.Top title="Open Tickets"/>
                 <Tile.Content>
                   <Tile.Inner>
-                    <h3><span className="count--number">4</span> <span className="count--type">NEW</span></h3>
-                    <p><span className="count--number">2</span> <span className="count--type count--time">Unseen for 24 hours</span></p>
+                    <div className="count--container">
+                      <h3><span className="count--number">4</span></h3>
+                      <p><span className="count--number">2</span></p>
+                    </div>
+                    <div className="count--container">
+                      <h3><span className="count--type">NEW</span></h3>
+                      <p><span className="count--type count--time">Unseen for 24 hours</span></p>
+                    </div>
                   </Tile.Inner>
                   <Tile.Inner>
-                    <h3><span className="count--number">34</span> <span className="count--type">IN PROGRESS</span></h3>
-                    <p><span className="count--number">2</span> <span className="count--type count--time">Still in progress for 1 week</span></p>
+                    <div className="count--container">
+                      <h3><span className="count--number">34</span></h3>
+                      <p><span className="count--number">2</span></p>
+                    </div>
+                    <div className="count--container">
+                      <h3><span className="count--type">IN PROGRESS</span></h3>
+                      <p><span className="count--type count--time">Still in progress for 1 week</span></p>
+                    </div>
                   </Tile.Inner>
                 </Tile.Content>
               </Tile>
@@ -79,12 +91,22 @@ class Administration extends React.Component {
                 <Tile.Top title="Reports" />
                 <Tile.Content>
                   <Tile.Inner>
-                    <h3><span className="count--number">4</span> <span className="count--type">COMPLIMENTS</span></h3>
-                    <p><span className="count--type count--time">in the last week</span></p>
+                    <div className="count--container">
+                      <h3><span className="count--number">4</span></h3>
+                    </div>
+                    <div className="count--container">
+                      <h3><span className="count--type">COMPLIMENTS</span></h3>
+                      <p><span className="count--type count--time">in the last week</span></p>
+                    </div>
                   </Tile.Inner>
                   <Tile.Inner>
-                    <h3><span className="count--number">12</span> <span className="count--type">CLOSED TICKETS</span></h3>
-                    <p><span className="count--type count--time">in the last week</span></p>
+                    <div className="count--container">
+                      <h3><span className="count--number">12</span></h3>
+                    </div>
+                    <div className="count--container">
+                      <h3><span className="count--type">CLOSED TICKETS</span></h3>
+                      <p><span className="count--type count--time">in the last week</span></p>
+                    </div>
                   </Tile.Inner>
                 </Tile.Content>
               </Tile>
@@ -92,18 +114,20 @@ class Administration extends React.Component {
                 <Tile.Top title="New PMs" />
                 <Tile.Content>
                   <Tile.Inner>
-                    <p>
-                      <span>Today</span>
-                      <span className="count--time">Property Manager Name</span>
-                    </p>
-                    <p>
-                      <span>02/04</span>
-                      <span className="count--time">Property Manager Name</span>
-                    </p>
-                    <p>
-                      <span>01/14</span>
-                      <span className="count--time">Property Manager Name</span>
-                    </p>
+                    <ul>
+                      <li className="count--time">
+                        <span className="count--date">Today</span>
+                        <span>Property Manager Name</span>
+                      </li>
+                      <li className="count--time">
+                        <span className="count--date">02/04</span>
+                        <span>Property Manager Name</span>
+                      </li>
+                      <li className="count--time">
+                        <span className="count--date">01/14</span>
+                        <span>Property Manager Name</span>
+                      </li>
+                    </ul>
                   </Tile.Inner>
                 </Tile.Content>
               </Tile>
