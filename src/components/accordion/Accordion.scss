@@ -29,8 +29,10 @@
       table-layout: fixed;
       text-align: left;
       width: 800px;
+      padding-right: 10px;
       @media screen and (min-width: $mq--desktop) {
         width: 100%;
+        padding-right: 0;
       }
       td {
         border-bottom: 1px solid $color__gray--border;
