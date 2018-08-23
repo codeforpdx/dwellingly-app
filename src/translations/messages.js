@@ -65,6 +65,10 @@ export const FORMS = defineMessages({
     id: 'form.error.match_password',
     defaultMessage: 'Please make sure your passwords match.'    
   },
+  FORGOT_PASSWORD_LABEL: {
+    id: 'form.forgot_password.label',
+    defaultMessage: 'Forgot Password' 
+  },
   LOGIN: {
     id: 'form.login',
     defaultMessage: 'Login'    
@@ -194,7 +198,7 @@ export const PRIVACY = defineMessages({
   },
   CONTENT_INFO_03: {
     id: 'privacy.content_info_03',
-    defaultMessage: 'When we talk about “Personal Information” in this Privacy Policy, we are talking both about Device Information and Order Information.',
+    defaultMessage: 'When we talk about “Personal Information” in this Privacy Policy, we are talking both Device Information.',
   },
   CONTENT_INFO_USE: {
     id: 'privacy.content_info_use',
