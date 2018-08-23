@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, Route } from 'react-router-dom';
 import Header from '../../components/header/Header';
+import Icon from '../../components/icon/Icon';
 import Navigation from '../../components/navigation/Navigation';
 import SearchForm from '../../components/search-form/SearchForm';
 import List from '../../components/list/List';
@@ -55,6 +56,13 @@ class Tenants extends Component {
                       to={`${ROUTES.TENANTS}/all`}
                       activeClassName="tab--active">
                       <strong>All Tenants</strong>
+                    </NavLink>
+                  </li>
+                  <li className="tab">
+                    <NavLink
+                      to={ROUTES.ADD_TENANT}
+                      activeClassName="tab--active">
+                      <Icon icon="plus" />
                     </NavLink>
                   </li>
                 </ul>
