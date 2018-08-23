@@ -30,6 +30,7 @@ import Admin from './pages/admin/Admin';
 import Archive from './pages/tenant-details/Archive';
 import EmergencyNumbers from './pages/admin/EmergencyNumbers';
 import Emergency from './pages/emergency/Emergency';
+import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import OutOfOffice from './pages/settings/OutOfOffice';
@@ -113,6 +114,7 @@ ReactDOM.render(
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
+            <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
             <Route path={ROUTES.SIGNUP} component={Signup} />
             <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
             <PrivateRoute path={ROUTES.ROOT} component={Home} />

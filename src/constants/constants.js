@@ -18,6 +18,7 @@ export const ROUTES = {
   CLOSED_TICKETS: '/tickets/closed',
   DASHBOARD: '/dashboard',
   EMERGENCY: '/emergency',
+  FORGOT_PASSWORD: '/forgot-password',
   LOGIN: '/login',
   PRIVACY: '/privacy-policy',
   PROPERTIES: '/properties',

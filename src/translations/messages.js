@@ -47,6 +47,13 @@ export const ADMIN = defineMessages( {
   },
 } );
 
+export const FORGOT_PASSWORD = defineMessages( {
+  TITLE: {
+    id: "forgot_password.title",
+    defaultMessage: "Forgot Password",
+  },
+} );
+
 /* Form messages */
 export const FORMS = defineMessages({
   CREATE_ACCOUNT: {
