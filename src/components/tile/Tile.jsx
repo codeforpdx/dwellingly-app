@@ -23,15 +23,12 @@ class Tile extends Component {
   }
 
   render() {
-    const { types } = this.props;
     return (
       <Card>
         <Card.Content>
           <div className="admin__tile">
             {React.Children.map(this.props.children, child =>
-              React.cloneElement(child, {
-                types
-              })
+              child
             )}
           </div>
         </Card.Content>
@@ -41,7 +38,6 @@ class Tile extends Component {
 }
 
 Tile.propTypes = {
-  types: PropTypes.arrayOf(PropTypes.string),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element
@@ -49,8 +45,7 @@ Tile.propTypes = {
 }
 
 Tile.defaultProps = {
-  children: undefined,
-  types: []
+  children: undefined
 }
 
 export default Tile
