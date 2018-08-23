@@ -21,13 +21,17 @@
     align-items: flex-start;
     font-size: .9em;
     padding: 10px;
+    overflow: auto;
+    @media screen and (min-width: $mq--desktop) {
+      overflow: visible;
+    }
     table {
       border-spacing: 0;
       box-sizing: border-box;
       position: relative;
       table-layout: fixed;
       text-align: left;
-      width: 100%;
+      width: 800px;
       td {
         border-bottom: 1px solid $color__gray--border;
         padding: 1em 0;
