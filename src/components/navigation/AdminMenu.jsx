@@ -21,6 +21,11 @@ function AdminMenu({ handleToggleMenu, type, user }) {
         {user.name}
       </dt>
       <dd>
+        <NavLink to={ROUTES.ADMIN} activeClassName="menu__link--active">
+          <strong>
+            <Icon icon="gear"/> Admin Dashboard
+          </strong>
+        </NavLink>
         <NavLink to={ROUTES.OUT_OF_OFFICE} activeClassName="menu__link--active">
           <strong>
             <Icon icon="gear" /> Out of Office
@@ -32,16 +37,16 @@ function AdminMenu({ handleToggleMenu, type, user }) {
             <Icon icon="gear" /> Settings
           </strong>
         </NavLink>
-        <NavLink
-          to={`${ROUTES.TICKETS}/open`}
-          activeClassName="menu__link--active">
-          <strong>
-            <Icon icon="ticketOutline" /> Tickets
-          </strong>
-        </NavLink>
         <NavLink to={ROUTES.TENANTS} activeClassName="menu__link--active">
           <strong>
             <Icon icon="userOutlineNoBottom" /> Tenants
+          </strong>
+        </NavLink>
+        <NavLink
+          to={ROUTES.PROPERTIES}
+          activeClassName="menu__link--active">
+          <strong>
+            <Icon icon="building" /> Properties
           </strong>
         </NavLink>
         <NavLink
@@ -49,6 +54,13 @@ function AdminMenu({ handleToggleMenu, type, user }) {
           activeClassName="menu__link--active">
           <strong>
             <Icon icon="userOutlineNoBottom" /> Property Managers
+          </strong>
+        </NavLink>
+        <NavLink
+          to={`${ROUTES.TICKETS}/open`}
+          activeClassName="menu__link--active">
+          <strong>
+            <Icon icon="ticketOutline" /> Tickets
           </strong>
         </NavLink>
       </dd>
