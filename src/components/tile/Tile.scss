@@ -4,16 +4,23 @@
   &__tiles {
     display: flex;
     justify-content: space-between;
-    margin: 1.5em 0 3em 0;
-  }
-  & .card {
-    flex: 1;
-    margin: 0 1em;
-    &:first-child {
-      margin-left: 0;
+    flex-direction: column;
+    margin: 1em;
+    @media screen and (min-width: $mq--desktop) {
+      margin: 1.5em 0 3em 0;
+      flex-direction: row;
     }
-    &:last-child {
-      margin-right: 0;
+    & .card {
+      flex: 1;
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      @media screen and (min-width: $mq--desktop) {
+        margin: 0 1em;
+      }
     }
   }
   &__tile {
