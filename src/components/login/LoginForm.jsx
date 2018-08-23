@@ -97,7 +97,7 @@ class LoginForm extends React.Component {
             </button>
             <br />
             <br />
-            <Link to="/forgot-password">Forgot Password</Link>
+            <Link to="/forgot-password">{intl.formatMessage(FORMS.FORGOT_PASSWORD_LABEL)}</Link>
           </div>
         </form>
         {this.state.error && <p>{this.state.error}</p>}

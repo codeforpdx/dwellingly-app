@@ -18,7 +18,7 @@ class Login extends Component {
   render() {
     return (
       <div className="main page page--login">
-      <Header>
+        <Header>
           {() => (
             <div>
               <Navigation />
@@ -36,8 +36,8 @@ class Login extends Component {
         </section>
         <section className="width-wrapper">
           <p className="login-conditions align-left">{this.props.intl.formatMessage(LOGIN.INSTRUCTIONS)} <Link to="/terms-conditions">{this.props.intl.formatMessage(TERMS.TITLE)}</Link> {this.props.intl.formatMessage(COMMON.CONJUNCTION_AND)} <Link to="/privacy-policy">{this.props.intl.formatMessage(PRIVACY.TITLE_STANDALONE)}</Link>.</p>
-        </section>
-      </div>
+         </section>
+       </div>
     );
   }
 }
