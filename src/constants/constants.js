@@ -22,6 +22,7 @@ export const ROUTES = {
   SETTINGS: '/settings',
   SIGNUP: '/signup',
   TENANTS: '/tenants',
+  ADD_TENANT: '/admin/add-new-tenant',
   TICKETS: '/tickets'
 };
 
@@ -29,6 +30,12 @@ export const ROLES = {
   ADMIN: 'admin',
   STAFF: 'staff',
   PROPERTY_MANAGER: 'property-manager'
+};
+
+export const ACCORDION_TYPES = {
+  TABLE: 'table',
+  LIST: 'list',
+  SELECT: 'select'
 };
 
 export const CARD_TYPES = {
