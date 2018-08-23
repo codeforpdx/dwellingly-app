@@ -117,15 +117,24 @@ class Administration extends React.Component {
                     <ul>
                       <li className="count--time">
                         <span className="count--date">Today</span>
-                        <span>Property Manager Name</span>
+                        <div>
+                          <p>Property Manager Name</p>
+                          <p>Meerkat Manor</p>
+                        </div>
                       </li>
                       <li className="count--time">
                         <span className="count--date">02/04</span>
-                        <span>Property Manager Name</span>
+                        <div>
+                          <p>Property Manager Name</p>
+                          <p>Meerkat Manor</p>
+                        </div>
                       </li>
                       <li className="count--time">
                         <span className="count--date">01/14</span>
-                        <span>Property Manager Name</span>
+                        <div>
+                          <p>Property Manager Name</p>
+                          <p>Meerkat Manor</p>
+                        </div>
                       </li>
                     </ul>
                   </Tile.Inner>

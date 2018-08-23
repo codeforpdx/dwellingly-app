@@ -40,8 +40,15 @@
         }
         & .count--time {
           font-size: .8em;
+          line-height: 1.4;
           & .count--date {
-            text-align: center;
+            flex: 1;
+          }
+          div {
+            margin-bottom: .8em;
+            p {
+              margin-bottom: 0;
+            }
           }
         }
         h3,
@@ -67,6 +74,7 @@
           li {
             display: flex;
             justify-content: space-between;
+            flex-flow: row wrap;
           }
         }
       }
