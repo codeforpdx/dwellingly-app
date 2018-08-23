@@ -20,47 +20,53 @@ function AdminMenu({ handleToggleMenu, type, user }) {
         <Icon icon="userOutline" />
         {user.name}
       </dt>
+
       <dd>
         <NavLink to={ROUTES.ADMIN} activeClassName="menu__link--active">
           <strong>
-            <Icon icon="gear"/> Admin Dashboard
+            Admin Dashboard
           </strong>
         </NavLink>
         <NavLink to={ROUTES.OUT_OF_OFFICE} activeClassName="menu__link--active">
           <strong>
-            <Icon icon="gear" /> Out of Office
+            {/* <Icon icon="gear" /> */} Out of Office
           </strong>
           <span>Off</span>
         </NavLink>
         <NavLink to={ROUTES.SETTINGS} activeClassName="menu__link--active">
           <strong>
-            <Icon icon="gear" /> Settings
+            {/* <Icon icon="gear" /> */} Settings
           </strong>
         </NavLink>
+      </dd>
+      <dt className="menu__label">
+        <Icon icon="gear" /> Manage
+      </dt>
+      <dd>
         <NavLink to={ROUTES.TENANTS} activeClassName="menu__link--active">
           <strong>
-            <Icon icon="userOutlineNoBottom" /> Tenants
+            {/* <Icon icon="userOutlineNoBottom" /> */}Tenants
           </strong>
         </NavLink>
         <NavLink
           to={ROUTES.PROPERTIES}
           activeClassName="menu__link--active">
           <strong>
-            <Icon icon="building" /> Properties
+            {/* <Icon icon="building" /> */} Properties
           </strong>
         </NavLink>
         <NavLink
           to={ROUTES.PROPERTY_MANAGERS}
           activeClassName="menu__link--active">
           <strong>
-            <Icon icon="userOutlineNoBottom" /> Property Managers
+            {/* <Icon icon="userOutlineNoBottom" /> */} Property Managers
           </strong>
         </NavLink>
         <NavLink
           to={`${ROUTES.TICKETS}/open`}
           activeClassName="menu__link--active">
           <strong>
-            <Icon icon="ticketOutline" /> Tickets
+            {/* <Icon icon="ticketOutline" /> */} Tickets
           </strong>
         </NavLink>
       </dd>
