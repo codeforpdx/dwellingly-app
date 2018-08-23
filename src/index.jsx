@@ -43,6 +43,7 @@ import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyM
 import Settings from './pages/settings/Settings';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
+import NewTenantForm from './pages/new-tenant-form/NewTenantForm';
 import Tickets from './pages/tickets/Tickets';
 
 // mock data
@@ -112,6 +113,10 @@ ReactDOM.render(
                 path={`${ROUTES.TENANTS}/all`}
                 exact
                 component={Tenants}
+              />
+              <PrivateRoute
+                path={ROUTES.ADD_TENANT}
+                component={StaffUser(NewTenantForm)}
               />
               <PrivateRoute
                 path={`${ROUTES.TENANTS}/:id/archive`}
