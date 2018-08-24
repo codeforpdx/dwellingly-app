@@ -6,7 +6,9 @@ import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
 
 // REDUCERS
 import {
+  initiateCallToFirebase,
   addError,
+  clearUser,
 } from '../dux/user';
 
 
@@ -15,9 +17,9 @@ const provider = new firebase.auth.GoogleAuthProvider();
 // Sign Up a user with email address and password
 export function doCreateUserWithEmailAndPassword(firstName, lastName, email, password) {
   console.log('creating user:', email, password);
+  store.dispatch(initiateCallToFirebase());
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((response) => {
-        console.log(response)
         fetch( ENDPOINTS.USER, {
           method: HTTP_METHODS.POST,
           headers: {
@@ -35,14 +37,25 @@ export function doCreateUserWithEmailAndPassword(firstName, lastName, email, pas
     .catch((error) => {
       // Handle Errors here.
       store.dispatch(addError(error));
-      console.log(error);
     });
 }
 
 // Sign In user with email address and password
 export function doSignInWithEmailAndPassword(email, password) {
   console.log('signing in with', email, password);
+  store.dispatch(initiateCallToFirebase());
   firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(response => {
+        // fetch user data
+        const userEndpoint = `${ENDPOINTS.USER}${response.user.uid}`;
+        fetch(userEndpoint, {
+        method: HTTP_METHODS.GET,
+      }).then( (response => response.json()))
+        .then((json) => {
+          console.log(json)
+        })
+      }
+      )
     .catch((error) => {
       // Handle Errors here.
       console.log(error.code, error.message);
@@ -97,7 +110,9 @@ export function getUserProfile() {
 // Sign out
 export function doSignOut() {
   firebase.auth().signOut()
-    .then(console.log('loggedout'));
+    .then(
+      store.dispatch(clearUser())
+    );
 }
 
 // Password Reset

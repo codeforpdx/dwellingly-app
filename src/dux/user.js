@@ -61,7 +61,7 @@ export default (state = initialState, action) => {
 };
 
 // Sychronous functions
-export const startCallToFirebase = () => (dispatch) => {
+export const initiateCallToFirebase = () => (dispatch) => {
   dispatch({
     type: FETCHING_USER_DATA,
     isFetchingDataFromFirebase: true,
@@ -91,7 +91,7 @@ export const setUser = user => (dispatch) => {
     user: {
       email: user.email,
       account_source: user.providerData[0].providerId,
-      id: user.l,
+      id: user.uid,
     },
   });
 };
