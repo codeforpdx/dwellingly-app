@@ -12,10 +12,9 @@ class NewTenantForm extends Component {
     super(props);
 
     this.handlePropertySearch = this.handlePropertySearch.bind(this);
-
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       user: dummyUser,
-      property: properties,
       propertySearch: ''
     }
   }
@@ -24,8 +23,22 @@ class NewTenantForm extends Component {
     this.setState({propertySearch: event.target.value})
   }
 
+  handleChange(event) {
+    const { target } = event;
+    const { name } = target;
+    const { value } = target;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
   render() {
-    const { user, property } = this.state;
+    const { user, propertySearch, propertySelected } = this.state;
+    const propertySearched = properties.filter(property => {
+      const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
+      return propertyNameAndAddress.includes(propertySearch)
+    })
     return (
       <div className="admin page">
         {user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
@@ -66,14 +79,23 @@ class NewTenantForm extends Component {
                 onChange={this.handlePropertySearch}
                 value={this.state.propertySearch} />
               <div className="propertySearchResults">
-                {property.map(property =>
-                  property.name.toLowerCase().split('').map(propertyLetters =>
-                  propertyLetters === this.state.propertySearch ?
-                  <div className="propertyResult">
-                    <h4>{property.name}</h4>
-                    <p>{property.address}</p>
-                  </div> : null
-                ))}
+                {propertySearch !== '' ?
+                  propertySearched.map(property => (
+                  <div key={property.id} className="propertyResult">
+                    <button
+                      id="propertySelect"
+                      type="button"
+                      name="propertySelected"
+                      onClick={this.handleChange}
+                      value={`${property.name} ${property.address}`}>
+                      {property.name} {property.address}
+                    </button>
+                  </div>)) : null}
+                {propertySelected ?
+                  <div>
+                    <h3>{propertySelected}</h3>
+                  </div>
+                 : null}
               </div>
             </fieldset>
           </div>
