@@ -1,0 +1,28 @@
+@import '../../constants/constants.scss';
+
+.newTenantFormHeading {
+  border-bottom: 1px solid $color__gray--border;
+  text-align: left;
+  margin: 0.5em;
+  line-height: 1.5;
+}
+
+.propertySearchResults {
+  text-align: left;
+  background: $color__gray--light;
+  & .propertyResult {
+    padding: 0.5em;
+    margin: 0.5em 0;
+  }
+}
+
+.input {
+  &.inline-input {
+    select {
+      width: 70%;
+      height: 40px;
+      border: 1px solid $color__gray--border;
+      margin: 0.5em 0;
+    }
+  }
+}
