@@ -31,6 +31,7 @@ class NewTenantForm extends Component {
     this.setState({
       [name]: value
     });
+    this.setState({ propertySearch: '' })
   }
 
   render() {
@@ -39,12 +40,14 @@ class NewTenantForm extends Component {
       const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
       return propertyNameAndAddress.includes(propertySearch)
     })
+    const property = propertySearched.find(property => property.id === propertySelected);
+    console.log(property);
     return (
       <div className="admin page">
         {user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
         <div>
           <div className="width-wrapper">
-            <h1>Add a New Tenant</h1>
+            <h1 className="newTenantFormHeading">Add a New Tenant</h1>
             <h2 className="newTenantFormHeading">Tenant</h2>
             <fieldset>
               <Input
@@ -87,15 +90,19 @@ class NewTenantForm extends Component {
                       type="button"
                       name="propertySelected"
                       onClick={this.handleChange}
-                      value={`${property.name} ${property.address}`}>
+                      value={property.id}>
                       {property.name} {property.address}
                     </button>
-                  </div>)) : null}
-                {propertySelected ?
-                  <div>
-                    <h3>{propertySelected}</h3>
                   </div>
-                 : null}
+                )) : null}
+                {propertySelected ?
+                  <div className="newTenantProperty">
+                    <div>
+                      <h3>{property.name}</h3>
+                      <p>{property.address}</p>
+                    </div>
+                  </div>
+                : null}
               </div>
             </fieldset>
           </div>
