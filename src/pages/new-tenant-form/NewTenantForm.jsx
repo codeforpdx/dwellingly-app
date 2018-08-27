@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
+import Icon from '../../components/icon/Icon';
 // import SearchForm from '../../components/search-form/SearchForm';
 import { ROLES, ROUTES } from '../../constants/constants';
 import { dummyUser, properties } from '../../data';
@@ -12,15 +13,21 @@ class NewTenantForm extends Component {
     super(props);
 
     this.handlePropertySearch = this.handlePropertySearch.bind(this);
+    this.handleAddingNewProperty = this.handleAddingNewProperty.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       user: dummyUser,
-      propertySearch: ''
+      propertySearch: '',
+      addingNewProperty: false
     }
   }
 
   handlePropertySearch(event) {
     this.setState({propertySearch: event.target.value})
+  }
+
+  handleAddingNewProperty() {
+    this.setState(prevState => ({addingNewProperty: !prevState.addingNewProperty}))
   }
 
   handleChange(event) {
@@ -35,7 +42,7 @@ class NewTenantForm extends Component {
   }
 
   render() {
-    const { user, propertySearch, propertySelected } = this.state;
+    const { user, propertySearch, propertySelected, addingNewProperty } = this.state;
     const propertySearched = properties.filter(property => {
       const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
       return propertyNameAndAddress.includes(propertySearch)
@@ -81,7 +88,7 @@ class NewTenantForm extends Component {
                 onChange={this.handlePropertySearch}
                 value={this.state.propertySearch} />
               <div className="propertySearchResults">
-                {propertySearch !== '' ?
+                {propertySearch !== '' && !addingNewProperty ?
                   propertySearched.map(property => (
                   <div key={property.id} className="propertyResult">
                     <button
@@ -94,6 +101,36 @@ class NewTenantForm extends Component {
                     </button>
                   </div>
                 )) : null}
+                {!propertySelected && propertySearch === '' && (
+                  <div className="addNewPropertyLink" onClick={this.handleAddingNewProperty} role="presentation">
+                    <span className="addIcon"><Icon icon="plus"/></span>
+                    Add new Property
+                  </div>
+                )}
+                {addingNewProperty && (
+                  <div>
+                    <Input
+                      id="newPropertyName"
+                      placeholder="Property Name"
+                      label="Property Name"
+                      type="text" />
+                    <Input
+                      id="newPropertyAddress"
+                      placeholder="Property Address"
+                      label="Street Address"
+                      type="text" />
+                    <Input
+                      id="newPropertyCity"
+                      placeholder="City"
+                      label="City"
+                      type="text" />
+                    <Input
+                      id="newPropertyZip"
+                      placeholder="Zip"
+                      label="Zip"
+                      type="number" />
+                  </div>
+                )}
                 {propertySelected ?
                   <div className="newTenantProperty">
                     <div>
