@@ -134,6 +134,12 @@ class NewTenantForm extends Component {
               {(addingNewProperty &&
                 !propertySelected) && (
                 <fieldset>
+                  <div className="propertyFormCloseButton">
+                    Add new property
+                    <span onClick={this.handleAddingNewProperty} role="presentation">
+                      <Icon icon="close"/>
+                    </span>
+                  </div>
                   <Input
                     id="newPropertyName"
                     placeholder="Property Name"
@@ -187,16 +193,16 @@ class NewTenantForm extends Component {
               !propertyManagerSelected) && (
               <div>
                 <h2 className="newTenantFormHeading">Property Manager</h2>
+                <fieldset>
+                  <Input
+                    id="propertyManagerName"
+                    placeholder="Search Manager Name"
+                    label="Property Manager"
+                    type="text"
+                    onChange={this.handleSearch}
+                    value={this.state.propertyManagerName} />
+                </fieldset>
                 <div className="propertySearchResults">
-                  <fieldset>
-                    <Input
-                      id="propertyManagerName"
-                      placeholder="Search Manager Name"
-                      label="Property Manager"
-                      type="text"
-                      onChange={this.handleSearch}
-                      value={this.state.propertyManagerName} />
-                  </fieldset>
                   {propertyManagerName !== '' ?
                     propertyManagerSearched.map(manager => (
                     <div key={manager.id} className="propertyResult">
@@ -210,27 +216,45 @@ class NewTenantForm extends Component {
                       </button>
                     </div>
                   )) : null}
+                  {(propertyManagerName === '' &&
+                    !propertyManagerSelected) && (
+                    <fieldset>
+                      <div className="propertyFormCloseButton">
+                        Add new manager
+                        <span onClick={this.handleAddingNewPropertyManager} role="presentation">
+                          <Icon icon="close"/>
+                        </span>
+                        </div>
+                      <Input
+                        id="newPropertyManagerName"
+                        placeholder="Name"
+                        label="Name"
+                        type="text" />
+                      <Input
+                        id="newPropertyManagerPhone"
+                        placeholder="ex. 503-555-1234"
+                        label="Phone"
+                        type="tel" />
+                      <Input
+                        id="newPropertyManagerEmail"
+                        placeholder="email@email.com"
+                        label="Email"
+                        type="text" />
+                    </fieldset>
+                  )}
                 </div>
-                {(propertyManagerName === '' &&
-                  !propertyManagerSelected) && (
-                  <fieldset>
-                    <Input
-                      id="newPropertyManagerName"
-                      placeholder="Name"
-                      label="Name"
-                      type="text" />
-                    <Input
-                      id="newPropertyManagerPhone"
-                      placeholder="ex. 503-555-1234"
-                      label="Phone"
-                      type="tel" />
-                    <Input
-                      id="newPropertyManagerEmail"
-                      placeholder="email@email.com"
-                      label="Email"
-                      type="text" />
-                  </fieldset>
-                )}
+              </div>
+            )}
+            {/* Add Unit Input
+            ======================================= */}
+            {propertySelected && (
+              <div>
+                <h2 className="newTenantFormHeading">Unit</h2>
+                <Input
+                  id="propertyUnit"
+                  placeholder="Unit # / ABC..."
+                  label="Unit"
+                  type="text"/>
               </div>
             )}
           </div>
