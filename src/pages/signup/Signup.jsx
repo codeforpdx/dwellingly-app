@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import SignupFormComponent from '../../components/signup-form/SignUpForm';
-import LoginWithGoogle from '../../components/login/LoginWithGoogle';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
+import SignupFormComponent from '../../components/signup-form/SignUpForm';
+import LoginWithGoogle from '../../components/login/LoginWithGoogle';
+import Spinner from '../../components/spinner/Spinner';
 import { COMMON, PRIVACY, SIGNUP, TERMS } from '../../translations/messages';
 import { SETTINGS } from '../../constants/constants';
 
 import './Signup.scss';
 
-const Signup = ({isFetchingAuthorization, isFetchingUserData, haveUser, intl}) => (
+const Signup = ({isFetchingAuthorization, isFetchingUserData, haveUser, error, intl}) => (
   <div className="main page page--signin">
     <Header>
       {() => (
@@ -28,12 +29,20 @@ const Signup = ({isFetchingAuthorization, isFetchingUserData, haveUser, intl}) =
       { !isFetchingAuthorization && !isFetchingUserData &&
         <SignupFormComponent />
       }
+      { (isFetchingAuthorization || isFetchingUserData) &&
+        <Spinner />
+      }
       { haveUser &&
         <span>
           We have a user!
         </span>
       }
     </section>
+    { error && error.message.length > 0 &&
+      <p className="error">
+        { error.message }
+      </p>
+    }
     <section className="signup--google width-wrapper">
       <div className="allCaps separator">{intl.formatMessage(COMMON.CONJUNCTION_OR)}</div>
       <h2 className="align-left">
@@ -51,6 +60,7 @@ const mapStateToProps = ({ user }) => ({
   isFetchingAuthorization: user.isFetchingAuthorization,
   isFetchingUserData: user.isFetchingUserData,
   haveUser: user.haveUser,
+  error: user.error,
 });
 
 Signup.propTypes = {
@@ -58,7 +68,18 @@ Signup.propTypes = {
   isFetchingAuthorization: PropTypes.bool.isRequired,
   isFetchingUserData: PropTypes.bool.isRequired,
   haveUser: PropTypes.bool.isRequired,
+  error: PropTypes.shape({
+    code: PropTypes.string,
+    message: PropTypes.string
+  }),
 };
+
+Signup.defaultProps = {
+  error: {
+    code: null,
+    message: null,
+  }
+}
 
 export default connect(
   mapStateToProps,

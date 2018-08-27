@@ -69,6 +69,7 @@ class SignUpForm extends React.Component {
               name="firstName"
               onChange={this.handleInputChange}
               placeholder={intl.formatMessage(FORMS.NAME_FIRST_PLACEHOLDER)}
+              required
               type="text"
               value={this.state.firstName}
               variants={['full']}
@@ -79,6 +80,7 @@ class SignUpForm extends React.Component {
               name="lastName"
               onChange={this.handleInputChange}
               placeholder={intl.formatMessage(FORMS.NAME_LAST_PLACEHOLDER)}
+              required
               type="text"
               value={this.state.lastName}
               variants={['full']}
@@ -89,6 +91,7 @@ class SignUpForm extends React.Component {
               name="email"
               onChange={this.handleInputChange}
               placeholder={intl.formatMessage(FORMS.EMAIL_PLACEHOLDER)}
+              required
               type="email"
               value={this.state.email}
               variants={['full']}
@@ -99,6 +102,7 @@ class SignUpForm extends React.Component {
               name="password"
               onChange={this.handleInputChange}
               placeholder={intl.formatMessage(FORMS.PASSWORD_PLACEHOLDER)}
+              required
               type="password"
               value={this.state.password}
               variants={['full']}
@@ -109,6 +113,7 @@ class SignUpForm extends React.Component {
               name="passwordConfirm"
               onChange={this.handleInputChange}
               placeholder={intl.formatMessage(FORMS.PASSWORD_CONFIRM_PLACEHOLDER)}
+              required
               type="password"
               value={this.state.passwordConfirm}
               variants={['full']}
