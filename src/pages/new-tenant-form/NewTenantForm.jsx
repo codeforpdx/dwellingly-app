@@ -41,7 +41,6 @@ class NewTenantForm extends Component {
       return propertyNameAndAddress.includes(propertySearch)
     })
     const property = propertySearched.find(property => property.id === propertySelected);
-    console.log(property);
     return (
       <div className="admin page">
         {user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
@@ -98,8 +97,8 @@ class NewTenantForm extends Component {
                 {propertySelected ?
                   <div className="newTenantProperty">
                     <div>
-                      <h3>{property.name}</h3>
-                      <p>{property.address}</p>
+                      <h3>{property.name.length > 0 ? property.name : null}</h3>
+                      <p>{property.address.length > 0 ? property.address : null}</p>
                     </div>
                   </div>
                 : null}

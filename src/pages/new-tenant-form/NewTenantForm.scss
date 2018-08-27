@@ -10,10 +10,15 @@
 .propertySearchResults {
   text-align: left;
   background: $color__gray--light;
+  margin: 1em;
   & .propertyResult {
     padding: 0.5em;
     margin: 0.5em 0;
   }
+}
+
+.newTenantProperty {
+  padding: 1em;
 }
 
 .input {
