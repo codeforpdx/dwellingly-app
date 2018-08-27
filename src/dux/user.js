@@ -1,4 +1,5 @@
 // Actions
+export const FETCHING_AUTHORIZATION = 'user/FETCHING_AUTHORIZATION';
 export const FETCHING_USER_DATA = 'user/FETCHING_USER_DATA';
 export const LOGIN = 'user/LOGIN';
 export const NO_USER = 'user/NO_USER';
@@ -8,7 +9,9 @@ export const CLEAR_ERROR = 'user/CLEAR_ERROR';
 // Initial State
 const initialState = {
   user: {},
-  isFetchingDataFromFirebase: false,
+  accountSource: null,
+  isFetchingAuthorization: false,
+  isFetchingUserData: false,
   haveUser: false,
   error: null,
 };
@@ -16,26 +19,38 @@ const initialState = {
 // Reducer
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FETCHING_AUTHORIZATION:
+      return {
+        ...state,
+        isFetchingAuthorization: action.isFetchingAuthorization,
+        haveUser: action.haveUser,
+        error: action.error,
+      };
+
     case FETCHING_USER_DATA:
       return {
         ...state,
-        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
+        isFetchingUserData: action.isFetchingUserData,
         haveUser: action.haveUser,
+        error: action.error,
       };
 
     case LOGIN:
       return {
         ...state,
         user: action.user,
-        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
+        isFetchingAuthorization: action.isFetchingAuthorization,
+        isFetchingUserData: action.isFetchingUserData,
         haveUser: action.haveUser,
+        error: action.error,
       };
 
     case NO_USER:
       return {
         ...state,
         user: action.user,
-        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
+        isFetchingAuthorization: action.isFetchingAuthorization,
+        isFetchingUserData: action.isFetchingUserData,
         haveUser: action.haveUser,
       };
 
@@ -43,7 +58,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         haveUser: action.haveUser,
-        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
+        isFetchingAuthorization: action.isFetchingAuthorization,
+        isFetchingUserData: action.isFetchingUserData,
         error: action.error,
       };
 
@@ -51,7 +67,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         haveUser: action.haveUser,
-        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
+        isFetchingAuthorization: action.isFetchingAuthorization,
+        isFetchingUserData: action.isFetchingUserData,
         error: action.error,
       };
 
@@ -61,45 +78,92 @@ export default (state = initialState, action) => {
 };
 
 // Sychronous functions
-export const initiateCallToFirebase = () => (dispatch) => {
+export const initiateFirebaseCall = () => (dispatch) => {
+  dispatch({
+    type: FETCHING_AUTHORIZATION,
+    isFetchingAuthorization: true,
+    haveUser: false,
+    error: null,
+  });  
+}
+
+export const initiateUserDataCall = () => (dispatch) => {
   dispatch({
     type: FETCHING_USER_DATA,
-    isFetchingDataFromFirebase: true,
+    isFetchingUserData: true,
     haveUser: false,
   });  
 }
 
+
+
 export const createUser = user => (dispatch) => {
   dispatch({
     type: LOGIN,
-    isFetchingDataFromFirebase: false,
+    isFetchingUserData: false,
     haveUser: true,
     user: {
       email: user.email,
-      account_source: user.providerData.providerId,
+      accountSource: user.providerData.providerId,
       id: user.l,
     },
   });
 };
 
-export const setUser = user => (dispatch) => {
-  console.log('setting user:', user );
+export const setUserFromFirebaseEmail = (user) => (dispatch) => {
+  console.log(user);
   dispatch({
     type: LOGIN,
-    isFetchingDataFromFirebase: true,
+    isFetchingAuthorization: false,
+    isFetchingUserData: false,
     haveUser: true,
     user: {
       email: user.email,
-      account_source: user.providerData[0].providerId,
+      id: user.id,
+    },
+    error: null,
+  });
+};
+
+export const setUserFromGoogle = (user) => (dispatch) => {
+  console.log(user)
+  dispatch({
+    type: LOGIN,
+    isFetchingAuthorization: false,
+    isFetchingUserData: false,
+    haveUser: true,
+    user: {
+      email: user.email,
+      accountSource: user.credential.signInMethod,
       id: user.uid,
     },
+    error: null,
+  });
+};
+
+export const addCustomUserData = (user, accountSource) => (dispatch) => {
+  dispatch({
+    type: LOGIN,
+    isFetchingAuthorization: false,
+    isFetchingUserData: false,
+    haveUser: true,
+    user: {
+      accountSource,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      id: user.id,
+      role: user.role,
+    },
+    error: null,
   });
 };
 
 export const clearUser = () => (dispatch) => {
   dispatch({
     type: NO_USER,
-    isFetchingDataFromFirebase: false,
+    isFetchingAuthorization: false,
+    isFetchingUserData: false,
     haveUser: false,
     user: null,
   });
@@ -109,7 +173,8 @@ export const addError = error => (dispatch) => {
   console.log(error);
   dispatch({
     type: ADD_ERROR,
-    isFetchingDataFromFirebase: false,
+    isFetchingAuthorization: false,
+    isFetchingUserData: false,
     haveUser: false,
     error,
   });
@@ -123,3 +188,10 @@ export const clearError = () => (dispatch) => {
     error: null,
   });
 };
+
+// User data from Firestore
+export const getFirestoreUserData = ( json ) => (dispatch) => {
+  console.log(json)
+  dispatch(initiateUserDataCall())
+  .then(console.log(json.id))
+}

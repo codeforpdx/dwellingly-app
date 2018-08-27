@@ -3,7 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
-// import { Input } from '../input/Input';
 import Input from '../input/Input';
 // import { fakeAuth } from '../../utils';
 import { FORMS, LOGIN } from '../../translations/messages';

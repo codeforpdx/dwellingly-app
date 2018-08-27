@@ -5,16 +5,19 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import firebase from 'firebase/app';
-import LogoutButton from '../login/LogoutButton';
 import 'firebase/auth';
+import {getFirestoreUserData} from '../../firebase/auth';
+import LogoutButton from '../login/LogoutButton';
 import { USER } from '../../translations/messages';
 
 import './UserControls.scss';
 
 import {
-  setUser,
+  addCustomUserData,
   clearUser,
 } from '../../dux/user';
+
+
 
 class UserControls extends React.Component {
   constructor(props) {
@@ -28,11 +31,17 @@ class UserControls extends React.Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
+      // Monitor Firebase authorization for user state, adding cookie for user email
       const cookies = new Cookies();
       const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+      let accountSource = 'email'
       if (user) {
+        if (user && user.providerData[0]) {
+          accountSource = user.providerData[0].providerId;
+        }
         this.setState({ userId: user.email, activeUser: true });
-        this.props.setUser(user);
+        this.props.addCustomUserData(user);
+        getFirestoreUserData(user.uid, accountSource);
         const cookieExist = cookies.get('messengerUser');
         if (!cookieExist) {
           cookies.set(
@@ -85,10 +94,11 @@ class UserControls extends React.Component {
 const mapStateToProps = ({ user }) => ({
   user: user.user,
   haveUser: user.haveUser,
+  accountSource: user.accountSource,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch(setUser(user)),
+  addCustomUserData: (user, accountSource) => dispatch(addCustomUserData(user, accountSource)),
   clearUser: () => dispatch(clearUser()),
 });
 
@@ -96,11 +106,11 @@ UserControls.propTypes = {
   intl: intlShape.isRequired,
   user: PropTypes.shape({
     email: PropTypes.string,
-    account_source: PropTypes.string,
+    accountSource: PropTypes.string,
     id: PropTypes.string,
   }),
   haveUser: PropTypes.bool.isRequired,
-  setUser: PropTypes.func.isRequired,
+  addCustomUserData: PropTypes.func.isRequired,
   clearUser: PropTypes.func.isRequired,
 };
 

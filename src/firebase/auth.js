@@ -6,18 +6,38 @@ import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
 
 // REDUCERS
 import {
-  initiateCallToFirebase,
+  initiateFirebaseCall,
   addError,
+  setUserFromFirebaseEmail,
+  setUserFromGoogle,
+  addCustomUserData,
   clearUser,
 } from '../dux/user';
 
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
+
+// User data from Firestore
+export function getFirestoreUserData( uid, accountSource ) {
+  const userEndpoint = `${ENDPOINTS.USER}${uid}`;
+  fetch(userEndpoint, {
+    method: HTTP_METHODS.GET,
+  }).then((response => response.json()))
+    .then((json) => {
+      const userData = json[0];
+      store.dispatch(addCustomUserData(userData, accountSource))
+      // Don't need to set user here, will get picked up by UserControl as auth changes!
+      // store.dispatch(setUser(json, 'email'))
+    })
+    .catch((error) => {
+      store.dispatch(addError(error));
+    })
+  }
+
 // Sign Up a user with email address and password
 export function doCreateUserWithEmailAndPassword(firstName, lastName, email, password) {
-  console.log('creating user:', email, password);
-  store.dispatch(initiateCallToFirebase());
+  store.dispatch(initiateFirebaseCall());
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((response) => {
         fetch( ENDPOINTS.USER, {
@@ -43,16 +63,24 @@ export function doCreateUserWithEmailAndPassword(firstName, lastName, email, pas
 // Sign In user with email address and password
 export function doSignInWithEmailAndPassword(email, password) {
   console.log('signing in with', email, password);
-  store.dispatch(initiateCallToFirebase());
+  store.dispatch(initiateFirebaseCall());
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(response => {
+      console.log(response)
         // fetch user data
         const userEndpoint = `${ENDPOINTS.USER}${response.user.uid}`;
         fetch(userEndpoint, {
         method: HTTP_METHODS.GET,
-      }).then( (response => response.json()))
+      }).then((response => response.json()))
         .then((json) => {
           console.log(json)
+          setUserFromFirebaseEmail(json);
+          // Don't need to set user here, will get picked up by UserControl as auth changes!
+          // store.dispatch(setUser(json, 'email'))
+        })
+        .catch((error) => {
+          console.log(error.code, error.message);
+          store.dispatch(addError(error));
         })
       }
       )
@@ -70,9 +98,11 @@ export function doSignInWithGoogle() {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const token = result.credential.accessToken;
     // The signed-in user info.
-    const { user } = result.user.email;
+    const userEmail = result.user.email;
+    const userUID = result.user.uid;
     // ...
-    console.log(result, token, user);
+    console.log(result, token, userEmail, userUID);
+    setUserFromGoogle(result);
   }).catch((error) => {
     // Handle Errors here.
     const { errorCode } = error.code;
