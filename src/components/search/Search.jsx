@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 class Search extends Component {
   constructor(props) {
     super(props)
     this.testData = [
       {
-        test: 'something'
+        name: 'Paul Flart',
+        address: 'The Mall Security'
       },
       {
-        test: 'something else'
+        name: 'Burt Macklin',
+        address: 'Quanico FBI HQ'
       }
     ]
 
@@ -30,9 +32,9 @@ class Search extends Component {
 
   render() {
     const { testData } = this;
-    const { searchTerms } = this.props;
+    // const { searchTerms } = this.props;
     const { searchText } = this.state;
-    const filterSearch = testData.filter(data => data.includes(searchTerms))
+    const filterSearch = testData.filter(data => data.name.includes(searchText))
     return (
       <div className="searchContainer">
         {!searchText && (
@@ -41,9 +43,9 @@ class Search extends Component {
         {searchText && (
           <div>
             <input type="text" className="searchBar" onChange={this.handleChange} id="newSearchText" />
-            <div className="text">test</div>
+            {/* <div className="text">test</div> */}
             {filterSearch.map(term =>
-              <div className="results" id="searchResults" onClick={this.handleChange} role="presentation">{term.test}</div>
+              <div className="results" id="searchResults" onClick={this.handleChange} role="presentation">{term.name}</div>
             )}
           </div>
         )}
@@ -52,10 +54,10 @@ class Search extends Component {
   }
 }
 
-Search.propTypes = {
-  searchTerms: PropTypes.shape({
-    test: PropTypes.string
-  }).isRequired
-}
+// Search.propTypes = {
+//   searchTerms: PropTypes.shape({
+//     test: PropTypes.string
+//   }).isRequired
+// }
 
 export default Search
