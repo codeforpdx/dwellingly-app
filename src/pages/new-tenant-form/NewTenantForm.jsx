@@ -13,12 +13,14 @@ class NewTenantForm extends Component {
     super(props);
 
     this.handlePropertySearch = this.handlePropertySearch.bind(this);
+    this.handleAddingNewPropertyManager = this.handleAddingNewPropertyManager.bind(this);
     this.handleAddingNewProperty = this.handleAddingNewProperty.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       user: dummyUser,
       propertySearch: '',
-      addingNewProperty: false
+      addingNewProperty: false,
+      addingNewPropertyManager: false
     }
   }
 
@@ -27,6 +29,10 @@ class NewTenantForm extends Component {
   }
 
   handleAddingNewProperty() {
+    this.setState(prevState => ({addingNewPropertyManager: !prevState.addingNewPropertyManager}))
+  }
+
+  handleAddingNewPropertyManager() {
     this.setState(prevState => ({addingNewProperty: !prevState.addingNewProperty}))
   }
 
@@ -42,7 +48,7 @@ class NewTenantForm extends Component {
   }
 
   render() {
-    const { user, propertySearch, propertySelected, addingNewProperty } = this.state;
+    const { user, propertySearch, propertySelected, addingNewProperty, addingNewPropertyManager } = this.state;
     const propertySearched = properties.filter(property => {
       const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
       return propertyNameAndAddress.includes(propertySearch)
@@ -102,7 +108,7 @@ class NewTenantForm extends Component {
                   </div>
                 )) : null}
                 {!propertySelected && propertySearch === '' && (
-                  <div className="addNewPropertyLink" onClick={this.handleAddingNewProperty} role="presentation">
+                  <div className="addNewLink" onClick={this.handleAddingNewProperty} role="presentation">
                     <span className="addIcon"><Icon icon="plus"/></span>
                     Add new Property
                   </div>
@@ -131,11 +137,34 @@ class NewTenantForm extends Component {
                       type="number" />
                   </div>
                 )}
+                {(addingNewPropertyManager && propertySelected) && (
+                  <div>
+                    <Input
+                      id="newPropertyManagerName"
+                      placeholder="Name"
+                      label="Name"
+                      type="text" />
+                    <Input
+                      id="newPropertyManagerPhone"
+                      placeholder="ex. 503-555-1234"
+                      label="Phone"
+                      type="tel" />
+                    <Input
+                      id="newPropertyManagerEmail"
+                      placeholder="email@email.com"
+                      label="Email"
+                      type="text" />
+                  </div>
+                )}
                 {propertySelected ?
                   <div className="newTenantProperty">
                     <div>
                       <h3>{property.name.length > 0 ? property.name : null}</h3>
                       <p>{property.address.length > 0 ? property.address : null}</p>
+                    </div>
+                    <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
+                      <span className="addIcon"><Icon icon="plus"/></span>
+                      Add new manager
                     </div>
                   </div>
                 : null}
