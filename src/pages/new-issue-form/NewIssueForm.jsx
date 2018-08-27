@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
+import Fieldset from '../../components/fieldset/Fieldset';
 import Input from '../../components/input/Input';
-import RadioArray from '../../components/input/RadioArray';
+// import RadioArray from '../../components/input/RadioArray';
 import Icon from '../../components/icon/Icon';
 import Card from '../../components/card/Card';
 import { CARD_TYPES } from '../../constants/constants';
@@ -18,6 +19,7 @@ class NewIssueForm extends Component {
     super(props);
 
     this.tenant = tenants.find(({ id }) => id === this.props.match.params.id);
+
 
     this.handleChange = this.handleChange.bind(this);
     this.handleMovingToNextIssueStep = this.handleMovingToNextIssueStep.bind(this);
@@ -49,6 +51,16 @@ class NewIssueForm extends Component {
   handleEditingSummary(event) {
     const { currentTarget } = event;
     this.setState({ step: `${currentTarget.id}` })
+  }
+
+  handleChange(event) {
+    const { target } = event;
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    this.setState({
+      [name]: value
+    });
   }
 
   handleGoingBack() {
@@ -83,16 +95,6 @@ class NewIssueForm extends Component {
     } else {
       this.setState({ step: 'summary' })
     }
-  }
-
-  handleChange(event) {
-    const { target } = event;
-    const { name } = target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-
-    this.setState({
-      [name]: value
-    });
   }
 
   render() {
@@ -216,44 +218,13 @@ class NewIssueForm extends Component {
                     onChange={this.handleChange}
                     type="radio"
                     value={option[key]}
-                  />
+                    />
                 );
               })}
             </fieldset>
           ) : null}
           {this.state.step === 'urgancy' ? (
-            <fieldset>
-              <div className="message message--light">
-                <p>
-                  <strong>Step 2: Select urgency level.</strong>
-                </p>
-              </div>
-              <div className="message">
-                <p>This will help our JOIN staff prioritize open tickets.</p>
-              </div>
-              <RadioArray
-                name="urgency"
-                model={this.state.urgency}
-                onChange={this.handleChange}
-                options={[
-                  {
-                    id: 'low',
-                    label: 'low',
-                    value: 'low'
-                  },
-                  {
-                    id: 'med',
-                    label: 'med',
-                    value: 'med'
-                  },
-                  {
-                    id: 'high',
-                    label: 'high',
-                    value: 'high'
-                  }
-                ]}
-              />
-            </fieldset>
+            <Fieldset type="issueRadioArray" />
           ) : null}
           {this.state.step === 'attachments' ? (
             <fieldset>
