@@ -5,6 +5,9 @@
   text-align: left;
   margin: 0.5em;
   line-height: 1.5;
+  &:first-of-type {
+    margin-bottom: 40px;
+  }
 }
 
 .propertyFormCloseButton {
@@ -44,6 +47,10 @@
       margin-right: 1em;
       background-color: $color__blue;
       color: $color__white;
+      & .icon {
+        position: relative;
+        top: 1px;
+      }
     }
   }
   & .propertyResult {
