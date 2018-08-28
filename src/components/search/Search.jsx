@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import './Search.scss';
 
@@ -21,6 +21,11 @@ class Search extends Component {
         id: 2,
         name: 'Janet Snakehole',
         address: 'The Snakehole Lounge'
+      },
+      {
+        id: 3,
+        name: 'Kurt Hackmin',
+        address: 'Burts Brothers House'
       }
     ]
 
@@ -28,7 +33,10 @@ class Search extends Component {
     this.handleSelection = this.handleSelection.bind(this);
     this.handleNewSearch = this.handleNewSearch.bind(this);
 
-    this.state = {}
+    this.state = {
+      searchText: '',
+      searchResult: ''
+    }
   }
 
   handleSelection(event) {
@@ -41,9 +49,16 @@ class Search extends Component {
   handleNewSearch(event) {
     if(this.state.searchResult && this.state.searchText) {
       event.target.classList.add('active')
+      this.setState({ searchText: '' })
     }
-    this.setState({ searchText: '' })
   }
+
+  // handleUnfocus(event) {
+  //   if(!event.target.activeElement) {
+  //     event.target.classList.add('inactive')
+  //     this.setState({ searchResult: '' })
+  //   }
+  // }
 
   handleChange(event) {
     const { target } = event;
@@ -59,7 +74,7 @@ class Search extends Component {
 
   render() {
     const { testData } = this;
-    // const { searchTerms } = this.props;
+    const { placeholder } = this.props;
     const { searchText, searchResult } = this.state;
     const filterSearch = testData.filter(data => {
       const nameAndAddress = `${data.name} ${data.address}`.toLowerCase();
@@ -71,8 +86,10 @@ class Search extends Component {
           type="text"
           id="searchText"
           className="searchBarFirst"
+          placeholder={placeholder}
           onClick={this.handleNewSearch}
           onChange={this.handleChange}
+
           value={searchText} />
         {searchResult && (
           <div className="pastSearch">
@@ -98,11 +115,12 @@ class Search extends Component {
   }
 }
 
-// Search.propTypes = {
-//   // searchTerms: PropTypes.shape({
-//   //   test: PropTypes.string
-//   // }).isRequired
-// }
+Search.propTypes = {
+  placeholder: PropTypes.string
+}
 
+Search.defaultProps = {
+  placeholder: undefined
+}
 
 export default Search

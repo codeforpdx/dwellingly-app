@@ -1,3 +1,4 @@
+@import '../../constants/constants.scss';
 .searchContainer {
   position: relative;
   display: flex;
@@ -25,14 +26,34 @@
 }
 .searchResultsContainer {
   position: absolute;
+  z-index: 2;
   margin-top: 40px;
   max-height: 300px;
   width: 100%;
   overflow: scroll;
-  transition: height 0.5s ease;
+  animation: height 0.1s linear;
   background-color: white;
+  @include dialog_shadow;
+  border-bottom-left-radius: $border-radius--card;
+  border-bottom-right-radius: $border-radius--card;
 }
 .results {
   cursor: pointer;
-  z-index: 2;
+  &:hover {
+    background: #ececec;
+  }
+}
+
+@keyframes height {
+  0% {
+    opacity: 0;
+    height: 0%;
+  }
+  50% {
+    height: 50%;
+  }
+  100% {
+    opacity: 1;
+    height: 100%;
+  }
 }
