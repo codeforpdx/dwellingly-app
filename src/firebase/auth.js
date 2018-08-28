@@ -49,7 +49,7 @@ export function doCreateUserWithEmailAndPassword(firstName, lastName, email, pas
             firstName,
             lastName,
             email,
-            uid: response.user.uid,
+            id: response.user.uid,
           })
         })
       }
@@ -94,6 +94,7 @@ export function doSignInWithEmailAndPassword(email, password) {
 // Sign in user with Google OAuth
 export function doSignInWithGoogle() {
   firebase.auth().useDeviceLanguage();
+  store.dispatch(initiateFirebaseCall());
   firebase.auth().signInWithPopup(provider).then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const token = result.credential.accessToken;
