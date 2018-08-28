@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
 import Icon from '../../components/icon/Icon';
-// import SearchForm from '../../components/search-form/SearchForm';
+import Search from '../../components/search/Search';
 import { ROLES, ROUTES } from '../../constants/constants';
 import { dummyUser, properties, propertyManagers } from '../../data';
 
@@ -102,13 +102,17 @@ class NewTenantForm extends Component {
             ======================================= */}
             <h2 className="newTenantFormHeading">Property</h2>
             <fieldset>
-              <Input
+              <Search
+                id="propertyName"
+                onSearch={this.handleSearch}
+                searchData={properties} />
+              {/* <Input
                 id="propertyName"
                 placeholder="Search Property Name"
                 label="Property"
                 type="text"
                 onChange={this.handleSearch}
-                value={this.state.propertyName} />
+                value={this.state.propertyName} /> */}
             </fieldset>
             <div className="propertySearchResults">
               {propertyName !== '' && (
