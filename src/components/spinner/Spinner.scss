@@ -1,3 +1,5 @@
+@import "../../constants/constants.scss";
+
 .spinner {
   margin: 100px auto;
   width: 40px;
@@ -15,7 +17,7 @@
   display: inline-block;
   position: absolute;
   top: 0;
-  background-color: #333;
+  background-color: $color__gray--medium;
   border-radius: 100%;
   
   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
