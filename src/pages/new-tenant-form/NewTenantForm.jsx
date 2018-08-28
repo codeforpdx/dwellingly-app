@@ -27,6 +27,7 @@ class NewTenantForm extends Component {
     const { target } = event;
     const { id } = target;
     const { value } = target;
+
     this.setState({
       [id]: value
     })
@@ -115,7 +116,7 @@ class NewTenantForm extends Component {
                 value={this.state.propertyName} /> */}
             </fieldset>
             <div className="propertySearchResults">
-              {propertyName !== '' && (
+              {/* propertyName !== '' && (
                 propertySearched.map(property => (
                 <div key={property.id} className="propertyResult">
                   <button
@@ -127,7 +128,7 @@ class NewTenantForm extends Component {
                     {property.name} {property.address}
                   </button>
                 </div>
-              )))}
+              ))) */}
               {(!propertySelected &&
                 !addingNewProperty) && (
                 <div className="addNewLink" onClick={this.handleAddingNewProperty} role="presentation">
