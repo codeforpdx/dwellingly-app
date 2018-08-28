@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Icon from '../icon/Icon';
 
 import './Search.scss';
 
@@ -29,41 +30,44 @@ class Search extends Component {
       }
     ]
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
     this.handleNewSearch = this.handleNewSearch.bind(this);
+    // this.onFocus = this.onFocus.bind(this);
 
     this.state = {
-      searchText: '',
-      searchResult: ''
+      // searchText: '',
+      searchResult: '',
+      // focus: false
     }
   }
 
+  // onFocus() {
+  //   this.setState(prevState => ({ focus: !prevState.focus }))
+  // }
+
   handleSelection(event) {
+    const { searchId } = this.state;
     this.setState({
       [event.target.id]: event.target.textContent
     });
-    this.setState({ searchText: event.target.textContent })
+    this.setState({ [searchId]: event.target.textContent })
   }
 
   handleNewSearch(event) {
-    if(this.state.searchResult && this.state.searchText) {
+    const { searchId } = this.state;
+    if(this.state.searchResult && this.state[searchId]) {
       event.target.classList.add('active')
-      this.setState({ searchText: '' })
+      this.setState({ [searchId]: '' })
     }
   }
 
-  // handleUnfocus(event) {
-  //   if(!event.target.activeElement) {
-  //     event.target.classList.add('inactive')
-  //     this.setState({ searchResult: '' })
-  //   }
-  // }
-
-  handleChange(event) {
+  handleSearch(event) {
     const { target } = event;
     const { id } = target;
     const { value } = target;
+
+    this.setState({ searchId: id })
 
     this.setState({ searchResult: ''})
 
@@ -73,30 +77,32 @@ class Search extends Component {
   }
 
   render() {
-    const { testData } = this;
-    const { placeholder } = this.props;
-    const { searchText, searchResult } = this.state;
-    const filterSearch = testData.filter(data => {
+    const { onSearch, id, searchData } = this.props;
+    const { searchId, searchResult } = this.state;
+    const filterSearch = searchData.filter(data => {
       const nameAndAddress = `${data.name} ${data.address}`.toLowerCase();
-      return nameAndAddress.includes(searchText)
+      return nameAndAddress.includes(this.state[id])
     })
     return (
       <div className="searchContainer">
-        <input
-          type="text"
-          id="searchText"
-          className="searchBarFirst"
-          placeholder={placeholder}
-          onClick={this.handleNewSearch}
-          onChange={this.handleChange}
-
-          value={searchText} />
+        <div className="searchContainerInner">
+          <input
+            type="text"
+            id={id}
+            className="searchBarFirst"
+            placeholder={!searchResult && "Search"}
+            onSearch={onSearch}
+            onClick={this.handleNewSearch}
+            onChange={this.handleSearch}
+            value={this.state[id]} />
+          <span><Icon icon="arrowRight" /></span>
+        </div>
         {searchResult && (
           <div className="pastSearch">
             {searchResult}
           </div>
         )}
-        {searchText && (
+        {searchId && (
           <div className="searchResultsContainer">
             {filterSearch.map(term =>
               <div
@@ -105,7 +111,7 @@ class Search extends Component {
                 id="searchResult"
                 onClick={this.handleSelection}
                 role="presentation">
-                {term.name}
+                {term.name} {term.address}
               </div>
             )}
           </div>
@@ -116,11 +122,10 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  placeholder: PropTypes.string
+  onSearch: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  searchData: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-Search.defaultProps = {
-  placeholder: undefined
-}
 
 export default Search

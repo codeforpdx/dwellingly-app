@@ -3,6 +3,28 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  & .searchContainerInner {
+    display: flex;
+    position: relative;
+    align-items: center;
+    & .searchBarFirst {
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      &.active {
+        opacity: .6;
+        z-index: 2;
+        letter-spacing: 0.077px;
+      }
+    }
+    span {
+      position: absolute;
+      top: 11px;
+      right: 0;
+      transform: rotate(45deg);
+      z-index: 3;
+    }
+  }
   & .pastSearch {
     width: 100%;
     background-color: white;
@@ -14,14 +36,6 @@
     position: absolute;
     top: 0;
     left: 0;
-  }
-  & .searchBarFirst {
-    position: relative;
-    z-index: 2;
-    &.active {
-      opacity: .6;
-      z-index: 2;
-    }
   }
 }
 .searchResultsContainer {
