@@ -63,11 +63,12 @@ class Search extends Component {
   }
 
   handleSearch(event) {
+    const inputId = this.props.onSearch();
     const { target } = event;
     const { id } = target;
     const { value } = target;
-
-    this.setState({ searchId: id })
+    console.log(inputId);
+    this.setState({ searchId: id });
 
     this.setState({ searchResult: ''})
 
@@ -77,7 +78,7 @@ class Search extends Component {
   }
 
   render() {
-    const { onSearch, id, searchData } = this.props;
+    const { id, searchData } = this.props;
     const { searchId, searchResult } = this.state;
     const filterSearch = searchData.filter(data => {
       const nameAndAddress = `${data.name} ${data.address}`.toLowerCase();
@@ -90,8 +91,7 @@ class Search extends Component {
             type="text"
             id={id}
             className="searchBarFirst"
-            placeholder={!searchResult && "Search"}
-            onSearch={onSearch}
+            placeholder={!searchResult ? "Search" : null}
             onClick={this.handleNewSearch}
             onChange={this.handleSearch}
             value={this.state[id]} />
