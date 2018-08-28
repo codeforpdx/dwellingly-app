@@ -1,0 +1,27 @@
+.searchContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  & .searchBarFirst {
+    position: relative;
+    z-index: 1;
+    &.active {
+      z-index: 2;
+    }
+  }
+  & .searchBarSecond {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    opacity: .6;
+    &.active {
+      z-index: 3;
+    }
+  }
+}
+.results {
+  position: relative;
+  z-index: 2;
+}
