@@ -15,6 +15,7 @@ class Search extends Component {
 
     this.state = {
       searchResult: '',
+      pastSearch: ''
       // focus: false
     }
   }
@@ -25,28 +26,30 @@ class Search extends Component {
 
   handleSelection(searchedObj) {
     const { name, address } = searchedObj
+    const searchedResult = `${name} ${address}`
     this.props.onSearchSelection(searchedObj)
 
-    this.setState({ searchResult: `${name} ${address}` });
-    // this.setState({ [searchId]: event.target.textContent })
+    this.setState({ searchResult: searchedResult });
+    this.setState({ pastSearch: searchedResult })
   }
 
   handleNewSearch(event) {
-    const { searchId } = this.state;
-    if(this.state.searchResult && this.state[searchId]) {
+    // const { searchId } = this.state;
+    if(this.state.searchResult && this.state.pastSearch) {
       event.target.classList.add('active')
       this.setState({ searchResult: '' })
+      this.setState({ [this.props.id]: '' })
     }
   }
 
   handleSearch(event) {
     const { target } = event;
-    const { id } = target;
-    const { value } = target;
+    const { id, value } = target;
 
-    this.setState({ searchId: id });
+    // this.setState({ searchId: id });
 
     this.setState({ searchResult: ''})
+    this.setState({ pastSearch: '' })
 
     this.setState({
       [id]: value
@@ -55,7 +58,7 @@ class Search extends Component {
 
   render() {
     const { id, searchData } = this.props;
-    const { searchId, searchResult } = this.state;
+    const { searchResult, pastSearch } = this.state;
     const filterSearch = searchData.filter(data => {
       const nameAndAddress = `${data.name} ${data.address}`.toLowerCase();
       return nameAndAddress.includes(this.state[id])
@@ -67,18 +70,18 @@ class Search extends Component {
             type="text"
             id={id}
             className="searchBarFirst"
-            placeholder={!searchResult ? "Search" : null}
+            placeholder={!pastSearch ? "Search" : null}
             onClick={this.handleNewSearch}
             onChange={this.handleSearch}
-            value={this.state.searchResult} />
+            value={!searchResult ? this.state[id] : searchResult} />
           <span><Icon icon="arrowRight" /></span>
         </div>
-        {searchResult && (
+        {pastSearch && (
           <div className="pastSearch">
-            {searchResult}
+            {pastSearch}
           </div>
         )}
-        {searchId && (
+        {this.state[id] && (
           <div className="searchResultsContainer">
             {filterSearch.map(term =>
               <div
