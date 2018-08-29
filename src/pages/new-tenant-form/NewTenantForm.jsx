@@ -35,7 +35,7 @@ class NewTenantForm extends Component {
   }
 
   handleSelectionFromSearch(searchedObj) {
-    this.setState({ propertyTest: searchedObj })
+    this.setState({ propertySelected: searchedObj })
   }
 
   handleAddingNewPropertyManager() {
@@ -59,7 +59,7 @@ class NewTenantForm extends Component {
   }
 
   render() {
-    const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager, propertyManagerName, propertyTest } = this.state;
+    const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager, propertyManagerName } = this.state;
     // const propertySearched = properties.filter(property => {
     //   const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
     //   return propertyNameAndAddress.includes(propertyName)
@@ -79,47 +79,51 @@ class NewTenantForm extends Component {
 
             {/* Add new tenant form section
             ======================================= */}
-            <h2 className="newTenantFormHeading">Tenant</h2>
-            <fieldset>
-              <Input
-                id="fullName"
-                label="Name"
-                type="text" />
-              <Input
-                id="phoneNumber"
-                label="Phone"
-                type="tel"
-                placeholder="ex. 503-555-1234" />
-              <div className="input inline-input">
-                <span className="inline-input__label">Outreach</span>
-                <select id="outreachWorker">
-                  <option>Staff Name</option>
-                </select>
-              </div>
-              <div className="input inline-input">
-                <span className="inline-input__label">Retention</span>
-                <select id="retentionWorker">
-                  <option>Staff Name</option>
-                </select>
-              </div>
-            </fieldset>
+            <section>
+              <h2 className="newTenantFormHeading">Tenant</h2>
+              <fieldset>
+                <Input
+                  id="fullName"
+                  label="Name"
+                  type="text" />
+                <Input
+                  id="phoneNumber"
+                  label="Phone"
+                  type="tel"
+                  placeholder="ex. 503-555-1234" />
+                <div className="input inline-input">
+                  <span className="inline-input__label">Outreach</span>
+                  <select id="outreachWorker">
+                    <option>Staff Name</option>
+                  </select>
+                </div>
+                <div className="input inline-input">
+                  <span className="inline-input__label">Retention</span>
+                  <select id="retentionWorker">
+                    <option>Staff Name</option>
+                  </select>
+                </div>
+              </fieldset>
+            </section>
 
             {/* Add new property form
             ======================================= */}
-            <h2 className="newTenantFormHeading">Property</h2>
-            <fieldset>
-              <Search
-                id="propertyName"
-                onSearchSelection={this.handleSelectionFromSearch}
-                searchData={properties} />
-              {/* <Input
-                id="propertyName"
-                placeholder="Search Property Name"
-                label="Property"
-                type="text"
-                onChange={this.handleSearch}
-                value={this.state.propertyName} /> */}
-            </fieldset>
+            <section>
+              <h2 className="newTenantFormHeading">Property</h2>
+              <fieldset>
+                <Search
+                  id="propertyName"
+                  onSearchSelection={this.handleSelectionFromSearch}
+                  searchData={properties} />
+                {/* <Input
+                  id="propertyName"
+                  placeholder="Search Property Name"
+                  label="Property"
+                  type="text"
+                  onChange={this.handleSearch}
+                  value={this.state.propertyName} /> */}
+              </fieldset>
+            </section>
             <div className="propertySearchResults">
               {/* propertyName !== '' && (
                 propertySearched.map(property => (
@@ -175,8 +179,8 @@ class NewTenantForm extends Component {
               {propertySelected ?
                 <div className="newTenantProperty">
                   <div>
-                    <h3>{propertyTest.name.length > 0 ? propertyTest.name : null}</h3>
-                    <p>{propertyTest.address.length > 0 ? propertyTest.address : null}</p>
+                    <h3>{propertySelected.name.length > 0 ? propertySelected.name : null}</h3>
+                    <p>{propertySelected.address.length > 0 ? propertySelected.address : null}</p>
                   </div>
                 </div>
               : null}
@@ -201,7 +205,7 @@ class NewTenantForm extends Component {
             {(addingNewPropertyManager &&
               propertySelected &&
               !propertyManagerSelected) && (
-              <div>
+              <section>
                 <h2 className="newTenantFormHeading">Property Manager</h2>
                 <fieldset>
                   <Input
@@ -253,19 +257,19 @@ class NewTenantForm extends Component {
                     </fieldset>
                   )}
                 </div>
-              </div>
+              </section>
             )}
             {/* Add Unit Input
             ======================================= */}
             {propertySelected && (
-              <div>
+              <section>
                 <h2 className="newTenantFormHeading">Unit</h2>
                 <Input
                   id="propertyUnit"
                   placeholder="Unit # / ABC..."
                   label="Unit"
                   type="text"/>
-              </div>
+              </section>
             )}
           </div>
         </div>
