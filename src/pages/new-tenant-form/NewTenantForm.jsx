@@ -14,12 +14,14 @@ class NewTenantForm extends Component {
 
     this.handleSearch = this.handleSearch.bind(this);
     this.handleAddingNewPropertyManager = this.handleAddingNewPropertyManager.bind(this);
+    this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
     this.handleAddingNewProperty = this.handleAddingNewProperty.bind(this);
     this.handleChange = this.handleChange.bind(this);
+
     this.state = {
       user: dummyUser,
       addingNewProperty: false,
-      addingNewPropertyManager: false
+      addingNewPropertyManager: false,
     }
   }
 
@@ -27,10 +29,13 @@ class NewTenantForm extends Component {
     const { target } = event;
     const { id } = target;
     const { value } = target;
-
     this.setState({
       [id]: value
     })
+  }
+
+  handleSelectionFromSearch(searchedObj) {
+    this.setState({ propertyTest: searchedObj })
   }
 
   handleAddingNewPropertyManager() {
@@ -49,22 +54,22 @@ class NewTenantForm extends Component {
     this.setState({
       [name]: value
     });
-    this.setState({ propertyName: '' })
+    // this.setState({ propertyName: '' })
     this.setState({ propertyManagerName: '' })
   }
 
   render() {
-    const { user, propertyName, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager, propertyManagerName } = this.state;
-    const propertySearched = properties.filter(property => {
-      const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
-      return propertyNameAndAddress.includes(propertyName)
-    })
+    const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager, propertyManagerName, propertyTest } = this.state;
+    // const propertySearched = properties.filter(property => {
+    //   const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
+    //   return propertyNameAndAddress.includes(propertyName)
+    // })
     const propertyManagerSearched = propertyManagers.filter(manager => {
       const managerNameAndPhone = `${manager.name} ${manager.number}`.toLowerCase();
       return managerNameAndPhone.includes(propertyManagerName)
     })
     const manager = propertyManagerSearched.find(manager => manager.id === propertyManagerSelected)
-    const property = propertySearched.find(property => property.id === propertySelected);
+    // const property = propertySearched.find(property => property.id === propertySelected);
     return (
       <div className="admin page">
         {user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
@@ -105,7 +110,7 @@ class NewTenantForm extends Component {
             <fieldset>
               <Search
                 id="propertyName"
-                onSearch={this.handleSearch}
+                onSearchSelection={this.handleSelectionFromSearch}
                 searchData={properties} />
               {/* <Input
                 id="propertyName"
@@ -170,8 +175,8 @@ class NewTenantForm extends Component {
               {propertySelected ?
                 <div className="newTenantProperty">
                   <div>
-                    <h3>{property.name.length > 0 ? property.name : null}</h3>
-                    <p>{property.address.length > 0 ? property.address : null}</p>
+                    <h3>{propertyTest.name.length > 0 ? propertyTest.name : null}</h3>
+                    <p>{propertyTest.address.length > 0 ? propertyTest.address : null}</p>
                   </div>
                 </div>
               : null}
