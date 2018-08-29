@@ -34,7 +34,6 @@ class Search extends Component {
   }
 
   handleNewSearch(event) {
-    // const { searchId } = this.state;
     if(this.state.searchResult && this.state.pastSearch) {
       event.target.classList.add('active')
       this.setState({ searchResult: '' })
@@ -45,8 +44,6 @@ class Search extends Component {
   handleSearch(event) {
     const { target } = event;
     const { id, value } = target;
-
-    // this.setState({ searchId: id });
 
     this.setState({ searchResult: ''})
     this.setState({ pastSearch: '' })
