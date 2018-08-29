@@ -7,28 +7,6 @@ import './Search.scss';
 class Search extends Component {
   constructor(props) {
     super(props)
-    this.testData = [
-      {
-        id: 0,
-        name: 'Paul Flart',
-        address: 'The Mall Security'
-      },
-      {
-        id: 1,
-        name: 'Burt Macklin',
-        address: 'Quanico FBI HQ'
-      },
-      {
-        id: 2,
-        name: 'Janet Snakehole',
-        address: 'The Snakehole Lounge'
-      },
-      {
-        id: 3,
-        name: 'Kurt Hackmin',
-        address: 'Burts Brothers House'
-      }
-    ]
 
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
@@ -36,7 +14,6 @@ class Search extends Component {
     // this.onFocus = this.onFocus.bind(this);
 
     this.state = {
-      // searchText: '',
       searchResult: '',
       // focus: false
     }
@@ -46,28 +23,27 @@ class Search extends Component {
   //   this.setState(prevState => ({ focus: !prevState.focus }))
   // }
 
-  handleSelection(event) {
-    const { searchId } = this.state;
-    this.setState({
-      [event.target.id]: event.target.textContent
-    });
-    this.setState({ [searchId]: event.target.textContent })
+  handleSelection(searchedObj) {
+    const { name, address } = searchedObj
+    this.props.onSearchSelection(searchedObj)
+
+    this.setState({ searchResult: `${name} ${address}` });
+    // this.setState({ [searchId]: event.target.textContent })
   }
 
   handleNewSearch(event) {
     const { searchId } = this.state;
     if(this.state.searchResult && this.state[searchId]) {
       event.target.classList.add('active')
-      this.setState({ [searchId]: '' })
+      this.setState({ searchResult: '' })
     }
   }
 
   handleSearch(event) {
-    const inputId = this.props.onSearch();
     const { target } = event;
     const { id } = target;
     const { value } = target;
-    console.log(inputId);
+
     this.setState({ searchId: id });
 
     this.setState({ searchResult: ''})
@@ -94,7 +70,7 @@ class Search extends Component {
             placeholder={!searchResult ? "Search" : null}
             onClick={this.handleNewSearch}
             onChange={this.handleSearch}
-            value={this.state[id]} />
+            value={this.state.searchResult} />
           <span><Icon icon="arrowRight" /></span>
         </div>
         {searchResult && (
@@ -109,7 +85,7 @@ class Search extends Component {
                 className="results"
                 key={term.id}
                 id="searchResult"
-                onClick={this.handleSelection}
+                onClick={() => this.handleSelection(term)}
                 role="presentation">
                 {term.name} {term.address}
               </div>
@@ -122,7 +98,7 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  onSearch: PropTypes.func.isRequired,
+  onSearchSelection: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired
 }
