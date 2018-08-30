@@ -11,18 +11,23 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
     this.handleNewSearch = this.handleNewSearch.bind(this);
-    // this.onFocus = this.onFocus.bind(this);
 
     this.state = {
       searchResult: '',
-      pastSearch: ''
-      // focus: false
+      pastSearch: '',
+      focus: null
     }
   }
 
-  // onFocus() {
-  //   this.setState(prevState => ({ focus: !prevState.focus }))
-  // }
+  componentDidMount() {
+    const input = document.getElementById(this.props.id)
+    input.onfocus = () => {
+      this.setState({ focus: true })
+    }
+    input.onblur = () => {
+      this.setState({ focus: false })
+    }
+  }
 
   handleSelection(searchedObj) {
     const { name, address } = searchedObj
@@ -55,10 +60,10 @@ class Search extends Component {
 
   render() {
     const { id, searchData } = this.props;
-    const { searchResult, pastSearch } = this.state;
+    const { searchResult, pastSearch, focus } = this.state;
     const filterSearch = searchData.filter(data => {
-      const nameAndAddress = `${data.name} ${data.address}`.toLowerCase();
-      return nameAndAddress.includes(this.state[id])
+      const dataString = Object.values(data).join(' ').toLowerCase();
+      return dataString.includes(this.state[id])
     })
     return (
       <div className="searchContainer">
@@ -78,13 +83,13 @@ class Search extends Component {
             {pastSearch}
           </div>
         )}
-        {this.state[id] && (
+        {(this.state[id] && focus) && (
           <div className="searchResultsContainer">
             {filterSearch.map(term =>
               <div
-                className="results"
                 key={term.id}
                 id="searchResult"
+                className="results"
                 onClick={() => this.handleSelection(term)}
                 role="presentation">
                 {term.name} {term.address}
