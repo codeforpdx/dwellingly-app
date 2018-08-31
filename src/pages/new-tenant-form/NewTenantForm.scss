@@ -61,6 +61,27 @@
 
 .newTenantProperty {
   padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & .editPropertyDetails {
+    text-align: center;
+    & .editIcon {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: $color__gray--dark;
+      color: $color__white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & .icon {
+        position: relative;
+        top: 1px;
+        left: 1px;
+      }
+    }
+  }
 }
 
 .input {

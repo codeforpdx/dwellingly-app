@@ -39,6 +39,7 @@ class NewTenantForm extends Component {
       this.setState({ propertySelected: searchedObj })
     } else {
       this.setState({ propertyManagerSelected: searchedObj })
+      this.setState({ addingNewPropertyManager: false })
     }
   }
 
@@ -58,11 +59,11 @@ class NewTenantForm extends Component {
     this.setState({
       [name]: value
     });
-    this.setState({ propertyManagerName: '' })
+    // this.setState({ propertyManagerName: '' })
   }
 
   render() {
-    const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager, propertyManagerName } = this.state;
+    const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager } = this.state;
     return (
       <div className="admin page">
         {user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
@@ -77,13 +78,17 @@ class NewTenantForm extends Component {
               <fieldset>
                 <Input
                   id="fullName"
+                  name="tenantName"
                   label="Name"
-                  type="text" />
+                  type="text"
+                  onChange={this.handleChange} />
                 <Input
                   id="phoneNumber"
+                  name="tenantPhone"
                   label="Phone"
                   type="tel"
-                  placeholder="ex. 503-555-1234" />
+                  placeholder="ex. 503-555-1234"
+                  onChange={this.handleChange} />
                 <div className="input inline-input">
                   <span className="inline-input__label">Outreach</span>
                   <select id="outreachWorker">
@@ -130,21 +135,25 @@ class NewTenantForm extends Component {
                   </div>
                   <Input
                     id="newPropertyName"
+                    name="newPropertyName"
                     placeholder="Property Name"
                     label="Property Name"
                     type="text" />
                   <Input
                     id="newPropertyAddress"
+                    name="newPropertyAddress"
                     placeholder="Property Address"
                     label="Street Address"
                     type="text" />
                   <Input
                     id="newPropertyCity"
+                    name="newPropertyCity"
                     placeholder="City"
                     label="City"
                     type="text" />
                   <Input
                     id="newPropertyZip"
+                    name="newPropertyZip"
                     placeholder="Zip"
                     label="Zip"
                     type="number" />
@@ -156,6 +165,12 @@ class NewTenantForm extends Component {
                     <h3>{propertySelected.name.length > 0 ? propertySelected.name : null}</h3>
                     <p>{propertySelected.address.length > 0 ? propertySelected.address : null}</p>
                   </div>
+                  <div className="editPropertyDetails">
+                    <span className="editIcon">
+                      <Icon icon="pencil"/>
+                    </span>
+                    <p>edit</p>
+                  </div>
                 </div>
               : null}
               {propertyManagerSelected && (
@@ -163,6 +178,12 @@ class NewTenantForm extends Component {
                   <div>
                     <h3>{propertyManagerSelected.name.length > 0 && propertyManagerSelected.name}</h3>
                     <p>{propertyManagerSelected.number.length > 0 && propertyManagerSelected.number}</p>
+                  </div>
+                  <div className="editPropertyDetails">
+                    <span className="editIcon">
+                      <Icon icon="pencil"/>
+                    </span>
+                    <p>edit</p>
                   </div>
                 </div>
               )}
@@ -189,15 +210,13 @@ class NewTenantForm extends Component {
                     searchData={propertyManagers} />
                 </fieldset>
                 <div className="propertySearchResults">
-                  {(propertyManagerName === '' &&
-                    !propertyManagerSelected) && (
                     <fieldset>
                       <div className="propertyFormCloseButton">
                         Add new manager
                         <span onClick={this.handleAddingNewPropertyManager} role="presentation">
                           <Icon icon="close"/>
                         </span>
-                        </div>
+                      </div>
                       <Input
                         id="newPropertyManagerName"
                         placeholder="Name"
@@ -214,7 +233,6 @@ class NewTenantForm extends Component {
                         label="Email"
                         type="text" />
                     </fieldset>
-                  )}
                 </div>
               </section>
             )}
