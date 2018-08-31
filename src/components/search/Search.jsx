@@ -93,7 +93,7 @@ class Search extends Component {
           <div className="input inline-input">
             <div className="inline-input__text">
             <label htmlFor={id}>
-              <span className="inline-input__label">{label}</span>
+              <span className={label.length > 20 ? "inline-input__label sml-text" : "inline-input__label"}>{label}</span>
               <input
                 type="text"
                 id={id}

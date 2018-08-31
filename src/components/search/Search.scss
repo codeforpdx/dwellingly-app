@@ -3,6 +3,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  padding-top: 1em;
   & .searchContainerInner {
     position: absolute;
     z-index: 3;
@@ -18,6 +19,11 @@
       &.active {
         opacity: .6;
         letter-spacing: 0.077px;
+      }
+    }
+    & .inline-input__label {
+      &.sml-text {
+        font-size: .91rem;
       }
     }
     & .dropdownIcon {
