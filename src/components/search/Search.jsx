@@ -10,14 +10,14 @@ class Search extends Component {
 
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
-    this.handleNewSearch = this.handleNewSearch.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleShowOptionsList = this.handleShowOptionsList.bind(this);
     this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
 
     this.state = {
-      searchResult: '',
+      // searchResult: '',
+      searchTerm: '',
       pastSearch: '',
       focus: null
     }
@@ -34,7 +34,6 @@ class Search extends Component {
 
   handleFocus() {
     const { focus } = this.state;
-    this.handleNewSearch();
     if(focus) {
       this.handleHideOptionsList();
     } else {
@@ -43,14 +42,14 @@ class Search extends Component {
   }
 
   handleShowOptionsList() {
-    console.log('SHOW OPTIONS');
-    document.addEventListener("click", this.handleBlur, false);
+    // console.log('SHOW OPTIONS')
+    ["click", "blur"].forEach(e => document.addEventListener(e, this.handleBlur, false));
     this.setState({ focus: true });
   }
 
   handleHideOptionsList() {
-    console.log('HIDE OPTIONS');
-    document.removeEventListener("click", this.handleBlur, false);
+    // console.log('HIDE OPTIONS');
+    ["click", "blur"].forEach(e => document.removeEventListener(e, this.handleBlur, false));
     this.setState({ focus: false });
   }
 
@@ -58,61 +57,54 @@ class Search extends Component {
     const { name, address } = searchedObj
     const searchedResult = `${name} ${address}`
     this.props.onSearchSelection(searchedObj)
-    this.setState({ searchResult: searchedResult });
+    this.setState({ searchTerm: '' });
     this.setState({ pastSearch: searchedResult })
     this.handleHideOptionsList();
   }
 
-  handleNewSearch() {
-    if(this.state.searchResult && this.state.pastSearch) {
-      // event.target.classList.add('active')
-      this.setState({ searchResult: '' })
-      this.setState({ [this.props.id]: '' })
-    }
-  }
-
   handleSearch(event) {
     const { target } = event;
-    const { id, value } = target;
+    const { value } = target;
 
-    this.setState({ searchResult: ''})
-    this.setState({ pastSearch: '' })
+    // this.setState({ searchResult: ''})
+    // this.setState({ pastSearch: '' })
 
     this.setState({
-      [id]: value
+      searchTerm: value
     });
   }
 
   render() {
-    const { id, searchData } = this.props;
-    const { searchResult, pastSearch, focus } = this.state;
+    const { searchData } = this.props;
+    const { pastSearch, focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
       const dataString = Object.values(data).join(' ').toLowerCase();
-      return dataString.includes(this.state[id])
+      return dataString.includes(searchTerm)
     })
     return (
       <div className="searchContainer">
         <div className="searchContainerInner" ref={node => { this.node = node }}>
           <input
             type="text"
-            id={id}
             className="searchBar"
             placeholder={!pastSearch ? "Search" : pastSearch}
+            onClick={this.handleFocus}
             onFocus={this.handleFocus}
             onChange={this.handleSearch}
-            defaultValue={!searchResult ? this.state[id] : searchResult} />
+            value={searchTerm} />
           <span><Icon icon="arrowRight" /></span>
-          {(this.state[id] && focus) && (
+          {(searchTerm && focus) && (
             <div className="searchResultsContainer">
-              {filterSearch.map(term =>
-                <div
-                  key={term.id}
+              {filterSearch.map(data =>
+                <button
+                  key={data.id}
                   id="searchResult"
+                  type="button"
+                  aria-label={`searchResult - ${data.name}`}
                   className="results"
-                  onClick={() => this.handleSelection(term)}
-                  role="presentation">
-                  {term.name} {term.address}
-                </div>
+                  onClick={() => this.handleSelection(data)}>
+                  {data.name} {data.address}
+                </button>
               )}
             </div>
           )}
@@ -124,7 +116,6 @@ class Search extends Component {
 
 Search.propTypes = {
   onSearchSelection: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
