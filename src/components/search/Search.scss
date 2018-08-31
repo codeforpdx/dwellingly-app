@@ -3,17 +3,22 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  // margin-bottom: 60px;
   & .searchContainerInner {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    width: 100%;
     display: flex;
-    position: relative;
-    align-items: center;
-    & .searchBarFirst {
+    // position: relative;
+    flex-direction: column;
+    justify-content: center;
+    & .searchBar {
       width: 100%;
       position: relative;
       z-index: 2;
       &.active {
         opacity: .6;
-        z-index: 2;
         letter-spacing: 0.077px;
       }
     }
@@ -39,20 +44,23 @@
   }
 }
 .searchResultsContainer {
-  position: absolute;
-  z-index: 2;
-  margin-top: 40px;
+  // margin-top: 60px;
+  // position: relative;
+  // z-index: 3;
+  // top: 40px;
   max-height: 300px;
   width: 100%;
   overflow: scroll;
   animation: height 0.1s linear;
   background-color: white;
   @include dialog_shadow;
+  border-top: 1px solid $color__gray--border;
   border-bottom-left-radius: $border-radius--card;
   border-bottom-right-radius: $border-radius--card;
 }
 .results {
   cursor: pointer;
+  padding: 0.5em;
   &:hover {
     background: #ececec;
   }

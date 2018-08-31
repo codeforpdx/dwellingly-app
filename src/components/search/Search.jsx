@@ -11,6 +11,10 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
     this.handleNewSearch = this.handleNewSearch.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleShowOptionsList = this.handleShowOptionsList.bind(this);
+    this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
 
     this.state = {
       searchResult: '',
@@ -19,28 +23,49 @@ class Search extends Component {
     }
   }
 
-  componentDidMount() {
-    const input = document.getElementById(this.props.id)
-    input.onfocus = () => {
-      this.setState({ focus: true })
+
+  handleBlur(event) {
+    if(this.node && this.node.contains(event.target)) {
+      console.log('BLUR', event.target);
+      return
     }
-    input.onblur = () => {
-      this.setState({ focus: false })
+    this.handleFocus();
+  }
+
+  handleFocus() {
+    const { focus } = this.state;
+    this.handleNewSearch();
+    if(focus) {
+      this.handleHideOptionsList();
+    } else {
+      this.handleShowOptionsList();
     }
+  }
+
+  handleShowOptionsList() {
+    console.log('SHOW OPTIONS');
+    document.addEventListener("click", this.handleBlur, false);
+    this.setState({ focus: true });
+  }
+
+  handleHideOptionsList() {
+    console.log('HIDE OPTIONS');
+    document.removeEventListener("click", this.handleBlur, false);
+    this.setState({ focus: false });
   }
 
   handleSelection(searchedObj) {
     const { name, address } = searchedObj
     const searchedResult = `${name} ${address}`
     this.props.onSearchSelection(searchedObj)
-
     this.setState({ searchResult: searchedResult });
     this.setState({ pastSearch: searchedResult })
+    this.handleHideOptionsList();
   }
 
-  handleNewSearch(event) {
+  handleNewSearch() {
     if(this.state.searchResult && this.state.pastSearch) {
-      event.target.classList.add('active')
+      // event.target.classList.add('active')
       this.setState({ searchResult: '' })
       this.setState({ [this.props.id]: '' })
     }
@@ -67,36 +92,31 @@ class Search extends Component {
     })
     return (
       <div className="searchContainer">
-        <div className="searchContainerInner">
+        <div className="searchContainerInner" ref={node => { this.node = node }}>
           <input
             type="text"
             id={id}
-            className="searchBarFirst"
-            placeholder={!pastSearch ? "Search" : null}
-            onClick={this.handleNewSearch}
+            className="searchBar"
+            placeholder={!pastSearch ? "Search" : pastSearch}
+            onFocus={this.handleFocus}
             onChange={this.handleSearch}
-            value={!searchResult ? this.state[id] : searchResult} />
+            defaultValue={!searchResult ? this.state[id] : searchResult} />
           <span><Icon icon="arrowRight" /></span>
+          {(this.state[id] && focus) && (
+            <div className="searchResultsContainer">
+              {filterSearch.map(term =>
+                <div
+                  key={term.id}
+                  id="searchResult"
+                  className="results"
+                  onClick={() => this.handleSelection(term)}
+                  role="presentation">
+                  {term.name} {term.address}
+                </div>
+              )}
+            </div>
+          )}
         </div>
-        {pastSearch && (
-          <div className="pastSearch">
-            {pastSearch}
-          </div>
-        )}
-        {(this.state[id] && focus) && (
-          <div className="searchResultsContainer">
-            {filterSearch.map(term =>
-              <div
-                key={term.id}
-                id="searchResult"
-                className="results"
-                onClick={() => this.handleSelection(term)}
-                role="presentation">
-                {term.name} {term.address}
-              </div>
-            )}
-          </div>
-        )}
       </div>
     )
   }
