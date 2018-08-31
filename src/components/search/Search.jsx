@@ -17,7 +17,6 @@ class Search extends Component {
     this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
 
     this.state = {
-      // searchResult: '',
       searchTerm: '',
       pastSearch: '',
       focus: null
@@ -48,20 +47,16 @@ class Search extends Component {
     if(event.key !== 'Tab' || event.which !== 9) {
       return
      }
-     console.log('TAB');
      this.handleBlur(event);
   }
 
   handleShowOptionsList() {
-    console.log('SHOW OPTIONS');
-    // If the keydown is === to 'tab' run the function
     document.addEventListener("click", this.handleBlur, false);
     document.addEventListener("keyup", this.handleTab, false);
     this.setState({ focus: true });
   }
 
   handleHideOptionsList() {
-    console.log('HIDE OPTIONS');
     document.removeEventListener("click", this.handleBlur, false);
     document.removeEventListener("keyup", this.handleTab, false);
     this.setState({ focus: false });
@@ -80,16 +75,13 @@ class Search extends Component {
     const { target } = event;
     const { value } = target;
 
-    // this.setState({ searchResult: ''})
-    // this.setState({ pastSearch: '' })
-
     this.setState({
       searchTerm: value
     });
   }
 
   render() {
-    const { id, searchData } = this.props;
+    const { id, searchData, label } = this.props;
     const { pastSearch, focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
       const dataString = Object.values(data).join(' ').toLowerCase();
@@ -101,7 +93,7 @@ class Search extends Component {
           <div className="input inline-input">
             <div className="inline-input__text">
             <label htmlFor={id}>
-              <span className="inline-input inline__label">Property Search</span>
+              <span className="inline-input__label">{label}</span>
               <input
                 type="text"
                 id={id}
@@ -137,6 +129,7 @@ class Search extends Component {
 
 Search.propTypes = {
   id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   onSearchSelection: PropTypes.func.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired
 }

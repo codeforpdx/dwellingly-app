@@ -3,14 +3,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  // margin-bottom: 60px;
   & .searchContainerInner {
     position: absolute;
     z-index: 3;
     top: 0;
     width: 100%;
     display: flex;
-    // position: relative;
     flex-direction: column;
     justify-content: center;
     & .searchBar {
@@ -24,9 +22,10 @@
     }
     & .dropdownIcon {
       position: absolute;
+      font-size: .8em;
       top: 11px;
-      right: 0;
-      transform: rotate(45deg);
+      right: 5px;
+      transform: rotate(90deg);
       z-index: 3;
     }
   }
@@ -44,17 +43,12 @@
   }
 }
 .searchResultsContainer {
-  // margin-top: 60px;
-  // position: relative;
-  // z-index: 3;
-  // top: 40px;
+  margin: 0 1em;
   max-height: 300px;
-  width: 100%;
   overflow: scroll;
   animation: height 0.1s linear;
   background-color: white;
   @include dialog_shadow;
-  border-top: 1px solid $color__gray--border;
   border-bottom-left-radius: $border-radius--card;
   border-bottom-right-radius: $border-radius--card;
 }
