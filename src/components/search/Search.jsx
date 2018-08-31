@@ -11,6 +11,7 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.handleTab = this.handleTab.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleShowOptionsList = this.handleShowOptionsList.bind(this);
     this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
@@ -28,11 +29,14 @@ class Search extends Component {
     if(this.node && this.node.contains(event.target)) {
       return
     }
-    this.handleFocus();
+    this.handleFocus(event);
   }
 
-  handleFocus() {
+  handleFocus(event) {
     const { focus } = this.state;
+    if(focus && this.node && this.node.contains(event.target)) {
+      return
+    }
     if(focus) {
       this.handleHideOptionsList();
     } else {
@@ -40,28 +44,26 @@ class Search extends Component {
     }
   }
 
+  handleTab(event) {
+    if(event.key !== 'Tab' || event.which !== 9) {
+      return
+     }
+     console.log('TAB');
+     this.handleBlur(event);
+  }
+
   handleShowOptionsList() {
-    // console.log('SHOW OPTIONS');
+    console.log('SHOW OPTIONS');
     // If the keydown is === to 'tab' run the function
     document.addEventListener("click", this.handleBlur, false);
-    document.addEventListener("keyup", this.handleBlur, false);
-    // document.addEventListener("keydown", (e) => {
-    //   if(e.keyCode === 9 || e.which === 'tab') {
-    //     this.handleBlur();
-    //   }
-    // }, false);
+    document.addEventListener("keyup", this.handleTab, false);
     this.setState({ focus: true });
   }
 
   handleHideOptionsList() {
-    // console.log('HIDE OPTIONS');
+    console.log('HIDE OPTIONS');
     document.removeEventListener("click", this.handleBlur, false);
-    document.removeEventListener("keyup", this.handleBlur, false);
-    // document.removeEventListener("keydown", (e) => {
-    //   if(e.keyCode === 9 || e.which === 'tab') {
-    //     this.handleBlur();
-    //   }
-    // }, false);
+    document.removeEventListener("keyup", this.handleTab, false);
     this.setState({ focus: false });
   }
 
@@ -87,7 +89,7 @@ class Search extends Component {
   }
 
   render() {
-    const { searchData } = this.props;
+    const { id, searchData } = this.props;
     const { pastSearch, focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
       const dataString = Object.values(data).join(' ').toLowerCase();
@@ -96,14 +98,22 @@ class Search extends Component {
     return (
       <div className="searchContainer">
         <div className="searchContainerInner" ref={node => { this.node = node }}>
-          <input
-            type="text"
-            className="searchBar"
-            placeholder={!pastSearch ? "Search" : pastSearch}
-            onFocus={this.handleFocus}
-            onChange={this.handleSearch}
-            value={searchTerm} />
-          <span><Icon icon="arrowRight" /></span>
+          <div className="input inline-input">
+            <div className="inline-input__text">
+            <label htmlFor={id}>
+              <span className="inline-input inline__label">Property Search</span>
+              <input
+                type="text"
+                id={id}
+                className="searchBar"
+                placeholder={!pastSearch ? "Search" : pastSearch}
+                onFocus={this.handleFocus}
+                onChange={this.handleSearch}
+                value={searchTerm} />
+            </label>
+            <span className="dropdownIcon"><Icon icon="arrowRight" /></span>
+            </div>
+          </div>
           {(searchTerm && focus) && (
             <div className="searchResultsContainer">
               {filterSearch.map(data =>
@@ -126,6 +136,7 @@ class Search extends Component {
 }
 
 Search.propTypes = {
+  id: PropTypes.string.isRequired,
   onSearchSelection: PropTypes.func.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired
 }
