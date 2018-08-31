@@ -35,7 +35,11 @@ class NewTenantForm extends Component {
   }
 
   handleSelectionFromSearch(searchedObj) {
-    this.setState({ propertySelected: searchedObj })
+    if(Object.keys(searchedObj).includes("address")) {
+      this.setState({ propertySelected: searchedObj })
+    } else {
+      this.setState({ propertyManagerSelected: searchedObj })
+    }
   }
 
   handleAddingNewPropertyManager() {
@@ -54,22 +58,11 @@ class NewTenantForm extends Component {
     this.setState({
       [name]: value
     });
-    // this.setState({ propertyName: '' })
     this.setState({ propertyManagerName: '' })
   }
 
   render() {
     const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager, propertyManagerName } = this.state;
-    // const propertySearched = properties.filter(property => {
-    //   const propertyNameAndAddress = `${property.name} ${property.address}`.toLowerCase();
-    //   return propertyNameAndAddress.includes(propertyName)
-    // })
-    const propertyManagerSearched = propertyManagers.filter(manager => {
-      const managerNameAndPhone = `${manager.name} ${manager.number}`.toLowerCase();
-      return managerNameAndPhone.includes(propertyManagerName)
-    })
-    const manager = propertyManagerSearched.find(manager => manager.id === propertyManagerSelected)
-    // const property = propertySearched.find(property => property.id === propertySelected);
     return (
       <div className="admin page">
         {user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
@@ -113,31 +106,12 @@ class NewTenantForm extends Component {
               <fieldset>
                 <Search
                   id="propertyName"
+                  label="Property Search"
                   onSearchSelection={this.handleSelectionFromSearch}
                   searchData={properties} />
-                {/* <Input
-                  id="propertyName"
-                  placeholder="Search Property Name"
-                  label="Property"
-                  type="text"
-                  onChange={this.handleSearch}
-                  value={this.state.propertyName} /> */}
               </fieldset>
             </section>
             <div className="propertySearchResults">
-              {/* propertyName !== '' && (
-                propertySearched.map(property => (
-                <div key={property.id} className="propertyResult">
-                  <button
-                    id="propertySelect"
-                    type="button"
-                    name="propertySelected"
-                    onClick={this.handleChange}
-                    value={property.id}>
-                    {property.name} {property.address}
-                  </button>
-                </div>
-              ))) */}
               {(!propertySelected &&
                 !addingNewProperty) && (
                 <div className="addNewLink" onClick={this.handleAddingNewProperty} role="presentation">
@@ -187,8 +161,8 @@ class NewTenantForm extends Component {
               {propertyManagerSelected && (
                 <div className="newTenantProperty">
                   <div>
-                    <h3>{manager.name.length > 0 && manager.name}</h3>
-                    <p>{manager.number.length > 0 && manager.number}</p>
+                    <h3>{propertyManagerSelected.name.length > 0 && propertyManagerSelected.name}</h3>
+                    <p>{propertyManagerSelected.number.length > 0 && propertyManagerSelected.number}</p>
                   </div>
                 </div>
               )}
@@ -208,28 +182,13 @@ class NewTenantForm extends Component {
               <section className="newTenanFromSection">
                 <h2 className="newTenantFormHeading">Property Manager</h2>
                 <fieldset>
-                  <Input
+                  <Search
                     id="propertyManagerName"
-                    placeholder="Search Manager Name"
-                    label="Property Manager"
-                    type="text"
-                    onChange={this.handleSearch}
-                    value={this.state.propertyManagerName} />
+                    label="Property Manager Search"
+                    onSearchSelection={this.handleSelectionFromSearch}
+                    searchData={propertyManagers} />
                 </fieldset>
                 <div className="propertySearchResults">
-                  {propertyManagerName !== '' ?
-                    propertyManagerSearched.map(manager => (
-                    <div key={manager.id} className="propertyResult">
-                      <button
-                        id="propertyManagerSelect"
-                        type="button"
-                        name="propertyManagerSelected"
-                        onClick={this.handleChange}
-                        value={manager.id}>
-                        {manager.name} {manager.number}
-                      </button>
-                    </div>
-                  )) : null}
                   {(propertyManagerName === '' &&
                     !propertyManagerSelected) && (
                     <fieldset>
