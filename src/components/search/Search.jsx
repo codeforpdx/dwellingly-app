@@ -26,7 +26,6 @@ class Search extends Component {
 
   handleBlur(event) {
     if(this.node && this.node.contains(event.target)) {
-      console.log('BLUR', event.target);
       return
     }
     this.handleFocus();
@@ -42,14 +41,27 @@ class Search extends Component {
   }
 
   handleShowOptionsList() {
-    // console.log('SHOW OPTIONS')
-    ["click", "blur"].forEach(e => document.addEventListener(e, this.handleBlur, false));
+    // console.log('SHOW OPTIONS');
+    // If the keydown is === to 'tab' run the function
+    document.addEventListener("click", this.handleBlur, false);
+    document.addEventListener("keyup", this.handleBlur, false);
+    // document.addEventListener("keydown", (e) => {
+    //   if(e.keyCode === 9 || e.which === 'tab') {
+    //     this.handleBlur();
+    //   }
+    // }, false);
     this.setState({ focus: true });
   }
 
   handleHideOptionsList() {
     // console.log('HIDE OPTIONS');
-    ["click", "blur"].forEach(e => document.removeEventListener(e, this.handleBlur, false));
+    document.removeEventListener("click", this.handleBlur, false);
+    document.removeEventListener("keyup", this.handleBlur, false);
+    // document.removeEventListener("keydown", (e) => {
+    //   if(e.keyCode === 9 || e.which === 'tab') {
+    //     this.handleBlur();
+    //   }
+    // }, false);
     this.setState({ focus: false });
   }
 
@@ -88,7 +100,6 @@ class Search extends Component {
             type="text"
             className="searchBar"
             placeholder={!pastSearch ? "Search" : pastSearch}
-            onClick={this.handleFocus}
             onFocus={this.handleFocus}
             onChange={this.handleSearch}
             value={searchTerm} />

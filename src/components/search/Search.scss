@@ -59,10 +59,13 @@
   border-bottom-right-radius: $border-radius--card;
 }
 .results {
+  width: 100%;
   cursor: pointer;
   padding: 0.5em;
-  &:hover {
+  &:hover,
+  &:focus {
     background: #ececec;
+    outline: none;
   }
 }
 
