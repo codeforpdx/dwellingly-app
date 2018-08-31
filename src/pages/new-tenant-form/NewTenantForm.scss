@@ -3,8 +3,11 @@
 .newTenantFormHeading {
   border-bottom: 1px solid $color__gray--border;
   text-align: left;
-  margin: 0.5em;
   line-height: 1.5;
+}
+
+.newTenanFromSection {
+  padding: 0.5em;
 }
 
 .propertyFormCloseButton {
@@ -24,7 +27,7 @@
 .propertySearchResults {
   text-align: left;
   background: $color__gray--light;
-  margin: 0 1em;
+  margin: 2.5em 1em;
   & .input:last-of-type {
     padding-bottom: 1em;
   }
