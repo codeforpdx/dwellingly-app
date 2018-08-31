@@ -73,7 +73,7 @@ class NewTenantForm extends Component {
 
             {/* Add new tenant form section
             ======================================= */}
-            <section className="newTenanFromSection">
+            <section className="newTenantFromSection">
               <h2 className="newTenantFormHeading">Tenant</h2>
               <fieldset>
                 <Input
@@ -106,7 +106,7 @@ class NewTenantForm extends Component {
 
             {/* Add new property form
             ======================================= */}
-            <section className="newTenanFromSection">
+            <section className="newTenantFromSection">
               <h2 className="newTenantFormHeading">Property</h2>
               <fieldset>
                 <Search
@@ -200,7 +200,7 @@ class NewTenantForm extends Component {
             {(addingNewPropertyManager &&
               propertySelected &&
               !propertyManagerSelected) && (
-              <section className="newTenanFromSection">
+              <section className="newTenantFromSection">
                 <h2 className="newTenantFormHeading">Property Manager</h2>
                 <fieldset>
                   <Search
@@ -239,7 +239,7 @@ class NewTenantForm extends Component {
             {/* Add Unit Input
             ======================================= */}
             {propertySelected && (
-              <section className="newTenanFromSection">
+              <section className="newTenantFromSection">
                 <h2 className="newTenantFormHeading">Unit</h2>
                 <Input
                   id="propertyUnit"
