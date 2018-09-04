@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
+import Fields from '../../components/fields/Fields';
 import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
 import { ROLES, ROUTES } from '../../constants/constants';
@@ -126,13 +127,22 @@ class NewTenantForm extends Component {
               )}
               {(addingNewProperty &&
                 !propertySelected) && (
-                <fieldset>
+                <form>
                   <div className="propertyFormCloseButton">
                     Add new property
                     <span onClick={this.handleAddingNewProperty} role="presentation">
                       <Icon icon="close"/>
                     </span>
                   </div>
+                  <Fields
+                    id={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
+                    label={["Property Name", "Property Address", "City", "Zip"]}
+                    name={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
+                    placeholder={["Property Name", "Property Address", "City", "Zip"]}
+                    inputTypes={["text", "text", "text", "number"]}
+                    onChange={this.handleChange} />
+                </form>
+                /* <fieldset>
                   <Input
                     id="newPropertyName"
                     name="newPropertyName"
@@ -157,7 +167,7 @@ class NewTenantForm extends Component {
                     placeholder="Zip"
                     label="Zip"
                     type="number" />
-                </fieldset>
+                </fieldset> */
               )}
               {propertySelected ?
                 <div className="newTenantProperty">
