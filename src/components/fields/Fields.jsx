@@ -11,7 +11,7 @@ class Fields extends Component {
   }
 
   render() {
-    const { label, inputTypes } = this.props;
+    const { label, inputTypes, name, onChange } = this.props;
 
     return (
       <fieldset>
@@ -19,6 +19,8 @@ class Fields extends Component {
           <Input
             key={inputType}
             label={label[index]}
+            name={name[index]}
+            onChange={onChange}
             type={inputType}  />
         )}
       </fieldset>
@@ -32,7 +34,15 @@ Fields.propTypes = {
   ).isRequired,
   inputTypes: PropTypes.arrayOf(
     PropTypes.string
-  ).isRequired
+  ).isRequired,
+  name: PropTypes.arrayOf(
+    PropTypes.string
+  ),
+  onChange: PropTypes.func.isRequired
+}
+
+Fields.defaultProps = {
+  name: undefined
 }
 
 export default Fields
