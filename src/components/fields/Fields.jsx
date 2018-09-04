@@ -15,10 +15,10 @@ class Fields extends Component {
 
     return (
       <fieldset>
-        {inputTypes.map((inputType) =>
+        {inputTypes.map((inputType, index) =>
           <Input
             key={inputType}
-            label={label}
+            label={label[index]}
             type={inputType}  />
         )}
       </fieldset>
@@ -27,7 +27,9 @@ class Fields extends Component {
 }
 
 Fields.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.arrayOf(
+    PropTypes.string
+  ).isRequired,
   inputTypes: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired
