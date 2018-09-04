@@ -6,8 +6,11 @@
   line-height: 1.5;
 }
 
-.newTenanFromSection {
+.newTenantFormSection {
   padding: 0.5em;
+  &:first-of-type {
+    margin-top: 1em;
+  }
 }
 
 .propertyFormCloseButton {
