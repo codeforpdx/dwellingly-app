@@ -11,13 +11,14 @@ class Fields extends Component {
   }
 
   render() {
-    const { label, inputTypes, name, onChange } = this.props;
+    const { id, label, inputTypes, name, onChange } = this.props;
 
     return (
       <fieldset>
         {inputTypes.map((inputType, index) =>
           <Input
-            key={inputType}
+            key={id[index]}
+            id={`${id[index]}-${index}`}
             label={label[index]}
             name={name[index]}
             onChange={onChange}
@@ -29,6 +30,9 @@ class Fields extends Component {
 }
 
 Fields.propTypes = {
+  id: PropTypes.arrayOf(
+    PropTypes.string
+  ).isRequired,
   label: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,
