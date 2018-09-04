@@ -136,7 +136,7 @@ class NewTenantForm extends Component {
                   </div>
                   <Fields
                     id={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
-                    label={["Property Name", "Property Address", "City", "Zip"]}
+                    label={["Property Name", "Street Address", "City", "Zip"]}
                     name={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
                     placeholder={["Property Name", "Property Address", "City", "Zip"]}
                     inputTypes={["text", "text", "text", "number"]}
@@ -220,29 +220,36 @@ class NewTenantForm extends Component {
                     searchData={propertyManagers} />
                 </fieldset>
                 <div className="propertySearchResults">
-                    <fieldset>
-                      <div className="propertyFormCloseButton">
-                        Add new manager
-                        <span onClick={this.handleAddingNewPropertyManager} role="presentation">
-                          <Icon icon="close"/>
-                        </span>
-                      </div>
-                      <Input
-                        id="newPropertyManagerName"
-                        placeholder="Name"
-                        label="Name"
-                        type="text" />
-                      <Input
-                        id="newPropertyManagerPhone"
-                        placeholder="ex. 503-555-1234"
-                        label="Phone"
-                        type="tel" />
-                      <Input
-                        id="newPropertyManagerEmail"
-                        placeholder="email@email.com"
-                        label="Email"
-                        type="text" />
-                    </fieldset>
+                  <form>
+                    <div className="propertyFormCloseButton">
+                      Add new manager
+                      <span onClick={this.handleAddingNewPropertyManager} role="presentation">
+                        <Icon icon="close"/>
+                      </span>
+                    </div>
+                    <Fields
+                      id={["newPropertyManagerName", "newPropertyManagerPhone", "newPropertyManagerEmail"]}
+                      name={["newPropertyManagerName", "newPropertyManagerPhone", "newPropertyManagerEmail"]}
+                      placeholder={["Name", "ex. 503-555-1234", "email@email.com"]}
+                      label={["Name", "Phone", "Email"]}
+                      inputTypes={["text", "tel", "text"]}
+                      onChange={this.handleChange}  />
+                  </form>
+                  {/* <Input
+                    id="newPropertyManagerName"
+                    placeholder="Name"
+                    label="Name"
+                    type="text" />
+                  <Input
+                    id="newPropertyManagerPhone"
+                    placeholder="ex. 503-555-1234"
+                    label="Phone"
+                    type="tel" />
+                  <Input
+                    id="newPropertyManagerEmail"
+                    placeholder="email@email.com"
+                    label="Email"
+                    type="text" /> */}
                 </div>
               </section>
             )}
