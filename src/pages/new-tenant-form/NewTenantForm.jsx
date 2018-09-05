@@ -60,7 +60,6 @@ class NewTenantForm extends Component {
     this.setState({
       [name]: value
     });
-    // this.setState({ propertyManagerName: '' })
   }
 
   render() {
@@ -142,32 +141,6 @@ class NewTenantForm extends Component {
                     inputTypes={["text", "text", "text", "number"]}
                     onChange={this.handleChange} />
                 </form>
-                /* <fieldset>
-                  <Input
-                    id="newPropertyName"
-                    name="newPropertyName"
-                    placeholder="Property Name"
-                    label="Property Name"
-                    type="text" />
-                  <Input
-                    id="newPropertyAddress"
-                    name="newPropertyAddress"
-                    placeholder="Property Address"
-                    label="Street Address"
-                    type="text" />
-                  <Input
-                    id="newPropertyCity"
-                    name="newPropertyCity"
-                    placeholder="City"
-                    label="City"
-                    type="text" />
-                  <Input
-                    id="newPropertyZip"
-                    name="newPropertyZip"
-                    placeholder="Zip"
-                    label="Zip"
-                    type="number" />
-                </fieldset> */
               )}
               {propertySelected ?
                 <div className="newTenantProperty">
@@ -235,21 +208,6 @@ class NewTenantForm extends Component {
                       inputTypes={["text", "tel", "text"]}
                       onChange={this.handleChange}  />
                   </form>
-                  {/* <Input
-                    id="newPropertyManagerName"
-                    placeholder="Name"
-                    label="Name"
-                    type="text" />
-                  <Input
-                    id="newPropertyManagerPhone"
-                    placeholder="ex. 503-555-1234"
-                    label="Phone"
-                    type="tel" />
-                  <Input
-                    id="newPropertyManagerEmail"
-                    placeholder="email@email.com"
-                    label="Email"
-                    type="text" /> */}
                 </div>
               </section>
             )}
