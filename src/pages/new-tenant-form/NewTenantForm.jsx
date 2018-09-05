@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
-import Fields from '../../components/fields/Fields';
+// import Fields from '../../components/fields/Fields';
+import NewProperty from '../../components/new-property/NewProperty';
 import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
 import { ROLES, ROUTES } from '../../constants/constants';
@@ -134,12 +135,13 @@ class NewTenantForm extends Component {
                       <Icon icon="close"/>
                     </span>
                   </div>
-                  <Fields
+                  <NewProperty onChange={this.handleChange} />
+                  {/* <Fields
                     id={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
                     label={["Property Name", "Street Address", "City", "Zip"]}
                     placeholder={["Property Name", "Property Address", "City", "Zip"]}
                     inputTypes={["text", "text", "text", "number"]}
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange} /> */}
                 </form>
               )}
               {propertySelected ?
@@ -200,12 +202,12 @@ class NewTenantForm extends Component {
                         <Icon icon="close"/>
                       </span>
                     </div>
-                    <Fields
+                    {/* <Fields
                       id={["newPropertyManagerName", "newPropertyManagerPhone", "newPropertyManagerEmail"]}
                       placeholder={["Name", "ex. 503-555-1234", "email@email.com"]}
                       label={["Name", "Phone", "Email"]}
                       inputTypes={["text", "tel", "text"]}
-                      onChange={this.handleChange}  />
+                      onChange={this.handleChange}  /> */}
                   </form>
                 </div>
               </section>
