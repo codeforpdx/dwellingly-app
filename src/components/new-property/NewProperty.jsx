@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../input/Input';
 
-const NewProperty = ({ onChange, id }) => (
-  <fieldset id={id} onChange={onChange}>
+const NewProperty = ({ onChange }) => (
+  <fieldset onChange={onChange}>
     <Input
       type="text"
       id="newPropertyName"
@@ -32,7 +32,6 @@ const NewProperty = ({ onChange, id }) => (
 );
 
 NewProperty.propTypes = {
-  id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
 
