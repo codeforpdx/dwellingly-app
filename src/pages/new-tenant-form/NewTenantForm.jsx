@@ -106,7 +106,7 @@ class NewTenantForm extends Component {
                 </div>
               </fieldset>
             </section>
-            
+
             {/* Add new property form
             ======================================= */}
             <section className="newTenantFormSection">
@@ -151,7 +151,9 @@ class NewTenantForm extends Component {
                       <Icon icon="close"/>
                     </span>
                   </div>
-                  <NewProperty onChange={this.handleChange} />
+                  <NewProperty
+                    id="propertySelected"
+                    onChange={this.handleChange} />
                 </form>
               )}
               {propertyManagerSelected && (
