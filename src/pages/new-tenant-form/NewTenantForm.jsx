@@ -126,18 +126,6 @@ class NewTenantForm extends Component {
                   Add new Property
                 </div>
               )}
-              {(addingNewProperty &&
-                !propertySelected) && (
-                <form>
-                  <div className="propertyFormCloseButton">
-                    Add new property
-                    <span onClick={this.handleAddingNewProperty} role="presentation">
-                      <Icon icon="close"/>
-                    </span>
-                  </div>
-                  <NewProperty onChange={this.handleChange} />
-                </form>
-              )}
               {propertySelected ?
                 <div className="newTenantProperty">
                   <div>
@@ -145,13 +133,24 @@ class NewTenantForm extends Component {
                     <p>{propertySelected.address.length > 0 ? propertySelected.address : null}</p>
                   </div>
                   <div className="editPropertyDetails">
-                    <span className="editIcon">
+                    <span className="editIcon" onClick={this.handleAddingNewProperty} role="presentation">
                       <Icon icon="pencil"/>
                     </span>
                     <p>edit</p>
                   </div>
                 </div>
               : null}
+              {addingNewProperty && (
+                <form>
+                  <div className="propertyFormCloseButton">
+                    {!propertySelected ? "Add new property" : "Edit new property"}
+                    <span onClick={this.handleAddingNewProperty} role="presentation">
+                      <Icon icon="close"/>
+                    </span>
+                  </div>
+                  <NewProperty onChange={this.handleChange} />
+                </form>
+              )}
               {propertyManagerSelected && (
                 <div className="newTenantProperty">
                   <div>
@@ -159,14 +158,14 @@ class NewTenantForm extends Component {
                     <p>{propertyManagerSelected.number.length > 0 && propertyManagerSelected.number}</p>
                   </div>
                   <div className="editPropertyDetails">
-                    <span className="editIcon">
+                    <span className="editIcon" onClick={this.handleAddingNewPropertyManager} role="presentation">
                       <Icon icon="pencil"/>
                     </span>
                     <p>edit</p>
                   </div>
                 </div>
               )}
-              {propertySelected && (
+              {(propertySelected && !propertyManagerSelected) && (
                 <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
                   <span className="addIcon"><Icon icon="plus"/></span>
                   Add new manager
@@ -177,21 +176,22 @@ class NewTenantForm extends Component {
             {/* Add new property manager form
             ======================================= */}
             {(addingNewPropertyManager &&
-              propertySelected &&
-              !propertyManagerSelected) && (
+              propertySelected) && (
               <section className="newTenantFormSection">
                 <h2 className="newTenantFormHeading">Property Manager</h2>
-                <fieldset>
-                  <Search
-                    id="propertyManagerName"
-                    label="Property Manager Search"
-                    onSearchSelection={this.handleSelectionFromSearch}
-                    searchData={propertyManagers} />
-                </fieldset>
+                {!propertyManagerSelected && (
+                  <fieldset>
+                    <Search
+                      id="propertyManagerName"
+                      label="Property Manager Search"
+                      onSearchSelection={this.handleSelectionFromSearch}
+                      searchData={propertyManagers} />
+                  </fieldset>
+                )}
                 <div className="propertySearchResults">
                   <form>
                     <div className="propertyFormCloseButton">
-                      Add new manager
+                      {!propertyManagerSelected ? "Add new manager" : "Edit property manager"}
                       <span onClick={this.handleAddingNewPropertyManager} role="presentation">
                         <Icon icon="close"/>
                       </span>
