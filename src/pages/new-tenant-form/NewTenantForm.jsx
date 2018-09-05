@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
-// import Fields from '../../components/fields/Fields';
 import NewProperty from '../../components/new-property/NewProperty';
 import NewPropertyManager from '../../components/new-property-manager/NewPropertyManager';
 import Icon from '../../components/icon/Icon';
@@ -137,12 +136,6 @@ class NewTenantForm extends Component {
                     </span>
                   </div>
                   <NewProperty onChange={this.handleChange} />
-                  {/* <Fields
-                    id={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
-                    label={["Property Name", "Street Address", "City", "Zip"]}
-                    placeholder={["Property Name", "Property Address", "City", "Zip"]}
-                    inputTypes={["text", "text", "text", "number"]}
-                    onChange={this.handleChange} /> */}
                 </form>
               )}
               {propertySelected ?
@@ -204,12 +197,6 @@ class NewTenantForm extends Component {
                       </span>
                     </div>
                     <NewPropertyManager onChange={this.handleChange} />
-                    {/* <Fields
-                      id={["newPropertyManagerName", "newPropertyManagerPhone", "newPropertyManagerEmail"]}
-                      placeholder={["Name", "ex. 503-555-1234", "email@email.com"]}
-                      label={["Name", "Phone", "Email"]}
-                      inputTypes={["text", "tel", "text"]}
-                      onChange={this.handleChange}  /> */}
                   </form>
                 </div>
               </section>
