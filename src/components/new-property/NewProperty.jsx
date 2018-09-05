@@ -2,40 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../input/Input';
 
-const NewProperty = ({ onChange }) => (
-  <fieldset>
+const NewProperty = ({ onChange, id }) => (
+  <fieldset id={id} onChange={onChange}>
     <Input
       type="text"
       id="newPropertyName"
       name="newPropertyName"
       label="Property Name"
-      placeholder="Property Name"
-      onChange={onChange} />
+      placeholder="Property Name" />
     <Input
       type="text"
       id="newPropertyAddress"
       name="newPropertyAddress"
       label="Property Address"
-      placeholder="Property Address"
-      onChange={onChange} />
+      placeholder="Property Address" />
     <Input
       type="text"
       id="newPropertyCity"
       name="newPropertyCity"
       label="City"
-      placeholder="City"
-      onChange={onChange} />
+      placeholder="City" />
     <Input
       type="number"
       id="newPropertyZip"
       name="newPropertyZip"
       label="Zip"
-      placeholder="Zip"
-      onChange={onChange} />
+      placeholder="Zip" />
   </fieldset>
 );
 
 NewProperty.propTypes = {
+  id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
 
