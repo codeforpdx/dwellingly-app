@@ -119,8 +119,8 @@ class NewTenantForm extends Component {
             <div className="propertySearchResults">
               {(!propertySelected &&
                 !addingNewProperty) && (
-                <div className="addNewLink" onClick={this.handleAddingNewProperty} role="presentation">
-                  <span className="addIcon"><Icon icon="plus"/></span>
+                <div className="addNewLink">
+                  <span className="addIcon" onClick={this.handleAddingNewProperty} role="presentation"><Icon icon="plus"/></span>
                   Add new Property
                 </div>
               )}
@@ -136,7 +136,6 @@ class NewTenantForm extends Component {
                   <Fields
                     id={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
                     label={["Property Name", "Street Address", "City", "Zip"]}
-                    name={["newPropertyName", "newPropertyAddress", "newPropertyCity", "newPropertyZip"]}
                     placeholder={["Property Name", "Property Address", "City", "Zip"]}
                     inputTypes={["text", "text", "text", "number"]}
                     onChange={this.handleChange} />
@@ -202,7 +201,6 @@ class NewTenantForm extends Component {
                     </div>
                     <Fields
                       id={["newPropertyManagerName", "newPropertyManagerPhone", "newPropertyManagerEmail"]}
-                      name={["newPropertyManagerName", "newPropertyManagerPhone", "newPropertyManagerEmail"]}
                       placeholder={["Name", "ex. 503-555-1234", "email@email.com"]}
                       label={["Name", "Phone", "Email"]}
                       inputTypes={["text", "tel", "text"]}
