@@ -134,5 +134,4 @@ Search.propTypes = {
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-
 export default Search
