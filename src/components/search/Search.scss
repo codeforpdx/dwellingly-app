@@ -5,10 +5,6 @@
   flex-direction: column;
   padding-top: 1em;
   & .searchContainerInner {
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -49,12 +45,18 @@
   }
 }
 .searchResultsContainer {
+  position: absolute;
+  z-index: 3;
+  top: 64px;
+  right: 0;
+  left: 0;
   margin: 0 1em;
   max-height: 300px;
   overflow: scroll;
   animation: height 0.1s linear;
   background-color: white;
   @include dialog_shadow;
+  border-top: 1px solid $color__gray--border;
   border-bottom-left-radius: $border-radius--card;
   border-bottom-right-radius: $border-radius--card;
 }
