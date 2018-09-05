@@ -179,15 +179,13 @@ class NewTenantForm extends Component {
               propertySelected) && (
               <section className="newTenantFormSection">
                 <h2 className="newTenantFormHeading">Property Manager</h2>
-                {!propertyManagerSelected && (
-                  <fieldset>
-                    <Search
-                      id="propertyManagerName"
-                      label="Property Manager Search"
-                      onSearchSelection={this.handleSelectionFromSearch}
-                      searchData={propertyManagers} />
-                  </fieldset>
-                )}
+                <fieldset>
+                  <Search
+                    id="propertyManagerName"
+                    label="Property Manager Search"
+                    onSearchSelection={this.handleSelectionFromSearch}
+                    searchData={propertyManagers} />
+                </fieldset>
                 <div className="propertySearchResults">
                   <form>
                     <div className="propertyFormCloseButton">
