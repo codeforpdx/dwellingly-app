@@ -85,7 +85,7 @@ class Search extends Component {
     const { pastSearch, focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
       const dataString = Object.values(data).join(' ').toLowerCase();
-      return dataString.includes(searchTerm)
+      return dataString.includes(searchTerm.toLowerCase())
     })
     return (
       <div className="searchContainer">
