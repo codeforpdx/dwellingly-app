@@ -66,7 +66,8 @@ class NewTenantForm extends Component {
     const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager } = this.state;
     return (
       <div className="admin page">
-        {user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
+        {// If the user isn't an Admin, Redirect back to the Root Route
+          user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
         <div>
           <div className="width-wrapper">
             <h1 className="newTenantFormHeading">Add a New Tenant</h1>
