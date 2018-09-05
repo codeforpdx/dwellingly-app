@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../input/Input';
 
-const Fields = ({ id, label, inputTypes, name, placeholder, onChange }) => (
+const Fields = ({ id, label, inputTypes, placeholder, onChange }) => (
   <fieldset>
     {inputTypes.map((inputType, index) =>
       <Input
         key={id[index]}
         id={`${id[index]}-${index}`}
         label={label[index]}
-        name={name[index]}
+        name={id[index]}
         placeholder={placeholder[index]}
         onChange={onChange}
         type={inputType}  />
@@ -27,9 +27,6 @@ Fields.propTypes = {
   inputTypes: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,
-  name: PropTypes.arrayOf(
-    PropTypes.string
-  ),
   placeholder: PropTypes.arrayOf(
     PropTypes.string
   ),
@@ -37,7 +34,6 @@ Fields.propTypes = {
 }
 
 Fields.defaultProps = {
-  name: undefined,
   placeholder: undefined
 }
 
