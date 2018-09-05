@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
 // import Fields from '../../components/fields/Fields';
 import NewProperty from '../../components/new-property/NewProperty';
+import NewPropertyManager from '../../components/new-property-manager/NewPropertyManager';
 import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
 import { ROLES, ROUTES } from '../../constants/constants';
@@ -202,6 +203,7 @@ class NewTenantForm extends Component {
                         <Icon icon="close"/>
                       </span>
                     </div>
+                    <NewPropertyManager onChange={this.handleChange} />
                     {/* <Fields
                       id={["newPropertyManagerName", "newPropertyManagerPhone", "newPropertyManagerEmail"]}
                       placeholder={["Name", "ex. 503-555-1234", "email@email.com"]}
