@@ -106,7 +106,7 @@ class NewTenantForm extends Component {
                 </div>
               </fieldset>
             </section>
-
+            
             {/* Add new property form
             ======================================= */}
             <section className="newTenantFormSection">
@@ -160,12 +160,14 @@ class NewTenantForm extends Component {
                     <h3>{propertyManagerSelected.name.length > 0 && propertyManagerSelected.name}</h3>
                     <p>{propertyManagerSelected.number.length > 0 && propertyManagerSelected.number}</p>
                   </div>
-                  <div className="editPropertyDetails">
-                    <span className="editIcon" onClick={this.handleAddingNewPropertyManager} role="presentation">
-                      <Icon icon="pencil"/>
-                    </span>
-                    <p>edit</p>
-                  </div>
+                  {!addingNewPropertyManager && (
+                    <div className="editPropertyDetails">
+                      <span className="editIcon" onClick={this.handleAddingNewPropertyManager} role="presentation">
+                        <Icon icon="pencil"/>
+                      </span>
+                      <p>edit</p>
+                    </div>
+                  )}
                 </div>
               )}
               {(propertySelected && !propertyManagerSelected) && (
