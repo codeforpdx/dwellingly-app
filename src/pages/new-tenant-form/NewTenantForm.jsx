@@ -68,7 +68,8 @@ class NewTenantForm extends Component {
     return (
       <div className="admin page">
         {// If the user isn't an Admin, Redirect back to the Root Route
-          user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>}
+          user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>
+        }
         <div>
           <div className="width-wrapper">
             <h1 className="newTenantFormHeading">Add a New Tenant</h1>
@@ -132,12 +133,14 @@ class NewTenantForm extends Component {
                     <h3>{propertySelected.name.length > 0 ? propertySelected.name : null}</h3>
                     <p>{propertySelected.address.length > 0 ? propertySelected.address : null}</p>
                   </div>
-                  <div className="editPropertyDetails">
-                    <span className="editIcon" onClick={this.handleAddingNewProperty} role="presentation">
-                      <Icon icon="pencil"/>
-                    </span>
-                    <p>edit</p>
-                  </div>
+                  {!addingNewProperty && (
+                    <div className="editPropertyDetails">
+                      <span className="editIcon" onClick={this.handleAddingNewProperty} role="presentation">
+                        <Icon icon="pencil"/>
+                      </span>
+                      <p>edit</p>
+                    </div>
+                  )}
                 </div>
               : null}
               {addingNewProperty && (
