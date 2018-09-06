@@ -7,7 +7,7 @@
     flex-direction: column;
     margin: 1em;
     @media screen and (min-width: $mq--desktop) {
-      margin: 1.5em 0 3em 0;
+      margin: 3em 0;
       flex-direction: row;
     }
     & .card {
