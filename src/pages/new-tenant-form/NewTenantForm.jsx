@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
+import Header from '../../components/header/Header';
 import NewProperty from '../../components/new-property/NewProperty';
 import NewPropertyManager from '../../components/new-property-manager/NewPropertyManager';
 import Icon from '../../components/icon/Icon';
@@ -70,10 +71,13 @@ class NewTenantForm extends Component {
         {// If the user isn't an Admin, Redirect back to the Root Route
           user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>
         }
+        <Header>
+          {() => (
+            <Header.Label label="Add New Tenant" type="basic" />
+          )}
+        </Header>
         <div>
           <div className="width-wrapper">
-            <h1 className="newTenantFormHeading">Add a New Tenant</h1>
-
             {/* Add new tenant form section
             ======================================= */}
             <section className="newTenantFormSection">
