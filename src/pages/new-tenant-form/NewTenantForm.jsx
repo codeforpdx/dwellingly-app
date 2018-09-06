@@ -80,9 +80,15 @@ class NewTenantForm extends Component {
               <h2 className="newTenantFormHeading">Tenant</h2>
               <fieldset>
                 <Input
-                  id="fullName"
-                  name="tenantName"
-                  label="Name"
+                  id="firstName"
+                  name="tenantFirstName"
+                  label="First Name"
+                  type="text"
+                  onChange={this.handleChange} />
+                <Input
+                  id="lastName"
+                  name="tenantLastName"
+                  label="Last Name"
                   type="text"
                   onChange={this.handleChange} />
                 <Input
