@@ -9,7 +9,9 @@
     flex-direction: column;
     justify-content: center;
     & .searchBar {
-      width: 100%;
+      border: 1px solid $color__gray--border;
+      border-radius: 5px;
+      margin: 0;
       position: relative;
       z-index: 2;
       &.active {
@@ -25,8 +27,8 @@
     & .dropdownIcon {
       position: absolute;
       font-size: .8em;
-      top: 11px;
-      right: 5px;
+      top: 14px;
+      right: 12px;
       transform: rotate(90deg);
       z-index: 3;
     }

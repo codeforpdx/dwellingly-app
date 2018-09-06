@@ -97,7 +97,7 @@ class Search extends Component {
               <input
                 type="text"
                 id={id}
-                className="searchBar"
+                className="searchBar inline-input"
                 placeholder={!pastSearch ? "Search" : pastSearch}
                 onFocus={this.handleFocus}
                 onChange={this.handleSearch}
