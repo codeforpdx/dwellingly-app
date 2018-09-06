@@ -84,12 +84,14 @@ class NewTenantForm extends Component {
                   name="tenantFirstName"
                   label="First Name"
                   type="text"
+                  placeholder="First Name"
                   onChange={this.handleChange} />
                 <Input
                   id="lastName"
                   name="tenantLastName"
                   label="Last Name"
                   type="text"
+                  placeholder="Last Name"
                   onChange={this.handleChange} />
                 <Input
                   id="phoneNumber"
