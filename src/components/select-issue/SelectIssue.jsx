@@ -29,9 +29,15 @@ const SelectIssue = ({ issueOptions, issue, onChange }) => (
 
 SelectIssue.propTypes = {
   issueOptions: PropTypes.arrayOf(
-    PropTypes.shape(
-      PropTypes.string
-    )
+    PropTypes.shape({
+      unpaidRent: PropTypes.string,
+      otherFinancial: PropTypes.string,
+      unauthorizedGuests: PropTypes.string,
+      unitConditions: PropTypes.string,
+      ruleViolations: PropTypes.string,
+      noise: PropTypes.string,
+      propertyDamage: PropTypes.string,
+    })
   ),
   issue: PropTypes.string,
   onChange: PropTypes.func.isRequired
