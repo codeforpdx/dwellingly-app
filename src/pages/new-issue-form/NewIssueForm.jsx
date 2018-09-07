@@ -6,9 +6,7 @@ import Urgency from '../../components/urgency/Urgency';
 import SelectIssue from '../../components/select-issue/SelectIssue';
 import Attachments from '../../components/attachments/Attachments';
 import IssueSummary from '../../components/issue-summary/IssueSummary';
-// import Input from '../../components/input/Input';
-// import RadioArray from '../../components/input/RadioArray';
-import Icon from '../../components/icon/Icon';
+import IssueSubmit from '../../components/issue-submit/IssueSubmit';
 import Card from '../../components/card/Card';
 import { CARD_TYPES } from '../../constants/constants';
 import { backURL } from '../../utils';
@@ -231,24 +229,11 @@ class NewIssueForm extends Component {
                         issueNote={this.state.issueNote}
                         editSummary={this.handleEditingSummary}
                         urgency={this.state.urgency} /> :
-                     <div className={!this.state.issueSent ? "newIssueSent error" : "newIssueSent success"}>
-                       {!this.state.issueSentError ? <Icon icon="checkbox" /> : <Icon icon="close" />}
-                       <p className="issueStatusText">{this.state.issueSent ? "Sent!" : "Error!"}</p>
-                       <p className="issueStatusMessage">Message status goes here. Lorem ipsum dolar set</p>
-                       {!this.state.issueSentError ?
-                       <button
-                         type="button"
-                         className="btn btn--strong summaryButton"
-                         onClick={this.handleAcceptingSentSummary}>
-                         Ok
-                       </button> :
-                       <button
-                         type="button"
-                         className="btn btn--strong btn--urgent summaryButton"
-                         onClick={this.handleAcceptingSentSummary}>
-                         Retry
-                       </button>}
-                     </div>}
+                      <IssueSubmit
+                        issueSent={this.state.issueSent}
+                        issueSentError={this.state.issueSentError}
+                        onAcceptingSentSummary={this.handleAcceptingSentSummary} />
+                    }
                  </div>
                </Card.Content>
              </Card>
