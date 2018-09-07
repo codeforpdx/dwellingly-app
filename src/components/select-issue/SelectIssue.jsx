@@ -29,10 +29,17 @@ const SelectIssue = ({ issueOptions, issue, onChange }) => (
 
 SelectIssue.propTypes = {
   issueOptions: PropTypes.arrayOf(
-    PropTypes.string
-  ).isRequired,
-  issue: PropTypes.string.isRequired,
+    PropTypes.shape(
+      PropTypes.string
+    )
+  ),
+  issue: PropTypes.string,
   onChange: PropTypes.func.isRequired
+}
+
+SelectIssue.defaultProps = {
+  issue: undefined,
+  issueOptions: undefined
 }
 
 export default SelectIssue;
