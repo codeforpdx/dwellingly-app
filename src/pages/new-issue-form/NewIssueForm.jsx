@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
-import Fieldset from '../../components/fieldset/Fieldset';
-import Input from '../../components/input/Input';
+import Urgency from '../../components/urgency/Urgency';
+import SelectIssue from '../../components/select-issue/SelectIssue';
+// import Input from '../../components/input/Input';
 // import RadioArray from '../../components/input/RadioArray';
 import Icon from '../../components/icon/Icon';
 import Card from '../../components/card/Card';
@@ -67,7 +68,7 @@ class NewIssueForm extends Component {
     if(this.state.step === 'summary') {
       this.setState({ step: 'attachments' })
     } else if (this.state.step === 'attachments') {
-      this.setState({ step: 'urgancy' });
+      this.setState({ step: 'urgency' });
     } else {
       this.setState({ step: 'issueType' })
     }
@@ -89,8 +90,8 @@ class NewIssueForm extends Component {
 
   handleMovingToNextIssueStep() {
     if(this.state.step === 'issueType') {
-      this.setState({ step: 'urgancy' })
-    } else if(this.state.step === 'urgancy') {
+      this.setState({ step: 'urgency' })
+    } else if(this.state.step === 'urgency') {
       this.setState({ step: 'attachments' })
     } else {
       this.setState({ step: 'summary' })
@@ -199,34 +200,19 @@ class NewIssueForm extends Component {
             )}
           </Header>
         <section className="main width-wrapper">
-          {this.state.step === 'issueType' ? (
-            <fieldset>
-              <div className="message message--light">
-                <p>
-                  <strong>Step 1: Select Issue</strong>
-                </p>
-              </div>
-              {this.issueOptions.map(option => {
-                const key = Object.keys(option)[0];
-                return (
-                  <Input
-                    id={`settings-issue-${key}`}
-                    key={key}
-                    label={option[key]}
-                    model={this.state.issue}
-                    name="issue"
-                    onChange={this.handleChange}
-                    type="radio"
-                    value={option[key]}
-                    />
-                );
-              })}
-            </fieldset>
-          ) : null}
-          {this.state.step === 'urgancy' ? (
-            <Fieldset type="issueRadioArray" />
-          ) : null}
-          {this.state.step === 'attachments' ? (
+          {this.state.step === 'issueType' && (
+            <SelectIssue
+              issueOptions={this.issueOptions}
+              issue={this.state.issue}
+              onChange={this.handleChange} />
+          )}
+          {this.state.step === 'urgency' && (
+            <Urgency
+              type="issueRadioArray"
+              onChange={this.handleChange}
+              urgency={this.state.urgency} />
+          )}
+          {this.state.step === 'attachments' && (
             <fieldset>
               <div className="message message--light">
                 <p>
@@ -235,7 +221,7 @@ class NewIssueForm extends Component {
               </div>
               <textarea placeholder="Add a note..." rows="8" value={this.state.issueNote} onChange={this.handleNoteInput} autoFocus />
             </fieldset>
-          ) : null}
+          )}
           {this.state.step === 'summary' ?
            <div className="newIssueSummary padding--1em">
              <Card types={[CARD_TYPES.FORM]}>
@@ -256,7 +242,7 @@ class NewIssueForm extends Component {
                        </div>
                        <div className="newIssueSummaryInfo padding--1em">
                          <div className="newIssueTitle">
-                           <span className="title">Urgancy Level</span>
+                           <span className="title">urgency Level</span>
                            <span
                              className={this.state.urgency === "high" ? "status status--high" : "status"}>
                              {this.state.urgency}
@@ -266,7 +252,7 @@ class NewIssueForm extends Component {
                            className="newIssueSummaryEdit"
                            onClick={this.handleEditingSummary}
                            role="presentation"
-                           id="urgancy">
+                           id="urgency">
                            <Icon icon="pencil" />
                          </span>
                        </div>
