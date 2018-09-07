@@ -3,8 +3,8 @@ import { ROLES } from './constants/constants';
 export const dummyUser = {
   name: 'Tara Mckenzie',
   // role: ROLES.PROPERTY_MANAGER,
-  role: ROLES.STAFF,
-  // role: ROLES.ADMIN,
+  // role: ROLES.STAFF,
+  role: ROLES.ADMIN,
   username: 'tmckenzie',
   email: 'taramckenzie@pm.com',
   phone: '503-823-3333'
@@ -168,7 +168,20 @@ export const tickets = [
       {
         id: 'K-0089ttxqQX-1',
         name: 'Tara Mckenzie',
+        sent: 'Just now',
+        message: 'Thanks, Tom.'
+      },
+      {
+        id: 'K-0089ttxqQX-2',
+        name: 'Tom Smith',
         sent: 'Today 3:20pm',
+        message:
+          'I plan to meet with Megan today. Thank you for contacting JOIN with this issue.'
+      },
+      {
+        id: 'K-0089ttxqQX-3',
+        name: 'Tara Mckenzie',
+        sent: 'Today 12:40pm',
         message:
           'This is the third time we have had to deal with late rent. Please speak to tenant ASAP.'
       }
