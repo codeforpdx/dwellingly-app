@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Urgency from '../../components/urgency/Urgency';
 import SelectIssue from '../../components/select-issue/SelectIssue';
+import Attachments from '../../components/attachments/Attachments';
 // import Input from '../../components/input/Input';
 // import RadioArray from '../../components/input/RadioArray';
 import Icon from '../../components/icon/Icon';
@@ -213,14 +214,9 @@ class NewIssueForm extends Component {
               urgency={this.state.urgency} />
           )}
           {this.state.step === 'attachments' && (
-            <fieldset>
-              <div className="message message--light">
-                <p>
-                  <strong>Step 3: Add Note</strong>
-                </p>
-              </div>
-              <textarea placeholder="Add a note..." rows="8" value={this.state.issueNote} onChange={this.handleNoteInput} autoFocus />
-            </fieldset>
+            <Attachments
+              onChange={this.handleNoteInput}
+              issueNote={this.state.issueNote}/>
           )}
           {this.state.step === 'summary' ?
            <div className="newIssueSummary padding--1em">
