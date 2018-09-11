@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { connect } from 'react-redux';
+import { getEmergencyNumbers } from '../../dux/emergencyNumbers';
 
 import EmergencyNumber from './EmergencyNumber';
 import './Emergency.scss';
@@ -10,7 +13,13 @@ class EmergencyList extends React.Component {
     console.log('Emergency list');
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getEmergencyNumbers());
+  }
+
   render() {
+    const { emergencyNumbers } = this.props;
     const EMERGENCYNUM_QUERY = gql`
       {
         emergencyNumbers(orderBy: sortOrder_ASC) {
@@ -26,6 +35,11 @@ class EmergencyList extends React.Component {
         <h2>
           Emergency List
         </h2>
+        {emergencyNumbers.numbers.length > 0 &&
+          emergencyNumbers.numbers.map(number =>
+            console.log(number)
+          )
+        }
         <Query query={EMERGENCYNUM_QUERY}>
           { ({ loading, error, data }) => {
             if (loading) {
@@ -60,4 +74,13 @@ class EmergencyList extends React.Component {
   }
 }
 
-export default EmergencyList;
+EmergencyList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  emergencyNumbers: PropTypes.shape({}).isRequired,
+}
+
+const mapStateToProps = state => ({
+  emergencyNumbers: state.emergencyNumbers,
+})
+
+export default connect(mapStateToProps)(EmergencyList);

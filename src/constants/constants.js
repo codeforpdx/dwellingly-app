@@ -25,7 +25,8 @@ export const ROUTES = {
   TENANTS: '/tenants',
   ADD_TENANT: '/admin/add-new-tenant',
   TICKETS: '/tickets',
-  USERS: '/users'
+  USERS: '/users',
+  EMERGENCY_NUMBERS: '/emergencyNumbers'
 };
 
 export const ROLES = {
