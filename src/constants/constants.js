@@ -5,7 +5,8 @@ export const SETTINGS = {
   VALID_LOCALES: ['en', 'es'], // English and spanish
   LOCALE_COOKIE: 'language',
   DAYS_LOCALE_SAVED: 366,
-  APOLLO_SERVER: 'https://my-app-kxybtzpvrq.now.sh' // ZEIT: 'https://my-app-kxybtzpvrq.now.sh' | LOCALHOST:  'http://localhost:4000'
+  APOLLO_SERVER: 'https://my-app-kxybtzpvrq.now.sh', // ZEIT: 'https://my-app-kxybtzpvrq.now.sh' | LOCALHOST:  'http://localhost:4000'
+  FIREBASE_API: 'https://us-central1-join-thingy-v01.cloudfunctions.net/api/v1'
 };
 
 export const ROUTES = {
@@ -22,7 +23,9 @@ export const ROUTES = {
   SETTINGS: '/settings',
   SIGNUP: '/signup',
   TENANTS: '/tenants',
-  TICKETS: '/tickets'
+  ADD_TENANT: '/admin/add-new-tenant',
+  TICKETS: '/tickets',
+  USERS: '/users'
 };
 
 export const ROLES = {

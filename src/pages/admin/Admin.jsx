@@ -1,5 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+// import { compose } from 'redux';
+// import { injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 // import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
 import EmergencyList from '../../components/emergency/EmergencyList';
@@ -9,9 +13,13 @@ import Icon from '../../components/icon/Icon';
 import { ROUTES } from '../../constants/constants';
 import { ADMIN } from '../../translations/messages';
 
+import { getUsers } from '../../dux/user'
+
 class Administration extends React.Component {
   componentDidMount() {
+    const { dispatch } = this.props;
     window.scrollTo(0, 0);
+    dispatch(getUsers());
   }
 
   render() {
@@ -51,7 +59,8 @@ class Administration extends React.Component {
 }
 
 Administration.propTypes = {
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
-export default injectIntl(Administration);
+export default injectIntl(connect(null)(Administration))

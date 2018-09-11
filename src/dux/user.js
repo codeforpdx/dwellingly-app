@@ -1,5 +1,7 @@
+import { ROUTES, SETTINGS } from '../constants/constants';
 // Actions
 export const FETCHING_USER_DATA = 'user/FETCHING_USER_DATA';
+export const FETCHING_USERS = 'user/FETCHING_USERS';
 export const LOGIN = 'user/LOGIN';
 export const LOGOUT = 'user/LOGOUT';
 export const USER_ERROR = 'user/USER_ERROR';
@@ -18,6 +20,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
+      };
+
+    case FETCHING_USERS:
+      return {
+        ...state,
+        users: action.users
       };
 
     case LOGIN:
@@ -86,3 +94,15 @@ export const clearUser = () => (dispatch) => {
     user: null,
   });
 };
+
+export const getUsersCollection = (data) => ({
+  type: FETCHING_USERS,
+  users: data
+})
+
+export const getUsers = () => async dispatch => {
+  const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.USERS);
+  const data = await response.json();
+  console.log(data);
+  dispatch(getUsersCollection(data))
+}
