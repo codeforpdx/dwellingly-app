@@ -53,6 +53,5 @@ export const getEmergencyNumbersCollection = (data) => (dispatch) => {
 export const getEmergencyNumbers = () => async dispatch => {
   const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}`);
   const data = await response.json();
-  console.log(data);
   dispatch(getEmergencyNumbersCollection(data))
 }
