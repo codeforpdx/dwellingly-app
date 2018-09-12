@@ -9,7 +9,7 @@ const EmergencyNumberStatic = (props) => {
     <div>
       <div className="emergencyNumberRow" key={`row-${emergency.id}`}>
         <div className="emergencyTitle">
-          {!props.doneEditing ? emergency.title : props.newTitle}
+          {!props.doneEditing ? emergency.contact : props.newContact}
         </div>
         <div className="emergencyNumberContainer">
           <div className="emergencyNumber">
@@ -37,7 +37,7 @@ const EmergencyNumberStatic = (props) => {
 
 EmergencyNumberStatic.propTypes = {
   doneEditing: PropTypes.bool.isRequired,
-  newTitle: PropTypes.string.isRequired,
+  newContact: PropTypes.string.isRequired,
   newNumber01: PropTypes.string.isRequired,
   newNumber02: PropTypes.string.isRequired,
   onEditingNumber: PropTypes.func.isRequired,

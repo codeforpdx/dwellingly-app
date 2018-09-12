@@ -13,7 +13,7 @@ class EmergencyNumber extends Component {
       editing: false,
       doneEditing: false,
       id: this.props.emergency.id,
-      title: '',
+      contact: '',
       phoneNumberOne: '',
       phoneNumberTwo: ''
     }
@@ -28,10 +28,10 @@ class EmergencyNumber extends Component {
 
   handleSavingNewEmergencyNumber() {
     const { dispatch } = this.props;
-    const { id, title, phoneNumberOne, phoneNumberTwo } = this.state;
+    const { id, contact, phoneNumberOne, phoneNumberTwo } = this.state;
     dispatch(onEditingEmergencyNumber({
       id,
-      title,
+      contact,
       phoneNumberOne,
       phoneNumberTwo,
     }));
@@ -54,13 +54,13 @@ class EmergencyNumber extends Component {
           <EmergencyNumberStatic
             emergency={emergency}
             doneEditing={this.state.doneEditing}
-            newTitle={this.state.title}
+            newContact={this.state.contact}
             newNumber01={this.state.phoneNumberOne}
             newNumber02={this.state.phoneNumberTwo}
             onEditingNumber={this.handleEditingNumber} /> :
           <EmergencyNumberEdit
             id={emergency.id}
-            title={emergency.title}
+            contact={emergency.contact}
             number01={emergency.phoneNumberOne}
             number02={emergency.phoneNumberTwo !== null && emergency.phoneNumberTwo !== '' ? emergency.phoneNumberTwo : null }
             onCancellingEditEmergencyNumber={this.handleEditingNumber}
@@ -77,7 +77,7 @@ EmergencyNumber.propTypes = {
   dispatch: PropTypes.func.isRequired,
   emergency: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    contact: PropTypes.string.isRequired,
     phoneNumberOne: PropTypes.string.isRequired,
     phoneNumberTwo: PropTypes.string,
   }),

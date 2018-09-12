@@ -8,7 +8,7 @@ const EmergencyNumberEdit = (props) => {
   }
   return (
     <div id={props.id}>
-      <input name="title" placeholder={props.title} onChange={props.onEditingEmergencyNumber} type="text" />
+      <input name="contact" placeholder={props.contact} onChange={props.onEditingEmergencyNumber} type="text" />
       <input name="phoneNumberOne" placeholder={props.number01} onChange={props.onEditingEmergencyNumber} type="text" />
       {props.number02 !== null && props.number02 !== ''
         && (
@@ -23,7 +23,7 @@ const EmergencyNumberEdit = (props) => {
 
 EmergencyNumberEdit.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  contact: PropTypes.string.isRequired,
   number01: PropTypes.string.isRequired,
   number02: PropTypes.string,
   onCancellingEditEmergencyNumber: PropTypes.func.isRequired,

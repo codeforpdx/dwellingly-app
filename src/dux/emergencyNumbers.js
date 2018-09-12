@@ -34,10 +34,15 @@ export default (state = initialState, action) => {
     case EDIT_EMERGENCY_NUMBER:
       return {
         ...state,
-        id: action.id,
-        title: action.title,
-        phoneNumberOne: action.phoneNumberOne,
-        phoneNumberTwo: action.phoneNumberTwo
+        numbers: {
+          ...state.numbers,
+          [action.id]: {
+            id: action.id,
+            contact: action.contact,
+            phoneNumberOne: action.phoneNumberOne,
+            phoneNumberTwo: action.phoneNumberTwo
+          }
+        }
       }
     default:
       return state
@@ -61,10 +66,10 @@ export const getEmergencyNumbersCollection = (data) => (dispatch) => {
 export const editEmergencyNumber = (response) => (dispatch) => {
   dispatch({
     type: EDIT_EMERGENCY_NUMBER,
-    id: response.body.id,
-    title: response.body.title,
-    phoneNumberOne: response.body.phoneNumberOne,
-    phoneNumberTwo: response.body.phoneNumberTwo
+    id: response.id,
+    contact: response.contact,
+    phoneNumberOne: response.phoneNumberOne,
+    phoneNumberTwo: response.phoneNumberTwo
   })
 }
 
@@ -83,5 +88,6 @@ export const onEditingEmergencyNumber = (data) => async dispatch => {
     },
     body: await JSON.stringify(data)
   })
-  dispatch(editEmergencyNumber(response))
+  console.log(response);
+  dispatch(editEmergencyNumber(data))
 }
