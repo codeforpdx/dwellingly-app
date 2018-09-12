@@ -9,10 +9,10 @@ const EmergencyNumberEdit = (props) => {
   return (
     <div id={props.id}>
       <input name="title" placeholder={props.title} onChange={props.onEditingEmergencyNumber} type="text" />
-      <input name="number01" placeholder={props.number01} onChange={props.onEditingEmergencyNumber} type="text" />
+      <input name="phoneNumberOne" placeholder={props.number01} onChange={props.onEditingEmergencyNumber} type="text" />
       {props.number02 !== null && props.number02 !== ''
         && (
-          <input name="number02" placeholder={props.number02} onChange={props.onEditingEmergencyNumber} type="text" />
+          <input name="phoneNumberTwo" placeholder={props.number02} onChange={props.onEditingEmergencyNumber} type="text" />
         )
       }
       <button type="submit" className="btn" onClick={() => onSubmit()}>Save</button>

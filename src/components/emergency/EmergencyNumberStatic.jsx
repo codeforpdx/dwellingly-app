@@ -13,15 +13,15 @@ const EmergencyNumberStatic = (props) => {
         </div>
         <div className="emergencyNumberContainer">
           <div className="emergencyNumber">
-            <a href={`tel:${!props.doneEditing ? emergency.number01 : props.newNumber01}`}>
-              {!props.doneEditing ? emergency.number01 : props.newNumber01}
+            <a href={`tel:${!props.doneEditing ? emergency.phoneNumberOne : props.newNumber01}`}>
+              {!props.doneEditing ? emergency.phoneNumberOne : props.newNumber01}
             </a>
           </div>
-          {emergency.number02 !== null && emergency.number02 !== ''
+          {emergency.phoneNumberTwo !== null && emergency.phoneNumberTwo !== ''
             && (
             <div className="emergencyNumber">
-              |&nbsp;&nbsp;&nbsp;<a href={`tel:${!props.doneEditing ? emergency.number02 : props.newNumber02}`}>
-                {!props.doneEditing ? emergency.number02 : props.newNumber02}
+              |&nbsp;&nbsp;&nbsp;<a href={`tel:${!props.doneEditing ? emergency.phoneNumberTwo : props.newNumber02}`}>
+                {!props.doneEditing ? emergency.phoneNumberTwo : props.newNumber02}
               </a>
             </div>
             )
@@ -43,8 +43,8 @@ EmergencyNumberStatic.propTypes = {
   onEditingNumber: PropTypes.func.isRequired,
   emergency: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    number01: PropTypes.string.isRequired,
-    number02: PropTypes.string,
+    phoneNumberOne: PropTypes.string.isRequired,
+    phoneNumberTwo: PropTypes.string,
   }),
 }
 
