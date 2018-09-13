@@ -9,10 +9,15 @@ const EmergencyNumberEdit = (props) => {
   return (
     <div id={props.id}>
       <input name="contact" placeholder={props.contact} onChange={props.onEditingEmergencyNumber} type="text" />
-      <input name="phoneNumberOne" placeholder={props.number01} onChange={props.onEditingEmergencyNumber} type="text" />
-      {props.number02 !== null && props.number02 !== ''
+      <input name="phoneNumberOne" placeholder={props.numberOne} onChange={props.onEditingEmergencyNumber} type="text" />
+      {props.numberTwo !== null && props.numberTwo !== ''
         && (
-          <input name="phoneNumberTwo" placeholder={props.number02} onChange={props.onEditingEmergencyNumber} type="text" />
+          <input name="phoneNumberTwo" placeholder={props.numberTwo} onChange={props.onEditingEmergencyNumber} type="text" />
+        )
+      }
+      {props.numberThree !== null && props.numberThree !== ''
+        && (
+          <input name="phoneNumberThree" placeholder={props.numberThree} onChange={props.onEditingEmergencyNumber} type="text" />
         )
       }
       <button type="submit" className="btn" onClick={() => onSubmit()}>Save</button>
@@ -24,15 +29,17 @@ const EmergencyNumberEdit = (props) => {
 EmergencyNumberEdit.propTypes = {
   id: PropTypes.string.isRequired,
   contact: PropTypes.string.isRequired,
-  number01: PropTypes.string.isRequired,
-  number02: PropTypes.string,
+  numberOne: PropTypes.string.isRequired,
+  numberTwo: PropTypes.string,
+  numberThree: PropTypes.string,
   onCancellingEditEmergencyNumber: PropTypes.func.isRequired,
   onEditingEmergencyNumber: PropTypes.func.isRequired,
   onSavingNewEmergencyNumber: PropTypes.func.isRequired
 }
 
 EmergencyNumberEdit.defaultProps = {
-  number02: null
+  numberTwo: "",
+  numberThree: ""
 }
 
 export default EmergencyNumberEdit

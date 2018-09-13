@@ -35,12 +35,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         numbers: {
-          ...state.numbers,
           [action.id]: {
             id: action.id,
             contact: action.contact,
             phoneNumberOne: action.phoneNumberOne,
-            phoneNumberTwo: action.phoneNumberTwo
+            phoneNumberTwo: action.phoneNumberTwo,
+            phoneNumberThree: action.phoneNumberThree
           }
         }
       }
@@ -63,13 +63,15 @@ export const getEmergencyNumbersCollection = (data) => (dispatch) => {
   })
 }
 
-export const editEmergencyNumber = (response) => (dispatch) => {
+export const editEmergencyNumber = (data) => (dispatch) => {
+  console.log(data);
   dispatch({
     type: EDIT_EMERGENCY_NUMBER,
-    id: response.id,
-    contact: response.contact,
-    phoneNumberOne: response.phoneNumberOne,
-    phoneNumberTwo: response.phoneNumberTwo
+    id: data.id,
+    contact: data.contact,
+    phoneNumberOne: data.phoneNumberOne,
+    phoneNumberTwo: data.phoneNumberTwo,
+    phoneNumberThree: data.phoneNumberThree
   })
 }
 
@@ -80,14 +82,23 @@ export const getEmergencyNumbers = () => async dispatch => {
   dispatch(getEmergencyNumbersCollection(data))
 }
 
-export const onEditingEmergencyNumber = (data) => async dispatch => {
-  const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}/${data.id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: await JSON.stringify(data)
-  })
-  console.log(response);
-  dispatch(editEmergencyNumber(data))
+// export const onEditingEmergencyNumber = async data => {
+//   // const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}/${data.id}`, {
+//   //   method: 'PATCH',
+//   //   headers: {
+//   //     'Content-Type': 'application/json'
+//   //   },
+//   //   body: JSON.stringify(data)
+//   // })
+//   // return response.json();
+// }
+
+export const editingEmergencyNumber = data => async dispatch => {
+  console.log(data);
+  try {
+    // const resData = await onEditingEmergencyNumber(data)
+    dispatch(editEmergencyNumber(data))
+  } catch(e) {
+    console.log(e);
+  }
 }

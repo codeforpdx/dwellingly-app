@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import EmergencyNumberEdit from '../forms/EmergencyNumberEdit';
 import EmergencyNumberStatic from './EmergencyNumberStatic';
 
-import { onEditingEmergencyNumber } from '../../dux/emergencyNumbers';
+import { editingEmergencyNumber } from '../../dux/emergencyNumbers';
 
 class EmergencyNumber extends Component {
   constructor(props) {
@@ -13,9 +13,10 @@ class EmergencyNumber extends Component {
       editing: false,
       doneEditing: false,
       id: this.props.emergency.id,
-      contact: '',
-      phoneNumberOne: '',
-      phoneNumberTwo: ''
+      contact: this.props.emergency.contact,
+      phoneNumberOne: this.props.emergency.phoneNumberOne,
+      phoneNumberTwo: this.props.emergency.phoneNumberTwo,
+      phoneNumberThree: '555-555-5555'
     }
     this.handleEditingNumber = this.handleEditingNumber.bind(this);
     this.handleChangedNumberField = this.handleChangedNumberField.bind(this);
@@ -28,12 +29,13 @@ class EmergencyNumber extends Component {
 
   handleSavingNewEmergencyNumber() {
     const { dispatch } = this.props;
-    const { id, contact, phoneNumberOne, phoneNumberTwo } = this.state;
-    dispatch(onEditingEmergencyNumber({
+    const { id, contact, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
+    dispatch(editingEmergencyNumber({
       id,
       contact,
       phoneNumberOne,
       phoneNumberTwo,
+      phoneNumberThree
     }));
     this.setState(prevState => ({ doneEditing: !prevState.doneEditing }))
   }
@@ -55,14 +57,16 @@ class EmergencyNumber extends Component {
             emergency={emergency}
             doneEditing={this.state.doneEditing}
             newContact={this.state.contact}
-            newNumber01={this.state.phoneNumberOne}
-            newNumber02={this.state.phoneNumberTwo}
+            newNumberOne={this.state.phoneNumberOne}
+            newNumberTwo={this.state.phoneNumberTwo}
+            newNumberThree={this.state.phoneNumberThree}
             onEditingNumber={this.handleEditingNumber} /> :
           <EmergencyNumberEdit
             id={emergency.id}
             contact={emergency.contact}
-            number01={emergency.phoneNumberOne}
-            number02={emergency.phoneNumberTwo !== null && emergency.phoneNumberTwo !== '' ? emergency.phoneNumberTwo : null }
+            numberOne={emergency.phoneNumberOne}
+            numberTwo={emergency.phoneNumberTwo !== null && emergency.phoneNumberTwo !== '' ? emergency.phoneNumberTwo : null }
+            numberThree={emergency.phoneNumberThree !== null && emergency.phoneNumberThree !== '' ? emergency.phoneNumberThree : null }
             onCancellingEditEmergencyNumber={this.handleEditingNumber}
             onEditingEmergencyNumber={this.handleChangedNumberField}
             onSavingNewEmergencyNumber={this.handleSavingNewEmergencyNumber}
@@ -80,6 +84,7 @@ EmergencyNumber.propTypes = {
     contact: PropTypes.string.isRequired,
     phoneNumberOne: PropTypes.string.isRequired,
     phoneNumberTwo: PropTypes.string,
+    phoneNumberThree: PropTypes.string
   }),
 };
 
