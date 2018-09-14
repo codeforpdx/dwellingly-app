@@ -77,12 +77,15 @@ export const editEmergencyNumber = (data) => (dispatch) => {
 }
 
 // Asynchronous Functions
+
 // GET Emergency Numbers
 export const getEmergencyNumbers = () => async dispatch => {
   const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}`);
   const data = await response.json();
   dispatch(getEmergencyNumbersCollection(data))
 }
+
+// POST Emergency Number
 
 // PATCH Selected Emergency Number
 export const onEditingEmergencyNumber = async data => {
@@ -96,7 +99,7 @@ export const onEditingEmergencyNumber = async data => {
   console.log(response.body);
   return response.json();
 }
-
+// Once the PATCH request is successful, update the store.
 export const editingEmergencyNumber = data => async dispatch => {
   console.log('BEFORE AWAIT', data);
   try {
