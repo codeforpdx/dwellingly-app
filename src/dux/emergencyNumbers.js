@@ -65,7 +65,6 @@ export const getEmergencyNumbersCollection = (data) => (dispatch) => {
 }
 
 export const editEmergencyNumber = (data) => (dispatch) => {
-  console.log(data);
   dispatch({
     type: EDIT_EMERGENCY_NUMBER,
     id: data.id,
@@ -96,15 +95,15 @@ export const onEditingEmergencyNumber = async data => {
     },
     body: JSON.stringify(data)
   })
-  console.log(response.body);
   return response.json();
 }
 // Once the PATCH request is successful, update the store.
 export const editingEmergencyNumber = data => async dispatch => {
   console.log('BEFORE AWAIT', data);
   try {
-    const resData = await onEditingEmergencyNumber(data)
-    dispatch(editEmergencyNumber(resData))
+    // TODO: Uncomment this to get PATCH request to run. It still gets stuck pending.
+    // const resData = await onEditingEmergencyNumber(data)
+    dispatch(editEmergencyNumber(data))
   } catch(e) {
     console.log(e);
   }
