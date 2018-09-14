@@ -16,7 +16,7 @@ class EmergencyNumber extends Component {
       contact: this.props.emergency.contact,
       phoneNumberOne: this.props.emergency.phoneNumberOne,
       phoneNumberTwo: this.props.emergency.phoneNumberTwo,
-      phoneNumberThree: '555-555-5555'
+      phoneNumberThree: this.props.emergency.phoneNumberThree
     }
     this.handleEditingNumber = this.handleEditingNumber.bind(this);
     this.handleChangedNumberField = this.handleChangedNumberField.bind(this);
