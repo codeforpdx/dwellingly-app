@@ -76,12 +76,14 @@ export const editEmergencyNumber = (data) => (dispatch) => {
 }
 
 // Asynchronous Functions
+// GET Emergency Numbers
 export const getEmergencyNumbers = () => async dispatch => {
   const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}`);
   const data = await response.json();
   dispatch(getEmergencyNumbersCollection(data))
 }
 
+// PATCH Selected Emergency Number
 export const onEditingEmergencyNumber = async data => {
   const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}/${data.id}`, {
     method: 'PATCH',
