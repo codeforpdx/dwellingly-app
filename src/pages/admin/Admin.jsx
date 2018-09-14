@@ -2,7 +2,6 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-// import { compose } from 'redux';
 // import { injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 // import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
