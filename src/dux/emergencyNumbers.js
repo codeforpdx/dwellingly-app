@@ -35,6 +35,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         numbers: {
+          ...state.numbers,
           [action.id]: {
             id: action.id,
             contact: action.contact,
