@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Query } from 'react-apollo';
-// import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { getEmergencyNumbers } from '../../dux/emergencyNumbers';
 
@@ -17,16 +15,6 @@ class EmergencyList extends React.Component {
 
   render() {
     const { emergencyNumbers } = this.props;
-    // const EMERGENCYNUM_QUERY = gql`
-    //   {
-    //     emergencyNumbers(orderBy: sortOrder_ASC) {
-    //       id
-    //       title
-    //       number01
-    //       number02
-    //     }
-    //   }
-    // `;
     return (
       <div className="emergencyNumberList">
         <h2>
@@ -39,35 +27,6 @@ class EmergencyList extends React.Component {
               emergency={number} />
           )
         }
-        {/* <Query query={EMERGENCYNUM_QUERY}>
-          { ({ loading, error, data }) => {
-            if (loading) {
-              return (
-                <div>
-                  Loading Numbers...
-                </div>
-              );
-            }
-            if (error) {
-              return (
-                <div>
-                  Error - Something went wrong with the EMERGENCYNUM_QUERY call!
-                </div>
-              );
-            }
-            const emergencyNumbersList = data.emergencyNumbers;
-            return (
-              <div>
-                {emergencyNumbersList.map(emergency => (
-                  <EmergencyNumber
-                    key={emergency.id}
-                    emergency={emergency}
-                  />))}
-              </div>
-            );
-          }
-        }
-        </Query> */}
       </div>
     );
   }
