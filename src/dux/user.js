@@ -95,6 +95,8 @@ export const clearUser = () => (dispatch) => {
   });
 };
 
+// Asynchronous Functions
+
 export const getUsersCollection = (data) => ({
   type: FETCHING_USERS,
   users: data
@@ -103,6 +105,5 @@ export const getUsersCollection = (data) => ({
 export const getUsers = () => async dispatch => {
   const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.USERS);
   const data = await response.json();
-  console.log(data);
   dispatch(getUsersCollection(data))
 }
