@@ -82,22 +82,23 @@ export const getEmergencyNumbers = () => async dispatch => {
   dispatch(getEmergencyNumbersCollection(data))
 }
 
-// export const onEditingEmergencyNumber = async data => {
-//   // const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}/${data.id}`, {
-//   //   method: 'PATCH',
-//   //   headers: {
-//   //     'Content-Type': 'application/json'
-//   //   },
-//   //   body: JSON.stringify(data)
-//   // })
-//   // return response.json();
-// }
+export const onEditingEmergencyNumber = async data => {
+  const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}/${data.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  console.log(response.body);
+  return response.json();
+}
 
 export const editingEmergencyNumber = data => async dispatch => {
-  console.log(data);
+  console.log('BEFORE AWAIT', data);
   try {
-    // const resData = await onEditingEmergencyNumber(data)
-    dispatch(editEmergencyNumber(data))
+    const resData = await onEditingEmergencyNumber(data)
+    dispatch(editEmergencyNumber(resData))
   } catch(e) {
     console.log(e);
   }
