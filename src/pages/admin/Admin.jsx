@@ -18,6 +18,7 @@ class Administration extends React.Component {
   componentDidMount() {
     // const { dispatch } = this.props;
     window.scrollTo(0, 0);
+    // TODO: I've commented out this action to get the collection of Users for now. It currently only updates the store
     // dispatch(getUsers());
   }
 
