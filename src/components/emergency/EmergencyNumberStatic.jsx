@@ -20,7 +20,7 @@ const EmergencyNumberStatic = (props) => {
           {emergency.phoneNumberTwo !== null && emergency.phoneNumberTwo !== ''
             && (
             <div className="emergencyNumber">
-              |&nbsp;&nbsp;&nbsp;<a href={`tel:${!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}`}>
+              |&nbsp;&nbsp;&nbsp;<span>{numberObj.textContentOfNumber}</span> <a href={`tel:${!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}`}>
                 {!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}
               </a>
             </div>

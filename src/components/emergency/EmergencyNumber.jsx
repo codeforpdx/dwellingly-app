@@ -23,6 +23,7 @@ class EmergencyNumber extends Component {
     this.handleSavingNewEmergencyNumber = this.handleSavingNewEmergencyNumber.bind(this);
   }
 
+
   handleEditingNumber() {
     this.setState(prevState => ({ editing: !prevState.editing }))
   }
@@ -49,6 +50,22 @@ class EmergencyNumber extends Component {
 
   render() {
     const { emergency } = this.props;
+    // TODO: Get this working to parse text from numbers
+    // const handleRemovingTextContentFromLink = (number) => {
+    //   const textRegex = /[a-zA-Z]\D/g;
+    //   const numberRegex = /[0-9]\S/g;
+    //   if(number !== null || number !== '') {
+    //     const textContent = number.match(textRegex);
+    //     const numberContent = number.match(numberRegex);
+    //     if(textContent !== null || numberContent !== null) {
+    //       return {
+    //         textContentOfNumber: textContent.join('').trim(),
+    //         number: numberContent.join('')
+    //       }
+    //     }
+    //   }
+    //   return this
+    // }
     return (
       <div>
       {
