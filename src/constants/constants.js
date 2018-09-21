@@ -14,7 +14,7 @@ export const SETTINGS = {
   CONTACT_EMAIL: 'info@joinpdx.org',
 };
 
-/* Routes to get throughout the applicaiton, this way we only have to change URLs in one place */
+/* Routes to get throughout the application, this way we only have to change URLs in one place */
 export const ROUTES = {
   ADMIN: '/admin',
   ADMIN_EMERGENCY: '/admin/emergency',

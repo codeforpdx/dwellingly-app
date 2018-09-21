@@ -46,7 +46,7 @@ import TermsConditions from './pages/terms-conditions/TermsConditions';
 import Tickets from './pages/tickets/Tickets';
 
 // mock data
-import { dummyUser } from './data';
+// import { dummyUser } from './data';
 
 // Set up cookie stuff for translation
 const cookies = new Cookies();
@@ -61,14 +61,14 @@ if (!validLang) {
 // const PropertyManagerUser = Authorization([ROLES.ADMIN, ROLES.PROPERTY_MANAGER]);
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
-const userRole = dummyUser.role || '';
+// const userRole = dummyUser.role || '';
 
 // Render the thing!
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <div className={`app ${userRole}`}>
+        <div className="app">
           <Navigation type="desktop" desktopOnly />
           <Switch>
             <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />

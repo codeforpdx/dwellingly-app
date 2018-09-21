@@ -12,14 +12,12 @@ class SignUpForm extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleError = this.handleError.bind(this);
     this.state = {
       email: '',
       firstName: '',
       lastName: '',
       password: '',
       passwordConfirm: '',
-      error: null,
     };
   }
 
@@ -31,10 +29,6 @@ class SignUpForm extends React.Component {
     this.setState({
       [name]: value,
     });
-  }
-
-  handleError(error) {
-    this.setState({ error });
   }
 
   handleSubmit(event) {
@@ -136,14 +130,6 @@ class SignUpForm extends React.Component {
             </button>
           </div>
         </form>
-
-        { this.state.error
-          && (
-          <p>
-            {this.state.error}
-          </p>
-          )
-        }
       </div>
     );
   }

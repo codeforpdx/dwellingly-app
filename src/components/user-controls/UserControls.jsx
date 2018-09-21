@@ -24,6 +24,7 @@ class UserControls extends React.Component {
     super(props);
 
     this.state = {
+      userEmail: null,
       userId: null,
       activeUser: false,
     };
@@ -34,26 +35,45 @@ class UserControls extends React.Component {
       // Monitor Firebase authorization for user state, adding cookie for user email
       const cookies = new Cookies();
       const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-      let accountSource = 'email'
-      if (user) {
+      let accountSource = 'email';
+      if (user && !this.props.isCreatingUser) {
         if (user && user.providerData[0]) {
           accountSource = user.providerData[0].providerId;
         }
-        this.setState({ userId: user.email, activeUser: true });
+        if (user && user.email && (user.id || user.l)){
+          let userID = user.id
+          if (user.l) {
+            userID = user.l
+          }
+          this.setState({ userEmail: user.email, userId: userID, activeUser: true });
+        }
+       
+        console.log( user);
         this.props.addCustomUserData(user);
-        getFirestoreUserData(user.uid, accountSource);
-        const cookieExist = cookies.get('messengerUser');
-        if (!cookieExist) {
+        if (user && !this.props.isCreatingUser) {
+          getFirestoreUserData(user.uid, accountSource, user.uid);
+        }
+        const userEmailCookieExist = cookies.get('messengerUser');
+        const userIDCookieExist = cookies.get('messengerUserId');
+        if (!userEmailCookieExist) {
           cookies.set(
             'messengerUser', 
-            user.email,
+            this.state.userEmail,
+            { path: '/', expires: cookieExpiration,  }
+          );
+        }
+        if (!userIDCookieExist) {
+          cookies.set(
+            'messengerUserId', 
+            this.state.userId,
             { path: '/', expires: cookieExpiration,  }
           );
         }
       } else {
-        this.setState({ userId: null, activeUser: false });
+        this.setState({ userEmail: null, userId: null, activeUser: false });
         this.props.clearUser();
         cookies.remove('messengerUser');
+        cookies.remove('messengerUserId');
       }
     });
   }
@@ -93,8 +113,12 @@ class UserControls extends React.Component {
 
 const mapStateToProps = ({ user }) => ({
   user: user.user,
-  haveUser: user.haveUser,
+  userCreated: user.userCreated,
   accountSource: user.accountSource,
+  isCreatingUser: user.isCreatingUser,
+  isFetchingAuthorization: user.isFetchingAuthorization,
+  isFetchingUserData: user.isFetchingUserData,
+  haveUser: user.haveUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -105,10 +129,11 @@ const mapDispatchToProps = dispatch => ({
 UserControls.propTypes = {
   intl: intlShape.isRequired,
   user: PropTypes.shape({
-    email: PropTypes.string,
     accountSource: PropTypes.string,
+    email: PropTypes.string,
     id: PropTypes.string,
   }),
+  isCreatingUser: PropTypes.bool.isRequired,
   haveUser: PropTypes.bool.isRequired,
   addCustomUserData: PropTypes.func.isRequired,
   clearUser: PropTypes.func.isRequired,
