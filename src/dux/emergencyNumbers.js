@@ -102,8 +102,8 @@ export const editingEmergencyNumber = data => async dispatch => {
   console.log('BEFORE AWAIT', data);
   try {
     // TODO: Uncomment this to get PATCH request to run. It still gets stuck pending.
-    // const resData = await onEditingEmergencyNumber(data)
-    dispatch(editEmergencyNumber(data))
+    const resData = await onEditingEmergencyNumber(data)
+    dispatch(editEmergencyNumber(resData))
   } catch(e) {
     console.log(e);
   }
