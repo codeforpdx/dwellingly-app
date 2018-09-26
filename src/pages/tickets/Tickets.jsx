@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import SearchForm from '../../components/search-form/SearchForm';
 import TicketsList from '../../components/list/TicketsList';
+import TicketModal from '../../components/modal/TicketModal';
 import Icon from '../../components/icon/Icon';
 
 // mock data
@@ -23,10 +24,22 @@ class Tickets extends Component {
     window.scrollTo(0, 0);
   }
 
-  handleSearch(event) {
-    if (event) event.preventDefault();
-    // do stuff
-    return this;
+  handleSearch(searchTerm) {
+    // TODO: filter tickets list
+    const filteredTickets = tickets.filter(
+      ({ tenant, sender }) =>
+        `${tenant.fullName} ${tenant.property &&
+          tenant.property.addressOne} ${tenant.property &&
+          tenant.property.addressTwo} ${tenant.property &&
+          tenant.property.name} ${sender && sender.fullName}`
+          .toUpperCase()
+          .indexOf(searchTerm.toUpperCase()) !== -1
+    );
+
+    this.tickets =
+      searchTerm && searchTerm.length > 0 ? filteredTickets : tickets;
+
+    console.log(filteredTickets);
   }
 
   render() {
@@ -76,6 +89,8 @@ class Tickets extends Component {
         <section className="main width-wrapper">
           <TicketsList items={tickets} />
         </section>
+
+        <Route path={`${match.path}/:ticket`} component={TicketModal} />
       </div>
     );
   }

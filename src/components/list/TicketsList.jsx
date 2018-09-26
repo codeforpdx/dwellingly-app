@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Icon from '../icon/Icon';
+import { formatDateFromString } from '../../utils';
 
 function TicketsList({ items }) {
   return (
@@ -14,36 +15,46 @@ function TicketsList({ items }) {
             issue,
             tenant,
             sender,
-            sent,
+            dateCreated,
             status,
             urgency,
             flagged
           } = item;
-          const sentDate = sent;
+          const sentDate = formatDateFromString(dateCreated);
+          let { property } = tenant;
+          if (typeof property !== 'string') {
+            property = `${property.addressOne} ${property.addressTwo}`;
+          }
+
           return (
             <Link key={id} to={`tickets/${id}`} className="list-group__item">
-              <div className="contact-group">
+              <div className="contact-group ">
                 {status &&
                   urgency && (
                     <div
                       className={`contact-group__status contact-group__status--${urgency.toLowerCase()}`}
                     />
                   )}
-                <h3 className="contact-group__name">{tenant.name}</h3>
+                <h3 className="contact-group__name">{tenant.fullName}</h3>
                 <p className="contact-group__title title">
                   {issue !== 'Compliment' &&
                     issue !== 'Resolved' && <Icon icon="comment" />}
                   {issue === 'Compliment' && <Icon icon="heart" />}
                   {issue}
                 </p>
-                <p>{tenant.address}</p>
-                <p>Sender: {sender.name}</p>
+                <p>
+                  {property}
+                  {tenant.lease &&
+                    tenant.lease.unit &&
+                    `, ${tenant.lease.unit}`}
+                </p>
+                {sender && <p>Sender: {sender.fullName}</p>}
 
                 <div className="contact-group__meta ptr">
                   <time className="meta" dateTime={sentDate}>
                     {sentDate}
                   </time>
-                  {status && <p className="status progress">{status}</p>}
+                  {/* status && <p className="status progress">{status}</p> */}
                 </div>
 
                 {Boolean(flagged) && (

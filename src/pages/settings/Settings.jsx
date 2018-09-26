@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
-// import { Input, RadioArray } from "../../components/input/Input";
 import Input from '../../components/input/Input';
-import RadioArray from '../../components/input/RadioArray';
 import Icon from '../../components/icon/Icon';
 
 import { dummyUser } from '../../data';
@@ -26,12 +24,12 @@ class Settings extends Component {
       { propertyDamage: 'Property Damage' }
     ];
 
+    this.user = dummyUser;
+
     this.state = {
-      user: dummyUser,
       password: '',
       passwordNew: '',
-      passwordConfirm: '',
-      urgency: 'low'
+      passwordConfirm: ''
     };
   }
 
@@ -41,7 +39,7 @@ class Settings extends Component {
 
   handleSubmit(event) {
     if (event) event.preventDefault();
-    // do stuff
+    // TODO: do stuff
     return this;
   }
 
@@ -57,7 +55,7 @@ class Settings extends Component {
 
   render() {
     const { history } = this.props;
-    const { user } = this.state;
+    const { user } = this;
     return (
       <form action="" onSubmit={this.handleSubmit} className="page">
         <Header variants={['form']}>
@@ -157,80 +155,6 @@ class Settings extends Component {
               Log Out
             </Link>
           </div>
-
-          <fieldset>
-            <div className="message message--light">
-              <p>
-                <strong>Step 1: Select Issue</strong>
-              </p>
-            </div>
-            {this.issueOptions.map(option => {
-              const key = Object.keys(option)[0];
-              return (
-                <Input
-                  id={`settings-issue-${key}`}
-                  key={key}
-                  label={option[key]}
-                  model={this.state.issue}
-                  name="issue"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value={option[key]}
-                />
-              );
-            })}
-          </fieldset>
-          <fieldset>
-            <div className="message message--light">
-              <p>
-                <strong>Step 2: Select urgency level.</strong>
-              </p>
-            </div>
-            <div className="message">
-              <p>This will help our JOIN staff prioritize open tickets.</p>
-            </div>
-            <RadioArray
-              name="urgency"
-              model={this.state.urgency}
-              onChange={this.handleChange}
-              options={[
-                {
-                  id: 'low',
-                  label: 'low',
-                  value: 'low'
-                },
-                {
-                  id: 'med',
-                  label: 'med',
-                  value: 'med'
-                },
-                {
-                  id: 'high',
-                  label: 'high',
-                  value: 'high'
-                }
-              ]}
-            />
-          </fieldset>
-          <fieldset>
-            <div className="message message--light">
-              <p>
-                <strong>Step 3: Add attachments</strong>
-              </p>
-            </div>
-            <Input type="button" onClick={() => {}}>
-              Add Note
-            </Input>
-            <Input type="button" url="/tickets">
-              Add Photo
-            </Input>
-          </fieldset>
-          <fieldset>
-            <div className="message message--light">
-              <p>Note Demo</p>
-            </div>
-            <textarea placeholder="Add a note..." rows="8" />
-          </fieldset>
         </section>
       </form>
     );

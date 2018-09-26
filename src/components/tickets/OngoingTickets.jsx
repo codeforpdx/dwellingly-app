@@ -12,8 +12,17 @@ function OngoingTickets({ match, tickets }) {
       {tickets &&
         tickets.length > 0 &&
         tickets.map(
-          ({ id, sent, sender, tenant, notes, issue, status, urgency }) => {
-            const sentDate = formatDateFromString(sent);
+          ({
+            id,
+            dateCreated,
+            sender,
+            tenant,
+            notes,
+            issue,
+            status,
+            urgency
+          }) => {
+            const sentDate = formatDateFromString(dateCreated);
             return (
               <Link key={id} to={`${match.url}/ongoing/${id}`}>
                 <Card types={[CARD_TYPES.TICKET]}>
@@ -24,7 +33,7 @@ function OngoingTickets({ match, tickets }) {
                           {sentDate}
                         </time>
                         {status && <p className="progress status">{status}</p>}
-                        <p className="title">{tenant.name}</p>
+                        <p className="title">{tenant.fullName}</p>
                         <p className="meta">{issue}</p>
                       </div>
                     </Card.Content>
@@ -34,7 +43,7 @@ function OngoingTickets({ match, tickets }) {
                       <div className="card__contact container">
                         <div className="container--left">
                           <h4>Sender</h4>
-                          <p>{sender.name}</p>
+                          <p>{sender.fullName}</p>
                         </div>
                         {urgency && (
                           <div className="container--right">

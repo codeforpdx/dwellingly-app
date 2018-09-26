@@ -1,23 +1,40 @@
 @import '../../constants/constants.scss';
+
+.new-issue-form {
+  @media screen and (max-width: $mq--desktop) {
+    fieldset {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
+
 .newIssueSummary {
   & .card__content {
     padding: 0;
   }
+
   & .newIssueSummaryInfo {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     border-bottom: 1px solid $color__gray--border;
+
     &:last-child {
       border-bottom: none;
     }
+
     & .newIssueTitle {
       flex: 4;
       & .title {
         padding-right: 1em;
       }
     }
+
     & .newIssueSummaryEdit {
       display: flex;
       justify-content: flex-end;
@@ -27,6 +44,7 @@
     }
   }
 }
+
 .newIssueSent {
   padding: 30px;
   font-size: 4em;
@@ -42,24 +60,30 @@
   right: 0;
   left: 0;
   animation: fade 1s linear;
+
   &.success {
     color: $color__blue;
   }
+
   &.error {
     color: $color__red;
   }
+
   & .issueStatusText  {
     margin-top: .5rem;
     font-size: 2rem;
   }
+
   & .issueStatusMessage {
     font-size: 1rem;
     text-align: center; 
   }
+
   & .summaryButton {
     font-size: 1rem;
     margin-top: .5rem;
   }
+
   @keyframes fade {
     0% {
       opacity: 0;

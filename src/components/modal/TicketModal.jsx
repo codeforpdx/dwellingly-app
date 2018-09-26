@@ -7,7 +7,7 @@ import { CARD_TYPES, STATUS_OPTIONS } from '../../constants/constants';
 import { formatPhoneNumber, backURL, formatDateFromString } from '../../utils';
 
 // mock data
-import { tickets } from '../../data';
+import { dummyUser, tickets } from '../../data';
 
 class TicketModal extends Component {
   constructor(props) {
@@ -16,6 +16,8 @@ class TicketModal extends Component {
     this.ticket = tickets.find(
       ({ id }) => id === this.props.match.params.ticket
     );
+
+    this.user = dummyUser;
   }
 
   render() {
@@ -23,15 +25,25 @@ class TicketModal extends Component {
     const {
       id,
       issue,
-      notes,
-      sender,
-      sent,
-      status,
       tenant,
-      urgency
+      sender,
+      dateCreated,
+      status,
+      urgency,
+      notes
     } = this.ticket;
-    const sentDate = formatDateFromString(sent);
+    const sentDate = formatDateFromString(dateCreated);
     const backUrl = backURL(match.url);
+
+    const ticketTypes = [CARD_TYPES.LARGE];
+    if (
+      this.user.role.isStaff === 'true' ||
+      this.user.role.isAdmin === 'true'
+    ) {
+      ticketTypes.push(CARD_TYPES.STATUS);
+    } else {
+      ticketTypes.push(CARD_TYPES.TICKET);
+    }
 
     const reopenButton = (
       <button type="button" className="btn btn--strong" onClick={() => {}}>
@@ -57,10 +69,7 @@ class TicketModal extends Component {
                 history.push(backUrl);
               }}
             />
-            <Card
-              className="width-wrapper"
-              types={[CARD_TYPES.LARGE, CARD_TYPES.TICKET]}
-              status={status}>
+            <Card className="width-wrapper" types={ticketTypes} status={status}>
               <Card.Top>
                 <Card.Header
                   label={issue}
@@ -73,9 +82,9 @@ class TicketModal extends Component {
                     {tenant && (
                       <div className="container--left">
                         <h4>Tenant</h4>
-                        <p className="title">{tenant.name}</p>
-                        <a href={formatPhoneNumber(tenant.number)}>
-                          {tenant.number}
+                        <p className="title">{tenant.fullName}</p>
+                        <a href={formatPhoneNumber(tenant.phone)}>
+                          {tenant.phone}
                         </a>
                       </div>
                     )}
@@ -93,9 +102,9 @@ class TicketModal extends Component {
                     {sender && (
                       <div className="container--left">
                         <h4>Sender</h4>
-                        <p className="title">{sender.name}</p>
-                        <a href={formatPhoneNumber(sender.number)}>
-                          {sender.number}
+                        <p className="title">{sender.fullName}</p>
+                        <a href={formatPhoneNumber(sender.phone)}>
+                          {sender.phone}
                         </a>
                       </div>
                     )}

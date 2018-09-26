@@ -288,6 +288,22 @@ time {
   letter-spacing: emify(1, 16);
   margin-bottom: emify(8, 16);
 }
+
+.desktop-only {
+  display: none;
+
+  @media screen and (min-width: $mq--desktop) {
+    display: block;
+  }
+}
+
+.mobile-only {
+  display: block;
+  
+  @media screen and (min-width: $mq--desktop) {
+    display: none;
+  }
+}
 /* end defaults */
 
 // FORM-META
@@ -422,7 +438,7 @@ time {
   }
 
   @media screen and (min-width: $mq--desktop) {
-    width: calc(100% - #{$width__nav});
+    // width: calc(100% - #{$width__nav});
 
     @at-root .property-manager & {
       width: 100%;

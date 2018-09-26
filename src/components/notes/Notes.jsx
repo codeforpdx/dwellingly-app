@@ -9,6 +9,7 @@ import './Notes.scss';
 class Notes extends Component {
   render() {
     const { action, notes, summary } = this.props;
+    const sentDate = notes.dateCreated;
     return (
       <div>
         {summary && (
@@ -28,14 +29,12 @@ class Notes extends Component {
               notes.map(note => (
                 <div key={note.id} className="note">
                   <div className="note__meta">
-                    <p className="note__name">{note.name}</p>
-                    <time className="node__date" dateTime={note.sent}>
-                      {note.sent}
+                    <p className="note__name">{note.fullName}</p>
+                    <time className="node__date" dateTime={sentDate}>
+                      {sentDate}
                     </time>
                   </div>
-                  <MessageBox
-                    user={note.name}
-                    message={note.message} />
+                  <MessageBox user={note.name} message={note.message} />
                 </div>
               ))}
           </div>

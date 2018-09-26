@@ -8,6 +8,8 @@ class SearchForm extends Component {
   constructor(props) {
     super(props);
 
+    this.focusSearchBox = this.focusSearchBox.bind(this);
+    this.blurSearchBox = this.blurSearchBox.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
@@ -16,8 +18,31 @@ class SearchForm extends Component {
     };
   }
 
-  handleSearch(event) {
-    if (event) event.preventDefault();
+  componentDidMount() {
+    const searchBox = document.querySelector('.search .search__wrapper');
+    if (searchBox) {
+      searchBox.addEventListener('click', this.focusSearchBox, false);
+    }
+  }
+
+  focusSearchBox() {
+    if (this.searchInput) {
+      this.searchInput.focus();
+    }
+  }
+
+  blurSearchBox() {
+    if (this.searchInput) {
+      if (this.searchInput.value.length > 0) {
+        this.searchInput.classList.add('active');
+      } else {
+        this.searchInput.classList.remove('active');
+      }
+    }
+  }
+
+  handleSearch(e) {
+    if (e) e.preventDefault();
     this.props.onSubmit(this.state.searchTerm);
   }
 
@@ -34,7 +59,11 @@ class SearchForm extends Component {
             type="search"
             placeholder="Search"
             onChange={this.handleChange}
+            onBlur={this.blurSearchBox}
             value={this.state.searchTerm}
+            ref={el => {
+              this.searchInput = el;
+            }}
           />
         </div>
       </form>

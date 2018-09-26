@@ -19,7 +19,7 @@ import PrivateRoute from './components/authorization/PrivateRoute';
 import { translationMessages } from './translations/i18n';
 import { SETTINGS, ROUTES, ROLES } from './constants/constants';
 import store, { history } from './store';
-import { getCookie, setCookie } from './utils';
+import { getCookie, setCookie, getUserRoleString } from './utils';
 import registerServiceWorker from './registerServiceWorker';
 
 // CSS
@@ -48,6 +48,8 @@ import Tickets from './pages/tickets/Tickets';
 // mock data
 import { dummyUser } from './data';
 
+const user = dummyUser;
+
 // Apollo setup
 const httpLink = createHttpLink({
   uri: SETTINGS.APOLLO_SERVER
@@ -70,7 +72,7 @@ if (!validLang) {
 // const PropertyManagerUser = Authorization([ROLES.ADMIN, ROLES.PROPERTY_MANAGER]);
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
-const userRole = dummyUser.role || '';
+const userRole = getUserRoleString(user.role, ROLES);
 
 // Render the thing!
 ReactDOM.render(
@@ -115,7 +117,7 @@ ReactDOM.render(
               <PrivateRoute
                 path={`${ROUTES.TENANTS}/:id/issue`}
                 exact
-                component={StaffUser(NewIssueForm)}
+                component={NewIssueForm}
               />
               <PrivateRoute
                 path={`${ROUTES.TENANTS}/:id`}

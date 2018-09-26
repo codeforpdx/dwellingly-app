@@ -25,7 +25,8 @@ class TenantDetails extends Component {
   }
 
   handleMoveToArchive(id) {
-    console.log(id);
+    // TODO:
+    this.archivedTenant = id;
     return this;
   }
 
