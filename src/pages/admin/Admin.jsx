@@ -1,7 +1,8 @@
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
-import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
+// import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
+import EmergencyList from '../../components/emergency/EmergencyList';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import Icon from '../../components/icon/Icon';
@@ -28,17 +29,12 @@ class Administration extends React.Component {
                     <li className="tab">
                       <Link to={ROUTES.ADMIN_EMERGENCY}>
                         <strong>
-                          <Icon icon="plus" />
+                          <Icon icon="asterisk" />
                           {intl.formatMessage(ADMIN.EMERGENCY_NUMS_CREATE)}
                         </strong>
                       </Link>
                     </li>
                   </ul>
-                  <Link
-                    to={ROUTES.EMERGENCY}
-                    className="tab__link tab__link--right">
-                    <Icon icon="asterisk" />
-                  </Link>
                 </div>
               </nav>
             </div>
@@ -46,7 +42,8 @@ class Administration extends React.Component {
         </Header>
 
         <section className="main width-wrapper">
-          <EmergencyContactsList />
+          {/* <EmergencyContactsList /> */}
+          <EmergencyList />
         </section>
       </div>
     );

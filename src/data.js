@@ -12,82 +12,6 @@ export const dummyUser = {
   phone: '503-823-3333'
 };
 
-// mocking out a ticket full-view (modal)
-export const ticket = {
-  id: 'test',
-  issue: 'Property Damage',
-  tenant: {
-    name: 'Megan Collins',
-    number: '503-123-4567'
-  },
-  sender: {
-    name: 'Tara Mckenzie',
-    number: '541-123-4567'
-  },
-  sent: Date.parse(new Date('2017/12/19')),
-  status: 'New',
-  urgency: 'Low',
-  notes: [
-    {
-      id: 'K-0089ttxqQX-1',
-      name: 'Admin',
-      sent: 'Just now',
-      message:
-        "A card with the class name card--lg will only ever be used as a modal.\nIt's only being displayed here for the sake of the demo."
-    },
-    {
-      id: 'K-1089ttbqXX-1',
-      name: 'Tara Mckenzie',
-      sent: 'Today 3:20pm',
-      message: 'Thanks, Tom.'
-    },
-    {
-      id: 'K-0089ttxqRC-0',
-      name: 'Tom Smith',
-      sent: 'Today 12:40pm',
-      message:
-        'I plan to meet with Megan today. Thank you for contacting JOIN with this issue.'
-    }
-  ]
-};
-
-// mocking out ticket archives
-export const archives = [
-  {
-    id: 'A-0000000-0003',
-    issue: 'Property Damage',
-    tenant: {
-      name: 'Megan Collins'
-    },
-    sender: {
-      name: 'Tara Mckenzie'
-    },
-    sent: Date.parse(new Date('2017/12/19'))
-  },
-  {
-    id: 'A-0000000-0002',
-    issue: 'Compliment',
-    tenant: {
-      name: 'Megan Collins'
-    },
-    sender: {
-      name: 'Tara Mckenzie'
-    },
-    sent: Date.parse(new Date('2017/12/19'))
-  },
-  {
-    id: 'A-0000000-0001',
-    issue: 'Neighbor Disputes',
-    tenant: {
-      name: 'Andrew Wiggins'
-    },
-    sender: {
-      name: 'Tara Mckenzie'
-    },
-    sent: Date.parse(new Date('2017/11/02'))
-  }
-];
-
 export const tenants = [
   {
     id: 'TN00-000000-0001',
@@ -216,6 +140,18 @@ export const propertyManagers = [
     ],
     number: '503-654-9087',
     tickets: ['K-0089ttxqQX-2', 'K-0089ttxqQX-4']
+  },
+  {
+    id: 'propertyManager-02',
+    name: 'Miles Prower',
+    number: '503-555-1234',
+    tenants: [
+      {
+        id: 'tenant-01',
+        name: 'Brenden Smith'
+      }
+    ],
+    tickets: []
   }
 ];
 
@@ -347,7 +283,20 @@ export const tickets = [
       {
         id: 'K-0089ttxqQX-1',
         name: 'Tara Mckenzie',
+        sent: 'Just now',
+        message: 'Thanks, Tom.'
+      },
+      {
+        id: 'K-0089ttxqQX-2',
+        name: 'Tom Smith',
         sent: 'Today 3:20pm',
+        message:
+          'I plan to meet with Megan today. Thank you for contacting JOIN with this issue.'
+      },
+      {
+        id: 'K-0089ttxqQX-3',
+        name: 'Tara Mckenzie',
+        sent: 'Today 12:40pm',
         message:
           'This is the third time we have had to deal with late rent. Please speak to tenant ASAP.'
       }
@@ -436,6 +385,42 @@ export const tickets = [
     status: 'In Progress',
     flagged: 'true', // mimicing what's likely to come from the database...
     notes: []
+  },
+  {
+    id: 'A-0000000-0003',
+    issue: 'Property Damage',
+    tenant: {
+      name: 'Megan Collins'
+    },
+    sender: {
+      name: 'Tara Mckenzie'
+    },
+    sent: Date.parse(new Date('2017/12/19')),
+    status: 'Closed'
+  },
+  {
+    id: 'A-0000000-0002',
+    issue: 'Compliment',
+    tenant: {
+      name: 'Megan Collins'
+    },
+    sender: {
+      name: 'Tara Mckenzie'
+    },
+    sent: Date.parse(new Date('2017/12/19')),
+    status: 'Closed'
+  },
+  {
+    id: 'A-0000000-0001',
+    issue: 'Neighbor Disputes',
+    tenant: {
+      name: 'Andrew Wiggins'
+    },
+    sender: {
+      name: 'Tara Mckenzie'
+    },
+    sent: Date.parse(new Date('2017/11/02')),
+    status: 'Closed'
   }
 */
 ];

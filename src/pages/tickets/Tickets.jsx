@@ -45,6 +45,13 @@ class Tickets extends Component {
   render() {
     const { match } = this.props;
     const { tickets } = this;
+
+    // TODO: Replace with proper query to DB for CLOSED tickets
+    const closedTickets = tickets.filter(({ status }) => status === 'Closed');
+
+    // TODO: Replace with proper query to DB for OPEN tickets
+    const openTickets = tickets.filter(({ status }) => status !== 'Closed');
+
     return (
       <div className="page">
         <Header>
@@ -87,10 +94,19 @@ class Tickets extends Component {
         </Header>
 
         <section className="main width-wrapper">
-          <TicketsList items={tickets} />
+          <Route
+            path={`${match.path}/open`}
+            component={() => <TicketsList items={openTickets} match={match} />}
+          />
+          <Route
+            path={`${match.path}/closed`}
+            component={() => (
+              <TicketsList items={closedTickets} match={match} />
+            )}
+          />
         </section>
 
-        <Route path={`${match.path}/:ticket`} component={TicketModal} />
+        <Route path={`${match.path}/*/:ticket`} exact component={TicketModal} />
       </div>
     );
   }

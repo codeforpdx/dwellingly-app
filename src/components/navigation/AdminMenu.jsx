@@ -32,7 +32,9 @@ function AdminMenu({ handleToggleMenu, type, user }) {
             <Icon icon="gear" /> Settings
           </strong>
         </NavLink>
-        <NavLink to={ROUTES.TICKETS} activeClassName="menu__link--active">
+        <NavLink
+          to={`${ROUTES.TICKETS}/open`}
+          activeClassName="menu__link--active">
           <strong>
             <Icon icon="ticketOutline" /> Tickets
           </strong>

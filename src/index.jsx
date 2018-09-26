@@ -40,10 +40,15 @@ import OutOfOffice from './pages/settings/OutOfOffice';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
+import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyManagerTenantsDirectory';
 import Settings from './pages/settings/Settings';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
 import Tickets from './pages/tickets/Tickets';
+
+// Code Samples/Docs
+import CardSamples from './pages/code-samples/CardSamples';
+import HeaderSamples from './pages/code-samples/HeaderSamples';
 
 // mock data
 import { dummyUser } from './data';
@@ -98,6 +103,11 @@ ReactDOM.render(
                 component={PropertyDetails}
               />
               <PrivateRoute
+                path={`${ROUTES.PROPERTY_MANAGERS}/:id/tenants`}
+                exact
+                component={StaffUser(PropertyManagerTenantsDirectory)}
+              />
+              <PrivateRoute
                 path={`${ROUTES.PROPERTY_MANAGERS}/:id`}
                 component={StaffUser(PropertyManagerDetails)}
               />
@@ -129,6 +139,8 @@ ReactDOM.render(
                 component={StaffUser(Tickets)}
               />
               <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
+              <Route path="/code-samples/card" component={CardSamples} />
+              <Route path="/code-samples/header" component={HeaderSamples} />
               <Route path={ROUTES.LOGIN} component={Login} />
               <PrivateRoute path={ROUTES.ROOT} component={Home} />
             </Switch>

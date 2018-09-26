@@ -6,6 +6,8 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Header from '../header/Header';
 import Input from '../input/Input';
+
+import './EmergencyNumberForm.scss';
 import { ROUTES } from '../../constants/constants';
 import { FORMS } from '../../translations/messages';
 
@@ -146,11 +148,33 @@ class FormCreateEmergencyNumber extends React.Component {
           </fieldset>
           {this.state.submit}
 
-          {this.state.error && (
+          <Mutation
+            mutation={POST_MUTATION}
+            variables={{
+              title, number01, number02, sortOrder,
+            }}
+            onCompleted={() => this.props.history.push(successRoute)}
+          >
+            {
+              createEmergencyNumber => (
+                <button
+                  type="submit"
+                  className="btn btn--lg btn--strong"
+                  disabled={disableForm}
+                  onClick={createEmergencyNumber}
+                >{intl.formatMessage(FORMS.SUBMIT)}</button>
+              )
+            }
+          </Mutation>
+          { this.state.error
+            && (
             <div className="form-meta">
-              <p>{this.state.error}</p>
+              <p>
+                {this.state.error}
+              </p>
             </div>
-          )}
+            )
+          }
         </section>
       </form>
     );

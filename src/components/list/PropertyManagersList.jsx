@@ -12,7 +12,7 @@ function PropertyManagersList({ url, items }) {
           return (
             <Link
               key={id}
-              to={`${url}/${id}`}
+              to={`${url}/${id}/ongoing`}
               className="list-group__item list-group__item--basic">
               <div className="contact-group contact-group--basic">
                 <h3 className="title">{name}</h3>

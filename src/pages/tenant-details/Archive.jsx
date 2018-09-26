@@ -8,7 +8,7 @@ import Icon from '../../components/icon/Icon';
 import { backURL } from '../../utils';
 
 // mock data
-import { archives } from '../../data';
+import { tickets } from '../../data';
 
 class Archive extends Component {
   componentDidMount() {
@@ -18,6 +18,8 @@ class Archive extends Component {
   render() {
     const { match } = this.props;
     const backUrl = backURL(match.url, 'ongoing');
+    const archives = tickets.filter(({ status }) => status === 'Closed');
+
     return (
       <div className="page page--light">
         <Header>

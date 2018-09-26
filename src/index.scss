@@ -181,6 +181,14 @@ h4 {
   text-transform: uppercase;
 }
 
+hr {
+  background: $color__gray--light;
+  border: 0;
+  display: block;
+  height: 1px;
+  width: 100%;
+}
+
 p {
   margin: 0 0 1em 0;
 }
@@ -202,8 +210,18 @@ time {
   text-align: center;
   width: 100%;
 
+  & > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
   .main {
     flex-grow: 2;
+
+    &--white {
+      background: $color__white;
+    }
   }
 
   &--light {
@@ -252,6 +270,18 @@ time {
 
 .padding--1em {
   padding: 1em;
+}
+
+.align {
+  &--center {
+    text-align: center;
+  }
+  &--left {
+    text-align: left;
+  }
+  &--right {
+    text-align: rigth;
+  }
 }
 
 .meta {
@@ -447,11 +477,12 @@ time {
 
   .card {
     @include hidden_scrolling;
+    box-shadow: none;
     // height: 100%;
     max-height: calc(100% - 1rem);
     padding: 0.5rem;
     position: relative;
-    // width: calc(100% - 1rem);
+    width: calc(100% - 1rem);
 
     .card__top,
     .card__bottom {

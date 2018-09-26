@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Icon from '../icon/Icon';
 import { formatDateFromString } from '../../utils';
 
-function TicketsList({ items }) {
+function TicketsList({ items, match }) {
   return (
     <div className="list-group">
       {items &&
@@ -27,8 +27,11 @@ function TicketsList({ items }) {
           }
 
           return (
-            <Link key={id} to={`tickets/${id}`} className="list-group__item">
-              <div className="contact-group ">
+            <Link
+              key={id}
+              to={`${match.path}/${id}`}
+              className="list-group__item">
+              <div className="contact-group">
                 {status &&
                   urgency && (
                     <div
@@ -80,13 +83,14 @@ function TicketsList({ items }) {
 }
 
 TicketsList.propTypes = {
+  match: PropTypes.shape({}),
   items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       issue: PropTypes.string,
       tenant: PropTypes.shape({}),
       sender: PropTypes.shape({}),
-      sent: PropTypes.string,
+      sent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       status: PropTypes.string,
       urgency: PropTypes.string,
       flagged: PropTypes.string
@@ -95,7 +99,8 @@ TicketsList.propTypes = {
 };
 
 TicketsList.defaultProps = {
+  match: '',
   items: []
 };
 
-export default TicketsList;
+export default withRouter(TicketsList);

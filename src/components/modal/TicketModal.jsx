@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Card from '../card/Card';
 import Notes from '../notes/Notes';
-import { CARD_TYPES, STATUS_OPTIONS } from '../../constants/constants';
+import { CARD_TYPES, ROLES, STATUS_OPTIONS } from '../../constants/constants';
 import { formatPhoneNumber, backURL, formatDateFromString } from '../../utils';
 
 // mock data
@@ -13,11 +13,26 @@ class TicketModal extends Component {
   constructor(props) {
     super(props);
 
+    this.isUserPropertyManager = this.isUserPropertyManager.bind(this);
+    this.toggleFlag = this.toggleFlag.bind(this);
+
     this.ticket = tickets.find(
       ({ id }) => id === this.props.match.params.ticket
     );
 
     this.user = dummyUser;
+
+    this.state = {
+      flagged: this.ticket ? Boolean(this.ticket.flagged) : false
+    };
+  }
+
+  isUserPropertyManager() {
+    return this.user.role && this.user.role.isPropertyManager === 'true';
+  }
+
+  toggleFlag() {
+    this.setState(({ flagged }) => ({ flagged: !flagged }));
   }
 
   render() {
@@ -34,16 +49,9 @@ class TicketModal extends Component {
     } = this.ticket;
     const sentDate = formatDateFromString(dateCreated);
     const backUrl = backURL(match.url);
-
-    const ticketTypes = [CARD_TYPES.LARGE];
-    if (
-      this.user.role.isStaff === 'true' ||
-      this.user.role.isAdmin === 'true'
-    ) {
-      ticketTypes.push(CARD_TYPES.STATUS);
-    } else {
-      ticketTypes.push(CARD_TYPES.TICKET);
-    }
+    const ticketTypes = this.isUserPropertyManager()
+      ? [CARD_TYPES.LARGE, CARD_TYPES.TICKET]
+      : [CARD_TYPES.LARGE, CARD_TYPES.STATUS];
 
     const reopenButton = (
       <button type="button" className="btn btn--strong" onClick={() => {}}>
@@ -76,6 +84,8 @@ class TicketModal extends Component {
                   close={() => {
                     history.push(backUrl);
                   }}
+                  isFlagged={this.state.flagged}
+                  toggleFlag={this.toggleFlag}
                 />
                 <Card.Content>
                   <div className="card__contact container">

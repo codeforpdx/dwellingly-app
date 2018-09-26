@@ -1,0 +1,8 @@
+.createEmergencyNumberForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  & .input {
+    margin: 1.1rem;
+  }
+}

@@ -17,7 +17,9 @@ function List({ url, items, className, showStaff, showNumber, history }) {
           // have to "cheat" here and use a button instead of link because of nested <a> tags (phone number)
           const ElementNodeName = url ? 'button' : 'div';
           const urlPath =
-            url.indexOf(':id') !== -1 ? url.replace(':id', id) : `${url}/${id}`;
+            url && url.indexOf(':id') !== -1
+              ? url.replace(':id', id)
+              : `${url}/${id}`;
           return (
             <ElementNodeName
               key={id}
