@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
+// import { Mutation } from 'react-apollo';
+// import gql from 'graphql-tag';
 import Header from '../header/Header';
 import Input from '../input/Input';
 
 import './EmergencyNumberForm.scss';
 import { ROUTES } from '../../constants/constants';
 import { FORMS } from '../../translations/messages';
+
+import { creatingEmergencyNumber } from '../../dux/emergencyNumbers';
 
 class FormCreateEmergencyNumber extends React.Component {
   static handleSubmit(event) {
@@ -21,12 +24,14 @@ class FormCreateEmergencyNumber extends React.Component {
     super(props);
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmittingNewEmergencyNumber = this.handleSubmittingNewEmergencyNumber.bind(this);
     this.handleError = this.handleError.bind(this);
     this.state = {
-      title: '',
-      number01: '',
-      number02: '',
-      sortOrder: 0,
+      contact: '',
+      phoneNumberOne: '',
+      phoneNumberTwo: '',
+      phoneNumberThree: '',
+      // sortOrder: 0,
       submit: false,
       error: null
     };
@@ -46,37 +51,46 @@ class FormCreateEmergencyNumber extends React.Component {
     this.setState({ error });
   }
 
+  handleSubmittingNewEmergencyNumber() {
+    const { dispatch } = this.props;
+    const { contact, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
+    dispatch(creatingEmergencyNumber({
+      contact,
+      phoneNumberOne,
+      phoneNumberTwo,
+      phoneNumberThree
+    }))
+  }
+
   render() {
     const { intl } = this.props;
-    const { title, number01, number02, sortOrder } = this.state;
-    const disableForm = title === '' || !number01;
+    const { contact, phoneNumberOne } = this.state;
+    const disableForm = contact === '' || !phoneNumberOne;
 
-    const POST_MUTATION = gql`
-      mutation createEmergencyNum(
-        $title: String!
-        $number01: String!
-        $number02: String
-        $sortOrder: Int
-      ) {
-        createEmergencyNum(
-          title: $title
-          number01: $number01
-          number02: $number02
-          sortOrder: $sortOrder
-        ) {
-          title
-          number01
-          number02
-          sortOrder
-        }
-      }
-    `;
-    const successRoute = ROUTES.ADMIN;
+    // const POST_MUTATION = gql`
+    //   mutation createEmergencyNum(
+    //     $title: String!
+    //     $number01: String!
+    //     $number02: String
+    //     $sortOrder: Int
+    //   ) {
+    //     createEmergencyNum(
+    //       title: $title
+    //       number01: $number01
+    //       number02: $number02
+    //       sortOrder: $sortOrder
+    //     ) {
+    //       title
+    //       number01
+    //       number02
+    //       sortOrder
+    //     }
+    //   }
+    // `;
+    // const successRoute = ROUTES.ADMIN;
 
     return (
       <form
-        name="createEmergencyNumber"
-        method="POST"
         onSubmit={FormCreateEmergencyNumber.handleSubmit}
         className="page">
         <Header variant="form">
@@ -86,25 +100,13 @@ class FormCreateEmergencyNumber extends React.Component {
                 <Link to="/" className="action action--strong action--left">
                   Cancel
                 </Link>
-                <Mutation
-                  mutation={POST_MUTATION}
-                  variables={{
-                    title,
-                    number01,
-                    number02,
-                    sortOrder
-                  }}
-                  onCompleted={() => this.props.history.push(successRoute)}>
-                  {createEmergencyNumber => (
-                    <button
-                      className="action action--strong action--right"
-                      type="submit"
-                      disabled={disableForm}
-                      onClick={createEmergencyNumber}>
-                      {intl.formatMessage(FORMS.SUBMIT)}
-                    </button>
-                  )}
-                </Mutation>
+                <button
+                  className="action action--strong action--right"
+                  type="submit"
+                  disabled={disableForm}
+                  onClick={this.handleSubmittingNewEmergencyNumber}>
+                  {intl.formatMessage(FORMS.SUBMIT)}
+                </button>
               </div>
               <Header.Label label="Create Emergency Number" type="basic" />
             </div>
@@ -115,57 +117,60 @@ class FormCreateEmergencyNumber extends React.Component {
           <fieldset>
             <Input
               id="emergencyNumber-title"
-              label="Title"
+              label="Contact Name"
               onChange={this.handleInputChange}
               placeholder="Name or Organization"
               type="text"
-              value={this.state.title}
+              name="contact"
+              value={this.state.contact}
             />
             <Input
               id="emergencyNumber-number01"
               label="Phone Number"
               onChange={this.handleInputChange}
               placeholder="ex. 503-555-1234"
+              name="phoneNumberOne"
               type="tel"
-              value={this.state.number01}
+              value={this.state.phoneNumberOne}
             />
             <Input
               id="emergencyNumber-number02"
               label="Secondary Number"
               onChange={this.handleInputChange}
               placeholder="Optional"
+              name="phoneNumberTwo"
               type="tel"
-              value={this.state.number02}
+              value={this.state.phoneNumberTwo}
             />
-            <Input
+            {/* <Input
               id="emergencyNumber-sortOrder"
               label="Sort Order"
-              onChange={this.handleInputChange}
+              onChange=this.handleInputChange}
               placeholder="Optional"
               type="number"
-              value={this.state.sortOrder}
-            />
+              value=this.state.sortOrder}
+            /> */}
           </fieldset>
           {this.state.submit}
-
-          <Mutation
-            mutation={POST_MUTATION}
-            variables={{
-              title, number01, number02, sortOrder,
-            }}
-            onCompleted={() => this.props.history.push(successRoute)}
+          <button
+            type="submit"
+            className="btn btn--lg btn--strong"
+            disabled={disableForm}
+            onClick={this.handleSubmittingNewEmergencyNumber}
+          >{intl.formatMessage(FORMS.SUBMIT)}</button>
+          {/* <Mutation
+            onCompleted=() => this.props.history.push(successRoute)}
           >
-            {
               createEmergencyNumber => (
-                <button
-                  type="submit"
-                  className="btn btn--lg btn--strong"
-                  disabled={disableForm}
-                  onClick={createEmergencyNumber}
-                >{intl.formatMessage(FORMS.SUBMIT)}</button>
+              <button
+                type="submit"
+                className="btn btn--lg btn--strong"
+                disabled=disableForm}
+                onClick=createEmergencyNumber}
+              >intl.formatMessage(FORMS.SUBMIT)}</button>
               )
             }
-          </Mutation>
+          </Mutation> */}
           { this.state.error
             && (
             <div className="form-meta">
@@ -182,15 +187,16 @@ class FormCreateEmergencyNumber extends React.Component {
 }
 
 FormCreateEmergencyNumber.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  history: PropTypes.shape({
-    name: PropTypes.string,
-    push: PropTypes.func
-  })
+  // history: PropTypes.shape({
+  //   name: PropTypes.string,
+  //   push: PropTypes.func
+  // })
 };
 
-FormCreateEmergencyNumber.defaultProps = {
-  history: null
-};
+// FormCreateEmergencyNumber.defaultProps = {
+//   history: null
+// };
 
-export default withRouter(injectIntl(FormCreateEmergencyNumber));
+export default connect(null)(withRouter(injectIntl(FormCreateEmergencyNumber)));

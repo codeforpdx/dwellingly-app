@@ -4,6 +4,7 @@ export const FETCHING_EMERGENCY_NUMBERS = 'emergency/FETCHING_EMERGENCY_NUMBERS'
 export const FETCHING_EMERGENCY_NUMBERS_SUCCEEDED = 'emergency/FETCHING_EMERGENCY_NUMBERS_SUCCEEDED';
 export const FETCHING_EMERGENCY_NUMBERS_ERROR = 'emergency/FETCHING_EMERGENCY_NUMBERS_ERROR';
 export const EDIT_EMERGENCY_NUMBER = 'emergency/EDIT_EMERGENCY_NUMBER';
+export const CREATE_EMERGENCY_NUMBER = 'emergency/CREATE_EMERGENCY_NUMBER';
 
 // Initial State
 const initialState = {
@@ -40,6 +41,10 @@ export default (state = initialState, action) => {
         // phoneNumberTwo: action.phoneNumberTwo,
         // phoneNumberThree: action.phoneNumberThree
       }
+    case CREATE_EMERGENCY_NUMBER:
+      return {
+        ...state
+      }
     default:
       return state
   }
@@ -70,6 +75,17 @@ export const editEmergencyNumber = (data) => (dispatch) => {
   })
 }
 
+export const createEmergencyNumber = (data) => (dispatch) => {
+  dispatch({
+    type: CREATE_EMERGENCY_NUMBER,
+    id: data.id,
+    contact: data.contact,
+    phoneNumberOne: data.phoneNumberOne,
+    phoneNumberTwo: data.phoneNumberTwo,
+    phoneNumberThree: data.phoneNumberThree
+  })
+}
+
 // Asynchronous Functions
 
 // GET Emergency Numbers
@@ -80,6 +96,25 @@ export const getEmergencyNumbers = () => async dispatch => {
 }
 
 // POST Emergency Number
+export const onCreatingEmergencyNumber = async data => {
+  const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  console.log(response);
+  return response.json();
+}
+export const creatingEmergencyNumber = data => async dispatch => {
+  try {
+    const resData = await onCreatingEmergencyNumber(data);
+    dispatch(createEmergencyNumber(resData))
+  } catch(e) {
+    console.log(e);
+  }
+}
 
 // PATCH Selected Emergency Number
 export const onEditingEmergencyNumber = async data => {
