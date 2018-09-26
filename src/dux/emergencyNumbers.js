@@ -5,6 +5,7 @@ export const FETCHING_EMERGENCY_NUMBERS_SUCCEEDED = 'emergency/FETCHING_EMERGENC
 export const FETCHING_EMERGENCY_NUMBERS_ERROR = 'emergency/FETCHING_EMERGENCY_NUMBERS_ERROR';
 export const EDIT_EMERGENCY_NUMBER = 'emergency/EDIT_EMERGENCY_NUMBER';
 export const CREATE_EMERGENCY_NUMBER = 'emergency/CREATE_EMERGENCY_NUMBER';
+export const ARCHIVE_EMERGENCY_NUMBER = 'emergency/ARCHIVE_EMERGENCY_NUMBER';
 
 // Initial State
 const initialState = {
@@ -42,6 +43,10 @@ export default (state = initialState, action) => {
         // phoneNumberThree: action.phoneNumberThree
       }
     case CREATE_EMERGENCY_NUMBER:
+      return {
+        ...state
+      }
+    case ARCHIVE_EMERGENCY_NUMBER:
       return {
         ...state
       }
@@ -83,6 +88,13 @@ export const createEmergencyNumber = (data) => (dispatch) => {
     phoneNumberOne: data.phoneNumberOne,
     phoneNumberTwo: data.phoneNumberTwo,
     phoneNumberThree: data.phoneNumberThree
+  })
+}
+
+export const archiveEmergencyNumber = (data) => (dispatch) => {
+  dispatch({
+    type: ARCHIVE_EMERGENCY_NUMBER,
+    id: data.id
   })
 }
 
@@ -132,6 +144,26 @@ export const editingEmergencyNumber = data => async dispatch => {
   try {
     const resData = await onEditingEmergencyNumber(data)
     dispatch(editEmergencyNumber(resData))
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+// Archive Emergency Number
+export const onArchivingEmergencyNumber = async data => {
+  const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.EMERGENCY_NUMBERS}/${data.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  return response.json();
+}
+export const archivingEmergencyNumber = data => async dispatch => {
+  try {
+    const resData = await onArchivingEmergencyNumber(data)
+    dispatch(archiveEmergencyNumber(resData))
   } catch(e) {
     console.log(e);
   }
