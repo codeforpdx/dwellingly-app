@@ -268,6 +268,10 @@ time {
   top: 0;
 }
 
+.padding--1em {
+  padding: 1em;
+}
+
 .align {
   &--center {
     text-align: center;
@@ -296,6 +300,7 @@ time {
 
 .status {
   text-transform: uppercase;
+  font-weight: 300;
 
   &--low,
   &--med {
@@ -312,6 +317,22 @@ time {
   font-weight: 700;
   letter-spacing: emify(1, 16);
   margin-bottom: emify(8, 16);
+}
+
+.desktop-only {
+  display: none;
+
+  @media screen and (min-width: $mq--desktop) {
+    display: block;
+  }
+}
+
+.mobile-only {
+  display: block;
+  
+  @media screen and (min-width: $mq--desktop) {
+    display: none;
+  }
 }
 /* end defaults */
 
@@ -400,6 +421,7 @@ time {
   background: $color__gray--light;
   border-radius: $border-radius;
   padding: 0.5rem 1rem;
+  font-weight: 300;
 
   .count {
     font-weight: 500;
@@ -446,7 +468,7 @@ time {
   }
 
   @media screen and (min-width: $mq--desktop) {
-    width: calc(100% - #{$width__nav});
+    // width: calc(100% - #{$width__nav});
 
     @at-root .property-manager & {
       width: 100%;

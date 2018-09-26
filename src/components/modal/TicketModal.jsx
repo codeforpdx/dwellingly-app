@@ -16,10 +16,11 @@ class TicketModal extends Component {
     this.isUserPropertyManager = this.isUserPropertyManager.bind(this);
     this.toggleFlag = this.toggleFlag.bind(this);
 
-    this.userRole = dummyUser.role;
     this.ticket = tickets.find(
       ({ id }) => id === this.props.match.params.ticket
     );
+
+    this.user = dummyUser;
 
     this.state = {
       flagged: this.ticket ? Boolean(this.ticket.flagged) : false
@@ -27,7 +28,7 @@ class TicketModal extends Component {
   }
 
   isUserPropertyManager() {
-    return this.userRole === ROLES.PROPERTY_MANAGER;
+    return this.user.role && this.user.role.isPropertyManager === 'true';
   }
 
   toggleFlag() {
@@ -39,16 +40,16 @@ class TicketModal extends Component {
     const {
       id,
       issue,
-      notes,
-      sender,
-      sent,
-      status,
       tenant,
-      urgency
+      sender,
+      dateCreated,
+      status,
+      urgency,
+      notes
     } = this.ticket;
-    const sentDate = formatDateFromString(sent);
+    const sentDate = formatDateFromString(dateCreated);
     const backUrl = backURL(match.url);
-    const ticketType = this.isUserPropertyManager()
+    const ticketTypes = this.isUserPropertyManager()
       ? [CARD_TYPES.LARGE, CARD_TYPES.TICKET]
       : [CARD_TYPES.LARGE, CARD_TYPES.STATUS];
 
@@ -76,7 +77,7 @@ class TicketModal extends Component {
                 history.push(backUrl);
               }}
             />
-            <Card className="width-wrapper" types={ticketType} status={status}>
+            <Card className="width-wrapper" types={ticketTypes} status={status}>
               <Card.Top>
                 <Card.Header
                   label={issue}
@@ -92,8 +93,8 @@ class TicketModal extends Component {
                       <div className="container--left">
                         <h4>Tenant</h4>
                         <p className="title">{tenant.name}</p>
-                        <a href={formatPhoneNumber(tenant.number)}>
-                          {tenant.number}
+                        <a href={formatPhoneNumber(tenant.phone)}>
+                          {tenant.phone}
                         </a>
                       </div>
                     )}
@@ -112,8 +113,8 @@ class TicketModal extends Component {
                       <div className="container--left">
                         <h4>Sender</h4>
                         <p className="title">{sender.name}</p>
-                        <a href={formatPhoneNumber(sender.number)}>
-                          {sender.number}
+                        <a href={formatPhoneNumber(sender.phone)}>
+                          {sender.phone}
                         </a>
                       </div>
                     )}

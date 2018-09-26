@@ -13,7 +13,7 @@ function List({ url, items, className, showStaff, showNumber, history }) {
       {items &&
         items.length > 0 &&
         items.map(item => {
-          const { id, name, address, number, status, staff } = item;
+          const { id, name, address, phone, ticketsStatus, staff } = item;
           // have to "cheat" here and use a button instead of link because of nested <a> tags (phone number)
           const ElementNodeName = url ? 'button' : 'div';
           const urlPath =
@@ -26,9 +26,9 @@ function List({ url, items, className, showStaff, showNumber, history }) {
               onClick={() => (url ? history.push(urlPath) : null)}
               className="list-group__item list-group__item--basic">
               <div className="contact-group contact-group--basic">
-                {status && (
+                {ticketsStatus && (
                   <div
-                    className={`contact-group__status contact-group__status--${status}`}
+                    className={`contact-group__status contact-group__status--${ticketsStatus}`}
                   />
                 )}
                 <h3 className="title">{name}</h3>
@@ -53,9 +53,9 @@ function List({ url, items, className, showStaff, showNumber, history }) {
                 <div className="contact-group__number">
                   <a
                     className="small"
-                    href={formatPhoneNumber(number)}
+                    href={formatPhoneNumber(phone)}
                     onClick={e => e.stopPropagation()}>
-                    {number}
+                    {phone}
                   </a>
                 </div>
               )}

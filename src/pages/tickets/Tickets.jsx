@@ -24,10 +24,22 @@ class Tickets extends Component {
     window.scrollTo(0, 0);
   }
 
-  handleSearch(event) {
-    if (event) event.preventDefault();
-    // do stuff
-    return this;
+  handleSearch(searchTerm) {
+    // TODO: filter tickets list
+    const filteredTickets = tickets.filter(
+      ({ tenant, sender }) =>
+        `${tenant.fullName} ${tenant.property &&
+          tenant.property.addressOne} ${tenant.property &&
+          tenant.property.addressTwo} ${tenant.property &&
+          tenant.property.name} ${sender && sender.fullName}`
+          .toUpperCase()
+          .indexOf(searchTerm.toUpperCase()) !== -1
+    );
+
+    this.tickets =
+      searchTerm && searchTerm.length > 0 ? filteredTickets : tickets;
+
+    console.log(filteredTickets);
   }
 
   render() {
@@ -94,11 +106,7 @@ class Tickets extends Component {
           />
         </section>
 
-        <Route
-          path={`${match.path}/:status/:ticket`}
-          exact
-          component={TicketModal}
-        />
+        <Route path={`${match.path}/*/:ticket`} exact component={TicketModal} />
       </div>
     );
   }

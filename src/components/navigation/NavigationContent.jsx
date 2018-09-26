@@ -4,11 +4,13 @@ import { injectIntl, intlShape } from 'react-intl';
 import AdminMenu from './AdminMenu';
 import StaffMenu from './StaffMenu';
 import { ROLES } from '../../constants/constants';
+import { getUserRoleString } from '../../utils';
 // import { NAVIGATION } from '../../translations/messages';
 
 class NavigationContent extends Component {
   render() {
     const { handleToggleMenu, intl, type, user } = this.props;
+    const roleStr = getUserRoleString(user.role, ROLES);
     return (
       <nav className={`menu${type && ` menu--${type}`}`}>
         {user &&
@@ -23,7 +25,7 @@ class NavigationContent extends Component {
           )}
         <div className="menu__groups">
           {user &&
-            user.role === ROLES.STAFF && (
+            roleStr === ROLES.STAFF && (
               <StaffMenu
                 handleToggleMenu={handleToggleMenu}
                 intl={intl}
@@ -32,7 +34,7 @@ class NavigationContent extends Component {
               />
             )}
           {user &&
-            user.role === ROLES.ADMIN && (
+            roleStr === ROLES.ADMIN && (
               <AdminMenu
                 handleToggleMenu={handleToggleMenu}
                 intl={intl}

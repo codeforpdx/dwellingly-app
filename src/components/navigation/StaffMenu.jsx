@@ -40,7 +40,7 @@ function StaffMenu({ handleToggleMenu, type, user }) {
           <span>1</span>
         </NavLink>
         <NavLink
-          to={ROUTES.CLOSED_TICKETS}
+          to={`${ROUTES.TICKETS}?status=closed`}
           activeClassName="menu__link--active">
           <strong>Closed</strong>
           <span>3</span>
