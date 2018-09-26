@@ -468,7 +468,7 @@ time {
   }
 
   @media screen and (min-width: $mq--desktop) {
-    // width: calc(100% - #{$width__nav});
+    width: calc(100% - #{$width__nav});
 
     @at-root .property-manager & {
       width: 100%;

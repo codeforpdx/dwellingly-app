@@ -37,7 +37,7 @@ class Home extends Component {
             user={user}
           />
         )}
-        {roleStr === ROLES.STAFF && <Redirect to={ROUTES.TICKETS} />}
+        {roleStr === ROLES.STAFF && <Redirect to={`${ROUTES.TICKETS}/open`} />}
         {roleStr === ROLES.ADMIN && <Redirect to={ROUTES.ADMIN} />}
         {/* <UserControls /> */}
       </div>

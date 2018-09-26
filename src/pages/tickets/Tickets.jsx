@@ -43,7 +43,7 @@ class Tickets extends Component {
   }
 
   render() {
-    const { match } = this.props;
+    const { match, location } = this.props;
     const { tickets } = this;
 
     // TODO: Replace with proper query to DB for CLOSED tickets
@@ -63,7 +63,9 @@ class Tickets extends Component {
               <nav className="tabs tabs--dark tabs--no-border tabs--space-between tabs--icon-heavy">
                 <ul className="width-wrapper">
                   <li className="tab">
-                    <NavLink to={match.url} activeClassName="tab--active">
+                    <NavLink
+                      to={`${location.pathname}?sort=date`}
+                      activeClassName="tab--active">
                       <strong>
                         <Icon icon="calendar" />By Date
                       </strong>
@@ -71,7 +73,7 @@ class Tickets extends Component {
                   </li>
                   <li className="tab">
                     <NavLink
-                      to={`${match.url}?sort=status`}
+                      to={`${location.pathname}?sort=status`}
                       activeClassName="tab--active">
                       <strong>
                         <Icon icon="checkbox" />By Status
@@ -80,7 +82,7 @@ class Tickets extends Component {
                   </li>
                   <li className="tab">
                     <NavLink
-                      to={`${match.url}?sort=flagged`}
+                      to={`${location.pathname}?sort=flagged`}
                       activeClassName="tab--active">
                       <strong>
                         <Icon icon="flagOutline" />Flagged
@@ -113,6 +115,7 @@ class Tickets extends Component {
 }
 
 Tickets.propTypes = {
+  location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired
 };
 
