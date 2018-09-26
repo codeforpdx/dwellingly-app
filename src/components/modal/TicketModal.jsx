@@ -82,7 +82,7 @@ class TicketModal extends Component {
                     {tenant && (
                       <div className="container--left">
                         <h4>Tenant</h4>
-                        <p className="title">{tenant.fullName}</p>
+                        <p className="title">{tenant.name}</p>
                         <a href={formatPhoneNumber(tenant.phone)}>
                           {tenant.phone}
                         </a>
@@ -102,7 +102,7 @@ class TicketModal extends Component {
                     {sender && (
                       <div className="container--left">
                         <h4>Sender</h4>
-                        <p className="title">{sender.fullName}</p>
+                        <p className="title">{sender.name}</p>
                         <a href={formatPhoneNumber(sender.phone)}>
                           {sender.phone}
                         </a>

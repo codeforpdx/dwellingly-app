@@ -33,7 +33,9 @@ function OngoingTickets({ match, tickets }) {
                           {sentDate}
                         </time>
                         {status && <p className="progress status">{status}</p>}
-                        <p className="title">{tenant.fullName}</p>
+                        <p className="title">{`${tenant.firstName} ${
+                          tenant.lastName
+                        }`}</p>
                         <p className="meta">{issue}</p>
                       </div>
                     </Card.Content>
@@ -43,7 +45,7 @@ function OngoingTickets({ match, tickets }) {
                       <div className="card__contact container">
                         <div className="container--left">
                           <h4>Sender</h4>
-                          <p>{sender.fullName}</p>
+                          <p>{`${sender.firstName} ${sender.lastName}`}</p>
                         </div>
                         {urgency && (
                           <div className="container--right">

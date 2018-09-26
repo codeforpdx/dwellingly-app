@@ -90,96 +90,110 @@ export const archives = [
 
 export const tenants = [
   {
-    id: '',
-    dateCreated: '',
-    dateUpdated: '',
-    firstName: '',
-    lastName: '',
-    staff: [{}]
-  },
-  {
-    id: 'tenant-01',
+    id: 'TN00-000000-0001',
+    dateCreated: 'Thu Aug 23 2018 16:40:35 GMT-0700 (Pacific Daylight Time)',
+    dateUpdated: 'Thu Aug 23 2018 16:40:35 GMT-0700 (Pacific Daylight Time)',
+    firstName: 'Brenden',
+    lastName: 'Smith',
     name: 'Brenden Smith',
-    address: 'Magnolia Park, Unit #2',
-    number: '555-123-4567',
+    phone: '555-123-4567',
+    address: 'Magnolia Park, Unit #283', // summary version doesn't require all of the property and lease info
     staff: [
       {
-        name: 'Tom Smith'
-      },
-      {
-        name: 'Cassidy Erickson'
+        id: 'e10ae4004dcc4f8292719dbad5b6c5c8',
+        name: 'Jerry Seinfeld'
       }
     ],
-    // status: 'in-progress'
-    status: 'high'
-  },
-  {
-    id: 'tenant-02',
-    name: 'Alex Alder',
-    address: 'Magnolia Park, Unit #2',
-    number: '503-235-5333',
-    staff: [
-      {
-        name: 'Tom Smith'
-      },
-      {
-        name: 'Cassidy Erickson'
-      }
-    ]
-  },
-  {
-    id: 'tenant-03',
-    name: 'Beverly Burnside',
-    address: 'Baker Building, Unit #12',
-    number: '503-731-3100',
-    staff: [
-      {
-        name: 'Tom Smith'
-      },
-      {
-        name: 'Cassidy Erickson'
-      }
-    ]
-  },
-  {
-    id: 'tenant-04',
-    name: 'Donald Davis',
-    address: 'Magnolia Park, Unit #6',
-    number: '503-731-3100',
-    staff: [
-      {
-        name: 'Tom Smith'
-      },
-      {
-        name: 'Cassidy Erickson'
-      }
-    ]
-  },
-  {
-    id: 'tenant-05',
-    name: 'Bruce Wayne',
-    address: 'Garden Blocks, Unit #221B',
-    number: '503-469-8620',
-    staff: [
-      {
-        name: 'Tom Smith'
-      }
-    ]
-  },
-  {
-    id: 'tenant-06',
-    name: 'Andrew Wiggins',
-    address: 'Mountain View, #42',
-    number: '503-469-8620',
-    staff: [
-      {
-        name: 'Tom Smith'
-      },
-      {
-        name: 'Cassidy Erickson'
-      }
-    ]
+    ticketsTotals: {
+      open: '1',
+      closed: '3',
+      archived: '3'
+    },
+    ticketsStatus: 'in-progress' // business logic to determine if tenant has open or HIGH-urgency tickets
   }
+  // {
+  //   id: 'tenant-01',
+  //   name: 'Brenden Smith',
+  //   address: 'Magnolia Park, Unit #2',
+  //   number: '555-123-4567',
+  //   staff: [
+  //     {
+  //       name: 'Tom Smith'
+  //     },
+  //     {
+  //       name: 'Cassidy Erickson'
+  //     }
+  //   ],
+  //   // status: 'in-progress'
+  //   status: 'high'
+  // },
+  // {
+  //   id: 'tenant-02',
+  //   name: 'Alex Alder',
+  //   address: 'Magnolia Park, Unit #2',
+  //   number: '503-235-5333',
+  //   staff: [
+  //     {
+  //       name: 'Tom Smith'
+  //     },
+  //     {
+  //       name: 'Cassidy Erickson'
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: 'tenant-03',
+  //   name: 'Beverly Burnside',
+  //   address: 'Baker Building, Unit #12',
+  //   number: '503-731-3100',
+  //   staff: [
+  //     {
+  //       name: 'Tom Smith'
+  //     },
+  //     {
+  //       name: 'Cassidy Erickson'
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: 'tenant-04',
+  //   name: 'Donald Davis',
+  //   address: 'Magnolia Park, Unit #6',
+  //   number: '503-731-3100',
+  //   staff: [
+  //     {
+  //       name: 'Tom Smith'
+  //     },
+  //     {
+  //       name: 'Cassidy Erickson'
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: 'tenant-05',
+  //   name: 'Bruce Wayne',
+  //   address: 'Garden Blocks, Unit #221B',
+  //   number: '503-469-8620',
+  //   staff: [
+  //     {
+  //       name: 'Tom Smith'
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: 'tenant-06',
+  //   name: 'Andrew Wiggins',
+  //   address: 'Mountain View, #42',
+  //   number: '503-469-8620',
+  //   staff: [
+  //     {
+  //       name: 'Tom Smith'
+  //     },
+  //     {
+  //       name: 'Cassidy Erickson'
+  //     }
+  //   ]
+  // }
 ];
 
 export const propertyManagers = [
@@ -241,7 +255,7 @@ export const tickets = [
     tenant: {
       dateCreated: 'Thu Aug 23 2018 16:40:35 GMT-0700 (Pacific Daylight Time)',
       dateUpdated: 'Thu Aug 23 2018 15:54:48 GMT-0700 (Pacific Daylight Time)',
-      fullName: 'Will Smith',
+      name: 'Will Smith',
       lastName: 'Smith',
       firstName: 'Will',
       phone: '503-555-1234',
@@ -263,7 +277,7 @@ export const tickets = [
       }
     },
     sender: {
-      fullName: 'Jerry Seinfeld',
+      name: 'Jerry Seinfeld',
       firstName: 'Jerry',
       lastName: 'Seinfeld',
       email: 'jerry@herry.com',
@@ -277,7 +291,7 @@ export const tickets = [
     },
     users: [
       {
-        fullName: 'Jerry Seinfeld',
+        name: 'Jerry Seinfeld',
         firstName: 'Jerry',
         lastName: 'Seinfeld',
         email: 'jerry@herry.com',
@@ -290,7 +304,7 @@ export const tickets = [
         }
       },
       {
-        fullName: 'johnny alt',
+        name: 'johnny alt',
         firstName: 'johnny',
         lastName: 'alt',
         email: 'johnny@test.com',
@@ -309,7 +323,7 @@ export const tickets = [
         dateCreated:
           'Wed Aug 29 2018 10:29:51 GMT-0700 (Pacific Daylight Time)',
         message: 'Notes body',
-        fullName: 'Tara Mckenzie'
+        name: 'Tara Mckenzie'
       }
     ]
   }

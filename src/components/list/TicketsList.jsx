@@ -35,7 +35,9 @@ function TicketsList({ items }) {
                       className={`contact-group__status contact-group__status--${urgency.toLowerCase()}`}
                     />
                   )}
-                <h3 className="contact-group__name">{tenant.fullName}</h3>
+                <h3 className="contact-group__name">{`${tenant.firstName} ${
+                  tenant.lastName
+                }`}</h3>
                 <p className="contact-group__title title">
                   {issue !== 'Compliment' &&
                     issue !== 'Resolved' && <Icon icon="comment" />}
@@ -48,7 +50,9 @@ function TicketsList({ items }) {
                     tenant.lease.unit &&
                     `, ${tenant.lease.unit}`}
                 </p>
-                {sender && <p>Sender: {sender.fullName}</p>}
+                {sender && (
+                  <p>Sender: {`${sender.firstName} ${sender.lastName}`}</p>
+                )}
 
                 <div className="contact-group__meta ptr">
                   <time className="meta" dateTime={sentDate}>
