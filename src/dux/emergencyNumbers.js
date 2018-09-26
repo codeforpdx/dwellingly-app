@@ -34,16 +34,11 @@ export default (state = initialState, action) => {
     case EDIT_EMERGENCY_NUMBER:
       return {
         ...state,
-        numbers: {
-          ...state.numbers,
-          [action.id]: {
-            id: action.id,
-            contact: action.contact,
-            phoneNumberOne: action.phoneNumberOne,
-            phoneNumberTwo: action.phoneNumberTwo,
-            phoneNumberThree: action.phoneNumberThree
-          }
-        }
+        // id: action.id,
+        // contact: action.contact,
+        // phoneNumberOne: action.phoneNumberOne,
+        // phoneNumberTwo: action.phoneNumberTwo,
+        // phoneNumberThree: action.phoneNumberThree
       }
     default:
       return state
@@ -99,9 +94,7 @@ export const onEditingEmergencyNumber = async data => {
 }
 // Once the PATCH request is successful, update the store.
 export const editingEmergencyNumber = data => async dispatch => {
-  console.log('BEFORE AWAIT', data);
   try {
-    // TODO: Uncomment this to get PATCH request to run. It still gets stuck pending.
     const resData = await onEditingEmergencyNumber(data)
     dispatch(editEmergencyNumber(resData))
   } catch(e) {

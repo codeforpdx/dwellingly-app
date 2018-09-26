@@ -31,6 +31,17 @@ class EmergencyNumber extends Component {
   handleSavingNewEmergencyNumber() {
     const { dispatch } = this.props;
     const { id, contact, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
+    // const currentKey = Object.keys(this.state).map(numberItem => {
+    //   const updatedNumberItem = this.state[numberItem];
+    //   return {
+    //     id,
+    //     contact,
+    //     phoneNumberOne,
+    //     phoneNumberTwo,
+    //     phoneNumberThree
+    //   }
+    // });
+    // console.log(currentKey);
     dispatch(editingEmergencyNumber({
       id,
       contact,

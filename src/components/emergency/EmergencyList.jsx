@@ -15,12 +15,14 @@ class EmergencyList extends React.Component {
 
   render() {
     const { emergencyNumbers } = this.props;
+    console.log(emergencyNumbers);
     return (
       <div className="emergencyNumberList">
         <h2>
           Emergency List
         </h2>
-        {emergencyNumbers.numbers.length > 0 ?
+        {
+          emergencyNumbers.numbers.length > 0 ?
           emergencyNumbers.numbers.map(number =>
             <EmergencyNumber
               key={number.id}
