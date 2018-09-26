@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Card from '../card/Card';
 import Notes from '../notes/Notes';
-import { CARD_TYPES, ROLES, STATUS_OPTIONS } from '../../constants/constants';
+import { CARD_TYPES, STATUS_OPTIONS } from '../../constants/constants';
 import { formatPhoneNumber, backURL, formatDateFromString } from '../../utils';
 
 // mock data
