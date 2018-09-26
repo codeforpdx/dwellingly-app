@@ -45,6 +45,10 @@ import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
 import Tickets from './pages/tickets/Tickets';
 
+// Code Samples/Docs
+import CardSamples from './pages/code-samples/CardSamples';
+import HeaderSamples from './pages/code-samples/HeaderSamples';
+
 // mock data
 import { dummyUser } from './data';
 
@@ -127,6 +131,8 @@ ReactDOM.render(
                 component={StaffUser(Tickets)}
               />
               <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
+              <Route path="/code-samples/card" component={CardSamples} />
+              <Route path="/code-samples/header" component={HeaderSamples} />
               <Route path={ROUTES.LOGIN} component={Login} />
               <PrivateRoute path={ROUTES.ROOT} component={Home} />
             </Switch>
