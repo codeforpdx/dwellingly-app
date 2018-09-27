@@ -74,22 +74,22 @@ class EmergencyNumber extends Component {
 
   render() {
     const { emergency } = this.props;
-    // TODO: Get this working to parse text from numbers
-    // const handleRemovingTextContentFromLink = (number) => {
-    //   const textRegex = /[a-zA-Z]\D/g;
-    //   const numberRegex = /[0-9]\S/g;
-    //   if(number !== null || number !== '') {
-    //     const textContent = number.match(textRegex);
-    //     const numberContent = number.match(numberRegex);
-    //     if(textContent !== null || numberContent !== null) {
-    //       return {
-    //         textContentOfNumber: textContent.join('').trim(),
-    //         number: numberContent.join('')
-    //       }
-    //     }
-    //   }
-    //   return this
-    // }
+    // Parses Text from numbers and returns and object of key value pairs containg parsed data.
+    const handleRemovingTextContentFromLink = (number) => {
+      const textRegex = /[a-zA-Z]\D/g;
+      const numberRegex = /[0-9]\S/g;
+      if(number !== null || number !== '') {
+        const textContent = number.match(textRegex);
+        const numberContent = number.match(numberRegex);
+        if(textContent !== null && numberContent !== null) {
+          return {
+            textContentOfNumber: textContent.join('').trim(),
+            number: numberContent.join('')
+          }
+        }
+      }
+      return number
+    }
     return (
       <div>
       {
@@ -101,6 +101,7 @@ class EmergencyNumber extends Component {
             newNumberOne={this.state.phoneNumberOne}
             newNumberTwo={this.state.phoneNumberTwo}
             newNumberThree={this.state.phoneNumberThree}
+            parseNumber={handleRemovingTextContentFromLink}
             onArchivingNumber={this.handleArchivingEmergencyNumber}
             onEditingNumber={this.handleEditingNumber} /> :
           <EmergencyNumberEdit
