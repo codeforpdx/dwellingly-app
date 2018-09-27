@@ -46,10 +46,13 @@ export default (state = initialState, action) => {
       return {
         ...state
       }
-    case ARCHIVE_EMERGENCY_NUMBER:
+    case ARCHIVE_EMERGENCY_NUMBER: {
+      const numberId = action.id
       return {
-        ...state
+        ...state,
+        numbers: state.numbers.filter(({ id }) => id !== numberId)
       }
+    }
     default:
       return state
   }
@@ -116,7 +119,6 @@ export const onCreatingEmergencyNumber = async data => {
     },
     body: JSON.stringify(data)
   })
-  console.log(response);
   return response.json();
 }
 export const creatingEmergencyNumber = data => async dispatch => {
@@ -158,13 +160,12 @@ export const onArchivingEmergencyNumber = async data => {
     },
     body: JSON.stringify(data)
   })
-  return response.json();
+  return response;
 }
 export const archivingEmergencyNumber = data => async dispatch => {
-  console.log('IS THIS WORKING?');
   try {
-    const resData = await onArchivingEmergencyNumber(data)
-    dispatch(archiveEmergencyNumber(resData))
+    await onArchivingEmergencyNumber(data);
+    dispatch(archiveEmergencyNumber(data));
   } catch(e) {
     console.log(e);
   }

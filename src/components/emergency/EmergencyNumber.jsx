@@ -62,7 +62,7 @@ class EmergencyNumber extends Component {
       phoneNumberOne,
       phoneNumberTwo,
       phoneNumberThree
-    }))
+    }));
   }
 
   handleChangedNumberField(e) {
