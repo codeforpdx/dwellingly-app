@@ -74,7 +74,7 @@ class EmergencyNumber extends Component {
 
   render() {
     const { emergency } = this.props;
-    // Parses Text from numbers and returns and object of key value pairs containg parsed data.
+    // Parses Text from numbers and returns an object of key value pairs containg parsed data.
     const handleRemovingTextContentFromLink = (number) => {
       const textRegex = /[a-zA-Z]\D/g;
       const numberRegex = /[0-9]\S/g;

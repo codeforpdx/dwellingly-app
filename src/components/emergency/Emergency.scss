@@ -1,12 +1,15 @@
 .emergencyNumberList {
   max-width: 800px;
   margin: auto;
+  h2 {
+    text-align: left;
+  }
 }
 .emergencyNumberRow {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ddd;
-  padding: 20px;
+  padding: 20px 0px;
   font-size: 14px;
   &:last-child {
     border-bottom: none;
