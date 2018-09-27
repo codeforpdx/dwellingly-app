@@ -15,7 +15,6 @@ class EmergencyList extends React.Component {
 
   render() {
     const { emergencyNumbers } = this.props;
-    console.log(emergencyNumbers);
     return (
       <div className="emergencyNumberList">
         <h2>

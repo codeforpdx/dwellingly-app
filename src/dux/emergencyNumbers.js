@@ -161,6 +161,7 @@ export const onArchivingEmergencyNumber = async data => {
   return response.json();
 }
 export const archivingEmergencyNumber = data => async dispatch => {
+  console.log('IS THIS WORKING?');
   try {
     const resData = await onArchivingEmergencyNumber(data)
     dispatch(archiveEmergencyNumber(resData))

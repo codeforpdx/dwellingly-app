@@ -31,7 +31,6 @@ class FormCreateEmergencyNumber extends React.Component {
       phoneNumberOne: '',
       phoneNumberTwo: '',
       phoneNumberThree: '',
-      // sortOrder: 0,
       submit: false,
       error: null
     };
@@ -59,35 +58,13 @@ class FormCreateEmergencyNumber extends React.Component {
       phoneNumberOne,
       phoneNumberTwo,
       phoneNumberThree
-    }))
+    }));
   }
 
   render() {
     const { intl } = this.props;
     const { contact, phoneNumberOne } = this.state;
     const disableForm = contact === '' || !phoneNumberOne;
-
-    // const POST_MUTATION = gql`
-    //   mutation createEmergencyNum(
-    //     $title: String!
-    //     $number01: String!
-    //     $number02: String
-    //     $sortOrder: Int
-    //   ) {
-    //     createEmergencyNum(
-    //       title: $title
-    //       number01: $number01
-    //       number02: $number02
-    //       sortOrder: $sortOrder
-    //     ) {
-    //       title
-    //       number01
-    //       number02
-    //       sortOrder
-    //     }
-    //   }
-    // `;
-    // const successRoute = ROUTES.ADMIN;
 
     return (
       <form
@@ -142,14 +119,6 @@ class FormCreateEmergencyNumber extends React.Component {
               type="tel"
               value={this.state.phoneNumberTwo}
             />
-            {/* <Input
-              id="emergencyNumber-sortOrder"
-              label="Sort Order"
-              onChange=this.handleInputChange}
-              placeholder="Optional"
-              type="number"
-              value=this.state.sortOrder}
-            /> */}
           </fieldset>
           {this.state.submit}
           <button
@@ -189,14 +158,6 @@ class FormCreateEmergencyNumber extends React.Component {
 FormCreateEmergencyNumber.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  // history: PropTypes.shape({
-  //   name: PropTypes.string,
-  //   push: PropTypes.func
-  // })
 };
-
-// FormCreateEmergencyNumber.defaultProps = {
-//   history: null
-// };
 
 export default connect(null)(withRouter(injectIntl(FormCreateEmergencyNumber)));

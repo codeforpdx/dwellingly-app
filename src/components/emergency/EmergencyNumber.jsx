@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import EmergencyNumberEdit from '../forms/EmergencyNumberEdit';
 import EmergencyNumberStatic from './EmergencyNumberStatic';
 
-import { editingEmergencyNumber } from '../../dux/emergencyNumbers';
+import { editingEmergencyNumber, archivingEmergencyNumber } from '../../dux/emergencyNumbers';
 
 class EmergencyNumber extends Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class EmergencyNumber extends Component {
     this.handleEditingNumber = this.handleEditingNumber.bind(this);
     this.handleChangedNumberField = this.handleChangedNumberField.bind(this);
     this.handleSavingNewEmergencyNumber = this.handleSavingNewEmergencyNumber.bind(this);
+    this.handleArchivingEmergencyNumber = this.handleArchivingEmergencyNumber.bind(this);
   }
 
 
@@ -50,6 +51,18 @@ class EmergencyNumber extends Component {
       phoneNumberThree
     }));
     this.setState(prevState => ({ doneEditing: !prevState.doneEditing }))
+  }
+
+  handleArchivingEmergencyNumber() {
+    const { dispatch } = this.props;
+    const { id, contact, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
+    dispatch(archivingEmergencyNumber({
+      id,
+      contact,
+      phoneNumberOne,
+      phoneNumberTwo,
+      phoneNumberThree
+    }))
   }
 
   handleChangedNumberField(e) {
@@ -88,6 +101,7 @@ class EmergencyNumber extends Component {
             newNumberOne={this.state.phoneNumberOne}
             newNumberTwo={this.state.phoneNumberTwo}
             newNumberThree={this.state.phoneNumberThree}
+            onArchivingNumber={this.handleArchivingEmergencyNumber}
             onEditingNumber={this.handleEditingNumber} /> :
           <EmergencyNumberEdit
             id={emergency.id}

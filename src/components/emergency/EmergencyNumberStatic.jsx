@@ -39,6 +39,9 @@ const EmergencyNumberStatic = (props) => {
           <div className="emergencyNumberEditButton" onClick={props.onEditingNumber} role="presentation">
             <Icon icon="pencil" />
           </div>
+          <div onClick={props.onArchivingNumber} role="presentation">
+            <Icon icon="archive" />
+          </div>
         </div>
       </div>
     </div>
@@ -52,6 +55,7 @@ EmergencyNumberStatic.propTypes = {
   newNumberTwo: PropTypes.string,
   newNumberThree: PropTypes.string,
   onEditingNumber: PropTypes.func.isRequired,
+  onArchivingNumber: PropTypes.func.isRequired,
   emergency: PropTypes.shape({
     contact: PropTypes.string.isRequired,
     phoneNumberOne: PropTypes.string.isRequired,
