@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { ROLES } from '../../constants/constants';
+import { getUserRoleString } from '../../utils';
 
 // mock data
 import { dummyUser } from '../../data';
@@ -10,14 +12,13 @@ function Authorization(allowedRoles) {
       constructor(props) {
         super(props);
 
-        this.state = {
-          user: dummyUser
-        };
+        this.user = dummyUser;
       }
 
       render() {
-        const { role } = this.state.user;
-        if (allowedRoles.includes(role)) {
+        const { role } = this.user;
+        const roleStr = getUserRoleString(role, ROLES);
+        if (allowedRoles.includes(roleStr)) {
           return <WrappedComponent {...this.props} />;
         }
 

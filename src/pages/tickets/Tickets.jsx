@@ -24,14 +24,26 @@ class Tickets extends Component {
     window.scrollTo(0, 0);
   }
 
-  handleSearch(event) {
-    if (event) event.preventDefault();
-    // do stuff
-    return this;
+  handleSearch(searchTerm) {
+    // TODO: filter tickets list
+    const filteredTickets = tickets.filter(
+      ({ tenant, sender }) =>
+        `${tenant.fullName} ${tenant.property &&
+          tenant.property.addressOne} ${tenant.property &&
+          tenant.property.addressTwo} ${tenant.property &&
+          tenant.property.name} ${sender && sender.fullName}`
+          .toUpperCase()
+          .indexOf(searchTerm.toUpperCase()) !== -1
+    );
+
+    this.tickets =
+      searchTerm && searchTerm.length > 0 ? filteredTickets : tickets;
+
+    console.log(filteredTickets);
   }
 
   render() {
-    const { match } = this.props;
+    const { match, location } = this.props;
     const { tickets } = this;
 
     // TODO: Replace with proper query to DB for CLOSED tickets
@@ -51,7 +63,9 @@ class Tickets extends Component {
               <nav className="tabs tabs--dark tabs--no-border tabs--space-between tabs--icon-heavy">
                 <ul className="width-wrapper">
                   <li className="tab">
-                    <NavLink to={match.url} activeClassName="tab--active">
+                    <NavLink
+                      to={`${location.pathname}?sort=date`}
+                      activeClassName="tab--active">
                       <strong>
                         <Icon icon="calendar" />By Date
                       </strong>
@@ -59,7 +73,7 @@ class Tickets extends Component {
                   </li>
                   <li className="tab">
                     <NavLink
-                      to={`${match.url}?sort=status`}
+                      to={`${location.pathname}?sort=status`}
                       activeClassName="tab--active">
                       <strong>
                         <Icon icon="checkbox" />By Status
@@ -68,7 +82,7 @@ class Tickets extends Component {
                   </li>
                   <li className="tab">
                     <NavLink
-                      to={`${match.url}?sort=flagged`}
+                      to={`${location.pathname}?sort=flagged`}
                       activeClassName="tab--active">
                       <strong>
                         <Icon icon="flagOutline" />Flagged
@@ -94,17 +108,14 @@ class Tickets extends Component {
           />
         </section>
 
-        <Route
-          path={`${match.path}/:status/:ticket`}
-          exact
-          component={TicketModal}
-        />
+        <Route path={`${match.path}/*/:ticket`} exact component={TicketModal} />
       </div>
     );
   }
 }
 
 Tickets.propTypes = {
+  location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired
 };
 

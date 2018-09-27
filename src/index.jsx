@@ -19,7 +19,7 @@ import PrivateRoute from './components/authorization/PrivateRoute';
 import { translationMessages } from './translations/i18n';
 import { SETTINGS, ROUTES, ROLES } from './constants/constants';
 import store, { history } from './store';
-import { getCookie, setCookie } from './utils';
+import { getCookie, setCookie, getUserRoleString } from './utils';
 import registerServiceWorker from './registerServiceWorker';
 
 // CSS
@@ -35,6 +35,7 @@ import EmergencyNumbers from './pages/admin/EmergencyNumbers';
 import Emergency from './pages/emergency/Emergency';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
+import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
@@ -45,8 +46,14 @@ import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
 import Tickets from './pages/tickets/Tickets';
 
+// Code Samples/Docs
+import CardSamples from './pages/code-samples/CardSamples';
+import HeaderSamples from './pages/code-samples/HeaderSamples';
+
 // mock data
 import { dummyUser } from './data';
+
+const user = dummyUser;
 
 // Apollo setup
 const httpLink = createHttpLink({
@@ -70,7 +77,7 @@ if (!validLang) {
 // const PropertyManagerUser = Authorization([ROLES.ADMIN, ROLES.PROPERTY_MANAGER]);
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
-const userRole = dummyUser.role || '';
+const userRole = getUserRoleString(user.role, ROLES);
 
 // Render the thing!
 ReactDOM.render(
@@ -118,6 +125,11 @@ ReactDOM.render(
                 component={Archive}
               />
               <PrivateRoute
+                path={`${ROUTES.TENANTS}/:id/issue`}
+                exact
+                component={NewIssueForm}
+              />
+              <PrivateRoute
                 path={`${ROUTES.TENANTS}/:id`}
                 component={TenantDetails}
               />
@@ -127,6 +139,8 @@ ReactDOM.render(
                 component={StaffUser(Tickets)}
               />
               <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
+              <Route path="/code-samples/card" component={CardSamples} />
+              <Route path="/code-samples/header" component={HeaderSamples} />
               <Route path={ROUTES.LOGIN} component={Login} />
               <PrivateRoute path={ROUTES.ROOT} component={Home} />
             </Switch>
