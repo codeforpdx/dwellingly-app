@@ -33,15 +33,21 @@ export default (state = initialState, action) => {
         ...state,
         error: action.error
       }
-    case EDIT_EMERGENCY_NUMBER:
+    case EDIT_EMERGENCY_NUMBER: {
+      const targetObj = state.numbers.findIndex(({ id }) => id === action.id);
+      const numberArrCopy = state.numbers.slice(0);
+      numberArrCopy[targetObj] = {
+        id: action.id,
+        contact: action.contact,
+        phoneNumberOne: action.phoneNumberOne,
+        phoneNumberTwo: action.phoneNumberTwo,
+        phoneNumberThree: action.phoneNumberThree,
+      };
       return {
         ...state,
-        // id: action.id,
-        // contact: action.contact,
-        // phoneNumberOne: action.phoneNumberOne,
-        // phoneNumberTwo: action.phoneNumberTwo,
-        // phoneNumberThree: action.phoneNumberThree
+        numbers: numberArrCopy
       }
+    }
     case CREATE_EMERGENCY_NUMBER:
       return {
         ...state
