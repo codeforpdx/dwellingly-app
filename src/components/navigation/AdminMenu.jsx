@@ -51,6 +51,13 @@ function AdminMenu({ handleToggleMenu, type, user }) {
             <Icon icon="userOutlineNoBottom" /> Property Managers
           </strong>
         </NavLink>
+        <NavLink
+          to={ROUTES.ADMIN_EMERGENCY_NUMBERS}
+          activeClassName="menu__link--active">
+          <strong>
+            <Icon icon="phone" /> Edit Contacts
+          </strong>
+        </NavLink>
       </dd>
     </dl>
   );
