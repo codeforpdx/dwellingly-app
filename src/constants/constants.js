@@ -12,6 +12,7 @@ export const SETTINGS = {
 export const ROUTES = {
   ADMIN: '/admin',
   ADMIN_EMERGENCY: '/admin/emergency',
+  ADMIN_EMERGENCY_NUMBERS: '/admin/emergencyNumbers',
   CLOSED_TICKETS: '/tickets/closed',
   DASHBOARD: '/dashboard',
   EMERGENCY: '/emergency',
