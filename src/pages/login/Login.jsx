@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,16 +9,36 @@ import LoginForm from '../../components/login/LoginForm';
 import LoginWithGoogle from '../../components/login/LoginWithGoogle';
 import Spinner from '../../components/spinner/Spinner';
 import { COMMON, LOGIN, TERMS, PRIVACY } from '../../translations/messages';
-import { SETTINGS } from '../../constants/constants';
+import { SETTINGS, ROUTES } from '../../constants/constants';
 
 import './Login.scss';
 
-class Login extends Component {
+class Login extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
 
   render() {
+    const userRoutes = {
+      "isAdmin": ROUTES.ADMIN,
+      "isPropertyManager": ROUTES.TERMS_CONDITIONS,
+      "isStaff": ROUTES.PRIVACY,
+      "default": ROUTES.AWAITING_ROLE,
+    }
+
+    const ourUser = this.props.user;
+    let userType = "default";
+    if (ourUser && ourUser.role) {
+      console.log(ourUser)
+      if (ourUser.role.isAdmin === "true") {
+        userType = "isAdmin";
+      } else if (ourUser.role.isPropertyManager === "true") {
+        userType = "isPropertyManager";
+      } else if (ourUser.role.isStaff === "true") {
+        userType = "isStaff";
+      }
+      console.log('we would be going to ', userRoutes[userType]);
+    } 
     return (
       <div className="main page page--login">
         <Header>
@@ -32,15 +52,17 @@ class Login extends Component {
           )}
         </Header>
         <section className="main">
-          { this.props.haveUser &&
-            <p>WE HAVE AN ACTIVE USER (pretend we redirected away from this, we will do that once this is figured out)</p>
-          }
           { !this.props.isFetchingAuthorization && ! this.props.isFetchingUserData && !this.props.haveUser &&
             <LoginForm />
           }
           { (this.props.isFetchingAuthorization || this.props.isFetchingUserData) &&
             <Spinner />
           }
+          { this.props.haveUser && this.props.user && this.props.user.id && this.props.user.email && 
+
+            <p>This is a redirect that we need to fix on some other pages to avoid an inifite loop...</p>             /* <Redirect to={userRoutes[userType]} /> */
+          }
+
           { this.props.error && this.props.error.message.length > 0 &&
             <p className="error">
               { this.props.error.message }
@@ -63,6 +85,10 @@ class Login extends Component {
 }
 
 const mapStateToProps = ({ user }) => ({
+  user: user.user,
+  userCreated: user.userCreated,
+  accountSource: user.accountSource,
+  isCreatingUser: user.isCreatingUser, 
   isFetchingAuthorization: user.isFetchingAuthorization,
   isFetchingUserData: user.isFetchingUserData,
   haveUser: user.haveUser,
@@ -78,13 +104,24 @@ Login.propTypes = {
     code: PropTypes.string,
     message: PropTypes.string
   }),
+  user: PropTypes.shape({
+    accountSource: PropTypes.string,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    role:  PropTypes.shape({
+      isAdmin: PropTypes.bool,
+      isPropertyManager: PropTypes.bool,
+      isStaff: PropTypes.bool
+    })
+  }),
 };
 
 Login.defaultProps = {
   error: {
     code: null,
     message: null,
-  }
+  },
+  user: null,
 }
 
 export default connect(

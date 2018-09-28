@@ -45,7 +45,6 @@ class UserControls extends React.Component {
 
   componentWillReceiveProps(nextProp){
     if (this.props.isFetchingAuthorization && !nextProp.isFetchingAuthorization) {
-      console.log('incoming user');
       this.setUserCookies(nextProp.user);
     }
   }
@@ -74,9 +73,7 @@ class UserControls extends React.Component {
     const userEmailCookieExist = cookies.get('messengerUser');
     const userIDCookieExist = cookies.get('messengerUserId');
     const userRoleExist = cookies.get('userRole');
-    if (newUser && newUser.id) {
-      console.log('here is the user I has:')
-      console.log(newUser, this.props.user)
+    if (this.props.user && newUser && newUser.id) {
       if (!userEmailCookieExist) {
         cookies.set(
           'messengerUser', 
@@ -103,7 +100,6 @@ class UserControls extends React.Component {
 
   clearUser(){
     const cookies = new Cookies();
-    
     this.props.clearUser();
     cookies.remove('messengerUser');
     cookies.remove('messengerUserId');
@@ -176,9 +172,9 @@ UserControls.propTypes = {
     email: PropTypes.string,
     id: PropTypes.string,
     role:  PropTypes.shape({
-      isAdmin: PropTypes.string,
-      isPropertyManager: PropTypes.string,
-      isStaff: PropTypes.string
+      isAdmin: PropTypes.bool,
+      isPropertyManager: PropTypes.bool,
+      isStaff: PropTypes.bool
     })
   }),
   isFetchingAuthorization: PropTypes.bool.isRequired,

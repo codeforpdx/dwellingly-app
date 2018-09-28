@@ -1,8 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'whatwg-fetch';
-import store from '../store';
-import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
+import store, { history } from '../store';
+import { ENDPOINTS, HTTP_METHODS, ROUTES } from '../constants/constants';
 
 // REDUCERS
 import {
@@ -143,7 +143,8 @@ export function getUserProfile() {
 export function doSignOut() {
   firebase.auth().signOut()
     .then(
-      store.dispatch(clearUser())
+      store.dispatch(clearUser()),
+      history.push(ROUTES.LOGIN)
     );
 }
 
