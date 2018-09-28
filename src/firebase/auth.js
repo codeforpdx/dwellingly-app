@@ -20,6 +20,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 // User data from Firestore
 export function getFirestoreUserData( uid, accountSource ) {
+  store.dispatch(initiateFirebaseCall());
   const userEndpoint = `${ENDPOINTS.USER}${uid}`;
   fetch(userEndpoint, {
     method: HTTP_METHODS.GET,

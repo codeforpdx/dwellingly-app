@@ -13,6 +13,7 @@ import { USER } from '../../translations/messages';
 import './UserControls.scss';
 
 import {
+  initiateUserDetailsCall,
   addCustomUserData,
   clearUser,
 } from '../../dux/user';
@@ -23,60 +24,101 @@ class UserControls extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userEmail: null,
-      userId: null,
-      activeUser: false,
-    };
+    this.determineUserState = this.determineUserState.bind(this);
+    this.clearUser = this.clearUser.bind(this);
+    this.setUser = this.setUser.bind(this);
+    this.setUserCookies = this.setUserCookies.bind(this);
   }
 
   componentDidMount() {
+    // Create Firebase authorization ovbservable, do a thing if it changes
     firebase.auth().onAuthStateChanged((user) => {
-      // Monitor Firebase authorization for user state, adding cookie for user email
-      const cookies = new Cookies();
-      const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-      let accountSource = 'email';
       if (user && !this.props.isCreatingUser) {
-        if (user && user.providerData[0]) {
-          accountSource = user.providerData[0].providerId;
-        }
-        if (user && user.email && (user.id || user.l)){
-          let userID = user.id
-          if (user.l) {
-            userID = user.l
-          }
-          this.setState({ userEmail: user.email, userId: userID, activeUser: true });
-        }
-       
-        console.log( user);
-        this.props.addCustomUserData(user);
-        if (user && !this.props.isCreatingUser) {
-          getFirestoreUserData(user.uid, accountSource, user.uid);
-        }
-        const userEmailCookieExist = cookies.get('messengerUser');
-        const userIDCookieExist = cookies.get('messengerUserId');
-        if (!userEmailCookieExist) {
-          cookies.set(
-            'messengerUser', 
-            this.state.userEmail,
-            { path: '/', expires: cookieExpiration,  }
-          );
-        }
-        if (!userIDCookieExist) {
-          cookies.set(
-            'messengerUserId', 
-            this.state.userId,
-            { path: '/', expires: cookieExpiration,  }
-          );
-        }
+        console.log('onAuthStateChanged has a user')
+        this.setUser(user);
       } else {
-        this.setState({ userEmail: null, userId: null, activeUser: false });
-        this.props.clearUser();
-        cookies.remove('messengerUser');
-        cookies.remove('messengerUserId');
+        console.log('onAuthStateChanged does not have a user')
+        this.clearUser();
       }
     });
   }
+
+  componentWillReceiveProps(nextProp){
+    if (this.props.isFetchingAuthorization && !nextProp.isFetchingAuthorization) {
+      console.log('incoming user');
+      this.setUserCookies(nextProp.user);
+    }
+  }
+
+  setUser(user){
+    let accountSource = 'email';
+    let userID = '';
+    if (user && user.providerData[0]) {
+      accountSource = user.providerData[0].providerId;
+    }
+    if (user && user.email && (user.id || user.l)){
+      if (user.l) {
+        userID = user.l
+      }
+    }
+    console.log( user, userID);
+    this.props.addCustomUserData(user);
+    if (user && !this.props.isCreatingUser) {
+      getFirestoreUserData(user.uid, accountSource, user.uid);
+    }
+  }
+
+  setUserCookies(newUser){
+    const cookies = new Cookies();
+    const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+    const userEmailCookieExist = cookies.get('messengerUser');
+    const userIDCookieExist = cookies.get('messengerUserId');
+    const userRoleExist = cookies.get('userRole');
+    if (newUser && newUser.id) {
+      console.log('here is the user I has:')
+      console.log(newUser, this.props.user)
+      if (!userEmailCookieExist) {
+        cookies.set(
+          'messengerUser', 
+          newUser.email,
+          { path: '/', expires: cookieExpiration,  }
+        );
+      }
+      if (!userIDCookieExist) {
+        cookies.set(
+          'messengerUserId', 
+          newUser.id,
+          { path: '/', expires: cookieExpiration,  }
+        );
+      }
+      if (!userRoleExist) {
+        cookies.set(
+          'messengerUserRole', 
+          newUser.role,
+          { path: '/', expires: cookieExpiration,  }
+          );
+      }
+    }
+  }
+
+  clearUser(){
+    const cookies = new Cookies();
+    
+    this.props.clearUser();
+    cookies.remove('messengerUser');
+    cookies.remove('messengerUserId');
+    cookies.remove('messengerUserRole');
+  }
+
+
+  determineUserState(user){
+    const accountSource = "email";
+    this.props.addCustomUserData(user);
+    if (user && !this.props.isCreatingUser) {
+      getFirestoreUserData(user.uid, accountSource, user.uid);
+    }
+  }
+
 
   render() {
     return (
@@ -87,14 +129,14 @@ class UserControls extends React.Component {
             <span className="user-id">
               { this.props.intl.formatMessage(USER.HELLO) }
               &nbsp;
-              { this.state.userId }
+              { this.props.user.id }
               <br />
               { this.props.user.email }
               <LogoutButton />
             </span>
           )
         }
-        { !this.state.activeUser
+        { !this.props.haveUser
           && (
             <ul className="no-user">
               <li>
@@ -122,6 +164,7 @@ const mapStateToProps = ({ user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  initiateUserDetailsCall: () => dispatch(initiateUserDetailsCall()),
   addCustomUserData: (user, accountSource) => dispatch(addCustomUserData(user, accountSource)),
   clearUser: () => dispatch(clearUser()),
 });
@@ -132,7 +175,13 @@ UserControls.propTypes = {
     accountSource: PropTypes.string,
     email: PropTypes.string,
     id: PropTypes.string,
+    role:  PropTypes.shape({
+      isAdmin: PropTypes.string,
+      isPropertyManager: PropTypes.string,
+      isStaff: PropTypes.string
+    })
   }),
+  isFetchingAuthorization: PropTypes.bool.isRequired,
   isCreatingUser: PropTypes.bool.isRequired,
   haveUser: PropTypes.bool.isRequired,
   addCustomUserData: PropTypes.func.isRequired,

@@ -5,17 +5,26 @@ import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { ROUTES } from '../../constants/constants';
 
+// Check cookie to see if there's a role
 const cookies = new Cookies();
-const userRole = cookies.get('role');
-console.log(userRole);
+const userRole = cookies.get('messengerUserRole');
+let doesRoleExist = false;
+const isRoleArray = (userRole && (userRole.isAdmin || userRole.isPropertyManager || userRole.isStaff))
+if (userRole && isRoleArray) {
+  doesRoleExist = true;
+}
+// We also need to check props to see if there's a user! 
+
+
+console.log('user role', userRole, isRoleArray);
+
 
 function PrivateRoute({ user, component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-
       render={props =>
-        user && user.role && (user.role.isStaff || user.role.isAdmin || user.role.isPropertyManager) ? (
+        doesRoleExist ? (
           <Component {...props} />
         ) : (
           <Redirect

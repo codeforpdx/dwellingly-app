@@ -44,6 +44,7 @@ import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
 import TermsConditions from './pages/terms-conditions/TermsConditions';
 import Tickets from './pages/tickets/Tickets';
+import WaitingForRole from './pages/waiting-for-role/WaitingForRole';
 
 // mock data
 // import { dummyUser } from './data';
@@ -105,6 +106,8 @@ ReactDOM.render(
             <PrivateRoute
               path={`${ROUTES.TENANTS}/:id`}
               component={TenantDetails}
+            />
+            <PrivateRoute path={`${ROUTES.AWAITING_ROLE}`} component={WaitingForRole}
             />
             <PrivateRoute path={ROUTES.TENANTS} component={Tenants} />
             <PrivateRoute
