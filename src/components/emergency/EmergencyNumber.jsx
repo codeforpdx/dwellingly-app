@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import EmergencyNumberEdit from '../forms/EmergencyNumberEdit';
 import EmergencyNumberStatic from './EmergencyNumberStatic';
 
+import './Emergency.scss';
+
 import { editingEmergencyNumber, archivingEmergencyNumber } from '../../dux/emergencyNumbers';
 
 class EmergencyNumber extends Component {
@@ -91,7 +93,7 @@ class EmergencyNumber extends Component {
       return number
     }
     return (
-      <div>
+      <div className="emergencyNumberRow">
       {
         !this.state.editing ?
           <EmergencyNumberStatic
