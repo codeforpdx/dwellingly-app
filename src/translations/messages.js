@@ -52,6 +52,31 @@ export const FORGOT_PASSWORD = defineMessages( {
     id: "forgot_password.title",
     defaultMessage: "Forgot Password",
   },
+  HEADER_EMAIL: {
+    id: "forgot_password.header.email",
+    defaultMessage: "Email/password users",
+  },
+  HEADER_GOOGLE: {
+    id: "forgot_password.header.google",
+    defaultMessage: "Google account users",
+  },
+  INSTRUCTIONS_EMAIL: {
+    id: "forgot_password.instructions.email",
+    defaultMessage: "Do the thing",
+  },
+  INSTRUCTIONS_GOOGLE: {
+    id: "forgot_password.instructions.google",
+    defaultMessage: "Google account users should use the following link.",
+  },
+  LABEL_SUBMIT: {
+    id: "forgot_password.label.email_submit",
+    defaultMessage: "Request password reset",
+  },
+  LINK_GOOGLE: {
+    id: "forgot_password.link.google",
+    defaultMessage: "Recover your account",
+  }
+
 } );
 
 /* Form messages */
