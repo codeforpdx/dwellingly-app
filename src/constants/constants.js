@@ -23,6 +23,8 @@ export const ROUTES = {
   SIGNUP: '/signup',
   TENANTS: '/tenants',
   ADD_TENANT: '/admin/add-new-tenant',
+  ADD_PROPERTY: '/admin/add-new-property',
+  ADD_PROPERTY_MANAGER: '/admin/add-new-property-manager',
   TICKETS: '/tickets'
 };
 
