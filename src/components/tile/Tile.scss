@@ -14,9 +14,14 @@
       flex: 1;
       &:first-child {
         margin-left: 0;
+        background-color: $color__yellow;
+      }
+      &:nth-child(2) {
+        background-color: $color__red;
       }
       &:last-child {
         margin-right: 0;
+        background-color: $color__blue;
       }
       @media screen and (min-width: $mq--desktop) {
         margin: 0 1em;
