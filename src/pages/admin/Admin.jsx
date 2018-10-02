@@ -60,7 +60,7 @@ class Administration extends React.Component {
 
         <section className="main">
           <div className="width-wrapper">
-            <h2 className="align--left">Admin Dashboard</h2>
+            <h2 className="admin--header">Admin Dashboard</h2>
             <div className="admin__tiles">
               <Tile>
                 <Tile.Top title="Open Tickets"/>
