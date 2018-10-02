@@ -24,40 +24,36 @@ class Accordion extends Component {
               <tr>
                 <td>Tenant Name</td>
                 <td>Meerkat Manor<br/> Property Manager Name</td>
-                <td>Outreach Name</td>
                 <td>
                   <select>
-                    <option>Retention Name</option>
+                    <option>Staff Name</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>Tenant Name</td>
                 <td>Meerkat Manor<br/> Property Manager Name</td>
-                <td>Outreach Name</td>
                 <td>
                   <select>
-                    <option>Retention Name</option>
+                    <option>Staff Name</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>Tenant Name</td>
                 <td>Meerkat Manor<br/> Property Manager Name</td>
-                <td>Outreach Name</td>
                 <td>
                   <select>
-                    <option>Retention Name</option>
+                    <option>Staff Name</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>Tenant Name</td>
                 <td>Meerkat Manor<br/> Property Manager Name</td>
-                <td>Outreach Name</td>
                 <td>
                   <select>
-                    <option>Retention Name</option>
+                    <option>Staff Name</option>
                   </select>
                 </td>
               </tr>
@@ -81,8 +77,10 @@ class Accordion extends Component {
               <li>propertymanager@email.com</li>
               <li>(555)123-1234</li>
             </ul>
-            <p>Capuchin Court, Gibbon Gardens</p>
-            <button type="button" className="btn">Add</button>
+            <div className="btn--group">
+              <button type="button" className="btn btn--small">ADD</button>
+              <button type="button" className="btn btn--disabled btn--small">DECLINE</button>
+            </div>
           </div>
           <div className="accordion__list--item">
             <ul>
@@ -90,8 +88,10 @@ class Accordion extends Component {
               <li>propertymanager@email.com</li>
               <li>(555)123-1234</li>
             </ul>
-            <p>Capuchin Court, Gibbon Gardens</p>
-            <button type="button" className="btn">Add</button>
+            <div className="btn--group">
+              <button type="button" className="btn btn--small">ADD</button>
+              <button type="button" className="btn btn--disabled btn--small">DECLINE</button>
+            </div>
           </div>
           <div className="accordion__list--item">
             <ul>
@@ -99,8 +99,10 @@ class Accordion extends Component {
               <li>propertymanager@email.com</li>
               <li>(555)123-1234</li>
             </ul>
-            <p>Capuchin Court, Gibbon Gardens</p>
-            <button type="button" className="btn">Add</button>
+            <div className="btn--group">
+              <button type="button" className="btn btn--small">ADD</button>
+              <button type="button" className="btn btn--disabled btn--small">DECLINE</button>
+            </div>
           </div>
         </div>
         : null}

@@ -4,6 +4,14 @@
   &:first-child {
     margin-top: 3rem;
   }
+  .btn--group {
+    display: flex;
+    button {
+      &:last-child {
+        margin-left: 1em;
+      }
+    }
+  }
   margin-top: 1em;
   & .accordion__label {
     text-align: left;
@@ -40,18 +48,12 @@
         vertical-align: top;
         select {
           width: 100%;
-          height: 35px;
+          height: 30px;
           font-size: .9em;
           font-weight: 100;
           background: $color__white;
-        }
-      }
-    }
-    .btn--group {
-      display: flex;
-      button {
-        &:last-child {
-          margin-left: 1em;
+          border: 1px solid $color__gray--border;
+          border-radius: 14px;
         }
       }
     }
