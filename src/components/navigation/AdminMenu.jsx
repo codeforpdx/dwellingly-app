@@ -27,20 +27,35 @@ function AdminMenu({ handleToggleMenu, type, user }) {
             Admin Dashboard
           </strong>
         </NavLink>
-        <NavLink to={ROUTES.OUT_OF_OFFICE} activeClassName="menu__link--active">
+        {/* <NavLink to={ROUTES.OUT_OF_OFFICE} activeClassName="menu__link--active">
           <strong>
-            {/* <Icon icon="gear" /> */} Out of Office
+            <Icon icon="gear" /> Out of Office
           </strong>
           <span>Off</span>
-        </NavLink>
-        <NavLink to={ROUTES.SETTINGS} activeClassName="menu__link--active">
+        </NavLink> */}
+      </dd>
+      <dt className="menu__label">
+        <Icon icon="plus" /> Add New
+      </dt>
+      <dd>
+        <NavLink to={ROUTES.ADD_TENANT} activeClassName="menu__link--active">
           <strong>
-            {/* <Icon icon="gear" /> */} Settings
+            Tenant
+          </strong>
+        </NavLink>
+        <NavLink to={ROUTES.ADD_PROPERTY} activeClassName="menu__link--active">
+          <strong>
+            Property
+          </strong>
+        </NavLink>
+        <NavLink to={ROUTES.ADD_PROPERTY_MANAGER} activeClassName="menu__link--active">
+          <strong>
+            Property Manager
           </strong>
         </NavLink>
       </dd>
       <dt className="menu__label">
-        <Icon icon="gear" /> Manage
+        <Icon icon="userOutline" /> Manage
       </dt>
       <dd>
         <NavLink to={ROUTES.TENANTS} activeClassName="menu__link--active">
@@ -62,14 +77,30 @@ function AdminMenu({ handleToggleMenu, type, user }) {
             {/* <Icon icon="userOutlineNoBottom" /> */} Property Managers
           </strong>
         </NavLink>
+      </dd>
+      <dt>
         <NavLink
-          to={`${ROUTES.TICKETS}/open`}
-          activeClassName="menu__link--active">
+          to={`${ROUTES.TICKETS}/open`}>
           <strong>
-            {/* <Icon icon="ticketOutline" /> */} Tickets
+            <Icon icon="ticketOutline" /> Tickets
           </strong>
         </NavLink>
-      </dd>
+      </dt>
+      {/* <dt className="menu__label">
+        <NavLink
+          to={`${ROUTES.TICKETS}/open`}>
+          <strong>
+            <Icon icon="ticketOutline" /> Reports
+          </strong>
+        </NavLink>
+      </dt> */}
+      <dt>
+        <NavLink to={ROUTES.SETTINGS} activeClassName="menu__link--active">
+          <strong>
+            <Icon icon="gear" /> Settings
+          </strong>
+        </NavLink>
+      </dt>
     </dl>
   );
 }
