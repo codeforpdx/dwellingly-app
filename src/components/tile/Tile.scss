@@ -12,6 +12,7 @@
     }
     & .card {
       flex: 1;
+      color: $color__white;
       &:first-child {
         margin-left: 0;
         background-color: $color__yellow;
@@ -42,7 +43,7 @@
       flex-direction: column;
       padding: .6em;
       &-inner {
-        border-bottom: 1px solid $color__gray--border;
+        border-bottom: 1px solid $color__white;
         margin-bottom: 1em;
         display: flex;
         flex-flow: row wrap;
