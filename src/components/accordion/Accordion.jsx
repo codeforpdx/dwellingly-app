@@ -14,7 +14,7 @@ class Accordion extends Component {
     )
   }
 
-  static Table({ hidden }) {
+  static Table({ hidden, staffMemberSelected }) {
     return (
       <div>
       {!hidden ?
@@ -59,7 +59,10 @@ class Accordion extends Component {
               </tr>
             </tbody>
           </table>
-          <button type="button" className="btn btn--lg">Save Assignments</button>
+          <button
+            type="button"
+            className="btn btn--lg"
+            disabled={!staffMemberSelected}>Save Assignments</button>
         </div>
       : null}
       </div>
@@ -110,7 +113,7 @@ class Accordion extends Component {
     )
   }
 
-  static Select({ hidden }) {
+  static Select({ hidden, tenantSelected }) {
     return (
       <div>
         {!hidden ?
@@ -169,8 +172,8 @@ class Accordion extends Component {
             </tbody>
           </table>
           <div className="btn--group">
-            <button type="button" className="btn"><Icon icon="archive"/> Archive</button>
-            <button type="button" className="btn btn--alt">Extend</button>
+            <button type="button" className="btn" disabled={!tenantSelected}><Icon icon="archive"/> Archive</button>
+            <button type="button" className="btn" disabled={!tenantSelected}>Extend</button>
           </div>
         </div>
         : null}
