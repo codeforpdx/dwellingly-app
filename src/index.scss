@@ -138,6 +138,10 @@ a {
       }
     }
 
+    &--small {
+      font-size: .750em;
+    }
+
     &--lg {
       font-size: 1rem;
       height: emify(36, 16);
@@ -146,6 +150,10 @@ a {
 
     &--alt {
       background: $color__green;
+    }
+
+    &--disabled {
+      background: $color__gray--medium;
     }
 
     &--urgent {
@@ -345,7 +353,7 @@ time {
 
 .mobile-only {
   display: block;
-  
+
   @media screen and (min-width: $mq--desktop) {
     display: none;
   }
