@@ -51,5 +51,5 @@ export const STATUS_OPTIONS = {
   NEW: 'New',
   IN_PROGRESS: 'In Progress',
   RESOLVED: 'Resolved',
-  CLOSED: 'Closed'
+  REOPEN: 'Reopen'
 };

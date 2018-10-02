@@ -32,6 +32,28 @@ export function clearCookie(name) {
 }
 
 /**
+ *
+ * @param userRole object
+ * @param ROLES object const
+ * @returns string
+ */
+export function getUserRoleString(userRole, ROLES) {
+  let roleStr = '';
+  if (userRole) {
+    if (userRole.isPropertyManager === 'true') {
+      roleStr = ROLES.PROPERTY_MANAGER;
+    }
+    if (userRole.isStaff === 'true') {
+      roleStr = ROLES.STAFF;
+    }
+    if (userRole.isAdmin === 'true') {
+      roleStr = ROLES.ADMIN;
+    }
+  }
+  return roleStr;
+}
+
+/**
  * Format Date From String
  * @param string
  * @returns new date object formatted using "toLocaleDateString"
