@@ -1,7 +1,6 @@
 @import '../../constants/constants.scss';
 
 .newTenantFormHeading {
-  border-bottom: 1px solid $color__gray--border;
   text-align: left;
   line-height: 1.5;
 }
@@ -30,7 +29,6 @@
 
 .propertySearchResults {
   text-align: left;
-  background: $color__gray--light;
   margin: 1em;
   & .input:last-of-type {
     padding-bottom: 1em;
@@ -42,8 +40,8 @@
     padding: 1em;
     & .addIcon {
       cursor: pointer;
-      height: 30px;
-      width: 30px;
+      height: 22px;
+      width: 22px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -52,6 +50,7 @@
       background-color: $color__blue;
       color: $color__white;
       & .icon {
+        font-size: 0.750em;
         position: relative;
         top: 1px;
       }

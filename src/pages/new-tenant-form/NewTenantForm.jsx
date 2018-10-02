@@ -81,7 +81,7 @@ class NewTenantForm extends Component {
             {/* Add new tenant form section
             ======================================= */}
             <section className="newTenantFormSection">
-              <h2 className="newTenantFormHeading">Tenant</h2>
+              <h2 className="newTenantFormHeading">Tenant Information</h2>
               <fieldset>
                 <Input
                   id="firstName"
@@ -104,18 +104,6 @@ class NewTenantForm extends Component {
                   type="tel"
                   placeholder="ex. 503-555-1234"
                   onChange={this.handleChange} />
-                <div className="input inline-input">
-                  <span className="inline-input__label">Outreach</span>
-                  <select id="outreachWorker">
-                    <option>Staff Name</option>
-                  </select>
-                </div>
-                <div className="input inline-input">
-                  <span className="inline-input__label">Retention</span>
-                  <select id="retentionWorker">
-                    <option>Staff Name</option>
-                  </select>
-                </div>
               </fieldset>
             </section>
 
@@ -136,7 +124,7 @@ class NewTenantForm extends Component {
                 !addingNewProperty) && (
                 <div className="addNewLink">
                   <span className="addIcon" onClick={this.handleAddingNewProperty} role="presentation"><Icon icon="plus"/></span>
-                  Add new Property
+                  Add New Property
                 </div>
               )}
               {propertySelected ?
