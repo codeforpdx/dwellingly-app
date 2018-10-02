@@ -17,8 +17,8 @@ class Administration extends React.Component {
     super(props);
     this.state = {
       accordion01: false,
-      accordion02: true,
-      accordion03: true
+      accordion02: false,
+      accordion03: false
     }
     this.handleClosingAccordion = this.handleClosingAccordion.bind(this);
   }
@@ -147,19 +147,19 @@ class Administration extends React.Component {
           <div className="width-wrapper">
             <Accordion>
               <Accordion.Label
-                label="New Retention Assignments (4)"
+                label="NEW STAFF ASSIGNMENTS (3)"
                 onToggle={() => this.handleClosingAccordion("accordion01")} />
               <Accordion.Table hidden={this.state.accordion01}/>
             </Accordion>
             <Accordion>
               <Accordion.Label
-                label="Requests For Access"
+                label="REQUESTS FOR ACCESS"
                 onToggle={() => this.handleClosingAccordion("accordion02")} />
               <Accordion.List hidden={this.state.accordion02} />
             </Accordion>
             <Accordion>
               <Accordion.Label
-                label="Tenants Ready To Archive"
+                label="TENANTS READY TO ARCHIVE"
                 onToggle={() => this.handleClosingAccordion("accordion03")} />
               <Accordion.Select hidden={this.state.accordion03} />
             </Accordion>
