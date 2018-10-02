@@ -123,7 +123,7 @@ ReactDOM.render(
               />
               <PrivateRoute
                 path={ROUTES.ADD_TENANT}
-                component={StaffUser(NewTenantForm)}
+                component={AdminUser(NewTenantForm)}
               />
               <PrivateRoute
                 path={`${ROUTES.TENANTS}/:id/archive`}
