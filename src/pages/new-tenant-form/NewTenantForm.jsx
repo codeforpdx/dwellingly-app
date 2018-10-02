@@ -6,7 +6,7 @@ import NewProperty from '../../components/new-property/NewProperty';
 import NewPropertyManager from '../../components/new-property-manager/NewPropertyManager';
 import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
-import { ROLES, ROUTES } from '../../constants/constants';
+import { ROUTES } from '../../constants/constants';
 import { dummyUser, properties, propertyManagers } from '../../data';
 
 import './NewTenantForm.scss'
@@ -69,7 +69,7 @@ class NewTenantForm extends Component {
     return (
       <div className="admin page">
         {// If the user isn't an Admin, Redirect back to the Root Route
-          user.role !== ROLES.ADMIN && <Redirect to={ROUTES.ROOT}/>
+          !user.role.isAdmin && <Redirect to={ROUTES.ROOT}/>
         }
         <Header>
           {() => (
