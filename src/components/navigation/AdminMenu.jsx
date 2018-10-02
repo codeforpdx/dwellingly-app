@@ -86,11 +86,30 @@ function AdminMenu({ handleToggleMenu, type, user }) {
           </strong>
         </NavLink>
       </dt>
-      {/* <dt className="menu__label">
+      {/* <dt>
         <NavLink
-          to={`${ROUTES.TICKETS}/open`}>
+          to={ROUTES.REPORTS}
+          activeClassName="menu__link--active">
           <strong>
             <Icon icon="ticketOutline" /> Reports
+          </strong>
+        </NavLink>
+      </dt> */}
+      {/* <dt>
+        <NavLink
+          to={ROUTES.STAFF}
+          activeClassName="menu__link--active">
+          <strong>
+            <Icon icon="notebook" /> JOIN Staff
+          </strong>
+        </NavLink>
+      </dt> */}
+      {/* <dt>
+        <NavLink
+          to={ROUTES.ADMIN_EMERGENCY}
+          activeClassName="menu__link--active">
+          <strong>
+            <Icon icon="phone" /> Emergency Numbers
           </strong>
         </NavLink>
       </dt> */}
