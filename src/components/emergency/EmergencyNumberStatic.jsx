@@ -41,7 +41,6 @@ const EmergencyNumberStatic = (props) => {
             {parsedPhoneNumberTwo.textContentOfNumber !== undefined ?
               <div>
                 <span>
-                  |&nbsp;&nbsp;&nbsp;
                   {parsedPhoneNumberTwo.textContentOfNumber}:&nbsp;
                 </span>
                 <a href={`tel:${!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}`}>
@@ -49,7 +48,6 @@ const EmergencyNumberStatic = (props) => {
                 </a>
               </div> :
               <div>
-                |&nbsp;&nbsp;&nbsp;
                 <a href={`tel:${!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}`}>
                   {!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}
                 </a>

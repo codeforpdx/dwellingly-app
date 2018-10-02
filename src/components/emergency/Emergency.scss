@@ -45,50 +45,66 @@
 }
 .emergencyNumberRow {
   border-bottom: 1px solid $color__gray--light;
-  position: relative;
-  height: 65px;
   width: 100%;
-  overflow-x: scroll;
-  padding: 0 1rem;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  padding: 0 1em;
 }
 .emergencyNumberItem {
   display: flex;
   justify-content: space-between;
   padding: 20px 0px;
   font-size: 14px;
-  position: absolute;
-  width: 118%;
-  // &:last-child {
-  //   border-bottom: none;
-  // }
   & .emergencyNumberContainer {
     display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    .emergencyNumber {
+      &:nth-child(2) {
+        display: flex;
+        &:before {
+          @media screen and (min-width: $mq--desktop) {
+            content: '| \00a0';
+          }
+        }
+      }
+    }
   }
   & .emergencyTitle {
     // min-width: 300px;
+    text-align: left;
+    max-width: 300px;
+    font-weight: 400;
+    & .emergencyNumberDescription {
+      & p {
+        font-weight: 300;
+        font-size: .9em;
+      }
+    }
   }
-  & .emergencyNumberIcon {
-    color: $color__gray--medium;
-    font-size: 1.3em;
-    margin: 0 .7em;
-  }
-  & .emergencyNumberEditButton {
-    cursor: pointer;
-    background-color: $color__gray--medium;
-    color: $color__white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 22px;
-    height: 22px;
-    font-size: .8em;
-    border-radius: 50%;
-    & .icon {
-      position: relative;
-      top: 1px;
+  & .emergencyNumberEditButtons {
+    display: none;
+    @media screen and (min-width: $mq--desktop) {
+      display: flex;
+      & .emergencyNumberIcon {
+        color: $color__gray--medium;
+        font-size: 1.3em;
+        margin: 0 .7em;
+      }
+      & .emergencyNumberEditIcon {
+        cursor: pointer;
+        background-color: $color__gray--medium;
+        color: $color__white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 22px;
+        height: 22px;
+        font-size: .78em;
+        border-radius: 50%;
+        & .icon {
+          position: relative;
+          top: 1px;
+        }
+      }
     }
   }
   & .emergencyNumber {
