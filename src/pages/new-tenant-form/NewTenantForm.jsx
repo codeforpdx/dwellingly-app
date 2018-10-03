@@ -6,6 +6,7 @@ import NewProperty from '../../components/new-property/NewProperty';
 import NewPropertyManager from '../../components/new-property-manager/NewPropertyManager';
 import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
+import MultiSelect from '../../components/multi-select/MultiSelect';
 import { ROUTES } from '../../constants/constants';
 import { dummyUser, properties, users } from '../../data';
 
@@ -113,12 +114,16 @@ class NewTenantForm extends Component {
             <section className="newTenantFormSection">
               <h2 className="newTenantFormHeading">Assign JOIN Staff</h2>
               <fieldset>
-                <Search
+                <MultiSelect
+                  data={users}
+                  placeholder="Search JOIN Staff"
+                  onSearchSelection={this.handleSelectionFromSearch} />
+                {/* <Search
                   id="staffName"
                   placeholder="Search JOIN Staff"
                   onSearchSelection={this.handleSelectionFromSearch}
                   searchData={users}
-                  multiple />
+                  multiple /> */}
               </fieldset>
             </section>
             <div className="propertySearchResults">
