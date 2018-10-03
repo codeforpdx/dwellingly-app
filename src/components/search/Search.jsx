@@ -15,10 +15,12 @@ class Search extends Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleShowOptionsList = this.handleShowOptionsList.bind(this);
     this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
+    this.handleSelectionClasses = this.handleSelectionClasses.bind(this);
 
     this.state = {
       searchTerm: '',
       pastSearch: '',
+      selectedOptions: [],
       focus: null
     }
   }
@@ -63,12 +65,24 @@ class Search extends Component {
   }
 
   handleSelection(searchedObj) {
-    const { name, address } = searchedObj
-    const searchedResult = `${name} ${address}`
+    const { name, address, firstName, lastName } = searchedObj
+    const searchedResultAddress = `${name} ${address}`
+    const searchedResultName = `${firstName} ${lastName}`
     this.props.onSearchSelection(searchedObj)
     this.setState({ searchTerm: '' });
-    this.setState({ pastSearch: searchedResult })
+    this.setState({ pastSearch: searchedResultAddress })
+    this.setState(prevState => ({selectedOptions: [...prevState.selectedOptions, searchedResultName]}))
     this.handleHideOptionsList();
+  }
+
+  handleSelectionClasses(data) {
+    if(this.props.multiple && this.state.selectedOptions.includes(data)) {
+      return "searchResults--multiple-active"
+    }
+    if(this.props.multiple) {
+      return "searchResults--multiple"
+    }
+    return "searchResults"
   }
 
   handleSearch(event) {
@@ -81,7 +95,7 @@ class Search extends Component {
   }
 
   render() {
-    const { id, searchData, label, multiple, placeholder } = this.props;
+    const { id, searchData, multiple, placeholder } = this.props;
     const { pastSearch, focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
       const dataString = Object.values(data).join(' ').toLowerCase();
@@ -111,28 +125,18 @@ class Search extends Component {
             <div className="searchResultsContainer">
               {filterSearch.map(data =>
                 <div className="align--left" key={data.id}>
-                  {multiple ?
-                    <label
-                      key={data.id}
-                      id="searchCheckboxLabel"
-                      htmlFor="searchCheckbox">
-                      <input
-                        id="searchResult"
-                        name="searchCheckbox"
-                        type="checkbox" />
-                        <span>{data.firstName} {data.lastName}</span>
-                       </label> :
-                      <button
-                        key={data.id}
-                        id="searchResult"
-                        type="button"
-                        aria-label={`searchResult - ${data.name}`}
-                        className="results"
-                        onClick={() => this.handleSelection(data)}>
-                        {data.name} {data.address}
-                      </button>
+                  <button
+                    key={data.id}
+                    type="button"
+                    aria-label={`searchResult - ${data.name}`}
+                    className={this.handleSelectionClasses(data.firstName)}
+                    onClick={() => this.handleSelection(data)}>
+                    {!multiple ?
+                      <span>{data.name} {data.address}</span> :
+                      <span>{data.firstName} {data.lastName}</span>
                     }
-                    </div>
+                  </button>
+                </div>
               )}
             </div>
           )}
@@ -144,7 +148,6 @@ class Search extends Component {
 
 Search.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   onSearchSelection: PropTypes.func.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired,
   multiple: PropTypes.bool,

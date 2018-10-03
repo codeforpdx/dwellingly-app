@@ -72,10 +72,10 @@
   // border-bottom-left-radius: $border-radius--card;
   // border-bottom-right-radius: $border-radius--card;
 }
-.results {
+.searchResults {
   width: 100%;
   cursor: pointer;
-  padding: 0.5em;
+  padding: 0.5em 0;
   &:hover,
   &:focus {
     background: #ececec;
