@@ -24,7 +24,7 @@ function AdminMenu({ handleToggleMenu, type, user }) {
       <dd>
         <NavLink to={ROUTES.ADMIN} activeClassName="menu__link--active">
           <strong>
-            Admin Dashboard
+            {/* <Icon icon="dashboard" /> */}  Dashboard
           </strong>
         </NavLink>
         {/* <NavLink to={ROUTES.OUT_OF_OFFICE} activeClassName="menu__link--active">
