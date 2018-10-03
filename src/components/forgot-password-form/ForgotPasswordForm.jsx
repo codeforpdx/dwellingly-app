@@ -4,6 +4,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
 import Input from '../input/Input';
 // import { fakeAuth } from '../../utils';
+
 import { FORMS, FORGOT_PASSWORD } from '../../translations/messages';
 
 class ForgotPasswordForm extends React.Component {
@@ -12,12 +13,10 @@ class ForgotPasswordForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleError = this.handleError.bind(this);
 
     this.state = {
       email: '',
       submit: false,
-      error: null
     };
   }
 
@@ -31,9 +30,6 @@ class ForgotPasswordForm extends React.Component {
     });
   }
 
-  handleError(error) {
-    this.setState({ error });
-  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -48,7 +44,6 @@ class ForgotPasswordForm extends React.Component {
 
     return (
       <section className="width-wrapper">
-        <h2 className="align-left">{this.props.intl.formatMessage(FORGOT_PASSWORD.HEADER_EMAIL)}</h2>
         <form
           name="forgotPasswordEmail"
           method="POST"
@@ -75,7 +70,7 @@ class ForgotPasswordForm extends React.Component {
             </button>
           </div>
         </form>
-        {this.state.error && <p>{this.state.error}</p>}
+        {this.props.error && <p>{this.props.error.message}</p>}
       </section>
     );
   }
@@ -83,11 +78,13 @@ class ForgotPasswordForm extends React.Component {
 
 ForgotPasswordForm.propTypes = {
   intl: intlShape.isRequired,
-  location: PropTypes.shape({ state: PropTypes.shape({}) })
+  location: PropTypes.shape({ state: PropTypes.shape({}) }),
+  error: PropTypes.string
 };
 
 ForgotPasswordForm.defaultProps = {
-  location: {}
+  location: {},
+  error: null
 };
 
 export default injectIntl(ForgotPasswordForm);

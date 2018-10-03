@@ -12,6 +12,9 @@ import {
   setUserFromGoogle,
   addCustomUserData,
   clearUser,
+  initiateUserPasswordEmail,
+  resetUserPasswordEmail,
+  resetUserPasswordEmailError,
 } from '../dux/user';
 
 
@@ -150,7 +153,18 @@ export function doSignOut() {
 
 // Password Reset
 export function doPasswordReset(email) {
-  firebase.auth().sendPasswordResetEmail(email);
+  console.log('reset password for', email);
+  store.dispatch(initiateUserPasswordEmail());
+  firebase.auth().sendPasswordResetEmail(email).then
+    (response => {
+      console.log(response)
+      store.dispatch(resetUserPasswordEmail())
+      }
+    )
+    .catch((error) => {
+      console.log(error.code, error.message);
+      store.dispatch(resetUserPasswordEmailError(error));
+    })
 }
 
 // Password Change

@@ -5,6 +5,9 @@ export const GET_USER_DATA = 'user/GET_USER_DATA';
 export const GET_USER_DATA_COMPLETE = 'user/GET_USER_DATA_COMPLETE';
 export const CREATE_USER = 'user/CREATE_USER';
 export const CREATE_USER_COMPLETE = 'user/CREATE_USER_COMPLETE';
+export const RESET_USER_PASSWORD = 'user/RESET_USER_PASSWORD';
+export const RESET_USER_PASSWORD_COMPLETE = 'user/RESET_USER_PASSWORD_COMPLETE';
+export const RESET_USER_PASSWORD_ERROR = 'user/RESET_USER_PASSWORD_ERROR';
 export const NO_USER = 'user/NO_USER';
 export const ADD_ERROR = 'user/ADD_ERROR';
 export const CLEAR_ERROR = 'user/CLEAR_ERROR';
@@ -16,8 +19,10 @@ const initialState = {
   isFetchingAuthorization: false,
   isFetchingUserData: false,
   isCreatingUser: false,
+  isResettingPassword: false,
   haveToken: false,
   haveUser: false,
+  passwordResetComplete: false,
   error: null,
 };
 
@@ -101,7 +106,27 @@ export default (state = initialState, action) => {
         isFetchingUserData: action.isFetchingUserData,
         error: action.error,
       };
+      
+    case RESET_USER_PASSWORD:
+      return {
+        ...state,
+        isResettingPassword: action.isResettingPassword,
+        passwordResetComplete: action.passwordResetComplete,
+      };
 
+    case RESET_USER_PASSWORD_COMPLETE:
+      return {
+        ...state,
+        isResettingPassword: action.isResettingPassword,
+        passwordResetComplete: action.passwordResetComplete,
+      };
+    case RESET_USER_PASSWORD_ERROR:
+      return {
+        ...state,
+        isResettingPassword: action.isResettingPassword,
+        passwordResetComplete: action.passwordResetComplete,
+        error: action.error,
+      };
     default:
       return state;
   }
@@ -236,5 +261,34 @@ export const clearError = () => (dispatch) => {
     error: null,
   });
 };
+
+
+export const initiateUserPasswordEmail = () => (dispatch) => {
+  dispatch({
+    type: RESET_USER_PASSWORD,
+    isResettingPassword: true,
+    passwordResetComplete: false,
+    error: null
+  });
+};
+
+
+export const resetUserPasswordEmail = () => (dispatch) => {
+  dispatch({
+    type: RESET_USER_PASSWORD_COMPLETE,
+    isResettingPassword: false,
+    passwordResetComplete: true,
+  });
+};
+
+export const resetUserPasswordEmailError = error => (dispatch) => {
+  dispatch({
+    type: RESET_USER_PASSWORD_ERROR,
+    isResettingPassword: false,
+    passwordResetComplete: false,
+    error
+  });
+};
+
 
 

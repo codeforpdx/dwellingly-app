@@ -64,12 +64,20 @@ export const FORGOT_PASSWORD = defineMessages( {
     id: "forgot_password.instructions.email",
     defaultMessage: "Do the thing",
   },
+  INSTRUCTIONS_GENERAL: {
+    id: "forgot_password.instructions.general",
+    defaultMessage: "Forgot your password? It happens to all of us. To recover your password, follow the instructions that relate to your account",
+  },
   INSTRUCTIONS_GOOGLE: {
     id: "forgot_password.instructions.google",
     defaultMessage: "Google account users should use the following link.",
   },
+  RETURN_TO_LOGIN: {
+    id: "forgot_password.label.return_login",
+    defaultMessage: "Return to login",
+  },
   LABEL_SUBMIT: {
-    id: "forgot_password.label.email_submit",
+    id: "forgot_password.label.submit",
     defaultMessage: "Request password reset",
   },
   LINK_GOOGLE: {
