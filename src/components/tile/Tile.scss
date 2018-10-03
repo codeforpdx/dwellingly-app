@@ -34,6 +34,8 @@
     &--heading {
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px solid $color__white;
+      padding-bottom: 1rem;
       align-items: center;
       margin-bottom: 1em;
     }
