@@ -23,6 +23,7 @@ class NewTenantForm extends Component {
 
     this.state = {
       user: dummyUser,
+      staffMembersSelected: [],
       addingNewProperty: false,
       addingNewPropertyManager: false,
     }
@@ -41,7 +42,7 @@ class NewTenantForm extends Component {
     if(Object.keys(searchedObj).includes("address")) {
       this.setState({ propertySelected: searchedObj })
     } else {
-      this.setState({ propertyManagerSelected: searchedObj })
+      this.setState(prevState => ({staffMembersSelected: [...prevState.staffMembersSelected, searchedObj] }))
       this.setState({ addingNewPropertyManager: false })
     }
   }
@@ -159,10 +160,11 @@ class NewTenantForm extends Component {
               )}
               {propertyManagerSelected && (
                 <div className="newTenantProperty">
-                  <div>
+                  {/* <div>
+
                     <h3>{propertyManagerSelected.name.length > 0 && propertyManagerSelected.name}</h3>
                     <p>{propertyManagerSelected.number.length > 0 && propertyManagerSelected.number}</p>
-                  </div>
+                  </div> */}
                   {!addingNewPropertyManager && (
                     <div className="editPropertyDetails">
                       <span className="editIcon" onClick={this.handleAddingNewPropertyManager} role="presentation">
