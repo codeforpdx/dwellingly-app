@@ -54,6 +54,7 @@ import HeaderSamples from './pages/code-samples/HeaderSamples';
 
 // mock data
 import { dummyUser } from './data';
+
 const user = dummyUser;
 
 // Set up cookie stuff for translation
