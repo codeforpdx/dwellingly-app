@@ -29,7 +29,7 @@
 
 .propertySearchResults {
   text-align: left;
-  margin: 1em;
+  margin: 0.5em;
   & .input:last-of-type {
     padding-bottom: 1em;
   }
@@ -63,10 +63,16 @@
 }
 
 .newTenantProperty {
+  max-width: 400px;
   padding: 1em;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 0.875em;
+  color: $color__gray--medium;
+  & h3 {
+    color: $color__blue--dark;
+  }
   & .editPropertyDetails {
     text-align: center;
     & .editIcon {

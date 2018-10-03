@@ -128,19 +128,19 @@ class NewTenantForm extends Component {
                 </div>
               )}
               {propertySelected ?
-                <div className="newTenantProperty">
+                <div className="card newTenantProperty">
                   <div>
                     <h3>{propertySelected.name.length > 0 ? propertySelected.name : null}</h3>
                     <p>{propertySelected.address.length > 0 ? propertySelected.address : null}</p>
                   </div>
-                  {!addingNewProperty && (
+                  {/* !addingNewProperty && (
                     <div className="editPropertyDetails">
                       <span className="editIcon" onClick={this.handleAddingNewProperty} role="presentation">
                         <Icon icon="pencil"/>
                       </span>
                       <p>edit</p>
                     </div>
-                  )}
+                  ) */}
                 </div>
               : null}
               {addingNewProperty && (
