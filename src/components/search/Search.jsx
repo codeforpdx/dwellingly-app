@@ -81,7 +81,7 @@ class Search extends Component {
   }
 
   render() {
-    const { id, searchData, label, multiple } = this.props;
+    const { id, searchData, label, multiple, placeholder } = this.props;
     const { pastSearch, focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
       const dataString = Object.values(data).join(' ').toLowerCase();
@@ -99,7 +99,7 @@ class Search extends Component {
                 type="text"
                 id={id}
                 className="searchBar"
-                placeholder={!pastSearch ? "Search" : pastSearch}
+                placeholder={!pastSearch ? placeholder : pastSearch}
                 onFocus={this.handleFocus}
                 onChange={this.handleSearch}
                 value={searchTerm} />
@@ -147,10 +147,12 @@ Search.propTypes = {
   label: PropTypes.string.isRequired,
   onSearchSelection: PropTypes.func.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  multiple: PropTypes.bool
+  multiple: PropTypes.bool,
+  placeholder: PropTypes.string
 }
 Search.defaultProps = {
-  multiple: undefined
+  multiple: undefined,
+  placeholder: undefined
 }
 
 export default Search
