@@ -84,6 +84,19 @@ function InputContent({
     );
   }
 
+  if (type === 'toggle') {
+    inputContent = (
+      <Toggle
+        id={id}
+        blockClass={blockClass}
+        label={label}
+        model={name}
+        onToggle={onChange}
+        value={value}
+      />
+    );
+  }
+
   return inputContent;
 }
 

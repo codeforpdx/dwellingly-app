@@ -24,10 +24,12 @@ class ClosedTickets extends Component {
   }
 
   moveTicketToArchive(id) {
-    this.setState(({ archivedIssues }) => ({
-      archivedIssues: [...archivedIssues, id]
-    }));
-    this.props.moveToArchive(id);
+    if (this.props.moveToArchive) {
+      this.setState(({ archivedIssues }) => ({
+        archivedIssues: [...archivedIssues, id]
+      }));
+      this.props.moveToArchive(id);
+    }
   }
 
   undoMoveTicketToArchive(id) {
@@ -124,12 +126,13 @@ class ClosedTickets extends Component {
 
 ClosedTickets.propTypes = {
   archives: PropTypes.arrayOf(PropTypes.shape({})),
-  moveToArchive: PropTypes.func.isRequired,
+  moveToArchive: PropTypes.func,
   match: PropTypes.shape({}).isRequired
 };
 
 ClosedTickets.defaultProps = {
-  archives: []
+  archives: [],
+  moveToArchive: undefined
 };
 
 export default ClosedTickets;

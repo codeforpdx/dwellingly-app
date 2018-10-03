@@ -37,8 +37,9 @@ class Tenants extends Component {
           {() => (
             <div>
               <Navigation />
-              <Header.Label label="Tenant Directory" type="basic" />
+              <Header.Label label="Tenants Directory" type="basic" />
               <SearchForm onSubmit={this.handleSearch} />
+
               <nav className="tabs tabs--centered">
                 <ul className="width-wrapper">
                   <li className="tab">

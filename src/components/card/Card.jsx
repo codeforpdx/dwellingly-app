@@ -17,9 +17,12 @@ import './Card.scss';
 class Card extends Component {
   static Top({ types, status, children }) {
     // quickly convert STATUS_OPTIONS object to array
-    const statuses = Object.keys(STATUS_OPTIONS).map(
-      key => STATUS_OPTIONS[key]
-    );
+    const statuses = Object.keys(STATUS_OPTIONS).map(key => ({
+      key,
+      value: STATUS_OPTIONS[key]
+    }));
+    const closedArr = [STATUS_OPTIONS.REOPEN, STATUS_OPTIONS.RESOLVED];
+    const openArr = [STATUS_OPTIONS.NEW, STATUS_OPTIONS.IN_PROGRESS];
     return (
       <div>
         <div className="card__top">
@@ -28,10 +31,17 @@ class Card extends Component {
           )}
           {types.includes(CARD_TYPES.STATUS) && (
             <select className="card__status" defaultValue={status}>
-              <option>Set status&hellip;</option>
-              {statuses.map(option => (
-                <option key={option} value={option}>
-                  {option}
+              <option disabled>Set status&hellip;</option>
+              {statuses.map(({ key, value }) => (
+                <option
+                  key={key}
+                  value={value}
+                  disabled={
+                    value !== STATUS_OPTIONS.RESOLVED &&
+                    ((closedArr.includes(status) && openArr.includes(value)) ||
+                      (closedArr.includes(value) && openArr.includes(status)))
+                  }>
+                  {value}
                 </option>
               ))}
             </select>

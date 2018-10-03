@@ -16,7 +16,7 @@ import PrivateRoute from './components/authorization/PrivateRoute';
 import { translationMessages } from './translations/i18n';
 import { SETTINGS, ROUTES, ROLES } from './constants/constants';
 import store, { history } from './store';
-
+import { getUserRoleString } from './utils';
 import registerServiceWorker from './registerServiceWorker';
 
 // CSS
@@ -33,11 +33,13 @@ import Emergency from './pages/emergency/Emergency';
 import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
+import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
+import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyManagerTenantsDirectory';
 import Settings from './pages/settings/Settings';
 import Signup from './pages/signup/Signup';
 import Tenants from './pages/tenants/Tenants';
@@ -46,8 +48,13 @@ import TermsConditions from './pages/terms-conditions/TermsConditions';
 import Tickets from './pages/tickets/Tickets';
 import WaitingForRole from './pages/waiting-for-role/WaitingForRole';
 
+// Code Samples/Docs
+import CardSamples from './pages/code-samples/CardSamples';
+import HeaderSamples from './pages/code-samples/HeaderSamples';
+
 // mock data
-// import { dummyUser } from './data';
+import { dummyUser } from './data';
+const user = dummyUser;
 
 // Set up cookie stuff for translation
 const cookies = new Cookies();
@@ -62,14 +69,14 @@ if (!validLang) {
 // const PropertyManagerUser = Authorization([ROLES.ADMIN, ROLES.PROPERTY_MANAGER]);
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
-// const userRole = dummyUser.role || '';
+const userRole = getUserRoleString(user.role, ROLES);
 
 // Render the thing!
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
-    <Provider store={store}>
+  	<Provider store={store}>
       <ConnectedRouter history={history}>
-        <div className="app">
+        <div className={`app ${userRole}`}>
           <Navigation type="desktop" desktopOnly />
           <Switch>
             <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
@@ -85,6 +92,11 @@ ReactDOM.render(
             <PrivateRoute
               path={`${ROUTES.PROPERTIES}/:id`}
               component={PropertyDetails}
+            />
+            <PrivateRoute
+              path={`${ROUTES.PROPERTY_MANAGERS}/:id/tenants`}
+              exact
+              component={StaffUser(PropertyManagerTenantsDirectory)}
             />
             <PrivateRoute
               path={`${ROUTES.PROPERTY_MANAGERS}/:id`}
@@ -104,22 +116,28 @@ ReactDOM.render(
               component={Archive}
             />
             <PrivateRoute
+              path={`${ROUTES.TENANTS}/:id/issue`}
+              exact
+              component={NewIssueForm}
+            />
+            <PrivateRoute
               path={`${ROUTES.TENANTS}/:id`}
               component={TenantDetails}
-            />
-            <PrivateRoute path={`${ROUTES.AWAITING_ROLE}`} component={WaitingForRole}
             />
             <PrivateRoute path={ROUTES.TENANTS} component={Tenants} />
             <PrivateRoute
               path={ROUTES.TICKETS}
               component={StaffUser(Tickets)}
             />
+            <PrivateRoute path={`${ROUTES.AWAITING_ROLE}`} component={WaitingForRole} />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
             <Route path={ROUTES.SIGNUP} component={Signup} />
             <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
+            <Route path="/code-samples/card" component={CardSamples} />
+            <Route path="/code-samples/header" component={HeaderSamples} />
             <PrivateRoute path={ROUTES.ROOT} component={Home} />
           </Switch>
         </div>

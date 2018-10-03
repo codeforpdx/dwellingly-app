@@ -1,4 +1,5 @@
 /* Settings are used for various application-specific settings like language or application name */
+export const SITE_URL = 'http://localhost:3000';
 export const SETTINGS = {
   DEFAULT_LOCALE: 'en',         // locale cookie values must be lowercase
   VALID_LOCALES: ['en', 'es'],  // English and Spanish
@@ -78,5 +79,5 @@ export const STATUS_OPTIONS = {
   NEW: 'New',
   IN_PROGRESS: 'In Progress',
   RESOLVED: 'Resolved',
-  CLOSED: 'Closed'
+  REOPEN: 'Reopen',
 };

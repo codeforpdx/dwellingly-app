@@ -6,7 +6,6 @@ import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
 
 import './Navigation.scss';
-import { ROLES } from '../../constants/constants';
 
 import { dummyUser } from '../../data';
 
@@ -16,9 +15,10 @@ class Navigation extends Component {
 
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
 
+    this.user = dummyUser;
+
     this.state = {
-      showMenu: false,
-      user: dummyUser
+      showMenu: false
     };
   }
 
@@ -28,8 +28,9 @@ class Navigation extends Component {
 
   render() {
     const { desktopOnly, intl } = this.props;
-    const { showMenu, user } = this.state;
-    if (user.role !== ROLES.PROPERTY_MANAGER) {
+    const { showMenu } = this.state;
+    const { user } = this;
+    if (user.role.isPropertyManager !== 'true') {
       return (
         <div className="navigation">
           {desktopOnly && (

@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import List from '../../components/list/List';
 import Icon from '../../components/icon/Icon';
+import { backURL } from '../../utils';
+
+// mock data
+import { propertyManagers, tenants } from '../../data';
+import { ROUTES } from '../../constants/constants';
 
 class PropertyManagerTenantsDirectory extends Component {
   constructor(props) {
     super(props);
 
-    this.propertyManager = this.props.propertyManagers.find(
+    this.propertyManager = propertyManagers.find(
       ({ id }) => id === this.props.match.params.id
     );
+    this.tempTenantsList = tenants.filter(({ staff }) => {
+      const names = staff.filter(
+        ({ name }) => name === this.propertyManager.name
+      );
+      return names.length > 0;
+    });
   }
 
   componentDidMount() {
@@ -19,58 +31,52 @@ class PropertyManagerTenantsDirectory extends Component {
   }
 
   render() {
-    const { match, history } = this.props;
-    const pm = this.propertyManager;
-
+    const { match } = this.props;
+    const { name } = this.propertyManager;
+    const backUrl = backURL(match.url, 'ongoing');
     return (
-      <div className="page page--light">
-        <Header>
-          {() => (
-            <div>
-              <Navigation />
-              <div className="actions">
-                <button
-                  type="button"
-                  aria-label="Go Back"
-                  className="action action--left"
-                  onClick={() => {
-                    // make new array from url
-                    const url = match.url.split('/');
-                    // remove last path
-                    url.pop();
-                    // return new array for "Go Back" function in case user got here from a link
-                    // and has no history
-                    const closeUrl = url.join('/');
-                    history.push(closeUrl);
-                  }}>
-                  <Icon icon="arrowLeft" />
-                </button>
-              </div>
-              <Header.Label label={`${pm.name}'s Tenants`} type="basic" />
-            </div>
-          )}
-        </Header>
+      <div className="page">
+        {this.propertyManager && (
+          <div>
+            <Header>
+              {() => (
+                <div>
+                  <Navigation />
+                  <div className="actions">
+                    <Link
+                      aria-label="Go Back"
+                      className="action action--left"
+                      to={backUrl}
+                      title="Go Back">
+                      <Icon icon="arrowLeft" />
+                    </Link>
+                  </div>
+                  <Header.Label label={`${name}'s Tenants`} type="basic" />
+                </div>
+              )}
+            </Header>
 
-        <section className="main width-wrapper">
-          <List url="tenant" showStaff showNumber items={[]} />
-        </section>
+            <section className="main width-wrapper">
+              <List
+                url={`${ROUTES.TENANTS}/:id/ongoing`}
+                showStaff
+                showNumber
+                items={this.tempTenantsList}
+              />
+            </section>
+          </div>
+        )}
       </div>
     );
   }
 }
 
 PropertyManagerTenantsDirectory.propTypes = {
-  history: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string
     })
-  }).isRequired,
-  propertyManagers: PropTypes.arrayOf(PropTypes.shape({}))
-};
-
-PropertyManagerTenantsDirectory.defaultProps = {
-  propertyManagers: []
+  }).isRequired
 };
 
 export default PropertyManagerTenantsDirectory;
