@@ -7,7 +7,7 @@ import NewPropertyManager from '../../components/new-property-manager/NewPropert
 import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
 import { ROUTES } from '../../constants/constants';
-import { dummyUser, properties, propertyManagers } from '../../data';
+import { dummyUser, properties, users } from '../../data';
 
 import './NewTenantForm.scss'
 
@@ -110,23 +110,24 @@ class NewTenantForm extends Component {
             {/* Add new property form
             ======================================= */}
             <section className="newTenantFormSection">
-              <h2 className="newTenantFormHeading">Property</h2>
+              <h2 className="newTenantFormHeading">Assign JOIN Staff</h2>
               <fieldset>
                 <Search
-                  id="propertyName"
-                  label="Property Search"
+                  id="staffName"
+                  placeholder="Search JOIN Staff"
                   onSearchSelection={this.handleSelectionFromSearch}
-                  searchData={properties} />
+                  searchData={users}
+                  multiple />
               </fieldset>
             </section>
             <div className="propertySearchResults">
-              {(!propertySelected &&
+              {/* (!propertySelected &&
                 !addingNewProperty) && (
                 <div className="addNewLink">
                   <span className="addIcon" onClick={this.handleAddingNewProperty} role="presentation"><Icon icon="plus"/></span>
                   Add New Property
                 </div>
-              )}
+              ) */}
               {propertySelected ?
                 <div className="card newTenantProperty">
                   <div>
@@ -182,30 +183,37 @@ class NewTenantForm extends Component {
 
             {/* Add new property manager form
             ======================================= */}
-            {(addingNewPropertyManager &&
-              propertySelected) && (
-              <section className="newTenantFormSection">
-                <h2 className="newTenantFormHeading">Property Manager</h2>
-                <fieldset>
-                  <Search
-                    id="propertyManagerName"
-                    label="Property Manager Search"
-                    onSearchSelection={this.handleSelectionFromSearch}
-                    searchData={propertyManagers} />
-                </fieldset>
-                <div className="propertySearchResults">
-                  <form>
-                    <div className="propertyFormCloseButton">
-                      {!propertyManagerSelected ? "Add new manager" : "Edit property manager"}
-                      <span onClick={this.handleAddingNewPropertyManager} role="presentation">
-                        <Icon icon="close"/>
-                      </span>
-                    </div>
-                    <NewPropertyManager onChange={this.handleChange} />
-                  </form>
+            <section className="newTenantFormSection">
+              <h2 className="newTenantFormHeading">Property</h2>
+              <fieldset>
+                <Search
+                  id="propertyName"
+                  label="Property Search"
+                  placeholder="Search Properties"
+                  onSearchSelection={this.handleSelectionFromSearch}
+                  searchData={properties} />
+              </fieldset>
+              <div className="propertySearchResults">
+              {(!propertySelected &&
+                !addingNewProperty) && (
+                <div className="addNewLink">
+                  <span className="addIcon" onClick={this.handleAddingNewProperty} role="presentation"><Icon icon="plus"/></span>
+                  Add New Property
                 </div>
-              </section>
-            )}
+              )}
+              {propertySelected && (
+                <form>
+                  <div className="propertyFormCloseButton">
+                    {!propertyManagerSelected ? "Add new manager" : "Edit property manager"}
+                    <span onClick={this.handleAddingNewPropertyManager} role="presentation">
+                      <Icon icon="close"/>
+                    </span>
+                  </div>
+                  <NewPropertyManager onChange={this.handleChange} />
+                </form>
+              )}
+              </div>
+            </section>
             {/* Add Unit Input
             ======================================= */}
             {propertySelected && (
