@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Icon from '../icon/Icon';
+// import Icon from '../icon/Icon';
 
 import './Search.scss';
 
@@ -81,7 +81,7 @@ class Search extends Component {
   }
 
   render() {
-    const { id, searchData, label } = this.props;
+    const { id, searchData, label, multiple } = this.props;
     const { pastSearch, focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
       const dataString = Object.values(data).join(' ').toLowerCase();
@@ -90,34 +90,49 @@ class Search extends Component {
     return (
       <div className="searchContainer">
         <div className="searchContainerInner" ref={node => { this.node = node }}>
-          <div className="input inline-input">
-            <div className="inline-input__text">
+        {/* needs class "input inline-input" */}
+          <div className="align--left">
+            <div className="">
             <label htmlFor={id}>
-              <span className={label.length > 20 ? "inline-input__label sml-text" : "inline-input__label"}>{label}</span>
+              {/* <span className={label.length > 20 ? "inline-input__label sml-text" : "inline-input__label"}>{label}</span> */}
               <input
                 type="text"
                 id={id}
-                className="searchBar inline-input"
+                className="searchBar"
                 placeholder={!pastSearch ? "Search" : pastSearch}
                 onFocus={this.handleFocus}
                 onChange={this.handleSearch}
                 value={searchTerm} />
             </label>
-            <span className="dropdownIcon"><Icon icon="arrowRight" /></span>
+            {/* <span className="dropdownIcon"><Icon icon="arrowRight" /></span> */}
             </div>
           </div>
           {(searchTerm && focus) && (
             <div className="searchResultsContainer">
               {filterSearch.map(data =>
-                <button
-                  key={data.id}
-                  id="searchResult"
-                  type="button"
-                  aria-label={`searchResult - ${data.name}`}
-                  className="results"
-                  onClick={() => this.handleSelection(data)}>
-                  {data.name} {data.address}
-                </button>
+                <div className="align--left" key={data.id}>
+                  {multiple ?
+                    <label
+                      key={data.id}
+                      id="searchCheckboxLabel"
+                      htmlFor="searchCheckbox">
+                      <input
+                        id="searchResult"
+                        name="searchCheckbox"
+                        type="checkbox" />
+                        <span>{data.firstName} {data.lastName}</span>
+                       </label> :
+                      <button
+                        key={data.id}
+                        id="searchResult"
+                        type="button"
+                        aria-label={`searchResult - ${data.name}`}
+                        className="results"
+                        onClick={() => this.handleSelection(data)}>
+                        {data.name} {data.address}
+                      </button>
+                    }
+                    </div>
               )}
             </div>
           )}
@@ -131,7 +146,11 @@ Search.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onSearchSelection: PropTypes.func.isRequired,
-  searchData: PropTypes.arrayOf(PropTypes.object).isRequired
+  searchData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  multiple: PropTypes.bool
+}
+Search.defaultProps = {
+  multiple: undefined
 }
 
 export default Search

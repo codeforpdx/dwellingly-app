@@ -10,10 +10,13 @@
     justify-content: center;
     & .searchBar {
       border: 1px solid $color__gray--border;
-      border-radius: 5px;
+      border-radius: 25px;
       margin: 0;
       position: relative;
       z-index: 2;
+      padding: 0.350rem;
+      width: 100%;
+      max-width: 400px;
       &.active {
         opacity: .6;
         letter-spacing: 0.077px;
@@ -24,15 +27,15 @@
         font-size: .91rem;
       }
     }
-    & .dropdownIcon {
-      color: $color__gray--medium;
-      position: absolute;
-      font-size: .8em;
-      top: 14px;
-      right: 12px;
-      transform: rotate(90deg);
-      z-index: 3;
-    }
+    // & .dropdownIcon {
+    //   color: $color__gray--medium;
+    //   position: absolute;
+    //   font-size: .8em;
+    //   top: 14px;
+    //   right: 12px;
+    //   transform: rotate(90deg);
+    //   z-index: 3;
+    // }
   }
   & .pastSearch {
     width: 100%;
@@ -49,19 +52,25 @@
 }
 .searchResultsContainer {
   position: absolute;
-  z-index: 3;
-  top: 64px;
+  z-index: 1;
+  top: 16px;
   right: 0;
   left: 0;
-  margin: 0 1em;
+  // margin: 0 1em;
+  padding: 0 1em;
+  padding-top: 38px;
   max-height: 300px;
+  max-width: 400px;
   overflow: scroll;
   animation: height 0.1s linear;
   background-color: white;
   @include dialog_shadow;
-  border-top: 1px solid $color__gray--border;
-  border-bottom-left-radius: $border-radius--card;
-  border-bottom-right-radius: $border-radius--card;
+  border-radius: 25px;
+  border-left: 1px solid $color__gray--border;
+  border-right: 1px solid $color__gray--border;
+  border-bottom: 1px solid $color__gray--border;
+  // border-bottom-left-radius: $border-radius--card;
+  // border-bottom-right-radius: $border-radius--card;
 }
 .results {
   width: 100%;
