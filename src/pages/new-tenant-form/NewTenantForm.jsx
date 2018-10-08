@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Input from '../../components/input/Input';
 import Header from '../../components/header/Header';
 import NewProperty from '../../components/new-property/NewProperty';
-import NewPropertyManager from '../../components/new-property-manager/NewPropertyManager';
+// import NewPropertyManager from '../../components/new-property-manager/NewPropertyManager';
 import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
 import MultiSelect from '../../components/multi-select/MultiSelect';
@@ -75,7 +75,7 @@ class NewTenantForm extends Component {
         }
         <Header>
           {() => (
-            <Header.Label label="Add New Tenant" type="basic" />
+            <Header.Label label="JOIN Messenger Administration" type="basic"/>
           )}
         </Header>
         <div>
@@ -83,6 +83,7 @@ class NewTenantForm extends Component {
             {/* Add new tenant form section
             ======================================= */}
             <section className="newTenantFormSection">
+              <h1 className="align--left">Add a New Tenant</h1>
               <h2 className="newTenantFormHeading">Tenant Information</h2>
               <fieldset>
                 <Input
@@ -117,6 +118,7 @@ class NewTenantForm extends Component {
                 <MultiSelect
                   data={users}
                   placeholder="Search JOIN Staff"
+                  filterSubset={["firstName", "lastName"]}
                   onSearchSelection={this.handleSelectionFromSearch} />
                 {/* <Search
                   id="staffName"
@@ -140,6 +142,7 @@ class NewTenantForm extends Component {
                   id="propertyName"
                   label="Property Search"
                   placeholder="Search Properties"
+                  filterSubset={["name", "address"]}
                   onSearchSelection={this.handleSelectionFromSearch}
                   searchData={properties} />
               </fieldset>
@@ -159,6 +162,14 @@ class NewTenantForm extends Component {
                       <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
                         <span className="addIcon"><Icon icon="plus"/></span>
                         Add new manager
+                      </div>
+                    )}
+                    {propertySelected && addingNewPropertyManager && (
+                      <div>
+                        <Search
+                          placeholder="Search Property Managers"
+                          filterSubset={["firstName", "lastName"]}
+                          searchData={propertyManagers} />
                       </div>
                     )}
                   </div>
@@ -232,7 +243,12 @@ class NewTenantForm extends Component {
                   Add New Property
                 </div>
               ) */}
-              {propertySelected && addingNewPropertyManager && (
+              {/* propertySelected && addingNewPropertyManager && (
+                <div>
+                  <Search
+                    placeholder="Search Property Managers"
+                    searchData={propertyManagers} />
+                </div>
                 <form>
                   <div className="propertyFormCloseButton">
                     {!propertyManagerSelected ? "Add new manager" : "Edit property manager"}
@@ -242,7 +258,7 @@ class NewTenantForm extends Component {
                   </div>
                   <NewPropertyManager onChange={this.handleChange} />
                 </form>
-              )}
+              ) */}
               </div>
             </section>
             {/* Add Unit Input
@@ -253,12 +269,12 @@ class NewTenantForm extends Component {
                 <Input
                   id="propertyUnit"
                   placeholder="Unit # / ABC..."
-                  label="Unit"
+                  label="Unit Number (Optional)"
                   type="text"/>
               </section>
             )}
             <section className="newTenantFormSection">
-              <button type="submit" className="btn">Save</button>
+              <button type="submit" className="btn" disabled={!propertySelected}>Save</button>
             </section>
           </div>
         </div>

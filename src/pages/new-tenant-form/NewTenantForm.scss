@@ -2,13 +2,24 @@
 
 .newTenantFormHeading {
   text-align: left;
+  font-size: 1.2em;
   line-height: 1.5;
+  margin-top: 1em;
 }
 
 .newTenantFormSection {
   padding: 0.5em;
   &:first-of-type {
     margin-top: 1em;
+  }
+  & .inline-input {
+    margin: 0;
+    &:first-child {
+      border-top: 1px solid $color__gray--border;
+    }
+    &:last-child {
+      border-bottom: 1px solid $color__gray--border;
+    }
   }
 }
 
