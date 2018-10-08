@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Search from '../search/Search';
+import Icon from '../icon/Icon';
+
+import './MultiSelect.scss'
 
 class MultiSelect extends Component {
   constructor(props) {
@@ -26,6 +29,11 @@ class MultiSelect extends Component {
           placeholder={placeholder}
           searchData={data}
           multiple />
+          <div className="selectedOptions">
+            {this.state.selected.map(({firstName, lastName}) =>
+              <div className="selectedPill"><span>{firstName} {lastName}</span><Icon icon="close" /></div>
+            )}
+          </div>
       </div>
     )
   }
