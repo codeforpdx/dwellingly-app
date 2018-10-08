@@ -5,7 +5,9 @@ import Search from '../search/Search';
 class MultiSelect extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      selected: []
+    }
 
     this.handleUpdatingSelected = this.handleUpdatingSelected.bind(this);
   }
@@ -31,7 +33,7 @@ class MultiSelect extends Component {
 
 MultiSelect.propTypes = {
   placeholder: PropTypes.string,
-  data: PropTypes.shape([]).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onSearchSelection: PropTypes.func.isRequired
 }
 MultiSelect.defaultProps = {
