@@ -134,11 +134,26 @@ class NewTenantForm extends Component {
                   Add New Property
                 </div>
               ) */}
+              <h2 className="newTenantFormHeading">Property</h2>
+              <fieldset>
+                <Search
+                  id="propertyName"
+                  label="Property Search"
+                  placeholder="Search Properties"
+                  onSearchSelection={this.handleSelectionFromSearch}
+                  searchData={properties} />
+              </fieldset>
               {propertySelected ?
                 <div className="card newTenantProperty">
                   <div>
                     <h3>{propertySelected.name.length > 0 ? propertySelected.name : null}</h3>
                     <p>{propertySelected.address.length > 0 ? propertySelected.address : null}</p>
+                    {(propertySelected && !propertyManagerSelected) && (
+                      <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
+                        <span className="addIcon"><Icon icon="plus"/></span>
+                        Add new manager
+                      </div>
+                    )}
                   </div>
                   {/* !addingNewProperty && (
                     <div className="editPropertyDetails">
@@ -180,18 +195,18 @@ class NewTenantForm extends Component {
                   )}
                 </div>
               )}
-              {(propertySelected && !propertyManagerSelected) && (
+              {/* (propertySelected && !propertyManagerSelected) && (
                 <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
                   <span className="addIcon"><Icon icon="plus"/></span>
                   Add new manager
                 </div>
-              )}
+              ) */}
             </div>
 
             {/* Add new property manager form
             ======================================= */}
             <section className="newTenantFormSection">
-              <h2 className="newTenantFormHeading">Property</h2>
+              {/* <h2 className="newTenantFormHeading">Property</h2>
               <fieldset>
                 <Search
                   id="propertyName"
@@ -199,16 +214,16 @@ class NewTenantForm extends Component {
                   placeholder="Search Properties"
                   onSearchSelection={this.handleSelectionFromSearch}
                   searchData={properties} />
-              </fieldset>
+              </fieldset> */}
               <div className="propertySearchResults">
-              {(!propertySelected &&
+              {/* (!propertySelected &&
                 !addingNewProperty) && (
                 <div className="addNewLink">
                   <span className="addIcon" onClick={this.handleAddingNewProperty} role="presentation"><Icon icon="plus"/></span>
                   Add New Property
                 </div>
-              )}
-              {propertySelected && (
+              ) */}
+              {propertySelected && addingNewPropertyManager && (
                 <form>
                   <div className="propertyFormCloseButton">
                     {!propertyManagerSelected ? "Add new manager" : "Edit property manager"}
