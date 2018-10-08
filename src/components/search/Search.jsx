@@ -19,7 +19,7 @@ class Search extends Component {
 
     this.state = {
       searchTerm: '',
-      pastSearch: '',
+      // pastSearch: '',
       selectedOptions: [],
       focus: null
     }
@@ -61,18 +61,22 @@ class Search extends Component {
   handleHideOptionsList() {
     document.removeEventListener("click", this.handleBlur, false);
     document.removeEventListener("keyup", this.handleTab, false);
+    this.setState({ searchTerm: '' });
     this.setState({ focus: false });
   }
 
   handleSelection(searchedObj) {
-    const { name, address, firstName, lastName } = searchedObj
-    const searchedResultAddress = `${name} ${address}`
-    const searchedResultName = `${firstName} ${lastName}`
-    this.props.onSearchSelection(searchedObj)
-    this.setState({ searchTerm: '' });
-    this.setState({ pastSearch: searchedResultAddress })
-    this.setState(prevState => ({selectedOptions: [...prevState.selectedOptions, searchedResultName]}))
-    this.handleHideOptionsList();
+    const { firstName, lastName } = searchedObj;
+    // const searchedResultAddress = `${name} ${address}`;
+    const searchedResultName = `${firstName} ${lastName}`;
+    this.props.onSearchSelection(searchedObj);
+    // this.setState({ pastSearch: searchedResultAddress });
+    this.setState(prevState => ({selectedOptions: [...prevState.selectedOptions, searchedResultName]}));
+    if(this.props.multiple) {
+      this.props.onUpdatingSelected(searchedObj);
+    } else {
+      this.handleHideOptionsList();
+    }
   }
 
   handleSelectionClasses(data) {
@@ -95,10 +99,10 @@ class Search extends Component {
   }
 
   render() {
-    const { id, searchData, multiple, placeholder } = this.props;
-    const { pastSearch, focus, searchTerm } = this.state;
+    const { id, searchData, multiple, placeholder, filterSubset } = this.props;
+    const { focus, searchTerm } = this.state;
     const filterSearch = searchData.filter(data => {
-      const dataString = Object.values(data).join(' ').toLowerCase();
+      const dataString = filterSubset.map(item => data[item]).join(' ').toLowerCase();
       return dataString.includes(searchTerm.toLowerCase())
     })
     return (
@@ -106,14 +110,14 @@ class Search extends Component {
         <div className="searchContainerInner" ref={node => { this.node = node }}>
         {/* needs class "input inline-input" */}
           <div className="align--left">
-            <div className="">
+            <div>
             <label htmlFor={id}>
               {/* <span className={label.length > 20 ? "inline-input__label sml-text" : "inline-input__label"}>{label}</span> */}
               <input
                 type="text"
                 id={id}
                 className="searchBar"
-                placeholder={!pastSearch ? placeholder : pastSearch}
+                placeholder={placeholder}
                 onFocus={this.handleFocus}
                 onChange={this.handleSearch}
                 value={searchTerm} />
@@ -147,14 +151,18 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  id: PropTypes.string.isRequired,
+  filterSubset: PropTypes.arrayOf(PropTypes.string).isRequired,
+  id: PropTypes.string,
   onSearchSelection: PropTypes.func.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired,
   multiple: PropTypes.bool,
+  onUpdatingSelected: PropTypes.func,
   placeholder: PropTypes.string
 }
 Search.defaultProps = {
+  id: undefined,
   multiple: undefined,
+  onUpdatingSelected: undefined,
   placeholder: undefined
 }
 
