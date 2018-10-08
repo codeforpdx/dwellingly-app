@@ -8,7 +8,7 @@ import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
 import MultiSelect from '../../components/multi-select/MultiSelect';
 import { ROUTES } from '../../constants/constants';
-import { dummyUser, properties, users } from '../../data';
+import { dummyUser, properties, users, propertyManagers } from '../../data';
 
 import './NewTenantForm.scss'
 
@@ -143,6 +143,13 @@ class NewTenantForm extends Component {
                   onSearchSelection={this.handleSelectionFromSearch}
                   searchData={properties} />
               </fieldset>
+              {(!propertySelected &&
+                !addingNewProperty) && (
+                <div className="addNewLink">
+                  <span className="addIcon" onClick={this.handleAddingNewProperty} role="presentation"><Icon icon="plus"/></span>
+                  Add New Property
+                </div>
+              )}
               {propertySelected ?
                 <div className="card newTenantProperty">
                   <div>
@@ -175,6 +182,8 @@ class NewTenantForm extends Component {
                   </div>
                   <NewProperty
                     id="propertySelected"
+                    data={propertyManagers}
+                    placeholder="Search Property Managers"
                     onChange={this.handleChange} />
                 </form>
               )}
