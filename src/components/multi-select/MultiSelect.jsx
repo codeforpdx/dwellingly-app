@@ -17,11 +17,15 @@ class MultiSelect extends Component {
   }
 
   handleUpdatingSelected(data) {
-    this.setState(prevState => ({selected: [...prevState.selected, data]}))
+    if(!this.state.selected.includes(data)) {
+      this.setState(prevState => ({selected: [...prevState.selected, data]}))
+    } else {
+      this.setState(prevState => ({selected: prevState.selected.filter((item) => item !== data)}))
+    }
   }
 
   handleDeletingSelected() {
-    this.state.selected.map((item, index) => this.state.selected.splice(item[index], 1));
+    this.state.selected.map((item) => this.state.selected.splice(item, 1));
     this.setState(prevState => ({selected: [...prevState.selected]}));
   }
 
