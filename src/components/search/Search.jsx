@@ -72,6 +72,10 @@ class Search extends Component {
     // this.setState({ pastSearch: searchedResultAddress });
     this.setState(prevState => ({selectedOptions: [...prevState.selectedOptions, searchedResultName]}));
     if(this.props.multiple) {
+      const { firstName, lastName } = searchedObj;
+      if(this.state.selectedOptions.includes(`${firstName} ${lastName}`)) {
+        this.setState(prevState => ({selectedOptions: prevState.selectedOptions.filter(item => item !== `${firstName} ${lastName}`)}));
+      }
       this.props.onUpdatingSelected(searchedObj);
     } else {
       this.handleHideOptionsList();
@@ -132,7 +136,7 @@ class Search extends Component {
                     key={data.id}
                     type="button"
                     aria-label={`searchResult - ${data.name}`}
-                    className={this.handleSelectionClasses(data.firstName)}
+                    className={this.handleSelectionClasses(`${data.firstName} ${data.lastName}`)}
                     onClick={() => this.handleSelection(data)}>
                     {!multiple ?
                       <span>{data.name} {data.address}</span> :
