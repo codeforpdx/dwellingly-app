@@ -25,7 +25,6 @@ class Search extends Component {
     }
   }
 
-
   handleBlur(event) {
     if(this.node && this.node.contains(event.target)) {
       return
@@ -74,6 +73,7 @@ class Search extends Component {
     this.setState(prevState => ({selectedOptions: [...prevState.selectedOptions, searchedResultName]}));
     if(this.props.multiple) {
       this.props.onUpdatingSelected(searchedObj);
+      // this.props.onTogglingOption();
     } else {
       this.handleHideOptionsList();
     }
@@ -152,6 +152,7 @@ class Search extends Component {
 
 Search.propTypes = {
   filterSubset: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // onTogglingOption: PropTypes.func,
   id: PropTypes.string,
   onSearchSelection: PropTypes.func.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -160,6 +161,7 @@ Search.propTypes = {
   placeholder: PropTypes.string
 }
 Search.defaultProps = {
+  // onTogglingOption: undefined,
   id: undefined,
   multiple: undefined,
   onUpdatingSelected: undefined,
