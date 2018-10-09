@@ -13,25 +13,38 @@ class MultiSelect extends Component {
     }
 
     this.handleUpdatingSelected = this.handleUpdatingSelected.bind(this);
+    this.handleDeletingSelected = this.handleDeletingSelected.bind(this);
   }
 
   handleUpdatingSelected(data) {
     this.setState(prevState => ({selected: [...prevState.selected, data]}))
   }
 
+  handleDeletingSelected() {
+    this.state.selected.map((item, index) => this.state.selected.splice(item[index], 1));
+    this.setState(prevState => ({selected: [...prevState.selected]}));
+  }
+
   render() {
-    const { placeholder, data, onSearchSelection } = this.props;
+    const { placeholder, data, onSearchSelection, filterSubset } = this.props;
     return (
       <div>
         <Search
           onSearchSelection={onSearchSelection}
           onUpdatingSelected={this.handleUpdatingSelected}
+          onTogglingOption={this.handleDeletingSelected}
+          filterSubset={filterSubset}
           placeholder={placeholder}
           searchData={data}
           multiple />
           <div className="selectedOptions">
-            {this.state.selected.map(({firstName, lastName}) =>
-              <div className="selectedPill"><span>{firstName} {lastName}</span><Icon icon="close" /></div>
+            {this.state.selected.map(({firstName, lastName, id}) =>
+              <div className="selectedPill" key={id}>
+                <span>{firstName} {lastName}</span>
+                <span className="pillClose" onClick={this.handleDeletingSelected} role="presentation">
+                  <Icon icon="close" />
+                </span>
+              </div>
             )}
           </div>
       </div>
@@ -40,6 +53,7 @@ class MultiSelect extends Component {
 }
 
 MultiSelect.propTypes = {
+  filterSubset: PropTypes.arrayOf(PropTypes.string).isRequired,
   placeholder: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onSearchSelection: PropTypes.func.isRequired
