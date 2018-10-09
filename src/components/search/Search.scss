@@ -27,15 +27,6 @@
         font-size: .91rem;
       }
     }
-    // & .dropdownIcon {
-    //   color: $color__gray--medium;
-    //   position: absolute;
-    //   font-size: .8em;
-    //   top: 14px;
-    //   right: 12px;
-    //   transform: rotate(90deg);
-    //   z-index: 3;
-    // }
   }
   & .pastSearch {
     width: 100%;
@@ -56,7 +47,6 @@
   top: 16px;
   right: 0;
   left: 0;
-  // margin: 0 1em;
   padding: 0 1em;
   padding-top: 38px;
   max-height: 300px;
@@ -69,8 +59,6 @@
   border-left: 1px solid $color__gray--border;
   border-right: 1px solid $color__gray--border;
   border-bottom: 1px solid $color__gray--border;
-  // border-bottom-left-radius: $border-radius--card;
-  // border-bottom-right-radius: $border-radius--card;
 }
 .searchResults {
   width: 100%;
