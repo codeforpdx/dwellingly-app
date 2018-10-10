@@ -166,7 +166,7 @@ class Search extends Component {
               {this.state.selectedOptions.map(option =>
                 <div className="selectedPill" key={option.id}>
                   <span>{option.text}</span>
-                  <span className="pillClose" onClick={() => this.handleUpdatingOptions(option)} role="presentation">
+                  <span className="pillClose" onClick={() => this.handleSelection(option)} role="presentation">
                     <Icon icon="close" />
                   </span>
                 </div>
