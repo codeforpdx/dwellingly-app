@@ -28,8 +28,7 @@ class Login extends React.Component {
 
     const ourUser = this.props.user;
     let userType = "default";
-    if (ourUser && ourUser.role) {
-      console.log(ourUser)
+    if (ourUser && (ourUser.role.isAdmin || ourUser.role.isPropertyManager || ourUser.role.isStaff ) && !this.props.isFetchingUserData && !this.props.isFetchingAuthorization) {
       if (ourUser.role.isAdmin === "true" || ourUser.role.isAdmin === true) {
         userType = "isAdmin";
       } else if (ourUser.role.isPropertyManager === "true"  || ourUser.role.isPropertyManager === true) {
