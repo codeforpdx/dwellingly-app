@@ -176,6 +176,14 @@ export const addCustomUserData = (userData, accountSource, userID) => (dispatch)
   } else if (userData && userData.localId && userData.localId.length > 0) {
     userIdentifier = userData.localId
   }
+  let userRole = {};
+  if (userData && userData.role) {
+    userRole = {
+          isAdmin: userData.role.isAdmin,
+          isPropertyManager: userData.role.isPropertyManager,
+          isStaff: userData.role.isStaff,
+        }
+  }
   if (userData && accountSource) {
     dispatch({
       type: GET_USER_DATA_COMPLETE,
@@ -189,7 +197,7 @@ export const addCustomUserData = (userData, accountSource, userID) => (dispatch)
         firstName: userData.firstName,
         lastName: userData.lastName,
         id: userIdentifier,
-        role: userData.role,
+        role: userRole,
       },
       error: null,
     });

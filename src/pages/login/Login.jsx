@@ -30,11 +30,11 @@ class Login extends React.Component {
     let userType = "default";
     if (ourUser && ourUser.role) {
       console.log(ourUser)
-      if (ourUser.role.isAdmin === "true") {
+      if (ourUser.role.isAdmin === "true" || ourUser.role.isAdmin === true) {
         userType = "isAdmin";
-      } else if (ourUser.role.isPropertyManager === "true") {
+      } else if (ourUser.role.isPropertyManager === "true"  || ourUser.role.isPropertyManager === true) {
         userType = "isPropertyManager";
-      } else if (ourUser.role.isStaff === "true") {
+      } else if (ourUser.role.isStaff === "true" || ourUser.role.isStaff === true) {
         userType = "isStaff";
       }
       console.log('we would be going to ', userRoutes[userType]);
