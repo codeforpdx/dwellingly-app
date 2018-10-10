@@ -151,7 +151,7 @@ class Search extends Component {
                     aria-label={`searchResult - ${data.name}`}
                     className={this.handleSelectionClasses(data.id)}
                     onClick={() => this.handleSelection(data)}>
-                    {filterSubset.map(item => <span>{data[item]}&nbsp;</span>)}
+                    {filterSubset.map(item => <span key={item}>{data[item]}&nbsp;</span>)}
                     {/* !multiple ?
                       <span>{data.name} {data.address}</span> :
                       <span>{data.firstName} {data.lastName}</span>
