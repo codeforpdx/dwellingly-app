@@ -16,7 +16,7 @@ class Search extends Component {
     this.handleShowOptionsList = this.handleShowOptionsList.bind(this);
     this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
     this.handleSelectionClasses = this.handleSelectionClasses.bind(this);
-    this.handleUpdatingMultipleOptions = this.handleUpdatingMultipleOptions.bind(this);
+    this.handleUpdatingOptions = this.handleUpdatingOptions.bind(this);
     // this.handleDeletingSelected = this.handleDeletingSelected.bind(this);
 
     this.state = {
@@ -65,7 +65,7 @@ class Search extends Component {
     this.setState({ focus: false });
   }
 
-  handleUpdatingMultipleOptions(data) {
+  handleUpdatingOptions(data) {
     const newDataObj = {
       id: data.id,
       text: this.props.filterSubset.map(item => data[item]).join(' ')
@@ -89,14 +89,14 @@ class Search extends Component {
     // New Tenant Form Callback
     this.props.onSearchSelection(searchedObj);
     if(this.props.multiple) {
-      this.handleUpdatingMultipleOptions(searchedObj);
+      this.handleUpdatingOptions(searchedObj);
     } else {
       this.handleHideOptionsList();
     }
   }
 
   handleSelectionClasses(data) {
-    if(this.props.multiple && this.state.selectedOptions.includes(data)) {
+    if(this.props.multiple && this.state.selectedOptions.find(({id}) => id === data)) {
       return "searchResults--multiple-active"
     }
     if(this.props.multiple) {
@@ -149,12 +149,13 @@ class Search extends Component {
                     key={data.id}
                     type="button"
                     aria-label={`searchResult - ${data.name}`}
-                    className={this.handleSelectionClasses(`${data.firstName} ${data.lastName}`)}
+                    className={this.handleSelectionClasses(data.id)}
                     onClick={() => this.handleSelection(data)}>
-                    {!multiple ?
+                    {filterSubset.map(item => <span>{data[item]}&nbsp;</span>)}
+                    {/* !multiple ?
                       <span>{data.name} {data.address}</span> :
                       <span>{data.firstName} {data.lastName}</span>
-                    }
+                    */}
                   </button>
                 </div>
               )}
@@ -165,7 +166,7 @@ class Search extends Component {
               {this.state.selectedOptions.map(option =>
                 <div className="selectedPill" key={option.id}>
                   <span>{option.text}</span>
-                  <span className="pillClose" onClick={() => this.handleUpdatingMultipleOptions(option)} role="presentation">
+                  <span className="pillClose" onClick={() => this.handleUpdatingOptions(option)} role="presentation">
                     <Icon icon="close" />
                   </span>
                 </div>

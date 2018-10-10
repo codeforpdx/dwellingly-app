@@ -68,7 +68,6 @@
   top: 16px;
   right: 0;
   left: 0;
-  padding: 0 1em;
   padding-top: 38px;
   max-height: 300px;
   max-width: 400px;
@@ -84,7 +83,7 @@
 .searchResults {
   width: 100%;
   cursor: pointer;
-  padding: 0.5em 0;
+  padding: 0.5em 0.5em;
   &:hover,
   &:focus {
     background: #ececec;
