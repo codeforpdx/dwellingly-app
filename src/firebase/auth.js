@@ -29,8 +29,11 @@ export function getFirestoreUserData( uid, accountSource ) {
     method: HTTP_METHODS.GET,
   }).then((response => response.json()))
     .then((json) => {
-      const userData = json[0];
-      store.dispatch(addCustomUserData(userData, accountSource, uid))
+      const userData = json;
+      console.log(userData);
+      if (userData) {
+        store.dispatch(addCustomUserData(userData, accountSource, uid))
+      }
       // Don't need to set user here, will get picked up by UserControl as auth changes!
       // store.dispatch(setUser(json, 'email'))
     })

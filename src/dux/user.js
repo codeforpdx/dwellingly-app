@@ -143,14 +143,14 @@ export const initiateFirebaseCall = () => (dispatch) => {
 }
 
 export const getAuthDetailsFromFirebase = user => (dispatch) => {
-  console.log('getting details from firebase');
+  console.log('getting details from firebase', user);
   dispatch({
     type: GET_AUTHORIZATION_COMPLETE,
     isFetchingAuthorization: false,
     haveToken: true,
     user: {
       email: user.email,
-      accountSource: user.providerData.providerId,
+      accountSource: user.providerData[0].providerId,
       id: user.localId,
     },
     error: user.error
@@ -158,6 +158,7 @@ export const getAuthDetailsFromFirebase = user => (dispatch) => {
 }
 
 export const initiateUserDetailsCall = () => (dispatch) => {
+  console.log('start getting user data!')
   dispatch({
     type: GET_USER_DATA,
     isFetchingUserData: true,
@@ -167,31 +168,36 @@ export const initiateUserDetailsCall = () => (dispatch) => {
 }
 
 export const addCustomUserData = (userData, accountSource, userID) => (dispatch) => {
+  console.log('adding custom user data');
+  console.log(userData, accountSource, userID);
   let userIdentifier = userID
-  if (userData.id && userData.id.length > 0) {
+  if (userData && userData.id && userData.id.length > 0) {
     userIdentifier = userData.id
-  } else if (userData.localId && userData.localId.length > 0) {
+  } else if (userData && userData.localId && userData.localId.length > 0) {
     userIdentifier = userData.localId
   }
-  dispatch({
-    type: GET_USER_DATA_COMPLETE,
-    isCreatingUser: false,
-    isFetchingAuthorization: false,
-    isFetchingUserData: false,
-    haveUser: true,
-    user: {
-      accountSource,
-      email: userData.email,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      id: userIdentifier,
-      role: userData.role,
-    },
-    error: null,
-  });
+  if (userData && accountSource) {
+    dispatch({
+      type: GET_USER_DATA_COMPLETE,
+      isCreatingUser: false,
+      isFetchingAuthorization: false,
+      isFetchingUserData: false,
+      haveUser: true,
+      user: {
+        accountSource,
+        email: userData.email,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        id: userIdentifier,
+        role: userData.role,
+      },
+      error: null,
+    });
+  }
 };
 
 export const initiateCreateUserCall = () => (dispatch) => {
+  console.log('start create user call')
   dispatch({
     type: CREATE_USER,
     isFetchingUserData: true,
@@ -201,6 +207,7 @@ export const initiateCreateUserCall = () => (dispatch) => {
 }
 
 export const setUserFromFirebaseEmail = (user) => (dispatch) => {
+  console.log('set user from Firebase')
   console.log(user);
   dispatch({
     type: CREATE_USER_COMPLETE,

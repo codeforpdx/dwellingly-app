@@ -24,6 +24,7 @@ import './index.scss';
 
 // Components, if any
 import Navigation from './components/navigation/Navigation';
+import UserControls from './components/user-controls/UserControls';
 
 // Pages
 import Admin from './pages/admin/Admin';
@@ -79,6 +80,7 @@ ReactDOM.render(
       <ConnectedRouter history={history}>
         <div className={`app ${userRole}`}>
           <Navigation type="desktop" desktopOnly />
+          <UserControls />
           <Switch>
             <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
             <PrivateRoute

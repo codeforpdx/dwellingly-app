@@ -33,7 +33,7 @@ class UserControls extends React.Component {
   componentDidMount() {
     // Create Firebase authorization ovbservable, do a thing if it changes
     firebase.auth().onAuthStateChanged((user) => {
-      if (user && !this.props.isCreatingUser) {
+      if (user && !this.props.isCreatingUser && !this.props.isFetchingUserData) {
         console.log('onAuthStateChanged has a user')
         this.setUser(user);
       } else {
@@ -44,12 +44,15 @@ class UserControls extends React.Component {
   }
 
   componentWillReceiveProps(nextProp){
-    if (this.props.isFetchingAuthorization && !nextProp.isFetchingAuthorization) {
+    console.log('authorization prop',this.props.isFetchingAuthorization, nextProp.isFetchingAuthorization)
+    if (this.props.isFetchingAuthorization && !nextProp.isFetchingUserData) {
+      console.log('set cookies for', nextProp.user);
       this.setUserCookies(nextProp.user);
     }
   }
 
   setUser(user){
+    this.props.initiateUserDetailsCall();
     let accountSource = 'email';
     let userID = '';
     if (user && user.providerData[0]) {
@@ -61,8 +64,9 @@ class UserControls extends React.Component {
       }
     }
     console.log( user, userID);
-    this.props.addCustomUserData(user);
-    if (user && !this.props.isCreatingUser) {
+    this.props.addCustomUserData(user, accountSource, userID);
+    if (user && this.props.haveUser) {
+      console.log('gonna get firestore data!', user, accountSource)
       getFirestoreUserData(user.uid, accountSource, user.uid);
     }
   }
@@ -73,7 +77,8 @@ class UserControls extends React.Component {
     const userEmailCookieExist = cookies.get('messengerUser');
     const userIDCookieExist = cookies.get('messengerUserId');
     const userRoleExist = cookies.get('userRole');
-    if (this.props.user && newUser && newUser.id) {
+    console.log(this.props.isFetchingAuthorization, newUser.id)
+    if (this.props.isFetchingAuthorization && newUser && newUser.id) {
       if (!userEmailCookieExist) {
         cookies.set(
           'messengerUser', 
@@ -108,10 +113,11 @@ class UserControls extends React.Component {
 
 
   determineUserState(user){
+    console.log('HEY THIS IS DETERMINEUSERSTATE')
     const accountSource = "email";
     this.props.addCustomUserData(user);
     if (user && !this.props.isCreatingUser) {
-      getFirestoreUserData(user.uid, accountSource, user.uid);
+      console.log(user.uid, accountSource, user.uid);
     }
   }
 
@@ -156,6 +162,7 @@ const mapStateToProps = ({ user }) => ({
   isCreatingUser: user.isCreatingUser,
   isFetchingAuthorization: user.isFetchingAuthorization,
   isFetchingUserData: user.isFetchingUserData,
+  haveToken: user.haveToken,
   haveUser: user.haveUser,
 });
 
@@ -179,7 +186,9 @@ UserControls.propTypes = {
   }),
   isFetchingAuthorization: PropTypes.bool.isRequired,
   isCreatingUser: PropTypes.bool.isRequired,
+  isFetchingUserData: PropTypes.bool.isRequired,
   haveUser: PropTypes.bool.isRequired,
+  initiateUserDetailsCall: PropTypes.func.isRequired,
   addCustomUserData: PropTypes.func.isRequired,
   clearUser: PropTypes.func.isRequired,
 };
