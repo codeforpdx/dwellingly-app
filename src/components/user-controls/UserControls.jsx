@@ -34,19 +34,15 @@ class UserControls extends React.Component {
     // Create Firebase authorization ovbservable, do a thing if it changes
     firebase.auth().onAuthStateChanged((user) => {
       if (user && !this.props.isCreatingUser && !this.props.isFetchingUserData) {
-        console.log('onAuthStateChanged has a user')
         this.setUser(user);
       } else {
-        console.log('onAuthStateChanged does not have a user')
         this.clearUser();
       }
     });
   }
 
   componentWillReceiveProps(nextProp){
-    console.log('authorization prop',this.props.isFetchingAuthorization, nextProp.isFetchingAuthorization)
     if (this.props.isFetchingAuthorization && !nextProp.isFetchingUserData) {
-      console.log('set cookies for', nextProp.user);
       this.setUserCookies(nextProp.user);
     }
   }
@@ -63,10 +59,8 @@ class UserControls extends React.Component {
         userID = user.l
       }
     }
-    console.log( user, userID);
     this.props.addCustomUserData(user, accountSource, userID);
     if (user && this.props.haveUser) {
-      console.log('gonna get firestore data!', user, accountSource)
       getFirestoreUserData(user.uid, accountSource, user.uid);
     }
   }
@@ -77,7 +71,6 @@ class UserControls extends React.Component {
     const userEmailCookieExist = cookies.get('messengerUser');
     const userIDCookieExist = cookies.get('messengerUserId');
     const userRoleExist = cookies.get('userRole');
-    console.log(this.props.isFetchingAuthorization, newUser.id)
     if (this.props.isFetchingAuthorization && newUser && newUser.id) {
       if (!userEmailCookieExist) {
         cookies.set(
@@ -113,7 +106,6 @@ class UserControls extends React.Component {
 
 
   determineUserState(user){
-    console.log('HEY THIS IS DETERMINEUSERSTATE')
     const accountSource = "email";
     this.props.addCustomUserData(user);
     if (user && !this.props.isCreatingUser) {

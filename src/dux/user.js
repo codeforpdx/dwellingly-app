@@ -143,7 +143,6 @@ export const initiateFirebaseCall = () => (dispatch) => {
 }
 
 export const getAuthDetailsFromFirebase = user => (dispatch) => {
-  console.log('getting details from firebase', user);
   dispatch({
     type: GET_AUTHORIZATION_COMPLETE,
     isFetchingAuthorization: false,
@@ -158,7 +157,6 @@ export const getAuthDetailsFromFirebase = user => (dispatch) => {
 }
 
 export const initiateUserDetailsCall = () => (dispatch) => {
-  console.log('start getting user data!')
   dispatch({
     type: GET_USER_DATA,
     isFetchingUserData: true,
@@ -168,8 +166,6 @@ export const initiateUserDetailsCall = () => (dispatch) => {
 }
 
 export const addCustomUserData = (userData, accountSource, userID) => (dispatch) => {
-  console.log('adding custom user data');
-  console.log(userData, accountSource, userID);
   let userIdentifier = userID
   if (userData && userData.id && userData.id.length > 0) {
     userIdentifier = userData.id
@@ -205,7 +201,6 @@ export const addCustomUserData = (userData, accountSource, userID) => (dispatch)
 };
 
 export const initiateCreateUserCall = () => (dispatch) => {
-  console.log('start create user call')
   dispatch({
     type: CREATE_USER,
     isFetchingUserData: true,
@@ -215,8 +210,6 @@ export const initiateCreateUserCall = () => (dispatch) => {
 }
 
 export const setUserFromFirebaseEmail = (user) => (dispatch) => {
-  console.log('set user from Firebase')
-  console.log(user);
   dispatch({
     type: CREATE_USER_COMPLETE,
     isFetchingAuthorization: false,
@@ -231,7 +224,6 @@ export const setUserFromFirebaseEmail = (user) => (dispatch) => {
 };
 
 export const setUserFromGoogle = (user) => (dispatch) => {
-  console.log(user)
   dispatch({
     type: CREATE_USER_COMPLETE,
     isFetchingAuthorization: false,
@@ -258,7 +250,6 @@ export const clearUser = () => (dispatch) => {
 };
 
 export const addError = error => (dispatch) => {
-  console.log(error);
   dispatch({
     type: ADD_ERROR,
     isFetchingAuthorization: false,
