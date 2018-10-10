@@ -27,6 +27,27 @@
         font-size: .91rem;
       }
     }
+    & .selectedOptions {
+      display: flex;
+      margin-top: 20px;
+      & .selectedPill {
+        display: flex;
+        align-items: center;
+        padding: 3px 10px;
+        margin: 0 0.3rem;
+        border-radius: 18px;
+        background: $color__gray--light;
+        &:first-child {
+          margin-left: 0;
+        }
+        & .pillClose {
+          cursor: pointer;
+          font-size: .7em;
+          margin-left: 8px;
+          margin-top: 1px;
+        }
+      }
+    }
   }
   & .pastSearch {
     width: 100%;

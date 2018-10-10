@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import Icon from '../icon/Icon';
+import Icon from '../icon/Icon';
 
 import './Search.scss';
 
@@ -16,10 +16,11 @@ class Search extends Component {
     this.handleShowOptionsList = this.handleShowOptionsList.bind(this);
     this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
     this.handleSelectionClasses = this.handleSelectionClasses.bind(this);
+    this.handleUpdatingMultipleOptions = this.handleUpdatingMultipleOptions.bind(this);
+    // this.handleDeletingSelected = this.handleDeletingSelected.bind(this);
 
     this.state = {
       searchTerm: '',
-      // pastSearch: '',
       selectedOptions: [],
       focus: null
     }
@@ -64,19 +65,31 @@ class Search extends Component {
     this.setState({ focus: false });
   }
 
+  handleUpdatingMultipleOptions(data) {
+    const newDataObj = {
+      id: data.id,
+      text: this.props.filterSubset.map(item => data[item]).join(' ')
+    };
+
+    if(!this.state.selectedOptions.find(({id}) => id === data.id)) {
+      this.setState(prevState => ({
+        selectedOptions: [...prevState.selectedOptions, newDataObj]}));
+    } else {
+      this.setState(prevState => ({
+        selectedOptions: prevState.selectedOptions.filter(({id}) => id !== data.id)
+      }));
+    }
+  }
+
+  // handleDeletingSelected(data) {
+  //   this.setState(prevState => ({selectedOptions: prevState.selectedOptions.filter(item => item !== data)}))
+  // }
+
   handleSelection(searchedObj) {
-    const { firstName, lastName } = searchedObj;
-    // const searchedResultAddress = `${name} ${address}`;
-    const searchedResultName = `${firstName} ${lastName}`;
+    // New Tenant Form Callback
     this.props.onSearchSelection(searchedObj);
-    // this.setState({ pastSearch: searchedResultAddress });
-    this.setState(prevState => ({selectedOptions: [...prevState.selectedOptions, searchedResultName]}));
     if(this.props.multiple) {
-      const { firstName, lastName } = searchedObj;
-      if(this.state.selectedOptions.includes(`${firstName} ${lastName}`)) {
-        this.setState(prevState => ({selectedOptions: prevState.selectedOptions.filter(item => item !== `${firstName} ${lastName}`)}));
-      }
-      this.props.onUpdatingSelected(searchedObj);
+      this.handleUpdatingMultipleOptions(searchedObj);
     } else {
       this.handleHideOptionsList();
     }
@@ -147,6 +160,18 @@ class Search extends Component {
               )}
             </div>
           )}
+          {multiple && (
+            <div className="selectedOptions">
+              {this.state.selectedOptions.map(option =>
+                <div className="selectedPill" key={option.id}>
+                  <span>{option.text}</span>
+                  <span className="pillClose" onClick={() => this.handleUpdatingMultipleOptions(option)} role="presentation">
+                    <Icon icon="close" />
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     )
@@ -159,13 +184,11 @@ Search.propTypes = {
   onSearchSelection: PropTypes.func.isRequired,
   searchData: PropTypes.arrayOf(PropTypes.object).isRequired,
   multiple: PropTypes.bool,
-  onUpdatingSelected: PropTypes.func,
   placeholder: PropTypes.string
 }
 Search.defaultProps = {
   id: undefined,
   multiple: undefined,
-  onUpdatingSelected: undefined,
   placeholder: undefined
 }
 

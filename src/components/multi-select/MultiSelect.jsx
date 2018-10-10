@@ -34,6 +34,7 @@ class MultiSelect extends Component {
     return (
       <div>
         <Search
+          multiSelectData={this.state.selected}
           onSearchSelection={onSearchSelection}
           onUpdatingSelected={this.handleUpdatingSelected}
           onTogglingOption={this.handleDeletingSelected}
