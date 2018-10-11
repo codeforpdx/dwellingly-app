@@ -1,14 +1,24 @@
 @import "../../constants/constants.scss";
 
 .admin__accordion {
-  &:first-child {
-    margin-top: 1rem;
-  }
+  margin: 1em;
+  // &:first-child {
+  //   margin-top: 1rem;
+  // }
   .btn--group {
     display: flex;
-    button {
-      &:last-child {
-        margin-left: 1em;
+    flex-direction: column;
+    & button:last-child {
+      margin-top: 0.625em;
+    }
+    @media screen and (min-width: $mq--desktop) {
+      flex-direction: row;
+      margin-top: 1em;
+      button {
+        &:last-child {
+          margin-left: 1em;
+          margin-top: 0;
+        }
       }
     }
   }
@@ -28,7 +38,7 @@
     flex-direction: column;
     align-items: flex-start;
     font-size: .9em;
-    padding: 10px;
+    // padding: 10px;
     overflow: auto;
     table {
       border-spacing: 0;
@@ -54,6 +64,9 @@
           background: $color__white;
           border: 1px solid $color__gray--border;
           border-radius: 14px;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
         }
       }
     }
@@ -71,13 +84,21 @@
     }
     & .accordion__list--item {
       display: flex;
-      justify-content: flex-start;
       align-items: flex-start;
-      flex-direction: column;
+      justify-content: space-between;
+      flex-direction: row;
+      padding: 1.25em 0;
+      border-bottom: 1px solid $color__gray--border;
       & ul {
+        margin: 0;
         padding: 0;
         list-style: none;
         text-align: left;
+      }
+      @media screen and (min-width: $mq--desktop) {
+        justify-content: flex-start;
+        flex-direction: column;
+        border: 0;
       }
     }
   }
