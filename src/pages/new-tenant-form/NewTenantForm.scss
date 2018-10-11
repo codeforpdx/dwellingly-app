@@ -82,10 +82,11 @@
 
 .newTenantProperty {
   max-width: 400px;
+  width: 100%;
   margin-top: 1em;
   padding: 1em;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   font-size: 0.875em;
   color: $color__gray--medium;

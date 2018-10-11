@@ -158,38 +158,36 @@ class NewTenantForm extends Component {
               </div>
               {propertySelected ?
                 <div className="card newTenantProperty">
-                  <div>
-                    <h3>
-                      {
-                        propertySelected.name.length > 0 ?
-                          propertySelected.name :
-                          newProperty.newPropertyName
-                      }
-                    </h3>
-                    <p>
-                      {
-                        propertySelected.address.length > 0 ?
-                          propertySelected.address :
-                          newProperty.newPropertyAddress
-                      }
-                    </p>
-                    <div className="propertySearchResults">
-                      {(propertySelected && !propertyManagerSelected) && (
-                        <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
-                          <span className="addIcon"><Icon icon="plus"/></span>
-                          Add new manager
-                        </div>
-                      )}
-                    </div>
-                    {propertySelected && addingNewPropertyManager && (
-                      <div>
-                        <Search
-                          placeholder="Search Property Managers"
-                          filterSubset={["firstName", "lastName"]}
-                          searchData={propertyManagers} />
+                  <h3>
+                    {
+                      propertySelected.name.length > 0 ?
+                        propertySelected.name :
+                        newProperty.newPropertyName
+                    }
+                  </h3>
+                  <p>
+                    {
+                      propertySelected.address.length > 0 ?
+                        propertySelected.address :
+                        newProperty.newPropertyAddress
+                    }
+                  </p>
+                  <div className="propertySearchResults">
+                    {(propertySelected && !propertyManagerSelected) && (
+                      <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
+                        <span className="addIcon"><Icon icon="plus"/></span>
+                        Add new manager
                       </div>
                     )}
                   </div>
+                  {propertySelected && addingNewPropertyManager && (
+                    <div>
+                      <Search
+                        placeholder="Search Property Managers"
+                        filterSubset={["firstName", "lastName"]}
+                        searchData={propertyManagers} />
+                    </div>
+                  )}
                 </div>
               : null}
               {addingNewProperty && (
