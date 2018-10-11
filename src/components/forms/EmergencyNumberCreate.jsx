@@ -17,7 +17,7 @@ import { creatingEmergencyNumber } from '../../dux/emergencyNumbers';
 class FormCreateEmergencyNumber extends React.Component {
   static handleSubmit(event) {
     if (event) event.preventDefault();
-    return <Redirect to={ROUTES.ADMIN} />;
+    return <Redirect to={ROUTES.ADMIN_EMERGENCY_NUMBERS} />;
   }
 
   constructor(props) {
