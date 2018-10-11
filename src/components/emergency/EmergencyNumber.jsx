@@ -20,6 +20,7 @@ class EmergencyNumber extends Component {
       phoneNumberTwo: this.props.emergency.phoneNumberTwo,
       phoneNumberThree: this.props.emergency.phoneNumberThree
     }
+    this.handleChange = this.handleChange.bind(this);
     this.handleEditingNumber = this.handleEditingNumber.bind(this);
     this.handleChangedNumberField = this.handleChangedNumberField.bind(this);
     this.handleSavingNewEmergencyNumber = this.handleSavingNewEmergencyNumber.bind(this);
@@ -65,6 +66,16 @@ class EmergencyNumber extends Component {
       phoneNumberTwo,
       phoneNumberThree
     }));
+  }
+
+  handleChange(event) {
+    const { target } = event;
+    const { name } = target;
+    const { value } = target;
+
+    this.setState({
+      [name]: value
+    })
   }
 
   handleChangedNumberField(e) {
@@ -121,6 +132,7 @@ class EmergencyNumber extends Component {
             numberTwo={phoneNumberTwo !== '' && phoneNumberTwo }
             numberThree={phoneNumberThree !== '' && phoneNumberThree }
             onCancellingEditEmergencyNumber={this.handleEditingNumber}
+            onEditingEmergencyText={this.handleChange}
             onEditingEmergencyNumber={this.handleChangedNumberField}
             onSavingNewEmergencyNumber={this.handleSavingNewEmergencyNumber}
           />
