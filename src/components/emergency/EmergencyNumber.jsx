@@ -68,30 +68,39 @@ class EmergencyNumber extends Component {
   }
 
   handleChangedNumberField(e) {
-    const targetName = e.target.name;
-    this.setState({
-      [targetName]: e.target.value
-    })
+    const { target } = e;
+    const { name } = target;
+    const { parentElement } = target;
+    const { value } = target;
+    const targetName = name;
+    const parentName = parentElement.name;
+    this.setState(prevState => ({
+      [parentName]: {
+        ...prevState[parentName],
+        [targetName]: value
+      }
+    }))
   }
 
   render() {
     const { emergency } = this.props;
     // Parses Text from numbers and returns an object of key value pairs containg parsed data.
-    const handleRemovingTextContentFromLink = (number) => {
-      const textRegex = /[a-zA-Z]\D/g;
-      const numberRegex = /[0-9]\S/g;
-      if(number !== null || number !== '') {
-        const textContent = number.match(textRegex);
-        const numberContent = number.match(numberRegex);
-        if(textContent !== null && numberContent !== null) {
-          return {
-            textContentOfNumber: textContent.join('').trim(),
-            number: numberContent.join('')
-          }
-        }
-      }
-      return number
-    }
+    // const handleRemovingTextContentFromLink = (number) => {
+    //   const textRegex = /[a-zA-Z]\D/g;
+    //   const numberRegex = /[0-9]\S/g;
+    //   if(number !== null || number !== '') {
+    //     const textContent = number.match(textRegex);
+    //     const numberContent = number.match(numberRegex);
+    //     if(textContent !== null && numberContent !== null) {
+    //       return {
+    //         textContentOfNumber: textContent.join('').trim(),
+    //         number: numberContent.join('')
+    //       }
+    //     }
+    //   }
+    //   return number
+    // }
+    const { contact, id, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = emergency;
     return (
       <div className="emergencyNumberRow">
       {
@@ -103,15 +112,14 @@ class EmergencyNumber extends Component {
             newNumberOne={this.state.phoneNumberOne}
             newNumberTwo={this.state.phoneNumberTwo}
             newNumberThree={this.state.phoneNumberThree}
-            parseNumber={handleRemovingTextContentFromLink}
             onArchivingNumber={this.handleArchivingEmergencyNumber}
             onEditingNumber={this.handleEditingNumber} /> :
           <EmergencyNumberEdit
-            id={emergency.id}
-            contact={emergency.contact}
-            numberOne={emergency.phoneNumberOne}
-            numberTwo={emergency.phoneNumberTwo !== null && emergency.phoneNumberTwo !== '' ? emergency.phoneNumberTwo : null }
-            numberThree={emergency.phoneNumberThree !== null && emergency.phoneNumberThree !== '' ? emergency.phoneNumberThree : null }
+            id={id}
+            contact={contact}
+            numberOne={phoneNumberOne}
+            numberTwo={phoneNumberTwo !== '' && phoneNumberTwo }
+            numberThree={phoneNumberThree !== '' && phoneNumberThree }
             onCancellingEditEmergencyNumber={this.handleEditingNumber}
             onEditingEmergencyNumber={this.handleChangedNumberField}
             onSavingNewEmergencyNumber={this.handleSavingNewEmergencyNumber}
@@ -127,9 +135,10 @@ EmergencyNumber.propTypes = {
   emergency: PropTypes.shape({
     id: PropTypes.string.isRequired,
     contact: PropTypes.string.isRequired,
-    phoneNumberOne: PropTypes.string.isRequired,
-    phoneNumberTwo: PropTypes.string,
-    phoneNumberThree: PropTypes.string
+    phoneNumberOne: PropTypes.shape({}).isRequired,
+    phoneNumberTwo: PropTypes.shape({}),
+    phoneNumberThree: PropTypes.shape({}),
+    subtext: PropTypes.any
   }),
 };
 
