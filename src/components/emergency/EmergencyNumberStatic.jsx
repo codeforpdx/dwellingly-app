@@ -5,17 +5,18 @@ import Icon from '../icon/Icon';
 
 const EmergencyNumberStatic = (props) => {
   const { emergency } = props;
-  const parsedPhoneNumberOne = props.parseNumber(emergency.phoneNumberOne);
-  const parsedPhoneNumberTwo = props.parseNumber(emergency.phoneNumberTwo);
+  const { phoneNumberOne, phoneNumberTwo } = emergency;
+  // const parsedPhoneNumberOne = props.parseNumber(emergency.phoneNumberOne);
+  // const parsedPhoneNumberTwo = props.parseNumber(emergency.phoneNumberTwo);
   return (
     <div className="emergencyNumberItem" key={`row-${emergency.id}`}>
       <div className="emergencyTitle">
         {!props.doneEditing ? emergency.contact : props.newContact}
-        {emergency.phoneNumberThree !== null && emergency.phoneNumberThree !== ''
+        {emergency.subtext !== null && emergency.subtext !== ''
           && (
           <div className="emergencyNumberDescription">
             <p>
-              {!props.doneEditing ? emergency.phoneNumberThree : props.newNumberThree}
+              {!props.doneEditing ? emergency.subtext : props.newNumberThree}
             </p>
           </div>
           )
@@ -23,35 +24,33 @@ const EmergencyNumberStatic = (props) => {
       </div>
       <div className="emergencyNumberContainer">
         <div className="emergencyNumber">
-        {parsedPhoneNumberOne.textContentOfNumber !== undefined ?
+        {phoneNumberOne.subtext !== '' ?
           <div>
-            <a href={`tel:${!props.doneEditing ? emergency.phoneNumberOne : props.newNumberOne}`}>
-            {!props.doneEditing ? parsedPhoneNumberOne.number : props.newNumberOne}
+            <span>{phoneNumberOne.subtext}:&nbsp;</span>
+            <a href={`tel:${!props.doneEditing ? phoneNumberOne.number : props.newNumberOne}`}>
+            {!props.doneEditing ? phoneNumberOne.number : props.newNumberOne}
             </a>
-            <span> {parsedPhoneNumberOne.textContentOfNumber}</span>
           </div> :
-          <a href={`tel:${!props.doneEditing ? emergency.phoneNumberOne : props.newNumberOne}`}>
-          {!props.doneEditing ? emergency.phoneNumberOne : props.newNumberOne}
+          <a href={`tel:${!props.doneEditing ? phoneNumberOne.number : props.newNumberOne}`}>
+          {!props.doneEditing ? phoneNumberOne.number : props.newNumberOne}
           </a>
         }
         </div>
-        {emergency.phoneNumberTwo !== null && emergency.phoneNumberTwo !== ''
+        {phoneNumberTwo.number !== null && phoneNumberTwo.number !== ''
           && (
           <div className="emergencyNumber">
-            {parsedPhoneNumberTwo.textContentOfNumber !== undefined ?
+            {phoneNumberTwo.subtext !== '' ?
               <div>
                 <span>
-                  {parsedPhoneNumberTwo.textContentOfNumber}:&nbsp;
+                  {phoneNumberTwo.subtext}:&nbsp;
                 </span>
-                <a href={`tel:${!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}`}>
-                  {!props.doneEditing ? parsedPhoneNumberTwo.number : props.newNumberTwo}
+                <a href={`tel:${!props.doneEditing ? phoneNumberTwo.number : props.newNumberTwo}`}>
+                  {!props.doneEditing ? phoneNumberTwo.number : props.newNumberTwo}
                 </a>
               </div> :
-              <div>
-                <a href={`tel:${!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}`}>
-                  {!props.doneEditing ? emergency.phoneNumberTwo : props.newNumberTwo}
-                </a>
-              </div>
+              <a href={`tel:${!props.doneEditing ? phoneNumberTwo.number : props.newNumberTwo}`}>
+                {!props.doneEditing ? phoneNumberTwo.number : props.newNumberTwo}
+              </a>
             }
           </div>
           )
@@ -72,17 +71,18 @@ const EmergencyNumberStatic = (props) => {
 EmergencyNumberStatic.propTypes = {
   doneEditing: PropTypes.bool.isRequired,
   newContact: PropTypes.string.isRequired,
-  newNumberOne: PropTypes.string.isRequired,
-  newNumberTwo: PropTypes.string,
-  newNumberThree: PropTypes.string,
+  newNumberOne: PropTypes.shape({}).isRequired,
+  newNumberTwo: PropTypes.shape({}),
+  newNumberThree: PropTypes.shape({}),
   onEditingNumber: PropTypes.func.isRequired,
   onArchivingNumber: PropTypes.func.isRequired,
-  parseNumber: PropTypes.func.isRequired,
+  // parseNumber: PropTypes.func.isRequired,
   emergency: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     contact: PropTypes.string.isRequired,
-    phoneNumberOne: PropTypes.string.isRequired,
-    phoneNumberTwo: PropTypes.string,
-    phoneNumberThree: PropTypes.string
+    phoneNumberOne: PropTypes.shape({}).isRequired,
+    phoneNumberTwo: PropTypes.shape({}),
+    phoneNumberThree: PropTypes.shape({})
   }),
 }
 
