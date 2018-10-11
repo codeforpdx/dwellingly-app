@@ -192,12 +192,6 @@ class NewTenantForm extends Component {
               : null}
               {addingNewProperty && (
                 <form className="align--left">
-                  {/* <div className="propertyFormCloseButton">
-                    {!propertySelected ? "Add new property" : "Edit new property"}
-                    <span onClick={this.handleAddingNewProperty} role="presentation">
-                      <Icon icon="close"/>
-                    </span>
-                  </div> */}
                   <NewProperty
                     id="propertySelected"
                     data={propertyManagers}
