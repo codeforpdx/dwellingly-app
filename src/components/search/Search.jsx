@@ -17,7 +17,6 @@ class Search extends Component {
     this.handleHideOptionsList = this.handleHideOptionsList.bind(this);
     this.handleSelectionClasses = this.handleSelectionClasses.bind(this);
     this.handleUpdatingOptions = this.handleUpdatingOptions.bind(this);
-    // this.handleDeletingSelected = this.handleDeletingSelected.bind(this);
 
     this.state = {
       searchTerm: '',
@@ -80,10 +79,6 @@ class Search extends Component {
       }));
     }
   }
-
-  // handleDeletingSelected(data) {
-  //   this.setState(prevState => ({selectedOptions: prevState.selectedOptions.filter(item => item !== data)}))
-  // }
 
   handleSelection(searchedObj) {
     // New Tenant Form Callback
@@ -152,10 +147,6 @@ class Search extends Component {
                     className={this.handleSelectionClasses(data.id)}
                     onClick={() => this.handleSelection(data)}>
                     {filterSubset.map(item => <span key={item}>{data[item]}&nbsp;</span>)}
-                    {/* !multiple ?
-                      <span>{data.name} {data.address}</span> :
-                      <span>{data.firstName} {data.lastName}</span>
-                    */}
                   </button>
                 </div>
               )}

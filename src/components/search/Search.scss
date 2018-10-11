@@ -84,32 +84,28 @@
   width: 100%;
   cursor: pointer;
   padding: 0.5em 0.5em;
+  font-size: 0.875em;
+  color: $color__gray--medium;
   &:hover,
   &:focus {
     background: #ececec;
     outline: none;
   }
   &--multiple {
-    padding-left: 2em;
+    padding-left: 1em;
     display: flex;
     align-items: center;
-    position: relative;
     &:before {
-      position: absolute;
-      left: 0.8em;
       content: "\2610";
       color: $color__black;
       font-size: 1.2em;
     }
     &-active {
-      position: relative;
-      padding-left: 2em;
+      padding-left: 1em;
       &:before {
         content: "\2611";
         font-size: 1.2em;
         color: $color__black;
-        position: absolute;
-        left: 0.8em;
       }
     }
   }
