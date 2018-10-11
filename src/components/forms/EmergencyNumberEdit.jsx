@@ -19,10 +19,14 @@ const EmergencyNumberEdit = (props) => {
             name="number"
             placeholder={props.numberOne.number}
             type="text" />
+          <input
+            name="ext"
+            placeholder={props.numberOne.ext !== '' ? props.numberOne.ext : 'Enter extension'}
+            type="text" />
         </fieldset>
         {props.numberTwo !== null && props.numberTwo !== ''
           && (
-            <div name="phoneNumberTwo">
+            <fieldset name="phoneNumberTwo">
               <input
               name="subtext"
               placeholder={props.numberTwo.subtext !== '' ? props.numberTwo.subtext : 'Enter number info'}
@@ -32,16 +36,33 @@ const EmergencyNumberEdit = (props) => {
                 placeholder={props.numberTwo.number}
                 onChange={props.onEditingEmergencyNumber}
                 type="text" />
-            </div>
+              <input
+                name="ext"
+                placeholder={props.numberTwo.ext !== '' ? props.numberTwo.ext : 'Enter extension'}
+                onChange={props.onEditingEmergencyNumber}
+                type="text" />
+            </fieldset>
           )
         }
         {props.numberThree !== null && props.numberThree !== ''
           && (
-            <input
-              name="phoneNumberThree"
-              placeholder={props.numberThree.number}
-              onChange={props.onEditingEmergencyNumber}
-              type="text" />
+            <fieldset name="phoneNumberThree">
+              <input
+                name="subtext"
+                placeholder={props.numberThree.subtext}
+                onChange={props.onEditingEmergencyNumber}
+                type="text" />
+              <input
+                name="number"
+                placeholder={props.numberThree.number}
+                onChange={props.onEditingEmergencyNumber}
+                type="text" />
+              <input
+                name="ext"
+                placeholder={props.numberThree.ext}
+                onChange={props.onEditingEmergencyNumber}
+                type="text" />
+            </fieldset>
           )
         }
       </div>
