@@ -16,6 +16,7 @@ class EmergencyNumber extends Component {
       doneEditing: false,
       id: this.props.emergency.id,
       contact: this.props.emergency.contact,
+      subtext: this.props.emergency.subtext,
       phoneNumberOne: this.props.emergency.phoneNumberOne,
       phoneNumberTwo: this.props.emergency.phoneNumberTwo,
       phoneNumberThree: this.props.emergency.phoneNumberThree
@@ -35,10 +36,11 @@ class EmergencyNumber extends Component {
 
   handleSavingNewEmergencyNumber() {
     const { dispatch } = this.props;
-    const { id, contact, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
+    const { id, contact, subtext, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
     dispatch(editingEmergencyNumber({
       id,
       contact,
+      subtext,
       phoneNumberOne,
       phoneNumberTwo,
       phoneNumberThree
@@ -48,10 +50,11 @@ class EmergencyNumber extends Component {
 
   handleArchivingEmergencyNumber() {
     const { dispatch } = this.props;
-    const { id, contact, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
+    const { id, contact, subtext, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
     dispatch(archivingEmergencyNumber({
       id,
       contact,
+      subtext,
       phoneNumberOne,
       phoneNumberTwo,
       phoneNumberThree
@@ -91,7 +94,7 @@ class EmergencyNumber extends Component {
 
   render() {
     const { emergency } = this.props;
-    const { contact, id, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = emergency;
+    const { contact, subtext, id, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = emergency;
     return (
       <div className="emergencyNumberRow">
       {
@@ -100,6 +103,7 @@ class EmergencyNumber extends Component {
             emergency={emergency}
             doneEditing={this.state.doneEditing}
             newContact={this.state.contact}
+            newSubtext={this.state.subtext}
             newNumberOne={this.state.phoneNumberOne}
             newNumberTwo={this.state.phoneNumberTwo}
             newNumberThree={this.state.phoneNumberThree}
@@ -108,6 +112,7 @@ class EmergencyNumber extends Component {
           <EmergencyNumberEdit
             id={id}
             contact={contact}
+            subtext={subtext}
             numberOne={phoneNumberOne}
             numberTwo={phoneNumberTwo !== '' && phoneNumberTwo }
             numberThree={phoneNumberThree !== '' && phoneNumberThree }
