@@ -6,7 +6,7 @@ import EmergencyNumberStatic from './EmergencyNumberStatic';
 
 import './Emergency.scss';
 
-import { editingEmergencyNumber, archivingEmergencyNumber } from '../../dux/emergencyNumbers';
+import { editingEmergencyNumber, archivingEmergencyNumber, deletingEmergencyNumber } from '../../dux/emergencyNumbers';
 
 class EmergencyNumber extends Component {
   constructor(props) {
@@ -25,6 +25,7 @@ class EmergencyNumber extends Component {
     this.handleChangedNumberField = this.handleChangedNumberField.bind(this);
     this.handleSavingNewEmergencyNumber = this.handleSavingNewEmergencyNumber.bind(this);
     this.handleArchivingEmergencyNumber = this.handleArchivingEmergencyNumber.bind(this);
+    this.handleDeletingEmergencyNumber = this.handleDeletingEmergencyNumber.bind(this);
   }
 
 
@@ -35,17 +36,6 @@ class EmergencyNumber extends Component {
   handleSavingNewEmergencyNumber() {
     const { dispatch } = this.props;
     const { id, contact, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
-    // const currentKey = Object.keys(this.state).map(numberItem => {
-    //   const updatedNumberItem = this.state[numberItem];
-    //   return {
-    //     id,
-    //     contact,
-    //     phoneNumberOne,
-    //     phoneNumberTwo,
-    //     phoneNumberThree
-    //   }
-    // });
-    // console.log(currentKey);
     dispatch(editingEmergencyNumber({
       id,
       contact,
@@ -66,6 +56,12 @@ class EmergencyNumber extends Component {
       phoneNumberTwo,
       phoneNumberThree
     }));
+  }
+
+  handleDeletingEmergencyNumber() {
+    const { dispatch } = this.props;
+    const { id } = this.state;
+    dispatch(deletingEmergencyNumber(id))
   }
 
   handleChange(event) {
@@ -95,22 +91,6 @@ class EmergencyNumber extends Component {
 
   render() {
     const { emergency } = this.props;
-    // Parses Text from numbers and returns an object of key value pairs containg parsed data.
-    // const handleRemovingTextContentFromLink = (number) => {
-    //   const textRegex = /[a-zA-Z]\D/g;
-    //   const numberRegex = /[0-9]\S/g;
-    //   if(number !== null || number !== '') {
-    //     const textContent = number.match(textRegex);
-    //     const numberContent = number.match(numberRegex);
-    //     if(textContent !== null && numberContent !== null) {
-    //       return {
-    //         textContentOfNumber: textContent.join('').trim(),
-    //         number: numberContent.join('')
-    //       }
-    //     }
-    //   }
-    //   return number
-    // }
     const { contact, id, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = emergency;
     return (
       <div className="emergencyNumberRow">
@@ -135,6 +115,7 @@ class EmergencyNumber extends Component {
             onEditingEmergencyText={this.handleChange}
             onEditingEmergencyNumber={this.handleChangedNumberField}
             onSavingNewEmergencyNumber={this.handleSavingNewEmergencyNumber}
+            onDeletingEmergencyNumber={this.handleDeletingEmergencyNumber}
           />
       }
       </div>

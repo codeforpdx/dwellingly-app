@@ -11,6 +11,9 @@ const EmergencyNumberEdit = (props) => {
       <input name="contact" placeholder={props.contact} onChange={props.onEditingEmergencyText} type="text" />
       <div className="emergencyNumberEditInputs">
         <fieldset name="phoneNumberOne" onChange={props.onEditingEmergencyNumber}>
+          <div>
+            {props.numberOne.number}
+          </div>
           <input
             name="subtext"
             type="text"
@@ -33,7 +36,7 @@ const EmergencyNumberEdit = (props) => {
               onChange={props.onEditingEmergencyNumber} />
               <input
                 name="number"
-                placeholder={props.numberTwo.number}
+                placeholder={props.numberTwo.number !== '' ? props.numberTwo.number : 'Enter phone number'}
                 onChange={props.onEditingEmergencyNumber}
                 type="text" />
               <input
@@ -69,7 +72,7 @@ const EmergencyNumberEdit = (props) => {
       <div className="btn--group">
         <div className="btn--group-inner">
           <button type="submit" className="btn" onClick={() => onSubmit()}>Save</button>
-          <button type="button" className="btn btn--disabled">Delete</button>
+          <button type="button" className="btn btn--disabled" onClick={props.onDeletingEmergencyNumber}>Delete</button>
         </div>
         <button type="button" className="btn btn--danger" onClick={props.onCancellingEditEmergencyNumber}>Cancel</button>
       </div>
@@ -95,6 +98,7 @@ EmergencyNumberEdit.propTypes = {
     number: PropTypes.string,
     subtext: PropTypes.string
   }),
+  onDeletingEmergencyNumber: PropTypes.func.isRequired,
   onEditingEmergencyText: PropTypes.func.isRequired,
   onCancellingEditEmergencyNumber: PropTypes.func.isRequired,
   onEditingEmergencyNumber: PropTypes.func.isRequired,
