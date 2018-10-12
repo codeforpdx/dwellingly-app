@@ -27,23 +27,23 @@ class UserControls extends React.Component {
     this.determineUserState = this.determineUserState.bind(this);
     this.clearUser = this.clearUser.bind(this);
     this.setUser = this.setUser.bind(this);
-    this.setUserCookies = this.setUserCookies.bind(this);
   }
 
   componentDidMount() {
+    const cookies = new Cookies();
     // Create Firebase authorization ovbservable, do a thing if it changes
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user && !this.props.isCreatingUser && !this.props.isFetchingUserData) {
-        this.setUser(user);
-      } else {
-        this.clearUser();
-      }
-    });
-  }
-
-  componentWillReceiveProps(nextProp){
-    if (this.props.isFetchingAuthorization && !nextProp.isFetchingUserData) {
-      this.setUserCookies(nextProp.user);
+     const userEmailCookieExist = cookies.get('messengerUser');
+    if (userEmailCookieExist) {
+      console.log('user exists, watch authentication object');
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user && !this.props.isCreatingUser && !this.props.isFetchingUserData) {
+          this.setUser(user);
+        } else {
+          this.clearUser();
+        }
+      });
+    } else {
+      console.log('no user!');
     }
   }
 
@@ -65,36 +65,7 @@ class UserControls extends React.Component {
     }
   }
 
-  setUserCookies(newUser){
-    const cookies = new Cookies();
-    const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-    const userEmailCookieExist = cookies.get('messengerUser');
-    const userIDCookieExist = cookies.get('messengerUserId');
-    const userRoleExist = cookies.get('userRole');
-    if (this.props.isFetchingAuthorization && newUser && newUser.id) {
-      if (!userEmailCookieExist) {
-        cookies.set(
-          'messengerUser', 
-          newUser.email,
-          { path: '/', expires: cookieExpiration,  }
-        );
-      }
-      if (!userIDCookieExist) {
-        cookies.set(
-          'messengerUserId', 
-          newUser.id,
-          { path: '/', expires: cookieExpiration,  }
-        );
-      }
-      if (!userRoleExist) {
-        cookies.set(
-          'messengerUserRole', 
-          newUser.role,
-          { path: '/', expires: cookieExpiration,  }
-          );
-      }
-    }
-  }
+
 
   clearUser(){
     const cookies = new Cookies();
@@ -139,6 +110,9 @@ class UserControls extends React.Component {
               <li>
                 <Link to="/login">Login</Link>
               </li>
+              <li>
+                <LogoutButton />
+              </li>
             </ul>
           )
         }
@@ -152,7 +126,6 @@ const mapStateToProps = ({ user }) => ({
   userCreated: user.userCreated,
   accountSource: user.accountSource,
   isCreatingUser: user.isCreatingUser,
-  isFetchingAuthorization: user.isFetchingAuthorization,
   isFetchingUserData: user.isFetchingUserData,
   haveToken: user.haveToken,
   haveUser: user.haveUser,
@@ -176,7 +149,6 @@ UserControls.propTypes = {
       isStaff: PropTypes.bool
     })
   }),
-  isFetchingAuthorization: PropTypes.bool.isRequired,
   isCreatingUser: PropTypes.bool.isRequired,
   isFetchingUserData: PropTypes.bool.isRequired,
   haveUser: PropTypes.bool.isRequired,

@@ -134,6 +134,7 @@ export default (state = initialState, action) => {
 
 // Sychronous functions
 export const initiateFirebaseCall = () => (dispatch) => {
+  console.log('initiate firebase call');
   dispatch({
     type: GET_AUTHORIZATION,
     isFetchingAuthorization: true,
@@ -142,15 +143,20 @@ export const initiateFirebaseCall = () => (dispatch) => {
   });  
 }
 
-export const getAuthDetailsFromFirebase = user => (dispatch) => {
+export const getAuthDetailsFromFirebase = (user, accountSource) => (dispatch) => {
+  console.log('here are the details about user from firebase');
+  console.log(user)
   dispatch({
     type: GET_AUTHORIZATION_COMPLETE,
     isFetchingAuthorization: false,
     haveToken: true,
     user: {
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
-      accountSource: user.providerData[0].providerId,
+      accountSource,
       id: user.localId,
+      role: user.role,
     },
     error: user.error
   });  
@@ -210,6 +216,7 @@ export const initiateCreateUserCall = () => (dispatch) => {
 }
 
 export const setUserFromFirebaseEmail = (user) => (dispatch) => {
+  console.log('is this thing on?', user)
   dispatch({
     type: CREATE_USER_COMPLETE,
     isFetchingAuthorization: false,

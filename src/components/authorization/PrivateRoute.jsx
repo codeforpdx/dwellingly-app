@@ -16,7 +16,7 @@ if (userRole && isRoleArray) {
 // We also need to check props to see if there's a user! 
 
 
-console.log('user role', userRole, isRoleArray);
+console.log('user role: ', userRole, doesRoleExist);
 
 
 function PrivateRoute({ user, component: Component, ...rest }) {

@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'whatwg-fetch';
+import Cookies from 'universal-cookie';
 import store, { history } from '../store';
 import { ENDPOINTS, HTTP_METHODS, ROUTES } from '../constants/constants';
 
@@ -8,6 +9,7 @@ import { ENDPOINTS, HTTP_METHODS, ROUTES } from '../constants/constants';
 import {
   initiateFirebaseCall,
   addError,
+  getAuthDetailsFromFirebase,
   setUserFromFirebaseEmail,
   setUserFromGoogle,
   addCustomUserData,
@@ -23,13 +25,16 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 // User data from Firestore
 export function getFirestoreUserData( uid, accountSource ) {
+  console.log('get user data');
   store.dispatch(initiateFirebaseCall());
   const userEndpoint = `${ENDPOINTS.USER}${uid}`;
+  console.log('getting user at ', userEndpoint)
   fetch(userEndpoint, {
     method: HTTP_METHODS.GET,
   }).then((response => response.json()))
     .then((json) => {
       const userData = json;
+      console.log(json);
       if (userData) {
         store.dispatch(addCustomUserData(userData, accountSource, uid))
       }
@@ -59,7 +64,10 @@ export function doCreateUserWithEmailAndPassword(firstName, lastName, email, pas
           })
         })
       }
-    )
+    ).then((response => response.json()))
+     .then((json) => {
+      store.dispatch(setUserFromFirebaseEmail(json))
+     })
     .catch((error) => {
       // Handle Errors here.
       store.dispatch(addError(error));
@@ -69,15 +77,19 @@ export function doCreateUserWithEmailAndPassword(firstName, lastName, email, pas
 // Sign In user with email address and password
 export function doSignInWithEmailAndPassword(email, password) {
   store.dispatch(initiateFirebaseCall());
+  console.log('login with username and password');
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(response => {
         // fetch user data
+        console.log(response);
         const userEndpoint = `${ENDPOINTS.USER}${response.user.uid}`;
         fetch(userEndpoint, {
         method: HTTP_METHODS.GET,
       }).then((response => response.json()))
         .then((json) => {
-          setUserFromFirebaseEmail(json);
+          console.log(json);
+          store.dispatch(getAuthDetailsFromFirebase(json, 'password'));
+          this.setUserCookies(json);
           // Don't need to set user here, will get picked up by UserControl as auth changes!
           // store.dispatch(setUser(json, 'email'))
         })
@@ -153,3 +165,38 @@ export function doPasswordReset(email) {
 export function doPasswordUpdate(password) {
   firebase.auth().currentUser.updatePassword(password);
 }
+
+export function setUserCookies(newUser){
+  console.log('setting cookies!');
+  console.log(newUser);
+  const cookies = new Cookies();
+  const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+  const userEmailCookieExist = cookies.get('messengerUser');
+  const userIDCookieExist = cookies.get('messengerUserId');
+  const userRoleExist = cookies.get('userRole');
+  if (newUser && newUser.id) {
+    if (!userEmailCookieExist) {
+      cookies.set(
+        'messengerUser', 
+        newUser.email,
+        { path: '/', expires: cookieExpiration,  }
+      );
+    }
+    if (!userIDCookieExist) {
+      cookies.set(
+        'messengerUserId', 
+        newUser.id,
+        { path: '/', expires: cookieExpiration,  }
+      );
+    }
+    if (!userRoleExist) {
+      cookies.set(
+        'messengerUserRole', 
+        newUser.role,
+        { path: '/', expires: cookieExpiration,  }
+        );
+    }
+  }
+}
+
+

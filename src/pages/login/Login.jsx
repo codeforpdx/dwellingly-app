@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
 import Header from '../../components/header/Header';
@@ -28,7 +28,7 @@ class Login extends React.Component {
 
     const ourUser = this.props.user;
     let userType = "default";
-    if (ourUser && (ourUser.role.isAdmin || ourUser.role.isPropertyManager || ourUser.role.isStaff ) && !this.props.isFetchingUserData && !this.props.isFetchingAuthorization) {
+    if (ourUser && ourUser.role && (ourUser.role.isAdmin || ourUser.role.isPropertyManager || ourUser.role.isStaff ) && !this.props.isFetchingUserData && !this.props.isFetchingAuthorization) {
       if (ourUser.role.isAdmin === "true" || ourUser.role.isAdmin === true) {
         userType = "isAdmin";
       } else if (ourUser.role.isPropertyManager === "true"  || ourUser.role.isPropertyManager === true) {
@@ -36,7 +36,7 @@ class Login extends React.Component {
       } else if (ourUser.role.isStaff === "true" || ourUser.role.isStaff === true) {
         userType = "isStaff";
       }
-      console.log('we would be going to ', userRoutes[userType]);
+      console.log('we are going to ', userRoutes[userType]);
     } 
     return (
       <div className="main page page--login">
@@ -58,11 +58,10 @@ class Login extends React.Component {
             <Spinner />
           }
           { this.props.haveUser && this.props.user && this.props.user.id && this.props.user.email && 
-
-            <p>This is a redirect that we need to fix on some other pages to avoid an inifite loop...</p>             /* <Redirect to={userRoutes[userType]} /> */
+            <Redirect to={userRoutes[userType]} />
           }
 
-          { this.props.error && this.props.error.message.length > 0 &&
+          { this.props.error && this.props.error.message && this.props.error.message.length > 0 &&
             <p className="error">
               { this.props.error.message }
             </p>
