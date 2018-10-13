@@ -8,23 +8,29 @@ const EmergencyNumberEdit = (props) => {
   }
   return (
     <div id={props.id} className="emergencyNumberEditContainer">
-      <input name="contact" placeholder={props.contact} onChange={props.onEditingEmergencyText} type="text" />
+      <input
+        name="contact"
+        placeholder={props.contact}
+        onChange={props.onEditingEmergencyText}
+        type="text" />
+      <input
+        name="subtext"
+        placeholder={props.subtext}
+        onChange={props.onEditingEmergencyText}
+        type="text" />
       <div className="emergencyNumberEditInputs">
         <fieldset name="phoneNumberOne" onChange={props.onEditingEmergencyNumber}>
-          <div>
-            {props.numberOne.number}
-          </div>
           <input
             name="subtext"
             type="text"
-            placeholder={props.numberOne.subtext !== '' ? props.numberOne.subtext : 'Enter number info'} />
+            placeholder={props.numberOne.subtext !== null ? props.numberOne.subtext : 'Enter number info'} />
           <input
             name="number"
             placeholder={props.numberOne.number}
             type="text" />
           <input
             name="ext"
-            placeholder={props.numberOne.ext !== '' ? props.numberOne.ext : 'Enter extension'}
+            placeholder={props.numberOne.ext !== null ? props.numberOne.ext : 'Enter extension'}
             type="text" />
         </fieldset>
         {props.numberTwo !== null && props.numberTwo !== ''
@@ -32,16 +38,16 @@ const EmergencyNumberEdit = (props) => {
             <fieldset name="phoneNumberTwo">
               <input
               name="subtext"
-              placeholder={props.numberTwo.subtext !== '' ? props.numberTwo.subtext : 'Enter number info'}
+              placeholder={props.numberTwo.subtext !== null ? props.numberTwo.subtext : 'Enter number info'}
               onChange={props.onEditingEmergencyNumber} />
               <input
                 name="number"
-                placeholder={props.numberTwo.number !== '' ? props.numberTwo.number : 'Enter phone number'}
+                placeholder={props.numberTwo.number !== null ? props.numberTwo.number : 'Enter phone number'}
                 onChange={props.onEditingEmergencyNumber}
                 type="text" />
               <input
                 name="ext"
-                placeholder={props.numberTwo.ext !== '' ? props.numberTwo.ext : 'Enter extension'}
+                placeholder={props.numberTwo.ext !== null ? props.numberTwo.ext : 'Enter extension'}
                 onChange={props.onEditingEmergencyNumber}
                 type="text" />
             </fieldset>
@@ -83,6 +89,7 @@ const EmergencyNumberEdit = (props) => {
 EmergencyNumberEdit.propTypes = {
   id: PropTypes.string.isRequired,
   contact: PropTypes.string.isRequired,
+  subtext: PropTypes.string,
   numberOne: PropTypes.shape({
     ext: PropTypes.string,
     number: PropTypes.string,
@@ -106,8 +113,9 @@ EmergencyNumberEdit.propTypes = {
 }
 
 EmergencyNumberEdit.defaultProps = {
-  numberTwo: "",
-  numberThree: ""
+  numberTwo: null,
+  numberThree: null,
+  subtext: ""
 }
 
 export default EmergencyNumberEdit
