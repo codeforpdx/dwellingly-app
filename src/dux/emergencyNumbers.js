@@ -92,6 +92,7 @@ export const editEmergencyNumber = (data) => (dispatch) => {
     type: EDIT_EMERGENCY_NUMBER,
     id: data.id,
     contact: data.contact,
+    subtext: data.subtext,
     phoneNumberOne: data.phoneNumberOne,
     phoneNumberTwo: data.phoneNumberTwo,
     phoneNumberThree: data.phoneNumberThree
@@ -103,6 +104,7 @@ export const createEmergencyNumber = (data) => (dispatch) => {
     type: CREATE_EMERGENCY_NUMBER,
     id: data.id,
     contact: data.contact,
+    subtext: data.subtext,
     phoneNumberOne: data.phoneNumberOne,
     phoneNumberTwo: data.phoneNumberTwo,
     phoneNumberThree: data.phoneNumberThree
