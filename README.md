@@ -61,13 +61,13 @@ _config_<br/>
 Holds all of the configuration files for webpack, the environment, and any polyfills for the site
 
 _functions_<br/>
-Stores Firebase functions! Not sure if we'll use this. Also note this has its own _node_modules_ subfolder that needs separate installation!
+The Firebase functions are now their own special project: https://github.com/AmplifiedHub/join-messenger-db
 
 _public_<br/> 
 The source HTML file, manifest file, and favicon. These files get moved to the _build_ folder as part of the build process.
 
 _scripts_<br/>
-The ejected build, start, and test scripts from Create React App. Do not delete
+The ejected build, start, and test scripts from Create React App. Do not delete!
 
 _src_<br/>
 All of the code for the application! Subfolders are described below.
@@ -100,6 +100,7 @@ Why is this different than the bog standard CRA application?
 
 Incldes the following
 - Sass
+- Firebase integrations (authentication, hosting)
 - eslint-config-airbnb
 - react-intl
 - react-redux

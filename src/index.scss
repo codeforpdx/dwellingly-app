@@ -154,7 +154,7 @@ a {
   }
 }
 
-// specifically styling for TELEPHONE numbers!
+/* specifically styling for TELEPHONE numbers! */
 a[href^="tel:"] {
   font-weight: 400;
   white-space: nowrap;
@@ -196,6 +196,12 @@ p {
 time {
   display: block;
   line-height: 1em;
+}
+
+
+.textblock {
+  margin: 2rem 0 4rem;
+  text-align: left;
 }
 
 .app {
@@ -312,6 +318,14 @@ time {
   }
 }
 
+.separator {
+  margin: 1rem 0;
+}
+
+.allCaps {
+  text-transform: uppercase;
+}
+
 .progress {
   color: $color__yellow;
   font-weight: 700;
@@ -336,7 +350,7 @@ time {
 }
 /* end defaults */
 
-// FORM-META
+/* FORM-META */
 .form-meta {
   @include clearfix;
   border-top: 1px solid $color__gray--border;

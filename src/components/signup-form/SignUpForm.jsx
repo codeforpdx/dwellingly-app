@@ -1,7 +1,8 @@
 import React from 'react';
 import { intlShape, injectIntl } from 'react-intl';
+import Input from '../input/Input';
 import { auth } from '../../firebase';
-import { FORMS } from '../../translations/messages';
+import { SIGNUP, FORMS } from '../../translations/messages';
 
 import './SignUpForm.scss';
 
@@ -11,13 +12,12 @@ class SignUpForm extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleError = this.handleError.bind(this);
     this.state = {
       email: '',
+      firstName: '',
+      lastName: '',
       password: '',
       passwordConfirm: '',
-      submit: false,
-      error: null,
     };
   }
 
@@ -31,14 +31,14 @@ class SignUpForm extends React.Component {
     });
   }
 
-  handleError(error) {
-    this.setState({ error });
-  }
-
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ submit: true });
-    auth.doCreateUserWithEmailAndPassword(this.state.email, this.state.password);
+    auth.doCreateUserWithEmailAndPassword(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.email,
+      this.state.password
+    );
   }
 
   render() {
@@ -51,44 +51,85 @@ class SignUpForm extends React.Component {
     const disableForm = (this.state.email === '' || !this.state.password || !this.state.passwordConfirm || passwordsDoNotMatch);
 
     return (
-      <div className="dashboard">
-        <h2>
-          Create account using email address
+      <div className="form form--signin">
+        <h2 className="align-left">
+          {intl.formatMessage(SIGNUP.CREATE_ACCOUNT_EMAIL)}
         </h2>
         <form name="loginEmail" method="POST" onSubmit={this.handleSubmit} className="signupForm">
-          <label htmlFor="email">
-            Email
-            <input name="email" type="email" value={this.state.email} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="password">
-            Password
-            <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="passwordConfirm">
-            Confirm Password
-            <input name="passwordConfirm" type="password" value={this.state.passwordConfirm} onChange={this.handleInputChange} />
-          </label>
-          { this.state.submit }
-          <input
-            type="submit"
-            value={intl.formatMessage(FORMS.SUBMIT)}
-            disabled={disableForm}
-          />
+          <fieldset>
+            <Input
+              id="signup-firstName"
+              label={intl.formatMessage(FORMS.NAME_FIRST_LABEL)}
+              name="firstName"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.NAME_FIRST_PLACEHOLDER)}
+              required
+              type="text"
+              value={this.state.firstName}
+              variants={['full']}
+            />
+            <Input
+              id="signup-lastName"
+              label={intl.formatMessage(FORMS.NAME_LAST_LABEL)}
+              name="lastName"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.NAME_LAST_PLACEHOLDER)}
+              required
+              type="text"
+              value={this.state.lastName}
+              variants={['full']}
+            />
+            <Input
+              id="signup-email"
+              label={intl.formatMessage(FORMS.EMAIL_LABEL)}
+              name="email"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.EMAIL_PLACEHOLDER)}
+              required
+              type="email"
+              value={this.state.email}
+              variants={['full']}
+            />
+            <Input
+              id="signup-password"
+              label={intl.formatMessage(FORMS.PASSWORD_LABEL)}
+              name="password"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.PASSWORD_PLACEHOLDER)}
+              required
+              type="password"
+              value={this.state.password}
+              variants={['full']}
+            />
+            <Input
+              id="signup-password-confirm"
+              label={intl.formatMessage(FORMS.PASSWORD_CONFIRM_LABEL)}
+              name="passwordConfirm"
+              onChange={this.handleInputChange}
+              placeholder={intl.formatMessage(FORMS.PASSWORD_CONFIRM_PLACEHOLDER)}
+              required
+              type="password"
+              value={this.state.passwordConfirm}
+              variants={['full']}
+            />
+          </fieldset>
+          { passwordsDoNotMatch
+            && (
+              <p>
+                {intl.formatMessage(FORMS.ERROR_MATCH_PASSWORD)}
+              </p>
+            )
+          }
+          <div className="form-meta">
+            <button
+              className="btn btn--strong"
+              type="submit"
+              disabled={disableForm}
+            >
+              {intl.formatMessage(FORMS.CREATE_ACCOUNT)}
+            </button>
+          </div>
         </form>
-        { passwordsDoNotMatch
-          && (
-            <p>
-              Please make sure your passwords match
-            </p>
-          )
-        }
-        { this.state.error
-          && (
-          <p>
-            {this.state.error}
-          </p>
-          )
-        }
       </div>
     );
   }
