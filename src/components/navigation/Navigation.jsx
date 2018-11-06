@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
+import UserControls from '../user-controls/UserControls';
 import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
 
@@ -33,7 +34,10 @@ class Navigation extends Component {
       return (
         <div className="navigation">
           {desktopOnly && (
-            <NavigationContent intl={intl} type="desktop" user={user} />
+            <div className="frontmatter">
+              <NavigationContent intl={intl} type="desktop" user={user} />
+              <UserControls type="desktop" />
+            </div>
           )}
           {!showMenu &&
             !desktopOnly && (
