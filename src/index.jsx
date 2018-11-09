@@ -73,7 +73,6 @@ if (!validLang) {
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
 const userRole = getUserRoleString(user.role, ROLES);
-
 // Render the thing!
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
@@ -83,7 +82,7 @@ ReactDOM.render(
           <Navigation type="desktop" desktopOnly />
           <UserControls />
           <Switch>
-            <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
+            PrivateRoute path={ROUTES.ADMIN_EMERGENCY_NUMBERS} component={AdminUser(Emergency)} />
             <PrivateRoute
               path={ROUTES.ADMIN_EMERGENCY}
               component={AdminUser(EmergencyNumbers)}

@@ -4,12 +4,17 @@ export const GET_AUTHORIZATION_COMPLETE = 'user/GET_AUTHORIZATION_COMPLETE';
 export const GET_USER_DATA = 'user/GET_USER_DATA';
 export const GET_USER_DATA_COMPLETE = 'user/GET_USER_DATA_COMPLETE';
 export const CREATE_USER = 'user/CREATE_USER';
+export const FETCHING_USER_DATA = 'user/FETCHING_USER_DATA';
+export const FETCHING_USERS = 'user/FETCHING_USERS';
 export const CREATE_USER_COMPLETE = 'user/CREATE_USER_COMPLETE';
 export const RESET_USER_PASSWORD = 'user/RESET_USER_PASSWORD';
 export const RESET_USER_PASSWORD_COMPLETE = 'user/RESET_USER_PASSWORD_COMPLETE';
 export const RESET_USER_PASSWORD_ERROR = 'user/RESET_USER_PASSWORD_ERROR';
 export const NO_USER = 'user/NO_USER';
 export const ADD_ERROR = 'user/ADD_ERROR';
+export const LOGIN = 'user/LOGIN';
+export const LOGOUT = 'user/LOGOUT';
+export const USER_ERROR = 'user/USER_ERROR';
 export const CLEAR_ERROR = 'user/CLEAR_ERROR';
 
 // Initial state for users
@@ -63,6 +68,32 @@ export default (state = initialState, action) => {
         user: action.user,
         error: action.error,
       };
+
+    case FETCHING_USERS:
+      return {
+        ...state,
+        users: action.users
+      };
+
+    case LOGIN:
+      return {
+        ...state,
+        user: action.user,
+        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
+      };
+
+    case LOGOUT:
+      return {
+        ...state,
+        user: action.user,
+      };
+
+    case USER_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
+
 
     case CREATE_USER:
       return {
@@ -133,6 +164,20 @@ export default (state = initialState, action) => {
 };
 
 // Sychronous functions
+
+export const getUsersCollection = (data) => ({
+  type: FETCHING_USERS,
+  users: data
+})
+
+export const getUsers = () => async dispatch => {
+  const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.USERS);
+  const data = await response.json();
+  dispatch(getUsersCollection(data))
+}
+
+
+
 export const initiateFirebaseCall = () => (dispatch) => {
   console.log('initiate firebase call');
   dispatch({

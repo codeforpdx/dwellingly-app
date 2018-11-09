@@ -17,12 +17,17 @@ export const SETTINGS = {
 
 /* Routes to get throughout the application, this way we only have to change URLs in one place */
 export const ROUTES = {
+  ADD_TENANT: '/admin/add-new-tenant',
+  ADD_PROPERTY: '/admin/add-new-property',
+  ADD_PROPERTY_MANAGER: '/admin/add-new-property-manager',
   ADMIN: '/admin',
   ADMIN_EMERGENCY: '/admin/emergency',
+  ADMIN_EMERGENCY_NUMBERS: '/admin/emergencyNumbers',
   AWAITING_ROLE: '/awaiting-role',
   CLOSED_TICKETS: '/tickets/closed',
   DASHBOARD: '/dashboard',
   EMERGENCY: '/emergency',
+  EMERGENCY_NUMBERS: '/emergencyNumbers',
   FORGOT_PASSWORD: '/forgot-password',
   LOGIN: '/login',
   PRIVACY: '/privacy-policy',
@@ -33,34 +38,9 @@ export const ROUTES = {
   SETTINGS: '/settings',
   SIGNUP: '/signup',
   TENANTS: '/tenants',
-  ADD_TENANT: '/admin/add-new-tenant',
-  ADD_PROPERTY: '/admin/add-new-property',
-  ADD_PROPERTY_MANAGER: '/admin/add-new-property-manager',
   TERMS_CONDITIONS: '/terms-conditions',
-  TICKETS: '/tickets'
-
-};
-
-
-/* 
-  Endpoints for data in the application. Should all have standard CRUD functions 
-  Without UID, gets all of something, with UID:  will read, update, or delete specific something
-*/
-export const ENDPOINTS = {
-  EMERGENCY_NUMBER:  `${SETTINGS.API_SERVER}/api/${SETTINGS.API_VERSION}/emergencyNumbers/`,
-  LEASE: `${SETTINGS.API_SERVER}/api/${SETTINGS.API_VERSION}/lease/`, 
-  PROPERTY:  `${SETTINGS.API_SERVER}/api/${SETTINGS.API_VERSION}/properties/`, 
-  TENANT:  `${SETTINGS.API_SERVER}/api/${SETTINGS.API_VERSION}/tenants/`, 
-  TICKET: `${SETTINGS.API_SERVER}/api/${SETTINGS.API_VERSION}/tickets/`, 
-  USER: `${SETTINGS.API_SERVER}/api/${SETTINGS.API_VERSION}/users/`, 
-};
-
-export const HTTP_METHODS = {
-  GET: "get",         // Get something
-  DELETE: "delete",   // Remove something 
-  POST: "post",       // Create something
-  PUT: "put",         // Archive something
-  PATCH: "patch"      // Update something
+  TICKETS: '/tickets',
+  USERS: '/users',
 };
 
 export const ROLES = {

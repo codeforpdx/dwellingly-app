@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import Icon from '../../components/icon/Icon';
-import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
+import EmergencyList from '../../components/emergency/EmergencyList';
 
 class Emergency extends Component {
   componentDidMount() {
@@ -28,7 +28,7 @@ class Emergency extends Component {
         </Header>
 
         <section className="main width-wrapper">
-          <EmergencyContactsList />
+          <EmergencyList />
         </section>
       </div>
     );

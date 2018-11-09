@@ -3,8 +3,8 @@
 export const dummyUser = {
   name: 'Tara Mckenzie',
   role: {
-    isAdmin: 'false',
-    isPropertyManager: 'true',
+    isAdmin: 'true',
+    isPropertyManager: 'false',
     isStaff: 'false'
   },
   username: 'tmckenzie',
