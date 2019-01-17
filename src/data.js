@@ -173,6 +173,35 @@ export const properties = [
   }
 ];
 
+export const users = [
+  {
+    name: 'Jerry Seinfeld',
+    firstName: 'Jerry',
+    lastName: 'Seinfeld',
+    email: 'jerry@herry.com',
+    id: '45d9b1ac78f8464082edccb7e4d81e26',
+    phone: '541-123-4567',
+    role: {
+      isAdmin: 'false',
+      isPropertyManager: 'false',
+      isStaff: 'true'
+    }
+  },
+  {
+    name: 'Taika Waititi',
+    firstName: 'Taika',
+    lastName: 'Waititi',
+    email: 'grandmaster@ragnarok.com',
+    id: '2352146214631461',
+    phone: '541-123-4567',
+    role: {
+      isAdmin: 'false',
+      isPropertyManager: 'false',
+      isStaff: 'trie'
+    }
+  }
+];
+
 export const tickets = [
   {
     dateCreated: 'Wed Aug 29 2018 10:29:51 GMT-0700 (Pacific Daylight Time)',

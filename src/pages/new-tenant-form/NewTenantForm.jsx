@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { intlShape, injectIntl } from 'react-intl';
 import Input from '../../components/input/Input';
 import Header from '../../components/header/Header';
 import NewProperty from '../../components/new-property/NewProperty';
@@ -8,27 +11,30 @@ import Icon from '../../components/icon/Icon';
 import Search from '../../components/search/Search';
 import Navigation from '../../components/navigation/Navigation';
 // import MultiSelect from '../../components/multi-select/MultiSelect';
+import { TENANT } from '../../translations/messages';
 import { ROUTES } from '../../constants/constants';
-import { dummyUser, properties, users, propertyManagers } from '../../data';
+import './NewTenantForm.scss';
 
-import './NewTenantForm.scss'
+// REPLACE AS THIS API STARTS WORKING
+import { properties, users, propertyManagers } from '../../data';
 
 class NewTenantForm extends Component {
   constructor(props) {
     super(props);
 
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleAddingNewPropertyManager = this.handleAddingNewPropertyManager.bind(this);
+    this.handleAddingNewPropertyManager = this.handleAddingNewPropertyManager.bind(
+      this
+    );
     this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
     this.handleAddingNewProperty = this.handleAddingNewProperty.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      user: dummyUser,
       staffMembersSelected: [],
       addingNewProperty: false,
-      addingNewPropertyManager: false,
-    }
+      addingNewPropertyManager: false
+    };
   }
 
   handleSearch(event) {
@@ -37,32 +43,40 @@ class NewTenantForm extends Component {
     const { value } = target;
     this.setState({
       [id]: value
-    })
+    });
   }
 
   handleSelectionFromSearch(searchedObj) {
-    if(Object.keys(searchedObj).includes("address")) {
-      this.setState({ propertySelected: searchedObj })
+    if (Object.keys(searchedObj).includes('address')) {
+      this.setState({ propertySelected: searchedObj });
     } else {
-      if(!this.state.staffMembersSelected.find(({id}) => id === searchedObj.id)) {
+      if (
+        !this.state.staffMembersSelected.find(({ id }) => id === searchedObj.id)
+      ) {
         this.setState(prevState => ({
           staffMembersSelected: [...prevState.staffMembersSelected, searchedObj]
-        }))
+        }));
       } else {
         this.setState(prevState => ({
-          staffMembersSelected: prevState.staffMembersSelected.filter(({id}) => id !== searchedObj.id)
-        }))
+          staffMembersSelected: prevState.staffMembersSelected.filter(
+            ({ id }) => id !== searchedObj.id
+          )
+        }));
       }
-      this.setState({ addingNewPropertyManager: false })
+      this.setState({ addingNewPropertyManager: false });
     }
   }
 
   handleAddingNewPropertyManager() {
-    this.setState(prevState => ({addingNewPropertyManager: !prevState.addingNewPropertyManager}))
+    this.setState(prevState => ({
+      addingNewPropertyManager: !prevState.addingNewPropertyManager
+    }));
   }
 
   handleAddingNewProperty() {
-    this.setState(prevState => ({addingNewProperty: !prevState.addingNewProperty}))
+    this.setState(prevState => ({
+      addingNewProperty: !prevState.addingNewProperty
+    }));
   }
 
   handleChange(event) {
@@ -76,17 +90,26 @@ class NewTenantForm extends Component {
   }
 
   render() {
-    const { user, propertySelected, propertyManagerSelected, addingNewProperty, addingNewPropertyManager, newProperty } = this.state;
+    const {
+      propertySelected,
+      propertyManagerSelected,
+      addingNewProperty,
+      addingNewPropertyManager,
+      newProperty
+    } = this.state;
+    const { user } = this.props;
     return (
       <div className="admin page">
         {// If the user isn't an Admin, Redirect back to the Root Route
-          !user.role.isAdmin && <Redirect to={ROUTES.ROOT}/>
-        }
+        !user.role.isAdmin && <Redirect to={ROUTES.ROOT} />}
         <Header>
           {() => (
             <div>
               <Navigation />
-              <Header.Label label="JOIN Messenger Administration" type="basic"/>
+              <Header.Label
+                label="JOIN Messenger Administration"
+                type="basic"
+              />
             </div>
           )}
         </Header>
@@ -94,7 +117,9 @@ class NewTenantForm extends Component {
           <div className="width-wrapper">
             {/* Add new tenant form section
             ======================================= */}
-            <h2 className="admin--header align--left">Add a New Tenant</h2>
+            <h2 className="admin--header align--left">
+              {this.props.intl.formatMessage(TENANT.BTN_ADD_NEW)}
+            </h2>
             <section className="newTenantFormSection">
               <h2 className="newTenantFormHeading">Tenant Information</h2>
               <fieldset>
@@ -104,21 +129,24 @@ class NewTenantForm extends Component {
                   label="First Name"
                   type="text"
                   placeholder="First Name"
-                  onChange={this.handleChange} />
+                  onChange={this.handleChange}
+                />
                 <Input
                   id="lastName"
                   name="tenantLastName"
                   label="Last Name"
                   type="text"
                   placeholder="Last Name"
-                  onChange={this.handleChange} />
+                  onChange={this.handleChange}
+                />
                 <Input
                   id="phoneNumber"
                   name="tenantPhone"
                   label="Phone"
                   type="tel"
                   placeholder="ex. 503-555-1234"
-                  onChange={this.handleChange} />
+                  onChange={this.handleChange}
+                />
               </fieldset>
             </section>
 
@@ -130,9 +158,10 @@ class NewTenantForm extends Component {
                 <Search
                   searchData={users}
                   placeholder="Search JOIN Staff"
-                  filterSubset={["firstName", "lastName"]}
+                  filterSubset={['firstName', 'lastName']}
                   onSearchSelection={this.handleSelectionFromSearch}
-                  multiple />
+                  multiple
+                />
               </fieldset>
             </section>
             <div className="newTenantFormSection">
@@ -142,54 +171,62 @@ class NewTenantForm extends Component {
                   id="propertyName"
                   label="Property Search"
                   placeholder="Search Properties"
-                  filterSubset={["name", "address"]}
+                  filterSubset={['name', 'address']}
                   onSearchSelection={this.handleSelectionFromSearch}
-                  searchData={properties} />
+                  searchData={properties}
+                />
               </fieldset>
               <div className="propertySearchResults">
-                {(!propertySelected) && (
+                {!propertySelected && (
                   <div className="addNewLink">
-                    <span className="addIcon" onClick={this.handleAddingNewProperty} role="presentation">
-                      <Icon icon="plus"/>
+                    <span
+                      className="addIcon"
+                      onClick={this.handleAddingNewProperty}
+                      role="presentation">
+                      <Icon icon="plus" />
                     </span>
                     Create New Property
                   </div>
                 )}
               </div>
-              {propertySelected ?
+              {propertySelected ? (
                 <div className="card newTenantProperty">
                   <h3>
-                    {
-                      propertySelected.name.length > 0 ?
-                        propertySelected.name :
-                        newProperty.newPropertyName
-                    }
+                    {propertySelected.name.length > 0
+                      ? propertySelected.name
+                      : newProperty.newPropertyName}
                   </h3>
                   <p>
-                    {
-                      propertySelected.address.length > 0 ?
-                        propertySelected.address :
-                        newProperty.newPropertyAddress
-                    }
+                    {propertySelected.address.length > 0
+                      ? propertySelected.address
+                      : newProperty.newPropertyAddress}
                   </p>
                   <div className="propertySearchResults">
-                    {(propertySelected && !propertyManagerSelected) && (
-                      <div className="addNewLink" onClick={this.handleAddingNewPropertyManager} role="presentation">
-                        <span className="addIcon"><Icon icon="plus"/></span>
-                        Add new manager
+                    {propertySelected &&
+                      !propertyManagerSelected && (
+                        <div
+                          className="addNewLink"
+                          onClick={this.handleAddingNewPropertyManager}
+                          role="presentation">
+                          <span className="addIcon">
+                            <Icon icon="plus" />
+                          </span>
+                          Add new manager
+                        </div>
+                      )}
+                  </div>
+                  {propertySelected &&
+                    addingNewPropertyManager && (
+                      <div>
+                        <Search
+                          placeholder="Search Property Managers"
+                          filterSubset={['firstName', 'lastName']}
+                          searchData={propertyManagers}
+                        />
                       </div>
                     )}
-                  </div>
-                  {propertySelected && addingNewPropertyManager && (
-                    <div>
-                      <Search
-                        placeholder="Search Property Managers"
-                        filterSubset={["firstName", "lastName"]}
-                        searchData={propertyManagers} />
-                    </div>
-                  )}
                 </div>
-              : null}
+              ) : null}
               {addingNewProperty && (
                 <form className="align--left">
                   <NewProperty
@@ -198,15 +235,19 @@ class NewTenantForm extends Component {
                     placeholder="Search Property Managers"
                     onSearch={this.handleSelectionFromSearch}
                     onChange={this.handleChange}
-                    onSave={this.handleAddingNewProperty} />
+                    onSave={this.handleAddingNewProperty}
+                  />
                 </form>
               )}
               {propertyManagerSelected && (
                 <div className="newTenantProperty">
                   {!addingNewPropertyManager && (
                     <div className="editPropertyDetails">
-                      <span className="editIcon" onClick={this.handleAddingNewPropertyManager} role="presentation">
-                        <Icon icon="pencil"/>
+                      <span
+                        className="editIcon"
+                        onClick={this.handleAddingNewPropertyManager}
+                        role="presentation">
+                        <Icon icon="pencil" />
                       </span>
                       <p>edit</p>
                     </div>
@@ -224,23 +265,50 @@ class NewTenantForm extends Component {
                     id="propertyUnit"
                     placeholder="Unit Number (Optional)"
                     label="Number"
-                    type="text"/>
+                    type="text"
+                  />
                   <Input
                     id="propertyOccupants"
                     placeholder="Total number of unit tenants"
                     label="Occupant"
-                    type="number"/>
+                    type="number"
+                  />
                 </fieldset>
               </section>
             )}
             <section className="newTenantFormSection">
-              <button type="submit" className="btn" disabled={!propertySelected}>Save</button>
+              <button
+                type="submit"
+                className="btn"
+                disabled={!propertySelected}>
+                Save
+              </button>
             </section>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default NewTenantForm;
+const mapStateToProps = ({ user }) => ({
+  user: user.user,
+  accountSource: user.accountSource,
+  haveUser: user.haveUser
+});
+
+NewTenantForm.propTypes = {
+  intl: intlShape.isRequired,
+  user: PropTypes.shape({
+    accountSource: PropTypes.string,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    role: PropTypes.shape({
+      isAdmin: PropTypes.bool,
+      isPropertyManager: PropTypes.bool,
+      isStaff: PropTypes.bool
+    })
+  }).isRequired
+};
+
+export default connect(mapStateToProps)(injectIntl(NewTenantForm));

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
@@ -22,8 +23,12 @@ class FormCreateEmergencyNumber extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleNumberObjectChange = this.handleNumberObjectChange.bind(this);
-    this.handleSubmittingNewEmergencyNumber = this.handleSubmittingNewEmergencyNumber.bind(this);
-    this.handleAddingNewPhoneNumber = this.handleAddingNewPhoneNumber.bind(this);
+    this.handleSubmittingNewEmergencyNumber = this.handleSubmittingNewEmergencyNumber.bind(
+      this
+    );
+    this.handleAddingNewPhoneNumber = this.handleAddingNewPhoneNumber.bind(
+      this
+    );
     this.handleError = this.handleError.bind(this);
     this.state = {
       addingNewNumber: false,
@@ -32,17 +37,17 @@ class FormCreateEmergencyNumber extends React.Component {
       phoneNumberOne: {
         subtext: '',
         number: '',
-        ext: '',
+        ext: ''
       },
       phoneNumberTwo: {
         subtext: '',
         number: '',
-        ext: '',
+        ext: ''
       },
       phoneNumberThree: {
         subtext: '',
         number: '',
-        ext: '',
+        ext: ''
       },
       submit: false,
       error: null
@@ -71,11 +76,13 @@ class FormCreateEmergencyNumber extends React.Component {
         ...prevState[parentName],
         [targetName]: value
       }
-    }))
+    }));
   }
 
   handleAddingNewPhoneNumber() {
-    this.setState(prevState => ({addingNewNumber: !prevState.addingNewNumber}))
+    this.setState(prevState => ({
+      addingNewNumber: !prevState.addingNewNumber
+    }));
   }
 
   handleError(error) {
@@ -84,14 +91,22 @@ class FormCreateEmergencyNumber extends React.Component {
 
   handleSubmittingNewEmergencyNumber() {
     const { dispatch } = this.props;
-    const { contact, subtext, phoneNumberOne, phoneNumberTwo, phoneNumberThree } = this.state;
-    dispatch(creatingEmergencyNumber({
+    const {
       contact,
       subtext,
       phoneNumberOne,
       phoneNumberTwo,
       phoneNumberThree
-    }));
+    } = this.state;
+    dispatch(
+      creatingEmergencyNumber({
+        contact,
+        subtext,
+        phoneNumberOne,
+        phoneNumberTwo,
+        phoneNumberThree
+      })
+    );
   }
 
   render() {
@@ -100,9 +115,7 @@ class FormCreateEmergencyNumber extends React.Component {
     const disableForm = contact === '' || !phoneNumberOne;
 
     return (
-      <form
-        onSubmit={FormCreateEmergencyNumber.handleSubmit}
-        className="page">
+      <form onSubmit={FormCreateEmergencyNumber.handleSubmit} className="page">
         <Header variant="basic">
           {() => (
             <div>
@@ -136,7 +149,9 @@ class FormCreateEmergencyNumber extends React.Component {
               name="subtext"
               value={this.state.subtext}
             />
-            <fieldset name="phoneNumberOne" onChange={this.handleNumberObjectChange}>
+            <fieldset
+              name="phoneNumberOne"
+              onChange={this.handleNumberObjectChange}>
               <Input
                 id="emergencyNumber-number01"
                 label="Phone Number"
@@ -163,14 +178,16 @@ class FormCreateEmergencyNumber extends React.Component {
               />
             </fieldset>
           </fieldset>
-            <button
-              type="button"
-              className="align--left btn"
-              onClick={this.handleAddingNewPhoneNumber}>
-                Add new number
-            </button>
+          <button
+            type="button"
+            className="align--left btn"
+            onClick={this.handleAddingNewPhoneNumber}>
+            Add new number
+          </button>
           {this.state.addingNewNumber && (
-            <fieldset name="phoneNumberTwo" onChange={this.handleNumberObjectChange}>
+            <fieldset
+              name="phoneNumberTwo"
+              onChange={this.handleNumberObjectChange}>
               <Input
                 id="emergencyNumber-number02"
                 label="Phone Number"
@@ -211,17 +228,14 @@ class FormCreateEmergencyNumber extends React.Component {
             type="submit"
             className="btn btn--lg btn--strong"
             disabled={disableForm}
-            onClick={this.handleSubmittingNewEmergencyNumber}
-          >ADD EMERGENCY NUMBER</button>
-          { this.state.error
-            && (
+            onClick={this.handleSubmittingNewEmergencyNumber}>
+            ADD EMERGENCY NUMBER
+          </button>
+          {this.state.error && (
             <div className="form-meta">
-              <p>
-                {this.state.error}
-              </p>
+              <p>{this.state.error}</p>
             </div>
-            )
-          }
+          )}
         </section>
       </form>
     );
@@ -229,7 +243,7 @@ class FormCreateEmergencyNumber extends React.Component {
 }
 
 FormCreateEmergencyNumber.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
   // intl: intlShape.isRequired,
 };
 

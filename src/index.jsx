@@ -61,7 +61,7 @@ const user = dummyUser;
 
 // Set up cookie stuff for translation
 const cookies = new Cookies();
-const lang = cookies.get('language')
+const lang = cookies.get('language');
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
 if (!validLang) {
@@ -76,13 +76,16 @@ const userRole = getUserRoleString(user.role, ROLES);
 // Render the thing!
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
-  	<Provider store={store}>
+    <Provider store={store}>
       <ConnectedRouter history={history}>
         <div className={`app ${userRole}`}>
           <Navigation type="desktop" desktopOnly />
           <UserControls />
           <Switch>
-            PrivateRoute path={ROUTES.ADMIN_EMERGENCY_NUMBERS} component={AdminUser(Emergency)} />
+            <PrivateRoute
+              path={ROUTES.ADMIN_EMERGENCY_NUMBERS}
+              component={AdminUser(Emergency)}
+            />
             <PrivateRoute
               path={ROUTES.ADMIN_EMERGENCY}
               component={AdminUser(EmergencyNumbers)}
@@ -136,7 +139,10 @@ ReactDOM.render(
               path={ROUTES.TICKETS}
               component={StaffUser(Tickets)}
             />
-            <PrivateRoute path={`${ROUTES.AWAITING_ROLE}`} component={WaitingForRole} />
+            <PrivateRoute
+              path={`${ROUTES.AWAITING_ROLE}`}
+              component={WaitingForRole}
+            />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
