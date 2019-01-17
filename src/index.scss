@@ -43,6 +43,7 @@ fieldset {
   padding: 0;
 }
 
+select,
 input {
   background: $color__white;
   border: none;
@@ -137,10 +138,22 @@ a {
       }
     }
 
+    &--small {
+      font-size: .750em;
+    }
+
     &--lg {
       font-size: 1rem;
       height: emify(36, 16);
       line-height: emify(36, 16);
+    }
+
+    &--alt {
+      background: $color__green;
+    }
+
+    &--disabled {
+      background: $color__gray--medium;
     }
 
     &--urgent {
@@ -223,10 +236,32 @@ time {
   }
 
   .main {
-    flex-grow: 2;
-
+    // flex-grow: 2;
     &--white {
       background: $color__white;
+    }
+  }
+
+  &.admin {
+    & .hero__wrapper {
+      justify-content: flex-start;
+      padding-left: 1.5rem;
+    }
+    & .admin--header {
+      text-align: left;
+      color: $color__blue--dark;
+      font-size: 1.250em;
+      margin-top: 1.5em;
+      padding: 0 1em;
+      @media screen and (min-width: $mq--desktop) {
+        font-size: 1.5em;
+        padding: 0;
+      }
+    }
+    .main {
+      &--white {
+        height: 100%;
+      }
     }
   }
 
@@ -343,7 +378,7 @@ time {
 
 .mobile-only {
   display: block;
-  
+
   @media screen and (min-width: $mq--desktop) {
     display: none;
   }

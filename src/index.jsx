@@ -35,6 +35,7 @@ import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import NewIssueForm from './pages/new-issue-form/NewIssueForm';
+import NewTenantForm from './pages/new-tenant-form/NewTenantForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
 import PropertyDetails from './pages/property-details/PropertyDetails';
@@ -60,7 +61,7 @@ const user = dummyUser;
 
 // Set up cookie stuff for translation
 const cookies = new Cookies();
-const lang = cookies.get('language')
+const lang = cookies.get('language');
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
 if (!validLang) {
@@ -72,17 +73,19 @@ if (!validLang) {
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
 const userRole = getUserRoleString(user.role, ROLES);
-
 // Render the thing!
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
-  	<Provider store={store}>
+    <Provider store={store}>
       <ConnectedRouter history={history}>
         <div className={`app ${userRole}`}>
           <Navigation type="desktop" desktopOnly />
           <UserControls />
           <Switch>
-            <PrivateRoute path={ROUTES.EMERGENCY} component={Emergency} />
+            <PrivateRoute
+              path={ROUTES.ADMIN_EMERGENCY_NUMBERS}
+              component={AdminUser(Emergency)}
+            />
             <PrivateRoute
               path={ROUTES.ADMIN_EMERGENCY}
               component={AdminUser(EmergencyNumbers)}
@@ -115,6 +118,10 @@ ReactDOM.render(
               component={Tenants}
             />
             <PrivateRoute
+              path={ROUTES.ADD_TENANT}
+              component={AdminUser(NewTenantForm)}
+            />
+            <PrivateRoute
               path={`${ROUTES.TENANTS}/:id/archive`}
               component={Archive}
             />
@@ -132,7 +139,10 @@ ReactDOM.render(
               path={ROUTES.TICKETS}
               component={StaffUser(Tickets)}
             />
-            <PrivateRoute path={`${ROUTES.AWAITING_ROLE}`} component={WaitingForRole} />
+            <PrivateRoute
+              path={`${ROUTES.AWAITING_ROLE}`}
+              component={WaitingForRole}
+            />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />

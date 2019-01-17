@@ -3,8 +3,8 @@
 export const dummyUser = {
   name: 'Tara Mckenzie',
   role: {
-    isAdmin: 'false',
-    isPropertyManager: 'true',
+    isAdmin: 'true',
+    isPropertyManager: 'false',
     isStaff: 'false'
   },
   username: 'tmckenzie',
@@ -170,6 +170,35 @@ export const properties = [
     id: 'property-03',
     name: 'Mountain View',
     address: '311 Sandy Blvd. Portland OR, 97218'
+  }
+];
+
+export const users = [
+  {
+    name: 'Jerry Seinfeld',
+    firstName: 'Jerry',
+    lastName: 'Seinfeld',
+    email: 'jerry@herry.com',
+    id: '45d9b1ac78f8464082edccb7e4d81e26',
+    phone: '541-123-4567',
+    role: {
+      isAdmin: 'false',
+      isPropertyManager: 'false',
+      isStaff: 'true'
+    }
+  },
+  {
+    name: 'Taika Waititi',
+    firstName: 'Taika',
+    lastName: 'Waititi',
+    email: 'grandmaster@ragnarok.com',
+    id: '2352146214631461',
+    phone: '541-123-4567',
+    role: {
+      isAdmin: 'false',
+      isPropertyManager: 'false',
+      isStaff: 'trie'
+    }
   }
 ];
 
