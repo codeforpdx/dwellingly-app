@@ -50,6 +50,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetchingAuthorization: action.isFetchingAuthorization,
         haveToken: action.haveToken,
+        haveUser: action.haveUser,
         user: action.user,
         error: action.error
       };
@@ -195,6 +196,7 @@ export const getAuthDetailsFromFirebase = (user, accountSource) => dispatch => {
     type: GET_AUTHORIZATION_COMPLETE,
     isFetchingAuthorization: false,
     haveToken: true,
+    haveUser: true,
     user: {
       firstName: user.firstName,
       lastName: user.lastName,
