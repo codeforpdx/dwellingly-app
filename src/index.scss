@@ -43,6 +43,7 @@ fieldset {
   padding: 0;
 }
 
+select,
 input {
   background: $color__white;
   border: none;
@@ -55,6 +56,7 @@ input {
   &[type="tel"],
   &[type="text"],
   &[type="email"],
+  &[type="number"],
   &[type="password"] {
     line-height: 1.5em;
     padding: 0.5em;
@@ -86,7 +88,8 @@ a {
   padding: 0;
   text-decoration: none;
 
-  &.disabled {
+  &.disabled,
+  &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
@@ -135,10 +138,22 @@ a {
       }
     }
 
+    &--small {
+      font-size: .750em;
+    }
+
     &--lg {
       font-size: 1rem;
       height: emify(36, 16);
       line-height: emify(36, 16);
+    }
+
+    &--alt {
+      background: $color__green;
+    }
+
+    &--disabled {
+      background: $color__gray--medium;
     }
 
     &--urgent {
@@ -152,7 +167,7 @@ a {
   }
 }
 
-// specifically styling for TELEPHONE numbers!
+/* specifically styling for TELEPHONE numbers! */
 a[href^="tel:"] {
   font-weight: 400;
   white-space: nowrap;
@@ -179,6 +194,14 @@ h4 {
   text-transform: uppercase;
 }
 
+hr {
+  background: $color__gray--light;
+  border: 0;
+  display: block;
+  height: 1px;
+  width: 100%;
+}
+
 p {
   margin: 0 0 1em 0;
 }
@@ -188,23 +211,58 @@ time {
   line-height: 1em;
 }
 
+
+.textblock {
+  margin: 2rem 0 4rem;
+  text-align: left;
+}
+
+.app {
+  display: flex;
+}
+
 .page {
   align-content: stretch;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   text-align: center;
+  width: 100%;
 
-  @media screen and (min-width: $mq--desktop) {
-    .navigation + & {
-      position: absolute;
-      right: 0;
-      width: calc(100% - #{$width__nav});
-    }
+  & > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .main {
-    flex-grow: 2;
+    // flex-grow: 2;
+    &--white {
+      background: $color__white;
+    }
+  }
+
+  &.admin {
+    & .hero__wrapper {
+      justify-content: flex-start;
+      padding-left: 1.5rem;
+    }
+    & .admin--header {
+      text-align: left;
+      color: $color__blue--dark;
+      font-size: 1.250em;
+      margin-top: 1.5em;
+      padding: 0 1em;
+      @media screen and (min-width: $mq--desktop) {
+        font-size: 1.5em;
+        padding: 0;
+      }
+    }
+    .main {
+      &--white {
+        height: 100%;
+      }
+    }
   }
 
   &--light {
@@ -251,6 +309,22 @@ time {
   top: 0;
 }
 
+.padding--1em {
+  padding: 1em;
+}
+
+.align {
+  &--center {
+    text-align: center;
+  }
+  &--left {
+    text-align: left;
+  }
+  &--right {
+    text-align: rigth;
+  }
+}
+
 .meta {
   color: $color__gray--medium;
 }
@@ -267,6 +341,7 @@ time {
 
 .status {
   text-transform: uppercase;
+  font-weight: 300;
 
   &--low,
   &--med {
@@ -278,15 +353,39 @@ time {
   }
 }
 
+.separator {
+  margin: 1rem 0;
+}
+
+.allCaps {
+  text-transform: uppercase;
+}
+
 .progress {
   color: $color__yellow;
   font-weight: 700;
   letter-spacing: emify(1, 16);
   margin-bottom: emify(8, 16);
 }
+
+.desktop-only {
+  display: none;
+
+  @media screen and (min-width: $mq--desktop) {
+    display: block;
+  }
+}
+
+.mobile-only {
+  display: block;
+
+  @media screen and (min-width: $mq--desktop) {
+    display: none;
+  }
+}
 /* end defaults */
 
-// FORM-META
+/* FORM-META */
 .form-meta {
   @include clearfix;
   border-top: 1px solid $color__gray--border;
@@ -371,6 +470,7 @@ time {
   background: $color__gray--light;
   border-radius: $border-radius;
   padding: 0.5rem 1rem;
+  font-weight: 300;
 
   .count {
     font-weight: 500;
@@ -400,23 +500,38 @@ time {
 /* M O D A L */
 /* ==================================================== */
 .modal {
-  background: rgba(0, 0, 0, 0.5);
-  height: 100%;
-  left: 0;
-  // padding: 0.5rem;
+  height: 100vh;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 
+  &__bg {
+    background: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  @media screen and (min-width: $mq--desktop) {
+    width: calc(100% - #{$width__nav});
+
+    @at-root .property-manager & {
+      width: 100%;
+    }
+  }
+
   .card {
     @include hidden_scrolling;
+    box-shadow: none;
     // height: 100%;
-    height: calc(100% - 1rem);
-    margin: 0;
+    max-height: calc(100% - 1rem);
     padding: 0.5rem;
     position: relative;
-    // width: calc(100% - 1rem);
+    width: calc(100% - 1rem);
 
     .card__top,
     .card__bottom {
@@ -434,6 +549,10 @@ time {
   border-bottom: 1px solid $color__gray--border;
   min-height: emify(40, 16);
   padding: 0 1rem;
+
+  & > div {
+    @include flex_align(space-between);
+  }
 
   ul {
     list-style: none;
@@ -520,7 +639,9 @@ time {
   }
 
   &--centered {
-    @include flex_align(center);
+    ul {
+      text-align: center;
+    }
   }
 
   &--no-border {

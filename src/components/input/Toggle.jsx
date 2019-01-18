@@ -26,20 +26,23 @@ class Toggle extends Component {
   render() {
     const { blockClass, id, label } = this.props;
     return (
-      <div className="inline-input">
-        <label htmlFor={id} className="inline-input__toggle">
-          <span className={`${blockClass}__label`}>{label}</span>
-          <div className="switch">
-            <input type="checkbox" checked={this.state.toggle} id={id} />
-            <button
-              aria-label="Checkbox toggle"
-              className="switch__btn"
-              onClick={this.handleToggle}
-              type="button"
-            />
-          </div>
-        </label>
-      </div>
+      <label htmlFor={id} className="inline-input__toggle">
+        <span className={`${blockClass}__label`}>{label}</span>
+        <div className="switch">
+          <input
+            type="checkbox"
+            onChange={this.handleToggle}
+            checked={this.state.toggle}
+            id={id}
+          />
+          <button
+            aria-label="Checkbox toggle"
+            className="switch__btn"
+            onClick={this.handleToggle}
+            type="button"
+          />
+        </div>
+      </label>
     );
   }
 }

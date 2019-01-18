@@ -1,48 +1,120 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'whatwg-fetch';
+import Cookies from 'universal-cookie';
+import store, { history } from '../store';
+import { ENDPOINTS, HTTP_METHODS, ROUTES } from '../constants/constants';
+
+// REDUCERS
+import {
+  initiateFirebaseCall,
+  addError,
+  getAuthDetailsFromFirebase,
+  setUserFromFirebaseEmail,
+  setUserFromGoogle,
+  addCustomUserData,
+  clearUser,
+  initiateUserPasswordEmail,
+  resetUserPasswordEmail,
+  resetUserPasswordEmailError,
+} from '../dux/user';
+
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
+
+// User data from Firestore
+export function getFirestoreUserData( uid, accountSource ) {
+  console.log('get user data');
+  store.dispatch(initiateFirebaseCall());
+  const userEndpoint = `${ENDPOINTS.USER}${uid}`;
+  console.log('getting user at ', userEndpoint)
+  fetch(userEndpoint, {
+    method: HTTP_METHODS.GET,
+  }).then((response => response.json()))
+    .then((json) => {
+      const userData = json;
+      console.log(json);
+      if (userData) {
+        store.dispatch(addCustomUserData(userData, accountSource, uid))
+      }
+      // Don't need to set user here, will get picked up by UserControl as auth changes!
+      // store.dispatch(setUser(json, 'email'))
+    })
+    .catch((error) => {
+      store.dispatch(addError(error));
+    })
+  }
+
 // Sign Up a user with email address and password
-export function doCreateUserWithEmailAndPassword(email, password) {
-  console.log('creating user:', email, password);
+export function doCreateUserWithEmailAndPassword(firstName, lastName, email, password) {
+  store.dispatch(initiateFirebaseCall());
   firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(
-      console.log('user created'),
-    )
+    .then((response) => {
+        fetch( ENDPOINTS.USER, {
+          method: HTTP_METHODS.POST,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            id: response.user.uid,
+          })
+        })
+      }
+    ).then((response => response.json()))
+     .then((json) => {
+      store.dispatch(setUserFromFirebaseEmail(json))
+     })
     .catch((error) => {
       // Handle Errors here.
-      console.log(error);
+      store.dispatch(addError(error));
     });
 }
 
 // Sign In user with email address and password
 export function doSignInWithEmailAndPassword(email, password) {
-  console.log('signing in with', email, password);
+  store.dispatch(initiateFirebaseCall());
+  console.log('login with username and password');
   firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(response => {
+        // fetch user data
+        console.log(response);
+        const userEndpoint = `${ENDPOINTS.USER}${response.user.uid}`;
+        fetch(userEndpoint, {
+        method: HTTP_METHODS.GET,
+      }).then((response => response.json()))
+        .then((json) => {
+          console.log(json);
+          store.dispatch(getAuthDetailsFromFirebase(json, 'password'));
+          this.setUserCookies(json);
+          // Don't need to set user here, will get picked up by UserControl as auth changes!
+          // store.dispatch(setUser(json, 'email'))
+        })
+        .catch((error) => {
+          store.dispatch(addError(error));
+        })
+      }
+      )
     .catch((error) => {
       // Handle Errors here.
-      console.log(error.code, error.message);
+      store.dispatch(addError(error));
     });
 }
 
 // Sign in user with Google OAuth
 export function doSignInWithGoogle() {
+  firebase.auth().useDeviceLanguage();
+  store.dispatch(initiateFirebaseCall());
   firebase.auth().signInWithPopup(provider).then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
-    const token = result.credential.accessToken;
     // The signed-in user info.
-    const { user } = result.user;
-    // ...
-    console.log(user, token);
+    setUserFromGoogle(result);
   }).catch((error) => {
     // Handle Errors here.
-    const { errorCode } = error.code;
-    const { errorMessage } = error.message;
-    // The email of the user's account used.
-    const { email } = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    const { credential } = error.credential;
-    console.log(errorCode, errorMessage, email, credential);
+    store.dispatch(addError(error));
     // ...
   });
 }
@@ -70,15 +142,61 @@ export function getUserProfile() {
 // Sign out
 export function doSignOut() {
   firebase.auth().signOut()
-    .then(console.log('loggedout'));
+    .then(
+      store.dispatch(clearUser()),
+      history.push(ROUTES.LOGIN)
+    );
 }
 
 // Password Reset
 export function doPasswordReset(email) {
-  firebase.auth().sendPasswordResetEmail(email);
+  store.dispatch(initiateUserPasswordEmail());
+  firebase.auth().sendPasswordResetEmail(email).then
+    (response => {
+      store.dispatch(resetUserPasswordEmail(response))
+      }
+    )
+    .catch((error) => {
+      store.dispatch(resetUserPasswordEmailError(error));
+    })
 }
 
 // Password Change
 export function doPasswordUpdate(password) {
   firebase.auth().currentUser.updatePassword(password);
 }
+
+export function setUserCookies(newUser){
+  console.log('setting cookies!');
+  console.log(newUser);
+  const cookies = new Cookies();
+  const cookieExpiration = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+  const userEmailCookieExist = cookies.get('messengerUser');
+  const userIDCookieExist = cookies.get('messengerUserId');
+  const userRoleExist = cookies.get('userRole');
+  if (newUser && newUser.id) {
+    if (!userEmailCookieExist) {
+      cookies.set(
+        'messengerUser', 
+        newUser.email,
+        { path: '/', expires: cookieExpiration,  }
+      );
+    }
+    if (!userIDCookieExist) {
+      cookies.set(
+        'messengerUserId', 
+        newUser.id,
+        { path: '/', expires: cookieExpiration,  }
+      );
+    }
+    if (!userRoleExist) {
+      cookies.set(
+        'messengerUserRole', 
+        newUser.role,
+        { path: '/', expires: cookieExpiration,  }
+        );
+    }
+  }
+}
+
+

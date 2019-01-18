@@ -1,63 +1,61 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { intlShape, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { getEmergencyNumbers } from '../../dux/emergencyNumbers';
+import { ROUTES } from '../../constants/constants';
+import { ADMIN } from '../../translations/messages';
+import Icon from '../icon/Icon';
 
 import EmergencyNumber from './EmergencyNumber';
 import './Emergency.scss';
 
 class EmergencyList extends React.Component {
-  componentWillMount() {
-    console.log('Emergency list');
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getEmergencyNumbers());
   }
 
+
+
   render() {
-    const EMERGENCYNUM_QUERY = gql`
-      {
-        emergencyNumbers(orderBy: sortOrder_ASC) {
-          id
-          title
-          number01
-          number02
-        }
-      }
-    `;
+    const { emergencyNumbers, intl } = this.props;
     return (
       <div className="emergencyNumberList">
-        <h2>
-          Emergency List
-        </h2>
-        <Query query={EMERGENCYNUM_QUERY}>
-          { ({ loading, error, data }) => {
-            if (loading) {
-              return (
-                <div>
-                  Loading Numbers...
-                </div>
-              );
-            }
-            if (error) {
-              return (
-                <div>
-                  Error - Something went wrong with the EMERGENCYNUM_QUERY call!
-                </div>
-              );
-            }
-            const emergencyNumbersList = data.emergencyNumbers;
-            return (
-              <div>
-                {emergencyNumbersList.map(emergency => (
-                  <EmergencyNumber
-                    key={emergency.id}
-                    emergency={emergency}
-                  />))}
-              </div>
-            );
-          }
+        <div className="emergencyHeader">
+          <h2>
+            Emergency List
+          </h2>
+          <Link className="createEmergencyNumberLink" to={ROUTES.ADMIN_EMERGENCY}>
+            <div className="emergencyCreateNumberIcon">
+              <Icon icon="plus" />
+            </div>
+            {intl.formatMessage(ADMIN.EMERGENCY_NUMS_CREATE)}
+          </Link>
+        </div>
+        {
+          emergencyNumbers.numbers.length > 0 ?
+          emergencyNumbers.numbers.map(number =>
+            <EmergencyNumber
+              key={number.id}
+              emergency={number} />
+          ) : 'Loading...'
         }
-        </Query>
       </div>
     );
   }
 }
 
-export default EmergencyList;
+EmergencyList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
+  emergencyNumbers: PropTypes.shape({}).isRequired,
+}
+
+const mapStateToProps = state => ({
+  emergencyNumbers: state.emergencyNumbers,
+})
+
+export default injectIntl(connect(mapStateToProps)(EmergencyList));

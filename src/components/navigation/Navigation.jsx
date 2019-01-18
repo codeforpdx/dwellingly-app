@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
+import UserControls from '../user-controls/UserControls';
 import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
 
 import './Navigation.scss';
-import { ROLES } from '../../constants/constants';
 
 import { dummyUser } from '../../data';
 
@@ -15,9 +15,10 @@ class Navigation extends Component {
 
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
 
+    this.user = dummyUser;
+
     this.state = {
-      showMenu: false,
-      user: dummyUser
+      showMenu: false
     };
   }
 
@@ -27,12 +28,16 @@ class Navigation extends Component {
 
   render() {
     const { desktopOnly, intl } = this.props;
-    const { showMenu, user } = this.state;
-    if (user.role !== ROLES.PROPERTY_MANAGER) {
+    const { showMenu } = this.state;
+    const { user } = this;
+    if (user.role.isPropertyManager !== 'true') {
       return (
         <div className="navigation">
           {desktopOnly && (
-            <NavigationContent intl={intl} type="desktop" user={user} />
+            <div className="frontmatter">
+              <NavigationContent intl={intl} type="desktop" user={user} />
+              <UserControls type="desktop" />
+            </div>
           )}
           {!showMenu &&
             !desktopOnly && (

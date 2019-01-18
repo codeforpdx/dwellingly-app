@@ -9,27 +9,31 @@ import './Input.scss';
 function InputContent({
   blockClass,
   children,
-  id, // identifier for use with htmlFor and key properties
+  id,           // identifier for use with htmlFor and key properties
   label,
-  model, // value of key in state
-  name, // name of input
-  onChange, // passes along the onChange function through props
-  onClick, // for use with button/Link
-  placeholder,
-  type, // defines input type ["radio", "button", etc.]
-  url, // for use with button/Link
-  value // value from state, object, or string
+  maxLength,    // maximum length
+  model,        // value of key in state
+  name,         // name of input
+  onChange,     // passes along the onChange function through props
+  onClick,      // for use with button/Link
+  placeholder,  // placeholder text
+  required,     // is this component required 
+  type,         // defines input type ["radio", "button", etc.]
+  url,          // for use with button/Link
+  value         // value from state, object, or string
 }) {
   let inputContent = (
     <label htmlFor={id}>
       <span className={`${blockClass}__label`}>{label}</span>
       <input
         id={id}
+        maxLength={maxLength || 200}
         name={name}
         onChange={onChange}
         placeholder={placeholder}
         type={type}
         value={value}
+        required={required}
       />
     </label>
   );
@@ -77,6 +81,19 @@ function InputContent({
           value={value}
         />
       </label>
+    );
+  }
+
+  if (type === 'toggle') {
+    inputContent = (
+      <Toggle
+        id={id}
+        blockClass={blockClass}
+        label={label}
+        model={name}
+        onToggle={onChange}
+        value={value}
+      />
     );
   }
 

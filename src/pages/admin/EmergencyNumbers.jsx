@@ -6,12 +6,8 @@ class EmergencyList extends React.Component {
     super(props);
 
     this.state = {
-      mode: 'create',
+      mode: 'create'
     };
-  }
-
-  componentWillMount() {
-    console.log('Emergency list');
   }
 
   render() {
@@ -21,11 +17,7 @@ class EmergencyList extends React.Component {
       pageContent = <CreateEmergencyNumberForm />;
     }
 
-    return (
-      <div>
-        {pageContent}
-      </div>
-    );
+    return <div className="page">{pageContent}</div>;
   }
 }
 

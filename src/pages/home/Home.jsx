@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import PropertyManagerHome from './PropertyManagerHome';
-import UserControls from '../../components/user-controls/UserControls';
+// import UserControls from '../../components/user-controls/UserControls';
 import { ROLES, ROUTES } from '../../constants/constants';
+import { getUserRoleString } from '../../utils';
 
-import { dummyUser } from '../../data';
+import { dummyUser, properties, tenants } from '../../data';
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.tenants = [];
-    this.properties = [];
+    this.tenants = tenants;
+    this.properties = properties;
 
-    this.state = {
-      user: dummyUser
-    };
+    this.user = dummyUser;
   }
 
   componentDidMount() {
@@ -25,11 +24,12 @@ class Home extends Component {
 
   render() {
     const { match } = this.props;
-    const { user } = this.state;
+    const { user } = this;
+    const roleStr = getUserRoleString(user.role, ROLES);
     return (
       // do check agains user roles
-      <div>
-        {user.role === ROLES.PROPERTY_MANAGER && (
+      <div className="page">
+        {roleStr === ROLES.PROPERTY_MANAGER && (
           <PropertyManagerHome
             match={match}
             tenants={this.tenants}
@@ -37,9 +37,9 @@ class Home extends Component {
             user={user}
           />
         )}
-        {user.role === ROLES.STAFF && <Redirect to={ROUTES.TICKETS} />}
-        {user.role === ROLES.ADMIN && <Redirect to={ROUTES.ADMIN} />}
-        <UserControls />
+        {roleStr === ROLES.STAFF && <Redirect to={`${ROUTES.TICKETS}/open`} />}
+        {roleStr === ROLES.ADMIN && <Redirect to={ROUTES.ADMIN} />}
+        {/* <UserControls /> */}
       </div>
     );
   }

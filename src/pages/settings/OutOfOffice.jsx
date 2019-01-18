@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
-// import { Input, Toggle } from "../../components/input/Input";
 import Input from '../../components/input/Input';
-import Toggle from '../../components/input/Toggle';
 import { formatDatepickerDate } from '../../utils';
 
 class OutOfOffice extends Component {
@@ -29,7 +27,7 @@ class OutOfOffice extends Component {
 
   handleSubmit(event) {
     if (event) event.preventDefault();
-    // do stuff
+    // TODO: do stuff
     return this;
   }
 
@@ -51,7 +49,7 @@ class OutOfOffice extends Component {
       <form action="" onSubmit={this.handleSubmit} className="page">
         <Header variants={['form']}>
           {() => (
-            <div className="width-wrapper">
+            <div>
               <div className="actions">
                 <button
                   type="button"
@@ -81,11 +79,12 @@ class OutOfOffice extends Component {
                 automatically forwarded to other JOIN staff.
               </p>
             </div>
-            <Toggle
+            <Input
               id="outOfOffice"
               label="Out of Office"
-              model="outOfOffice"
-              onToggle={this.handleToggle}
+              name="outOfOffice"
+              onChange={this.handleToggle}
+              type="toggle"
               value={this.state.outOfOffice}
             />
           </fieldset>
@@ -116,46 +115,52 @@ class OutOfOffice extends Component {
                 <div className="message message--light">
                   <p>Share With&hellip;</p>
                 </div>
-                <Toggle
+                <Input
                   id="person-brendenSmith"
                   label="Brenden Smith"
-                  model="brenenSmith"
-                  onToggle={this.handleToggle}
+                  name="brenenSmith"
+                  onChange={this.handleToggle}
+                  type="toggle"
                   value={this.state.brendenSmith}
                 />
-                <Toggle
+                <Input
                   id="person-alexAlder"
                   label="Alex Alder"
-                  model="alexAlder"
-                  onToggle={this.handleToggle}
+                  name="alexAlder"
+                  onChange={this.handleToggle}
+                  type="toggle"
                   value={this.state.alexAlder}
                 />
-                <Toggle
+                <Input
                   id="person-beverlyBurnside"
                   label="Beverly Burnside"
-                  model="beverlyBurnside"
-                  onToggle={this.handleToggle}
+                  name="beverlyBurnside"
+                  onChange={this.handleToggle}
+                  type="toggle"
                   value={this.state.beverlyBurnside}
                 />
-                <Toggle
+                <Input
                   id="person-donaldDavis"
                   label="Donald Davis"
-                  model="donaldDavis"
-                  onToggle={this.handleToggle}
+                  name="donaldDavis"
+                  onChange={this.handleToggle}
+                  type="toggle"
                   value={this.state.donaldDavis}
                 />
-                <Toggle
+                <Input
                   id="person-batman"
                   label="Bruce Wayne"
-                  model="batman"
-                  onToggle={this.handleToggle}
+                  name="batman"
+                  onChange={this.handleToggle}
+                  type="toggle"
                   value={this.state.batman}
                 />
-                <Toggle
+                <Input
                   id="person-enderWiggins"
                   label="Andrew Wiggins"
-                  model="enderWiggins"
-                  onToggle={this.handleToggle}
+                  name="enderWiggins"
+                  onChange={this.handleToggle}
+                  type="toggle"
                   value={this.state.enderWiggins}
                 />
               </fieldset>

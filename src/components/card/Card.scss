@@ -4,7 +4,12 @@
 /* ==================================================== */
 .cards {
   background: $color__gray--light;
-  padding: 1em;
+  padding: 1em 1em 0 1em;
+
+  @media screen and (min-width: $mq--desktop) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 a .card,
@@ -20,10 +25,6 @@ button .card {
   margin-bottom: 1em;
   position: relative;
   text-align: left;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 
   &__top {
     background: $color__white;

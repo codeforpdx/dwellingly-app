@@ -1,5 +1,9 @@
 @import "../../constants/constants.scss";
 
+.navigation {
+  background-color: $color__blue;
+}
+
 /* MENU */
 .menu {
   height: 100vh;
@@ -10,7 +14,8 @@
 
   &--desktop {
     display: none;
-    left: 0;
+    height: auto;
+    position: relative;
     width: $width__nav;
   }
 
@@ -29,8 +34,8 @@
   }
 
   &__groups {
-    @include hidden_scrolling;
     background-image: $color__gradient--nav;
+    @include hidden_scrolling;
     color: $color__white;
     height: 100vh;
     margin: 0;
@@ -84,6 +89,13 @@
 @media only screen and (min-width: $mq--desktop) {
   .menu--desktop {
     display: block;
+
+    .menu__groups {
+      background-image: none;
+      height: auto;
+      overflow-y: auto;
+      position: relative;
+    }
   }
 
   .menu--mobile,

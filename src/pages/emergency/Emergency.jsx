@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
-import ContactsList from '../../components/list/ContactsList';
 import Icon from '../../components/icon/Icon';
+import EmergencyList from '../../components/emergency/EmergencyList';
 
 class Emergency extends Component {
   componentDidMount() {
@@ -11,21 +11,16 @@ class Emergency extends Component {
   }
 
   render() {
-    const { history } = this.props;
     return (
       <div className="page">
         <Header>
           {() => (
-            <div className="width-wrapper">
+            <div>
               <Navigation />
               <div className="actions">
-                <button
-                  type="button"
-                  aria-label="Go Back"
-                  className="action action--left"
-                  onClick={() => history.push('/')}>
+                <Link to="/" title="Go Back" className="action action--left">
                   <Icon icon="arrowLeft" />
-                </button>
+                </Link>
               </div>
               <Header.Label label="Emergency Numbers" type="basic" />
             </div>
@@ -33,27 +28,11 @@ class Emergency extends Component {
         </Header>
 
         <section className="main width-wrapper">
-          <div className="message message--light">
-            <p>
-              In the event of a life-threatening emergency with your JOIN
-              tenants, please dial 911.<br />
-              <br />
-              <a
-                href="tel:+911"
-                className="btn btn--strong btn--lg btn--urgent">
-                <Icon icon="phone" /> 911
-              </a>
-            </p>
-          </div>
-          <ContactsList items={[]} />
+          <EmergencyList />
         </section>
       </div>
     );
   }
 }
-
-Emergency.propTypes = {
-  history: PropTypes.shape({}).isRequired
-};
 
 export default Emergency;
