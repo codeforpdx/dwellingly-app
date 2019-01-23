@@ -38,6 +38,7 @@ import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import NewTenantForm from './pages/new-tenant-form/NewTenantForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
+import PropertyDashboard from './pages/property-dashboard/PropertyDashboard';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
@@ -149,6 +150,7 @@ ReactDOM.render(
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
             <Route path={ROUTES.SIGNUP} component={Signup} />
             <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
+            <Route path={ROUTES.PROPERTY_DASHBOARD} component={PropertyDashboard} />
             <Route path="/code-samples/card" component={CardSamples} />
             <Route path="/code-samples/header" component={HeaderSamples} />
             <PrivateRoute path={ROUTES.ROOT} component={Home} />
