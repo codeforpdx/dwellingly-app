@@ -5,16 +5,64 @@ import Header from '../../components/header/Header';
 // import Icon from '../../components/icon/Icon';
 import Input from '../../components/input/Input';
 import Navigation from '../../components/navigation/Navigation';
+import { propertyManagers } from '../../data';
 import Search from '../../components/search/Search';
-
 import './NewPropertyForm.scss';
 
-import { propertyManagers } from '../../data';
-
 class NewPropertyForm extends Component {
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
+
+    // this.handleSearch = this.handleSearch.bind(this);
+
+    this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
+    //
+    // this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      propertyManagerSelected: []
+    };
+  }
+
+  // handleSearch(event) {
+  //   const { target } = event;
+  //   const { id } = target;
+  //   const { value } = target;
+  //   this.setState({
+  //     [id]: value
+  //   });
   // }
+
+  // handleChange(event) {
+  //   const { target } = event;
+  //   const { name } = target;
+  //   const { value } = target;
+  //
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // }
+
+  handleSelectionFromSearch(searchedObj) {
+    // if (Object.keys(searchedObj).includes('address')) {
+    //   this.setState({ propertySelected: searchedObj });
+    // } else {
+      if (
+        !this.state.propertyManagerSelected.find(({ id }) => id === searchedObj.id)
+      ) {
+        this.setState(prevState => ({
+          propertyManagerSelected: [...prevState.propertyManagerSelected, searchedObj]
+        }));
+      } else {
+        this.setState(prevState => ({
+          propertyManagerSelected: prevState.propertyManagerSelected.filter(
+            ({ id }) => id !== searchedObj.id
+          )
+        }));
+      }
+      // this.setState({ addingNewPropertyManager: false });
+    // }
+  }
 
   render() {
     return (
@@ -43,7 +91,7 @@ class NewPropertyForm extends Component {
                   name="newPropertyName"
                   label="Name"
                   type="text"
-                  placeholder="Name"
+                  placeholder="Property Name"
                   onChange={this.handleChange}
                 />
                 <Input
@@ -51,7 +99,7 @@ class NewPropertyForm extends Component {
                   name="newPropertyAddress"
                   label="Address"
                   type="text"
-                  placeholder="Address"
+                  placeholder="Property Address"
                   onChange={this.handleChange}
                 />
                 <Input
@@ -75,7 +123,7 @@ class NewPropertyForm extends Component {
                   name="newPropertyZipcode"
                   label="Zipcode"
                   type="text"
-                  placeholder="Zipcode"
+                  placeholder="Zip"
                   onChange={this.handleChange}
                 />
                 <Input
@@ -83,7 +131,7 @@ class NewPropertyForm extends Component {
                   name="newPropertyUnits"
                   label="Units"
                   type="text"
-                  placeholder="# of Units"
+                  placeholder="Units"
                   onChange={this.handleChange}
                 />
               </fieldset>

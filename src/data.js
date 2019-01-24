@@ -123,7 +123,7 @@ export const tenants = [
 export const propertyManagers = [
   {
     id: 'propertyManager-01',
-    name: 'Tom Smith',
+    firstName: 'Tom Smith',
     tenants: [
       {
         id: 'tenant-02',
