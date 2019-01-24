@@ -6,6 +6,8 @@ import Navigation from '../../components/navigation/Navigation';
 import './PropertyDashboard.scss';
 import { properties } from '../../data';
 
+console.log(properties)
+
 function getPropertyData() {
   // Match tenants and managers to property?
   // Return array of all properties with added data?
@@ -15,7 +17,7 @@ function getPropertyData() {
 function getTableRow(property) {
   return (
     <tr>
-      <td><input type="checkbox" />{property.name}</td>
+      <td><input type="checkbox" /> {property.name}</td>
       <td>{property.manager}</td>
       <td>{property.address}</td>
       <td>{property.tenants}</td>
@@ -36,7 +38,10 @@ const PropertyDashboard = ({ intl }) => (
     </Header>
     <section className="property-dashboard-header">
       <div className="add-new">
-        <p className="property-header">PROPERTIES<button type="button" className="btn btn--lrg add-new-btn">+ ADD NEW</button></p>
+        <h2 className="property-header">PROPERTIES</h2>
+        <button type="button" className="btn btn--lrg add-new-btn">+ ADD NEW</button>
+      </div>
+      <div className="property-search-wrapper">
         <input
           type="text"
           className="property-search"
@@ -53,7 +58,7 @@ const PropertyDashboard = ({ intl }) => (
       }
         <table>
           <tr>
-            <th><input type="checkbox" />Name</th>
+            <th><input type="checkbox" /> Name</th>
             <th>Property Manager</th>
             <th>Address</th>
             <th>Tenants</th>
