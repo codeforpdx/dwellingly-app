@@ -14,7 +14,7 @@ function getPropertyData() {
 
 function getTableRow(property) {
   return (
-    <tr className="table-list">
+    <tr>
       <td><input type="checkbox" />{property.name}</td>
       <td>{property.manager}</td>
       <td>{property.address}</td>
@@ -37,11 +37,11 @@ const PropertyDashboard = ({ intl }) => (
     <section className="property-dashboard-header">
       <div className="add-new">
         <p className="property-header">PROPERTIES<button type="button" className="btn btn--lrg add-new-btn">+ ADD NEW</button></p>
+        <input
+          type="text"
+          className="property-search"
+          placeholder="search" />
       </div>
-      <input
-        type="text"
-        className="property-search"
-        placeholder="search" />
     </section>
     <section className="property-dashboard-header property-table">
       <div className="gray-bar">
@@ -52,7 +52,7 @@ const PropertyDashboard = ({ intl }) => (
         // Is there a table library for sorting/styling? 
       }
         <table>
-          <tr className="table-list">
+          <tr>
             <th><input type="checkbox" />Name</th>
             <th>Property Manager</th>
             <th>Address</th>
@@ -62,7 +62,6 @@ const PropertyDashboard = ({ intl }) => (
           {getPropertyData().map(property => (getTableRow(property)))}
         </table>
       </div>
-      <hr/>
     </section>
   </div>
 );

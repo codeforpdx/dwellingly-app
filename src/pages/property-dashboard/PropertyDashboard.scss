@@ -1,7 +1,9 @@
+@import "../../constants/constants.scss";
+
 .property-dashboard-header {
   margin: 0 5rem;
+  padding-bottom: 0;
 }
-
 .add-new-btn {
   margin-left: 2rem;
 }
@@ -11,30 +13,28 @@
   padding: 0 1rem;
   justify-content: flex-end;
   align-items: center;
-  background: #F5F5F5;
+  border-radius: 2px;
+  background: $color__gray--lightest;
   width: 800px;
   height: 4rem;
 }
 .archive-btn {
   margin: .3rem;
 }
-
-.table-header {
+.table-wrapper {
   display: flex;
-  align-content: center;
-  background: #F5F5F5;
   margin-top: .5rem;
-  td {
-    padding-bottom: 10px;
+  table {
+    width: 800px;
   }
-}
-
-.table-list {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 2rem;
+  th {
+    background: $color__gray--lightest;
+    padding: 1rem;
+    text-align: left;
+  }
   td {
-    margin: 0 50px;
+    border-bottom: solid 1px $color__gray--light;
+    padding: 1.5rem 0;
   }
 }
 
@@ -43,19 +43,20 @@
   margin: 2rem;
   text-align: left;
   .property-header {
-    padding-right: 2rem;
-    padding-top: .3rem;  
+    padding-right: 2rem; 
+    color: $color__blue--dark;
+    font-weight: 400;
   }
 }
 
 .property-search {
-  width: 60%;
-  border: solid .5px #D3D3D3;
+  width: 50%;
+  height: 2.2rem;
+  border: solid .5px $color__gray--border;
   border-radius: 25px;
 }
 
 .property-table {
-  margin-top: 2rem;
   width: 800px;
 }
 
