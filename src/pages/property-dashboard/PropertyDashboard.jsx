@@ -4,6 +4,25 @@ import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import './PropertyDashboard.scss';
+import { properties } from '../../data';
+
+function getPropertyData() {
+  // Match tenants and managers to property?
+  // Return array of all properties with added data?
+  return properties
+}
+
+function getTableRow(property) {
+  return (
+    <tr className="table-list">
+      <td><input type="checkbox" />{property.name}</td>
+      <td>{property.manager}</td>
+      <td>{property.address}</td>
+      <td>{property.tenants}</td>
+      <td>{property.date}</td>
+    </tr>
+  )
+}
 
 const PropertyDashboard = ({ intl }) => (
   <div className="page">
@@ -28,33 +47,21 @@ const PropertyDashboard = ({ intl }) => (
       <div className="gray-bar">
         <button type="button" className="btn archive-btn">ARCHIVE</button>
       </div>
-      <div className="table-header">
-      <table>
-        <tr className="table-list">
-          <td><input type="checkbox" />Name</td>
-          <td>Property Manager</td>
-          <td>Address</td>
-          <td>Tenants</td>
-        </tr>
-      </table>
+      <div className="table-wrapper">
+      {
+        // Is there a table library for sorting/styling? 
+      }
+        <table>
+          <tr className="table-list">
+            <th><input type="checkbox" />Name</th>
+            <th>Property Manager</th>
+            <th>Address</th>
+            <th>Tenants</th>
+            <th>Date Added</th>
+          </tr>
+          {getPropertyData().map(property => (getTableRow(property)))}
+        </table>
       </div>
-      <table>
-        <tr className="table-list">
-          <td><input type="checkbox" />name</td>
-          <td>property manager</td>
-          <td>address</td>
-          <td>tenants</td>
-        </tr>
-      </table>
-      <hr/>
-      <table>
-        <tr className="table-list">
-          <td><input type="checkbox" />name</td>
-          <td>property manager</td>
-          <td>address</td>
-          <td>tenants</td>
-        </tr>
-      </table>
       <hr/>
     </section>
   </div>
