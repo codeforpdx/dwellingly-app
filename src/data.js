@@ -143,7 +143,7 @@ export const propertyManagers = [
   },
   {
     id: 'propertyManager-02',
-    name: 'Miles Prower',
+    firstName: 'Miles Prower',
     number: '503-555-1234',
     tenants: [
       {

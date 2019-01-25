@@ -5,7 +5,7 @@ import Header from '../../components/header/Header';
 // import Icon from '../../components/icon/Icon';
 import Input from '../../components/input/Input';
 import Navigation from '../../components/navigation/Navigation';
-import { propertyManagers } from '../../data';
+import { propertyManagers, properties } from '../../data';
 import Search from '../../components/search/Search';
 import './NewPropertyForm.scss';
 
@@ -13,55 +13,80 @@ class NewPropertyForm extends Component {
   constructor(props) {
     super(props);
 
-    // this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
 
     this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
-    //
-    // this.handleChange = this.handleChange.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+
+    this.handleAddNewProperty = this.handleAddNewProperty.bind(this);
 
     this.state = {
-      propertyManagerSelected: []
+      propertyManagerSelected: [],
+      properties
+
     };
   }
 
-  // handleSearch(event) {
-  //   const { target } = event;
-  //   const { id } = target;
-  //   const { value } = target;
-  //   this.setState({
-  //     [id]: value
-  //   });
-  // }
+  handleSearch(event) {
+    const { target } = event;
+    const { id } = target;
+    const { value } = target;
+    this.setState({
+      [id]: value
+    });
+  }
 
-  // handleChange(event) {
-  //   const { target } = event;
-  //   const { name } = target;
-  //   const { value } = target;
-  //
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // }
+  handleChange(event) {
+    const { target } = event;
+    const { name } = target;
+    const { value } = target;
 
-  handleSelectionFromSearch(searchedObj) {
-    // if (Object.keys(searchedObj).includes('address')) {
-    //   this.setState({ propertySelected: searchedObj });
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSelectionFromSearch(nameSearched) {
+    // if (Object.keys(nameSearched).includes('firstName')) {
+    //   this.setState({ propertyManagerSelected: nameSearched });
     // } else {
       if (
-        !this.state.propertyManagerSelected.find(({ id }) => id === searchedObj.id)
+        !this.state.propertyManagerSelected.find(({ id }) => id === nameSearched.id)
       ) {
         this.setState(prevState => ({
-          propertyManagerSelected: [...prevState.propertyManagerSelected, searchedObj]
+          propertyManagerSelected: [...prevState.propertyManagerSelected, nameSearched]
         }));
+        console.log(this.state);
+        console.log(nameSearched);
       } else {
         this.setState(prevState => ({
           propertyManagerSelected: prevState.propertyManagerSelected.filter(
-            ({ id }) => id !== searchedObj.id
+            ({ id }) => id !== nameSearched.id
           )
         }));
       }
-      // this.setState({ addingNewPropertyManager: false });
-    // }
+      this.setState(prevState => ({ propertyManagerSelected: prevState.propertyManagerSelected }))
+  // console.log(this.state);
+// }
+  console.log(this.state);
+  // console.log(nameSearched);
+}
+
+handleAddNewProperty(newProperty) {
+  const newPropertyList =  this.state.properties;
+  newPropertyList.push(newProperty);
+  this.setState(prevState => ({
+    properties: prevState.newPropertyList
+  }));
+}
+
+
+  handleNewPropertyFormSubmit(event) {
+  event.preventDefault();
+  const propertyName = '';
+  this.handleAddNewProperty({propertyName: propertyName.value});
+    propertyName.value = '';
   }
 
   render() {
@@ -85,9 +110,9 @@ class NewPropertyForm extends Component {
             </h2>
             <section className="newPropertyFormSection">
               <h2 className="newPropertyFormHeading">Property Information</h2>
-              <fieldset>
+              <fieldset onSubmit={this.handleNewPropertyFormSubmit}>
                 <Input
-                  id="propertyName"
+                  id="name"
                   name="newPropertyName"
                   label="Name"
                   type="text"
