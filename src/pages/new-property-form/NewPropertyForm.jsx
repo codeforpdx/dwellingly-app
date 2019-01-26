@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import Header from '../../components/header/Header';
 // import Icon from '../../components/icon/Icon';
 import Input from '../../components/input/Input';
+import ConfirmationModal from '../../components/confirmation-modal/ConfirmationModal';
 import Navigation from '../../components/navigation/Navigation';
 import { propertyManagers, properties } from '../../data';
 import Search from '../../components/search/Search';
@@ -21,12 +22,33 @@ class NewPropertyForm extends Component {
 
     this.handleAddNewProperty = this.handleAddNewProperty.bind(this);
 
+    this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
+
+    this.changeBackground = this.changeBackground.bind(this);
+
     this.state = {
+      modalIsOpen: false,
       propertyManagerSelected: [],
-      properties
+      properties,
+      addClass: false
 
     };
   }
+
+  // function increment() {
+  //   this.setState(prevState => ({value: prevState.value + 1}));
+  // }
+
+  toggleConfirmationModal() {
+    this.setState(prevState => ({
+      modalIsOpen: !prevState.modalIsOpen
+    }));
+    this.changeBackground()
+  }
+
+  changeBackground() {
+		this.setState({addClass: true});
+	}
 
   handleSearch(event) {
     const { target } = event;
@@ -174,7 +196,7 @@ handleAddNewProperty(newProperty) {
               </fieldset>
             </section>
             <section className="newPropertyFormSection">
-              <button
+              <button onClick={this.toggleConfirmationModal}
                 type="submit"
                 className="btn">
                 Save
@@ -182,6 +204,11 @@ handleAddNewProperty(newProperty) {
             </section>
           </div>
         </div>
+        <ConfirmationModal
+          show={this.state.modalIsOpen}
+          onClose={this.toggleConfirmationModal}>
+          <p>Are You Sure?</p>
+        </ConfirmationModal>
       </div>
     );
   }

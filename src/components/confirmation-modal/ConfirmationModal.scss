@@ -1,0 +1,43 @@
+@import "../../constants/constants.scss";
+
+.confirmCard {
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: auto;
+
+  .card__content {
+    padding: 0.5em 1em;
+    background: $color__white;
+    width: 50%;
+    border-radius: $border-radius--card;
+    @include dialog_shadow;
+    @include clearfix;
+    align-self: center;
+    text-align: center;
+
+
+    .title {
+      margin: 0;
+      font-size: 1.5em;
+    }
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn {
+  margin-top: .5em;
+}
+
+.cancel {
+  background: $color__gray--medium;
+  border-radius: $border-radius--btn;
+  color: $color__white;
+  padding: 0 1rem;
+  margin-top: .5em;
+}
