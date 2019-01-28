@@ -10,7 +10,7 @@
   padding: 0 1rem;
   justify-content: flex-end;
   align-items: center;
-  border-radius: 2px;
+  border-radius: 1px;
   background: $color__gray--light;
   width: 800px;
   height: 4rem;
@@ -18,9 +18,6 @@
 .table-wrapper {
   display: flex;
   margin-top: .2rem;
-  table {
-    width: 800px;
-  }
   th {
     background: $color__gray--light;
     padding: 1.3rem;
@@ -55,14 +52,51 @@
   button:focus {
       outline: none;
   }
+  input {
+    margin-left: 10px;
+    padding-bottom: 10px;
+  }
 }
 .property-search {
   width: 100%;
   max-width: 450px;
-  height: 2.2rem;
+  height: 2rem;
   border: solid .5px $color__gray--border;
   border-radius: 25px;
 }
 .property-table {
   width: 800px;
+}
+.next-button {
+  display: flex;
+  align-items: flex-end;
+  width: 800px;
+  margin: 0 auto;
+  .next-btn {
+    margin-right: 2.5rem;
+  }
+}
+
+
+@media screen and (max-width: 667px) {
+  .property-search-wrapper {
+    display: none;
+  }
+  .gray-bar {
+    display: none;
+  }
+  .add-new {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .add-new-btn {
+      margin-top: 1rem;
+      width: 200px;
+    }
+  }
+  .property-dashboard-header {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+  }
 }

@@ -4,6 +4,7 @@ import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import './PropertyDashboard.scss';
+import Icon from '../../components/icon/Icon';
 import { properties } from '../../data';
 
 console.log(properties)
@@ -42,10 +43,11 @@ const PropertyDashboard = ({ intl }) => (
         <button type="button" className="btn btn--lrg add-new-btn">+ ADD NEW</button>
       </div>
       <div className="property-search-wrapper">
+      <Icon icon="search" />
         <input
           type="text"
           className="property-search"
-          placeholder="search" />
+          placeholder="search... " />
       </div>
     </section>
     <section className="property-dashboard-header property-table">
@@ -68,6 +70,9 @@ const PropertyDashboard = ({ intl }) => (
         </table>
       </div>
     </section>
+    <div className="next-button">
+      <button type="button" className="btn next-btn">NEXT</button>
+    </div>
   </div>
 );
 
