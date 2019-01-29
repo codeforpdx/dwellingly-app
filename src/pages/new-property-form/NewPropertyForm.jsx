@@ -29,15 +29,17 @@ class NewPropertyForm extends Component {
     this.state = {
       modalIsOpen: false,
       propertyManagerSelected: [],
-      properties: {
-        name: "",
-        address: "",
-        city: "",
-        state: "",
-        zipCode: "",
-        numberOfUnits: ""
-      },
+      properties,
+      // : {
+      //   name: "",
+      //   address: "",
+      //   city: "",
+      //   state: "",
+      //   zipCode: "",
+      //   numberOfUnits: ""
+      // },
       addClass: false
+
     };
   }
 
@@ -66,24 +68,11 @@ class NewPropertyForm extends Component {
     const { target } = event;
     const { name } = target;
     const { value } = target;
-    const {properties} = this.state.properties;
-
-    properties[name] = value;
 
     this.setState({
-      properties
+      [name]: value
     });
   }
-  //
-  // handleSubmit(event) {
-  //   const { target } = event;
-  //   const { name } = target;
-  //   const { value } = target;
-  //
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // }
 
   handleSelectionFromSearch(nameSearched) {
     // if (Object.keys(nameSearched).includes('firstName')) {
@@ -152,7 +141,6 @@ handleAddNewProperty(newProperty) {
                 <Input
                   id="name"
                   name="name"
-                  value={this.state.properties.name}
                   label="Name"
                   type="text"
                   placeholder="Property Name"
