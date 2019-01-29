@@ -7,9 +7,8 @@ import './PropertyDashboard.scss';
 import Icon from '../../components/icon/Icon';
 import { properties } from '../../data';
 
-console.log(properties)
-
 function getPropertyData() {
+  // If I fetch here, and no result, return empty array
   // Match tenants and managers to property?
   // Return array of all properties with added data?
   return properties
@@ -55,9 +54,6 @@ const PropertyDashboard = ({ intl }) => (
         <button type="button" className="btn archive-btn">ARCHIVE</button>
       </div>
       <div className="table-wrapper">
-      {
-        // Is there a table library for sorting/styling? 
-      }
         <table>
           <tr>
             <th><input type="checkbox" /> Name</th>
@@ -66,6 +62,9 @@ const PropertyDashboard = ({ intl }) => (
             <th>Tenants</th>
             <th>Date Added</th>
           </tr>
+          {
+            // if api data passed as prop, this.props.properties && 
+          }
           {getPropertyData().map(property => (getTableRow(property)))}
         </table>
       </div>
