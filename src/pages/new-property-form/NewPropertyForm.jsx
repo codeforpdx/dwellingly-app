@@ -29,15 +29,17 @@ class NewPropertyForm extends Component {
     this.state = {
       modalIsOpen: false,
       propertyManagerSelected: [],
-      properties,
+      properties: {
+        name: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        numberOfUnits: ""
+      },
       addClass: false
-
     };
   }
-
-  // function increment() {
-  //   this.setState(prevState => ({value: prevState.value + 1}));
-  // }
 
   toggleConfirmationModal() {
     this.setState(prevState => ({
@@ -60,14 +62,28 @@ class NewPropertyForm extends Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
     const { target } = event;
     const { name } = target;
     const { value } = target;
+    const {properties} = this.state.properties;
+
+    properties[name] = value;
 
     this.setState({
-      [name]: value
+      properties
     });
   }
+  //
+  // handleSubmit(event) {
+  //   const { target } = event;
+  //   const { name } = target;
+  //   const { value } = target;
+  //
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // }
 
   handleSelectionFromSearch(nameSearched) {
     // if (Object.keys(nameSearched).includes('firstName')) {
@@ -135,47 +151,48 @@ handleAddNewProperty(newProperty) {
               <fieldset onSubmit={this.handleNewPropertyFormSubmit}>
                 <Input
                   id="name"
-                  name="newPropertyName"
+                  name="name"
+                  value={this.state.properties.name}
                   label="Name"
                   type="text"
                   placeholder="Property Name"
                   onChange={this.handleChange}
                 />
                 <Input
-                  id="propertyAddress"
-                  name="newPropertyAddress"
+                  id="address"
+                  name="address"
                   label="Address"
                   type="text"
                   placeholder="Property Address"
                   onChange={this.handleChange}
                 />
                 <Input
-                  id="propertyCity"
-                  name="newPropertyCity"
+                  id="city"
+                  name="city"
                   label="City"
                   type="text"
                   placeholder="City"
                   onChange={this.handleChange}
                 />
                 <Input
-                  id="propertyState"
-                  name="newPropertyState"
+                  id="state"
+                  name="state"
                   label="State"
                   type="text"
                   placeholder="State"
                   onChange={this.handleChange}
                 />
                 <Input
-                  id="propertyZipcode"
-                  name="newPropertyZipcode"
+                  id="zipCode"
+                  name="zipCode"
                   label="Zipcode"
                   type="text"
                   placeholder="Zip"
                   onChange={this.handleChange}
                 />
                 <Input
-                  id="propertyUnits"
-                  name="newPropertyUnits"
+                  id="numberOfUnits"
+                  name="numberOfUnits"
                   label="Units"
                   type="text"
                   placeholder="Units"
@@ -189,7 +206,7 @@ handleAddNewProperty(newProperty) {
                 <Search
                   searchData={propertyManagers}
                   placeholder= "Search Property Managers"
-                  filterSubset={['firstName', 'lastName']}
+                  filterSubset={['firstName', 'lastName', 'name']}
                   onSearchSelection={this.handleSelectionFromSearch}
                   multiple
                 />
