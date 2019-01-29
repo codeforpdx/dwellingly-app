@@ -6,7 +6,7 @@ import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import ConfirmationModal from '../../components/confirmation-modal/ConfirmationModal';
 import Navigation from '../../components/navigation/Navigation';
-import { propertyManagers, properties } from '../../data';
+import { propertyManagers } from '../../data';
 import Search from '../../components/search/Search';
 import './NewPropertyForm.scss';
 
@@ -18,9 +18,13 @@ class NewPropertyForm extends Component {
 
     this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
 
+    this.handleSubmit = this.handleSubmit.bind(this);
+
     this.handleChange = this.handleChange.bind(this);
 
     this.handleAddNewProperty = this.handleAddNewProperty.bind(this);
+
+    this.handleNewPropertyFormSubmit = this.handleNewPropertyFormSubmit.bind(this);
 
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
 
@@ -28,18 +32,16 @@ class NewPropertyForm extends Component {
 
     this.state = {
       modalIsOpen: false,
-      propertyManagerSelected: [],
-      properties,
-      // : {
-      //   name: "",
-      //   address: "",
-      //   city: "",
-      //   state: "",
-      //   zipCode: "",
-      //   numberOfUnits: ""
-      // },
+      propertyManagerSelected: "",
+      properties: [{
+        name: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        numberOfUnits: ""
+      }],
       addClass: false
-
     };
   }
 
@@ -68,45 +70,41 @@ class NewPropertyForm extends Component {
     const { target } = event;
     const { name } = target;
     const { value } = target;
-
     this.setState({
-      [name]: value
+      properties: { [name]: value }
     });
+    console.log(this.state.properties.name);
+    console.log(this.state.properties.address);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { target } = event;
+    const { name } = target;
+    const { value } = target;
+    this.setState({
+      properties: { [name]: value}
+    });
+    console.log(this.state.properties.address);
   }
 
   handleSelectionFromSearch(nameSearched) {
-    // if (Object.keys(nameSearched).includes('firstName')) {
-    //   this.setState({ propertyManagerSelected: nameSearched });
-    // } else {
-      if (
-        !this.state.propertyManagerSelected.find(({ id }) => id === nameSearched.id)
-      ) {
-        this.setState(prevState => ({
-          propertyManagerSelected: [...prevState.propertyManagerSelected, nameSearched]
-        }));
-        console.log(this.state);
-        console.log(nameSearched);
-      } else {
-        this.setState(prevState => ({
-          propertyManagerSelected: prevState.propertyManagerSelected.filter(
-            ({ id }) => id !== nameSearched.id
-          )
-        }));
-      }
-      this.setState(prevState => ({ propertyManagerSelected: prevState.propertyManagerSelected }))
-  // console.log(this.state);
-// }
-  console.log(this.state);
-  // console.log(nameSearched);
-}
+    if
+     (Object.keys(nameSearched).includes('name')) {
+      this.setState({ propertyManagerSelected: nameSearched });
+      console.log(nameSearched);
+      console.log(this.state);
+    }
+  }
 
-handleAddNewProperty(newProperty) {
-  const newPropertyList =  this.state.properties;
-  newPropertyList.push(newProperty);
-  this.setState(prevState => ({
-    properties: prevState.newPropertyList
-  }));
-}
+
+  handleAddNewProperty(newProperty) {
+    const newPropertyList =  this.state.properties;
+    newPropertyList.push(newProperty);
+    this.setState(prevState => ({
+      properties: prevState.newPropertyList
+    }));
+  }
 
 
   handleNewPropertyFormSubmit(event) {
@@ -135,9 +133,9 @@ handleAddNewProperty(newProperty) {
             <h2 className="admin--header align--left">
               Add a New Property
             </h2>
+            <form onSubmit={this.handleNewPropertyFormSubmit}>
             <section className="newPropertyFormSection">
               <h2 className="newPropertyFormHeading">Property Information</h2>
-              <fieldset onSubmit={this.handleNewPropertyFormSubmit}>
                 <Input
                   id="name"
                   name="name"
@@ -186,7 +184,6 @@ handleAddNewProperty(newProperty) {
                   placeholder="Units"
                   onChange={this.handleChange}
                 />
-              </fieldset>
             </section>
             <section className="newPropertyFormSection">
               <h2 className="newPropertyFormHeading">Assign Property Managers</h2>
@@ -207,6 +204,7 @@ handleAddNewProperty(newProperty) {
                 Save
               </button>
             </section>
+          </form>
           </div>
         </div>
         <ConfirmationModal
