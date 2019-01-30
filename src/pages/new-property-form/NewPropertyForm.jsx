@@ -22,13 +22,13 @@ class NewPropertyForm extends Component {
 
     this.handleChange = this.handleChange.bind(this);
 
-    this.handleAddNewProperty = this.handleAddNewProperty.bind(this);
-
-    this.handleNewPropertyFormSubmit = this.handleNewPropertyFormSubmit.bind(this);
+    // this.handleAddNewProperty = this.handleAddNewProperty.bind(this);
+    //
+    // this.handleNewPropertyFormSubmit = this.handleNewPropertyFormSubmit.bind(this);
 
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
 
-    this.changeBackground = this.changeBackground.bind(this);
+    // this.changeBackground = this.changeBackground.bind(this);
 
     this.state = {
       showModal: false,
@@ -40,22 +40,17 @@ class NewPropertyForm extends Component {
         state: "",
         zipCode: "",
         numberOfUnits: ""
-      },
-      addClass: false
+      }
     };
   }
 
-  toggleConfirmationModal() {
+  toggleConfirmationModal(event) {
+    event.preventDefault();
     this.setState(prevState => ({
       showModal: !prevState.showModal
     }));
-    this.changeBackground()
   }
-
-  changeBackground() {
-		this.setState({addClass: true});
-	}
-
+  
   handleSearch(event) {
     const { target } = event;
     const { id } = target;
@@ -73,8 +68,6 @@ class NewPropertyForm extends Component {
     this.setState(prevState => ({
       properties: { ...prevState.properties, [name]: value}
     }));
-    console.log(this.state.properties.name);
-    console.log(this.state.properties.address);
   }
 
   handleSubmit(event) {
@@ -85,7 +78,7 @@ class NewPropertyForm extends Component {
     this.setState(prevState => ({
       properties: { ...prevState.properties, [name]: value}
     }));
-    console.log(this.state.properties.address);
+    this.toggleConfirmationModal(event);
   }
 
   handleSelectionFromSearch(nameSearched) {
@@ -99,21 +92,21 @@ class NewPropertyForm extends Component {
 
 // Next two functions are not currently in use. Could be rewritten for use later.
 
-  handleAddNewProperty(newProperty) {
-    const newPropertyList =  this.state.properties;
-    newPropertyList.push(newProperty);
-    this.setState(prevState => ({
-      properties: prevState.newPropertyList
-    }));
-  }
-
-
-  handleNewPropertyFormSubmit(event) {
-  event.preventDefault();
-  const propertyName = '';
-  this.handleAddNewProperty({propertyName: propertyName.value});
-    propertyName.value = '';
-  }
+  // handleAddNewProperty(newProperty) {
+  //   const newPropertyList =  this.state.properties;
+  //   newPropertyList.push(newProperty);
+  //   this.setState(prevState => ({
+  //     properties: prevState.newPropertyList
+  //   }));
+  // }
+  //
+  //
+  // handleNewPropertyFormSubmit(event) {
+  // event.preventDefault();
+  // const propertyName = '';
+  // this.handleAddNewProperty({propertyName: propertyName.value});
+  //   propertyName.value = '';
+  // }
 
 // End useless functions
 
@@ -137,7 +130,7 @@ class NewPropertyForm extends Component {
             <h2 className="admin--header align--left">
               Add a New Property
             </h2>
-            <form onSubmit={this.handleSubmit}>
+            <form id="newPropertyForm">
             <section className="newPropertyFormSection">
               <h2 className="newPropertyFormHeading">Property Information</h2>
                 <Input
@@ -145,6 +138,7 @@ class NewPropertyForm extends Component {
                   name="name"
                   label="Name"
                   type="text"
+                  value={this.state.properties.name}
                   placeholder="Property Name"
                   onChange={this.handleChange}
                 />
@@ -213,8 +207,10 @@ class NewPropertyForm extends Component {
         </div>
         <ConfirmationModal
           show={this.state.showModal}
-          onClose={this.toggleConfirmationModal}>
-          Are you sure you want to save {this.state.properties.name}, {this.state.properties.address} {this.state.properties.city}, {this.state.properties.state} {this.state.properties.zipCode} ?
+          onClose={this.toggleConfirmationModal}
+          onSubmit={this.handleSubmit}>
+          Are you sure you want to save {this.state.properties.name}, {this.state.properties.address} {this.state.properties.city}, {this.state.properties.state} {this.state.properties.zipCode}
+          ?
         </ConfirmationModal>
       </div>
     );

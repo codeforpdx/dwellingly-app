@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../card/Card';
 import './ConfirmationModal.scss';
 
 class ConfirmationModal extends React.Component {
@@ -11,14 +10,15 @@ class ConfirmationModal extends React.Component {
     }
 
     return (
-      <Card className="confirmCard" >
-        <Card.Content className="card__content">
+      <div className="full-window-modal" >
+        <div className="modal-content">
           <p className="title">
             {this.props.children}
           </p>
           <div className="button-container">
-            <button className="btn" id="yes-button" onClick={this.props.onClose}
-              type="button">
+            <button form='newPropertyForm' className="btn"
+              id="yes-button" type="submit"
+              onClick={this.props.onSubmit}>
               YES
             </button>
             <button className="cancel" onClick={this.props.onClose}
@@ -26,13 +26,14 @@ class ConfirmationModal extends React.Component {
               NO
             </button>
           </div>
-        </Card.Content>
-      </Card>
+        </div>
+      </div>
     );
   }
 }
 
 ConfirmationModal.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired
