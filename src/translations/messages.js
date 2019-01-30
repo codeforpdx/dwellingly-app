@@ -339,30 +339,108 @@ export const TERMS = defineMessages({
     id: 'terms.title',
     defaultMessage: 'Terms and Conditions'
   },
-  PARAGRAPH_01: {
-    id: 'terms.paragaraph_01',
-    defaultMessage:
-      'There are some terms and conditions and we will have them once we talk to a lawyer!'
+  PARAGRAPH_LAST_MODIFIED: {
+    id: 'terms.paragaraph.last_modified',
+    defaultMessage: 'This Agreement was last modified on January 17, 2019.'
   },
-  PARAGRAPH_02: {
-    id: 'terms.paragaraph_02',
+  PARAGRAPH_INSTRUCTIONS_A: {
+    id: 'terms.paragaraph.instructions_a',
     defaultMessage:
-      'Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea. Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.'
+      'Please read these Terms of Service completely using <a href="{site}">{site}</a> which is owned and operated by {org}. This Agreement documents the legally binding terms and conditions attached to the use of the Site at <b>{site}</b>.'
   },
-  PARAGRAPH_03: {
-    id: 'terms.paragaraph_03',
+  PARAGRAPH_INSTRUCTIONS_B: {
+    id: 'terms.paragaraph.instructions_b',
     defaultMessage:
-      'Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley jícama salsify.'
+      'By using or accessing the Site in any way, viewing or browsing the Site, or adding your own content to the Site, you are agreeing to be bound by these Terms of Service. '
   },
-  PARAGRAPH_04: {
-    id: 'terms.paragaraph_04',
-    defaultMessage:
-      'Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut jícama green bean celtuce collard greens avocado quandong fennel gumbo black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd. Gumbo kakadu plum komatsuna black-eyed pea green bean zucchini gourd winter purslane silver beet rock melon radish asparagus spinach.'
+  HEADER_PROPERTY: {
+    id: 'terms.header_intellectual_property',
+    defaultMessage: 'Intellectual Property'
   },
-  PARAGRAPH_05: {
-    id: 'terms.paragaraph_05',
+  PARAGRAPH_PROPERTY: {
+    id: 'terms.paragaraph_intellectual_property',
     defaultMessage:
-      'Soko radicchio bunya nuts gram dulse silver beet parsnip napa cabbage lotus root sea lettuce brussels sprout cabbage. Catsear cauliflower garbanzo yarrow salsify chicory garlic bell pepper napa cabbage lettuce tomato kale arugula melon sierra leone bologi rutabaga tigernut. Sea lettuce gumbo grape kale kombu cauliflower salsify kohlrabi okra sea lettuce broccoli celery lotus root carrot winter purslane turnip greens garlic. Jícama garlic courgette coriander radicchio plantain scallion cauliflower fava bean desert raisin spring onion chicory bunya nuts. Sea lettuce water spinach gram fava bean leek dandelion silver beet eggplant bush tomato.'
+      'The Site and all of its original content are the sole property of {org} and are, as such, fully protected by the appropriate international copyright and other intellectual property rights laws.'
+  },
+  HEADER_TERMINATION: {
+    id: 'terms.header_termination',
+    defaultMessage: 'Termination'
+  },
+  PARAGRAPH_TERMINATION: {
+    id: 'terms.paragraph.termination',
+    defaultMessage:
+      '{org} reserves the right to terminate your access to the Site, without any advance notice. '
+  },
+  HEADER_LINKS: {
+    id: 'terms.header_links',
+    defaultMessage: 'Links to Other Websites'
+  },
+  PARAGRAPH_LINKS_A: {
+    id: 'terms.paragaraph_links_a',
+    defaultMessage:
+      'Our Site may contain links to other websites and online resources that are not owned or controlled by {org}.'
+  },
+  PARAGRAPH_LINKS_B: {
+    id: 'terms.paragaraph_links_a',
+    defaultMessage:
+      '{org} has no control over, and therefore cannot assume responsibility for, the content or general practices of any of these third party sites and/or services. Therefore, we strongly advise you to read the entire terms and conditions and privacy policy of any site that you visit as a result of following a link that is posted on our site.'
+  },
+  HEADER_GOVERNING_LAW: {
+    id: 'terms.header_governing_law',
+    defaultMessage: 'Governing Law'
+  },
+  PARAGRAPH_GOVERNING_LAW: {
+    id: 'terms.paragaraph_governing_law',
+    defaultMessage:
+      'This Agreement is governed in accordance with the laws of Oregon, United States.'
+  },
+  HEADER_CHANGES: {
+    id: 'terms.header_intellectual_property',
+    defaultMessage: 'Intellectual Property'
+  },
+  PARAGRAPH_CHANGES_A: {
+    id: 'terms.paragaraph_property',
+    defaultMessage:
+      'The Site and all of its original content are the sole property of {org} and are, as such, fully protected by the appropriate international copyright and other intellectual property rights laws.'
+  },
+  PARAGRAPH_CHANGES_B: {
+    id: 'terms.paragaraph_property',
+    defaultMessage:
+      'The Site and all of its original content are the sole property of {org} and are, as such, fully protected by the appropriate international copyright and other intellectual property rights laws.'
+  },
+
+  HEADER_WHAT_YOU_CAN_DO: {
+    id: 'terms.header_what_you_can_do',
+    defaultMessage: 'What You Can Do'
+  },
+  PARAGRAPH_WHAT_YOU_CAN_DO: {
+    id: 'terms.paragaraph_what_you_can_do',
+    defaultMessage:
+      'By using this Site, you promise to use the Site for any purpose that is unlawful or prohibited by these Terms, or for any purpose not reasonably intended by {org}. By way of example, and not by limitation, you agree not to use this Site:'
+  },
+  LIST_PROHIBITED_ACTIONS_1: {
+    id: 'terms.prohibited_actions_1',
+    defaultMessage: 'To abuse, harass, or intimidate any person;'
+  },
+  LIST_PROHIBITED_ACTIONS_2: {
+    id: 'terms.prohibited_actions_21',
+    defaultMessage:
+      'To post or transmit, or cause to be posted or transmitted, any Content that is libelous, defamatory, obscene, pornographic, abusive, profane, or that infringes on any copyright or any other right of person;'
+  },
+  LIST_PROHIBITED_ACTIONS_3: {
+    id: 'terms.prohibited_actions_3',
+    defaultMessage:
+      'To communicate with {org} representatives or other users in an abusive or offensive manner;'
+  },
+
+  HEADER_CONTACT_US: {
+    id: 'terms.header_intellectual_property',
+    defaultMessage: 'Contact Us'
+  },
+  PARAGRAPH_CONTACT_US: {
+    id: 'terms.paragaraph_property',
+    defaultMessage:
+      'If you have any questions about this Agreement, please feel free to contact us at <a href="mailto:{address}">{address}</a>.'
   }
 });
 
