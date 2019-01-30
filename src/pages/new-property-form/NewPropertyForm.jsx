@@ -33,14 +33,14 @@ class NewPropertyForm extends Component {
     this.state = {
       modalIsOpen: false,
       propertyManagerSelected: "",
-      properties: [{
+      properties: {
         name: "",
         address: "",
         city: "",
         state: "",
         zipCode: "",
         numberOfUnits: ""
-      }],
+      },
       addClass: false
     };
   }
@@ -70,9 +70,9 @@ class NewPropertyForm extends Component {
     const { target } = event;
     const { name } = target;
     const { value } = target;
-    this.setState({
-      properties: { [name]: value }
-    });
+    this.setState(prevState => ({
+      properties: { ...prevState.properties, [name]: value}
+    }));
     console.log(this.state.properties.name);
     console.log(this.state.properties.address);
   }
@@ -82,9 +82,9 @@ class NewPropertyForm extends Component {
     const { target } = event;
     const { name } = target;
     const { value } = target;
-    this.setState({
-      properties: { [name]: value}
-    });
+    this.setState(prevState => ({
+      properties: { ...prevState.properties, [name]: value}
+    }));
     console.log(this.state.properties.address);
   }
 
@@ -133,7 +133,7 @@ class NewPropertyForm extends Component {
             <h2 className="admin--header align--left">
               Add a New Property
             </h2>
-            <form onSubmit={this.handleNewPropertyFormSubmit}>
+            <form onSubmit={this.handleSubmit}>
             <section className="newPropertyFormSection">
               <h2 className="newPropertyFormHeading">Property Information</h2>
                 <Input
