@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import SearchForm from '../../components/search-form/SearchForm';
 import PropertyManagersList from '../../components/list/PropertyManagersList';
+// import { getPropertyManagers } from '../../dux/propertyManagers';
 import { ROUTES } from '../../constants/constants';
 
 // mock data
@@ -17,6 +20,8 @@ class PropertyManagersDirectory extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    // const { dispatch } = this.props;
+    // dispatch(getPropertyManagers())
   }
 
   handleSearch(event) {
@@ -48,4 +53,8 @@ class PropertyManagersDirectory extends Component {
   }
 }
 
-export default PropertyManagersDirectory;
+PropertyManagersDirectory.propTypes = {
+  // dispatch: PropTypes.func.isRequired
+}
+
+export default connect(null)(PropertyManagersDirectory);
