@@ -38,6 +38,7 @@ import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import NewTenantForm from './pages/new-tenant-form/NewTenantForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
+import Properties from './pages/properties/Properties';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
@@ -94,6 +95,10 @@ ReactDOM.render(
             <PrivateRoute
               path={ROUTES.OUT_OF_OFFICE}
               component={StaffUser(OutOfOffice)}
+            />
+            <PrivateRoute
+              path={`${ROUTES.PROPERTIES}`}
+              component={AdminUser(Properties)}
             />
             <PrivateRoute
               path={`${ROUTES.PROPERTIES}/:id`}
