@@ -31,7 +31,7 @@ class NewPropertyForm extends Component {
     this.changeBackground = this.changeBackground.bind(this);
 
     this.state = {
-      modalIsOpen: false,
+      showModal: false,
       propertyManagerSelected: "",
       properties: {
         name: "",
@@ -47,7 +47,7 @@ class NewPropertyForm extends Component {
 
   toggleConfirmationModal() {
     this.setState(prevState => ({
-      modalIsOpen: !prevState.modalIsOpen
+      showModal: !prevState.showModal
     }));
     this.changeBackground()
   }
@@ -97,6 +97,7 @@ class NewPropertyForm extends Component {
     }
   }
 
+// Next two functions are not currently in use. Could be rewritten for use later.
 
   handleAddNewProperty(newProperty) {
     const newPropertyList =  this.state.properties;
@@ -113,6 +114,9 @@ class NewPropertyForm extends Component {
   this.handleAddNewProperty({propertyName: propertyName.value});
     propertyName.value = '';
   }
+
+// End useless functions
+
 
   render() {
     return (
@@ -208,17 +212,23 @@ class NewPropertyForm extends Component {
           </div>
         </div>
         <ConfirmationModal
-          show={this.state.modalIsOpen}
+          show={this.state.showModal}
           onClose={this.toggleConfirmationModal}>
-          <p>Are You Sure?</p>
+          Are you sure you want to save {this.state.properties.name}, {this.state.properties.address} {this.state.properties.city}, {this.state.properties.state} {this.state.properties.zipCode} ?
         </ConfirmationModal>
       </div>
     );
   }
 }
 
-// NewPropertyForm.propTypes = {
-//   intl: intlShape.isRequired
-// };
+NewPropertyForm.propTypes = {
+  // properties: PropTypes.string,
+  // name: PropTypes.string.isRequired,
+  // address: PropTypes.string.isRequired,
+  // city: PropTypes.string.isRequired,
+  // state: PropTypes.string.isRequired,
+  // zipCode: PropTypes.string.isRequired,
+  // numberOfUnits: PropTypes.string.isRequired,
+};
 
 export default injectIntl(NewPropertyForm);
