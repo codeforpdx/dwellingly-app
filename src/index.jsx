@@ -56,9 +56,9 @@ import CardSamples from './pages/code-samples/CardSamples';
 import HeaderSamples from './pages/code-samples/HeaderSamples';
 
 // mock data
-import { dummyUser } from './data';
+// import { dummyUser } from './data';
 
-const user = dummyUser;
+const { user } = store.getState();
 
 // Set up cookie stuff for translation
 const cookies = new Cookies();
