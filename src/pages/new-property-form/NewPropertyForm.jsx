@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import Header from '../../components/header/Header';
-// import Icon from '../../components/icon/Icon';
 import Input from '../../components/input/Input';
 import ConfirmationModal from '../../components/confirmation-modal/ConfirmationModal';
 import Navigation from '../../components/navigation/Navigation';
@@ -14,20 +12,13 @@ class NewPropertyForm extends Component {
   constructor(props) {
     super(props);
 
-    this.handleSearch = this.handleSearch.bind(this);
-
     this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
-
     this.handleSubmit = this.handleSubmit.bind(this);
-
     this.handleChange = this.handleChange.bind(this);
-
     // this.handleAddNewProperty = this.handleAddNewProperty.bind(this);
     //
     // this.handleNewPropertyFormSubmit = this.handleNewPropertyFormSubmit.bind(this);
-
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
-
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
 
     this.state = {
@@ -44,30 +35,22 @@ class NewPropertyForm extends Component {
     };
   }
 
-  toggleConfirmationModal(event) {
-    event.preventDefault();
-    this.setState(prevState => ({
-      showModal: !prevState.showModal
-    }));
-  }
-
-  handleSearch(event) {
-    const { target } = event;
-    const { id } = target;
-    const { value } = target;
-    this.setState({
-      [id]: value
-    });
-  }
-
   handleChange(event) {
-    event.preventDefault();
     const { target } = event;
     const { name } = target;
     const { value } = target;
     this.setState(prevState => ({
       properties: { ...prevState.properties, [name]: value}
     }));
+  }
+
+  handleSelectionFromSearch(nameSearched) {
+    if
+    (Object.keys(nameSearched).includes('name')) {
+      this.setState({ propertyManagerSelected: nameSearched });
+      console.log(nameSearched);
+      console.log(this.state);
+    }
   }
 
   handleSubmit(event) {
@@ -81,29 +64,27 @@ class NewPropertyForm extends Component {
     this.toggleConfirmationModal(event);
   }
 
-  handleSelectionFromSearch(nameSearched) {
-    if
-     (Object.keys(nameSearched).includes('name')) {
-      this.setState({ propertyManagerSelected: nameSearched });
-      console.log(nameSearched);
-      console.log(this.state);
+  isSaveEnabled() {
+    const propertyName = this.state.properties.name;
+    const propertyAddress = this.state.properties.address;
+    const propertyCity = this.state.properties.city;
+    const propertyState = this.state.properties.state;
+    const propertyZipCode = this.state.properties.zipCode;
+    const propertyUnits = this.state.properties.numberOfUnits;
+    if(propertyName && propertyAddress && propertyCity && propertyState && propertyZipCode && propertyUnits){
+      return true;
     }
+    return false;
   }
 
-  isSaveEnabled() {
-   const propertyName = this.state.properties.name;
-   const propertyAddress = this.state.properties.address;
-   const propertyCity = this.state.properties.city;
-   const propertyState = this.state.properties.state;
-   const propertyZipCode = this.state.properties.zipCode;
-   const propertyUnits = this.state.properties.numberOfUnits;
-   if(propertyName && propertyAddress && propertyCity && propertyState && propertyZipCode && propertyUnits){
-      return true;
-   }
-   return false;
- }
+  toggleConfirmationModal(event) {
+    event.preventDefault();
+    this.setState(prevState => ({
+      showModal: !prevState.showModal
+    }));
+  }
 
-// Next two functions are not currently in use. Could be rewritten for use later.
+  // Next two functions are not currently in use. Could be rewritten for use later.
 
   // handleAddNewProperty(newProperty) {
   //   const newPropertyList =  this.state.properties;
@@ -121,7 +102,7 @@ class NewPropertyForm extends Component {
   //   propertyName.value = '';
   // }
 
-// End useless functions
+  // End useless functions
 
 
   render() {
@@ -136,7 +117,7 @@ class NewPropertyForm extends Component {
               <Header.Label
                 label="JOIN Messenger Administration"
                 type="basic"
-              />
+                />
             </div>
           )}
         </Header>
@@ -146,17 +127,16 @@ class NewPropertyForm extends Component {
               Add a New Property
             </h2>
             <form id="newPropertyForm">
-            <section className="newPropertyFormSection">
-              <h2 className="newPropertyFormHeading">Property Information</h2>
+              <section className="newPropertyFormSection">
+                <h2 className="newPropertyFormHeading">Property Information</h2>
                 <Input
                   id="name"
                   name="name"
                   label="Name"
                   type="text"
-                  value={this.state.properties.name}
                   placeholder="Property Name"
                   onChange={this.handleChange}
-                />
+                  />
                 <Input
                   id="address"
                   name="address"
@@ -164,7 +144,7 @@ class NewPropertyForm extends Component {
                   type="text"
                   placeholder="Property Address"
                   onChange={this.handleChange}
-                />
+                  />
                 <Input
                   id="city"
                   name="city"
@@ -172,7 +152,7 @@ class NewPropertyForm extends Component {
                   type="text"
                   placeholder="City"
                   onChange={this.handleChange}
-                />
+                  />
                 <Input
                   id="state"
                   name="state"
@@ -180,7 +160,7 @@ class NewPropertyForm extends Component {
                   type="text"
                   placeholder="State"
                   onChange={this.handleChange}
-                />
+                  />
                 <Input
                   id="zipCode"
                   name="zipCode"
@@ -188,7 +168,7 @@ class NewPropertyForm extends Component {
                   type="text"
                   placeholder="Zip"
                   onChange={this.handleChange}
-                />
+                  />
                 <Input
                   id="numberOfUnits"
                   name="numberOfUnits"
@@ -196,29 +176,30 @@ class NewPropertyForm extends Component {
                   type="text"
                   placeholder="Units"
                   onChange={this.handleChange}
-                />
-            </section>
-            <section className="newPropertyFormSection">
-              <h2 className="newPropertyFormHeading">Assign Property Managers</h2>
-              <fieldset>
-                <Search
-                  searchData={propertyManagers}
-                  placeholder= "Search Property Managers"
-                  filterSubset={['firstName', 'lastName', 'name']}
-                  onSearchSelection={this.handleSelectionFromSearch}
-                  multiple
-                />
-              </fieldset>
-            </section>
-            <section className="newPropertyFormSection">
-              <button onClick={this.toggleConfirmationModal}
-                disabled={!isEnabled}
-                type="submit"
-                className="btn">
-                Save
-              </button>
-            </section>
-          </form>
+                  />
+              </section>
+              <section className="newPropertyFormSection">
+                <h2 className="newPropertyFormHeading">Assign Property Managers</h2>
+                <fieldset>
+                  <Search
+                    searchData={propertyManagers}
+                    placeholder= "Search Property Managers"
+                    filterSubset={['firstName', 'lastName', 'name']}
+                    onSearchSelection={this.handleSelectionFromSearch}
+                    multiple
+                    />
+                </fieldset>
+              </section>
+              <section className="newPropertyFormSection">
+                <button
+                  onClick={this.toggleConfirmationModal}
+                  disabled={!isEnabled}
+                  type="submit"
+                  className="btn">
+                  Save
+                </button>
+              </section>
+            </form>
           </div>
         </div>
         <ConfirmationModal
@@ -232,15 +213,5 @@ class NewPropertyForm extends Component {
     );
   }
 }
-
-NewPropertyForm.propTypes = {
-  // properties: PropTypes.string,
-  // name: PropTypes.string.isRequired,
-  // address: PropTypes.string.isRequired,
-  // city: PropTypes.string.isRequired,
-  // state: PropTypes.string.isRequired,
-  // zipCode: PropTypes.string.isRequired,
-  // numberOfUnits: PropTypes.string.isRequired,
-};
 
 export default injectIntl(NewPropertyForm);
