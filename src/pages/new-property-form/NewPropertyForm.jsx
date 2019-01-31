@@ -28,7 +28,7 @@ class NewPropertyForm extends Component {
 
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
 
-    // this.changeBackground = this.changeBackground.bind(this);
+    this.isSaveEnabled = this.isSaveEnabled.bind(this);
 
     this.state = {
       showModal: false,
@@ -50,7 +50,7 @@ class NewPropertyForm extends Component {
       showModal: !prevState.showModal
     }));
   }
-  
+
   handleSearch(event) {
     const { target } = event;
     const { id } = target;
@@ -90,6 +90,19 @@ class NewPropertyForm extends Component {
     }
   }
 
+  isSaveEnabled() {
+   const propertyName = this.state.properties.name;
+   const propertyAddress = this.state.properties.address;
+   const propertyCity = this.state.properties.city;
+   const propertyState = this.state.properties.state;
+   const propertyZipCode = this.state.properties.zipCode;
+   const propertyUnits = this.state.properties.numberOfUnits;
+   if(propertyName && propertyAddress && propertyCity && propertyState && propertyZipCode && propertyUnits){
+      return true;
+   }
+   return false;
+ }
+
 // Next two functions are not currently in use. Could be rewritten for use later.
 
   // handleAddNewProperty(newProperty) {
@@ -112,6 +125,8 @@ class NewPropertyForm extends Component {
 
 
   render() {
+    const isEnabled = this.isSaveEnabled();
+
     return (
       <div className="admin page">
         <Header>
@@ -197,6 +212,7 @@ class NewPropertyForm extends Component {
             </section>
             <section className="newPropertyFormSection">
               <button onClick={this.toggleConfirmationModal}
+                disabled={!isEnabled}
                 type="submit"
                 className="btn">
                 Save
