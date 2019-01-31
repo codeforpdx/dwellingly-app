@@ -17,7 +17,6 @@
 }
 .table-wrapper {
   display: flex;
-  margin-top: .2rem;
   th {
     background: $color__gray--light;
     padding: 1.3rem;
@@ -32,7 +31,6 @@
 .add-new {
   display: flex;
   margin: 2rem 0;
-  justify-content: flex-start;
   text-align: left;
   margin-bottom: 1.5rem;
   .property-header {
@@ -76,7 +74,6 @@
     margin-right: 2.5rem;
   }
 }
-
 
 @media screen and (max-width: 667px) {
   .property-search-wrapper {

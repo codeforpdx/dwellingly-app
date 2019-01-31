@@ -179,6 +179,19 @@ export const getUsers = () => async dispatch => {
   dispatch(getUsersCollection(data));
 };
 
+// export const getPropertiesCollection = data => ({
+//   type: FETCHING_USERS,
+//   users: data
+// });
+// 
+// export const getProperties = () => async dispatch => {
+//   const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.PROPERTIES);
+//   const data = await response.json();
+//   dispatch(getPropertiesCollection(data));
+// };
+
+
+
 export const initiateFirebaseCall = () => dispatch => {
   console.log('initiate firebase call');
   dispatch({
