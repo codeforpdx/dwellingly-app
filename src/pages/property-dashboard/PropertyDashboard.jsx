@@ -10,9 +10,6 @@ import Icon from '../../components/icon/Icon';
 import { getProperties } from '../../dux/properties';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 
-
-// implement data from dux, mapped the store state to props. 
-
 class PropertyDashboard extends Component {
   constructor(props) {
     super(props);
@@ -28,9 +25,7 @@ class PropertyDashboard extends Component {
   }
 
   getPropertyData() {
-    // If I fetch here, and no result, return empty array
-    // How to match number of tenants, date added, and managers to property objects?
-    // Return array of all properties with added manager/tenants data?
+    // Somehow match number of tenants, date added, and managers to property objects
     const properties = this.props.properties.properties.length > 0 ? this.props.properties.properties : [];
     return properties.map(property => (this.getTableRow(property)))
   }
