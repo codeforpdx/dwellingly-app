@@ -2,7 +2,11 @@
 
 .property-dashboard-header {
   margin: 0 5rem 1rem;
-  padding-bottom: 0;
+  padding-bottom: .5rem;
+  
+  h2 {
+    margin-top: 5px;
+  }
 }
 .gray-bar {
   display: flex;
@@ -17,6 +21,7 @@
 }
 .table-wrapper {
   display: flex;
+  max-width: 800px;
   th {
     background: $color__gray--light;
     padding: 1.3rem;
@@ -27,7 +32,7 @@
   }
   td {
     border-bottom: solid 1px $color__gray--light;
-    padding: 1.5rem 0;
+    padding: 1.5rem 1rem;
     color: $color__blue--dark;
   }
 }

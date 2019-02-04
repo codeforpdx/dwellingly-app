@@ -155,10 +155,7 @@ ReactDOM.render(
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
             <Route path={ROUTES.SIGNUP} component={Signup} />
             <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
-            <PrivateRoute
-              path={`${ROUTES.PROPERTY_DASHBOARD}`}
-              component={AdminUser(PropertyDashboard)}
-            />
+            <PrivateRoute path={`${ROUTES.PROPERTY_DASHBOARD}`} component={AdminUser(PropertyDashboard)} />
             <Route path="/code-samples/card" component={CardSamples} />
             <Route path="/code-samples/header" component={HeaderSamples} />
             <PrivateRoute path={ROUTES.ROOT} component={Home} />

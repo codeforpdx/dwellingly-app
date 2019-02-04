@@ -64,7 +64,7 @@ function AdminMenu({ handleToggleMenu, type, user }) {
           </strong>
         </NavLink>
         <NavLink
-          to={ROUTES.PROPERTIES}
+          to={ROUTES.PROPERTY_DASHBOARD}
           activeClassName="menu__link--active">
           <strong>
             {/* <Icon icon="building" /> */} Properties
