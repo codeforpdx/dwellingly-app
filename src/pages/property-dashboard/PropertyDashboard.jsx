@@ -24,8 +24,10 @@ class PropertyDashboard extends Component {
     dispatch(getPropertyManagers());
   }
 
-  getPropertyData() {
-    // Somehow match number of tenants, date added, and managers to property objects
+  getPropertyData() {  
+    // Do we need to update the current data query to include date the property (not lease?) is saved to db, as well as number of residents? Not all properties will have leases. 
+    // Are we missing a foreign key to link managers to properties?
+    // If we are thinking of using server-side pagination, I'm not sure we should be mapping through multiple objects in the front-end to find those fields 
     const properties = this.props.properties.properties.length > 0 ? this.props.properties.properties : [];
     return properties.map(property => (this.getTableRow(property)))
   }
@@ -36,7 +38,7 @@ class PropertyDashboard extends Component {
       <tr>
         <td><input type="checkbox" />{property.name}</td>
         <td>{property.city}</td>
-        <td>{`${property.addressOne} ${property.addressTwo}`}</td>
+        <td>{property.addressOne} <br/> {property.addressTwo}</td>
         <td>{property.numberOfUnits}</td>
         <td>{property.state}</td>
       </tr>
