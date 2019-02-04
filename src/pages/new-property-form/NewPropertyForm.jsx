@@ -18,9 +18,6 @@ class NewPropertyForm extends Component {
     this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleAddNewProperty = this.handleAddNewProperty.bind(this);
-    //
-    // this.handleNewPropertyFormSubmit = this.handleNewPropertyFormSubmit.bind(this);
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
 
@@ -30,6 +27,7 @@ class NewPropertyForm extends Component {
       properties: {
         name: "",
         addressOne: "",
+        addressTwo: "",
         city: "",
         state: "",
         zipCode: "",
@@ -59,12 +57,10 @@ class NewPropertyForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { dispatch } = this.props;
-    const { name, addressOne, city, state, zipCode, numberOfUnits } = this.state.properties;
+    const { name, addressOne, addressTwo, city, state, zipCode, numberOfUnits } = this.state.properties;
     dispatch(creatingProperty({
-      name, addressOne, city, state, zipCode, numberOfUnits
+      name, addressOne, addressTwo, city, state, zipCode, numberOfUnits
     }));
-    console.log(dispatch);
-    console.log(this.state.properties);
     this.toggleConfirmationModal(event);
   }
 
@@ -87,27 +83,6 @@ class NewPropertyForm extends Component {
       showModal: !prevState.showModal
     }));
   }
-
-  // Next two functions are not currently in use. Could be rewritten for use later.
-
-  // handleAddNewProperty(newProperty) {
-  //   const newPropertyList =  this.state.properties;
-  //   newPropertyList.push(newProperty);
-  //   this.setState(prevState => ({
-  //     properties: prevState.newPropertyList
-  //   }));
-  // }
-  //
-  //
-  // handleNewPropertyFormSubmit(event) {
-  // event.preventDefault();
-  // const propertyName = '';
-  // this.handleAddNewProperty({propertyName: propertyName.value});
-  //   propertyName.value = '';
-  // }
-
-  // End useless functions
-
 
   render() {
     const isEnabled = this.isSaveEnabled();

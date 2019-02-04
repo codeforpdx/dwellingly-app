@@ -27,7 +27,6 @@ export default (state = initialState, action) => {
         isFetchingDataFromFirebase: action.isFetchingDataFromFirebase
       };
     case CREATE_PROPERTY:
-    console.log(action);
         return {
           ...state,
         }
@@ -83,8 +82,6 @@ export const onAddingProperty = async data => {
     },
     body: JSON.stringify(data)
   });
-  console.log(response);
-  console.log(data);
   return response.json();
 }
 export const creatingProperty = data => async dispatch => {
