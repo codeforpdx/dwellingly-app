@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import ConfirmationModal from '../../components/confirmation-modal/ConfirmationModal';
@@ -7,6 +9,7 @@ import Navigation from '../../components/navigation/Navigation';
 import { propertyManagers } from '../../data';
 import Search from '../../components/search/Search';
 import './NewPropertyForm.scss';
+import { creatingProperty } from '../../dux/properties';
 
 class NewPropertyForm extends Component {
   constructor(props) {
@@ -26,7 +29,7 @@ class NewPropertyForm extends Component {
       propertyManagerSelected: "",
       properties: {
         name: "",
-        address: "",
+        addressOne: "",
         city: "",
         state: "",
         zipCode: "",
@@ -55,18 +58,19 @@ class NewPropertyForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { target } = event;
-    const { name } = target;
-    const { value } = target;
-    this.setState(prevState => ({
-      properties: { ...prevState.properties, [name]: value}
+    const { dispatch } = this.props;
+    const { name, addressOne, city, state, zipCode, numberOfUnits } = this.state.properties;
+    dispatch(creatingProperty({
+      name, addressOne, city, state, zipCode, numberOfUnits
     }));
+    console.log(dispatch);
+    console.log(this.state.properties);
     this.toggleConfirmationModal(event);
   }
 
   isSaveEnabled() {
     const propertyName = this.state.properties.name;
-    const propertyAddress = this.state.properties.address;
+    const propertyAddress = this.state.properties.addressOne;
     const propertyCity = this.state.properties.city;
     const propertyState = this.state.properties.state;
     const propertyZipCode = this.state.properties.zipCode;
@@ -138,8 +142,8 @@ class NewPropertyForm extends Component {
                   onChange={this.handleChange}
                   />
                 <Input
-                  id="address"
-                  name="address"
+                  id="addressOne"
+                  name="addressOne"
                   label="Address"
                   type="text"
                   placeholder="Property Address"
@@ -206,7 +210,7 @@ class NewPropertyForm extends Component {
           show={this.state.showModal}
           onClose={this.toggleConfirmationModal}
           onSubmit={this.handleSubmit}>
-          Are you sure you want to save {this.state.properties.name}, {this.state.properties.address} {this.state.properties.city}, {this.state.properties.state} {this.state.properties.zipCode}
+          Are you sure you want to save {this.state.properties.name}, {this.state.properties.addressOne} {this.state.properties.city}, {this.state.properties.state} {this.state.properties.zipCode}
           ?
         </ConfirmationModal>
       </div>
@@ -214,4 +218,12 @@ class NewPropertyForm extends Component {
   }
 }
 
-export default injectIntl(NewPropertyForm);
+NewPropertyForm.propTypes = {
+  dispatch: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  properties: state.properties
+})
+
+export default injectIntl(connect(mapStateToProps)(NewPropertyForm));
