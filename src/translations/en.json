@@ -18,9 +18,9 @@
   "counting.up": "Increment",
 
   "form.button.submit": "Submit",
-  "form.create_account": "Create account",
+  "form.create_account": "Create an Account",
   "form.email.label": "Email",
-  "form.email.placeholder": "email address (i.e., email@example.com)",
+  "form.email.placeholder": "Email",
   "form.error.match_password": "Please make sure your passwords match.",
   "form.forgot_password.label": "Forgot Password",
   "form.login": "Login",
@@ -29,7 +29,7 @@
   "form.nameLast.label": "Last Name",
   "form.nameLast.placeholder": "your last name",
   "form.password.label": "Password",
-  "form.password.placeholder": "your password",
+  "form.password.placeholder": "Password",
   "form.password_confirm.label": "Confirm Password",
   "form.password_confirm.placeholder": "confirm your password",
 
