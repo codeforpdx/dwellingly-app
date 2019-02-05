@@ -16,9 +16,6 @@ class Navigation extends Component {
     super(props);
 
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
-    // this.cookies = new Cookies();
-    // this.user = this.cookies.get('messengerUserRole');
-    // this.user = this.props.user
 
     this.state = {
       showMenu: false
@@ -32,7 +29,6 @@ class Navigation extends Component {
   render() {
     const { desktopOnly, intl, user } = this.props;
     const { showMenu } = this.state;
-    console.log(user);
     if (user && user.role.isPropertyManager !== true) {
       return (
         <div className="navigation">
@@ -76,12 +72,13 @@ const mapStateToProps = state => ({
 });
 
 Navigation.propTypes = {
-  user: PropTypes.shape({}).isRequired,
+  user: PropTypes.shape({}),
   desktopOnly: PropTypes.bool,
   intl: intlShape.isRequired
 };
 
 Navigation.defaultProps = {
+  user: null,
   desktopOnly: false
 };
 
