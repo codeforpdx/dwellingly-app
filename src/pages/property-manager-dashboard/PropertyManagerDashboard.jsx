@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
 import { COMMON } from '../../translations/messages';
@@ -55,7 +56,7 @@ class PropertyManagerDashboard extends Component {
       <section className="property-dashboard-header">
         <div className="add-new">
           <h2 className="property-header">PROPERTY MANAGERS</h2>
-          <button type="button" className="btn btn--lrg add-new-btn">+ ADD NEW</button>
+          <Link to="admin/add-new-property-manager"><button type="button" className="btn btn--lrg add-new-btn"><Icon icon="plus"/> ADD NEW</button></Link>
         </div>
         <div className="property-search-wrapper">
           <Icon icon="search" />
@@ -67,8 +68,8 @@ class PropertyManagerDashboard extends Component {
       </section>
       <section className="property-dashboard-header property-table">
         <div className="gray-bar">
-          <button type="button" className="btn archive-btn">INVITE AGAIN</button>
-          <button type="button" className="btn archive-btn">ARCHIVE</button>
+          <button type="button" className="btn archive-btn"><Icon icon="calendar"/> INVITE AGAIN</button>
+          <button type="button" className="btn archive-btn"><Icon icon="archive"/> ARCHIVE</button>
         </div>
         <div className="table-wrapper">
           <table>

@@ -3,12 +3,14 @@
 .property-dashboard-header {
   margin: 0 5rem 1rem;
   padding-bottom: .5rem;
-  
   h2 {
     margin-top: 5px;
   }
 }
-.gray-bar {
+.btn {
+  font-size: emify(14, 16);
+}
+.gray-dash-bar {
   display: flex;
   margin-top: .4rem;
   padding: 0 1rem;
@@ -18,13 +20,15 @@
   background: $color__gray--light;
   width: 800px;
   height: 4rem;
+  .ghost-dot {
+    color: #eeeeee;
+  }
 }
+
 .table-wrapper {
   display: flex;
-  max-width: 800px;
   th {
     background: $color__gray--light;
-    padding: 1.3rem;
     text-align: left;
   }
   tr {
@@ -34,6 +38,10 @@
     border-bottom: solid 1px $color__gray--light;
     padding: 1.5rem 1rem;
     color: $color__blue--dark;
+    &:hover {
+      color: $color__blue;
+      outline: none;
+    }
   }
 }
 .add-new {
@@ -45,9 +53,6 @@
     padding-right: 2rem; 
     color: $color__blue--dark;
     font-weight: 400;
-  }
-  .add-new-btn {
-    margin-right: 1.5rem;
   }
 }
 .property-search-wrapper {
@@ -88,7 +93,7 @@
   .property-search-wrapper {
     display: none;
   }
-  .gray-bar {
+  .gray-dash-bar {
     display: none;
   }
   .add-new {

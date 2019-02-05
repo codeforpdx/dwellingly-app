@@ -10,7 +10,7 @@
 }
 .gray-bar {
   display: flex;
-  margin-top: .4rem;
+  margin-top: .5rem;
   padding: 0 1rem;
   justify-content: space-between;
   align-items: center;
@@ -18,6 +18,9 @@
   background: $color__gray--light;
   width: 800px;
   height: 3.5rem;
+  .btn {
+    font-size: emify(14, 16);
+  }
 }
 .table-wrapper {
   display: flex;
@@ -34,6 +37,10 @@
     border-bottom: solid 1px $color__gray--light;
     padding: 1.5rem 1rem;
     color: $color__blue--dark;
+    &:hover {
+      color: $color__blue;
+      outline: none;
+    }
   }
 }
 .add-new {
@@ -41,13 +48,13 @@
   margin: 2rem 0;
   text-align: left;
   margin-bottom: 1.5rem;
+  .btn {
+    font-size: emify(14, 16);
+  }
   .property-header {
     padding-right: 2rem; 
     color: $color__blue--dark;
     font-weight: 400;
-  }
-  .add-new-btn {
-    margin-right: 1.5rem;
   }
 }
 .property-search-wrapper {
