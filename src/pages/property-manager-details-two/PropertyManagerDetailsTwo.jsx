@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+// import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
+import Icon from '../../components/icon/Icon';
 import Input from '../../components/input/Input';
 import Navigation from '../../components/navigation/Navigation';
 import './PropertyManagerDetailsTwo.scss';
@@ -50,11 +52,20 @@ class PropertyManagerDetailsTwo extends Component {
         </Header>
         <div>
           <div className="width-wrapper">
+            <div className="name-header">
             <h2 className="admin--header align--left">
-              Contact
+              John Oliver
             </h2>
-            <form id="contactDetails">
-              <section className="contactDetailsSection">
+            <a
+              href='/'
+              id="archive-button"
+              className="btn btn--strong">
+              <Icon icon="archive" />Archive
+            </a>
+          </div>
+            <section className="contactDetailsSection">
+            <form className="contactDetailsForm">
+                <h2 className="detailSectionHeading" id="contactHeading">Contact</h2>
                 <Input
                   id="firstName"
                   name="firstName"
@@ -79,8 +90,14 @@ class PropertyManagerDetailsTwo extends Component {
                   placeholder="Phone Number"
                   onChange={this.handleChange}
                   />
-              </section>
             </form>
+          </section>
+            <section>
+              <h2 className="detailSectionHeading">Properties</h2>
+            </section>
+            <section>
+              <h2 className="detailSectionHeading">Tenants</h2>
+            </section>
           </div>
         </div>
       </div>
