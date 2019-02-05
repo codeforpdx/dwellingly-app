@@ -47,7 +47,7 @@ class NewStaffMemberForm extends Component {
                   name="lastName"
                   label="Last Name"
                   type="text"
-                  placeholder="First Name"
+                  placeholder="Last Name"
                   onChange={this.handleChange}
                   />
                 <Input
@@ -66,12 +66,12 @@ class NewStaffMemberForm extends Component {
                   placeholder="Email"
                   onChange={this.handleChange}
                   />
+                <button
+                  type="submit"
+                  className="btn">
+                  Save
+                </button>
               </section>
-              <button
-                type="submit"
-                className="btn">
-                Save
-              </button>
             </form>
           </div>
         </div>
