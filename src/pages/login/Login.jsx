@@ -8,8 +8,8 @@ import Navigation from '../../components/navigation/Navigation';
 import LoginForm from '../../components/login/LoginForm';
 import LoginWithGoogle from '../../components/login/LoginWithGoogle';
 import Spinner from '../../components/spinner/Spinner';
-import { COMMON, LOGIN, TERMS, PRIVACY } from '../../translations/messages';
-import { SETTINGS, ROUTES } from '../../constants/constants';
+import { COMMON, FORMS } from '../../translations/messages';
+import { ROUTES } from '../../constants/constants';
 
 import './Login.scss';
 
@@ -59,17 +59,17 @@ class Login extends React.Component {
           {() => (
             <div>
               <Navigation />
-              <Header.Label
+              {/* <Header.Label
                 label={this.props.intl.formatMessage(LOGIN.TITLE, {
                   org: SETTINGS.ORGANIZATION,
                   appname: SETTINGS.APP_NAME
                 })}
                 type="basic"
-              />
+              /> */}
             </div>
           )}
         </Header>
-        <section className="main">
+        <section className="main login-form">
           {!this.props.isFetchingAuthorization &&
             !this.props.isFetchingUserData &&
             !this.props.haveUser && <LoginForm />}
@@ -89,17 +89,24 @@ class Login extends React.Component {
             !this.props.isFetchingUserData &&
             !this.props.haveUser && (
               <div className="width-wrapper">
-                <div className="allCaps separator">
-                  {this.props.intl.formatMessage(COMMON.CONJUNCTION_OR)}
+                <div className="login-separator">
+                  <span className="separator">&nbsp;</span>
+                  <div className="allCaps">
+                    {this.props.intl.formatMessage(COMMON.CONJUNCTION_OR)}
+                  </div>
+                  <span className="separator">&nbsp;</span>
                 </div>
-                <h2 className="align-left">
-                  {this.props.intl.formatMessage(LOGIN.INSTRUCTIONS_GOOGLE)}
-                </h2>
                 <LoginWithGoogle />
               </div>
             )}
-          <div className="width-wrapper">
-            <p className="login-conditions align-left">
+          <div className="width-wrapper account-links">
+            <Link to={ROUTES.FORGOT_PASSWORD}>
+              {this.props.intl.formatMessage(FORMS.FORGOT_PASSWORD_LABEL)}
+            </Link>
+            <Link to={ROUTES.SIGNUP}>
+              {this.props.intl.formatMessage(FORMS.CREATE_ACCOUNT)}
+            </Link>
+            {/* <p className="login-conditions align-left">
               {this.props.intl.formatMessage(LOGIN.INSTRUCTIONS)}{' '}
               <Link to="/terms-conditions">
                 {this.props.intl.formatMessage(TERMS.TITLE)}
@@ -109,7 +116,7 @@ class Login extends React.Component {
                 {this.props.intl.formatMessage(PRIVACY.TITLE_STANDALONE)}
               </Link>
               .
-            </p>
+            </p> */}
           </div>
         </section>
       </div>
