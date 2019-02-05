@@ -296,6 +296,20 @@ export const setUserFromGoogle = user => dispatch => {
   });
 };
 
+export const setUserToStore = user => dispatch => {
+  console.log(user);
+  dispatch({
+    type: CREATE_USER_COMPLETE,
+    isFetchingAuthorization: false,
+    isFetchingUserData: false,
+    haveUser: true,
+    user: {
+      ...user
+    },
+    error: null
+  });
+};
+
 export const clearUser = () => dispatch => {
   dispatch({
     type: NO_USER,
