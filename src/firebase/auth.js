@@ -36,6 +36,7 @@ export function getFirestoreUserData(uid, accountSource) {
       const userData = json;
       console.log(json);
       if (userData) {
+        store.dispatch(setUserToStore(userData));
         store.dispatch(addCustomUserData(userData, accountSource, uid));
       }
       // Don't need to set user here, will get picked up by UserControl as auth changes!
@@ -181,7 +182,6 @@ export function doPasswordUpdate(password) {
 export function setUserCookies(newUser) {
   console.log('setting cookies!');
   console.log(newUser);
-  store.dispatch(setUserToStore(newUser));
   const cookies = new Cookies();
   const cookieExpiration = new Date(
     new Date().setFullYear(new Date().getFullYear() + 1)
