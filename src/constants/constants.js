@@ -43,6 +43,7 @@ export const ROUTES = {
   ADD_TENANT: '/admin/add-new-tenant',
   ADD_PROPERTY: '/add-new-property',
   ADD_PROPERTY_MANAGER: '/admin/add-new-property-manager',
+  ADD_STAFF_MEMBER: '/add-new-staff-member',
   ADMIN: '/admin',
   ADMIN_EMERGENCY: '/admin/emergency',
   ADMIN_EMERGENCY_NUMBERS: '/admin/emergencyNumbers',

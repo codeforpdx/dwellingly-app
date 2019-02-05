@@ -37,6 +37,7 @@ import Login from './pages/login/Login';
 import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import NewTenantForm from './pages/new-tenant-form/NewTenantForm';
 import NewPropertyForm from './pages/new-property-form/NewPropertyForm';
+import NewStaffMemberForm from './pages/new-staff-member-form/NewStaffMemberForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
 import Properties from './pages/properties/Properties';
@@ -151,6 +152,7 @@ ReactDOM.render(
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.ADD_PROPERTY} component={NewPropertyForm} />
+            <Route path={ROUTES.ADD_STAFF_MEMBER} component={NewStaffMemberForm} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
