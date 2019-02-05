@@ -58,11 +58,14 @@ import HeaderSamples from './pages/code-samples/HeaderSamples';
 // mock data
 // import { dummyUser } from './data';
 
-const { user } = store.getState();
+// const user = dummyUser;
 
 // Set up cookie stuff for translation
 const cookies = new Cookies();
 const lang = cookies.get('language');
+const role = cookies.get('messengerUserRole');
+// const { user } = store.getState();
+
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
 if (!validLang) {
@@ -73,7 +76,11 @@ if (!validLang) {
 // const PropertyManagerUser = Authorization([ROLES.ADMIN, ROLES.PROPERTY_MANAGER]);
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
-const userRole = getUserRoleString(user.role, ROLES);
+const userRole = getUserRoleString(role, ROLES);
+// if (role) {
+// console.log(user.role);
+// userRole =
+// }
 // Render the thing!
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>

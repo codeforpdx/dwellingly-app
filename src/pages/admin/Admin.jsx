@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 // import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
@@ -16,7 +16,7 @@ class Administration extends React.Component {
       accordion01: false,
       accordion02: false,
       accordion03: false
-    }
+    };
     this.handleClosingAccordion = this.handleClosingAccordion.bind(this);
   }
 
@@ -28,14 +28,16 @@ class Administration extends React.Component {
   }
 
   handleClosingAccordion(currentSelected) {
-    this.setState(prevState => ({ [currentSelected]: !prevState[currentSelected] }))
+    this.setState(prevState => ({
+      [currentSelected]: !prevState[currentSelected]
+    }));
   }
 
   render() {
     // const { intl } = this.props;
     return (
       <div className="admin page">
-         <Header>
+        <Header>
           {() => (
             <div>
               <Navigation />
@@ -63,26 +65,46 @@ class Administration extends React.Component {
             <h2 className="admin--header">Admin Dashboard</h2>
             <div className="admin__tiles">
               <Tile>
-                <Tile.Top title="Open Tickets"/>
+                <Tile.Top title="Open Tickets" />
                 <Tile.Content>
                   <Tile.Inner>
                     <div className="count--container">
-                      <h3><span className="count--number">4</span></h3>
-                      <p><span className="count--number">2</span></p>
+                      <h3>
+                        <span className="count--number">4</span>
+                      </h3>
+                      <p>
+                        <span className="count--number">2</span>
+                      </p>
                     </div>
                     <div className="count--container">
-                      <h3><span className="count--type">NEW</span></h3>
-                      <p><span className="count--type count--time">Unseen for 24 hours</span></p>
+                      <h3>
+                        <span className="count--type">NEW</span>
+                      </h3>
+                      <p>
+                        <span className="count--type count--time">
+                          Unseen for 24 hours
+                        </span>
+                      </p>
                     </div>
                   </Tile.Inner>
                   <Tile.Inner>
                     <div className="count--container">
-                      <h3><span className="count--number">34</span></h3>
-                      <p><span className="count--number">2</span></p>
+                      <h3>
+                        <span className="count--number">34</span>
+                      </h3>
+                      <p>
+                        <span className="count--number">2</span>
+                      </p>
                     </div>
                     <div className="count--container">
-                      <h3><span className="count--type">IN PROGRESS</span></h3>
-                      <p><span className="count--type count--time">Still in progress for 1 week</span></p>
+                      <h3>
+                        <span className="count--type">IN PROGRESS</span>
+                      </h3>
+                      <p>
+                        <span className="count--type count--time">
+                          Still in progress for 1 week
+                        </span>
+                      </p>
                     </div>
                   </Tile.Inner>
                 </Tile.Content>
@@ -92,20 +114,36 @@ class Administration extends React.Component {
                 <Tile.Content>
                   <Tile.Inner>
                     <div className="count--container">
-                      <h3><span className="count--number">4</span></h3>
+                      <h3>
+                        <span className="count--number">4</span>
+                      </h3>
                     </div>
                     <div className="count--container">
-                      <h3><span className="count--type">COMPLIMENTS</span></h3>
-                      <p><span className="count--type count--time">in the last week</span></p>
+                      <h3>
+                        <span className="count--type">COMPLIMENTS</span>
+                      </h3>
+                      <p>
+                        <span className="count--type count--time">
+                          in the last week
+                        </span>
+                      </p>
                     </div>
                   </Tile.Inner>
                   <Tile.Inner>
                     <div className="count--container">
-                      <h3><span className="count--number">12</span></h3>
+                      <h3>
+                        <span className="count--number">12</span>
+                      </h3>
                     </div>
                     <div className="count--container">
-                      <h3><span className="count--type">CLOSED TICKETS</span></h3>
-                      <p><span className="count--type count--time">in the last week</span></p>
+                      <h3>
+                        <span className="count--type">CLOSED TICKETS</span>
+                      </h3>
+                      <p>
+                        <span className="count--type count--time">
+                          in the last week
+                        </span>
+                      </p>
                     </div>
                   </Tile.Inner>
                 </Tile.Content>
@@ -148,19 +186,22 @@ class Administration extends React.Component {
             <Accordion>
               <Accordion.Label
                 label="NEW STAFF ASSIGNMENTS (3)"
-                onToggle={() => this.handleClosingAccordion("accordion01")} />
-              <Accordion.Table hidden={this.state.accordion01}/>
+                onToggle={() => this.handleClosingAccordion('accordion01')}
+              />
+              <Accordion.Table hidden={this.state.accordion01} />
             </Accordion>
             <Accordion>
               <Accordion.Label
                 label="REQUESTS FOR ACCESS"
-                onToggle={() => this.handleClosingAccordion("accordion02")} />
+                onToggle={() => this.handleClosingAccordion('accordion02')}
+              />
               <Accordion.List hidden={this.state.accordion02} />
             </Accordion>
             <Accordion>
               <Accordion.Label
                 label="TENANTS READY TO ARCHIVE"
-                onToggle={() => this.handleClosingAccordion("accordion03")} />
+                onToggle={() => this.handleClosingAccordion('accordion03')}
+              />
               <Accordion.Select hidden={this.state.accordion03} />
             </Accordion>
           </div>
@@ -174,9 +215,14 @@ class Administration extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.user
+});
+
 Administration.propTypes = {
+  user: PropTypes.shape({}).isRequired
   // intl: intlShape.isRequired,
   // dispatch: PropTypes.func.isRequired
 };
 
-export default injectIntl(connect(null)(Administration))
+export default injectIntl(connect(mapStateToProps)(Administration));

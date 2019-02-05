@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// import Cookies from 'universal-cookie';
+import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import UserControls from '../user-controls/UserControls';
 import NavigationContent from './NavigationContent';
@@ -7,15 +9,16 @@ import Icon from '../icon/Icon';
 
 import './Navigation.scss';
 
-import { dummyUser } from '../../data';
+// import { dummyUser } from '../../data';
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
 
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
-
-    this.user = dummyUser;
+    // this.cookies = new Cookies();
+    // this.user = this.cookies.get('messengerUserRole');
+    // this.user = this.props.user
 
     this.state = {
       showMenu: false
@@ -27,10 +30,10 @@ class Navigation extends Component {
   }
 
   render() {
-    const { desktopOnly, intl } = this.props;
+    const { desktopOnly, intl, user } = this.props;
     const { showMenu } = this.state;
-    const { user } = this;
-    if (user.role.isPropertyManager !== 'true') {
+    console.log(user);
+    if (user && user.role.isPropertyManager !== true) {
       return (
         <div className="navigation">
           {desktopOnly && (
@@ -68,7 +71,12 @@ class Navigation extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.user.user
+});
+
 Navigation.propTypes = {
+  user: PropTypes.shape({}).isRequired,
   desktopOnly: PropTypes.bool,
   intl: intlShape.isRequired
 };
@@ -77,4 +85,4 @@ Navigation.defaultProps = {
   desktopOnly: false
 };
 
-export default injectIntl(Navigation);
+export default injectIntl(connect(mapStateToProps)(Navigation));

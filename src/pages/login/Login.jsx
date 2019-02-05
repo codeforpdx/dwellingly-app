@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
 import Header from '../../components/header/Header';
@@ -20,64 +20,99 @@ class Login extends React.Component {
 
   render() {
     const userRoutes = {
-      "isAdmin": ROUTES.ADMIN,
-      "isPropertyManager": ROUTES.TERMS_CONDITIONS,
-      "isStaff": ROUTES.PRIVACY,
-      "default": ROUTES.AWAITING_ROLE,
-    }
+      isAdmin: ROUTES.ADMIN,
+      isPropertyManager: ROUTES.TERMS_CONDITIONS,
+      isStaff: ROUTES.PRIVACY,
+      default: ROUTES.AWAITING_ROLE
+    };
 
     const ourUser = this.props.user;
-    let userType = "default";
-    if (ourUser && ourUser.role && (ourUser.role.isAdmin || ourUser.role.isPropertyManager || ourUser.role.isStaff ) && !this.props.isFetchingUserData && !this.props.isFetchingAuthorization) {
-      if (ourUser.role.isAdmin === "true" || ourUser.role.isAdmin === true) {
-        userType = "isAdmin";
-      } else if (ourUser.role.isPropertyManager === "true"  || ourUser.role.isPropertyManager === true) {
-        userType = "isPropertyManager";
-      } else if (ourUser.role.isStaff === "true" || ourUser.role.isStaff === true) {
-        userType = "isStaff";
+    let userType = 'default';
+    if (
+      ourUser &&
+      ourUser.role &&
+      (ourUser.role.isAdmin ||
+        ourUser.role.isPropertyManager ||
+        ourUser.role.isStaff) &&
+      !this.props.isFetchingUserData &&
+      !this.props.isFetchingAuthorization
+    ) {
+      if (ourUser.role.isAdmin === 'true' || ourUser.role.isAdmin === true) {
+        userType = 'isAdmin';
+      } else if (
+        ourUser.role.isPropertyManager === 'true' ||
+        ourUser.role.isPropertyManager === true
+      ) {
+        userType = 'isPropertyManager';
+      } else if (
+        ourUser.role.isStaff === 'true' ||
+        ourUser.role.isStaff === true
+      ) {
+        userType = 'isStaff';
       }
       console.log('we are going to ', userRoutes[userType]);
-    } 
+    }
+    console.log(this.props);
     return (
       <div className="main page page--login">
         <Header>
           {() => (
             <div>
               <Navigation />
-              <Header.Label 
-                label={this.props.intl.formatMessage(LOGIN.TITLE, {org: SETTINGS.ORGANIZATION, appname: SETTINGS.APP_NAME})} 
-                type="basic" />
+              <Header.Label
+                label={this.props.intl.formatMessage(LOGIN.TITLE, {
+                  org: SETTINGS.ORGANIZATION,
+                  appname: SETTINGS.APP_NAME
+                })}
+                type="basic"
+              />
             </div>
           )}
         </Header>
         <section className="main">
-          { !this.props.isFetchingAuthorization && ! this.props.isFetchingUserData && !this.props.haveUser &&
-            <LoginForm />
-          }
-          { (this.props.isFetchingAuthorization || this.props.isFetchingUserData) &&
-            <Spinner />
-          }
-          { this.props.haveUser && this.props.user && this.props.user.id && this.props.user.email && 
-            <Redirect to={userRoutes[userType]} />
-          }
+          {!this.props.isFetchingAuthorization &&
+            !this.props.isFetchingUserData &&
+            !this.props.haveUser && <LoginForm />}
+          {(this.props.isFetchingAuthorization ||
+            this.props.isFetchingUserData) && <Spinner />}
+          {this.props.haveUser &&
+            this.props.user &&
+            this.props.user.id &&
+            this.props.user.email && <Redirect to={userRoutes[userType]} />}
 
-          { this.props.error && this.props.error.message && this.props.error.message.length > 0 &&
-            <p className="error">
-              { this.props.error.message }
-            </p>
-          }
-          { !this.props.isFetchingAuthorization && ! this.props.isFetchingUserData && !this.props.haveUser &&
-            <div className="width-wrapper">
-              <div className="allCaps separator">{this.props.intl.formatMessage(COMMON.CONJUNCTION_OR)}</div>
-              <h2 className="align-left">{this.props.intl.formatMessage(LOGIN.INSTRUCTIONS_GOOGLE)}</h2>
-              <LoginWithGoogle />
-            </div>
-          }
+          {this.props.error &&
+            this.props.error.message &&
+            this.props.error.message.length > 0 && (
+              <p className="error">{this.props.error.message}</p>
+            )}
+          {!this.props.isFetchingAuthorization &&
+            !this.props.isFetchingUserData &&
+            !this.props.haveUser && (
+              <div className="width-wrapper">
+                <div className="allCaps separator">
+                  {this.props.intl.formatMessage(COMMON.CONJUNCTION_OR)}
+                </div>
+                <h2 className="align-left">
+                  {this.props.intl.formatMessage(LOGIN.INSTRUCTIONS_GOOGLE)}
+                </h2>
+                <LoginWithGoogle />
+              </div>
+            )}
           <div className="width-wrapper">
-            <p className="login-conditions align-left">{this.props.intl.formatMessage(LOGIN.INSTRUCTIONS)} <Link to="/terms-conditions">{this.props.intl.formatMessage(TERMS.TITLE)}</Link> {this.props.intl.formatMessage(COMMON.CONJUNCTION_AND)} <Link to="/privacy-policy">{this.props.intl.formatMessage(PRIVACY.TITLE_STANDALONE)}</Link>.</p>
-           </div>
-         </section>
-       </div>
+            <p className="login-conditions align-left">
+              {this.props.intl.formatMessage(LOGIN.INSTRUCTIONS)}{' '}
+              <Link to="/terms-conditions">
+                {this.props.intl.formatMessage(TERMS.TITLE)}
+              </Link>{' '}
+              {this.props.intl.formatMessage(COMMON.CONJUNCTION_AND)}{' '}
+              <Link to="/privacy-policy">
+                {this.props.intl.formatMessage(PRIVACY.TITLE_STANDALONE)}
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+      </div>
     );
   }
 }
@@ -86,7 +121,7 @@ const mapStateToProps = ({ user }) => ({
   user: user.user,
   userCreated: user.userCreated,
   accountSource: user.accountSource,
-  isCreatingUser: user.isCreatingUser, 
+  isCreatingUser: user.isCreatingUser,
   isFetchingAuthorization: user.isFetchingAuthorization,
   isFetchingUserData: user.isFetchingUserData,
   haveUser: user.haveUser,
@@ -106,22 +141,20 @@ Login.propTypes = {
     accountSource: PropTypes.string,
     email: PropTypes.string,
     id: PropTypes.string,
-    role:  PropTypes.shape({
+    role: PropTypes.shape({
       isAdmin: PropTypes.bool,
       isPropertyManager: PropTypes.bool,
       isStaff: PropTypes.bool
     })
-  }),
+  })
 };
 
 Login.defaultProps = {
   error: {
     code: null,
-    message: null,
+    message: null
   },
-  user: null,
-}
+  user: null
+};
 
-export default connect(
-  mapStateToProps,
-)(injectIntl(Login));
+export default connect(mapStateToProps)(injectIntl(Login));
