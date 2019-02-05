@@ -7,6 +7,7 @@ import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import './PropertyManagerDashboard.scss';
+import '../../components/search-form/SearchForm.scss';
 import Icon from '../../components/icon/Icon';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 
@@ -15,6 +16,7 @@ class PropertyManagerDashboard extends Component {
     super(props);
     this.getPropertyManagerData = this.getPropertyManagerData.bind(this);
     this.getTableRow = this.getTableRow.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentWillMount() {
@@ -40,6 +42,11 @@ class PropertyManagerDashboard extends Component {
       </tr>
     )
   }
+  
+  handleSearch(event) {
+    if (event) event.preventDefault();
+    return this;
+  }
 
   render() {
     const { intl } = this.props;
@@ -58,13 +65,15 @@ class PropertyManagerDashboard extends Component {
           <h2 className="property-header">PROPERTY MANAGERS</h2>
           <Link to="admin/add-new-property-manager"><button type="button" className="btn btn--lrg add-new-btn"><Icon icon="plus"/> ADD NEW</button></Link>
         </div>
-        <div className="property-search-wrapper">
-          <Icon icon="search" />
+        <form action="" className="search" onSubmit={this.handleSearch}>
+          <div className="icon-wrapper">
+            <Icon icon="search" />
             <input
-              type="text"
-              className="property-search"
-              placeholder="search property managers by name, property, or status . . ." />
-        </div>
+              type="search"
+              placeholder="Search property managers by name, property, or status . . ."
+            />
+          </div>
+        </form>
       </section>
       <section className="property-dashboard-header property-table">
         <div className="gray-bar">
