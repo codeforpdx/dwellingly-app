@@ -158,7 +158,7 @@ class NewPropertyForm extends Component {
                   />
               </section>
               <section className="newPropertyFormSection">
-                <h2 className="newPropertyFormHeading">Assign Property Managers</h2>
+                <h2 className="newPropertyFormManagerHeading">Assign Property Managers</h2>
                 <fieldset>
                   <Search
                     searchData={propertyManagers}

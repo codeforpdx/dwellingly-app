@@ -8,6 +8,16 @@
   line-height: 1.5;
 }
 
+.make-admin {
+  text-align: left;
+  margin-top: 1em;
+  margin-right: 1em;
+}
+
+.adminCheckbox {
+  margin-left: 1em;
+}
+
 .newStaffMemberFormSection {
   padding: 1em;
   & .inline-input {
@@ -20,7 +30,7 @@
     }
   }
   & .btn {
-    margin-top: 1em;
+    margin-top: 3em;
     display: flex;
     align-content: flex-start;
   }

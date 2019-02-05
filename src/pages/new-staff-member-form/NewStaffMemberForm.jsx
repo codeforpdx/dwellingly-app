@@ -66,6 +66,17 @@ class NewStaffMemberForm extends Component {
                   placeholder="Email"
                   onChange={this.handleChange}
                   />
+                <div className="make-admin">
+                  <label htmlFor="makeAdmin">Make Admin
+                <input className="adminCheckbox"
+                    id="makeAdmin"
+                    name="makeAdmin"
+                    label="Make Admin"
+                    type="checkbox"
+                    onChange={this.handleChange}
+                    />
+                  </label>
+                </div>
                 <button
                   type="submit"
                   className="btn">
