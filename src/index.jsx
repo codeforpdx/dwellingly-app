@@ -43,6 +43,7 @@ import Properties from './pages/properties/Properties';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
+import PropertyManagerDetailsTwo from './pages/property-manager-details-two/PropertyManagerDetailsTwo';
 import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyManagerTenantsDirectory';
 import Settings from './pages/settings/Settings';
 import Signup from './pages/signup/Signup';
@@ -151,6 +152,7 @@ ReactDOM.render(
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.ADD_PROPERTY} component={NewPropertyForm} />
+            <Route path={ROUTES.PROPERTY_MANAGER_DETAILS} component={PropertyManagerDetailsTwo} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />

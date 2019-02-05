@@ -56,6 +56,7 @@ export const ROUTES = {
   PRIVACY: '/privacy-policy',
   PROPERTIES: '/properties',
   PROPERTY_MANAGERS: '/property-managers',
+  PROPERTY_MANAGER_DETAILS: '/property-manager-details',
   OUT_OF_OFFICE: '/settings/out-of-office',
   ROOT: '/',
   SETTINGS: '/settings',
