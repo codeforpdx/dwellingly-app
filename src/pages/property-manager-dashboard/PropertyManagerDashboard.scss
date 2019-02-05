@@ -12,12 +12,12 @@
   display: flex;
   margin-top: .4rem;
   padding: 0 1rem;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   border-radius: 1px;
   background: $color__gray--light;
   width: 800px;
-  height: 4rem;
+  height: 3.5rem;
 }
 .table-wrapper {
   display: flex;
@@ -66,7 +66,7 @@
 }
 .property-search {
   width: 100%;
-  max-width: 450px;
+  max-width: 550px;
   height: 2rem;
   border: solid .5px $color__gray--border;
   border-radius: 25px;

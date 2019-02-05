@@ -5,42 +5,37 @@ import { intlShape, injectIntl } from 'react-intl';
 import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
-import './PropertyDashboard.scss';
+import './PropertyManagerDashboard.scss';
 import Icon from '../../components/icon/Icon';
-import { getProperties } from '../../dux/properties';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 
-class PropertyDashboard extends Component {
+class PropertyManagerDashboard extends Component {
   constructor(props) {
     super(props);
-    this.getPropertyData = this.getPropertyData.bind(this);
+    this.getPropertyManagerData = this.getPropertyManagerData.bind(this);
     this.getTableRow = this.getTableRow.bind(this);
   }
 
   componentWillMount() {
     console.log(this.props);
     const { dispatch } = this.props;
-    dispatch(getProperties());
     dispatch(getPropertyManagers());
   }
 
-  getPropertyData() {  
-    // Do we need to update the current data query to include date the property (not lease?) is saved to db, as well as number of residents? Not all properties will have leases. 
-    // Are we missing a foreign key to link managers to properties?
-    // If we are thinking of using server-side pagination, I'm not sure we should be mapping through multiple objects in the front-end to find those fields 
-    const properties = this.props.properties.properties.length > 0 ? this.props.properties.properties : [];
-    return properties.map(property => (this.getTableRow(property)))
+  getPropertyManagerData() { 
+    const managers = this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : [];
+    return managers.map(manager => (this.getTableRow(manager)))
   }
   
-  getTableRow (property) {
+  getTableRow (manager) {
     console.log(this.props);
     return (
       <tr>
-        <td><input type="checkbox" />{property.name}</td>
-        <td>{property.city}</td>
-        <td>{property.addressOne} <br/> {property.addressTwo}</td>
-        <td>{property.numberOfUnits}</td>
-        <td>{property.state}</td>
+        <td><input type="checkbox" />{manager.firstName} {manager.lastName}</td>
+        <td>{manager.leases[0].propertyId}</td>
+        <td>{manager.email}</td>
+        <td>Invited</td>
+        <td>{manager.leases[0].dateUpdated}</td>
       </tr>
     )
   }
@@ -59,7 +54,7 @@ class PropertyDashboard extends Component {
       </Header>
       <section className="property-dashboard-header">
         <div className="add-new">
-          <h2 className="property-header">PROPERTIES</h2>
+          <h2 className="property-header">PROPERTY MANAGERS</h2>
           <button type="button" className="btn btn--lrg add-new-btn">+ ADD NEW</button>
         </div>
         <div className="property-search-wrapper">
@@ -67,52 +62,45 @@ class PropertyDashboard extends Component {
             <input
               type="text"
               className="property-search"
-              placeholder="search properties by name, property, or status . . ." />
+              placeholder="search property managers by name, property, or status . . ." />
         </div>
       </section>
       <section className="property-dashboard-header property-table">
         <div className="gray-bar">
+          <button type="button" className="btn archive-btn">INVITE AGAIN</button>
           <button type="button" className="btn archive-btn">ARCHIVE</button>
         </div>
         <div className="table-wrapper">
           <table>
             <tr>
               <th><input type="checkbox" /> Name</th>
-              <th>Property Manager</th>
-              <th>Address</th>
-              <th>Tenants</th>
-              <th>Date Added</th>
+              <th>Properties</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Last Usage</th>
             </tr>
-            {this.getPropertyData()}
+            {this.getPropertyManagerData()}
           </table>
         </div>
       </section>
-      <div className="next-button">
-        <button type="button" className="btn next-btn">NEXT</button>
-      </div>
     </div>
   )}
 };
 
-PropertyDashboard.propTypes = {
+PropertyManagerDashboard.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  properties: PropTypes.shape({
-    properties: PropTypes.arrayOf(PropTypes.object)
-  }),
   propertyManagers: PropTypes.shape({
     propertyManagers: PropTypes.arrayOf(PropTypes.object)
   })
 }
 
-PropertyDashboard.defaultProps = {
-  properties: {properties: []},
+PropertyManagerDashboard.defaultProps = {
   propertyManagers: {propertyManagers: []},
 };
 
 const mapStateToProps = state => ({
-  properties: state.properties,
   propertyManagers: state.propertyManagers,
 })
 
-export default injectIntl(connect(mapStateToProps)(PropertyDashboard));
+export default injectIntl(connect(mapStateToProps)(PropertyManagerDashboard));
