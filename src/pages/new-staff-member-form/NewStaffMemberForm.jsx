@@ -15,7 +15,11 @@ class NewStaffMemberForm extends Component {
         lastName: "",
         phone: "",
         email: "",
-        role: "",
+        role: {
+          isAdmin: false,
+          isStaff: true,
+          isPropertyManager: false,
+        },
         title: "",
         ext: ""
       }
@@ -38,7 +42,7 @@ class NewStaffMemberForm extends Component {
   // handleSubmit(event) {
   //   event.preventDefault();
   //   const { dispatch } = this.props;
-  //   const { firstName, lastName, phone, email } = this.state.users;
+  //   const { firstName, lastName, phone, email, role, title, ext } = this.state.users;
   // }
 
   isSaveEnabled() {
@@ -74,7 +78,7 @@ class NewStaffMemberForm extends Component {
             <h2 className="admin--header align--left">
               Add a New Staff Member
             </h2>
-            <form id="newStaffMemberForm">
+            <form id="newStaffMemberForm" onSubmit={this.handleSubmit}>
               <section className="newStaffMemberFormSection">
                 <Input
                   id="firstName"
