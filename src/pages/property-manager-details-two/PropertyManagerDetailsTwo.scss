@@ -7,6 +7,14 @@
   width: 35%;
 }
 
+.propertyManagerName {
+  text-align: left;
+  color: #003c71;
+  font-size: 1.250em;
+  margin-top: 1.5em;
+  font-weight: bold;
+}
+
 #archive-button {
   text-align: center;
   padding-top: .3em;
@@ -21,6 +29,7 @@
 .detailSectionHeading {
   text-align: left;
   font-size: 1em;
+  font-weight: bold;
   text-transform: uppercase;
   color: $color__blue--dark;
   line-height: 1.5;
@@ -28,7 +37,7 @@
 }
 
 .contactDetailsSection {
-  padding: 1em;
+  padding: 1em 1em 1em 0;
   margin-bottom: 2em;
   & .inline-input {
     margin: 0;
@@ -78,4 +87,24 @@ ul {
   text-align: left;
   padding: 0;
   margin: 0;
+}
+
+table {
+  border-spacing: 0;
+  box-sizing: border-box;
+  position: relative;
+  table-layout: fixed;
+  text-align: left;
+  width: 800px;
+  padding-right: 10px;
+  @media screen and (min-width: $mq--desktop) {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  td {
+    border-bottom: 1px solid $color__gray--border;
+    padding: 1em 0;
+    vertical-align: top;
+  }
 }

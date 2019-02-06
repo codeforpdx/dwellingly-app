@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
+// import Accordion from '../../components/accordion/Accordion';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
-import Input from '../../components/input/Input';
+// import Input from '../../components/input/Input';
 import Navigation from '../../components/navigation/Navigation';
 import { properties, tenants } from '../../data'
 import './PropertyManagerDetailsTwo.scss';
@@ -35,7 +36,7 @@ class PropertyManagerDetailsTwo extends Component {
         <div>
           <div className="width-wrapper">
             <div className="name-header">
-              <h2 className="admin--header align--left">
+              <h2 className="propertyManagerName ">
                 John Oliver
               </h2>
               <a
@@ -46,33 +47,35 @@ class PropertyManagerDetailsTwo extends Component {
                 </a>
               </div>
               <section className="contactDetailsSection">
-                <form className="contactDetailsForm">
+                <div >
                   <h2 className="detailSectionHeading" id="contactHeading">Contact</h2>
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    label="First Name"
-                    type="text"
-                    placeholder="John"
-                    onChange={this.handleChange}
-                    />
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    label="Last Name"
-                    type="text"
-                    placeholder="Oliver"
-                    onChange={this.handleChange}
-                    />
-                  <Input
-                    id="phone"
-                    name="phone"
-                    label="Phone Number"
-                    type="text"
-                    placeholder="(503) 123-1234"
-                    onChange={this.handleChange}
-                    />
-                </form>
+                  <table className="accordion__table">
+                    <tr>
+                      <td>
+                        First Name
+                      </td>
+                      <td>
+                        John
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Last Name
+                      </td>
+                      <td>
+                        Oliver
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Phone
+                      </td>
+                      <td>
+                        (503) 123-1234
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </section>
               <section>
                 <h2 className="detailSectionHeading">Properties</h2>
