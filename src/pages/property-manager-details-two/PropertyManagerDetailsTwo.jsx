@@ -92,10 +92,12 @@ class PropertyManagerDetailsTwo extends Component {
                   {tenants && tenants.map(tenant => {
                     const { name, phone, address} = tenant;
                     return(
-                      <div>
-                        <p>{name}</p>
-                        <p>{phone}</p>
-                        <p>{address}</p>
+                      <div className="tenantCard">
+                        <ul>
+                          <li>{name}</li>
+                          <li>{phone}</li>
+                          <li>{address}</li>
+                        </ul>
                       </div>
                     )
                   })}
