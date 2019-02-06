@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
-// import Accordion from '../../components/accordion/Accordion';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
-// import Input from '../../components/input/Input';
 import Navigation from '../../components/navigation/Navigation';
 import { properties, tenants } from '../../data'
 import './PropertyManagerDetailsTwo.scss';
@@ -51,7 +48,7 @@ class PropertyManagerDetailsTwo extends Component {
                   <h2 className="detailSectionHeading" id="contactHeading">Contact</h2>
                   <table className="accordion__table">
                     <tr>
-                      <td>
+                      <td id="test">
                         First Name
                       </td>
                       <td>

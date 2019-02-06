@@ -22,7 +22,6 @@
 
 #contactHeading {
   border-bottom: 1px solid $color__gray--border;
-  padding-bottom: .5em;
   margin-top: 1em;
 }
 
@@ -33,7 +32,8 @@
   text-transform: uppercase;
   color: $color__blue--dark;
   line-height: 1.5;
-  margin-bottom: .5em;
+  padding-bottom: .5em;
+
 }
 
 .contactDetailsSection {
@@ -104,7 +104,11 @@ table {
 
   td {
     border-bottom: 1px solid $color__gray--border;
-    padding: 1em 0;
+    padding: .5em 0;
     vertical-align: top;
   }
+}
+
+#test {
+  width: 22%;
 }
