@@ -152,7 +152,7 @@ ReactDOM.render(
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.ADD_PROPERTY} component={NewPropertyForm} />
-            <Route path={ROUTES.PROPERTY_MANAGER_DETAILS} component={PropertyManagerDetailsTwo} />
+            <Route path={`${ROUTES.PROPERTY_MANAGER_DETAILS}/:id`} component={StaffUser(PropertyManagerDetailsTwo)} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />

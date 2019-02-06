@@ -44,7 +44,7 @@ class PropertyManagersDirectory extends Component {
 
         <section className="main width-wrapper">
           <PropertyManagersList
-            url={`${ROUTES.PROPERTY_MANAGERS}`}
+            url={`${ROUTES.PROPERTY_MANAGER_DETAILS}`}
             items={propertyManagers}
           />
         </section>
