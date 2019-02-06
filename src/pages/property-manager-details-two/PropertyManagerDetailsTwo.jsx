@@ -17,7 +17,6 @@ class PropertyManagerDetailsTwo extends Component {
     }
   }
 
-
   render() {
 
     return(
@@ -54,7 +53,7 @@ class PropertyManagerDetailsTwo extends Component {
                     name="firstName"
                     label="First Name"
                     type="text"
-                    placeholder="First Name"
+                    placeholder="John"
                     onChange={this.handleChange}
                     />
                   <Input
@@ -62,7 +61,7 @@ class PropertyManagerDetailsTwo extends Component {
                     name="lastName"
                     label="Last Name"
                     type="text"
-                    placeholder="Last Name"
+                    placeholder="Oliver"
                     onChange={this.handleChange}
                     />
                   <Input
@@ -70,37 +69,43 @@ class PropertyManagerDetailsTwo extends Component {
                     name="phone"
                     label="Phone Number"
                     type="text"
-                    placeholder="Phone Number"
+                    placeholder="(503) 123-1234"
                     onChange={this.handleChange}
                     />
                 </form>
               </section>
               <section>
                 <h2 className="detailSectionHeading">Properties</h2>
-                {properties && properties.map(property => {
-                  const { name, address} = property;
-                  return(
-                    <div>
-                      <p>{name}</p>
-                      <p>{address}</p>
-                    </div>
-                  )
-                })}
+                <div className="cardContainer">
+                  {properties && properties.map(property => {
+                    const { name, address} = property;
+                    return(
+                      <div className="propertyCard">
+                        <ul>
+                          <li className="cardName">{name}</li>
+                          <li>{address}</li>
+                        </ul>
+                      </div>
+                    )
+                  })}
+                </div>
               </section>
               <section>
                 <h2 className="detailSectionHeading">Tenants</h2>
+                <div className="cardContainer">
                   {tenants && tenants.map(tenant => {
                     const { name, phone, address} = tenant;
                     return(
                       <div className="tenantCard">
-                        <ul>
-                          <li>{name}</li>
+                        <ul className="test">
+                          <li className="cardName">{name}</li>
                           <li>{phone}</li>
                           <li>{address}</li>
                         </ul>
                       </div>
                     )
                   })}
+                </div>
               </section>
             </div>
           </div>
