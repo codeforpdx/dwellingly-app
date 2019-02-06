@@ -63,12 +63,19 @@ class PropertyDashboard extends Component {
           <h2 className="property-header">PROPERTIES</h2>
           <Link to="admin/add-new-property"><button type="button" className="btn btn--lrg add-new-btn"><Icon icon="plus"/> ADD NEW</button></Link>
         </div>
-        <div className="property-search-wrapper">
-          <Icon icon="search" />
-            <input
-              type="text"
-              className="property-search"
-              placeholder="search properties by name, property, or status . . ." />
+        
+        
+        <div className="search-and-archive">
+          <form action="" className="search" onSubmit={this.handleSearch}>
+            <div className="icon-wrapper">
+              <Icon icon="search" />
+              <input
+                type="text"
+                className="property-search"
+                placeholder="search properties by name, property, or status . . ." />
+            </div>
+          </form>
+          <div>ARCHIVED:<button className="switch__btn" type="button">hide</button></div>
         </div>
       </section>
       <section className="property-dashboard-header property-table">

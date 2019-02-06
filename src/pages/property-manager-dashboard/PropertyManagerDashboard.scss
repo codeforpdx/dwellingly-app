@@ -6,10 +6,28 @@
   h2 {
     margin-top: 5px;
   }
+  .search-and-archive {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    color: $color__gray--medium;
+    font-size: emify(14, 16);
+    font-weight: 400;
+    .archive-flex {
+      display: flex;
+      align-items: center;
+    }
+  }
+  button {
+    display: inline;
+    margin-left: .5rem;
+  }
 }
 .icon-wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-radius: 25px;
   overflow: hidden;
   border: solid 1px $color__gray--light;

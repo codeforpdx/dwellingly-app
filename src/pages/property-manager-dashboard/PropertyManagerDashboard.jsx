@@ -8,6 +8,8 @@ import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import './PropertyManagerDashboard.scss';
 import '../../components/search-form/SearchForm.scss';
+import '../../components/input/Input.scss';
+import SearchForm from '../../components/search-form/SearchForm';
 import Icon from '../../components/icon/Icon';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 
@@ -34,7 +36,7 @@ class PropertyManagerDashboard extends Component {
     console.log(this.props);
     return (
       <tr>
-        <td><input type="checkbox" />{manager.firstName} {manager.lastName}</td>
+        <td><input type="checkbox" />{manager.name}</td>
         <td>{manager.leases[0].propertyId}</td>
         <td>{manager.email}</td>
         <td>Invited</td>
@@ -57,6 +59,7 @@ class PropertyManagerDashboard extends Component {
           <div>
             <Navigation />
             <Header.Label label={intl.formatMessage(COMMON.HELLO)} type="basic" />
+            <SearchForm onSubmit={this.handleSearch} />
           </div>
         )}
       </Header>
@@ -65,15 +68,18 @@ class PropertyManagerDashboard extends Component {
           <h2 className="property-header">PROPERTY MANAGERS</h2>
           <Link to="admin/add-new-property-manager"><button type="button" className="btn btn--lrg add-new-btn"><Icon icon="plus"/> ADD NEW</button></Link>
         </div>
-        <form action="" className="search" onSubmit={this.handleSearch}>
-          <div className="icon-wrapper">
-            <Icon icon="search" />
-            <input
-              type="search"
-              placeholder="Search property managers by name, property, or status . . ."
-            />
-          </div>
-        </form>
+        <div className="search-and-archive">
+          <form action="" className="search" onSubmit={this.handleSearch}>
+            <div className="icon-wrapper">
+              <Icon icon="search" />
+              <input
+                type="search"
+                placeholder="Search property managers by name, property, or status . . ."
+              />
+            </div>
+          </form>
+          <div className="archive-flex">ARCHIVED:<button type="button" className="switch__btn" /></div>
+        </div>
       </section>
       <section className="property-dashboard-header property-table">
         <div className="gray-bar">
