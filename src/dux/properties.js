@@ -73,6 +73,13 @@ export const getProperties = () => async dispatch =>  {
   dispatch(getPropertysCollection(data));
 }
 
+// GET Archived PROPERTIES
+export const getArchivedProperties = () => async dispatch =>  {
+  const response = await fetch(`${ENDPOINTS.ARCHIVED_PROPERTY}`)
+  const data = await response.json();
+  dispatch(getPropertysCollection(data));
+}
+
 // POST Property
 export const onAddingProperty = async data => {
   const response = await fetch(`${ENDPOINTS.PROPERTY}`, {

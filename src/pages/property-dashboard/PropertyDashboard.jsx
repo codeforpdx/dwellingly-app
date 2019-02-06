@@ -8,7 +8,7 @@ import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import './PropertyDashboard.scss';
 import Icon from '../../components/icon/Icon';
-import { getProperties } from '../../dux/properties';
+import { getProperties, getArchivedProperties } from '../../dux/properties';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 
 class PropertyDashboard extends Component {
@@ -22,6 +22,7 @@ class PropertyDashboard extends Component {
     console.log(this.props);
     const { dispatch } = this.props;
     dispatch(getProperties());
+    dispatch(getArchivedProperties());
     dispatch(getPropertyManagers());
   }
 
@@ -109,6 +110,9 @@ PropertyDashboard.propTypes = {
   properties: PropTypes.shape({
     properties: PropTypes.arrayOf(PropTypes.object)
   }),
+  archivedProperties: PropTypes.shape({
+    archivedProperties: PropTypes.arrayOf(PropTypes.object)
+  }),
   propertyManagers: PropTypes.shape({
     propertyManagers: PropTypes.arrayOf(PropTypes.object)
   })
@@ -116,11 +120,13 @@ PropertyDashboard.propTypes = {
 
 PropertyDashboard.defaultProps = {
   properties: {properties: []},
+  archivedProperties: {archivedProperties: []},
   propertyManagers: {propertyManagers: []},
 };
 
 const mapStateToProps = state => ({
   properties: state.properties,
+  archivedProperties: state.archivedProperties,
   propertyManagers: state.propertyManagers,
 })
 
