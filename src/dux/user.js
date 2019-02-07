@@ -66,6 +66,7 @@ export default (state = initialState, action) => {
     case GET_USER_DATA_COMPLETE:
       return {
         ...state,
+        isCreatingUser: action.isCreatingUser,
         isFetchingUserData: action.isFetchingUserData,
         isFetchingAuthorization: action.isFetchingAuthorization,
         haveUser: action.haveUser,
@@ -109,7 +110,7 @@ export default (state = initialState, action) => {
     case CREATE_USER_COMPLETE:
       return {
         ...state,
-        creatingUser: action.creatingUser,
+        isCreatingUser: action.isCreatingUser,
         haveUser: action.haveUser,
         error: action.error
       };
@@ -189,9 +190,15 @@ export const initiateFirebaseCall = () => dispatch => {
   });
 };
 
-export const getAuthDetailsFromFirebase = (user, accountSource) => dispatch => {
+export const getAuthDetailsFromFirebase = (
+  user,
+  accountSource,
+  cb
+) => dispatch => {
   console.log('here are the details about user from firebase');
   console.log(user);
+  // Set cookie
+  cb();
   dispatch({
     type: GET_AUTHORIZATION_COMPLETE,
     isFetchingAuthorization: false,
@@ -202,7 +209,7 @@ export const getAuthDetailsFromFirebase = (user, accountSource) => dispatch => {
       lastName: user.lastName,
       email: user.email,
       accountSource,
-      id: user.localId,
+      id: user.localId ? user.localId : user.id,
       role: user.role
     },
     error: user.error
@@ -223,7 +230,8 @@ export const addCustomUserData = (
   accountSource,
   userID
 ) => dispatch => {
-  let userIdentifier = userID;
+  console.log(userData, accountSource, userID);
+  let userIdentifier;
   if (userData && userData.id && userData.id.length > 0) {
     userIdentifier = userData.id;
   } else if (userData && userData.localId && userData.localId.length > 0) {
@@ -237,7 +245,7 @@ export const addCustomUserData = (
       isStaff: userData.role.isStaff
     };
   }
-  if (userData && accountSource) {
+  if (userData) {
     dispatch({
       type: GET_USER_DATA_COMPLETE,
       isCreatingUser: false,
@@ -260,6 +268,7 @@ export const addCustomUserData = (
 export const initiateCreateUserCall = () => dispatch => {
   dispatch({
     type: CREATE_USER,
+    isCreatingUser: true,
     isFetchingUserData: true,
     haveUser: false,
     error: null
@@ -270,6 +279,7 @@ export const setUserFromFirebaseEmail = user => dispatch => {
   console.log('is this thing on?', user);
   dispatch({
     type: CREATE_USER_COMPLETE,
+    isCreatingUser: false,
     isFetchingAuthorization: false,
     isFetchingUserData: false,
     haveUser: true,
@@ -284,6 +294,7 @@ export const setUserFromFirebaseEmail = user => dispatch => {
 export const setUserFromGoogle = user => dispatch => {
   dispatch({
     type: CREATE_USER_COMPLETE,
+    isCreatingUser: false,
     isFetchingAuthorization: false,
     isFetchingUserData: false,
     haveUser: true,
@@ -291,20 +302,6 @@ export const setUserFromGoogle = user => dispatch => {
       email: user.email,
       accountSource: user.credential.signInMethod,
       id: user.uid
-    },
-    error: null
-  });
-};
-
-export const setUserToStore = user => dispatch => {
-  console.log(user);
-  dispatch({
-    type: CREATE_USER_COMPLETE,
-    isFetchingAuthorization: false,
-    isFetchingUserData: false,
-    haveUser: true,
-    user: {
-      ...user
     },
     error: null
   });
