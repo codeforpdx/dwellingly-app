@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import EmergencyContactsList from '../../components/emergency/EmergencyContactsList';
 // import EmergencyList from '../../components/emergency/EmergencyList';
 import Header from '../../components/header/Header';
-import Navigation from '../../components/navigation/Navigation';
+// import Navigation from '../../components/navigation/Navigation';
 import Tile from '../../components/tile/Tile';
 import Accordion from '../../components/accordion/Accordion';
 
@@ -40,8 +40,11 @@ class Administration extends React.Component {
         <Header>
           {() => (
             <div>
-              <Navigation />
-              <Header.Label label="Administration" type="basic" />
+              {/* <Navigation /> */}
+              <Header.Label
+                label="JOIN Messenger Administration"
+                type="basic"
+              />
               {/* <nav className="tabs">
                 <div className="width-wrapper">
                   <ul>
