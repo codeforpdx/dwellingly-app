@@ -22,11 +22,13 @@ class NewStaffMemberForm extends Component {
         },
         title: "",
         ext: ""
-      }
+      },
+      isChecked: false
     }
 
     this.handleChange = this.handleChange.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleCheckbox = this.toggleCheckbox.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
   }
 
@@ -44,6 +46,12 @@ class NewStaffMemberForm extends Component {
   //   const { dispatch } = this.props;
   //   const { firstName, lastName, phone, email, role, title, ext } = this.state.users;
   // }
+
+  toggleCheckbox() {
+    this.setState(prevState => ({
+      isChecked: !prevState.isChecked
+    }));
+  }
 
   isSaveEnabled() {
     const staffFirstName = this.state.users.firstName;
@@ -119,7 +127,7 @@ class NewStaffMemberForm extends Component {
                     name="makeAdmin"
                     label="Make Admin"
                     type="checkbox"
-                    onChange={this.handleChange}
+                    onClick={this.toggleCheckbox}
                     />
                   </label>
                 </div>
