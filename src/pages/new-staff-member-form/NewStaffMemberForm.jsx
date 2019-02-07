@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {auth} from '../../firebase';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import Navigation from '../../components/navigation/Navigation';
@@ -15,6 +16,7 @@ class NewStaffMemberForm extends Component {
         lastName: "",
         phone: "",
         email: "",
+        password: "",
         role: {
           isAdmin: false,
           isStaff: true,
@@ -27,6 +29,7 @@ class NewStaffMemberForm extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
     this.makeAdmin = this.makeAdmin.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
@@ -39,6 +42,18 @@ class NewStaffMemberForm extends Component {
     this.setState(prevState => ({
       users: { ...prevState.users, [name]: value}
     }));
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    auth.doCreateStaffUser(
+     this.state.users.firstName,
+     this.state.users.lastName,
+     this.state.users.email,
+     this.state.users.phone,
+     this.state.users.password,
+     this.state.users.role
+   )
   }
 
   toggleCheckbox() {
@@ -122,6 +137,14 @@ render() {
                 label="Email"
                 type="text"
                 placeholder="Email"
+                onChange={this.handleChange}
+                />
+              <Input
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="Password"
                 onChange={this.handleChange}
                 />
               <div className="make-admin">

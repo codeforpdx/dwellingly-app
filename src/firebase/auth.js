@@ -89,6 +89,12 @@ export function doCreateStaffUser(
   password,
   role
 ) {
+  console.log(firstName,
+  lastName,
+  email,
+  phone,
+  password,
+  role);
   store.dispatch(initiateFirebaseCall());
   firebase
     .auth()
@@ -106,6 +112,7 @@ export function doCreateStaffUser(
           id: response.user.uid
         })
       });
+      console.log(response);
     })
     .then(response => response.json())
     .then(json => {
@@ -116,6 +123,7 @@ export function doCreateStaffUser(
         leaseIds: ['johnny_test'],
         title: ''
       };
+      console.log(newUser);
       store.dispatch(setUserFromFirebaseEmail(newUser));
     })
     .catch(error => {
