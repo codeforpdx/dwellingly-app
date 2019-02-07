@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
-import Header from '../../components/header/Header';
-import Navigation from '../../components/navigation/Navigation';
 import LoginForm from '../../components/login/LoginForm';
 import LoginWithGoogle from '../../components/login/LoginWithGoogle';
 import Spinner from '../../components/spinner/Spinner';
@@ -14,80 +12,80 @@ import { ROUTES } from '../../constants/constants';
 import './Login.scss';
 
 class Login extends React.Component {
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
-  render() {
-    const userRoutes = {
+  constructor(props) {
+    super(props);
+    this.userRoutes = {
       isAdmin: ROUTES.ADMIN,
       isPropertyManager: ROUTES.TERMS_CONDITIONS,
       isStaff: ROUTES.PRIVACY,
       default: ROUTES.AWAITING_ROLE
     };
+    this.userType = 'default';
+    this.ourUser = null;
+  }
 
-    const ourUser = this.props.user;
-    let userType = 'default';
-    if (
-      ourUser &&
-      ourUser.role &&
-      (ourUser.role.isAdmin ||
-        ourUser.role.isPropertyManager ||
-        ourUser.role.isStaff) &&
-      !this.props.isFetchingUserData &&
-      !this.props.isFetchingAuthorization
-    ) {
-      if (ourUser.role.isAdmin === 'true' || ourUser.role.isAdmin === true) {
-        userType = 'isAdmin';
-      } else if (
-        ourUser.role.isPropertyManager === 'true' ||
-        ourUser.role.isPropertyManager === true
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
+  componentDidUpdate() {
+    if (this.props.haveUser && this.props.user) {
+      this.ourUser = this.props.user;
+      console.log(this.ourUser);
+      if (
+        this.ourUser &&
+        this.ourUser.role &&
+        (this.ourUser.role.isAdmin ||
+          this.ourUser.role.isPropertyManager ||
+          this.ourUser.role.isStaff) &&
+        !this.props.isFetchingUserData &&
+        !this.props.isFetchingAuthorization
       ) {
-        userType = 'isPropertyManager';
-      } else if (
-        ourUser.role.isStaff === 'true' ||
-        ourUser.role.isStaff === true
-      ) {
-        userType = 'isStaff';
+        if (
+          this.ourUser.role.isAdmin === 'true' ||
+          this.ourUser.role.isAdmin === true
+        ) {
+          this.userType = 'isAdmin';
+        } else if (
+          this.ourUser.role.isPropertyManager === 'true' ||
+          this.ourUser.role.isPropertyManager === true
+        ) {
+          this.userType = 'isPropertyManager';
+        } else if (
+          this.ourUser.role.isStaff === 'true' ||
+          this.ourUser.role.isStaff === true
+        ) {
+          this.userType = 'isStaff';
+        }
       }
-      console.log('we are going to ', userRoutes[userType]);
+      console.log('we are going to ', this.userRoutes[this.userType]);
+      this.props.history.push(this.userRoutes[this.userType]);
     }
-    console.log(this.props);
+  }
+
+  render() {
+    const {
+      isFetchingUserData,
+      isFetchingAuthorization,
+      haveUser
+    } = this.props;
     return (
       <div className="main page page--login">
-        <Header>
-          {() => (
-            <div>
-              <Navigation />
-              {/* <Header.Label
-                label={this.props.intl.formatMessage(LOGIN.TITLE, {
-                  org: SETTINGS.ORGANIZATION,
-                  appname: SETTINGS.APP_NAME
-                })}
-                type="basic"
-              /> */}
-            </div>
-          )}
-        </Header>
         <section className="main login-form">
-          {!this.props.isFetchingAuthorization &&
-            !this.props.isFetchingUserData &&
-            !this.props.haveUser && <LoginForm />}
-          {(this.props.isFetchingAuthorization ||
-            this.props.isFetchingUserData) && <Spinner />}
-          {this.props.haveUser &&
-            this.props.user &&
-            this.props.user.id &&
-            this.props.user.email && <Redirect to={userRoutes[userType]} />}
+          {!isFetchingAuthorization &&
+            !isFetchingUserData &&
+            !haveUser && <LoginForm />}
+          {(isFetchingAuthorization || isFetchingUserData) &&
+            !haveUser && <Spinner />}
 
           {this.props.error &&
             this.props.error.message &&
             this.props.error.message.length > 0 && (
               <p className="error">{this.props.error.message}</p>
             )}
-          {!this.props.isFetchingAuthorization &&
-            !this.props.isFetchingUserData &&
-            !this.props.haveUser && (
+          {!isFetchingAuthorization &&
+            !isFetchingUserData &&
+            !haveUser && (
               <div className="width-wrapper">
                 <div className="login-separator">
                   <span className="separator">&nbsp;</span>
@@ -137,6 +135,12 @@ const mapStateToProps = ({ user }) => ({
 
 Login.propTypes = {
   intl: intlShape.isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.shape({})
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired,
   isFetchingAuthorization: PropTypes.bool.isRequired,
   isFetchingUserData: PropTypes.bool.isRequired,
   haveUser: PropTypes.bool.isRequired,
@@ -164,4 +168,4 @@ Login.defaultProps = {
   user: null
 };
 
-export default connect(mapStateToProps)(injectIntl(Login));
+export default injectIntl(connect(mapStateToProps)(Login));
