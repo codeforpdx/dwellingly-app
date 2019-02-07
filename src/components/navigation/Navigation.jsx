@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import UserControls from '../user-controls/UserControls';
+// import UserControls from '../user-controls/UserControls';
 import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
 
@@ -35,7 +35,7 @@ class Navigation extends Component {
           {desktopOnly && (
             <div className="frontmatter">
               <NavigationContent intl={intl} type="desktop" user={user} />
-              <UserControls type="desktop" />
+              {/* <UserControls type="desktop" /> */}
             </div>
           )}
           {!showMenu &&
