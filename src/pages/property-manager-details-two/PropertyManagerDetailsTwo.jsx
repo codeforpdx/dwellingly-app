@@ -63,6 +63,9 @@ class PropertyManagerDetailsTwo extends Component {
                           <td>
                             {name}
                           </td>
+                          <td className="pencilIconCell">
+                            <Icon className="pencilIcon" icon="pencil"/>
+                          </td>
                         </tr>
                         <tr>
                           <td>
@@ -71,6 +74,9 @@ class PropertyManagerDetailsTwo extends Component {
                           <td>
                             {name}
                           </td>
+                          <td className="pencilIconCell">
+                            <Icon className="pencilIcon" icon="pencil"/>
+                          </td>
                         </tr>
                         <tr>
                           <td>
@@ -78,6 +84,9 @@ class PropertyManagerDetailsTwo extends Component {
                           </td>
                           <td>
                             {number}
+                          </td>
+                          <td className="pencilIconCell">
+                            <Icon icon="pencil"/>
                           </td>
                         </tr>
                       </table>
