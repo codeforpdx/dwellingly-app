@@ -24,7 +24,7 @@ import './index.scss';
 
 // Components, if any
 import Navigation from './components/navigation/Navigation';
-import UserControls from './components/user-controls/UserControls';
+// import UserControls from './components/user-controls/UserControls';
 
 // Pages
 import Admin from './pages/admin/Admin';
@@ -60,11 +60,29 @@ import HeaderSamples from './pages/code-samples/HeaderSamples';
 
 // const user = dummyUser;
 
+// const select = state => state.user;
+// let currentValue;
+// const handleChange = () => {
+//   const previousValue = currentValue;
+//   currentValue = select(store.getState());
+//
+//   if (previousValue !== currentValue) {
+//     console.log(
+//       'User was this: ',
+//       previousValue,
+//       'Now its this: ',
+//       currentValue
+//     );
+//   }
+// };
+//
+// const unsubscribe = store.subscribe(handleChange);
+// unsubscribe();
+
 // Set up cookie stuff for translation
 const cookies = new Cookies();
 const lang = cookies.get('language');
 const role = cookies.get('messengerUserRole');
-// const { user } = store.getState();
 
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
@@ -87,8 +105,8 @@ ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div className={`app ${userRole}`}>
-          <Navigation type="desktop" desktopOnly />
-          <UserControls />
+          <Navigation type="desktop" userRole={userRole} desktopOnly />
+          {/* <UserControls /> */}
           <Switch>
             <PrivateRoute
               path={ROUTES.ADMIN_EMERGENCY_NUMBERS}
@@ -152,7 +170,7 @@ ReactDOM.render(
               component={StaffUser(Tickets)}
             />
             <PrivateRoute
-              path={`${ROUTES.AWAITING_ROLE}`}
+              path={ROUTES.AWAITING_ROLE}
               component={WaitingForRole}
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
