@@ -18,14 +18,12 @@ function AdminMenu({ handleToggleMenu, type, user }) {
         )}
       <dt className="menu__label">
         <Icon icon="userOutline" />
-        {user.name}
+        {user.firstName} {user.lastName}
       </dt>
 
       <dd>
         <NavLink to={ROUTES.ADMIN} activeClassName="menu__link--active">
-          <strong>
-            {/* <Icon icon="dashboard" /> */}  Dashboard
-          </strong>
+          <strong>{/* <Icon icon="dashboard" /> */} Dashboard</strong>
         </NavLink>
         {/* <NavLink to={ROUTES.OUT_OF_OFFICE} activeClassName="menu__link--active">
           <strong>
@@ -39,19 +37,15 @@ function AdminMenu({ handleToggleMenu, type, user }) {
       </dt>
       <dd>
         <NavLink to={ROUTES.ADD_TENANT} activeClassName="menu__link--active">
-          <strong>
-            Tenant
-          </strong>
+          <strong>Tenant</strong>
         </NavLink>
         <NavLink to={ROUTES.ADD_PROPERTY} activeClassName="menu__link--active">
-          <strong>
-            Property
-          </strong>
+          <strong>Property</strong>
         </NavLink>
-        <NavLink to={ROUTES.ADD_PROPERTY_MANAGER} activeClassName="menu__link--active">
-          <strong>
-            Property Manager
-          </strong>
+        <NavLink
+          to={ROUTES.ADD_PROPERTY_MANAGER}
+          activeClassName="menu__link--active">
+          <strong>Property Manager</strong>
         </NavLink>
       </dd>
       <dt className="menu__label">
@@ -60,15 +54,12 @@ function AdminMenu({ handleToggleMenu, type, user }) {
       <dd>
         <NavLink to={ROUTES.TENANTS} activeClassName="menu__link--active">
           <strong>
-            {/* <Icon icon="userOutlineNoBottom" /> */}Tenants
+            {/* <Icon icon="userOutlineNoBottom" /> */}
+            Tenants
           </strong>
         </NavLink>
-        <NavLink
-          to={ROUTES.PROPERTIES}
-          activeClassName="menu__link--active">
-          <strong>
-            {/* <Icon icon="building" /> */} Properties
-          </strong>
+        <NavLink to={ROUTES.PROPERTIES} activeClassName="menu__link--active">
+          <strong>{/* <Icon icon="building" /> */} Properties</strong>
         </NavLink>
         <NavLink
           to={ROUTES.PROPERTY_MANAGERS}
@@ -86,8 +77,7 @@ function AdminMenu({ handleToggleMenu, type, user }) {
         </NavLink>
       </dd>
       <dt>
-        <NavLink
-          to={`${ROUTES.TICKETS}/open`}>
+        <NavLink to={`${ROUTES.TICKETS}/open`}>
           <strong>
             <Icon icon="ticketOutline" /> Tickets
           </strong>
