@@ -12,8 +12,7 @@ import {
   getAuthDetailsFromFirebase,
   setUserFromFirebaseEmail,
   setUserFromGoogle,
-  setUserToStore,
-  addCustomUserData,
+  // setUserToStore,
   clearUser,
   initiateUserPasswordEmail,
   resetUserPasswordEmail,
@@ -23,29 +22,28 @@ import {
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // User data from Firestore
-export function getFirestoreUserData(uid, accountSource) {
-  console.log('get user data');
-  store.dispatch(initiateFirebaseCall());
-  const userEndpoint = `${ENDPOINTS.USER}${uid}`;
-  console.log('getting user at ', userEndpoint);
-  fetch(userEndpoint, {
-    method: HTTP_METHODS.GET
-  })
-    .then(response => response.json())
-    .then(json => {
-      const userData = json;
-      console.log(json);
-      if (userData) {
-        store.dispatch(setUserToStore(userData));
-        store.dispatch(addCustomUserData(userData, accountSource, uid));
-      }
-      // Don't need to set user here, will get picked up by UserControl as auth changes!
-      // store.dispatch(setUser(json, 'email'))
-    })
-    .catch(error => {
-      store.dispatch(addError(error));
-    });
-}
+// export function getFirestoreUserData(uid, accountSource) {
+//   console.log('get user data ');
+//   store.dispatch(initiateFirebaseCall());
+//   const userEndpoint = `${ENDPOINTS.USER}${uid}`;
+//   console.log('getting user at ', userEndpoint);
+//   fetch(userEndpoint, {
+//     method: HTTP_METHODS.GET
+//   })
+//     .then(response => response.json())
+//     .then(json => {
+//       const userData = json;
+//       if (userData) {
+//         // store.dispatch(setUserToStore(userData));
+//         store.dispatch(addCustomUserData(userData, accountSource, uid));
+//       }
+//       // Don't need to set user here, will get picked up by UserControl as auth changes!
+//       // store.dispatch(setUser(json, 'email'))
+//     })
+//     .catch(error => {
+//       store.dispatch(addError(error));
+//     });
+// }
 
 // Sign Up a user with email address and password
 export function doCreateUserWithEmailAndPassword(
@@ -99,8 +97,13 @@ export function doSignInWithEmailAndPassword(email, password) {
         .then(response => response.json())
         .then(json => {
           console.log(json);
-          store.dispatch(getAuthDetailsFromFirebase(json, 'password'));
-          this.setUserCookies(json);
+          store.dispatch(
+            getAuthDetailsFromFirebase(json, 'password', () =>
+              this.setUserCookies(json)
+            )
+          );
+          // this.setUserCookies(json);
+          // store.dispatch(addCustomUserData(json, 'password', json.id));
           // Don't need to set user here, will get picked up by UserControl as auth changes!
           // store.dispatch(setUser(json, 'email'))
         })
