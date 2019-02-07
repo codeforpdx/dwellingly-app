@@ -27,8 +27,8 @@ class NewStaffMemberForm extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
+    this.makeAdmin = this.makeAdmin.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
   }
 
@@ -41,109 +41,113 @@ class NewStaffMemberForm extends Component {
     }));
   }
 
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   const { dispatch } = this.props;
-  //   const { firstName, lastName, phone, email, role, title, ext } = this.state.users;
-  // }
-
   toggleCheckbox() {
     this.setState(prevState => ({
       isChecked: !prevState.isChecked
     }));
+    this.makeAdmin();
   }
 
-  isSaveEnabled() {
-    const staffFirstName = this.state.users.firstName;
-    const staffLastName = this.state.users.lastName;
-    const staffPhone = this.state.users.phone;
-    const staffEmail = this.state.users.email;
-    if(staffFirstName && staffLastName && staffPhone && staffEmail){
-      return true;
+  makeAdmin() {
+    this.setState(prevState => ({
+      users: {...prevState.users, role: {
+        ...prevState.users.role, isAdmin: !prevState.users.role.isAdmin
+      }
     }
-    return false;
+  }));
+}
+
+isSaveEnabled() {
+  const staffFirstName = this.state.users.firstName;
+  const staffLastName = this.state.users.lastName;
+  const staffPhone = this.state.users.phone;
+  const staffEmail = this.state.users.email;
+  if(staffFirstName && staffLastName && staffPhone && staffEmail){
+    return true;
   }
+  return false;
+}
 
-  render() {
+render() {
 
-    const isEnabled = this.isSaveEnabled();
+  const isEnabled = this.isSaveEnabled();
 
-    return(
-      <div className="admin page">
-        <Header>
-          {() => (
-            <div>
-              <Navigation />
-              <Header.Label
-                label="JOIN Messenger Administration"
-                type="basic"
+  return(
+    <div className="admin page">
+      <Header>
+        {() => (
+          <div>
+            <Navigation />
+            <Header.Label
+              label="JOIN Messenger Administration"
+              type="basic"
+              />
+          </div>
+        )}
+      </Header>
+      <div>
+        <div className="width-wrapper">
+          <h2 className="admin--header align--left">
+            Add a New Staff Member
+          </h2>
+          <form id="newStaffMemberForm" onSubmit={this.handleSubmit}>
+            <section className="newStaffMemberFormSection">
+              <Input
+                id="firstName"
+                name="firstName"
+                label="First Name"
+                type="text"
+                placeholder="First Name"
+                onChange={this.handleChange}
                 />
-            </div>
-          )}
-        </Header>
-        <div>
-          <div className="width-wrapper">
-            <h2 className="admin--header align--left">
-              Add a New Staff Member
-            </h2>
-            <form id="newStaffMemberForm" onSubmit={this.handleSubmit}>
-              <section className="newStaffMemberFormSection">
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  label="First Name"
-                  type="text"
-                  placeholder="First Name"
-                  onChange={this.handleChange}
-                  />
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  label="Last Name"
-                  type="text"
-                  placeholder="Last Name"
-                  onChange={this.handleChange}
-                  />
-                <Input
-                  id="phone"
-                  name="phone"
-                  label="Phone Number"
-                  type="text"
-                  placeholder="Phone Number"
-                  onChange={this.handleChange}
-                  />
-                <Input
-                  id="email"
-                  name="email"
-                  label="Email"
-                  type="text"
-                  placeholder="Email"
-                  onChange={this.handleChange}
-                  />
-                <div className="make-admin">
-                  <label htmlFor="makeAdmin">Make Admin
-                <input className="adminCheckbox"
+              <Input
+                id="lastName"
+                name="lastName"
+                label="Last Name"
+                type="text"
+                placeholder="Last Name"
+                onChange={this.handleChange}
+                />
+              <Input
+                id="phone"
+                name="phone"
+                label="Phone Number"
+                type="text"
+                placeholder="Phone Number"
+                onChange={this.handleChange}
+                />
+              <Input
+                id="email"
+                name="email"
+                label="Email"
+                type="text"
+                placeholder="Email"
+                onChange={this.handleChange}
+                />
+              <div className="make-admin">
+                <label htmlFor="makeAdmin">Make Admin
+                  <input className="adminCheckbox"
                     id="makeAdmin"
                     name="makeAdmin"
                     label="Make Admin"
                     type="checkbox"
                     onClick={this.toggleCheckbox}
                     />
-                  </label>
-                </div>
-                <button
-                  disabled={!isEnabled}
-                  type="submit"
-                  className="btn">
-                  Save
-                </button>
-              </section>
-            </form>
-          </div>
+                </label>
+              </div>
+              <button
+                disabled={!isEnabled}
+                type="submit"
+                className="btn">
+                Save
+              </button>
+            </section>
+          </form>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
+}
 }
 
 export default NewStaffMemberForm;
