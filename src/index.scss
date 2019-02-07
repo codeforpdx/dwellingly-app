@@ -1,6 +1,6 @@
-@import "./constants/constants.scss";
-@import url("https://use.typekit.net/atu1wus.css");
-@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+@import './constants/constants.scss';
+@import url('https://use.typekit.net/atu1wus.css');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 /* D E F A U L T S */
 /* ==================================================== */
@@ -17,14 +17,14 @@ body {
 body {
   background: $color__white;
   color: $color__black;
-  font-family: "proxima-nova", helvetica, sans-serif;
+  font-family: 'proxima-nova', helvetica, sans-serif;
   font-kerning: normal;
   font-size: 16px;
   font-weight: 300;
-  -webkit-font-feature-settings: "liga";
-  -moz-font-feature-settings: "liga";
-  -sm-font-feature-settings: "liga";
-  font-feature-settings: "liga";
+  -webkit-font-feature-settings: 'liga';
+  -moz-font-feature-settings: 'liga';
+  -sm-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5em;
@@ -53,11 +53,11 @@ input {
   font-size: inherit;
   width: auto;
 
-  &[type="tel"],
-  &[type="text"],
-  &[type="email"],
-  &[type="number"],
-  &[type="password"] {
+  &[type='tel'],
+  &[type='text'],
+  &[type='email'],
+  &[type='number'],
+  &[type='password'] {
     line-height: 1.5em;
     padding: 0.5em;
   }
@@ -128,7 +128,7 @@ a {
       font-weight: 700;
       text-transform: uppercase;
 
-      &[href^="tel:"] {
+      &[href^='tel:'] {
         font-weight: 700;
         letter-spacing: 0.1em;
 
@@ -139,13 +139,17 @@ a {
     }
 
     &--small {
-      font-size: .750em;
+      font-size: 0.75em;
     }
 
     &--lg {
       font-size: 1rem;
       height: emify(36, 16);
       line-height: emify(36, 16);
+    }
+
+    &--transparent {
+      background: transparent;
     }
 
     &--alt {
@@ -168,7 +172,7 @@ a {
 }
 
 /* specifically styling for TELEPHONE numbers! */
-a[href^="tel:"] {
+a[href^='tel:'] {
   font-weight: 400;
   white-space: nowrap;
 }
@@ -211,7 +215,6 @@ time {
   line-height: 1em;
 }
 
-
 .textblock {
   margin: 2rem 0 4rem;
   text-align: left;
@@ -250,7 +253,7 @@ time {
     & .admin--header {
       text-align: left;
       color: $color__blue--dark;
-      font-size: 1.250em;
+      font-size: 1.25em;
       margin-top: 1.5em;
       padding: 0 1em;
       @media screen and (min-width: $mq--desktop) {
@@ -396,7 +399,8 @@ time {
     line-height: 1.25em;
   }
 
-  a, button {
+  a,
+  button {
     clear: both;
     float: left;
     line-height: 2em;
@@ -667,7 +671,6 @@ time {
   }
 }
 /* end tabs */
-
 
 /* C O N T A C T - G R O U P */
 /* ==================================================== */
