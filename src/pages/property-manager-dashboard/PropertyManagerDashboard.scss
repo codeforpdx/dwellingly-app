@@ -11,6 +11,7 @@
     justify-content: space-between;
     align-items: center;
     width: 800px;
+    padding-right: 1em;
     color: $color__gray--medium;
     font-size: emify(14, 16);
     font-weight: 400;
@@ -48,7 +49,8 @@
   align-items: center;
   border-radius: 1px;
   background: $color__gray--light;
-  width: 800px;
+  width: 796px;
+  margin: 0 auto;
   height: 3.5rem;
   .btn {
     font-size: emify(14, 16);

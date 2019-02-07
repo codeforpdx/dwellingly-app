@@ -11,6 +11,7 @@
     justify-content: space-between;
     align-items: center;
     width: 800px;
+    padding-right: 1em;
     color: $color__gray--medium;
     font-size: emify(14, 16);
   }
@@ -53,7 +54,8 @@
   align-items: center;
   border-radius: 1px;
   background: $color__gray--light;
-  width: 800px;
+  width: 796px;
+  margin: 0 auto;
   height: 4rem;
   .ghost-dot {
     color: #eeeeee;
@@ -65,6 +67,7 @@
   th {
     background: $color__gray--light;
     text-align: left;
+    font-size: emify(14, 16);
   }
   tr {
     text-align: left;
@@ -99,12 +102,11 @@
       outline: none;
   }
   input {
-    margin-left: 10px;
-    padding-left: 1.2rem;
+    // margin-left: 10px;
+    // padding-left: 1.2rem;
     font-size: .9rem;
   }
 }
-
 .property-table {
   width: 800px;
 }

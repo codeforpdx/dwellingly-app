@@ -20,7 +20,6 @@ export const SETTINGS = {
   Without UID, gets all of something, with UID:  will read, update, or delete specific something
 */
 export const ENDPOINTS = {
-  ARCHIVED_PROPERTY: `${SETTINGS.API_SERVER}/api/${SETTINGS.API_VERSION}/archivedProperties/`,
   EMERGENCY_NUMBER: `${SETTINGS.API_SERVER}/api/${
     SETTINGS.API_VERSION
   }/emergencyNumbers/`,

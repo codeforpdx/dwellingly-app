@@ -8,7 +8,7 @@ import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import './PropertyDashboard.scss';
 import Icon from '../../components/icon/Icon';
-import { getProperties, getArchivedProperties } from '../../dux/properties';
+import { getProperties } from '../../dux/properties';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 
 class PropertyDashboard extends Component {
@@ -22,7 +22,6 @@ class PropertyDashboard extends Component {
     console.log(this.props);
     const { dispatch } = this.props;
     dispatch(getProperties());
-    dispatch(getArchivedProperties());
     dispatch(getPropertyManagers());
   }
 
@@ -64,8 +63,6 @@ class PropertyDashboard extends Component {
           <h2 className="property-header">PROPERTIES</h2>
           <Link to="admin/add-new-property"><button type="button" className="btn btn--lrg add-new-btn"><Icon icon="plus"/> ADD NEW</button></Link>
         </div>
-        
-        
         <div className="search-and-archive">
           <form action="" className="search" onSubmit={this.handleSearch}>
             <div className="icon-wrapper">
@@ -81,7 +78,7 @@ class PropertyDashboard extends Component {
       </section>
       <section className="property-dashboard-header property-table">
         <div className="gray-dash-bar">
-        <div className="ghost-dot"> .</div>
+          <div className="ghost-dot"> .</div>
           <button type="button" className="btn archive-btn"><Icon icon="archive"/> ARCHIVE</button>
         </div>
         <div className="table-wrapper">
