@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
@@ -19,7 +19,7 @@ class LoginForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      redirectToReferrer: false,
+      // redirectToReferrer: false,
       submit: false,
       error: null
     };
@@ -47,13 +47,13 @@ class LoginForm extends React.Component {
 
   render() {
     const { intl } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
-    const { email, password, redirectToReferrer } = this.state;
+    // const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { email, password } = this.state;
     const disableForm = email === '' || !password;
 
-    if (redirectToReferrer === true) {
-      return <Redirect to={from} />;
-    }
+    // if (redirectToReferrer === true) {
+    //   return <Redirect to={from} />;
+    // }
 
     return (
       <section className="width-wrapper">
