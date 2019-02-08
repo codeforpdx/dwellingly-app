@@ -31,6 +31,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "ag-grid-community": "^20.0.0",
+    "ag-grid-react": "^20.0.0",
     "apollo-boost": "^0.1.11",
     "apollo-cache-inmemory": "^1.2.6",
     "apollo-client": "^2.3.6",

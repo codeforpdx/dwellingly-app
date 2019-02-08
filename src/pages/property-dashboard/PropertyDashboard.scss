@@ -1,5 +1,14 @@
 @import "../../constants/constants.scss";
 
+// 
+// $accent-color: red;
+// $row-height: 500px;
+// 
+// $ag-icons-path: "../node_modules/ag-grid-community/src/styles/ag-theme-balham/icons/";
+
+// @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+// @import "../node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham.scss";
+
 .property-dashboard-header {
   margin: 0 5rem 1rem;
   padding-bottom: .5rem;
@@ -118,6 +127,20 @@
   .next-btn {
     margin-right: 2.5rem;
   }
+}
+
+.ag-header-cell {
+  background: $color__gray--light;
+  text-align: left;
+  font-size: emify(14, 16);
+  border: solid white 1px;
+}
+.ag-row {
+  border-bottom: solid $color__gray--light 1px;
+}
+.ag-grid-wrapper {
+  width: 800px;
+  height: 100%; 
 }
 
 @media screen and (max-width: 667px) {
