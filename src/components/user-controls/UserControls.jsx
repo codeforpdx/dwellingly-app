@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, injectIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { injectIntl } from 'react-intl';
+// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { getFirestoreUserData } from '../../firebase/auth';
 import LogoutButton from '../login/LogoutButton';
-import { USER } from '../../translations/messages';
+// import { USER } from '../../translations/messages';
 
 import './UserControls.scss';
 
@@ -22,7 +22,7 @@ class UserControls extends React.Component {
   constructor(props) {
     super(props);
 
-    this.determineUserState = this.determineUserState.bind(this);
+    // this.determineUserState = this.determineUserState.bind(this);
     this.clearUser = this.clearUser.bind(this);
     this.setUser = this.setUser.bind(this);
   }
@@ -65,7 +65,7 @@ class UserControls extends React.Component {
     }
     this.props.addCustomUserData(user, accountSource, userID);
     if (user && this.props.haveUser) {
-      getFirestoreUserData(user.uid, accountSource, user.uid);
+      getFirestoreUserData(user.uid, accountSource);
     }
   }
 
@@ -77,13 +77,13 @@ class UserControls extends React.Component {
     cookies.remove('messengerUserRole');
   }
 
-  determineUserState(user) {
-    const accountSource = 'email';
-    this.props.addCustomUserData(user);
-    if (user && !this.props.isCreatingUser) {
-      console.log(user.uid, accountSource, user.uid);
-    }
-  }
+  // determineUserState(user) {
+  //   const accountSource = 'email';
+  //   this.props.addCustomUserData(user);
+  //   if (user && !this.props.isCreatingUser) {
+  //     console.log(user.uid, accountSource, user.uid);
+  //   }
+  // }
 
   render() {
     return (
@@ -91,17 +91,17 @@ class UserControls extends React.Component {
         {this.props.user &&
           this.props.haveUser && (
             <span className="user-id">
-              {this.props.intl.formatMessage(USER.HELLO)}
+              {/* {this.props.intl.formatMessage(USER.HELLO)}
               ,&nbsp;
               {this.props.user.firstName}
               <br />
-              {this.props.user.email}
+              {this.props.user.email} */}
               <LogoutButton />
             </span>
           )}
-        {!this.props.haveUser && (
+        {/* !this.props.haveUser && (
           <ul className="no-user">
-            <li>
+            {<li>
               <Link to="/signup">Signup</Link>
             </li>
             <li>
@@ -111,7 +111,7 @@ class UserControls extends React.Component {
               <LogoutButton />
             </li>
           </ul>
-        )}
+        ) */}
       </div>
     );
   }
@@ -135,7 +135,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 UserControls.propTypes = {
-  intl: intlShape.isRequired,
+  // intl: intlShape.isRequired,
   user: PropTypes.shape({
     accountSource: PropTypes.string,
     email: PropTypes.string,

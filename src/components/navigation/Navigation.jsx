@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
+import Cookies from 'universal-cookie';
+import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { ROLES } from '../../constants/constants';
 import { getUserRoleString } from '../../utils';
 // import UserControls from '../user-controls/UserControls';
+import LogoutButton from '../login/LogoutButton';
 import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
+import { clearUser } from '../../dux/user';
 
 import './Navigation.scss';
 
@@ -15,6 +18,7 @@ class Navigation extends Component {
     super(props);
 
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
+    this.clearUserCookie = this.clearUserCookie.bind(this);
 
     this.state = {
       showMenu: false
@@ -23,6 +27,14 @@ class Navigation extends Component {
 
   handleToggleMenu() {
     this.setState(({ showMenu }) => ({ showMenu: !showMenu }));
+  }
+
+  clearUserCookie() {
+    const cookies = new Cookies();
+    this.props.clearUser();
+    cookies.remove('messengerUser');
+    cookies.remove('messengerUserId');
+    cookies.remove('messengerUserRole');
   }
 
   render() {
@@ -67,6 +79,7 @@ class Navigation extends Component {
                 user={user}
               />
             )}
+          <LogoutButton clearCookie={this.clearUserCookie} />
         </div>
       );
     }
@@ -79,10 +92,15 @@ class Navigation extends Component {
 //   user: state.user
 // });
 
+const mapDispatchToProps = dispatch => ({
+  clearUser: () => dispatch(clearUser())
+});
+
 Navigation.propTypes = {
   user: PropTypes.shape({}),
   desktopOnly: PropTypes.bool,
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
+  clearUser: PropTypes.func.isRequired
 };
 
 Navigation.defaultProps = {
@@ -90,4 +108,9 @@ Navigation.defaultProps = {
   desktopOnly: false
 };
 
-export default injectIntl(Navigation);
+export default injectIntl(
+  connect(
+    null,
+    mapDispatchToProps
+  )(Navigation)
+);

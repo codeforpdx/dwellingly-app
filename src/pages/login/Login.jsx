@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
 import LoginForm from '../../components/login/LoginForm';
@@ -29,9 +29,9 @@ class Login extends React.Component {
   }
 
   componentDidUpdate() {
+    const { history } = this.props;
     if (this.props.haveUser && this.props.user) {
       this.ourUser = this.props.user;
-      console.log(this.ourUser);
       if (
         this.ourUser &&
         this.ourUser.role &&
@@ -59,7 +59,7 @@ class Login extends React.Component {
         }
       }
       console.log('we are going to ', this.userRoutes[this.userType]);
-      this.props.history.push(this.userRoutes[this.userType]);
+      history.push(this.userRoutes[this.userType]);
     }
   }
 
@@ -77,7 +77,6 @@ class Login extends React.Component {
             !haveUser && <LoginForm />}
           {(isFetchingAuthorization || isFetchingUserData) &&
             !haveUser && <Spinner />}
-
           {this.props.error &&
             this.props.error.message &&
             this.props.error.message.length > 0 && (
@@ -168,4 +167,4 @@ Login.defaultProps = {
   user: null
 };
 
-export default injectIntl(connect(mapStateToProps)(Login));
+export default injectIntl(withRouter(connect(mapStateToProps)(Login)));

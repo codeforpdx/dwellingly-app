@@ -4,17 +4,16 @@ import { injectIntl, intlShape } from 'react-intl';
 import AdminMenu from './AdminMenu';
 import StaffMenu from './StaffMenu';
 import { ROLES } from '../../constants/constants';
-import { getUserRoleString } from '../../utils';
+// import { getUserRoleString } from '../../utils';
 // import { NAVIGATION } from '../../translations/messages';
 
 class NavigationContent extends Component {
   render() {
-    const { handleToggleMenu, intl, type, user } = this.props;
-    const roleStr = getUserRoleString(user.role, ROLES);
+    const { handleToggleMenu, intl, type, user, userRole } = this.props;
+    // const roleStr = getUserRoleString(user.role, ROLES);
     return (
       <nav className={`menu${type && ` menu--${type}`}`}>
-        {user &&
-          type === 'mobile' &&
+        {type === 'mobile' &&
           handleToggleMenu && (
             <button
               type="button"
@@ -24,24 +23,22 @@ class NavigationContent extends Component {
             />
           )}
         <div className="menu__groups">
-          {user &&
-            roleStr === ROLES.STAFF && (
-              <StaffMenu
-                handleToggleMenu={handleToggleMenu}
-                intl={intl}
-                type={type}
-                user={user}
-              />
-            )}
-          {user &&
-            roleStr === ROLES.ADMIN && (
-              <AdminMenu
-                handleToggleMenu={handleToggleMenu}
-                intl={intl}
-                type={type}
-                user={user}
-              />
-            )}
+          {userRole === ROLES.STAFF && (
+            <StaffMenu
+              handleToggleMenu={handleToggleMenu}
+              intl={intl}
+              type={type}
+              user={user}
+            />
+          )}
+          {userRole === ROLES.ADMIN && (
+            <AdminMenu
+              handleToggleMenu={handleToggleMenu}
+              intl={intl}
+              type={type}
+              user={user}
+            />
+          )}
         </div>
       </nav>
     );
@@ -49,6 +46,7 @@ class NavigationContent extends Component {
 }
 
 NavigationContent.propTypes = {
+  userRole: PropTypes.string.isRequired,
   intl: intlShape.isRequired,
   handleToggleMenu: PropTypes.func,
   type: PropTypes.string,
