@@ -226,7 +226,6 @@ export const initiateUserDetailsCall = () => dispatch => {
 };
 // This function is for application refresh, it takes the user ID from the cookie as an argument to the parameter
 export const setUserDetails = uid => async dispatch => {
-  console.log(uid);
   const response = await fetch(`${ENDPOINTS.USER}${uid}`);
   const data = await response.json();
   dispatch({
