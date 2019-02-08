@@ -8,6 +8,7 @@ import { ENDPOINTS, HTTP_METHODS, ROUTES } from '../constants/constants';
 // REDUCERS
 import {
   initiateFirebaseCall,
+  initiateUserDetailsCall,
   addError,
   getAuthDetailsFromFirebase,
   setUserFromFirebaseEmail,
@@ -116,15 +117,17 @@ export function doCreateStaffUser(
     })
     .then(response => response.json())
     .then(json => {
+      store.dispatch(initiateUserDetailsCall());
       const newUser = {
-        ...json,
+        firstName,
+        lastName,
+        email,
+        leaseId: ['johnny_test'], // THIS SHOULD GO AWAY LEASE SHOULD NOT BE REQUIRED!!!
         phone,
-        role,
-        leaseIds: ['johnny_test'],
-        title: ''
+        role
       };
       console.log(newUser);
-      store.dispatch(setUserFromFirebaseEmail(newUser));
+      store.dispatch(addCustomUserData(newUser, 'email', json.uid));
     })
     .catch(error => {
       // Handle Errors here.
