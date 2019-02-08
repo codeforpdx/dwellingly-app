@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import Cookies from 'universal-cookie';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
+import { ROLES } from '../../constants/constants';
+import { getUserRoleString } from '../../utils';
 // import UserControls from '../user-controls/UserControls';
 import NavigationContent from './NavigationContent';
 import Icon from '../icon/Icon';
 
 import './Navigation.scss';
-
-// import { dummyUser } from '../../data';
 
 class Navigation extends Component {
   constructor(props) {
@@ -28,13 +27,22 @@ class Navigation extends Component {
 
   render() {
     const { desktopOnly, intl, user } = this.props;
+    let userRole;
+    if (user) {
+      userRole = getUserRoleString(user.role, ROLES);
+    }
     const { showMenu } = this.state;
-    if (user && user.role.isPropertyManager !== true) {
+    if (userRole && userRole.isPropertyManager !== true) {
       return (
         <div className="navigation">
           {desktopOnly && (
             <div className="frontmatter">
-              <NavigationContent intl={intl} type="desktop" user={user} />
+              <NavigationContent
+                intl={intl}
+                type="desktop"
+                userRole={userRole}
+                user={user}
+              />
               {/* <UserControls type="desktop" /> */}
             </div>
           )}
@@ -67,9 +75,9 @@ class Navigation extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user.user
-});
+// const mapStateToProps = state => ({
+//   user: state.user
+// });
 
 Navigation.propTypes = {
   user: PropTypes.shape({}),
@@ -82,4 +90,4 @@ Navigation.defaultProps = {
   desktopOnly: false
 };
 
-export default injectIntl(connect(mapStateToProps)(Navigation));
+export default injectIntl(Navigation);

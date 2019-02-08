@@ -1,5 +1,5 @@
 // Get data
-import { SETTINGS, ROUTES } from '../constants/constants';
+import { SETTINGS, ROUTES, ENDPOINTS } from '../constants/constants';
 
 // Actions for users
 export const GET_AUTHORIZATION = 'user/GET_AUTHORIZATION';
@@ -221,6 +221,21 @@ export const initiateUserDetailsCall = () => dispatch => {
     type: GET_USER_DATA,
     isFetchingUserData: true,
     haveUser: false,
+    error: null
+  });
+};
+// This function is for application refresh, it takes the user ID from the cookie as an argument to the parameter
+export const setUserDetails = uid => async dispatch => {
+  console.log(uid);
+  const response = await fetch(`${ENDPOINTS.USER}${uid}`);
+  const data = await response.json();
+  dispatch({
+    type: GET_USER_DATA_COMPLETE,
+    isFetchingUserData: false,
+    haveUser: true,
+    user: {
+      ...data
+    },
     error: null
   });
 };

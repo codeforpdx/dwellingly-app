@@ -14,6 +14,7 @@ function PrivateRoute({ user, component: Component, ...rest }) {
   const cookies = new Cookies();
   // console.log(cookies);
   const userRole = cookies.get('messengerUserRole');
+  // const userRole = user ? user.role : null;
   let doesRoleExist = false;
   const isRoleArray =
     userRole &&
@@ -21,7 +22,6 @@ function PrivateRoute({ user, component: Component, ...rest }) {
   if (userRole && isRoleArray) {
     doesRoleExist = true;
   }
-  console.log(userRole);
   return (
     <Route
       {...rest}

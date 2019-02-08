@@ -1,11 +1,12 @@
 // REACT
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
 // REDUX, I18N, and OTHER STUFF
 import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
 import Cookies from 'universal-cookie';
@@ -17,6 +18,7 @@ import { translationMessages } from './translations/i18n';
 import { SETTINGS, ROUTES, ROLES } from './constants/constants';
 import store, { history } from './store';
 import { getUserRoleString } from './utils';
+import { setUserDetails } from './dux/user';
 import registerServiceWorker from './registerServiceWorker';
 
 // CSS
@@ -82,7 +84,6 @@ import HeaderSamples from './pages/code-samples/HeaderSamples';
 // Set up cookie stuff for translation
 const cookies = new Cookies();
 const lang = cookies.get('language');
-const role = cookies.get('messengerUserRole');
 
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
@@ -94,96 +95,149 @@ if (!validLang) {
 // const PropertyManagerUser = Authorization([ROLES.ADMIN, ROLES.PROPERTY_MANAGER]);
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
-const userRole = getUserRoleString(role, ROLES);
 // if (role) {
 // console.log(user.role);
 // userRole =
 // }
 // Render the thing!
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.userRole = null;
+  }
+
+  componentDidMount() {
+    const uid = cookies.get('messengerUserId');
+    if (uid && this.props !== null) {
+      this.props.setUserDetails(uid);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.user && this.props.user.user) {
+      this.userRole = getUserRoleString(this.props.user.user.role, ROLES);
+    }
+  }
+
+  render() {
+    const role = this.userRole;
+    return (
+      <div className={`app ${role}`}>
+        <Navigation type="desktop" user={this.props.user.user} desktopOnly />
+        {/* <UserControls /> */}
+        <Switch>
+          <PrivateRoute
+            path={ROUTES.ADMIN_EMERGENCY_NUMBERS}
+            component={AdminUser(Emergency)}
+          />
+          <PrivateRoute
+            path={ROUTES.ADMIN_EMERGENCY}
+            component={AdminUser(EmergencyNumbers)}
+          />
+          <PrivateRoute path={ROUTES.SETTINGS} exact component={Settings} />
+          <PrivateRoute
+            path={ROUTES.OUT_OF_OFFICE}
+            component={StaffUser(OutOfOffice)}
+          />
+          <PrivateRoute
+            path={`${ROUTES.PROPERTIES}`}
+            component={AdminUser(Properties)}
+          />
+          <PrivateRoute
+            path={`${ROUTES.PROPERTIES}/:id`}
+            component={PropertyDetails}
+          />
+          <PrivateRoute
+            path={`${ROUTES.PROPERTY_MANAGERS}/:id/tenants`}
+            exact
+            component={StaffUser(PropertyManagerTenantsDirectory)}
+          />
+          <PrivateRoute
+            path={`${ROUTES.PROPERTY_MANAGERS}/:id`}
+            component={StaffUser(PropertyManagerDetails)}
+          />
+          <PrivateRoute
+            path={ROUTES.PROPERTY_MANAGERS}
+            component={StaffUser(PropertyManagers)}
+          />
+          <PrivateRoute
+            path={`${ROUTES.TENANTS}/all`}
+            exact
+            component={Tenants}
+          />
+          <PrivateRoute
+            path={ROUTES.ADD_TENANT}
+            component={AdminUser(NewTenantForm)}
+          />
+          <PrivateRoute
+            path={`${ROUTES.TENANTS}/:id/archive`}
+            component={Archive}
+          />
+          <PrivateRoute
+            path={`${ROUTES.TENANTS}/:id/issue`}
+            exact
+            component={NewIssueForm}
+          />
+          <PrivateRoute
+            path={`${ROUTES.TENANTS}/:id`}
+            component={TenantDetails}
+          />
+          <PrivateRoute path={ROUTES.TENANTS} component={Tenants} />
+          <PrivateRoute path={ROUTES.TICKETS} component={StaffUser(Tickets)} />
+          <PrivateRoute
+            path={ROUTES.AWAITING_ROLE}
+            component={WaitingForRole}
+          />
+          <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
+          <Route path={ROUTES.LOGIN} component={Login} />
+          <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
+          <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
+          <Route path={ROUTES.SIGNUP} component={Signup} />
+          <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
+          <Route path="/code-samples/card" component={CardSamples} />
+          <Route path="/code-samples/header" component={HeaderSamples} />
+          <PrivateRoute path={ROUTES.ROOT} component={Home} />
+        </Switch>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = ({ user }) => ({
+  user
+});
+
+const mapDispatchToProps = dispatch => ({
+  setUserDetails: uid => dispatch(setUserDetails(uid))
+});
+
+App.propTypes = {
+  setUserDetails: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    user: PropTypes.shape({
+      role: PropTypes.shape({})
+    })
+  })
+};
+App.defaultProps = {
+  user: {
+    user: {
+      role: null
+    }
+  }
+};
+const ConnectedApp = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <div className={`app ${userRole}`}>
-          <Navigation type="desktop" userRole={userRole} desktopOnly />
-          {/* <UserControls /> */}
-          <Switch>
-            <PrivateRoute
-              path={ROUTES.ADMIN_EMERGENCY_NUMBERS}
-              component={AdminUser(Emergency)}
-            />
-            <PrivateRoute
-              path={ROUTES.ADMIN_EMERGENCY}
-              component={AdminUser(EmergencyNumbers)}
-            />
-            <PrivateRoute path={ROUTES.SETTINGS} exact component={Settings} />
-            <PrivateRoute
-              path={ROUTES.OUT_OF_OFFICE}
-              component={StaffUser(OutOfOffice)}
-            />
-            <PrivateRoute
-              path={`${ROUTES.PROPERTIES}`}
-              component={AdminUser(Properties)}
-            />
-            <PrivateRoute
-              path={`${ROUTES.PROPERTIES}/:id`}
-              component={PropertyDetails}
-            />
-            <PrivateRoute
-              path={`${ROUTES.PROPERTY_MANAGERS}/:id/tenants`}
-              exact
-              component={StaffUser(PropertyManagerTenantsDirectory)}
-            />
-            <PrivateRoute
-              path={`${ROUTES.PROPERTY_MANAGERS}/:id`}
-              component={StaffUser(PropertyManagerDetails)}
-            />
-            <PrivateRoute
-              path={ROUTES.PROPERTY_MANAGERS}
-              component={StaffUser(PropertyManagers)}
-            />
-            <PrivateRoute
-              path={`${ROUTES.TENANTS}/all`}
-              exact
-              component={Tenants}
-            />
-            <PrivateRoute
-              path={ROUTES.ADD_TENANT}
-              component={AdminUser(NewTenantForm)}
-            />
-            <PrivateRoute
-              path={`${ROUTES.TENANTS}/:id/archive`}
-              component={Archive}
-            />
-            <PrivateRoute
-              path={`${ROUTES.TENANTS}/:id/issue`}
-              exact
-              component={NewIssueForm}
-            />
-            <PrivateRoute
-              path={`${ROUTES.TENANTS}/:id`}
-              component={TenantDetails}
-            />
-            <PrivateRoute path={ROUTES.TENANTS} component={Tenants} />
-            <PrivateRoute
-              path={ROUTES.TICKETS}
-              component={StaffUser(Tickets)}
-            />
-            <PrivateRoute
-              path={ROUTES.AWAITING_ROLE}
-              component={WaitingForRole}
-            />
-            <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
-            <Route path={ROUTES.LOGIN} component={Login} />
-            <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
-            <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
-            <Route path={ROUTES.SIGNUP} component={Signup} />
-            <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
-            <Route path="/code-samples/card" component={CardSamples} />
-            <Route path="/code-samples/header" component={HeaderSamples} />
-            <PrivateRoute path={ROUTES.ROOT} component={Home} />
-          </Switch>
-        </div>
+        <ConnectedApp />
       </ConnectedRouter>
     </Provider>
   </IntlProvider>,
