@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { intlShape, injectIntl } from 'react-intl';
 import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
@@ -19,17 +18,20 @@ class PropertyDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultColDef: {
-        filter: true // set filtering on for all cols
-      },
-      columnDefs: [
-        {headerName: "Name", field: "name", filter: "agTextColumnFilter", sortable: true, checkboxSelection: true, unSortIcon: true},
-        {headerName: "Property Manager", field: "city", cellClass: 'my-class', sortable: true, unSortIcon: true },
-        {headerName: "Address", field: "addressOne", sortable: true, unSortIcon: true },
-        {headerName: "Tenants", field: "numberOfUnits", sortable: true, unSortIcon: true },
-        {headerName: "Date Added", field: "state", sortable: true, unSortIcon: true }
-      ]
+       gridOptions: {
+        rowHeight: 50,
+        defaultColDef: {
+          filter: true
+        },
+        columnDefs: [
+          {headerName: "Name", field: "name", filter: "agTextColumnFilter", sortable: true, checkboxSelection: true, unSortIcon: true },
+          {headerName: "Property Manager", field: "city", cellClass: 'my-class', sortable: true, unSortIcon: true },
+          {headerName: "Address", field: "addressOne", sortable: true, unSortIcon: true },
+          {headerName: "Tenants", field: "numberOfUnits", sortable: true, unSortIcon: true },
+          {headerName: "Date Added", field: "state", sortable: true, unSortIcon: true }
+        ]
     }
+  }
     // this.jsFunction = this.jsFunction.bind(this);
     // this.doesExternalFilterPass = this.doesExternalFilterPass.bind(this);
     // this.getPropertyData = this.getPropertyData.bind(this);
@@ -128,6 +130,7 @@ class PropertyDashboard extends Component {
       }
         <div className="ag-grid-wrapper">
           <AgGridReact
+            gridOptions={this.state.gridOptions}
             defaultColDef={this.state.defaultColDef}
             columnDefs={this.state.columnDefs}
             rowData={this.props.properties.properties.length > 0 ? this.props.properties.properties : []}
