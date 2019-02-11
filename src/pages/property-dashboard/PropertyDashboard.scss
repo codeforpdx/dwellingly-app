@@ -120,7 +120,15 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
-  padding-right: 1rem;
+  padding-right: 2rem;
+}
+.ag-filter-body-wrapper {
+  background: $color__gray--light;
+  padding: 1rem;
+  .ag-filter-filter {
+    margin-top: .5rem;
+    border-radius: 2px;
+  }
 }
 .ag-header-cell {
   display: flex;
@@ -135,10 +143,14 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
   color: $color__gray--dark;
 }
 .ag-cell-value {
-  padding-left: 1rem;
+  padding-left: .5rem;
+}
+.ag-center-cols-viewport {
+padding-bottom: 100px;
 }
 .ag-row {
   padding: 1rem;
+  margin-left: .5rem;
   color: $color__blue--dark;
   &:hover {
     color: $color__blue;
@@ -187,6 +199,6 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
   .property-dashboard-header {
     display: flex;
     flex-direction: column;
-    width: 90vw;
+    width: 100vw;
   }
 }

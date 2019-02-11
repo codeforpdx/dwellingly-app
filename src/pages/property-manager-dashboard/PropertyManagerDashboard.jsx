@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
 import { intlShape, injectIntl } from 'react-intl';
 import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
@@ -16,10 +18,26 @@ import { getPropertyManagers } from '../../dux/propertyManagers';
 class PropertyManagerDashboard extends Component {
   constructor(props) {
     super(props);
-    this.getPropertyManagerData = this.getPropertyManagerData.bind(this);
-    this.getTableRow = this.getTableRow.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
+    this.state = {
+       gridOptions: {
+        rowHeight: 55,
+        headerHeight: 70,
+        defaultColDef: {
+          filter: true
+        },
+        columnDefs: [
+          {headerName: "Name", field: "name", filter: "agTextColumnFilter", sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Property Id", field: "leases[0].propertyId", cellClass: 'my-class', sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Email", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Invited", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Last Usage", field: "leases[0].dateUpdated", sortable: true, unSortIcon: true, rowDrag: false }
+        ]
+    }
+    // this.getPropertyManagerData = this.getPropertyManagerData.bind(this);
+    // this.getTableRow = this.getTableRow.bind(this);
+    // this.handleSearch = this.handleSearch.bind(this);
   }
+}
 
   componentWillMount() {
     console.log(this.props);
@@ -27,23 +45,23 @@ class PropertyManagerDashboard extends Component {
     dispatch(getPropertyManagers());
   }
 
-  getPropertyManagerData() { 
-    const managers = this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : [];
-    return managers.map(manager => (this.getTableRow(manager)))
-  }
+  // getPropertyManagerData() { 
+  //   const managers = this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : [];
+  //   return managers.map(manager => (this.getTableRow(manager)))
+  // }
   
-  getTableRow (manager) {
-    console.log(this.props);
-    return (
-      <tr>
-        <td><input type="checkbox" />{manager.name}</td>
-        <td>{manager.leases[0].propertyId}</td>
-        <td>{manager.email}</td>
-        <td>Invited</td>
-        <td>{manager.leases[0].dateUpdated}</td>
-      </tr>
-    )
-  }
+  // getTableRow (manager) {
+  //   console.log(this.props);
+  //   return (
+  //     <tr>
+  //       <td><input type="checkbox" />{manager.name}</td>
+  //       <td>{manager.leases[0].propertyId}</td>
+  //       <td>{manager.email}</td>
+  //       <td>Invited</td>
+  //       <td>{manager.leases[0].dateUpdated}</td>
+  //     </tr>
+  //   )
+  // }
   
   handleSearch(event) {
     if (event) event.preventDefault();
@@ -86,17 +104,29 @@ class PropertyManagerDashboard extends Component {
           <button type="button" className="btn archive-btn"><Icon icon="calendar"/> INVITE AGAIN</button>
           <button type="button" className="btn archive-btn"><Icon icon="archive"/> ARCHIVE</button>
         </div>
-        <div className="table-wrapper">
-          <table>
-            <tr>
-              <th><input type="checkbox" /> Name</th>
-              <th>Properties</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Last Usage</th>
-            </tr>
-            {this.getPropertyManagerData()}
-          </table>
+        {
+        // <div className="table-wrapper">
+        //   <table>
+        //     <tr>
+        //       <th><input type="checkbox" /> Name</th>
+        //       <th>Properties</th>
+        //       <th>Email</th>
+        //       <th>Status</th>
+        //       <th>Last Usage</th>
+        //     </tr>
+        //     {this.getPropertyManagerData()}
+        //   </table>
+        // </div>
+      }
+        <div className="ag-grid-wrapper">
+          <AgGridReact
+            gridOptions={this.state.gridOptions}
+            defaultColDef={this.state.defaultColDef}
+            columnDefs={this.state.columnDefs}
+            rowData={this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : []}
+            pagination
+            paginationPageSize={10}
+          />    
         </div>
       </section>
     </div>
