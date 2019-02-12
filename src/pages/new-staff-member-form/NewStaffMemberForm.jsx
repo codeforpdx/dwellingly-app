@@ -5,7 +5,6 @@ import Input from '../../components/input/Input';
 import Navigation from '../../components/navigation/Navigation';
 import './NewStaffMemberForm.scss';
 
-
 class NewStaffMemberForm extends Component {
   constructor(props) {
     super(props);
@@ -47,13 +46,13 @@ class NewStaffMemberForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     auth.doCreateStaffUser(
-     this.state.users.firstName,
-     this.state.users.lastName,
-     this.state.users.email,
-     this.state.users.phone,
-     this.state.users.password,
-     this.state.users.role
-   )
+      this.state.users.firstName,
+      this.state.users.lastName,
+      this.state.users.email,
+      this.state.users.phone,
+      this.state.users.password,
+      this.state.users.role
+    )
   }
 
   toggleCheckbox() {
@@ -105,8 +104,8 @@ render() {
           <h2 className="admin--header align--left">
             Add a New Staff Member
           </h2>
-          <form id="newStaffMemberForm" onSubmit={this.handleSubmit}>
-            <section className="newStaffMemberFormSection">
+          <form id="new-staff-member-form" onSubmit={this.handleSubmit}>
+            <section className="new-staff-member-form-section">
               <Input
                 id="firstName"
                 name="firstName"
@@ -149,7 +148,7 @@ render() {
                 />
               <div className="make-admin">
                 <label htmlFor="makeAdmin">Make Admin
-                  <input className="adminCheckbox"
+                  <input className="admin-checkbox"
                     id="makeAdmin"
                     name="makeAdmin"
                     label="Make Admin"

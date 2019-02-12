@@ -1,24 +1,16 @@
 @import '../../constants/constants.scss';
 
-.newPropertyFormHeading {
-  text-align: left;
-  font-size: 1em;
-  text-transform: uppercase;
-  color: $color__blue--dark;
-  line-height: 1.5;
-}
-
 .make-admin {
   text-align: left;
   margin-top: 1em;
   margin-right: 1em;
 }
 
-.adminCheckbox {
+.admin-checkbox {
   margin-left: 1em;
 }
 
-.newStaffMemberFormSection {
+.new-staff-member-form-section {
   padding: 1em;
   & .inline-input {
     margin: 0;
