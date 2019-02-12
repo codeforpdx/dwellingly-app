@@ -28,11 +28,11 @@ class PropertyManagerDashboard extends Component {
           filter: true,
         },
         columnDefs: [
-          {headerName: "Name", field: "name", filter: "agTextColumnFilter", width: 165, sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Property Id", field: "leases", cellRendererFramework: ParamsRenderer, width: 165, sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Email", field: "email", width: 165, sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Invited", field: "email", width: 165, sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Last Usage", field: "leases", cellRendererFramework: DateUpdatedRenderer, width: 165, sortable: true, unSortIcon: true, rowDrag: false }
+          {headerName: "Name", field: "name", filter: "agTextColumnFilter", width: 180, sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Property Id", field: "leases", cellRendererFramework: ParamsRenderer, width: 180, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Email", field: "email", width: 180, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Invited", field: "email", width: 180, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Last Usage", field: "leases", cellRendererFramework: DateUpdatedRenderer, width: 180, sortable: true, unSortIcon: true, rowDrag: false }
         ]
       }
     }

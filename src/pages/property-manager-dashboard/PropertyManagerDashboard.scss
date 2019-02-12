@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 800px;
+    width: 900px;
     padding-right: 1em;
     color: $color__gray--medium;
     font-size: emify(14, 16);
@@ -106,12 +106,12 @@
   }
 }
 .property-table {
-  width: 800px;
+  width: 900px;
 }
 .next-button {
   display: flex;
   align-items: flex-end;
-  width: 810px;
+  width: 800px;
   margin: 0 auto;
   .next-btn {
     margin-right: 2.5rem;

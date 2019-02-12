@@ -24,11 +24,11 @@ class PropertyDashboard extends Component {
           filter: true
         },
         columnDefs: [
-          {headerName: "Name", field: "name", filter: "agTextColumnFilter", width: 165, sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Property Manager", field: "city", width: 165, sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Address", field: "addressOne", width:165, sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Tenants", field: "numberOfUnits", width: 165,sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Date Added", field: "state", width: 165, sortable: true, unSortIcon: true, rowDrag: false }
+          {headerName: "Name", field: "name", filter: "agTextColumnFilter", width: 180, sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Property Manager", field: "city", width: 180, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Address", field: "addressOne", width:180, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Tenants", field: "numberOfUnits", width: 180,sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Date Added", field: "state", width: 180, sortable: true, unSortIcon: true, rowDrag: false }
         ]
     }
   }
