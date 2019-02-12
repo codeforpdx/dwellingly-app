@@ -84,6 +84,7 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
     color: $color__blue--dark;
     &:hover {
       color: $color__blue;
+      transition: color 0.5s ease;
       outline: none;
     }
   }
@@ -154,6 +155,8 @@ padding-bottom: 100px;
   color: $color__blue--dark;
   &:hover {
     color: $color__blue;
+    transition: color 0.5s ease;
+    outline: none;
   }
 }
 .ag-row, .ag-row-position-absolute {

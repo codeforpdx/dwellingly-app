@@ -14,30 +14,29 @@ import '../../components/input/Input.scss';
 import SearchForm from '../../components/search-form/SearchForm';
 import Icon from '../../components/icon/Icon';
 import { getPropertyManagers } from '../../dux/propertyManagers';
+import ParamsRenderer from './ParamsRenderer';
 
 class PropertyManagerDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       gridOptions: {
+      gridOptions: {
         rowHeight: 55,
         headerHeight: 70,
         defaultColDef: {
-          filter: true
+          filter: true,
         },
         columnDefs: [
           {headerName: "Name", field: "name", filter: "agTextColumnFilter", sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Property Id", field: "leases[0].propertyId", cellClass: 'my-class', sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Property Id", field: "leases", cellRendererFramework: ParamsRenderer, sortable: true, unSortIcon: true, rowDrag: false },
           {headerName: "Email", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
           {headerName: "Invited", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
           {headerName: "Last Usage", field: "leases[0].dateUpdated", sortable: true, unSortIcon: true, rowDrag: false }
         ]
+      }
     }
-    // this.getPropertyManagerData = this.getPropertyManagerData.bind(this);
-    // this.getTableRow = this.getTableRow.bind(this);
-    // this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
-}
 
   componentWillMount() {
     console.log(this.props);
@@ -45,24 +44,6 @@ class PropertyManagerDashboard extends Component {
     dispatch(getPropertyManagers());
   }
 
-  // getPropertyManagerData() { 
-  //   const managers = this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : [];
-  //   return managers.map(manager => (this.getTableRow(manager)))
-  // }
-  
-  // getTableRow (manager) {
-  //   console.log(this.props);
-  //   return (
-  //     <tr>
-  //       <td><input type="checkbox" />{manager.name}</td>
-  //       <td>{manager.leases[0].propertyId}</td>
-  //       <td>{manager.email}</td>
-  //       <td>Invited</td>
-  //       <td>{manager.leases[0].dateUpdated}</td>
-  //     </tr>
-  //   )
-  // }
-  
   handleSearch(event) {
     if (event) event.preventDefault();
     return this;
@@ -104,20 +85,6 @@ class PropertyManagerDashboard extends Component {
           <button type="button" className="btn archive-btn"><Icon icon="calendar"/> INVITE AGAIN</button>
           <button type="button" className="btn archive-btn"><Icon icon="archive"/> ARCHIVE</button>
         </div>
-        {
-        // <div className="table-wrapper">
-        //   <table>
-        //     <tr>
-        //       <th><input type="checkbox" /> Name</th>
-        //       <th>Properties</th>
-        //       <th>Email</th>
-        //       <th>Status</th>
-        //       <th>Last Usage</th>
-        //     </tr>
-        //     {this.getPropertyManagerData()}
-        //   </table>
-        // </div>
-      }
         <div className="ag-grid-wrapper">
           <AgGridReact
             gridOptions={this.state.gridOptions}
