@@ -21,7 +21,7 @@ class NewPropertyForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
-    this.addAnother = this.addAnother.bind(this);
+    this.addAnotherProperty = this.addAnotherProperty.bind(this);
 
     this.state = {
       confirmingSubmit: false,
@@ -52,8 +52,6 @@ class NewPropertyForm extends Component {
     if
     (Object.keys(nameSearched).includes('name')) {
       this.setState({ propertyManagerSelected: nameSearched });
-      console.log(nameSearched);
-      console.log(this.state);
     }
   }
 
@@ -65,10 +63,15 @@ class NewPropertyForm extends Component {
       name, addressOne, addressTwo, city, state, zipCode, numberOfUnits
     }));
     this.setState(prevState => ({
-      // showModal: !prevState.showModal,
       confirmingSubmit: !prevState.confirmingSubmit
     }))
-    // this.toggleConfirmationModal(event);
+    this.state.properties.name = "";
+    this.state.properties.addressOne = "";
+    this.state.properties.city = "";
+    this.state.properties.state = "";
+    this.state.properties.zipCode = "";
+    this.state.properties.numberOfUnits = "";
+    this.state.propertyManagerSelected = "";
   }
 
   isSaveEnabled() {
@@ -84,7 +87,7 @@ class NewPropertyForm extends Component {
     return false;
   }
 
-  addAnother(event) {
+  addAnotherProperty(event) {
     event.preventDefault();
     this.setState(prevState => ({
       confirmingSubmit: !prevState.confirmingSubmit,
@@ -128,6 +131,7 @@ class NewPropertyForm extends Component {
                   name="name"
                   label="Name"
                   type="text"
+                  value={this.state.properties.name}
                   placeholder="Property Name"
                   onChange={this.handleChange}
                   />
@@ -136,6 +140,7 @@ class NewPropertyForm extends Component {
                   name="addressOne"
                   label="Address"
                   type="text"
+                  value={this.state.properties.addressOne}
                   placeholder="Property Address"
                   onChange={this.handleChange}
                   />
@@ -144,6 +149,7 @@ class NewPropertyForm extends Component {
                   name="city"
                   label="City"
                   type="text"
+                  value={this.state.properties.city}
                   placeholder="City"
                   onChange={this.handleChange}
                   />
@@ -152,6 +158,7 @@ class NewPropertyForm extends Component {
                   name="state"
                   label="State"
                   type="text"
+                  value={this.state.properties.state}
                   placeholder="State"
                   onChange={this.handleChange}
                   />
@@ -160,6 +167,7 @@ class NewPropertyForm extends Component {
                   name="zipCode"
                   label="Zipcode"
                   type="text"
+                  value={this.state.properties.zipCode}
                   placeholder="Zip"
                   onChange={this.handleChange}
                   />
@@ -168,6 +176,7 @@ class NewPropertyForm extends Component {
                   name="numberOfUnits"
                   label="Units"
                   type="text"
+                  value={this.state.properties.numberOfUnits}
                   placeholder="Units"
                   onChange={this.handleChange}
                   />
@@ -177,6 +186,7 @@ class NewPropertyForm extends Component {
                 <fieldset>
                   <Search
                     searchData={propertyManagers}
+                    value={this.state.propertyManagerSelected}
                     placeholder= "Search Property Managers"
                     filterSubset={['firstName', 'lastName', 'name']}
                     onSearchSelection={this.handleSelectionFromSearch}
@@ -209,7 +219,7 @@ class NewPropertyForm extends Component {
       {this.state.confirmingSubmit && (
         <SuccessModal
           show={this.state.showModal}
-          onAgain={this.addAnother}
+          onClick={this.addAnotherProperty}
           onClose={this.redirectHome}>
           Property Successfully Created!
         </SuccessModal>
