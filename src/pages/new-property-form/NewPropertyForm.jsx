@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
 import ConfirmationModal from '../../components/confirmation-modal/ConfirmationModal';
+import SuccessModal from '../../components/success-modal/SuccessModal';
 import Navigation from '../../components/navigation/Navigation';
 import { propertyManagers } from '../../data';
+import { creatingProperty } from '../../dux/properties';
 import Search from '../../components/search/Search';
 import './NewPropertyForm.scss';
-import { creatingProperty } from '../../dux/properties';
 
 class NewPropertyForm extends Component {
   constructor(props) {
@@ -20,8 +22,11 @@ class NewPropertyForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
+    this.addAnotherProperty = this.addAnotherProperty.bind(this);
+    this.redirectHome = this.redirectHome.bind(this);
 
     this.state = {
+      confirmingSubmit: false,
       showModal: false,
       propertyManagerSelected: "",
       properties: {
@@ -49,8 +54,6 @@ class NewPropertyForm extends Component {
     if
     (Object.keys(nameSearched).includes('name')) {
       this.setState({ propertyManagerSelected: nameSearched });
-      console.log(nameSearched);
-      console.log(this.state);
     }
   }
 
@@ -61,7 +64,16 @@ class NewPropertyForm extends Component {
     dispatch(creatingProperty({
       name, addressOne, addressTwo, city, state, zipCode, numberOfUnits
     }));
-    this.toggleConfirmationModal(event);
+    this.setState(prevState => ({
+      confirmingSubmit: !prevState.confirmingSubmit
+    }))
+    this.state.properties.name = "";
+    this.state.properties.addressOne = "";
+    this.state.properties.city = "";
+    this.state.properties.state = "";
+    this.state.properties.zipCode = "";
+    this.state.properties.numberOfUnits = "";
+    this.state.propertyManagerSelected = "";
   }
 
   isSaveEnabled() {
@@ -77,10 +89,22 @@ class NewPropertyForm extends Component {
     return false;
   }
 
+  addAnotherProperty(event) {
+    event.preventDefault();
+    this.setState(prevState => ({
+      confirmingSubmit: !prevState.confirmingSubmit,
+    }));
+    this.toggleConfirmationModal(event);
+  }
+
+  redirectHome() {
+    this.props.history.push('/');
+  }
+
   toggleConfirmationModal(event) {
     event.preventDefault();
     this.setState(prevState => ({
-      showModal: !prevState.showModal
+      showModal: !prevState.showModal,
     }));
   }
 
@@ -113,6 +137,7 @@ class NewPropertyForm extends Component {
                   name="name"
                   label="Name"
                   type="text"
+                  value={this.state.properties.name}
                   placeholder="Property Name"
                   onChange={this.handleChange}
                   />
@@ -121,6 +146,7 @@ class NewPropertyForm extends Component {
                   name="addressOne"
                   label="Address"
                   type="text"
+                  value={this.state.properties.addressOne}
                   placeholder="Property Address"
                   onChange={this.handleChange}
                   />
@@ -129,6 +155,7 @@ class NewPropertyForm extends Component {
                   name="city"
                   label="City"
                   type="text"
+                  value={this.state.properties.city}
                   placeholder="City"
                   onChange={this.handleChange}
                   />
@@ -137,6 +164,7 @@ class NewPropertyForm extends Component {
                   name="state"
                   label="State"
                   type="text"
+                  value={this.state.properties.state}
                   placeholder="State"
                   onChange={this.handleChange}
                   />
@@ -145,6 +173,7 @@ class NewPropertyForm extends Component {
                   name="zipCode"
                   label="Zipcode"
                   type="text"
+                  value={this.state.properties.zipCode}
                   placeholder="Zip"
                   onChange={this.handleChange}
                   />
@@ -153,6 +182,7 @@ class NewPropertyForm extends Component {
                   name="numberOfUnits"
                   label="Units"
                   type="text"
+                  value={this.state.properties.numberOfUnits}
                   placeholder="Units"
                   onChange={this.handleChange}
                   />
@@ -162,6 +192,7 @@ class NewPropertyForm extends Component {
                 <fieldset>
                   <Search
                     searchData={propertyManagers}
+                    value={this.state.propertyManagerSelected}
                     placeholder= "Search Property Managers"
                     filterSubset={['firstName', 'lastName', 'name']}
                     onSearchSelection={this.handleSelectionFromSearch}
@@ -181,24 +212,37 @@ class NewPropertyForm extends Component {
             </form>
           </div>
         </div>
-        <ConfirmationModal
+        {!this.state.confirmingSubmit && (
+          <ConfirmationModal
+            show={this.state.showModal}
+            onClose={this.toggleConfirmationModal}
+            onSubmit={this.handleSubmit}>
+            Are you sure you want to save {this.state.properties.name}, {this.state.properties.addressOne} {this.state.properties.city}, {this.state.properties.state} {this.state.properties.zipCode}
+            ?
+          </ConfirmationModal>
+        )
+      }
+      {this.state.confirmingSubmit && (
+        <SuccessModal
           show={this.state.showModal}
-          onClose={this.toggleConfirmationModal}
-          onSubmit={this.handleSubmit}>
-          Are you sure you want to save {this.state.properties.name}, {this.state.properties.addressOne} {this.state.properties.city}, {this.state.properties.state} {this.state.properties.zipCode}
-          ?
-        </ConfirmationModal>
-      </div>
-    );
-  }
+          onClick={this.addAnotherProperty}
+          onClose={this.redirectHome}>
+          Property Created Successfully!
+        </SuccessModal>
+      )
+    }
+  </div>
+);
+}
 }
 
 NewPropertyForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
   properties: state.properties
 })
 
-export default injectIntl(connect(mapStateToProps)(NewPropertyForm));
+export default withRouter(injectIntl(connect(mapStateToProps)(NewPropertyForm)));
