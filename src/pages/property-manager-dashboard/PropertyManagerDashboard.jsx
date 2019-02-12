@@ -15,6 +15,7 @@ import SearchForm from '../../components/search-form/SearchForm';
 import Icon from '../../components/icon/Icon';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 import ParamsRenderer from './ParamsRenderer';
+import DateUpdatedRenderer from './DateUpdatedRenderer';
 
 class PropertyManagerDashboard extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class PropertyManagerDashboard extends Component {
           {headerName: "Property Id", field: "leases", cellRendererFramework: ParamsRenderer, sortable: true, unSortIcon: true, rowDrag: false },
           {headerName: "Email", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
           {headerName: "Invited", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Last Usage", field: "leases[0].dateUpdated", sortable: true, unSortIcon: true, rowDrag: false }
+          {headerName: "Last Usage", field: "leases", cellRendererFramework: DateUpdatedRenderer, sortable: true, unSortIcon: true, rowDrag: false }
         ]
       }
     }
