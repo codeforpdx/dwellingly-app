@@ -7,7 +7,7 @@
   width: 35%;
 }
 
-.propertyManagerName {
+.property-manager-name {
   text-align: left;
   color: #003c71;
   font-size: 1.250em;
@@ -20,12 +20,12 @@
   padding-top: .3em;
 }
 
-#contactHeading {
+#contact-heading {
   border-bottom: 1px solid $color__gray--border;
   margin-top: 1em;
 }
 
-.detailSectionHeading {
+.detail-section-heading {
   text-align: left;
   font-size: 1em;
   font-weight: bold;
@@ -36,7 +36,7 @@
 
 }
 
-.contactDetailsSection {
+.contact-details-section {
   padding: 1em 1em 1em 0;
   margin-bottom: 2em;
   & .inline-input {
@@ -53,14 +53,14 @@
   }
 }
 
-.cardContainer {
+.card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 3em;
 }
 
-.propertyCard {
+.property-card {
   padding: 1em;
   margin-bottom: 1.5em;
   width: 48%;
@@ -68,7 +68,7 @@
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
 }
 
-.tenantCard {
+.tenant-card {
   padding: 1em;
   margin-bottom: 1.5em;
   text-align: left;
@@ -77,7 +77,7 @@
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
 }
 
-.cardName {
+.card-name {
   color: $color__blue--dark;
   font-weight: bold;
 }
@@ -109,11 +109,11 @@ table {
   }
 }
 
-#contactTableCell {
+#contact-table-cell {
   width: 22%;
 }
 
-.pencilIconCell {
+.pencil-icon-cell {
   text-align: right;
   color: grey;
 }

@@ -6,7 +6,6 @@ import Navigation from '../../components/navigation/Navigation';
 import { propertyManagers, properties, tenants } from '../../data'
 import './PropertyManagerDetailsTwo.scss';
 
-
 class PropertyManagerDetailsTwo extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +17,6 @@ class PropertyManagerDetailsTwo extends Component {
     this.pm = propertyManagers.find(
       ({ id }) => id === this.props.match.params.id
     );
-
   }
 
   render() {
@@ -42,7 +40,7 @@ class PropertyManagerDetailsTwo extends Component {
             <div>
               <div className="width-wrapper">
                 <div className="name-header">
-                  <h2 className="propertyManagerName">
+                  <h2 className="property-manager-name">
                     {name}
                   </h2>
                   <a
@@ -52,19 +50,19 @@ class PropertyManagerDetailsTwo extends Component {
                     <Icon icon="archive" />Archive
                     </a>
                   </div>
-                  <section className="contactDetailsSection">
+                  <section className="contact-details-section">
                     <div >
-                      <h2 className="detailSectionHeading" id="contactHeading">Contact</h2>
+                      <h2 className="detail-section-heading" id="contact-heading">Contact</h2>
                       <table className="accordion__table">
                         <tr>
-                          <td id="contactTableCell">
+                          <td id="contact-table-cell">
                             First Name
                           </td>
                           <td>
                             {name}
                           </td>
-                          <td className="pencilIconCell">
-                            <Icon className="pencilIcon" icon="pencil"/>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
                           </td>
                         </tr>
                         <tr>
@@ -74,8 +72,8 @@ class PropertyManagerDetailsTwo extends Component {
                           <td>
                             {name}
                           </td>
-                          <td className="pencilIconCell">
-                            <Icon className="pencilIcon" icon="pencil"/>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
                           </td>
                         </tr>
                         <tr>
@@ -85,22 +83,22 @@ class PropertyManagerDetailsTwo extends Component {
                           <td>
                             {number}
                           </td>
-                          <td className="pencilIconCell">
-                            <Icon icon="pencil"/>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
                           </td>
                         </tr>
                       </table>
                     </div>
                   </section>
                   <section>
-                    <h2 className="detailSectionHeading">Properties</h2>
-                    <div className="cardContainer">
+                    <h2 className="detail-section-heading">Properties</h2>
+                    <div className="card-container">
                       {properties && properties.map(property => {
                         const { name, address} = property;
                         return(
-                          <div className="propertyCard">
+                          <div className="property-card">
                             <ul>
-                              <li className="cardName">{name}</li>
+                              <li className="card-name">{name}</li>
                               <li>{address}</li>
                             </ul>
                           </div>
@@ -109,14 +107,14 @@ class PropertyManagerDetailsTwo extends Component {
                     </div>
                   </section>
                   <section>
-                    <h2 className="detailSectionHeading">Tenants</h2>
-                    <div className="cardContainer">
+                    <h2 className="detail-section-heading">Tenants</h2>
+                    <div className="card-container">
                       {tenants && tenants.map(tenant => {
                         const { name, phone, address} = tenant;
                         return(
-                          <div className="tenantCard">
+                          <div className="tenant-card">
                             <ul>
-                              <li className="cardName">{name}</li>
+                              <li className="card-name">{name}</li>
                               <li>{phone}</li>
                               <li>{address}</li>
                             </ul>
