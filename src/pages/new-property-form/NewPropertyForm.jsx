@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Input from '../../components/input/Input';
@@ -8,9 +9,9 @@ import ConfirmationModal from '../../components/confirmation-modal/ConfirmationM
 import SuccessModal from '../../components/success-modal/SuccessModal';
 import Navigation from '../../components/navigation/Navigation';
 import { propertyManagers } from '../../data';
+import { creatingProperty } from '../../dux/properties';
 import Search from '../../components/search/Search';
 import './NewPropertyForm.scss';
-import { creatingProperty } from '../../dux/properties';
 
 class NewPropertyForm extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class NewPropertyForm extends Component {
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
     this.addAnotherProperty = this.addAnotherProperty.bind(this);
+    this.redirectHome = this.redirectHome.bind(this);
 
     this.state = {
       confirmingSubmit: false,
@@ -93,6 +95,10 @@ class NewPropertyForm extends Component {
       confirmingSubmit: !prevState.confirmingSubmit,
     }));
     this.toggleConfirmationModal(event);
+  }
+
+  redirectHome() {
+    this.props.history.push('/');
   }
 
   toggleConfirmationModal(event) {
@@ -221,7 +227,7 @@ class NewPropertyForm extends Component {
           show={this.state.showModal}
           onClick={this.addAnotherProperty}
           onClose={this.redirectHome}>
-          Property Successfully Created!
+          Property Created Successfully!
         </SuccessModal>
       )
     }
@@ -231,11 +237,12 @@ class NewPropertyForm extends Component {
 }
 
 NewPropertyForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
   properties: state.properties
 })
 
-export default injectIntl(connect(mapStateToProps)(NewPropertyForm));
+export default withRouter(injectIntl(connect(mapStateToProps)(NewPropertyForm)));

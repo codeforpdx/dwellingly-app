@@ -21,7 +21,7 @@ class ConfirmationModal extends React.Component {
               onClick={this.props.onSubmit}>
               YES
             </button>
-            <button className="cancel" onClose={this.props.onClose}
+            <button className="cancel" onClick={this.props.onClose}
               type="button">
               NO
             </button>

@@ -18,12 +18,12 @@ class SuccessModal extends React.Component {
           <div className="button-container">
             <button form='newPropertyForm' className="btn"
               id="yes-button" type="button"
-              onClick={this.props.onAgain}>
-              Again
+              onClick={this.props.onClick}>
+              Add Another
             </button>
             <button className="cancel" onClick={this.props.onClose}
               type="button">
-              Home
+              Return Home
             </button>
           </div>
         </div>
@@ -33,7 +33,7 @@ class SuccessModal extends React.Component {
 }
 
 SuccessModal.propTypes = {
-  onAgain: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired
