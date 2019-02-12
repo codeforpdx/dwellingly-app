@@ -23,16 +23,16 @@ class PropertyManagerDashboard extends Component {
     this.state = {
       gridOptions: {
         rowHeight: 55,
-        headerHeight: 70,
+        headerHeight: 60,
         defaultColDef: {
           filter: true,
         },
         columnDefs: [
-          {headerName: "Name", field: "name", filter: "agTextColumnFilter", sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Property Id", field: "leases", cellRendererFramework: ParamsRenderer, sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Email", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Invited", field: "email", sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Last Usage", field: "leases", cellRendererFramework: DateUpdatedRenderer, sortable: true, unSortIcon: true, rowDrag: false }
+          {headerName: "Name", field: "name", filter: "agTextColumnFilter", width: 165, sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Property Id", field: "leases", cellRendererFramework: ParamsRenderer, width: 165, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Email", field: "email", width: 165, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Invited", field: "email", width: 165, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Last Usage", field: "leases", cellRendererFramework: DateUpdatedRenderer, width: 165, sortable: true, unSortIcon: true, rowDrag: false }
         ]
       }
     }

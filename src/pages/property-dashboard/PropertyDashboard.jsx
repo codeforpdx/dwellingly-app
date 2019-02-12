@@ -19,16 +19,16 @@ class PropertyDashboard extends Component {
     this.state = {
        gridOptions: {
         rowHeight: 55,
-        headerHeight: 70,
+        headerHeight: 60,
         defaultColDef: {
           filter: true
         },
         columnDefs: [
-          {headerName: "Name", field: "name", filter: "agTextColumnFilter", sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Property Manager", field: "city", cellClass: 'my-class', sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Address", field: "addressOne", sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Tenants", field: "numberOfUnits", sortable: true, unSortIcon: true, rowDrag: false },
-          {headerName: "Date Added", field: "state", sortable: true, unSortIcon: true, rowDrag: false }
+          {headerName: "Name", field: "name", filter: "agTextColumnFilter", width: 165, sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Property Manager", field: "city", width: 165, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Address", field: "addressOne", width:165, sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Tenants", field: "numberOfUnits", width: 165,sortable: true, unSortIcon: true, rowDrag: false },
+          {headerName: "Date Added", field: "state", width: 165, sortable: true, unSortIcon: true, rowDrag: false }
         ]
     }
   }
