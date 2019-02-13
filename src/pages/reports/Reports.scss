@@ -1,17 +1,39 @@
 @import '../../constants/constants.scss';
 
-.make-admin {
+.name-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 35%;
+}
+
+.property-manager-name {
   text-align: left;
+  color: #003c71;
+  font-size: 1.250em;
+  margin-top: 1.5em;
+  font-weight: bold;
+}
+
+#contact-heading {
+  border-bottom: 1px solid $color__gray--border;
   margin-top: 1em;
-  margin-right: 1em;
 }
 
-.admin-checkbox {
-  margin-left: 1em;
+.detail-section-heading {
+  text-align: left;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: $color__blue--dark;
+  line-height: 1.5;
+  padding-bottom: .5em;
+
 }
 
-.new-staff-member-form-section {
-  padding: 1em;
+.contact-details-section {
+  padding: 1em 1em 1em 0;
+  margin-bottom: 2em;
   & .inline-input {
     margin: 0;
     &:first-child {
@@ -21,12 +43,67 @@
       border-bottom: 1px solid $color__gray--border;
     }
   }
-  & .btn {
-    margin-top: 3em;
-    display: flex;
-    align-content: flex-start;
-  }
   @media screen and (min-width: $mq--desktop) {
     padding: 1em 0;
   }
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 3em;
+}
+
+.property-card {
+  padding: 1em;
+  margin-bottom: 1.5em;
+  width: 48%;
+  border-radius: $border-radius--card;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.tenant-card {
+  padding: 1em;
+  margin-bottom: 1.5em;
+  text-align: left;
+  width: 31%;
+  border-radius: $border-radius--card;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.card-name {
+  color: $color__blue--dark;
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+table {
+  border-spacing: 0;
+  box-sizing: border-box;
+  position: relative;
+  table-layout: fixed;
+  text-align: left;
+  width: 800px;
+  padding-right: 10px;
+  @media screen and (min-width: $mq--desktop) {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  td {
+    border-bottom: 1px solid $color__gray--border;
+    padding: .5em 0;
+    vertical-align: top;
+  }
+}
+
+#contact-table-cell {
+  width: 22%;
 }
