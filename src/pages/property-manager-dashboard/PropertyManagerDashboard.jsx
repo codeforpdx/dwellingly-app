@@ -44,7 +44,7 @@ class PropertyManagerDashboard extends Component {
     const { dispatch } = this.props;
     dispatch(getPropertyManagers());
   }
-
+  
   handleSearch(event) {
     if (event) event.preventDefault();
     return this;
