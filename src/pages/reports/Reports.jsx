@@ -51,7 +51,7 @@ render() {
                         </td>
                       </tr>
                       <tr>
-                        <td>
+                        <td className="icon-container">
                           <Icon icon="comment" />
                         </td>
                         <td>
@@ -62,7 +62,7 @@ render() {
                         </td>
                       </tr>
                       <tr>
-                        <td>
+                        <td className="icon-container">
                           <Icon icon="comment" />
                         </td>
                         <td>
@@ -73,7 +73,7 @@ render() {
                         </td>
                       </tr>
                       <tr>
-                        <td>
+                        <td className="icon-container">
                           <Icon icon="comment" />
                         </td>
                         <td>
@@ -84,7 +84,7 @@ render() {
                         </td>
                       </tr>
                       <tr>
-                        <td>
+                        <td className="icon-container">
                           <Icon icon="comment" />
                         </td>
                         <td>
@@ -95,7 +95,7 @@ render() {
                         </td>
                       </tr>
                       <tr>
-                        <td>
+                        <td className="icon-container">
                           <Icon icon="comment" />
                         </td>
                         <td>
@@ -106,7 +106,7 @@ render() {
                         </td>
                       </tr>
                       <tr>
-                        <td>
+                        <td className="icon-container">
                           <Icon icon="comment" />
                         </td>
                         <td>
@@ -117,7 +117,7 @@ render() {
                         </td>
                       </tr>
                       <tr>
-                        <td>
+                        <td className="icon-container">
                           <Icon icon="comment" />
                         </td>
                         <td>

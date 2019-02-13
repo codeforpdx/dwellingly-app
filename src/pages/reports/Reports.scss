@@ -72,15 +72,9 @@
 //   font-weight: bold;
 // }
 
-ul {
-  list-style: none;
-  text-align: left;
-  padding: 0;
-  margin: 0;
-}
-
 table {
   border-spacing: 0 .5em;
+  color: $color__blue--dark;
   box-sizing: border-box;
   position: relative;
   table-layout: fixed;
@@ -103,6 +97,7 @@ table {
 #contact-table-cell {
   width: 10%;
 }
+
 .table-row {
   background-color: $color__gray--light;
 }
