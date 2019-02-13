@@ -45,6 +45,7 @@ import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDashboard from './pages/property-manager-dashboard/PropertyManagerDashboard';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
 import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyManagerTenantsDirectory';
+import Reports from './pages/reports/Reports';
 import Settings from './pages/settings/Settings';
 import Signup from './pages/signup/Signup';
 import Tenants from './pages/tenants/Tenants';
@@ -156,6 +157,7 @@ ReactDOM.render(
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
             <Route path={ROUTES.SIGNUP} component={Signup} />
             <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
+            <Route path={ROUTES.REPORTS} component={Reports} />
             <PrivateRoute path={`${ROUTES.PROPERTY_DASHBOARD}`} component={AdminUser(PropertyDashboard)} />
             <PrivateRoute path={`${ROUTES.PROPERTY_MANAGER_DASHBOARD}`} component={AdminUser(PropertyManagerDashboard)} />
             <Route path="/code-samples/card" component={CardSamples} />
