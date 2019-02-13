@@ -37,11 +37,14 @@ import Login from './pages/login/Login';
 import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import NewTenantForm from './pages/new-tenant-form/NewTenantForm';
 import NewPropertyForm from './pages/new-property-form/NewPropertyForm';
+import NewStaffMemberForm from './pages/new-staff-member-form/NewStaffMemberForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
 import Properties from './pages/properties/Properties';
+import PropertyDashboard from './pages/property-dashboard/PropertyDashboard';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
+import PropertyManagerDashboard from './pages/property-manager-dashboard/PropertyManagerDashboard';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
 import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyManagerTenantsDirectory';
 import Settings from './pages/settings/Settings';
@@ -151,11 +154,14 @@ ReactDOM.render(
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.ADD_PROPERTY} component={NewPropertyForm} />
+            <Route path={ROUTES.ADD_STAFF_MEMBER} component={NewStaffMemberForm} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
             <Route path={ROUTES.SIGNUP} component={Signup} />
             <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
+            <PrivateRoute path={`${ROUTES.PROPERTY_DASHBOARD}`} component={AdminUser(PropertyDashboard)} />
+            <PrivateRoute path={`${ROUTES.PROPERTY_MANAGER_DASHBOARD}`} component={AdminUser(PropertyManagerDashboard)} />
             <Route path="/code-samples/card" component={CardSamples} />
             <Route path="/code-samples/header" component={HeaderSamples} />
             <PrivateRoute path={ROUTES.ROOT} component={Home} />

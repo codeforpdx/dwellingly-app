@@ -1,11 +1,27 @@
 @import '../../constants/constants.scss';
 
+.admin--header {
+  margin-bottom: .5em;
+}
+
 .newPropertyFormHeading {
   text-align: left;
   font-size: 1em;
   text-transform: uppercase;
   color: $color__blue--dark;
   line-height: 1.5;
+  border-bottom: 1px solid $color__gray--border;
+  padding-bottom: .75em;
+}
+
+.newPropertyFormManagerHeading {
+  text-align: left;
+  font-size: 1em;
+  text-transform: uppercase;
+  color: $color__blue--dark;
+  line-height: 1.5;
+  // border-bottom: 1px solid $color__gray--border;
+  padding-bottom: .75em;
 }
 
 .newPropertyFormSection {
