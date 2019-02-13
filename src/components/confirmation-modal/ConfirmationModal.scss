@@ -1,0 +1,44 @@
+@import "../../constants/constants.scss";
+
+.full-window-modal {
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: auto;
+
+  .modal-content {
+    padding: 2.2em 2.5em;
+    background: $color__white;
+    width: 40%;
+    border-radius: $border-radius--card;
+    @include dialog_shadow;
+    @include clearfix;
+    align-self: center;
+    text-align: center;
+
+    .title {
+      margin: 0;
+      font-size: 1em;
+    }
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5em;
+
+}
+
+#yes-button {
+  width: 8em;
+}
+
+.cancel {
+  background: $color__gray--medium;
+  border-radius: $border-radius--btn;
+  color: $color__white;
+  padding: 0 1rem;
+  width: 8em;
+}

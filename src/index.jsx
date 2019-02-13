@@ -36,8 +36,10 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import NewIssueForm from './pages/new-issue-form/NewIssueForm';
 import NewTenantForm from './pages/new-tenant-form/NewTenantForm';
+import NewPropertyForm from './pages/new-property-form/NewPropertyForm';
 import OutOfOffice from './pages/settings/OutOfOffice';
 import PrivacyPolicy from './pages/privacy-policy/PrivacyPolicy';
+import Properties from './pages/properties/Properties';
 import PropertyDetails from './pages/property-details/PropertyDetails';
 import PropertyManagers from './pages/property-managers/PropertyManagers';
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
@@ -96,6 +98,10 @@ ReactDOM.render(
               component={StaffUser(OutOfOffice)}
             />
             <PrivateRoute
+              path={`${ROUTES.PROPERTIES}`}
+              component={AdminUser(Properties)}
+            />
+            <PrivateRoute
               path={`${ROUTES.PROPERTIES}/:id`}
               component={PropertyDetails}
             />
@@ -144,6 +150,7 @@ ReactDOM.render(
               component={WaitingForRole}
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
+            <Route path={ROUTES.ADD_PROPERTY} component={NewPropertyForm} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
