@@ -1,23 +1,18 @@
 @import '../../constants/constants.scss';
 
-.name-header {
+.name-header-container {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   width: 35%;
 }
 
-.property-manager-name {
+.name-header {
   text-align: left;
   color: #003c71;
   font-size: 1.250em;
   margin-top: 1.5em;
   font-weight: bold;
-}
-
-#contact-heading {
-  border-bottom: 1px solid $color__gray--border;
-  margin-top: 1em;
 }
 
 .detail-section-heading {
@@ -48,34 +43,34 @@
   }
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: 3em;
-}
+// .card-container {
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: space-between;
+//   margin-bottom: 3em;
+// }
 
-.property-card {
-  padding: 1em;
-  margin-bottom: 1.5em;
-  width: 48%;
-  border-radius: $border-radius--card;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
-}
-
-.tenant-card {
-  padding: 1em;
-  margin-bottom: 1.5em;
-  text-align: left;
-  width: 31%;
-  border-radius: $border-radius--card;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
-}
-
-.card-name {
-  color: $color__blue--dark;
-  font-weight: bold;
-}
+// .property-card {
+//   padding: 1em;
+//   margin-bottom: 1.5em;
+//   width: 48%;
+//   border-radius: $border-radius--card;
+//   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+// }
+//
+// .tenant-card {
+//   padding: 1em;
+//   margin-bottom: 1.5em;
+//   text-align: left;
+//   width: 31%;
+//   border-radius: $border-radius--card;
+//   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+// }
+//
+// .card-name {
+//   color: $color__blue--dark;
+//   font-weight: bold;
+// }
 
 ul {
   list-style: none;
@@ -85,7 +80,7 @@ ul {
 }
 
 table {
-  border-spacing: 0;
+  border-spacing: 0 .5em;
   box-sizing: border-box;
   position: relative;
   table-layout: fixed;
@@ -99,11 +94,20 @@ table {
 
   td {
     border-bottom: 1px solid $color__gray--border;
-    padding: .5em 0;
+    padding: 1em;
+    background-color: $color__gray--light;
     vertical-align: top;
   }
 }
 
 #contact-table-cell {
-  width: 22%;
+  width: 10%;
+}
+.table-row {
+  background-color: $color__gray--light;
+}
+
+.icon-container {
+  width: 10%;
+  text-align: center;
 }

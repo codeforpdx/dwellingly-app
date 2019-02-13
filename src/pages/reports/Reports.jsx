@@ -31,16 +31,16 @@ render() {
           </Header>
           <div>
             <div className="width-wrapper">
-              <div className="name-header">
-                <h2 className="property-manager-name">
+              <div className="name-header-container">
+                <h2 className="name-header">
                   Reports
                 </h2>
                 </div>
                 <section className="contact-details-section">
                   <div >
                     <table className="accordion__table">
-                      <tr>
-                        <td>
+                      <tr className="table-row">
+                        <td className="icon-container">
                           <Icon icon="heart" />
                         </td>
                         <td id="contact-table-cell">
