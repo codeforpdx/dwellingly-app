@@ -1,9 +1,6 @@
 @import "../../constants/constants.scss";
 
-$accent-color: red;
-$grid-size: 5;
 $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-balham/icons/";
-
 
 @import "../../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 
@@ -51,7 +48,6 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
     padding-left: .5rem;
   }
 }
-
 .gray-dash-bar {
   display: flex;
   margin-top: .4rem;
@@ -67,7 +63,6 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
     color: #eeeeee;
   }
 }
-
 .table-wrapper {
   display: flex;
   th {
@@ -109,8 +104,8 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
       outline: none;
   }
   input {
-    // margin-left: 10px;
-    // padding-left: 1.2rem;
+    margin-left: 10px;
+    padding-left: 1.2rem;
     font-size: .9rem;
   }
 }
@@ -142,6 +137,7 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
 .ag-header-cell-text {
   padding-left: 1rem;
   color: $color__gray--dark;
+  font-size: 0.9rem;
 }
 .ag-cell-value {
   padding-left: .5rem;
@@ -181,6 +177,7 @@ padding-bottom: 100px;
   border-radius: 25px;
   width: 75px;
   font-weight: 400;
+  margin-left: 0 !important;
 }
 
 @media screen and (max-width: 667px) {
