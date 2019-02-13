@@ -159,7 +159,7 @@ export const properties = [
   {
     id: 'property-01',
     name: 'Garden Blocks',
-    address: '1654 NE 18th Ave. Portland OR, 97218'
+    address: '1654 NE 18th Ave. Portland OR, 97218',
   },
   {
     id: 'property-02',
