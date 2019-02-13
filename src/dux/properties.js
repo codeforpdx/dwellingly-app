@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
       };
     case CREATE_PROPERTY:
         return {
-          ...state
+          ...state,
         }
     default:
       return state

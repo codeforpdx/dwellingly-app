@@ -237,8 +237,10 @@ export const addCustomUserData = (
   userID
 ) => dispatch => {
   let userIdentifier = userID;
+  // User is a kind of user
   if (userData && userData.id && userData.id.length > 0) {
     userIdentifier = userData.id;
+    // User is another kind of user
   } else if (userData && userData.localId && userData.localId.length > 0) {
     userIdentifier = userData.localId;
   }
