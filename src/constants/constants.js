@@ -59,6 +59,7 @@ export const ROUTES = {
   PROPERTY_DASHBOARD: '/property-dashboard',
   PROPERTY_MANAGERS: '/property-managers',
   PROPERTY_MANAGER_DASHBOARD: '/property-manager-dashboard',
+  PROPERTY_MANAGER_DETAILS: '/property-manager-details',
   OUT_OF_OFFICE: '/settings/out-of-office',
   ROOT: '/',
   SETTINGS: '/settings',
