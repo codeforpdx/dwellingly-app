@@ -52,6 +52,7 @@ class PropertyManagerDashboard extends Component {
 
   render() {
     const { intl } = this.props;
+    console.log(this.props.propertyManagers.propertyManagers);
     return(  
     <div className="page">
       <Header>

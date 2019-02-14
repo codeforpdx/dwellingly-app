@@ -1,11 +1,71 @@
-// @import "../../constants/constants.scss";
-// 
-// .staff-card-wrapper {
-//   display: flex;
-//   justify-content: space-around; 
-//   width: 1000px;
-//   .staff-card {
-//     width:500px;
-//     background: $color__gray--light;
-//   }
-// }
+@import "../../constants/constants.scss";
+
+.staff-dashboard-header {
+  margin: 0 2rem;
+}
+.staff-dash-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; 
+  .staff-card {
+    width: 300px;
+    height: 280px;
+    text-align: left;
+    overflow: scroll;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 1px;
+    box-shadow: 0px 5px 3px rgba(0,0,0,0.1);
+    color: $color__gray--dark;
+    .staff-header {
+      display: flex;
+      justify-content: space-between;
+      h2 {
+        color: $color__blue--dark;
+        font-weight: 800;
+        font-size: 1.2em;
+      }
+      .icon {
+        color: $color__gray--medium;
+      }
+    }
+    .email-and-number {
+      margin-top: 2rem;
+      line-height: 1px;
+    }
+    .out-of-office {
+      margin: 2rem 0 1.1rem 0;
+      border-bottom: solid 1px $color__blue--dark;
+      padding-bottom: .4rem;
+      .icon {
+        color: $color__blue;
+      }
+    }
+    .reassign {
+      margin-top: 2.5rem;
+      .icon {
+        color: $color__blue;
+      }
+    }
+    .staff-info {
+      line-height: 1px;
+      margin-top: 1px;
+    }
+  }
+}
+.add-new-flex {
+  display: flex;
+  button {
+    margin-left: 2rem;
+  }
+  h2 {
+    font-weight: 800;
+    color: $color__blue--dark;
+  }
+}
+.staff-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
