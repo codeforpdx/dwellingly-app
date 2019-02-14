@@ -15,8 +15,8 @@ export const SETTINGS = {
   CONTACT_EMAIL: 'info@joinpdx.org'
 };
 
-/* 
-  Endpoints for data in the application. Should all have standard CRUD functions 
+/*
+  Endpoints for data in the application. Should all have standard CRUD functions
   Without UID, gets all of something, with UID:  will read, update, or delete specific something
 */
 export const ENDPOINTS = {
@@ -41,8 +41,9 @@ export const HTTP_METHODS = {
 /* Routes to get throughout the application, this way we only have to change URLs in one place */
 export const ROUTES = {
   ADD_TENANT: '/admin/add-new-tenant',
-  ADD_PROPERTY: '/admin/add-new-property',
+  ADD_PROPERTY: '/add-new-property',
   ADD_PROPERTY_MANAGER: '/admin/add-new-property-manager',
+  ADD_STAFF_MEMBER: '/add-new-staff-member',
   ADMIN: '/admin',
   ADMIN_EMERGENCY: '/admin/emergency',
   ADMIN_EMERGENCY_NUMBERS: '/admin/emergencyNumbers',
@@ -58,6 +59,7 @@ export const ROUTES = {
   PROPERTY_DASHBOARD: '/property-dashboard',
   PROPERTY_MANAGERS: '/property-managers',
   PROPERTY_MANAGER_DASHBOARD: '/property-manager-dashboard',
+  PROPERTY_MANAGER_DETAILS: '/property-manager-details',
   OUT_OF_OFFICE: '/settings/out-of-office',
   ROOT: '/',
   SETTINGS: '/settings',

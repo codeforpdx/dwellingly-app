@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
 import { intlShape, injectIntl } from 'react-intl';
 import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
@@ -12,12 +14,28 @@ import '../../components/input/Input.scss';
 import SearchForm from '../../components/search-form/SearchForm';
 import Icon from '../../components/icon/Icon';
 import { getPropertyManagers } from '../../dux/propertyManagers';
+import ParamsRenderer from './ParamsRenderer';
+import DateUpdatedRenderer from './DateUpdatedRenderer';
 
 class PropertyManagerDashboard extends Component {
   constructor(props) {
     super(props);
-    this.getPropertyManagerData = this.getPropertyManagerData.bind(this);
-    this.getTableRow = this.getTableRow.bind(this);
+    this.state = {
+      gridOptions: {
+        rowHeight: 55,
+        headerHeight: 60,
+        defaultColDef: {
+          filter: true,
+        },
+        columnDefs: [
+          {headerName: "Name", field: "name", filter: "agTextColumnFilter", width: 180, sortable: true, checkboxSelection: true, unSortIcon: true, rowDrag: false, suppressMovable:true },
+          {headerName: "Property Id", field: "leases", cellRendererFramework: ParamsRenderer, width: 180, sortable: true, unSortIcon: true, rowDrag: false, suppressMovable:true },
+          {headerName: "Email", field: "email", width: 180, sortable: true, unSortIcon: true, rowDrag: false, suppressMovable:true },
+          {headerName: "Invited", field: "email", width: 180, sortable: true, unSortIcon: true, rowDrag: false, suppressMovable:true },
+          {headerName: "Last Usage", field: "leases", cellRendererFramework: DateUpdatedRenderer, width: 180, sortable: true, unSortIcon: true, rowDrag: false, suppressMovable:true }
+        ]
+      }
+    }
     this.handleSearch = this.handleSearch.bind(this);
   }
 
@@ -25,24 +43,6 @@ class PropertyManagerDashboard extends Component {
     console.log(this.props);
     const { dispatch } = this.props;
     dispatch(getPropertyManagers());
-  }
-
-  getPropertyManagerData() { 
-    const managers = this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : [];
-    return managers.map(manager => (this.getTableRow(manager)))
-  }
-  
-  getTableRow (manager) {
-    console.log(this.props);
-    return (
-      <tr>
-        <td><input type="checkbox" />{manager.name}</td>
-        <td>{manager.leases[0].propertyId}</td>
-        <td>{manager.email}</td>
-        <td>Invited</td>
-        <td>{manager.leases[0].dateUpdated}</td>
-      </tr>
-    )
   }
   
   handleSearch(event) {
@@ -86,17 +86,15 @@ class PropertyManagerDashboard extends Component {
           <button type="button" className="btn archive-btn"><Icon icon="calendar"/> INVITE AGAIN</button>
           <button type="button" className="btn archive-btn"><Icon icon="archive"/> ARCHIVE</button>
         </div>
-        <div className="table-wrapper">
-          <table>
-            <tr>
-              <th><input type="checkbox" /> Name</th>
-              <th>Properties</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Last Usage</th>
-            </tr>
-            {this.getPropertyManagerData()}
-          </table>
+        <div className="ag-grid-wrapper">
+          <AgGridReact
+            gridOptions={this.state.gridOptions}
+            defaultColDef={this.state.defaultColDef}
+            columnDefs={this.state.columnDefs}
+            rowData={this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : []}
+            pagination
+            paginationPageSize={10}
+          />    
         </div>
       </section>
     </div>

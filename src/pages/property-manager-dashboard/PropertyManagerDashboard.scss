@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 800px;
+    width: 900px;
     padding-right: 1em;
     color: $color__gray--medium;
     font-size: emify(14, 16);
@@ -49,7 +49,7 @@
   align-items: center;
   border-radius: 1px;
   background: $color__gray--light;
-  width: 796px;
+  width: 100%;
   margin: 0 auto;
   height: 3.5rem;
   .btn {
@@ -58,7 +58,7 @@
 }
 .table-wrapper {
   display: flex;
-  max-width: 800px;
+
   th {
     background: $color__gray--light;
     padding: 1.3rem;
@@ -106,7 +106,7 @@
   }
 }
 .property-table {
-  width: 800px;
+  width: 900px;
 }
 .next-button {
   display: flex;
@@ -116,6 +116,10 @@
   .next-btn {
     margin-right: 2.5rem;
   }
+}
+
+.btn-previous {
+  padding-right: 2rem;
 }
 
 @media screen and (max-width: 667px) {
@@ -137,6 +141,6 @@
   .property-dashboard-header {
     display: flex;
     flex-direction: column;
-    width: 90vw;
+    width: 100vw;
   }
 }

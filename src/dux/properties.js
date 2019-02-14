@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
       };
     case CREATE_PROPERTY:
         return {
-          ...state
+          ...state,
         }
     default:
       return state
@@ -73,13 +73,6 @@ export const getProperties = () => async dispatch =>  {
   dispatch(getPropertysCollection(data));
 }
 
-// GET Archived Properties
-// export const getArchivedProperties = () => async dispatch =>  {
-//   const response = await fetch(`${ENDPOINTS.ARCHIVED_PROPERTY}`)
-//   const data = await response.json();
-//   dispatch(getPropertysCollection(data));
-// }
-
 // POST Property
 export const onAddingProperty = async data => {
   const response = await fetch(`${ENDPOINTS.PROPERTY}`, {
@@ -99,23 +92,3 @@ export const creatingProperty = data => async dispatch => {
     console.log(e);
   }
 }
-
-// // ARCHIVE Property 
-// export const onArchivingProperty = async data => {
-//   const response = await fetch(`${SETTINGS.FIREBASE_API}${ROUTES.PROPERTY}/${data.id}`, {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(data)
-//   })
-//   return response;
-// }
-// export const archivingProperty = data => async dispatch => {
-//   try {
-//     await onArchivingProperty(data);
-//     dispatch(archiveProperty(data));
-//   } catch(e) {
-//     console.log(e);
-//   }
-// }
