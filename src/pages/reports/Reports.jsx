@@ -40,14 +40,14 @@ render() {
                   <div>
                     <div className="table-header-container">
                       <div className="table-header-left">
-                        <p>OPENED FROM</p>
-                        <select>
+                        <p className="table-header-text">OPENED FROM</p>
+                        <select className="table-header-select">
                           <option>01/01/2018 - 12/31/2018</option>
                         </select>
                       </div>
                       <div className="table-header-right">
-                        <p>Average time to close: </p>
-                        <p>2 days, 4 hours</p>
+                        <p className="table-header-text">Average time to close: </p>
+                        <p className="table-header-text">2 days, 4 hours</p>
                       </div>
                     </div>
                     <table className="accordion__table">
