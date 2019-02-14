@@ -44,8 +44,8 @@ class StaffDashboard extends Component {
           </div>
           <p className="out-of-office">Set out of office  <Link to="/settings/out-of-office"><img className="blue-arrow" alt="blue arrow" src={arrow} /></Link> </p>
           <div className="staff-info">
-            <p>12 open tickets</p>
-            <p>58 Tenants</p>
+            <p><span className="numbers">12</span> open tickets</p>
+            <p><span className="numbers">58</span> Tenants</p>
           </div>
           <p className="reassign">Reassign  <img className="blue-arrow" alt="blue arrow" src={arrow} /> </p>
         </div>

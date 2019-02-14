@@ -23,6 +23,8 @@
       background: $color__gray--light;
       outline: none;
       transition: background 0.5s ease;
+      transform: scale(1.01);
+      transition: 0.5s;
     }
     img {
       margin-left: 10px;
@@ -66,6 +68,11 @@
     .staff-info {
       line-height: 1px;
       margin-top: 1px;
+      span {
+        font-weight: 400;
+        color: $color__gray--dark;
+        padding-right: 2px;
+      }
     }
   }
 }
