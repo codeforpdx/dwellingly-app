@@ -7,15 +7,16 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap; 
+  margin-top: 1rem;
   .staff-card {
-    width: 300px;
+    width: 310px;
+    font-size: emify(14, 16);
     height: 280px;
     text-align: left;
-    overflow: scroll;
     margin: 1rem;
     padding: 2rem;
-    border-radius: 1px;
-    box-shadow: 0px 5px 3px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
     color: $color__gray--dark;
     .staff-header {
       display: flex;
@@ -23,7 +24,6 @@
       h2 {
         color: $color__blue--dark;
         font-weight: 800;
-        font-size: 1.2em;
       }
       .icon {
         color: $color__gray--medium;
@@ -34,17 +34,21 @@
       line-height: 1px;
     }
     .out-of-office {
-      margin: 2rem 0 1.1rem 0;
+      margin: 1.5rem 0 1rem 0;
       border-bottom: solid 1px $color__blue--dark;
       padding-bottom: .4rem;
+      font-weight: 600;
+      color: $color__gray--medium;
       .icon {
-        color: $color__blue;
+        color: $color__blue--dark;
       }
     }
     .reassign {
-      margin-top: 2.5rem;
+      margin-top: 2rem;
+      font-weight: 600;
+      color: $color__gray--medium;
       .icon {
-        color: $color__blue;
+        color: $color__blue--dark;
       }
     }
     .staff-info {

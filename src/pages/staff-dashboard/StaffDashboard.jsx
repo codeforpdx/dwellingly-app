@@ -35,15 +35,15 @@ class StaffDashboard extends Component {
             <h2>{user.city}</h2> <Icon icon="archive"/>
           </div>
           <div className="email-and-number">
-            <p>971-808-0787</p>
+            <p>971-000-0000</p>
             <p>email@email.com</p>
           </div>
-          <p className="out-of-office">set out of office <Icon icon="arrowRight"/> </p>
+          <p className="out-of-office">Set out of office  <Icon icon="arrowRight"/> </p>
           <div className="staff-info">
             <p>12 open tickets</p>
             <p>58 Tenants</p>
           </div>
-          <p className="reassign">Reassign <Icon icon="arrowRight"/> </p>
+          <p className="reassign">Reassign  <Icon icon="arrowRight"/> </p>
         </div>
     )
   }
