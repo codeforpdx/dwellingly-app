@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
 import Navigation from '../../components/navigation/Navigation';
+import ReportsTicketModal from '../../components/reports-ticket-modal/ReportsTicketModal';
 import './Reports.scss';
 
 class Reports extends Component {
@@ -9,8 +12,18 @@ class Reports extends Component {
     super(props);
 
     this.state = {
-
+      showModal: false
     }
+
+    this.toggleReportsModal = this.toggleReportsModal.bind(this);
+
+  }
+
+  toggleReportsModal(event) {
+    event.preventDefault();
+    this.setState(prevState => ({
+      showModal: !prevState.showModal,
+    }));
   }
 
 render() {
@@ -32,7 +45,7 @@ render() {
           <div>
             <div className="width-wrapper">
               <div className="name-header-container">
-                <h2 className="name-header">
+                <h2 className="admin--header">
                   Reports
                 </h2>
                 </div>
@@ -51,7 +64,7 @@ render() {
                       </div>
                     </div>
                     <table className="accordion__table">
-                      <tr className="table-row">
+                      <tr className="table-row" onClick={this.toggleReportsModal}>
                         <td className="icon-container">
                           <Icon icon="heart" />
                         </td>
@@ -145,9 +158,16 @@ render() {
               </div>
             </div>
           </div>
+          <ReportsTicketModal
+            show={this.state.showModal}
+            onClose={this.toggleReportsModal}/>
       </div>
     );
   }
 }
 
-export default Reports;
+const mapStateToProps = state => ({
+  properties: state.properties
+})
+
+export default injectIntl(connect(mapStateToProps)(Reports));
