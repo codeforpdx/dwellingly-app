@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
 import { COMMON } from '../../translations/messages';
@@ -8,6 +9,7 @@ import Navigation from '../../components/navigation/Navigation';
 import './StaffDashboard.scss';
 import Icon from '../../components/icon/Icon';
 import { getProperties } from '../../dux/properties';
+import { getPropertyManagers } from '../../dux/propertyManagers';
 
 class StaffDashboard extends Component {
   constructor(props) {
@@ -20,10 +22,11 @@ class StaffDashboard extends Component {
     console.log(this.props);
     const { dispatch } = this.props;
     dispatch(getProperties());
+    dispatch(getPropertyManagers());
   }
 
   getUserData() {   
-    const users = this.props.properties.properties.length > 0 ? this.props.properties.properties : [];
+    const users = this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : [];
     return users.map(user => (this.getUserGrid(user)))
   }
 
@@ -32,13 +35,13 @@ class StaffDashboard extends Component {
     return (   
         <div className="staff-card">
           <div className="staff-header">
-            <h2>{user.city}</h2> <Icon icon="archive"/>
+            <h2>{user.name}</h2> <Icon icon="archive"/>
           </div>
           <div className="email-and-number">
-            <p>971-000-0000</p>
-            <p>email@email.com</p>
+            <p>{user.phone}</p>
+            <p>{user.email}</p>
           </div>
-          <p className="out-of-office">Set out of office  <Icon icon="arrowRight"/> </p>
+          <p className="out-of-office">Set out of office  <Link to="/settings/out-of-office"><Icon icon="arrowRight"/></Link> </p>
           <div className="staff-info">
             <p>12 open tickets</p>
             <p>58 Tenants</p>
@@ -99,17 +102,17 @@ class StaffDashboard extends Component {
 StaffDashboard.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  properties: PropTypes.shape({
-    properties: PropTypes.arrayOf(PropTypes.object)
-  }),
+  propertyManagers: PropTypes.shape({
+    propertyManagers: PropTypes.arrayOf(PropTypes.object)
+  })
 }
 
 StaffDashboard.defaultProps = {
-  properties: {properties: []},
+  propertyManagers: {propertyManagers: []},
 };
 
 const mapStateToProps = state => ({
-  properties: state.properties,
+  propertyManagers: state.propertyManagers,
 })
 
 export default injectIntl(connect(mapStateToProps)(StaffDashboard));
