@@ -42,12 +42,12 @@ class StaffDashboard extends Component {
             <p>{user.phone}</p>
             <p>{user.email}</p>
           </div>
-          <p className="out-of-office">Set out of office  <Link to="/settings/out-of-office"><img className="blue-arrow" alt="blue arrow" src={arrow} /></Link> </p>
+          <p className="out-of-office">Set out of office<Link to="/settings/out-of-office"><img className="blue-arrow" alt="blue arrow" src={arrow} /></Link></p>
           <div className="staff-info">
             <p><span className="numbers">12</span> open tickets</p>
             <p><span className="numbers">58</span> Tenants</p>
           </div>
-          <p className="reassign">Reassign  <img className="blue-arrow" alt="blue arrow" src={arrow} /> </p>
+          <p className="reassign">Reassign<img className="blue-arrow" alt="blue arrow" src={arrow} /></p>
         </div>
     )
   }

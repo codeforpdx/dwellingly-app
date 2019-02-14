@@ -2,29 +2,31 @@
 
 .staff-dashboard-header {
   margin: 0 2rem;
+  button:hover {
+    outline: none;
+    transform: scale(1.02);
+    transition: 0.5s ease-in-out;
+  }
 }
 .staff-dash-container {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap; 
-  margin-top: 1rem;
+  margin: 0 2rem;
   .staff-card {
-    width: 310px;
+    width: 290px;
+    height: 270px; 
     font-size: emify(14, 16);
-    height: 280px;
     text-align: left;
-    margin: 1rem;
     padding: 1.5rem;
     border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
     color: $color__gray--dark;
     &:hover,
     &:focus {
-      background: $color__gray--light;
       outline: none;
-      transition: background 0.5s ease;
       transform: scale(1.01);
-      transition: 0.5s;
+      transition: 0.5s ease;
     }
     img {
       margin-left: 10px;
@@ -78,6 +80,7 @@
 }
 .add-new-flex {
   display: flex;
+  align-items: center;
   button {
     margin-left: 2rem;
   }
@@ -90,5 +93,5 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
+  margin: 2rem;
 }

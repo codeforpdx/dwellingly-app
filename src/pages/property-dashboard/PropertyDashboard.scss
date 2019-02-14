@@ -7,6 +7,11 @@ $ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-bal
 .property-dashboard-header {
   margin: 0 5rem 1rem;
   padding-bottom: .5rem;
+  button:hover {
+    outline: none;
+    transform: scale(1.02);
+    transition: 0.5s ease-in-out;
+  }
   h2 {
     margin-top: 5px;
   }
@@ -192,6 +197,7 @@ button:nth-child(2) {
   margin-right: 1rem;
 }
 .ag-paging-page-summary-panel {
+  margin-top: 0.6rem;
  span:nth-child(4) {
    margin-right: 1rem;
  }
