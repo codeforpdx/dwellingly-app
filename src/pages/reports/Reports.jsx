@@ -63,12 +63,12 @@ render() {
                         <p className="table-header-text">2 days, 4 hours</p>
                       </div>
                     </div>
-                    <table className="accordion__table">
+                    <table id="reports-table" className="accordion__table">
                       <tr className="table-row" onClick={this.toggleReportsModal}>
                         <td className="icon-container">
                           <Icon icon="heart" />
                         </td>
-                        <td id="contact-table-cell">
+                        <td id="reports-issue-table-cell">
                           25
                         </td>
                         <td>

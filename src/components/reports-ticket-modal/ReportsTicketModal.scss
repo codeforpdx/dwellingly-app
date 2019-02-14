@@ -11,7 +11,7 @@
 }
 
 .reports-modal-container {
-  width: 50%;
+  width: 60%;
   top: 50%;
   left: 50%;
   position: fixed;
@@ -25,7 +25,7 @@
 }
 
 #reports-modal-card-content {
-  padding-top: 0;
+  margin-bottom: 50px;
 }
 
 .close-icon-container {
@@ -35,16 +35,55 @@
 }
 
 #reports-modal-title {
-  padding-left: 1em;
-  padding-bottom: 1em;
+  padding-left: .8em;
+  padding-bottom: .5em;
   margin: 0;
+  font-weight: normal;
 }
 
 #reports-modal-subtitle {
   margin-left: 4.5em;
   width: 60%;
+  margin-bottom: 1em;
+  font-weight: normal;
+  line-height: normal;
 }
 
 #scroll-container {
   overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 300px;
+}
+
+.reports-ticket-card {
+padding: 1em;
+margin-bottom: 1em;
+margin-right: 1em;
+width: 47%;
+border-radius: $border-radius--card;
+background-color: $color__gray--light
+}
+
+.reports-ticket-card-list {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.reports-ticket-card-issue-status {
+  color: $color__blue;
+  font-weight: normal;
+}
+
+.reports-ticket-card-tenant {
+  color: $color__blue--dark;
+  font-weight: normal;
+}
+
+.reports-ticket-card-sender {
+  color: $color__gray--medium;
+  font-weight: normal;
 }

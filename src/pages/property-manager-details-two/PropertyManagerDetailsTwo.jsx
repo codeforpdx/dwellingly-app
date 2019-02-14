@@ -53,9 +53,9 @@ class PropertyManagerDetailsTwo extends Component {
                   <section className="contact-details-section">
                     <div >
                       <h2 className="detail-section-heading" id="contact-heading">Contact</h2>
-                      <table className="accordion__table">
+                      <table id="property-manager-contact-table" className="accordion__table">
                         <tr>
-                          <td id="contact-table-cell">
+                          <td id="property-manager-contact-table-cell">
                             First Name
                           </td>
                           <td>
@@ -97,7 +97,7 @@ class PropertyManagerDetailsTwo extends Component {
                         const { name, address} = property;
                         return(
                           <div className="property-card">
-                            <ul>
+                            <ul className="property-card-list">
                               <li className="card-name">{name}</li>
                               <li>{address}</li>
                             </ul>
@@ -113,7 +113,7 @@ class PropertyManagerDetailsTwo extends Component {
                         const { name, phone, address} = tenant;
                         return(
                           <div className="tenant-card">
-                            <ul>
+                            <ul className="tenant-card-list">
                               <li className="card-name">{name}</li>
                               <li>{phone}</li>
                               <li>{address}</li>

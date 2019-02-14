@@ -24,24 +24,56 @@ class ReportsTicketModal extends React.Component {
                   </div>
                   <div className="reports-modal-title-container">
                     <Icon icon="comment"/>
-                    <p id="reports-modal-title" className="title">10 Property Damage</p>
+                    <h3 id="reports-modal-title" className="title">10 Property Damage</h3>
                   </div>
-                  <p id="reports-modal-subtitle" className="meta">There were 10 Property Damage tickets opened from 01/01/2018 - 12/31/2018</p>
+                  <h5 id="reports-modal-subtitle" className="meta">There were 10 Property Damage tickets opened from 01/01/2018 - 12/31/2018</h5>
                 </div>
               </Card.Content>
             </Card.Top>
             <Card.Bottom>
               <Card.Content>
                 <div id="scroll-container" className="card__contact container">
-                  <div className="container--left">
-                    <h4>Sender</h4>
-                    <p>ptag</p>
+                  <div className="reports-ticket-card">
+                    <ul className="reports-ticket-card-list">
+                      <li className="reports-ticket-card-issue-status">RESOLVED</li>
+                      <li className="reports-ticket-card-tenant">Megan Collins</li>
+                      <li className="reports-ticket-card-sender">Sender: Tara McKenzie</li>
+                    </ul>
                   </div>
-                  <div className="container--right">
-                    <h4>Urgency</h4>
-                    <p>
-                      ptag
-                    </p>
+                  <div className="reports-ticket-card">
+                    <ul className="reports-ticket-card-list">
+                      <li className="reports-ticket-card-issue-status">RESOLVED</li>
+                      <li className="reports-ticket-card-tenant">Megan Collins</li>
+                      <li className="reports-ticket-card-sender">Sender: Tara McKenzie</li>
+                    </ul>
+                  </div>
+                  <div className="reports-ticket-card">
+                    <ul className="reports-ticket-card-list">
+                      <li className="reports-ticket-card-issue-status">RESOLVED</li>
+                      <li className="reports-ticket-card-tenant">Megan Collins</li>
+                      <li className="reports-ticket-card-sender">Sender: Tara McKenzie</li>
+                    </ul>
+                  </div>
+                  <div className="reports-ticket-card">
+                    <ul className="reports-ticket-card-list">
+                      <li className="reports-ticket-card-issue-status">RESOLVED</li>
+                      <li className="reports-ticket-card-tenant">Megan Collins</li>
+                      <li className="reports-ticket-card-sender">Sender: Tara McKenzie</li>
+                    </ul>
+                  </div>
+                  <div className="reports-ticket-card">
+                    <ul className="reports-ticket-card-list">
+                      <li className="reports-ticket-card-issue-status">RESOLVED</li>
+                      <li className="reports-ticket-card-tenant">Megan Collins</li>
+                      <li className="reports-ticket-card-sender">Sender: Tara McKenzie</li>
+                    </ul>
+                  </div>
+                  <div className="reports-ticket-card">
+                    <ul className="reports-ticket-card-list">
+                      <li className="reports-ticket-card-issue-status">RESOLVED</li>
+                      <li className="reports-ticket-card-tenant">Megan Collins</li>
+                      <li className="reports-ticket-card-sender">Sender: Tara McKenzie</li>
+                    </ul>
                   </div>
                 </div>
               </Card.Content>
