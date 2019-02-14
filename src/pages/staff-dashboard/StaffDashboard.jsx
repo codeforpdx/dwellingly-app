@@ -10,6 +10,7 @@ import './StaffDashboard.scss';
 import Icon from '../../components/icon/Icon';
 import { getProperties } from '../../dux/properties';
 import { getPropertyManagers } from '../../dux/propertyManagers';
+import arrow from '../../assets/images/blue-action-arrow.png';
 
 class StaffDashboard extends Component {
   constructor(props) {
@@ -41,12 +42,12 @@ class StaffDashboard extends Component {
             <p>{user.phone}</p>
             <p>{user.email}</p>
           </div>
-          <p className="out-of-office">Set out of office  <Link to="/settings/out-of-office"><Icon icon="arrowRight"/></Link> </p>
+          <p className="out-of-office">Set out of office  <Link to="/settings/out-of-office"><img className="blue-arrow" alt="blue arrow" src={arrow} /></Link> </p>
           <div className="staff-info">
             <p>12 open tickets</p>
             <p>58 Tenants</p>
           </div>
-          <p className="reassign">Reassign  <Icon icon="arrowRight"/> </p>
+          <p className="reassign">Reassign  <img className="blue-arrow" alt="blue arrow" src={arrow} /> </p>
         </div>
     )
   }
