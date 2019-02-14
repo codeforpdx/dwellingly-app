@@ -23,7 +23,6 @@
   color: $color__blue--dark;
   line-height: 1.5;
   padding-bottom: .5em;
-
 }
 
 .contact-details-section {
@@ -43,34 +42,50 @@
   }
 }
 
-// .card-container {
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: space-between;
-//   margin-bottom: 3em;
-// }
+.table-header-container {
+  background-color: $color__gray--medium;
+  color: $color__white;
+  font-weight: 500;
+  text-align: left;
+  display: flex;
+  width: 790px;
+  height: 6em;
+  padding-right: 10px;
+  @media screen and (min-width: $mq--desktop) {
+    width: 100%;
+    padding-right: 0;
+  }
+}
 
-// .property-card {
-//   padding: 1em;
-//   margin-bottom: 1.5em;
-//   width: 48%;
-//   border-radius: $border-radius--card;
-//   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
-// }
-//
-// .tenant-card {
-//   padding: 1em;
-//   margin-bottom: 1.5em;
-//   text-align: left;
-//   width: 31%;
-//   border-radius: $border-radius--card;
-//   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
-// }
-//
-// .card-name {
-//   color: $color__blue--dark;
-//   font-weight: bold;
-// }
+p {
+  margin: 0;
+}
+
+.table-header-left {
+width: 35%;
+padding-left: 2em;
+justify-content: center;
+display: flex;
+flex-direction: column;
+}
+
+.table-header-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 36%;
+}
+
+select {
+  width: 80%;
+  height: 2em;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  border-radius: 40px;
+  color: $color__gray--medium;
+  text-align: center;
+  padding-left: 10px;
+}
 
 table {
   border-spacing: 0 .5em;
@@ -87,19 +102,15 @@ table {
   }
 
   td {
-    border-bottom: 1px solid $color__gray--border;
-    padding: 1em;
+    padding: 1em 0 1em;
     background-color: $color__gray--light;
     vertical-align: top;
+    font-variant-numeric: tabular-nums;
   }
 }
 
 #contact-table-cell {
   width: 10%;
-}
-
-.table-row {
-  background-color: $color__gray--light;
 }
 
 .icon-container {

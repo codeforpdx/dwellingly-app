@@ -37,7 +37,19 @@ render() {
                 </h2>
                 </div>
                 <section className="contact-details-section">
-                  <div >
+                  <div>
+                    <div className="table-header-container">
+                      <div className="table-header-left">
+                        <p>OPENED FROM</p>
+                        <select>
+                          <option>01/01/2018 - 12/31/2018</option>
+                        </select>
+                      </div>
+                      <div className="table-header-right">
+                        <p>Average time to close: </p>
+                        <p>2 days, 4 hours</p>
+                      </div>
+                    </div>
                     <table className="accordion__table">
                       <tr className="table-row">
                         <td className="icon-container">
