@@ -7,6 +7,13 @@
   width: 35%;
 }
 
+.reports-title {
+  text-align: left;
+  color: #003c71;
+  font-size: 1.250em;
+  margin-top: 1.5em;
+}
+
 .table-header-container {
   background-color: $color__gray--medium;
   color: $color__white;
@@ -28,11 +35,11 @@
 }
 
 .table-header-left {
-width: 35%;
-padding-left: 2em;
-justify-content: center;
-display: flex;
-flex-direction: column;
+  width: 35%;
+  padding-left: 2em;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .table-header-right {
