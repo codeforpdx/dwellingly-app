@@ -20,7 +20,8 @@ class ReportsTicketModal extends React.Component {
               <Card.Content id="reports-modal-card-content">
                 <div className="card__summary">
                   <div className="close-icon-container">
-                    <Icon id="close-icon" onClose={this.props.onClose} icon="close" />
+                    <button type="button" onClick={this.props.onClose}>
+                    <Icon id="close-icon"  icon="close"/></button>
                   </div>
                   <div className="reports-modal-title-container">
                     <Icon icon="comment"/>
