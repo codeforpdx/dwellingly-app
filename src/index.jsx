@@ -48,6 +48,7 @@ import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyM
 import Settings from './pages/settings/Settings';
 import Signup from './pages/signup/Signup';
 import StaffDashboard from './pages/staff-dashboard/StaffDashboard';
+import TenantDashboard from './pages/tenant-dashboard/TenantDashboard';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
 import TermsConditions from './pages/terms-conditions/TermsConditions';
@@ -160,6 +161,7 @@ ReactDOM.render(
             <PrivateRoute path={`${ROUTES.PROPERTY_DASHBOARD}`} component={AdminUser(PropertyDashboard)} />
             <PrivateRoute path={`${ROUTES.PROPERTY_MANAGER_DASHBOARD}`} component={AdminUser(PropertyManagerDashboard)} />
             <PrivateRoute path={`${ROUTES.STAFF_DASHBOARD}`} component={AdminUser(StaffDashboard)} />
+            <PrivateRoute path={`${ROUTES.TENANT_DASHBOARD}`} component={AdminUser(TenantDashboard)} />
             <Route path="/code-samples/card" component={CardSamples} />
             <Route path="/code-samples/header" component={HeaderSamples} />
             <PrivateRoute path={ROUTES.ROOT} component={Home} />
