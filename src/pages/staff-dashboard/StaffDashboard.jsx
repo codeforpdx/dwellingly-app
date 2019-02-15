@@ -8,7 +8,6 @@ import Header from '../../components/header/Header';
 import Navigation from '../../components/navigation/Navigation';
 import './StaffDashboard.scss';
 import Icon from '../../components/icon/Icon';
-import { getProperties } from '../../dux/properties';
 import { getPropertyManagers } from '../../dux/propertyManagers';
 import arrow from '../../assets/images/blue-action-arrow.png';
 
@@ -22,7 +21,6 @@ class StaffDashboard extends Component {
   componentWillMount() {
     console.log(this.props);
     const { dispatch } = this.props;
-    dispatch(getProperties());
     dispatch(getPropertyManagers());
   }
 
@@ -30,7 +28,7 @@ class StaffDashboard extends Component {
     const users = this.props.propertyManagers.propertyManagers.length > 0 ? this.props.propertyManagers.propertyManagers : [];
     return users.map(user => (this.getUserGrid(user)))
   }
-
+  
   getUserGrid (user) {
     console.log(this.props);
     return (   
@@ -84,22 +82,6 @@ class StaffDashboard extends Component {
   )}
 };
 
-// StaffDashboard.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-//   intl: intlShape.isRequired,
-//   users: PropTypes.shape({
-//     users: PropTypes.arrayOf(PropTypes.object)
-//   }),
-// }
-// 
-// StaffDashboard.defaultProps = {
-//   users: {users: []},
-// };
-// 
-// const mapStateToProps = state => ({
-//   users: state.users,
-// })
-
 StaffDashboard.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
@@ -110,10 +92,12 @@ StaffDashboard.propTypes = {
 
 StaffDashboard.defaultProps = {
   propertyManagers: {propertyManagers: []},
+
 };
 
 const mapStateToProps = state => ({
   propertyManagers: state.propertyManagers,
+  
 })
 
 export default injectIntl(connect(mapStateToProps)(StaffDashboard));
