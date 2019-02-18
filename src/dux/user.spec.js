@@ -145,4 +145,75 @@ describe('default reducer', () => {
     let newState = user({}, action)
     expect(newState.haveUser).toEqual(true)
   });
+  
+  it('should set isFetchingUserData to true', () => {
+    let action = {
+      type: 'user/NO_USER',
+      isFetchingUserData: false
+    };
+    let newState = user({}, action)
+    expect(newState.isFetchingUserData).toEqual(false)
+  });
+  
+  it('should set error to true', () => {
+    let action = {
+      type: 'user/ADD_ERROR',
+      error: true
+    };
+    let newState = user({}, action)
+    expect(newState.error).toEqual(true)
+  });
+  
+  it('should set error to null', () => {
+    let action = {
+      type: 'user/CLEAR_ERROR',
+      error: null
+    };
+    let newState = user({}, action)
+    expect(newState.error).toEqual(null)
+  });
+  
+  it('should set isResettingPassword to true', () => {
+    let action = {
+      type: 'user/RESET_USER_PASSWORD',
+      isResettingPassword: true
+    };
+    let newState = user({}, action)
+    expect(newState.isResettingPassword).toEqual(true)
+  });
+  
+  it('should set passwordResetComplete to false', () => {
+    let action = {
+      type: 'user/RESET_USER_PASSWORD',
+      passwordResetComplete: false
+    };
+    let newState = user({}, action)
+    expect(newState.passwordResetComplete).toEqual(false)
+  });
+  
+  it('should set passwordResetComplete to true', () => {
+    let action = {
+      type: 'user/RESET_USER_PASSWORD_COMPLETE',
+      passwordResetComplete: true
+    };
+    let newState = user({}, action)
+    expect(newState.passwordResetComplete).toEqual(true)
+  });
+  
+  it('should set error to true', () => {
+    let action = {
+      type: 'user/RESET_USER_PASSWORD_ERROR',
+      error: true
+    };
+    let newState = user({}, action)
+    expect(newState.error).toEqual(true)
+  });
+  
+  it('should use default case', () => {
+    let action = {
+      type: 'test type'
+    };
+    let newState = user({test: true}, action)
+    expect(newState.test).toEqual(true)
+  });
 });

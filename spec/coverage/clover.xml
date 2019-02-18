@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1550520603934" clover="3.2.0">
-  <project timestamp="1550520603934" name="All files">
-    <metrics statements="2001" coveredstatements="54" conditionals="768" coveredconditionals="11" methods="554" coveredmethods="1" elements="3323" coveredelements="66" complexity="0" loc="2001" ncloc="2001" packages="56" files="102" classes="102">
+<coverage generated="1550521932822" clover="3.2.0">
+  <project timestamp="1550521932822" name="All files">
+    <metrics statements="2001" coveredstatements="61" conditionals="768" coveredconditionals="18" methods="554" coveredmethods="1" elements="3323" coveredelements="80" complexity="0" loc="2001" ncloc="2001" packages="56" files="102" classes="102">
       <package name="src">
         <metrics statements="138" coveredstatements="0" conditionals="41" coveredconditionals="0" methods="22" coveredmethods="0"/>
         <file name="data.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/data.js">
@@ -1225,7 +1225,7 @@
         </file>
       </package>
       <package name="src.dux">
-        <metrics statements="227" coveredstatements="45" conditionals="62" coveredconditionals="11" methods="75" coveredmethods="1"/>
+        <metrics statements="227" coveredstatements="52" conditionals="62" coveredconditionals="18" methods="75" coveredmethods="1"/>
         <file name="common.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/common.js">
           <metrics statements="17" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
           <line num="2" count="0" type="stmt"/>
@@ -1399,7 +1399,7 @@
           <line num="1" count="0" type="stmt"/>
         </file>
         <file name="user.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/user.js">
-          <metrics statements="82" coveredstatements="45" conditionals="36" coveredconditionals="11" methods="30" coveredmethods="1"/>
+          <metrics statements="82" coveredstatements="52" conditionals="36" coveredconditionals="18" methods="30" coveredmethods="1"/>
           <line num="4" count="1" type="stmt"/>
           <line num="7" count="1" type="stmt"/>
           <line num="8" count="1" type="stmt"/>
@@ -1419,7 +1419,7 @@
           <line num="22" count="1" type="stmt"/>
           <line num="23" count="1" type="stmt"/>
           <line num="26" count="1" type="stmt"/>
-          <line num="41" count="16" type="cond" truecount="10" falsecount="7"/>
+          <line num="41" count="24" type="cond" truecount="17" falsecount="0"/>
           <line num="43" count="4" type="stmt"/>
           <line num="51" count="2" type="stmt"/>
           <line num="61" count="1" type="stmt"/>
@@ -1430,13 +1430,13 @@
           <line num="98" count="1" type="stmt"/>
           <line num="104" count="2" type="stmt"/>
           <line num="112" count="2" type="stmt"/>
-          <line num="120" count="0" type="stmt"/>
-          <line num="129" count="0" type="stmt"/>
-          <line num="138" count="0" type="stmt"/>
-          <line num="147" count="0" type="stmt"/>
-          <line num="154" count="0" type="stmt"/>
-          <line num="160" count="0" type="stmt"/>
-          <line num="167" count="0" type="stmt"/>
+          <line num="120" count="1" type="stmt"/>
+          <line num="129" count="1" type="stmt"/>
+          <line num="138" count="1" type="stmt"/>
+          <line num="147" count="2" type="stmt"/>
+          <line num="154" count="1" type="stmt"/>
+          <line num="160" count="1" type="stmt"/>
+          <line num="167" count="1" type="stmt"/>
           <line num="173" count="1" type="stmt"/>
           <line num="178" count="1" type="stmt"/>
           <line num="179" count="0" type="stmt"/>

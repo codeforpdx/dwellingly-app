@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">46.88% </span>
+        <span class="strong">54.17% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>45/96</span>
+        <span class='fraction'>52/96</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30.56% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>11/36</span>
+        <span class='fraction'>18/36</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">3.33% </span>
@@ -35,16 +35,16 @@
         <span class='fraction'>1/30</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">54.88% </span>
+        <span class="strong">63.41% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>45/82</span>
+        <span class='fraction'>52/82</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -454,7 +454,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -533,7 +533,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -542,7 +542,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -551,7 +551,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -560,27 +560,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -900,8 +900,8 @@ export default (state = initialState, action) =&gt; {
         error: action.error
       };
 &nbsp;
-<span class="branch-10 cbranch-no" title="branch not covered" >    case NO_USER:</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
+    case NO_USER:
+      return {
         ...state,
         user: action.user,
         isFetchingAuthorization: action.isFetchingAuthorization,
@@ -909,8 +909,8 @@ export default (state = initialState, action) =&gt; {
         haveUser: action.haveUser
       };
 &nbsp;
-<span class="branch-11 cbranch-no" title="branch not covered" >    case ADD_ERROR:</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
+    case ADD_ERROR:
+      return {
         ...state,
         haveUser: action.haveUser,
         isFetchingAuthorization: action.isFetchingAuthorization,
@@ -918,8 +918,8 @@ export default (state = initialState, action) =&gt; {
         error: action.error
       };
 &nbsp;
-<span class="branch-12 cbranch-no" title="branch not covered" >    case CLEAR_ERROR:</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
+    case CLEAR_ERROR:
+      return {
         ...state,
         haveUser: action.haveUser,
         isFetchingAuthorization: action.isFetchingAuthorization,
@@ -927,28 +927,28 @@ export default (state = initialState, action) =&gt; {
         error: action.error
       };
 &nbsp;
-<span class="branch-13 cbranch-no" title="branch not covered" >    case RESET_USER_PASSWORD:</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
+    case RESET_USER_PASSWORD:
+      return {
         ...state,
         isResettingPassword: action.isResettingPassword,
         passwordResetComplete: action.passwordResetComplete
       };
 &nbsp;
-<span class="branch-14 cbranch-no" title="branch not covered" >    case RESET_USER_PASSWORD_COMPLETE:</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
+    case RESET_USER_PASSWORD_COMPLETE:
+      return {
         ...state,
         isResettingPassword: action.isResettingPassword,
         passwordResetComplete: action.passwordResetComplete
       };
-<span class="branch-15 cbranch-no" title="branch not covered" >    case RESET_USER_PASSWORD_ERROR:</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
+    case RESET_USER_PASSWORD_ERROR:
+      return {
         ...state,
         isResettingPassword: action.isResettingPassword,
         passwordResetComplete: action.passwordResetComplete,
         error: action.error
       };
-<span class="branch-16 cbranch-no" title="branch not covered" >    default:</span>
-<span class="cstat-no" title="statement not covered" >      return state;</span>
+    default:
+      return state;
   }
 };
 &nbsp;
@@ -1156,7 +1156,7 @@ export const resetUserPasswordEmailError = <span class="fstat-no" title="functio
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Feb 18 2019 12:10:03 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Feb 18 2019 12:32:12 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>
