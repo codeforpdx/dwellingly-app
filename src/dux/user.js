@@ -111,7 +111,7 @@ export default (state = initialState, action) => {
     case CREATE_USER_COMPLETE:
       return {
         ...state,
-        creatingUser: action.creatingUser,
+        isCreatingUser: action.isCreatingUser,
         haveUser: action.haveUser,
         error: action.error
       };

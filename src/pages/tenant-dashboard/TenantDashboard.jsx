@@ -11,6 +11,7 @@ import Navigation from '../../components/navigation/Navigation';
 import './TenantDashboard.scss';
 import Icon from '../../components/icon/Icon';
 import { getProperties } from '../../dux/properties';
+import { getPropertyManagers } from '../../dux/propertyManagers';
 
 class TenantDashboard extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class TenantDashboard extends Component {
     console.log(this.props);
     const { dispatch } = this.props;
     dispatch(getProperties());
+    dispatch(getPropertyManagers());
   }
 
   render() {
@@ -75,6 +77,8 @@ class TenantDashboard extends Component {
             <td className="tenant-update">
               <select>
                 <option>JOIN Staff</option>
+                <option>staff props tsuff</option>
+                <option>staff props what it do</option>
               </select>
             </td>
           </div>
@@ -100,15 +104,20 @@ TenantDashboard.propTypes = {
   intl: intlShape.isRequired,
   properties: PropTypes.shape({
     properties: PropTypes.arrayOf(PropTypes.object)
+  }),
+  propertyManagers: PropTypes.shape({
+    propertyManagers: PropTypes.arrayOf(PropTypes.object)
   })
 }
 
 TenantDashboard.defaultProps = {
   properties: {properties: []},
+  propertyManagers: {propertyManagers: []},
 };
 
 const mapStateToProps = state => ({
   properties: state.properties,
+  propertyManagers: state.propertyManagers,
 })
 
 export default injectIntl(connect(mapStateToProps)(TenantDashboard));
