@@ -1,4 +1,5 @@
 import common from './common'
+import { increment, decrement } from './common'
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -56,5 +57,21 @@ describe('default reducer', () => {
     };
     let newState = common({test: true}, action)
     expect(newState.test).toEqual(true)
+  });
+});
+
+describe('increment', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    increment()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('decrement', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    decrement()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
   });
 });

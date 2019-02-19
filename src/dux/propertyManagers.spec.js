@@ -1,4 +1,5 @@
 import propertyManagers from './propertyManagers'
+import { getPropertyManagersCollection } from './propertyManagers'
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -35,5 +36,14 @@ describe('default reducer', () => {
     };
     let newState = propertyManagers({test: true}, action)
     expect(newState.test).toEqual(true)
+  });
+});
+
+describe('getPropertyManagersCollection', () => {
+  it('should dispatch actions', () => {
+    let data = {name: 'test'}
+    let dispatch = jest.fn()
+    getPropertyManagersCollection(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
   });
 });
