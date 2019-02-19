@@ -7,6 +7,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "precommit": "pretty-quick --staged"
   },
   "devDependencies": {
@@ -15,6 +17,9 @@
     "babel-jest": "23.4.2",
     "babel-loader": "7.1.2",
     "babel-preset-react-app": "^3.1.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-to-json": "^3.3.5",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "17.0.0",
     "eslint-config-prettier": "^2.9.0",
@@ -25,8 +30,9 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
-    "jest": "23.5.0",
+    "jest": "^23.5.0",
     "prettier": "^1.13.7",
+    "react-test-renderer": "^16.8.2",
     "webpack-dev-server": "2.9.4"
   },
   "license": "MIT",
@@ -89,7 +95,10 @@
       "src/**/*.{js,jsx,mjs}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+      "./test/jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
