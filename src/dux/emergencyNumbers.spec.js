@@ -1,4 +1,5 @@
 import emergencyNumbers from './emergencyNumbers'
+import { getEmergencyNumbersCollection  } from './emergencyNumbers'
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -38,11 +39,40 @@ describe('default reducer', () => {
     expect(newState.error).toEqual(true)
   });
   
+  it('should return edited number', () => {
+    let action = {
+      type: 'emergency/EDIT_EMERGENCY_NUMBER',
+      id: 1,
+      contact: 'test 1'
+    };
+    let newState = emergencyNumbers({numbers: [{id: 1, contact: 'test 2'}]}, action)
+    expect(newState.numbers[0].contact).toEqual('test 1')
+  });  
+  
+  // it('should delete state', () => {
+  //   let action = {
+  //     type: 'emergency/DELETE_EMERGENCY_NUMBER',
+  //     id: 1,
+  //     number: {}
+  //   };
+  //   let newState = emergencyNumbers({id: 1, number: 123}, action)
+  //   expect(newState.number).toEqual({})
+  // });
+  
   it('should return state', () => {
     let action = {
       type: 'emergency/CREATE_EMERGENCY_NUMBER'
     };
     let newState = emergencyNumbers({test: true}, action)
     expect(newState.test).toEqual(true)
+  });
+});
+
+describe('getEmergencyNumbersCollection', () => {
+  it('should dispatch actions', () => {
+    let data = {number: 'test'}
+    let dispatch = jest.fn()
+    getEmergencyNumbersCollection(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,6 @@
 import properties from './properties'
+import { getPropertysCollection, getProperties } from './properties'
+import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -45,3 +47,44 @@ describe('default reducer', () => {
     expect(newState.test).toEqual(true)
   });
 });
+
+describe('getPropertysCollection', () => {
+  it('should dispatch actions', () => {
+    let data = {name: 'test'}
+    let dispatch = jest.fn()
+    getPropertysCollection(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+// describe('getProperties', () => {
+//   it('should fetch mock json', done => {
+//     let propertyObj = {id: 1, name: 'test property'}
+//     let dispatch = jest.fn()
+//     getPropertysCollection = jest.fn()
+//     let fetch = jest.fn(() => new Promise(resolve => resolve()));
+//     getProperties()(dispatch)
+//     expect(dispatch).toHaveBeenCalled();
+//     expect(getPropertysCollection).toHaveBeenCalled();
+//   });
+// });
+
+
+// describe('getProperties', () => {
+//   it('fetches data from server when server returns a successful response', done => { // 1
+//     window.fetch = mockFetch;
+//     const mockSuccessResponse = {};
+//     const mockJsonPromise = Promise.resolve(mockSuccessResponse); // 2
+//     const mockFetchPromise = Promise.resolve({ // 3
+//       json: () => mockJsonPromise,
+//     });
+//     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise); // 4  
+//     expect(global.fetch).toHaveBeenCalledTimes(1);
+//     expect(global.fetch).toHaveBeenCalledWith(`${ENDPOINTS.PROPERTY}`);
+// 
+//       global.fetch.mockClear(); // 7
+//       done(); // 8
+//     });
+//   });
+
+  

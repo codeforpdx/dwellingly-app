@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1550521932822" clover="3.2.0">
-  <project timestamp="1550521932822" name="All files">
-    <metrics statements="2001" coveredstatements="61" conditionals="768" coveredconditionals="18" methods="554" coveredmethods="1" elements="3323" coveredelements="80" complexity="0" loc="2001" ncloc="2001" packages="56" files="102" classes="102">
+<coverage generated="1550607282346" clover="3.2.0">
+  <project timestamp="1550607282346" name="All files">
+    <metrics statements="2003" coveredstatements="71" conditionals="768" coveredconditionals="18" methods="554" coveredmethods="19" elements="3325" coveredelements="108" complexity="0" loc="2003" ncloc="2003" packages="56" files="102" classes="102">
       <package name="src">
         <metrics statements="138" coveredstatements="0" conditionals="41" coveredconditionals="0" methods="22" coveredmethods="0"/>
         <file name="data.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/data.js">
@@ -1225,7 +1225,7 @@
         </file>
       </package>
       <package name="src.dux">
-        <metrics statements="227" coveredstatements="52" conditionals="62" coveredconditionals="18" methods="75" coveredmethods="1"/>
+        <metrics statements="229" coveredstatements="62" conditionals="62" coveredconditionals="18" methods="75" coveredmethods="19"/>
         <file name="common.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/common.js">
           <metrics statements="17" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
           <line num="2" count="0" type="stmt"/>
@@ -1330,7 +1330,7 @@
           <line num="1" count="0" type="stmt"/>
         </file>
         <file name="properties.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/properties.js">
-          <metrics statements="28" coveredstatements="0" conditionals="5" coveredconditionals="0" methods="9" coveredmethods="0"/>
+          <metrics statements="30" coveredstatements="0" conditionals="5" coveredconditionals="0" methods="9" coveredmethods="0"/>
           <line num="1" count="0" type="stmt"/>
           <line num="3" count="0" type="stmt"/>
           <line num="4" count="0" type="stmt"/>
@@ -1351,14 +1351,16 @@
           <line num="71" count="0" type="stmt"/>
           <line num="72" count="0" type="stmt"/>
           <line num="73" count="0" type="stmt"/>
-          <line num="77" count="0" type="stmt"/>
-          <line num="78" count="0" type="stmt"/>
-          <line num="85" count="0" type="stmt"/>
+          <line num="74" count="0" type="stmt"/>
+          <line num="75" count="0" type="stmt"/>
+          <line num="79" count="0" type="stmt"/>
+          <line num="80" count="0" type="stmt"/>
           <line num="87" count="0" type="stmt"/>
-          <line num="88" count="0" type="stmt"/>
           <line num="89" count="0" type="stmt"/>
           <line num="90" count="0" type="stmt"/>
+          <line num="91" count="0" type="stmt"/>
           <line num="92" count="0" type="stmt"/>
+          <line num="94" count="0" type="stmt"/>
         </file>
         <file name="propertyManagers.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/propertyManagers.js">
           <metrics statements="18" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="5" coveredmethods="0"/>
@@ -1399,7 +1401,7 @@
           <line num="1" count="0" type="stmt"/>
         </file>
         <file name="user.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/user.js">
-          <metrics statements="82" coveredstatements="52" conditionals="36" coveredconditionals="18" methods="30" coveredmethods="1"/>
+          <metrics statements="82" coveredstatements="62" conditionals="36" coveredconditionals="18" methods="30" coveredmethods="19"/>
           <line num="4" count="1" type="stmt"/>
           <line num="7" count="1" type="stmt"/>
           <line num="8" count="1" type="stmt"/>
@@ -1450,7 +1452,7 @@
           <line num="209" count="0" type="stmt"/>
           <line num="210" count="0" type="stmt"/>
           <line num="227" count="1" type="stmt"/>
-          <line num="228" count="0" type="stmt"/>
+          <line num="228" count="1" type="stmt"/>
           <line num="236" count="1" type="stmt"/>
           <line num="240" count="0" type="stmt"/>
           <line num="241" count="0" type="stmt"/>
@@ -1464,24 +1466,24 @@
           <line num="255" count="0" type="cond" truecount="0" falsecount="4"/>
           <line num="256" count="0" type="stmt"/>
           <line num="275" count="1" type="stmt"/>
-          <line num="276" count="0" type="stmt"/>
+          <line num="276" count="1" type="stmt"/>
           <line num="284" count="1" type="stmt"/>
-          <line num="285" count="0" type="stmt"/>
-          <line num="286" count="0" type="stmt"/>
+          <line num="285" count="1" type="stmt"/>
+          <line num="286" count="1" type="stmt"/>
           <line num="299" count="1" type="stmt"/>
           <line num="300" count="0" type="stmt"/>
           <line num="314" count="1" type="stmt"/>
-          <line num="315" count="0" type="stmt"/>
+          <line num="315" count="1" type="stmt"/>
           <line num="325" count="1" type="stmt"/>
-          <line num="326" count="0" type="stmt"/>
+          <line num="326" count="1" type="stmt"/>
           <line num="335" count="1" type="stmt"/>
-          <line num="336" count="0" type="stmt"/>
+          <line num="336" count="1" type="stmt"/>
           <line num="344" count="1" type="stmt"/>
-          <line num="345" count="0" type="stmt"/>
+          <line num="345" count="1" type="stmt"/>
           <line num="353" count="1" type="stmt"/>
-          <line num="354" count="0" type="stmt"/>
+          <line num="354" count="1" type="stmt"/>
           <line num="361" count="1" type="stmt"/>
-          <line num="362" count="0" type="stmt"/>
+          <line num="362" count="1" type="stmt"/>
         </file>
       </package>
       <package name="src.firebase">

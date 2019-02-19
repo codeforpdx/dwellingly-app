@@ -1,4 +1,5 @@
 import user from './user'
+import { getUsersCollection, initiateUserDetailsCall, initiateCreateUserCall, setUserFromFirebaseEmail, setUserFromGoogle, clearUser, addError, clearError, initiateUserPasswordEmail, resetUserPasswordEmail, resetUserPasswordEmailError } from './user'
 
 describe('default reducer', () => {
   it('should set isFetchingAuthorization to true', () => {
@@ -82,7 +83,6 @@ describe('default reducer', () => {
     expect(newState.users.name).toEqual('bob ross')
   });
   
-  // HOW TO TEST LOGIN
   it('should set isFetchingDataFromFirebase to false', () => {
     let action = {
       type: 'user/LOGIN',
@@ -127,8 +127,8 @@ describe('default reducer', () => {
     let newState = user({}, action)
     expect(newState.haveUser).toEqual(false)
   });
-  // SHOULD THIS CASE BE isCreatingUser???
-  it('should set creatingUser to false', () => {
+  
+  it('should set isCreatingUser to false', () => {
     let action = {
       type: 'user/CREATE_USER_COMPLETE',
       isCreatingUser: false
@@ -215,5 +215,100 @@ describe('default reducer', () => {
     };
     let newState = user({test: true}, action)
     expect(newState.test).toEqual(true)
+  });
+});
+
+describe('getUsersCollection', () => {
+  it('should call getUsersCollection', () => {
+    let data = {user: 'test'}
+    let getUsersCollection = jest.fn()
+    getUsersCollection(data);
+    expect(getUsersCollection).toHaveBeenCalled();
+  });
+});
+
+describe('initiateUserDetailsCall', () => {
+  it('should dispatch actions', () => {
+    let data = {user: 'test'}
+    let dispatch = jest.fn()
+    initiateUserDetailsCall(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('initiateCreateUserCall', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    initiateCreateUserCall()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('setUserFromFirebaseEmail', () => {
+  it('should call setUserFromFirebaseEmail', () => {
+    let user = {email: 'email@gmail.com',
+      id: 1}
+    let dispatch = jest.fn()
+    setUserFromFirebaseEmail(user)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+// describe('setUserFromGoogle', () => {
+//   it('should call setUserFromGoogle', () => {
+//     let user = {email: 'test'}
+//     let dispatch = jest.fn()
+//     setUserFromGoogle(user)(dispatch);
+//     expect(dispatch).toHaveBeenCalled();
+//   });
+// });
+
+describe('clearUser', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    clearUser()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('addError', () => {
+  it('should dispatch actions', () => {
+    let error: true
+    let dispatch = jest.fn()
+    addError(error)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('clearError', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    clearError()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('initiateUserPasswordEmail', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    initiateUserPasswordEmail()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('resetUserPasswordEmail', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    resetUserPasswordEmail()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('resetUserPasswordEmailError', () => {
+  it('should dispatch actions', () => {
+    let error = true
+    let dispatch = jest.fn()
+    resetUserPasswordEmailError(error)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
   });
 });
