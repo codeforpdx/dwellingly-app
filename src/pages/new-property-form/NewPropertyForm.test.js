@@ -1,12 +1,11 @@
 import React from 'react';
+import renderer from 'react-test-renderer';
 import Input from '../../components/input/Input';
 import Header from '../../components/header/Header';
 import Search from '../../components/search/Search';
 import ConfirmationModal from '../../components/confirmation-modal/ConfirmationModal';
 import SuccessModal from '../../components/success-modal/SuccessModal';
 import Navigation from '../../components/navigation/Navigation';
-
-import renderer from 'react-test-renderer';
 // import NewPropertyForm from './NewPropertyForm';
 
 const ConfirmationModalTest = (props) =>
@@ -60,10 +59,10 @@ describe('ConfirmationModal Component', () => {
 
   it('renders component when show prop is true', () => {
     const props = {
-            show: true
-        },
-    ConfirmationModalComponent = mount(<ConfirmationModal {...props} />).find('.full-window-modal');
-    expect(ConfirmationModalComponent.hasClass('full-window-modal')).toEqual(true);
+      show: true,
+    },
+    ConfirmationModalComponent = mount(<ConfirmationModal {...props} />).find('p');
+    expect(ConfirmationModalComponent.hasClass('title')).toEqual(true);
   });
 });
 

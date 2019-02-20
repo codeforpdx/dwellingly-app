@@ -2,6 +2,8 @@
 
 exports[`ConfirmationModal Component correctly renders ConfirmationModal component 1`] = `null`;
 
+exports[`ConfirmationModal Component renders without component 1`] = `""`;
+
 exports[`Header Component correctly renders Header component 1`] = `
 <header
   className="hero  "
