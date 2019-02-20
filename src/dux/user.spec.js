@@ -1,5 +1,5 @@
 import user from './user'
-import { getUsersCollection, initiateUserDetailsCall, initiateCreateUserCall, setUserFromFirebaseEmail, setUserFromGoogle, clearUser, addError, clearError, initiateUserPasswordEmail, resetUserPasswordEmail, resetUserPasswordEmailError, initiateFirebaseCall, getAuthDetailsFromFirebase } from './user'
+import { getUsersCollection, initiateUserDetailsCall, initiateCreateUserCall, setUserFromFirebaseEmail, setUserFromGoogle, clearUser, addError, clearError, initiateUserPasswordEmail, resetUserPasswordEmail, resetUserPasswordEmailError, initiateFirebaseCall, getAuthDetailsFromFirebase, addCustomUserData, getUsers } from './user'
 
 describe('default reducer', () => {
   it('should set isFetchingAuthorization to true', () => {
@@ -254,15 +254,14 @@ describe('setUserFromFirebaseEmail', () => {
   });
 });
 
- // Cannot read property 'signInMethod' of undefined in user.js
-// describe('setUserFromGoogle', () => {
-//   it('should dispatch actions', () => {
-//     let user = {name: 'test user'}
-//     let dispatch = jest.fn()
-//     setUserFromGoogle(user)(dispatch);
-//     expect(dispatch).toHaveBeenCalled();
-//   });
-// });
+describe('setUserFromGoogle', () => {
+  it('should dispatch actions', () => {
+    let user = {name: 'test user', credential: {signInMethod: jest.fn()}}
+    let dispatch = jest.fn()
+    setUserFromGoogle(user)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
 
 describe('clearUser', () => {
   it('should dispatch actions', () => {
@@ -329,5 +328,35 @@ describe('getAuthDetailsFromFirebase', () => {
     let dispatch = jest.fn()
     getAuthDetailsFromFirebase(user, accountSource)(dispatch);
     expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('addCustomUserData', () => {
+  it('should dispatch actions', () => {
+    let user = {user: 'test'}
+    let accountSource = true
+    let userId = 1
+    let dispatch = jest.fn()
+    addCustomUserData(user, accountSource, userId)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+function mockFetch(data) {
+  return jest.fn().mockImplementation(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => data
+    })
+  );
+}
+
+describe('getUsers', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return getUsers()(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
   });
 });

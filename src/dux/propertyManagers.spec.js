@@ -1,5 +1,5 @@
 import propertyManagers from './propertyManagers'
-import { getPropertyManagersCollection } from './propertyManagers'
+import { getPropertyManagersCollection, getPropertyManagers } from './propertyManagers'
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -47,3 +47,22 @@ describe('getPropertyManagersCollection', () => {
     expect(dispatch).toHaveBeenCalled();
   });
 });
+
+// function mockFetch(data) {
+//   return jest.fn().mockImplementation(() =>
+//     Promise.resolve({
+//       ok: true,
+//       json: () => data
+//     })
+//   );
+// }
+// 
+// describe('getPropertyManagers', () => {
+//   it('should fetch mock data', () => {
+//     window.fetch = mockFetch({id: 1});
+//     let dispatch = jest.fn();
+//     return getPropertyManagers()(dispatch).then( () => {
+//       expect(window.fetch).toHaveBeenCalledTimes(1);
+//     });
+//   });
+// });

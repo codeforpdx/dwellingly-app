@@ -68,9 +68,7 @@ export const createProperty = (data) => (dispatch) => {
 
 // GET Properties
 export const getProperties = () => async dispatch =>  {
-  console.log('before');
   const response = await fetch(`${ENDPOINTS.PROPERTY}`)
-  console.log('after');
   const data = await response.json();
   dispatch(getPropertysCollection(data));
 }

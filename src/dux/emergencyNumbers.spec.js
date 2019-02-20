@@ -1,5 +1,5 @@
 import emergencyNumbers from './emergencyNumbers'
-import { getEmergencyNumbersCollection, editEmergencyNumber, createEmergencyNumber, deleteEmergencyNumber, archiveEmergencyNumber } from './emergencyNumbers'
+import { getEmergencyNumbersCollection, getEmergencyNumbers, editEmergencyNumber, createEmergencyNumber, editingEmergencyNumber, onEditingEmergencyNumber, creatingEmergencyNumber, deleteEmergencyNumber, onDeletingEmergencyNumber,  deletingEmergencyNumber, archiveEmergencyNumber, onArchivingEmergencyNumber, archivingEmergencyNumber } from './emergencyNumbers'
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -55,9 +55,17 @@ describe('default reducer', () => {
   //     id: 1,
   //     number: {}
   //   };
-  //   let newState = emergencyNumbers({id: 1, number: 123}, action)
+  //   let newState = emergencyNumbers({id: 1, numbers: {filter: jest.fn()}}, action)
   //   expect(newState.number).toEqual({})
   // });
+  
+  it('should return edited number', () => {
+    let action = {
+      type: 'test type',
+    };
+    let newState = emergencyNumbers({id: 1}, action)
+    expect(newState.id).toEqual(1)
+  }); 
   // 
   // it('should archive state', () => {
   //   let action = {
@@ -120,5 +128,91 @@ describe('archiveEmergencyNumber', () => {
     let dispatch = jest.fn()
     archiveEmergencyNumber(data)(dispatch);
     expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+function mockFetch(data) {
+  return jest.fn().mockImplementation(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => data
+    })
+  );
+}
+
+describe('getEmergencyNumbers', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return getEmergencyNumbers()(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('creatingEmergencyNumber', () => {
+  it('should take data and dispatch creatingEmergencyNumber function', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return creatingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('onEditingEmergencyNumber', () => {
+  it('should fetch mock number data', () => {
+    window.fetch = mockFetch({id: 1});
+    return onEditingEmergencyNumber({}).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('editingEmergencyNumber', () => {
+  it('should take data and dispatch editingEmergencyNumber function', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return editingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('onDeletingEmergencyNumber', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    return onDeletingEmergencyNumber({}).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('deletingEmergencyNumber', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return deletingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('onArchivingEmergencyNumber', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    return onArchivingEmergencyNumber({}).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('archivingEmergencyNumber', () => {
+  it('should take data and dispatch archivingEmergencyNumber function', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return archivingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
   });
 });

@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import properties from './properties'
-import { getPropertysCollection, getProperties, createProperty } from './properties'
+import { getPropertysCollection, getProperties, createProperty, onAddingProperty, creatingProperty } from './properties'
 import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
 
 describe('default reducer', () => {
@@ -113,11 +113,39 @@ function mockFetch(data) {
   );
 }
 
-test('getProperties()', async () => {  
-  fetch = mockFetch({id: 1});
-  let dispatch = jest.fn();
-  const property = await getProperties(data)(dispatch);
-  expect(property.id).toEqual(1);
-  expect(fetch).toHaveBeenCalledTimes(1);
+describe('getProperties', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return getProperties()(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('onAddingProperty', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    return onAddingProperty({}).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('creatingProperty', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return creatingProperty({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+  
+  it('should fetch mock data', () => {
+    let dispatch = jest.fn();
+    return creatingProperty({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(2);
+    });
+  });
 });
   

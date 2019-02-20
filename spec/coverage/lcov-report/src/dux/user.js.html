@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">81.25% </span>
+        <span class="strong">96.88% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>78/96</span>
+        <span class='fraction'>93/96</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">83.33% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>18/36</span>
+        <span class='fraction'>30/36</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.67% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>23/30</span>
+        <span class='fraction'>30/30</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">81.71% </span>
+        <span class="strong">96.34% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>67/82</span>
+        <span class='fraction'>79/82</span>
       </div>
     </div>
     <p class="quiet">
@@ -592,9 +592,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -653,28 +653,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -713,7 +713,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -954,15 +954,15 @@ export default (state = initialState, action) =&gt; {
 &nbsp;
 // Sychronous functions
 &nbsp;
-export const getUsersCollection = <span class="fstat-no" title="function not covered" >da</span>ta =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+export const getUsersCollection = data =&gt; ({
   type: FETCHING_USERS,
   users: data
 });
 &nbsp;
-export const getUsers = <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync dispatch =&gt; {</span>
-  const response = <span class="cstat-no" title="statement not covered" >await fetch(SETTINGS.FIREBASE_API + ROUTES.USER);</span>
-  const data = <span class="cstat-no" title="statement not covered" >await response.json();</span>
-<span class="cstat-no" title="statement not covered" >  dispatch(getUsersCollection(data));</span>
+export const getUsers = () =&gt; async dispatch =&gt; {
+  const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.USER);
+  const data = await response.json();
+  dispatch(getUsersCollection(data));
 };
 &nbsp;
 // export const getPropertiesCollection = data =&gt; ({
@@ -1017,27 +1017,27 @@ export const initiateUserDetailsCall = () =&gt; dispatch =&gt; {
   });
 };
 &nbsp;
-export const addCustomUserData = <span class="fstat-no" title="function not covered" >(</span>
+export const addCustomUserData = (
   userData,
   accountSource,
   userID
-) =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >di</span>spatch =&gt; {</span>
-  let userIdentifier = <span class="cstat-no" title="statement not covered" >userID;</span>
-<span class="cstat-no" title="statement not covered" >  if (userData &amp;&amp; userData.id &amp;&amp; userData.id.length &gt; 0) {</span>
+) =&gt; dispatch =&gt; {
+  let userIdentifier = userID;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (userData &amp;&amp; userData.id &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >userData.id.length &gt; 0)</span> {
 <span class="cstat-no" title="statement not covered" >    userIdentifier = userData.id;</span>
-  } else <span class="cstat-no" title="statement not covered" >if (userData &amp;&amp; userData.localId &amp;&amp; userData.localId.length &gt; 0) {</span>
+  } else <span class="missing-if-branch" title="if path not taken" >I</span>if (userData &amp;&amp; userData.localId &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >userData.localId.length &gt; 0)</span> {
 <span class="cstat-no" title="statement not covered" >    userIdentifier = userData.localId;</span>
   }
-  let userRole = <span class="cstat-no" title="statement not covered" >{};</span>
-<span class="cstat-no" title="statement not covered" >  if (userData &amp;&amp; userData.role) {</span>
+  let userRole = {};
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (userData &amp;&amp; userData.role) {
 <span class="cstat-no" title="statement not covered" >    userRole = {</span>
       isAdmin: userData.role.isAdmin,
       isPropertyManager: userData.role.isPropertyManager,
       isStaff: userData.role.isStaff
     };
   }
-<span class="cstat-no" title="statement not covered" >  if (userData &amp;&amp; accountSource) {</span>
-<span class="cstat-no" title="statement not covered" >    dispatch({</span>
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (userData &amp;&amp; accountSource) {
+    dispatch({
       type: GET_USER_DATA_COMPLETE,
       isCreatingUser: false,
       isFetchingAuthorization: false,
@@ -1080,8 +1080,8 @@ export const setUserFromFirebaseEmail = user =&gt; dispatch =&gt; {
   });
 };
 &nbsp;
-export const setUserFromGoogle = <span class="fstat-no" title="function not covered" >us</span>er =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >di</span>spatch =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  dispatch({</span>
+export const setUserFromGoogle = user =&gt; dispatch =&gt; {
+  dispatch({
     type: CREATE_USER_COMPLETE,
     isFetchingAuthorization: false,
     isFetchingUserData: false,
@@ -1156,7 +1156,7 @@ export const resetUserPasswordEmailError = error =&gt; dispatch =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Feb 19 2019 16:50:15 GMT-0800 (Pacific Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Feb 20 2019 10:34:38 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>
