@@ -1,5 +1,6 @@
+import 'whatwg-fetch';
 import properties from './properties'
-import { getPropertysCollection, getProperties } from './properties'
+import { getPropertysCollection, getProperties, createProperty } from './properties'
 import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
 
 describe('default reducer', () => {
@@ -19,6 +20,14 @@ describe('default reducer', () => {
     };
     let newState = properties(undefined, action)
     expect(newState.isFetchingDataFromFirebase).toEqual(true)
+  });
+  
+  it('should be the correct type', () => {
+    let action = {
+      type: 'properties/FETCHING_PROPERTIES',
+    };
+    let newState = properties({type: 'properties/FETCHING_PROPERTIES'}, action)
+    expect(newState.type).toEqual('properties/FETCHING_PROPERTIES')
   });
   
   it('should set properties', () => {
@@ -57,6 +66,15 @@ describe('getPropertysCollection', () => {
   });
 });
 
+describe('createProperty', () => {
+  it('should dispatch actions', () => {
+    let data = {name: 'test property'}
+    let dispatch = jest.fn()
+    createProperty(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
 // describe('getProperties', () => {
 //   it('should fetch mock json', done => {
 //     let propertyObj = {id: 1, name: 'test property'}
@@ -68,7 +86,6 @@ describe('getPropertysCollection', () => {
 //     expect(getPropertysCollection).toHaveBeenCalled();
 //   });
 // });
-
 
 // describe('getProperties', () => {
 //   it('fetches data from server when server returns a successful response', done => { // 1
@@ -87,4 +104,20 @@ describe('getPropertysCollection', () => {
 //     });
 //   });
 
+function mockFetch(data) {
+  return jest.fn().mockImplementation(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => data
+    })
+  );
+}
+
+test('getProperties()', async () => {  
+  fetch = mockFetch({id: 1});
+  let dispatch = jest.fn();
+  const property = await getProperties(data)(dispatch);
+  expect(property.id).toEqual(1);
+  expect(fetch).toHaveBeenCalledTimes(1);
+});
   

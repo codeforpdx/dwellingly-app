@@ -1,5 +1,5 @@
 import user from './user'
-import { getUsersCollection, initiateUserDetailsCall, initiateCreateUserCall, setUserFromFirebaseEmail, setUserFromGoogle, clearUser, addError, clearError, initiateUserPasswordEmail, resetUserPasswordEmail, resetUserPasswordEmailError } from './user'
+import { getUsersCollection, initiateUserDetailsCall, initiateCreateUserCall, setUserFromFirebaseEmail, setUserFromGoogle, clearUser, addError, clearError, initiateUserPasswordEmail, resetUserPasswordEmail, resetUserPasswordEmailError, initiateFirebaseCall, getAuthDetailsFromFirebase } from './user'
 
 describe('default reducer', () => {
   it('should set isFetchingAuthorization to true', () => {
@@ -64,7 +64,7 @@ describe('default reducer', () => {
     let newState = user({}, action)
     expect(newState.isFetchingUserData).toEqual(true)
   }); 
-  
+   
   it('should set isFetchingUserData to false', () => {
     let action = {
       type: 'user/GET_USER_DATA_COMPLETE',
@@ -254,9 +254,10 @@ describe('setUserFromFirebaseEmail', () => {
   });
 });
 
+ // Cannot read property 'signInMethod' of undefined in user.js
 // describe('setUserFromGoogle', () => {
-//   it('should call setUserFromGoogle', () => {
-//     let user = {email: 'test'}
+//   it('should dispatch actions', () => {
+//     let user = {name: 'test user'}
 //     let dispatch = jest.fn()
 //     setUserFromGoogle(user)(dispatch);
 //     expect(dispatch).toHaveBeenCalled();
@@ -309,6 +310,24 @@ describe('resetUserPasswordEmailError', () => {
     let error = true
     let dispatch = jest.fn()
     resetUserPasswordEmailError(error)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('initiateFirebaseCall', () => {
+  it('should dispatch actions', () => {
+    let dispatch = jest.fn()
+    initiateFirebaseCall()(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('getAuthDetailsFromFirebase', () => {
+  it('should dispatch actions', () => {
+    let user = {user: 'test'}
+    let accountSource = true
+    let dispatch = jest.fn()
+    getAuthDetailsFromFirebase(user, accountSource)(dispatch);
     expect(dispatch).toHaveBeenCalled();
   });
 });

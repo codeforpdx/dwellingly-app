@@ -1,5 +1,5 @@
 import emergencyNumbers from './emergencyNumbers'
-import { getEmergencyNumbersCollection  } from './emergencyNumbers'
+import { getEmergencyNumbersCollection, editEmergencyNumber, createEmergencyNumber, deleteEmergencyNumber, archiveEmergencyNumber } from './emergencyNumbers'
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -58,6 +58,16 @@ describe('default reducer', () => {
   //   let newState = emergencyNumbers({id: 1, number: 123}, action)
   //   expect(newState.number).toEqual({})
   // });
+  // 
+  // it('should archive state', () => {
+  //   let action = {
+  //     type: 'emergency/DELETE_EMERGENCY_NUMBER',
+  //     id: 1,
+  //     number: {}
+  //   };
+  //   let newState = emergencyNumbers({id: 1, number: 123}, action)
+  //   expect(newState.number).toEqual({})
+  // });
   
   it('should return state', () => {
     let action = {
@@ -73,6 +83,42 @@ describe('getEmergencyNumbersCollection', () => {
     let data = {number: 'test'}
     let dispatch = jest.fn()
     getEmergencyNumbersCollection(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('editEmergencyNumber', () => {
+  it('should dispatch actions', () => {
+    let data = {number: 'test'}
+    let dispatch = jest.fn()
+    editEmergencyNumber(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('createEmergencyNumber', () => {
+  it('should dispatch actions', () => {
+    let data = {number: 'test'}
+    let dispatch = jest.fn()
+    createEmergencyNumber(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('deleteEmergencyNumber', () => {
+  it('should dispatch actions', () => {
+    let data = {number: 'test'}
+    let dispatch = jest.fn()
+    deleteEmergencyNumber(data)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+});
+
+describe('archiveEmergencyNumber', () => {
+  it('should dispatch actions', () => {
+    let data = {number: 'test'}
+    let dispatch = jest.fn()
+    archiveEmergencyNumber(data)(dispatch);
     expect(dispatch).toHaveBeenCalled();
   });
 });
