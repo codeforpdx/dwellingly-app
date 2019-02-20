@@ -49,15 +49,27 @@ describe('default reducer', () => {
     expect(newState.numbers[0].contact).toEqual('test 1')
   });  
   
-  // it('should delete state', () => {
-  //   let action = {
-  //     type: 'emergency/DELETE_EMERGENCY_NUMBER',
-  //     id: 1,
-  //     number: {}
-  //   };
-  //   let newState = emergencyNumbers({id: 1, numbers: {filter: jest.fn()}}, action)
-  //   expect(newState.number).toEqual({})
-  // });
+  it('should delete state of number', () => {
+    let action = {
+      type: 'emergency/DELETE_EMERGENCY_NUMBER',
+      id: 1,
+      contact: 'test 1',
+      numbers:[]
+    };
+    let newState = emergencyNumbers({numbers: [{id: 1, contact: 'test 2'}]}, action)
+    expect(newState.numbers[0]).toEqual(undefined)
+  });
+  
+  it('should archive state of number', () => {
+    let action = {
+      type: 'emergency/ARCHIVE_EMERGENCY_NUMBER',
+      id: 1,
+      contact: 'test 1',
+      numbers:[]
+    };
+    let newState = emergencyNumbers({numbers: [{id: 1, contact: 'test 2'}]}, action)
+    expect(newState.numbers[0]).toEqual(undefined)
+  });
   
   it('should return edited number', () => {
     let action = {
@@ -66,16 +78,6 @@ describe('default reducer', () => {
     let newState = emergencyNumbers({id: 1}, action)
     expect(newState.id).toEqual(1)
   }); 
-  // 
-  // it('should archive state', () => {
-  //   let action = {
-  //     type: 'emergency/DELETE_EMERGENCY_NUMBER',
-  //     id: 1,
-  //     number: {}
-  //   };
-  //   let newState = emergencyNumbers({id: 1, number: 123}, action)
-  //   expect(newState.number).toEqual({})
-  // });
   
   it('should return state', () => {
     let action = {

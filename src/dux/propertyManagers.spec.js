@@ -48,21 +48,21 @@ describe('getPropertyManagersCollection', () => {
   });
 });
 
-// function mockFetch(data) {
-//   return jest.fn().mockImplementation(() =>
-//     Promise.resolve({
-//       ok: true,
-//       json: () => data
-//     })
-//   );
-// }
-// 
-// describe('getPropertyManagers', () => {
-//   it('should fetch mock data', () => {
-//     window.fetch = mockFetch({id: 1});
-//     let dispatch = jest.fn();
-//     return getPropertyManagers()(dispatch).then( () => {
-//       expect(window.fetch).toHaveBeenCalledTimes(1);
-//     });
-//   });
-// });
+function mockFetch(data) {
+  return jest.fn().mockImplementation(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => data
+    })
+  );
+}
+
+describe('getPropertyManagers', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return getPropertyManagers()(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
