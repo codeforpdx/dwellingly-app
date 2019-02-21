@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1550692392364" clover="3.2.0">
-  <project timestamp="1550692392364" name="All files">
-    <metrics statements="1998" coveredstatements="213" conditionals="768" coveredconditionals="54" methods="558" coveredmethods="78" elements="3324" coveredelements="345" complexity="0" loc="1998" ncloc="1998" packages="56" files="102" classes="102">
+<coverage generated="1550770708110" clover="3.2.0">
+  <project timestamp="1550770708110" name="All files">
+    <metrics statements="1998" coveredstatements="210" conditionals="768" coveredconditionals="54" methods="558" coveredmethods="76" elements="3324" coveredelements="340" complexity="0" loc="1998" ncloc="1998" packages="56" files="102" classes="102">
       <package name="src">
         <metrics statements="138" coveredstatements="0" conditionals="41" coveredconditionals="0" methods="22" coveredmethods="0"/>
         <file name="data.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/data.js">
@@ -1225,7 +1225,7 @@
         </file>
       </package>
       <package name="src.dux">
-        <metrics statements="224" coveredstatements="204" conditionals="62" coveredconditionals="54" methods="79" coveredmethods="78"/>
+        <metrics statements="224" coveredstatements="201" conditionals="62" coveredconditionals="54" methods="79" coveredmethods="76"/>
         <file name="common.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/common.js">
           <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
           <line num="2" count="1" type="stmt"/>
@@ -1359,7 +1359,7 @@
           <line num="92" count="0" type="stmt"/>
         </file>
         <file name="propertyManagers.js" path="/Users/krystalfoster/Desktop/join-messenger-app/src/dux/propertyManagers.js">
-          <metrics statements="17" coveredstatements="15" conditionals="6" coveredconditionals="4" methods="6" coveredmethods="5"/>
+          <metrics statements="17" coveredstatements="12" conditionals="6" coveredconditionals="4" methods="6" coveredmethods="3"/>
           <line num="3" count="1" type="stmt"/>
           <line num="4" count="1" type="stmt"/>
           <line num="5" count="1" type="stmt"/>
@@ -1372,9 +1372,9 @@
           <line num="35" count="1" type="stmt"/>
           <line num="39" count="1" type="stmt"/>
           <line num="51" count="1" type="stmt"/>
-          <line num="52" count="1" type="stmt"/>
-          <line num="53" count="1" type="stmt"/>
-          <line num="54" count="1" type="stmt"/>
+          <line num="52" count="0" type="stmt"/>
+          <line num="53" count="0" type="stmt"/>
+          <line num="54" count="0" type="stmt"/>
           <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
           <line num="57" count="0" type="stmt"/>
         </file>
