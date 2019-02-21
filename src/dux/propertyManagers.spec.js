@@ -61,6 +61,7 @@ describe('getPropertyManagersCollection', () => {
 //   it('should fetch mock data', () => {
 //     window.fetch = mockFetch({id: 1});
 //     let dispatch = jest.fn();
+//     let isPropertyManager = jest.fn();
 //     return getPropertyManagers()(dispatch).then( () => {
 //       expect(window.fetch).toHaveBeenCalledTimes(1);
 //     });
