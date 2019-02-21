@@ -9,6 +9,14 @@ import SuccessModal from '../../components/success-modal/SuccessModal';
 import Navigation from '../../components/navigation/Navigation';
 import NewPropertyForm from './NewPropertyForm';
 
-describe('NewPropertyForm', () => {
+const NewPropertyFormTest = (props) =>
+<NewPropertyForm
+{...props}
+/>;
 
+describe('NewPropertyForm', () => {
+  it('correctly renders NewPropertyForm component', () => {
+    const NewPropertyFormComponent = renderer.create(NewPropertyFormTest).toJSON();
+    expect(NewPropertyFormComponent).toMatchSnapshot();
+  });
 });

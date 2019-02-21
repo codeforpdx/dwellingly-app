@@ -9,7 +9,7 @@ const ConfirmationModalTest = (props) =>
 
 describe('ConfirmationModal Component', () => {
   it('correctly renders ConfirmationModal component', () => {
-    const ConfirmationModalComponent = renderer.create(ConfirmationModalTest).toJSON();
+    const ConfirmationModalComponent = renderer.create(<ConfirmationModal/>).toJSON();
     expect(ConfirmationModalComponent).toMatchSnapshot();
   });
 
