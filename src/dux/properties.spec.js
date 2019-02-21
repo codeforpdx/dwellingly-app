@@ -1,7 +1,6 @@
 import 'whatwg-fetch';
 import properties from './properties'
 import { getPropertysCollection, getProperties, createProperty, onAddingProperty, creatingProperty } from './properties'
-import { ENDPOINTS, HTTP_METHODS } from '../constants/constants';
 
 describe('default reducer', () => {
   it('should set isFetchingDataFromFirebase to true', () => {
@@ -75,35 +74,6 @@ describe('createProperty', () => {
   });
 });
 
-// describe('getProperties', () => {
-//   it('should fetch mock json', done => {
-//     let propertyObj = {id: 1, name: 'test property'}
-//     let dispatch = jest.fn()
-//     getPropertysCollection = jest.fn()
-//     let fetch = jest.fn(() => new Promise(resolve => resolve()));
-//     getProperties()(dispatch)
-//     expect(dispatch).toHaveBeenCalled();
-//     expect(getPropertysCollection).toHaveBeenCalled();
-//   });
-// });
-
-// describe('getProperties', () => {
-//   it('fetches data from server when server returns a successful response', done => { // 1
-//     window.fetch = mockFetch;
-//     const mockSuccessResponse = {};
-//     const mockJsonPromise = Promise.resolve(mockSuccessResponse); // 2
-//     const mockFetchPromise = Promise.resolve({ // 3
-//       json: () => mockJsonPromise,
-//     });
-//     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise); // 4  
-//     expect(global.fetch).toHaveBeenCalledTimes(1);
-//     expect(global.fetch).toHaveBeenCalledWith(`${ENDPOINTS.PROPERTY}`);
-// 
-//       global.fetch.mockClear(); // 7
-//       done(); // 8
-//     });
-//   });
-
 function mockFetch(data) {
   return jest.fn().mockImplementation(() =>
     Promise.resolve({
@@ -112,6 +82,13 @@ function mockFetch(data) {
     })
   );
 }
+
+function mockError(data) {
+  return jest.fn().mockImplementation(() => {
+    throw new Error();
+  });
+}
+
 
 describe('getProperties', () => {
   it('should fetch mock data', () => {
@@ -148,4 +125,34 @@ describe('creatingProperty', () => {
     });
   });
 });
+
+describe('creatingProperty', () => {
+  it('should fetch mock data', () => {
+    window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return creatingProperty({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+  
+  it('should fetch mock data', () => {
+    let dispatch = jest.fn();
+    return creatingProperty({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(2);
+    });
+  });
+});
+
+describe('creatingProperty', () => {
+  it('should throw error log on catch', () => {
+    window.fetch = mockError({id: 1});
+    let dispatch = jest.fn();
+    return creatingProperty({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+  
+  
   

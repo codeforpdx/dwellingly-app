@@ -142,6 +142,12 @@ function mockFetch(data) {
   );
 }
 
+function mockError(data) {
+  return jest.fn().mockImplementation(() => {
+    throw new Error();
+  });
+}
+
 describe('getEmergencyNumbers', () => {
   it('should fetch mock data', () => {
     window.fetch = mockFetch({id: 1});
@@ -155,6 +161,13 @@ describe('getEmergencyNumbers', () => {
 describe('creatingEmergencyNumber', () => {
   it('should take data and dispatch creatingEmergencyNumber function', () => {
     window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return creatingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+  it('should throw error log on catch', () => {
+    window.fetch = mockError({id: 1});
     let dispatch = jest.fn();
     return creatingEmergencyNumber({})(dispatch).then( () => {
       expect(window.fetch).toHaveBeenCalledTimes(1);
@@ -179,6 +192,13 @@ describe('editingEmergencyNumber', () => {
       expect(window.fetch).toHaveBeenCalledTimes(1);
     });
   });
+  it('should throw error log on catch', () => {
+    window.fetch = mockError({id: 1});
+    let dispatch = jest.fn();
+    return editingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
 });
 
 describe('onDeletingEmergencyNumber', () => {
@@ -198,6 +218,13 @@ describe('deletingEmergencyNumber', () => {
       expect(window.fetch).toHaveBeenCalledTimes(1);
     });
   });
+  it('should throw error log on catch', () => {
+    window.fetch = mockError({id: 1});
+    let dispatch = jest.fn();
+    return deletingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
 });
 
 describe('onArchivingEmergencyNumber', () => {
@@ -212,6 +239,13 @@ describe('onArchivingEmergencyNumber', () => {
 describe('archivingEmergencyNumber', () => {
   it('should take data and dispatch archivingEmergencyNumber function', () => {
     window.fetch = mockFetch({id: 1});
+    let dispatch = jest.fn();
+    return archivingEmergencyNumber({})(dispatch).then( () => {
+      expect(window.fetch).toHaveBeenCalledTimes(1);
+    });
+  });
+  it('should throw error log on catch', () => {
+    window.fetch = mockError({id: 1});
     let dispatch = jest.fn();
     return archivingEmergencyNumber({})(dispatch).then( () => {
       expect(window.fetch).toHaveBeenCalledTimes(1);
