@@ -11,16 +11,19 @@ describe('ConfirmationModal Component', () => {
   const props = {
     show: true,
   }
-  it('correctly renders ConfirmationModal component', () => {
+  it('correctly renders ConfirmationModal component when show is true', () => {
     const ConfirmationModalComponent = renderer.create(<ConfirmationModal {...props}/>).toJSON();
     expect(ConfirmationModalComponent).toMatchSnapshot();
   });
 
-  it('renders component when show prop is true', () => {
-    const ConfirmationModalComponent = mount(<ConfirmationModal {...props} />).find('p');
-    expect(ConfirmationModalComponent.hasClass('title')).toEqual(true);
+  it('does not render when show prop is false', () => {
+    const props = {
+      show: false,
+    }
+    const ConfirmationModalComponent = mount(<ConfirmationModal {...props} />).find('div');
+    expect(ConfirmationModalComponent).toHaveLength(0);
   });
-  it('handles clicks', () => {
+  it('runs function on button click', () => {
     const onClickSpy = jest.fn();
     const shallowConfirmationModal = shallow(<ConfirmationModal {...props} onSubmit={onClickSpy} />);
     shallowConfirmationModal.find('button').at(0).simulate('click');

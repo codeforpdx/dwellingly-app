@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ConfirmationModal Component correctly renders ConfirmationModal component 1`] = `
+exports[`ConfirmationModal Component correctly renders ConfirmationModal component when show is true 1`] = `
 <div
   className="full-window-modal"
 >
