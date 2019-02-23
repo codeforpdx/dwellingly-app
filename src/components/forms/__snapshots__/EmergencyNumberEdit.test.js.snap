@@ -1,3 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EmergencyNumberEdit Component correctly renders EmergencyNumberEdit component 1`] = `null`;
+exports[`EmergencyNumberEdit Component correctly renders EmergencyNumberEdit component 1`] = `
+<div
+  className="emergencyNumberEditContainer"
+>
+  <input
+    name="contact"
+    type="text"
+  />
+  <input
+    name="subtext"
+    placeholder=""
+    type="text"
+  />
+  <div
+    className="emergencyNumberEditInputs"
+  >
+    <fieldset
+      name="phoneNumberOne"
+    >
+      <input
+        name="subtext"
+        type="text"
+      />
+      <input
+        name="number"
+        type="text"
+      />
+      <input
+        name="ext"
+        type="text"
+      />
+    </fieldset>
+  </div>
+  <div
+    className="btn--group"
+  >
+    <div
+      className="btn--group-inner"
+    >
+      <button
+        className="btn"
+        onClick={[Function]}
+        type="submit"
+      >
+        Save
+      </button>
+      <button
+        className="btn btn--disabled"
+        type="button"
+      >
+        Delete
+      </button>
+    </div>
+    <button
+      className="btn btn--danger"
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
+</div>
+`;
