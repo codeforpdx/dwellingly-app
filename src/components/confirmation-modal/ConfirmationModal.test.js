@@ -11,7 +11,7 @@ describe('ConfirmationModal Component', () => {
   const props = {
     show: true,
   }
-  it('correctly renders ConfirmationModal component when show is true', () => {
+  it('correctly renders when show is true', () => {
     const ConfirmationModalComponent = renderer.create(<ConfirmationModal {...props}/>).toJSON();
     expect(ConfirmationModalComponent).toMatchSnapshot();
   });
@@ -28,5 +28,13 @@ describe('ConfirmationModal Component', () => {
     const shallowConfirmationModal = shallow(<ConfirmationModal {...props} onSubmit={onClickSpy} />);
     shallowConfirmationModal.find('button').at(0).simulate('click');
     expect(onClickSpy).toHaveBeenCalled();
+  });
+  it('renders passed down children props', () => {
+    const props = {
+      children: 'test',
+      show: true,
+    }
+    const ConfirmationModalComponent = renderer.create(<ConfirmationModal {...props}/>).toJSON();
+    expect(ConfirmationModalComponent).toMatchSnapshot();
   });
 });
