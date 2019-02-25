@@ -23,11 +23,19 @@ describe('default reducer', () => {
   it('should set numbers', () => {
     let action = {
       type: 'emergency/FETCHING_EMERGENCY_NUMBERS_SUCCEEDED',
-      isFetchingDataFromFirebase: true,
       numbers: {number: 'test number'}
     };
     let newState = emergencyNumbers({}, action)
     expect(newState.numbers.number).toEqual('test number')
+  });
+  
+  it('should set isFetchingDataFromFirebase to false', () => {
+    let action = {
+      type: 'emergency/FETCHING_EMERGENCY_NUMBERS_SUCCEEDED',
+      isFetchingDataFromFirebase: false
+    };
+    let newState = emergencyNumbers({}, action)
+    expect(newState.isFetchingDataFromFirebase).toEqual(false)
   });
   
   it('should catch error', () => {
