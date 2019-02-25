@@ -89,7 +89,6 @@ function mockError(data) {
   });
 }
 
-
 describe('getProperties', () => {
   it('should fetch mock data', () => {
     window.fetch = mockFetch({id: 1});
@@ -134,25 +133,17 @@ describe('creatingProperty', () => {
       expect(window.fetch).toHaveBeenCalledTimes(1);
     });
   });
-  
-  it('should fetch mock data', () => {
+  it('should fetch mock data and dispatch createProperty', () => {
     let dispatch = jest.fn();
     return creatingProperty({})(dispatch).then( () => {
       expect(window.fetch).toHaveBeenCalledTimes(2);
     });
   });
-});
-
-describe('creatingProperty', () => {
-  it('should throw error log on catch', () => {
+  it('should throw error log on failed try catch', () => {
     window.fetch = mockError({id: 1});
     let dispatch = jest.fn();
     return creatingProperty({})(dispatch).then( () => {
       expect(window.fetch).toHaveBeenCalledTimes(1);
     });
   });
-});
-
-  
-  
-  
+});  

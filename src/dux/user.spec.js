@@ -340,6 +340,41 @@ describe('addCustomUserData', () => {
     addCustomUserData(user, accountSource, userId)(dispatch);
     expect(dispatch).toHaveBeenCalled();
   });
+  it('should not dispatch actions with no accountSource', () => {
+    let user = {user: 'test'}
+    let accountSource = false
+    let userId = 1
+    let dispatch = jest.fn()
+    addCustomUserData(user, accountSource, userId)(dispatch);
+    expect(dispatch).not.toHaveBeenCalled();
+  });
+  it('should dispatch actions and set userIdentifier', () => {
+    let user = {user: 'test', id: [1]}
+    let accountSource = true
+    let userId = 1
+    let dispatch = jest.fn()
+    addCustomUserData(user, accountSource, userId)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+  it('should dispatch actions and set userIdentifier to localId', () => {
+    let user = {user: 'test', localId: [1]}
+    let accountSource = true
+    let userId = 1
+    let localId = 1
+    let dispatch = jest.fn()
+    addCustomUserData(user, accountSource, userId, localId)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
+  it('should dispatch actions and set userIdentifier to userRole', () => {
+    let user = {user: 'test', role: [1]}
+    let accountSource = true
+    let userId = 1
+    let localId = 1
+    let userRole = {isAdmin: true, isPropertyManager: true, isStaff: true}
+    let dispatch = jest.fn()
+    addCustomUserData(user, accountSource, userId, localId)(dispatch);
+    expect(dispatch).toHaveBeenCalled();
+  });
 });
 
 function mockFetch(data) {
