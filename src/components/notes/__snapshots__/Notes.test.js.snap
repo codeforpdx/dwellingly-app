@@ -1,33 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Notes Component renders Notes component 1`] = `
-<div>
-  <div
-    className="notes"
-  >
-    <header>
-      <h4>
-        Notes
-      </h4>
-    </header>
-  </div>
-</div>
-`;
-
-exports[`Notes Component renders div with className "notes" component 1`] = `
-<div>
-  <div
-    className="notes"
-  >
-    <header>
-      <h4>
-        Notes
-      </h4>
-    </header>
-  </div>
-</div>
-`;
-
 exports[`Notes Component renders div with className="msgbox msgbox--inline" if summary prop is true 1`] = `
 <div>
   <div
@@ -45,19 +17,16 @@ exports[`Notes Component renders div with className="msgbox msgbox--inline" if s
 </div>
 `;
 
-exports[`Notes Component renders div with className="msgbox msgbox--inline" if summary prop is true 2`] = `
+exports[`Notes Component renders div with className="notes" if summary prop is false 1`] = `
 <div>
   <div
-    className="msgbox msgbox--inline"
+    className="notes"
   >
-    <h4>
-      Notes
-    </h4>
-    <span
-      className="count"
-    >
-      0
-    </span>
+    <header>
+      <h4>
+        Notes
+      </h4>
+    </header>
   </div>
 </div>
 `;
