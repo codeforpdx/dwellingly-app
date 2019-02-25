@@ -1,7 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header Component correctly renders Header component 1`] = `
+exports[`Header Component correctly renders 1`] = `
 <header
   className="hero  "
 />
+`;
+
+exports[`Header Component correctly renders label passed down as props 1`] = `
+<header
+  className="hero hero--test-variant "
+>
+  <div
+    className="hero__wrapper hero__wrapper--test-type"
+  >
+    <h2>
+      test-label
+    </h2>
+  </div>
+</header>
 `;
