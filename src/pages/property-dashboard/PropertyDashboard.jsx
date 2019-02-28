@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
 import { intlShape, injectIntl } from 'react-intl';
 import { COMMON } from '../../translations/messages';
 import Header from '../../components/header/Header';
@@ -28,7 +27,7 @@ class PropertyDashboard extends Component {
             headerName: 'Name',
             field: 'name',
             filter: 'agTextColumnFilter',
-            width: 180,
+            // width: 180,
             sortable: true,
             checkboxSelection: true,
             unSortIcon: true,
@@ -38,7 +37,7 @@ class PropertyDashboard extends Component {
           {
             headerName: 'Property Manager',
             field: 'city',
-            width: 180,
+            // width: 180,
             sortable: true,
             unSortIcon: true,
             rowDrag: false,
@@ -47,7 +46,7 @@ class PropertyDashboard extends Component {
           {
             headerName: 'Address',
             field: 'addressOne',
-            width: 180,
+            // width: 180,
             sortable: true,
             unSortIcon: true,
             rowDrag: false,
@@ -56,7 +55,7 @@ class PropertyDashboard extends Component {
           {
             headerName: 'Tenants',
             field: 'numberOfUnits',
-            width: 180,
+            // width: 180,
             sortable: true,
             unSortIcon: true,
             rowDrag: false,
@@ -65,7 +64,7 @@ class PropertyDashboard extends Component {
           {
             headerName: 'Date Added',
             field: 'state',
-            width: 180,
+            // width: 180,
             sortable: true,
             unSortIcon: true,
             rowDrag: false,
@@ -97,9 +96,9 @@ class PropertyDashboard extends Component {
             </div>
           )}
         </Header>
-        <section className="property-dashboard-header">
+        <section className="property-dashboard-header width-wrapper">
           <div className="add-new">
-            <h2 className="property-header">PROPERTIES</h2>
+            <h2 className="property-header">Properties</h2>
             <Link to="admin/add-new-property">
               <button type="button" className="btn btn--lrg add-new-btn">
                 <Icon icon="plus" /> ADD NEW
@@ -107,7 +106,10 @@ class PropertyDashboard extends Component {
             </Link>
           </div>
           <div className="search-and-archive">
-            <form action="" className="search" onSubmit={this.handleSearch}>
+            <form
+              action=""
+              className="grid-search"
+              onSubmit={this.handleSearch}>
               <div className="icon-wrapper">
                 <Icon icon="search" />
                 <input
@@ -117,7 +119,7 @@ class PropertyDashboard extends Component {
                 />
               </div>
             </form>
-            <div>
+            <div className="btn-archive">
               ARCHIVED:
               <button className="switch__btn" type="button">
                 hide
@@ -125,7 +127,7 @@ class PropertyDashboard extends Component {
             </div>
           </div>
         </section>
-        <section className="property-dashboard-header property-table">
+        <section className="property-dashboard-header property-table width-wrapper">
           <div className="gray-dash-bar">
             <div className="ghost-dot"> .</div>
             <button type="button" className="btn archive-btn">
