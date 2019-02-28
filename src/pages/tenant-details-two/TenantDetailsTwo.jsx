@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
 import Navigation from '../../components/navigation/Navigation';
-import { tenants } from '../../data'
+import { tenants, users } from '../../data'
+import Search from '../../components/search/Search';
 import '../property-manager-details-two/PropertyManagerDetailsTwo.scss';
 
 class TenantDetailsTwo extends Component {
@@ -11,12 +12,21 @@ class TenantDetailsTwo extends Component {
     super(props);
 
     this.state = {
-
+      staffSelected: "",
     }
+
+    this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
 
     this.tenant = tenants.find(
       ({ id }) => id === this.props.match.params.id
     );
+  }
+
+  handleSelectionFromSearch(nameSearched) {
+    if
+    (Object.keys(nameSearched).includes('name')) {
+      this.setState({ staffSelected: nameSearched });
+    }
   }
 
   render() {
@@ -122,6 +132,19 @@ class TenantDetailsTwo extends Component {
                         </tr>
                       </table>
                     </div>
+                  </section>
+                  <section className="newPropertyFormSection">
+                    <h2 className="newPropertyFormManagerHeading">JOIN STAFF</h2>
+                    <fieldset>
+                      <Search
+                        searchData={users}
+                        value={this.state.staffSelected}
+                        placeholder= "Search JOIN Staff"
+                        filterSubset= {['name']}
+                        onSearchSelection={this.handleSelectionFromSearch}
+                        multiple
+                        />
+                    </fieldset>
                   </section>
                 </div>
               </div>
