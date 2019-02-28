@@ -16,7 +16,7 @@ class TenantDetailsTwo extends Component {
     }
 
     this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
-
+    
     this.tenant = tenants.find(
       ({ id }) => id === this.props.match.params.id
     );
