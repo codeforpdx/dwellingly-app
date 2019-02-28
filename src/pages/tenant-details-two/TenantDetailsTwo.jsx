@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
 import Navigation from '../../components/navigation/Navigation';
-import { propertyManagers, properties, tenants } from '../../data'
-import './PropertyManagerDetailsTwo.scss';
+import { tenants } from '../../data'
+import '../property-manager-details-two/PropertyManagerDetailsTwo.scss';
 
 class TenantDetailsTwo extends Component {
   constructor(props) {
@@ -14,17 +14,17 @@ class TenantDetailsTwo extends Component {
 
     }
 
-    this.pm = propertyManagers.find(
+    this.tenant = tenants.find(
       ({ id }) => id === this.props.match.params.id
     );
   }
 
   render() {
-    const { name, number } = this.pm;
+    const { name, firstName, lastName, phone, address } = this.tenant;
 
     return(
       <div className="admin page">
-        {this.pm && (
+        {this.tenant && (
           <div>
             <Header>
               {() => (
@@ -59,7 +59,7 @@ class TenantDetailsTwo extends Component {
                             First Name
                           </td>
                           <td>
-                            {name}
+                            {firstName}
                           </td>
                           <td className="pencil-icon-cell">
                             <Icon className="pencil-icon" icon="pencil"/>
@@ -70,7 +70,7 @@ class TenantDetailsTwo extends Component {
                             Last Name
                           </td>
                           <td>
-                            {name}
+                            {lastName}
                           </td>
                           <td className="pencil-icon-cell">
                             <Icon className="pencil-icon" icon="pencil"/>
@@ -81,46 +81,46 @@ class TenantDetailsTwo extends Component {
                             Phone
                           </td>
                           <td>
-                            {number}
+                            {phone}
+                          </td>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Property
+                          </td>
+                          <td>
+                            {address}
+                          </td>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Unit
+                          </td>
+                          <td>
+                            283
+                          </td>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Occupants
+                          </td>
+                          <td>
+                            3
                           </td>
                           <td className="pencil-icon-cell">
                             <Icon className="pencil-icon" icon="pencil"/>
                           </td>
                         </tr>
                       </table>
-                    </div>
-                  </section>
-                  <section>
-                    <h2 className="detail-section-heading">Properties</h2>
-                    <div className="card-container">
-                      {properties && properties.map(property => {
-                        const { name, address} = property;
-                        return(
-                          <div className="property-card">
-                            <ul>
-                              <li className="card-name">{name}</li>
-                              <li>{address}</li>
-                            </ul>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </section>
-                  <section>
-                    <h2 className="detail-section-heading">Tenants</h2>
-                    <div className="card-container">
-                      {tenants && tenants.map(tenant => {
-                        const { name, phone, address} = tenant;
-                        return(
-                          <div className="tenant-card">
-                            <ul>
-                              <li className="card-name">{name}</li>
-                              <li>{phone}</li>
-                              <li>{address}</li>
-                            </ul>
-                          </div>
-                        )
-                      })}
                     </div>
                   </section>
                 </div>

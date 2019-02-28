@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
 import Navigation from '../../components/navigation/Navigation';
+import { ROUTES } from '../../constants/constants';
 import { propertyManagers, properties, tenants } from '../../data'
 import './PropertyManagerDetailsTwo.scss';
 
@@ -110,15 +112,19 @@ class PropertyManagerDetailsTwo extends Component {
                     <h2 className="detail-section-heading">Tenants</h2>
                     <div className="card-container">
                       {tenants && tenants.map(tenant => {
-                        const { name, phone, address} = tenant;
+                        const { name, phone, address, id } = tenant;
                         return(
-                          <div className="tenant-card">
+                          <Link className="tenant-card"
+                            key={id}
+                            to={`${ROUTES.TENANT_DETAILS}/${id}/ongoing`}>
+                          <div >
                             <ul>
                               <li className="card-name">{name}</li>
                               <li>{phone}</li>
                               <li>{address}</li>
                             </ul>
                           </div>
+                        </Link>
                         )
                       })}
                     </div>

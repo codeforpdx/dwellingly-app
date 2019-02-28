@@ -65,6 +65,7 @@ export const ROUTES = {
   SETTINGS: '/settings',
   SIGNUP: '/signup',
   TENANTS: '/tenants',
+  TENANT_DETAILS: '/tenant-details',
   TERMS_CONDITIONS: '/terms-conditions',
   TICKETS: '/tickets',
   USERS: '/users'
