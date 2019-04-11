@@ -1,0 +1,345 @@
+@import "../../constants/constants.scss";
+
+/* C A R D S */
+/* ==================================================== */
+.cards {
+  background: $color__gray--light;
+  padding: 1em 1em 0 1em;
+
+  @media screen and (min-width: $mq--desktop) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+a .card,
+button .card {
+  color: $color__black;
+}
+
+.card {
+  background: $color__white;
+  border-radius: $border-radius--card;
+  @include dialog_shadow;
+  @include clearfix;
+  margin-bottom: 1em;
+  position: relative;
+  text-align: left;
+
+  &__top {
+    background: $color__white;
+    border-top-left-radius: $border-radius--card;
+    border-top-right-radius: $border-radius--card;
+    min-height: 1em;
+  }
+
+  &__bottom {
+    background: $color__white;
+    border-bottom-left-radius: $border-radius--card;
+    border-bottom-right-radius: $border-radius--card;
+    min-height: 1em;
+  }
+
+  &__header {
+    border-bottom: 1px solid $color__gray--border;
+    position: relative;
+
+    h1 {
+      font-size: 1.25em;
+      font-weight: 500;
+
+      .icon {
+        margin-right: 0.25em;
+      }
+    }
+
+    h2 {
+      font-size: emify(14, 16);
+    }
+
+    .action {
+      color: $color__blue--dark;
+      height: 1.5em;
+      top: 0.5em;
+      right: 0.5em;
+      text-align: center;
+      width: 1.5em;
+    }
+
+    button.card__flag {
+      background: $color__white;
+      border: 2px solid $color__red;
+      bottom: 0.5rem;
+      color: $color__red;
+      font-size: emify(13, 16);
+      height: auto;
+      line-height: 1.5em;
+      padding: 0 0.75em;
+      right: 0.5rem;
+
+      &--flagged {
+        background: $color__red;
+        color: $color__white;
+      }
+
+      .icon {
+        margin-right: 0.25em;
+        transform: translateY(2px);
+      }
+    }
+  }
+
+  &__content {
+    // padding: 0.5em 1em 0 1em;
+    padding: 1em;
+  }
+
+  &__contact {
+    & + .card__contact {
+      margin-top: 1em;
+    }
+
+    h4 {
+      font-size: emify(14, 16);
+      margin-bottom: emify(6, 14);
+    }
+
+    p,
+    .title {
+      font-size: emify(14, 16);
+      line-height: 1em;
+      margin: 0.25em 0;
+    }
+  }
+
+  &__summary {
+    font-weight: 500;
+    position: relative;
+
+    &--on-person {
+      p.meta {
+        color: inherit;
+      }
+    }
+
+    .progress {
+      font-size: emify(14, 16);
+      margin: 0;
+
+      .icon {
+        margin-right: 0.25em;
+      }
+    }
+
+    p {
+      line-height: 1em;
+      margin: 0.25rem 0;
+    }
+
+    .meta {
+      font-size: emify(14, 16);
+      font-weight: 300;
+      margin: 0;
+    }
+  }
+
+  &__message-and-action {
+    padding: 0.25em;
+    text-align: center;
+    p {
+      margin-bottom: 0.25em;
+
+      .icon {
+        margin-right: 0.5em;
+      }
+    }
+    .btn {
+      font-size: emify(14, 16);
+    }
+  }
+
+  &__action {
+    background: $color__blue--dark;
+    border-top-left-radius: $border-radius--card;
+    color: $color__white;
+    font-size: emify(14, 16);
+    padding: 0.5rem 1rem;
+  }
+
+  &__status {
+    border: 0;
+    border-radius: 0;
+    background: $color__yellow;
+    color: $color__white;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 2em;
+    margin: 1rem 0 0 0;
+    padding: 0.5rem 1.5rem;
+    position: relative;
+    text-align: center;
+    text-align-last: center;
+    text-transform: uppercase;
+    -webkit-appearance: none;
+    width: 100%;
+  }
+
+  &--btn {
+    cursor: pointer;
+  }
+
+  &--form {
+    &::before {
+      background: radial-gradient(
+        ellipse at center,
+        $color__gray--light 0%,
+        $color__gray--light 30%,
+        transparent 30%
+      );
+      background-size: 1em 1em;
+      background-repeat: repeat-x;
+      background-position: center center;
+      content: "";
+      display: block;
+      height: $border-radius--btn;
+      position: absolute;
+      top: -0.6em;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+
+  &--lg {
+    background: transparent;
+
+    .card__header {
+      padding: 1.5em;
+    }
+
+    .card__content {
+      padding: 1em 1.5em 0 1.5em;
+    }
+
+    .card__top {
+      padding-top: 0;
+    }
+
+    .card__bottom .card__content,
+    &.card--ticket .card__bottom .card__content {
+      padding-bottom: 1.5em;
+    }
+
+    .card__contact p {
+      font-size: 1rem;
+    }
+  }
+
+  &--sm {
+    .card__content {
+      @include flex_align(space-between);
+      padding: 0.5em 1em;
+
+      .title {
+        margin: 0;
+
+        .icon {
+          margin-right: 0.5em;
+        }
+      }
+
+      time.meta {
+        font-size: emify(14, 16);
+      }
+    }
+  }
+
+  &--closed {
+    overflow: hidden;
+
+    .card__content {
+      min-height: emify(80, 16);
+      padding: 0.5em 1em;
+    }
+
+    .card__summary {
+      .title {
+        margin-bottom: 0.5rem;
+
+        .icon {
+          border-bottom: 1px solid $color__yellow;
+          margin-right: 0.5em;
+          padding-bottom: 0.25em;
+          text-align: center;
+          width: emify(20, 16);
+        }
+      }
+
+      .card__contact {
+        p,
+        .title {
+          margin: 0;
+        }
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  &--ticket {
+    background: transparent;
+    box-shadow: none;
+
+    .card__top,
+    .card__bottom {
+      @include dialog_shadow;
+    }
+
+    .card__bottom .card__content {
+      padding-bottom: 1em;
+    }
+
+    .card__content {
+      padding-bottom: 0.5em;
+    }
+
+    &__ticket {
+      background: $color__white;
+      height: $ticket__cutout-size--height;
+      left: $ticket__cutout-size--width;
+      position: relative;
+      width: calc(100% - (#{$ticket__cutout-size--width} * 2));
+
+      &-cutout {
+        display: block;
+        height: $ticket__cutout-size--height;
+        overflow: hidden;
+        position: absolute;
+        width: $ticket__cutout-size--width;
+
+        &--left {
+          @include ticket_cutout(left);
+        }
+
+        &--right {
+          @include ticket_cutout(right);
+        }
+      }
+
+      &::after {
+        border: 0;
+        border-bottom: 1px dashed $color__gray--border;
+        content: "";
+        margin: 0;
+        position: absolute;
+        right: 50%;
+        top: 50%;
+        transform: translateX(50%) translateY(-1px);
+        width: calc(100% - 0.5rem);
+      }
+    }
+  }
+}
+/* end cards */

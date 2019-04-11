@@ -1,0 +1,14 @@
+.page--login {
+  & .main {
+    & h2 {
+      text-align: left;
+      margin: 2rem 0 1rem 1rem;
+    }
+    & .login-conditions  {
+      margin: 2rem 0 0 1rem;
+    }
+    & .align-left {
+      text-align: left;
+    }
+  }
+}

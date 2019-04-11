@@ -1,0 +1,146 @@
+@import "../../constants/constants.scss";
+
+.property-dashboard-header {
+  margin: 0 5rem 1rem;
+  padding-bottom: .5rem;
+  h2 {
+    margin-top: 5px;
+  }
+  .search-and-archive {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 900px;
+    padding-right: 1em;
+    color: $color__gray--medium;
+    font-size: emify(14, 16);
+    font-weight: 400;
+    .archive-flex {
+      display: flex;
+      align-items: center;
+    }
+  }
+  button {
+    display: inline;
+    margin-left: .5rem;
+  }
+}
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 25px;
+  overflow: hidden;
+  border: solid 1px $color__gray--light;
+  color: $color__gray--medium;
+  text-align: left;
+  padding-left: 1rem;
+  width: 500px;
+  height: 2rem;
+  input {
+    width: 100%;
+    padding-left: .5rem;
+  }
+}
+.gray-bar {
+  display: flex;
+  padding: 0 1rem;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 1px;
+  background: $color__gray--light;
+  width: 100%;
+  margin: 0 auto;
+  height: 3.5rem;
+  .btn {
+    font-size: emify(14, 16);
+  }
+}
+.table-wrapper {
+  display: flex;
+
+  th {
+    background: $color__gray--light;
+    padding: 1.3rem;
+    text-align: left;
+  }
+  tr {
+    text-align: left;
+  }
+  td {
+    border-bottom: solid 1px $color__gray--light;
+    padding: 1.5rem 1rem;
+    color: $color__blue--dark;
+    &:hover {
+      color: $color__blue;
+      outline: none;
+    }
+  }
+}
+.add-new {
+  display: flex;
+  margin: 2rem 0;
+  text-align: left;
+  margin-bottom: 1.5rem;
+  .btn {
+    font-size: emify(14, 16);
+  }
+  .property-header {
+    padding-right: 2rem; 
+    color: $color__blue--dark;
+    font-weight: 400;
+  }
+}
+.property-search-wrapper {
+  text-align: left;
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+      outline: none;
+  }
+  input {
+    margin-left: 10px;
+    padding-left: 1.2rem;
+    font-size: .9rem;
+  }
+}
+.property-table {
+  width: 900px;
+}
+.next-button {
+  display: flex;
+  align-items: flex-end;
+  width: 800px;
+  margin: 0 auto;
+  .next-btn {
+    margin-right: 2.5rem;
+  }
+}
+
+.btn-previous {
+  padding-right: 2rem;
+}
+
+@media screen and (max-width: 667px) {
+  .property-search-wrapper {
+    display: none;
+  }
+  .gray-bar {
+    display: none;
+  }
+  .add-new {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .add-new-btn {
+      margin-top: 1rem;
+      width: 200px;
+    }
+  }
+  .property-dashboard-header {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+}

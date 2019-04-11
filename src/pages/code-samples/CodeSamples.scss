@@ -1,0 +1,46 @@
+@import "../../constants/constants.scss";
+
+.main header:not(.hero) {
+  margin: 3em 0;
+
+  h1 {
+    font-weight: 700;
+  }
+}
+
+pre {
+  background: #2d2d2d;
+  color: $color__gray--border;
+  overflow: auto;
+  padding: 1em;
+}
+
+.code-sample {
+  margin: 5rem 0;
+
+  dd {
+    margin: 0;
+  }
+
+  .cards {
+    padding: 1rem;
+
+    .card {
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      header.card__header {
+        margin: 0;
+      }
+    }
+  }
+
+  .cards + pre {
+    margin-top: 0;
+  }
+
+  .notes header {
+    margin: 0;
+  }
+}

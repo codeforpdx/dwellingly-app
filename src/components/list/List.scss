@@ -1,0 +1,46 @@
+@import "../../constants/constants.scss";
+
+/* L I S T S */
+/* ==================================================== */
+.list-group {
+  &__item {
+    @include flex_align(space-between);
+    background: $color__white;
+    border-bottom: 1px solid $color__gray--border;
+    color: inherit;
+    min-height: 4rem;
+    padding: 1rem 1rem 1rem 1.5rem;
+    text-align: left;
+    width: 100%;
+
+    // &:last-child {
+    //   border: none;
+    // }
+
+    &--contact {
+      p {
+        line-height: 1.25em;
+        margin: 0;
+      }
+
+      a.list-group__contact-number {
+        border-right: 1px solid $color__gray--border;
+        padding: 0 0.5em;
+
+        &:last-child {
+          border: 0;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+
+  a.list-group__item {
+    color: inherit;
+  }
+
+  &--contacts-list {
+    font-size: emify(14, 16);
+  }
+}
+/* end lists */

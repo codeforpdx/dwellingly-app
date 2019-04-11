@@ -1,0 +1,28 @@
+.createEmergencyNumberForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  & .input {
+    margin: 1.1rem;
+  }
+}
+
+.emergencyNumberEditContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding-bottom: 1em;
+  > input:first-child {
+    max-height: fit-content;
+  }
+  & .btn--group {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 1 100%;
+    &-inner {
+      & .btn:last-child {
+        margin-left: 1em;
+      }
+    }
+  }
+}
