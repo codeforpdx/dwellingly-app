@@ -17,6 +17,7 @@
     "import/no-named-as-default-member": 0,
     "no-shadow": "off",
     "react/destructuring-assignment": "off",
-    "react/prefer-stateless-function": 0
+    "react/prefer-stateless-function": 0,
+    "linebreak-style": "off"
   }
 }

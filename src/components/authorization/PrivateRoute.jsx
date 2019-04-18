@@ -37,12 +37,14 @@ function PrivateRoute({ user, component: Component, ...rest }) {
 }
 
 PrivateRoute.propTypes = {
+  user: PropTypes.objectOf(Object),
   component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})])
     .isRequired,
   location: PropTypes.shape({})
 };
 
 PrivateRoute.defaultProps = {
+  user: undefined,
   location: undefined
 };
 
