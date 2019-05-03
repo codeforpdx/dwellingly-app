@@ -52,6 +52,7 @@ import Settings from './pages/settings/Settings';
 import Signup from './pages/signup/Signup';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
+import TenantDetailsTwo from './pages/tenant-details-two/TenantDetailsTwo';
 import TermsConditions from './pages/terms-conditions/TermsConditions';
 import Tickets from './pages/tickets/Tickets';
 import WaitingForRole from './pages/waiting-for-role/WaitingForRole';
@@ -155,7 +156,8 @@ ReactDOM.render(
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.ADD_PROPERTY} component={NewPropertyForm} />
-            <Route path={`${ROUTES.PROPERTY_MANAGER_DETAILS}/:id`} component={StaffUser(PropertyManagerDetailsTwo)} />
+            <Route path={`${ROUTES.PROPERTY_MANAGER_DETAILS}/:id`} component={AdminUser(PropertyManagerDetailsTwo)} />
+            <Route path={`${ROUTES.TENANT_DETAILS}/:id`} component={AdminUser(TenantDetailsTwo)} />
             <Route path={ROUTES.ADD_STAFF_MEMBER} component={NewStaffMemberForm} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />

@@ -197,7 +197,7 @@ export const users = [
     role: {
       isAdmin: 'false',
       isPropertyManager: 'false',
-      isStaff: 'trie'
+      isStaff: 'true'
     }
   }
 ];
