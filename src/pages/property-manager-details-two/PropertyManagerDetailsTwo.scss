@@ -82,14 +82,14 @@
   font-weight: bold;
 }
 
-ul {
+.property-card-list, .tenant-card-list {
   list-style: none;
   text-align: left;
   padding: 0;
   margin: 0;
 }
 
-table {
+#property-manager-contact-table {
   border-spacing: 0;
   box-sizing: border-box;
   position: relative;
@@ -109,7 +109,7 @@ table {
   }
 }
 
-#contact-table-cell {
+#property-manager-contact-table-cell {
   width: 22%;
 }
 
