@@ -1,14 +1,55 @@
+@import '../../constants/constants.scss';
 .page--login {
+  background: $color__gradient--blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   & .main {
-    & h2 {
-      text-align: left;
-      margin: 2rem 0 1rem 1rem;
+    &.login-form {
+      width: 395px;
+      height: 596px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: $color__white;
+      border-radius: 40px;
+      box-shadow: 0 2px 11px rgba(97, 97, 97, 0.5);
+      & .width-wrapper {
+        padding: 0 1.3rem;
+        & .login-separator {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & .separator {
+            width: 3em;
+            height: 1px;
+            margin: 0 1rem;
+            border-bottom: 1px solid $color__gray--border;
+          }
+        }
+        &.account-links {
+          display: flex;
+          flex-direction: column;
+          a:first-child {
+            margin: 0.5rem 0;
+          }
+        }
+        & .form-meta {
+          display: flex;
+          justify-content: center;
+          border: none;
+        }
+      }
     }
-    & .login-conditions  {
+    & h2 {
+      color: $color__blue;
+    }
+    & .login-conditions {
       margin: 2rem 0 0 1rem;
     }
     & .align-left {
-      text-align: left;
+      // text-align: left;
     }
   }
 }

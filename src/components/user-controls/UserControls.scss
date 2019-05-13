@@ -1,15 +1,15 @@
 .user-controls {
-  background-color: #000000;
   color: #ffffff;
   position: absolute;
   bottom: 0px;
   left: 0px;
   width: 200px;
   height: 100px;
+  ul {
+    margin: 0;
+  }
 }
 
-
-
-ul.no-user a{
+ul.no-user a {
   color: #fff;
 }

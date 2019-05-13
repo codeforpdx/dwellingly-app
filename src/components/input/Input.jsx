@@ -9,18 +9,18 @@ import './Input.scss';
 function InputContent({
   blockClass,
   children,
-  id,           // identifier for use with htmlFor and key properties
+  id, // identifier for use with htmlFor and key properties
   label,
-  maxLength,    // maximum length
-  model,        // value of key in state
-  name,         // name of input
-  onChange,     // passes along the onChange function through props
-  onClick,      // for use with button/Link
-  placeholder,  // placeholder text
-  required,     // is this component required 
-  type,         // defines input type ["radio", "button", etc.]
-  url,          // for use with button/Link
-  value         // value from state, object, or string
+  maxLength, // maximum length
+  model, // value of key in state
+  name, // name of input
+  onChange, // passes along the onChange function through props
+  onClick, // for use with button/Link
+  placeholder, // placeholder text
+  required, // is this component required
+  type, // defines input type ["radio", "button", etc.]
+  url, // for use with button/Link
+  value // value from state, object, or string
 }) {
   let inputContent = (
     <label htmlFor={id}>
@@ -102,7 +102,7 @@ function InputContent({
 
 export default class Input extends Component {
   render() {
-    const { blockClass, type, variants } = this.props;
+    const { blockClass, type, variants, className } = this.props;
 
     const variantsClasses =
       variants.length > 0
@@ -112,7 +112,7 @@ export default class Input extends Component {
         : '';
 
     return (
-      <div className={`input ${blockClass}`}>
+      <div className={`input ${blockClass} ${className}`}>
         <div className={`${blockClass}__${type} ${variantsClasses}`}>
           <InputContent {...this.props} variantsClasses={variantsClasses} />
         </div>

@@ -1,5 +1,5 @@
 // Get data
-import { SETTINGS, ROUTES } from '../constants/constants';
+import { SETTINGS, ROUTES, ENDPOINTS } from '../constants/constants';
 
 // Actions for users
 export const GET_AUTHORIZATION = 'user/GET_AUTHORIZATION';
@@ -31,7 +31,7 @@ const initialState = {
   haveToken: false,
   haveUser: false,
   passwordResetComplete: false,
-  error: null
+  error: null,
 };
 
 // Reducer for the user store
@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetchingAuthorization: action.isFetchingAuthorization,
         haveToken: action.haveToken,
-        error: action.error
+        error: action.error,
       };
 
     case GET_AUTHORIZATION_COMPLETE:
@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
         haveToken: action.haveToken,
         haveUser: action.haveUser,
         user: action.user,
-        error: action.error
+        error: action.error,
       };
 
     case GET_USER_DATA:
@@ -60,42 +60,43 @@ export default (state = initialState, action) => {
         ...state,
         isFetchingUserData: action.isFetchingUserData,
         haveUser: action.haveUser,
-        error: action.error
+        error: action.error,
       };
 
     case GET_USER_DATA_COMPLETE:
       return {
         ...state,
+        isCreatingUser: action.isCreatingUser,
         isFetchingUserData: action.isFetchingUserData,
         isFetchingAuthorization: action.isFetchingAuthorization,
         haveUser: action.haveUser,
         user: action.user,
-        error: action.error
+        error: action.error,
       };
 
     case FETCHING_USERS:
       return {
         ...state,
-        users: action.users
+        users: action.users,
       };
 
     case LOGIN:
       return {
         ...state,
         user: action.user,
-        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase
+        isFetchingDataFromFirebase: action.isFetchingDataFromFirebase,
       };
 
     case LOGOUT:
       return {
         ...state,
-        user: action.user
+        user: action.user,
       };
 
     case USER_ERROR:
       return {
         ...state,
-        error: action.error
+        error: action.error,
       };
 
     case CREATE_USER:
@@ -103,15 +104,15 @@ export default (state = initialState, action) => {
         ...state,
         isCreatingUser: action.isCreatingUser,
         haveUser: action.haveUser,
-        error: action.error
+        error: action.error,
       };
 
     case CREATE_USER_COMPLETE:
       return {
         ...state,
-        creatingUser: action.creatingUser,
+        isCreatingUser: action.isCreatingUser,
         haveUser: action.haveUser,
-        error: action.error
+        error: action.error,
       };
 
     case NO_USER:
@@ -120,7 +121,7 @@ export default (state = initialState, action) => {
         user: action.user,
         isFetchingAuthorization: action.isFetchingAuthorization,
         isFetchingUserData: action.isFetchingUserData,
-        haveUser: action.haveUser
+        haveUser: action.haveUser,
       };
 
     case ADD_ERROR:
@@ -129,7 +130,7 @@ export default (state = initialState, action) => {
         haveUser: action.haveUser,
         isFetchingAuthorization: action.isFetchingAuthorization,
         isFetchingUserData: action.isFetchingUserData,
-        error: action.error
+        error: action.error,
       };
 
     case CLEAR_ERROR:
@@ -138,28 +139,28 @@ export default (state = initialState, action) => {
         haveUser: action.haveUser,
         isFetchingAuthorization: action.isFetchingAuthorization,
         isFetchingUserData: action.isFetchingUserData,
-        error: action.error
+        error: action.error,
       };
 
     case RESET_USER_PASSWORD:
       return {
         ...state,
         isResettingPassword: action.isResettingPassword,
-        passwordResetComplete: action.passwordResetComplete
+        passwordResetComplete: action.passwordResetComplete,
       };
 
     case RESET_USER_PASSWORD_COMPLETE:
       return {
         ...state,
         isResettingPassword: action.isResettingPassword,
-        passwordResetComplete: action.passwordResetComplete
+        passwordResetComplete: action.passwordResetComplete,
       };
     case RESET_USER_PASSWORD_ERROR:
       return {
         ...state,
         isResettingPassword: action.isResettingPassword,
         passwordResetComplete: action.passwordResetComplete,
-        error: action.error
+        error: action.error,
       };
     default:
       return state;
@@ -170,7 +171,7 @@ export default (state = initialState, action) => {
 
 export const getUsersCollection = data => ({
   type: FETCHING_USERS,
-  users: data
+  users: data,
 });
 
 export const getUsers = () => async dispatch => {
@@ -183,14 +184,12 @@ export const getUsers = () => async dispatch => {
 //   type: FETCHING_USERS,
 //   users: data
 // });
-// 
+//
 // export const getProperties = () => async dispatch => {
 //   const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.PROPERTIES);
 //   const data = await response.json();
 //   dispatch(getPropertiesCollection(data));
 // };
-
-
 
 export const initiateFirebaseCall = () => dispatch => {
   console.log('initiate firebase call');
@@ -198,13 +197,19 @@ export const initiateFirebaseCall = () => dispatch => {
     type: GET_AUTHORIZATION,
     isFetchingAuthorization: true,
     haveToken: false,
-    error: null
+    error: null,
   });
 };
 
-export const getAuthDetailsFromFirebase = (user, accountSource) => dispatch => {
+export const getAuthDetailsFromFirebase = (
+  user,
+  accountSource,
+  cb,
+) => dispatch => {
   console.log('here are the details about user from firebase');
   console.log(user);
+  // Set cookie
+  cb();
   dispatch({
     type: GET_AUTHORIZATION_COMPLETE,
     isFetchingAuthorization: false,
@@ -215,10 +220,10 @@ export const getAuthDetailsFromFirebase = (user, accountSource) => dispatch => {
       lastName: user.lastName,
       email: user.email,
       accountSource,
-      id: user.localId,
-      role: user.role
+      id: user.localId ? user.localId : user.id,
+      role: user.role,
     },
-    error: user.error
+    error: user.error,
   });
 };
 
@@ -227,17 +232,31 @@ export const initiateUserDetailsCall = () => dispatch => {
     type: GET_USER_DATA,
     isFetchingUserData: true,
     haveUser: false,
-    error: null
+    error: null,
+  });
+};
+// This function is for application refresh, it takes the user ID from the cookie as an argument to the parameter
+export const setUserDetails = uid => async dispatch => {
+  const response = await fetch(`${ENDPOINTS.USER}${uid}`);
+  const data = await response.json();
+  dispatch({
+    type: GET_USER_DATA_COMPLETE,
+    isFetchingUserData: false,
+    haveUser: true,
+    user: {
+      ...data,
+    },
+    error: null,
   });
 };
 
 export const addCustomUserData = (
   userData,
   accountSource,
-  userID
+  userID,
 ) => dispatch => {
-  let userIdentifier = userID;
-  // User is a kind of user
+  console.log(userData, accountSource, userID);
+  let userIdentifier;
   if (userData && userData.id && userData.id.length > 0) {
     userIdentifier = userData.id;
     // User is another kind of user
@@ -249,10 +268,10 @@ export const addCustomUserData = (
     userRole = {
       isAdmin: userData.role.isAdmin,
       isPropertyManager: userData.role.isPropertyManager,
-      isStaff: userData.role.isStaff
+      isStaff: userData.role.isStaff,
     };
   }
-  if (userData && accountSource) {
+  if (userData) {
     dispatch({
       type: GET_USER_DATA_COMPLETE,
       isCreatingUser: false,
@@ -265,9 +284,9 @@ export const addCustomUserData = (
         firstName: userData.firstName,
         lastName: userData.lastName,
         id: userIdentifier,
-        role: userRole
+        role: userRole,
       },
-      error: null
+      error: null,
     });
   }
 };
@@ -275,9 +294,10 @@ export const addCustomUserData = (
 export const initiateCreateUserCall = () => dispatch => {
   dispatch({
     type: CREATE_USER,
+    isCreatingUser: true,
     isFetchingUserData: true,
     haveUser: false,
-    error: null
+    error: null,
   });
 };
 
@@ -285,29 +305,31 @@ export const setUserFromFirebaseEmail = user => dispatch => {
   console.log('is this thing on?', user);
   dispatch({
     type: CREATE_USER_COMPLETE,
+    isCreatingUser: false,
     isFetchingAuthorization: false,
     isFetchingUserData: false,
     haveUser: true,
     user: {
       email: user.email,
-      id: user.id
+      id: user.id,
     },
-    error: null
+    error: null,
   });
 };
 
 export const setUserFromGoogle = user => dispatch => {
   dispatch({
     type: CREATE_USER_COMPLETE,
+    isCreatingUser: false,
     isFetchingAuthorization: false,
     isFetchingUserData: false,
     haveUser: true,
     user: {
       email: user.email,
       accountSource: user.credential.signInMethod,
-      id: user.uid
+      id: user.uid,
     },
-    error: null
+    error: null,
   });
 };
 
@@ -318,7 +340,7 @@ export const clearUser = () => dispatch => {
     isFetchingUserData: false,
     haveToken: false,
     haveUser: false,
-    user: null
+    user: null,
   });
 };
 
@@ -328,7 +350,7 @@ export const addError = error => dispatch => {
     isFetchingAuthorization: false,
     isFetchingUserData: false,
     haveUser: false,
-    error
+    error,
   });
 };
 
@@ -337,7 +359,7 @@ export const clearError = () => dispatch => {
     type: CLEAR_ERROR,
     isFetchingDataFromFirebase: false,
     haveUser: false,
-    error: null
+    error: null,
   });
 };
 
@@ -346,7 +368,7 @@ export const initiateUserPasswordEmail = () => dispatch => {
     type: RESET_USER_PASSWORD,
     isResettingPassword: true,
     passwordResetComplete: false,
-    error: null
+    error: null,
   });
 };
 
@@ -354,7 +376,7 @@ export const resetUserPasswordEmail = () => dispatch => {
   dispatch({
     type: RESET_USER_PASSWORD_COMPLETE,
     isResettingPassword: false,
-    passwordResetComplete: true
+    passwordResetComplete: true,
   });
 };
 
@@ -363,6 +385,6 @@ export const resetUserPasswordEmailError = error => dispatch => {
     type: RESET_USER_PASSWORD_ERROR,
     isResettingPassword: false,
     passwordResetComplete: false,
-    error
+    error,
   });
 };

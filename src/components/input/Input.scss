@@ -1,4 +1,4 @@
-@import "../../constants/constants.scss";
+@import '../../constants/constants.scss';
 
 /* F O R M S */
 /* ==================================================== */
@@ -16,6 +16,20 @@
 
   &:last-of-type {
     border: 0;
+  }
+
+  &.input {
+    &--no-label {
+      &:last-of-type {
+        border-bottom: 1px solid $color__gray--border;
+      }
+      & .inline-input__label {
+        display: none;
+      }
+      & input {
+        width: 100%;
+      }
+    }
   }
 
   /* BUTTON */
@@ -44,7 +58,7 @@
       position: relative;
     }
 
-    input[type="radio"] {
+    input[type='radio'] {
       position: absolute;
       left: 0;
       opacity: 0;
@@ -86,7 +100,7 @@
       padding-right: 1em;
       width: 30%;
     }
-    
+
     input {
       width: 70%;
     }
@@ -112,7 +126,7 @@
 
 // SWITCH
 .switch {
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     display: none;
 
     &:checked + .switch__btn {
@@ -149,7 +163,7 @@
       border-radius: 1.5em;
       box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.1),
         0 3px 1px rgba(0, 0, 0, 0.05);
-      content: "";
+      content: '';
       display: block;
       height: calc(2em - 2px);
       left: -1px;

@@ -91,7 +91,7 @@ export const FORGOT_PASSWORD = defineMessages({
 export const FORMS = defineMessages({
   CREATE_ACCOUNT: {
     id: 'form.create_account',
-    defaultMessage: 'Create account'
+    defaultMessage: 'Create an Account'
   },
   EMAIL_LABEL: {
     id: 'form.email.label',
@@ -99,7 +99,7 @@ export const FORMS = defineMessages({
   },
   EMAIL_PLACEHOLDER: {
     id: 'form.email.placeholder',
-    defaultMessage: 'email address (i.e., email@example.com)'
+    defaultMessage: 'Email'
   },
   ERROR_MATCH_PASSWORD: {
     id: 'form.error.match_password',
@@ -135,7 +135,7 @@ export const FORMS = defineMessages({
   },
   PASSWORD_PLACEHOLDER: {
     id: 'form.password.placeholder',
-    defaultMessage: 'your password'
+    defaultMessage: 'Password'
   },
   PASSWORD_CONFIRM_LABEL: {
     id: 'form.password_confirm.label',
