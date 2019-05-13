@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmationModal Component correctly renders when show is true 1`] = `
+<div
+  className="full-window-modal"
+>
+  <div
+    className="modal-content"
+  >
+    <p
+      className="title"
+    />
+    <div
+      className="button-container"
+    >
+      <button
+        className="btn"
+        form="newPropertyForm"
+        id="yes-button"
+        type="submit"
+      >
+        YES
+      </button>
+      <button
+        className="cancel"
+        type="button"
+      >
+        NO
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ConfirmationModal Component renders passed down children props 1`] = `
+<div
+  className="full-window-modal"
+>
+  <div
+    className="modal-content"
+  >
+    <p
+      className="title"
+    >
+      test
+    </p>
+    <div
+      className="button-container"
+    >
+      <button
+        className="btn"
+        form="newPropertyForm"
+        id="yes-button"
+        type="submit"
+      >
+        YES
+      </button>
+      <button
+        className="cancel"
+        type="button"
+      >
+        NO
+      </button>
+    </div>
+  </div>
+</div>
+`;

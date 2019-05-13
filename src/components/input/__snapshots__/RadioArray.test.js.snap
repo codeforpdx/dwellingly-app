@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioArray Component correctly renders radio buttons if options are present 1`] = `
+<div
+  className="radio-array"
+>
+  <div
+    className="radio-array__wrapper"
+  >
+    <label>
+      <input
+        checked={true}
+        onChange={[Function]}
+        type="radio"
+      />
+      <span
+        className="radio-array__option"
+      />
+    </label>
+    <label>
+      <input
+        checked={true}
+        onChange={[Function]}
+        type="radio"
+      />
+      <span
+        className="radio-array__option"
+      />
+    </label>
+  </div>
+</div>
+`;
+
+exports[`RadioArray Component displays empty container without options present 1`] = `
+<div
+  className="radio-array"
+/>
+`;
