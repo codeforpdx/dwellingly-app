@@ -1,6 +1,8 @@
 // Get data
 import { SETTINGS, ROUTES } from '../constants/constants';
 
+export const FETCHING_USERS_SUCCEEDED = 'users/FETCHING_USERS_SUCCEEDED';
+
 // Actions for users
 export const GET_AUTHORIZATION = 'user/GET_AUTHORIZATION';
 export const GET_AUTHORIZATION_COMPLETE = 'user/GET_AUTHORIZATION_COMPLETE';
@@ -109,7 +111,7 @@ export default (state = initialState, action) => {
     case CREATE_USER_COMPLETE:
       return {
         ...state,
-        creatingUser: action.creatingUser,
+        isCreatingUser: action.isCreatingUser,
         haveUser: action.haveUser,
         error: action.error
       };
@@ -174,7 +176,7 @@ export const getUsersCollection = data => ({
 });
 
 export const getUsers = () => async dispatch => {
-  const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.USERS);
+  const response = await fetch(SETTINGS.FIREBASE_API + ROUTES.USER);
   const data = await response.json();
   dispatch(getUsersCollection(data));
 };

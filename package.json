@@ -25,7 +25,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
-    "jest": "23.5.0",
+    "jest": "^23.5.0",
     "prettier": "^1.13.7",
     "webpack-dev-server": "2.9.4"
   },
@@ -86,6 +86,7 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
     ],
+    "coverageDirectory": "spec/coverage",
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
@@ -93,7 +94,7 @@
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
     ],
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "testURL": "http://localhost",
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
