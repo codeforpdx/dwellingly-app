@@ -8,7 +8,6 @@ import { ENDPOINTS, HTTP_METHODS, ROUTES } from '../constants/constants';
 // REDUCERS
 import {
   initiateFirebaseCall,
-  initiateUserDetailsCall,
   addError,
   getAuthDetailsFromFirebase,
   setUserFromFirebaseEmail,

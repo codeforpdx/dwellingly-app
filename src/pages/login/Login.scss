@@ -17,6 +17,9 @@
       box-shadow: 0 2px 11px rgba(97, 97, 97, 0.5);
       & .width-wrapper {
         padding: 0 1.3rem;
+        & img {
+          width: 100%;
+        }
         & .login-separator {
           display: flex;
           align-items: center;

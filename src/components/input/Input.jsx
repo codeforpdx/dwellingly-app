@@ -20,7 +20,7 @@ function InputContent({
   required, // is this component required
   type, // defines input type ["radio", "button", etc.]
   url, // for use with button/Link
-  value // value from state, object, or string
+  value, // value from state, object, or string
 }) {
   let inputContent = (
     <label htmlFor={id}>
@@ -124,13 +124,15 @@ export default class Input extends Component {
 Input.propTypes = {
   blockClass: PropTypes.string,
   type: PropTypes.string,
-  variants: PropTypes.arrayOf(PropTypes.string)
+  className: PropTypes.string,
+  variants: PropTypes.arrayOf(PropTypes.string),
 };
 
 Input.defaultProps = {
   blockClass: 'inline-input',
   type: 'text',
-  variants: []
+  className: '',
+  variants: [],
 };
 
 export { Input, RadioArray, Toggle };

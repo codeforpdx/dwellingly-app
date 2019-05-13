@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
 import Input from '../input/Input';
-import { FORMS, COMMON } from '../../translations/messages';
+import { FORMS } from '../../translations/messages';
 
-import Icon from '../icon/Icon';
+import LOGO from '../../assets/images/dwellingly_logo.png';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class LoginForm extends React.Component {
       password: '',
       // redirectToReferrer: false,
       submit: false,
-      error: null
+      error: null,
     };
   }
 
@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
     const { name } = target;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -57,10 +57,7 @@ class LoginForm extends React.Component {
 
     return (
       <section className="width-wrapper">
-        <Icon className="icon--logo" icon="logo" />
-        <h2 className="align--center">
-          {intl.formatMessage(COMMON.APP_TITLE)}
-        </h2>
+        <img src={LOGO} alt="" />
         <form
           name="loginEmail"
           method="POST"
@@ -105,11 +102,11 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   intl: intlShape.isRequired,
-  location: PropTypes.shape({ state: PropTypes.shape({}) })
+  location: PropTypes.shape({ state: PropTypes.shape({}) }),
 };
 
 LoginForm.defaultProps = {
-  location: {}
+  location: {},
 };
 
 export default injectIntl(LoginForm);
