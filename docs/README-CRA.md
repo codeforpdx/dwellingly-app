@@ -1,3 +1,7 @@
+# Create React App README
+
+**This README is preserved for reference. It is included with all Create React App starters.**
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
