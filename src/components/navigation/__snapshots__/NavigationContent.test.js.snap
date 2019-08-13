@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationContent Component renders button when type=mobile 1`] = `
+<nav
+  className="menu menu--mobile"
+>
+  <button
+    aria-label="Close Menu"
+    className="menu__bg"
+    onClick={[Function]}
+    type="button"
+  />
+  <div
+    className="menu__groups"
+  />
+</nav>
+`;

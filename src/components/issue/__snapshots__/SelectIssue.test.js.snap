@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectIssue Component renders correctly when issueOptions prop exists 1`] = `
+<fieldset
+  className=""
+>
+  <div
+    className="message message--light"
+  >
+    <p>
+      <strong>
+        Step 1: Select Issue
+      </strong>
+    </p>
+  </div>
+  <div
+    className="input inline-input"
+  >
+    <div
+      className="inline-input__radio "
+    >
+      <label
+        htmlFor="settings-issue-undefined"
+      >
+        <input
+          checked={true}
+          id="settings-issue-undefined"
+          name="issue"
+          type="radio"
+        />
+        <span
+          className="inline-input__radio-btn"
+        />
+      </label>
+    </div>
+  </div>
+</fieldset>
+`;
