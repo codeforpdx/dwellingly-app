@@ -1,7 +1,7 @@
 How to set up Dwelling Flask Testing Backend. 
 NOTE: no database setup here. Backend uses list-based live data 
 
-# Setup Python on  your system.
+# Setup Python on  your system
 [Link to Guide](https://realpython.com/installing-python/ "Setup Python")
 # Run 
     pip install --no-cache-dir -r api/requirements.txt
