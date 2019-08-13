@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
 import Navigation from '../../components/navigation/Navigation';
-import { ROUTES } from '../../constants/constants';
 import { propertyManagers, properties, tenants } from '../../data'
 import './PropertyManagerDetailsTwo.scss';
 
@@ -55,9 +53,9 @@ class PropertyManagerDetailsTwo extends Component {
                   <section className="contact-details-section">
                     <div >
                       <h2 className="detail-section-heading" id="contact-heading">Contact</h2>
-                      <table className="accordion__table">
+                      <table id="property-manager-contact-table" className="accordion__table">
                         <tr>
-                          <td id="contact-table-cell">
+                          <td id="property-manager-contact-table-cell">
                             First Name
                           </td>
                           <td>
@@ -99,7 +97,7 @@ class PropertyManagerDetailsTwo extends Component {
                         const { name, address} = property;
                         return(
                           <div className="property-card">
-                            <ul>
+                            <ul className="property-card-list">
                               <li className="card-name">{name}</li>
                               <li>{address}</li>
                             </ul>
@@ -112,19 +110,15 @@ class PropertyManagerDetailsTwo extends Component {
                     <h2 className="detail-section-heading">Tenants</h2>
                     <div className="card-container">
                       {tenants && tenants.map(tenant => {
-                        const { name, phone, address, id } = tenant;
+                        const { name, phone, address } = tenant;
                         return(
-                          <Link className="tenant-card"
-                            key={id}
-                            to={`${ROUTES.TENANT_DETAILS}/${id}/ongoing`}>
-                          <div >
-                            <ul>
+                          <div className="tenant-card">
+                            <ul className="tenant-card-list">
                               <li className="card-name">{name}</li>
                               <li>{phone}</li>
                               <li>{address}</li>
                             </ul>
                           </div>
-                        </Link>
                         )
                       })}
                     </div>

@@ -23,7 +23,7 @@ class NewPropertyForm extends Component {
     this.toggleConfirmationModal = this.toggleConfirmationModal.bind(this);
     this.isSaveEnabled = this.isSaveEnabled.bind(this);
     this.addAnotherProperty = this.addAnotherProperty.bind(this);
-    this.redirectHome = this.redirectHome.bind(this);
+    this.redirectToDashboard = this.redirectToDashboard.bind(this);
 
     this.state = {
       confirmingSubmit: false,
@@ -97,8 +97,8 @@ class NewPropertyForm extends Component {
     this.toggleConfirmationModal(event);
   }
 
-  redirectHome() {
-    this.props.history.push('/');
+  redirectToDashboard() {
+    this.props.history.push('/admin');
   }
 
   toggleConfirmationModal(event) {
@@ -226,7 +226,7 @@ class NewPropertyForm extends Component {
         <SuccessModal
           show={this.state.showModal}
           onClick={this.addAnotherProperty}
-          onClose={this.redirectHome}>
+          onClose={this.redirectToDashboard}>
           Property Created Successfully!
         </SuccessModal>
       )
