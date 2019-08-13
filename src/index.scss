@@ -1,8 +1,6 @@
 @import './constants/constants.scss';
 @import url('https://use.typekit.net/atu1wus.css');
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-$ag-icons-path: '../node_modules/ag-grid-community/src/styles/ag-theme-balham/icons/';
-@import '../node_modules/ag-grid-community/src/styles/ag-grid.scss';
 
 /* D E F A U L T S */
 /* ==================================================== */
@@ -148,6 +146,10 @@ a {
       font-size: 1rem;
       height: emify(36, 16);
       line-height: emify(36, 16);
+    }
+
+    &--transparent {
+      background: transparent;
     }
 
     &--alt {

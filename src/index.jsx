@@ -67,9 +67,29 @@ import { dummyUser } from './data';
 
 const user = dummyUser;
 
+// const select = state => state.user;
+// let currentValue;
+// const handleChange = () => {
+//   const previousValue = currentValue;
+//   currentValue = select(store.getState());
+//
+//   if (previousValue !== currentValue) {
+//     console.log(
+//       'User was this: ',
+//       previousValue,
+//       'Now its this: ',
+//       currentValue
+//     );
+//   }
+// };
+//
+// const unsubscribe = store.subscribe(handleChange);
+// unsubscribe();
+
 // Set up cookie stuff for translation
 const cookies = new Cookies();
 const lang = cookies.get('language');
+
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
 if (!validLang) {
@@ -81,7 +101,7 @@ if (!validLang) {
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
 const userRole = getUserRoleString(user.role, ROLES);
-// Render the thing!
+
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
     <Provider store={store}>
@@ -176,6 +196,6 @@ ReactDOM.render(
       </ConnectedRouter>
     </Provider>
   </IntlProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 registerServiceWorker();

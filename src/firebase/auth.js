@@ -8,23 +8,23 @@ import { ENDPOINTS, HTTP_METHODS, ROUTES } from '../constants/constants';
 // REDUCERS
 import {
   initiateFirebaseCall,
-  initiateUserDetailsCall,
   addError,
   getAuthDetailsFromFirebase,
   setUserFromFirebaseEmail,
   setUserFromGoogle,
   addCustomUserData,
+  // setUserToStore,
   clearUser,
   initiateUserPasswordEmail,
   resetUserPasswordEmail,
-  resetUserPasswordEmailError
+  resetUserPasswordEmailError,
 } from '../dux/user';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // User data from Firestore
 export function getFirestoreUserData(uid, accountSource) {
-  console.log('get user data');
+  console.log('get user data ');
   store.dispatch(initiateFirebaseCall());
   const userEndpoint = `${ENDPOINTS.USER}${uid}`;
   console.log('getting user at ', userEndpoint);
@@ -34,8 +34,8 @@ export function getFirestoreUserData(uid, accountSource) {
     .then(response => response.json())
     .then(json => {
       const userData = json;
-      console.log(json);
       if (userData) {
+        // store.dispatch(setUserToStore(userData));
         store.dispatch(addCustomUserData(userData, accountSource, uid));
       }
       // Don't need to set user here, will get picked up by UserControl as auth changes!
@@ -51,7 +51,7 @@ export function doCreateUserWithEmailAndPassword(
   firstName,
   lastName,
   email,
-  password
+  password,
 ) {
   store.dispatch(initiateFirebaseCall());
   firebase
@@ -61,73 +61,19 @@ export function doCreateUserWithEmailAndPassword(
       fetch(ENDPOINTS.USER, {
         method: HTTP_METHODS.POST,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           firstName,
           lastName,
           email,
-          id: response.user.uid
-        })
+          id: response.user.uid,
+        }),
       });
     })
     .then(response => response.json())
     .then(json => {
       store.dispatch(setUserFromFirebaseEmail(json));
-    })
-    .catch(error => {
-      // Handle Errors here.
-      store.dispatch(addError(error));
-    });
-}
-
-// Create a user with an email and password, also create authentication in Firestore
-export function doCreateStaffUser(
-  firstName,
-  lastName,
-  email,
-  phone,
-  password,
-  role
-) {
-  console.log(firstName,
-  lastName,
-  email,
-  phone,
-  password,
-  role);
-  store.dispatch(initiateFirebaseCall());
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(response => {
-      fetch(ENDPOINTS.USER, {
-        method: HTTP_METHODS.POST,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          id: response.user.uid
-        })
-      });
-      console.log(response);
-    })
-    .then(response => response.json())
-    .then(json => {
-      store.dispatch(initiateUserDetailsCall());
-      const newUser = {
-        firstName,
-        lastName,
-        email,
-        leaseId: ['johnny_test'], // THIS SHOULD GO AWAY LEASE SHOULD NOT BE REQUIRED!!!
-        phone,
-        role
-      };
-      console.log(newUser);
-      store.dispatch(addCustomUserData(newUser, 'email', json.uid));
     })
     .catch(error => {
       // Handle Errors here.
@@ -147,13 +93,18 @@ export function doSignInWithEmailAndPassword(email, password) {
       console.log(response);
       const userEndpoint = `${ENDPOINTS.USER}${response.user.uid}`;
       fetch(userEndpoint, {
-        method: HTTP_METHODS.GET
+        method: HTTP_METHODS.GET,
       })
         .then(response => response.json())
         .then(json => {
           console.log(json);
-          store.dispatch(getAuthDetailsFromFirebase(json, 'password'));
-          this.setUserCookies(json);
+          store.dispatch(
+            getAuthDetailsFromFirebase(json, 'password', () =>
+              this.setUserCookies(json),
+            ),
+          );
+          // this.setUserCookies(json);
+          // store.dispatch(addCustomUserData(json, 'password', json.id));
           // Don't need to set user here, will get picked up by UserControl as auth changes!
           // store.dispatch(setUser(json, 'email'))
         })
@@ -237,7 +188,7 @@ export function setUserCookies(newUser) {
   console.log(newUser);
   const cookies = new Cookies();
   const cookieExpiration = new Date(
-    new Date().setFullYear(new Date().getFullYear() + 1)
+    new Date().setFullYear(new Date().getFullYear() + 1),
   );
   const userEmailCookieExist = cookies.get('messengerUser');
   const userIDCookieExist = cookies.get('messengerUserId');
@@ -246,19 +197,19 @@ export function setUserCookies(newUser) {
     if (!userEmailCookieExist) {
       cookies.set('messengerUser', newUser.email, {
         path: '/',
-        expires: cookieExpiration
+        expires: cookieExpiration,
       });
     }
     if (!userIDCookieExist) {
       cookies.set('messengerUserId', newUser.id, {
         path: '/',
-        expires: cookieExpiration
+        expires: cookieExpiration,
       });
     }
     if (!userRoleExist) {
       cookies.set('messengerUserRole', newUser.role, {
         path: '/',
-        expires: cookieExpiration
+        expires: cookieExpiration,
       });
     }
   }

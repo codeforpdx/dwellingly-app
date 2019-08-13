@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
 import { auth } from '../../firebase';
 import Input from '../input/Input';
-// import { fakeAuth } from '../../utils';
-import { FORMS, LOGIN } from '../../translations/messages';
+import { FORMS } from '../../translations/messages';
+
+import LOGO from '../../assets/images/dwellingly_logo.png';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -18,9 +19,9 @@ class LoginForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      redirectToReferrer: false,
+      // redirectToReferrer: false,
       submit: false,
-      error: null
+      error: null,
     };
   }
 
@@ -30,7 +31,7 @@ class LoginForm extends React.Component {
     const { name } = target;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -42,24 +43,21 @@ class LoginForm extends React.Component {
     event.preventDefault();
     this.setState({ submit: true });
     auth.doSignInWithEmailAndPassword(this.state.email, this.state.password);
-    // fakeAuth.authenticate(() => {
-    //  this.setState({ redirectToReferrer: true });
-    // });
   }
 
   render() {
     const { intl } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
-    const { email, password, redirectToReferrer } = this.state;
+    // const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { email, password } = this.state;
     const disableForm = email === '' || !password;
 
-    if (redirectToReferrer === true) {
-      return <Redirect to={from} />;
-    }
+    // if (redirectToReferrer === true) {
+    //   return <Redirect to={from} />;
+    // }
 
     return (
       <section className="width-wrapper">
-        <h2>{intl.formatMessage(LOGIN.INSTRUCTIONS_EMAIL)}</h2>
+        <img src={LOGO} alt="" />
         <form
           name="loginEmail"
           method="POST"
@@ -68,7 +66,7 @@ class LoginForm extends React.Component {
           <fieldset>
             <Input
               id="login-email"
-              label={intl.formatMessage(FORMS.EMAIL_LABEL)}
+              className="input--no-label"
               name="email"
               onChange={this.handleChange}
               placeholder={intl.formatMessage(FORMS.EMAIL_PLACEHOLDER)}
@@ -78,7 +76,7 @@ class LoginForm extends React.Component {
             />
             <Input
               id="login-password"
-              label={intl.formatMessage(FORMS.PASSWORD_LABEL)}
+              className="input--no-label"
               name="password"
               onChange={this.handleChange}
               placeholder={intl.formatMessage(FORMS.PASSWORD_PLACEHOLDER)}
@@ -94,9 +92,6 @@ class LoginForm extends React.Component {
               type="submit">
               {intl.formatMessage(FORMS.LOGIN)}
             </button>
-            <br />
-            <br />
-            <Link to="/forgot-password">{intl.formatMessage(FORMS.FORGOT_PASSWORD_LABEL)}</Link>
           </div>
         </form>
         {this.state.error && <p>{this.state.error}</p>}
@@ -107,11 +102,11 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   intl: intlShape.isRequired,
-  location: PropTypes.shape({ state: PropTypes.shape({}) })
+  location: PropTypes.shape({ state: PropTypes.shape({}) }),
 };
 
 LoginForm.defaultProps = {
-  location: {}
+  location: {},
 };
 
 export default injectIntl(LoginForm);

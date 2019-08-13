@@ -1,4 +1,4 @@
-@import "../../constants/constants.scss";
+@import '../../constants/constants.scss';
 
 /* I C O N S */
 /* ==================================================== */
@@ -28,6 +28,16 @@
 
   &--notebookOutline {
     transform: scale(0.8);
+  }
+
+  &--logo {
+    width: 85px;
+    height: 92px;
+    margin-bottom: 1.2rem;
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   // &--comment {
