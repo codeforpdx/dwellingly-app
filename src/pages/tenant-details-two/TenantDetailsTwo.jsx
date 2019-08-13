@@ -1,32 +1,40 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../../components/header/Header';
 import Icon from '../../components/icon/Icon';
 import Navigation from '../../components/navigation/Navigation';
-import { ROUTES } from '../../constants/constants';
-import { propertyManagers, properties, tenants } from '../../data'
-import './PropertyManagerDetailsTwo.scss';
+import { tenants, users } from '../../data'
+import Search from '../../components/search/Search';
+import '../property-manager-details-two/PropertyManagerDetailsTwo.scss';
 
-class PropertyManagerDetailsTwo extends Component {
+class TenantDetailsTwo extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-
+      staffSelected: "",
     }
 
-    this.pm = propertyManagers.find(
+    this.handleSelectionFromSearch = this.handleSelectionFromSearch.bind(this);
+    
+    this.tenant = tenants.find(
       ({ id }) => id === this.props.match.params.id
     );
   }
 
+  handleSelectionFromSearch(nameSearched) {
+    if
+    (Object.keys(nameSearched).includes('name')) {
+      this.setState({ staffSelected: nameSearched });
+    }
+  }
+
   render() {
-    const { name, number } = this.pm;
+    const { name, firstName, lastName, phone, address } = this.tenant;
 
     return(
       <div className="admin page">
-        {this.pm && (
+        {this.tenant && (
           <div>
             <Header>
               {() => (
@@ -61,7 +69,7 @@ class PropertyManagerDetailsTwo extends Component {
                             First Name
                           </td>
                           <td>
-                            {name}
+                            {firstName}
                           </td>
                           <td className="pencil-icon-cell">
                             <Icon className="pencil-icon" icon="pencil"/>
@@ -72,7 +80,7 @@ class PropertyManagerDetailsTwo extends Component {
                             Last Name
                           </td>
                           <td>
-                            {name}
+                            {lastName}
                           </td>
                           <td className="pencil-icon-cell">
                             <Icon className="pencil-icon" icon="pencil"/>
@@ -83,7 +91,40 @@ class PropertyManagerDetailsTwo extends Component {
                             Phone
                           </td>
                           <td>
-                            {number}
+                            {phone}
+                          </td>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Property
+                          </td>
+                          <td>
+                            {address}
+                          </td>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Unit
+                          </td>
+                          <td>
+                            283
+                          </td>
+                          <td className="pencil-icon-cell">
+                            <Icon className="pencil-icon" icon="pencil"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Occupants
+                          </td>
+                          <td>
+                            3
                           </td>
                           <td className="pencil-icon-cell">
                             <Icon className="pencil-icon" icon="pencil"/>
@@ -92,42 +133,18 @@ class PropertyManagerDetailsTwo extends Component {
                       </table>
                     </div>
                   </section>
-                  <section>
-                    <h2 className="detail-section-heading">Properties</h2>
-                    <div className="card-container">
-                      {properties && properties.map(property => {
-                        const { name, address} = property;
-                        return(
-                          <div className="property-card">
-                            <ul>
-                              <li className="card-name">{name}</li>
-                              <li>{address}</li>
-                            </ul>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </section>
-                  <section>
-                    <h2 className="detail-section-heading">Tenants</h2>
-                    <div className="card-container">
-                      {tenants && tenants.map(tenant => {
-                        const { name, phone, address, id } = tenant;
-                        return(
-                          <Link className="tenant-card"
-                            key={id}
-                            to={`${ROUTES.TENANT_DETAILS}/${id}/ongoing`}>
-                          <div >
-                            <ul>
-                              <li className="card-name">{name}</li>
-                              <li>{phone}</li>
-                              <li>{address}</li>
-                            </ul>
-                          </div>
-                        </Link>
-                        )
-                      })}
-                    </div>
+                  <section className="newPropertyFormSection">
+                    <h2 className="newPropertyFormManagerHeading">JOIN STAFF</h2>
+                    <fieldset>
+                      <Search
+                        searchData={users}
+                        value={this.state.staffSelected}
+                        placeholder= "Search JOIN Staff"
+                        filterSubset= {['name']}
+                        onSearchSelection={this.handleSelectionFromSearch}
+                        multiple
+                        />
+                    </fieldset>
                   </section>
                 </div>
               </div>
@@ -138,7 +155,7 @@ class PropertyManagerDetailsTwo extends Component {
     }
   }
 
-  PropertyManagerDetailsTwo.propTypes = {
+  TenantDetailsTwo.propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string
@@ -146,4 +163,4 @@ class PropertyManagerDetailsTwo extends Component {
     }).isRequired
   };
 
-  export default PropertyManagerDetailsTwo;
+  export default TenantDetailsTwo;
