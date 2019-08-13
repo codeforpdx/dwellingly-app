@@ -1,6 +1,10 @@
-@import '../../constants/constants.scss';
+@import "../../constants/constants.scss";
 
-.property-dashboard-header {
+$ag-icons-path: "../../../node_modules/ag-grid-community/src/styles/ag-theme-balham/icons/";
+
+@import "../../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+
+.tickets-dashboard-header {
   margin: 0 5rem 1rem;
   padding-bottom: .5rem;
   button:hover {
@@ -31,7 +35,17 @@
 .btn {
   font-size: emify(14, 16);
 }
+.filter-icon {
+  display: none;
+  color: $color__gray--medium;
+}
 
+.calendar-search {
+  margin-left: .5rem;
+}
+.select-start {
+  margin-top: 3px;
+}
 .icon-wrapper {
   display: flex;
   align-items: center;
@@ -54,15 +68,18 @@
     }
   }
 }
-.gray-dash-bar {
+.gray-dash-bar-tickets {
   display: flex;
   margin-top: .4rem;
-  padding: 0 1rem;
-  justify-content: flex-end;
+  padding: 2.5rem;
+  justify-content: space-between;
   align-items: center;
   border-radius: 1px;
   background: $color__gray--light;
   width: 100%;
+  font-weight: 500;
+  color: $color__gray--medium;
+  text-align: left;
   margin: 0 auto;
   height: 4rem;
   .ghost-dot {
@@ -95,13 +112,13 @@
   margin: 2rem 0;
   text-align: left;
   margin-bottom: 1.5rem;
-  .property-header {
+  .tickets-header {
     padding-right: 2rem; 
     color: $color__blue--dark;
     font-weight: 400;
   }
 }
-.property-search-wrapper {
+.tickets-search-wrapper {
   text-align: left;
   input:focus,
   select:focus,
@@ -115,7 +132,7 @@
     font-size: .9rem;
   }
 }
-.property-table {
+.tickets-table {
   width: 900px;
 }
 .ag-paging-panel {
@@ -200,7 +217,7 @@ button:nth-child(2) {
 }
 
 @media screen and (max-width: 667px) {
-  .property-search-wrapper {
+  .tickets-search-wrapper {
     display: none;
   }
   .gray-dash-bar {
@@ -215,7 +232,7 @@ button:nth-child(2) {
       width: 200px;
     }
   }
-  .property-dashboard-header {
+  .tickets-dashboard-header {
     display: flex;
     flex-direction: column;
     width: 100vw;

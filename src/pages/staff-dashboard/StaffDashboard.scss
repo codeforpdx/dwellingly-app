@@ -1,11 +1,97 @@
-// @import "../../constants/constants.scss";
-// 
-// .staff-card-wrapper {
-//   display: flex;
-//   justify-content: space-around; 
-//   width: 1000px;
-//   .staff-card {
-//     width:500px;
-//     background: $color__gray--light;
-//   }
-// }
+@import "../../constants/constants.scss";
+
+.staff-dashboard-header {
+  margin: 0 2rem;
+  button:hover {
+    outline: none;
+    transform: scale(1.02);
+    transition: 0.5s ease-in-out;
+  }
+}
+.staff-dash-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; 
+  margin: 0 2rem;
+  .staff-card {
+    width: 290px;
+    height: 270px; 
+    font-size: emify(14, 16);
+    text-align: left;
+    padding: 1.3rem;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    color: $color__gray--dark;
+    &:hover,
+    &:focus {
+      outline: none;
+      transform: scale(1.01);
+      transition: 0.5s ease;
+    }
+    img {
+      margin-left: 10px;
+      width: 7px;
+    }
+    .staff-header {
+      display: flex;
+      justify-content: space-between;
+      h2 {
+        color: $color__blue--dark;
+        font-weight: 800;
+      }
+      .icon {
+        color: $color__gray--medium;
+      }
+    }
+    .email-and-number {
+      margin-top: 2rem;
+      line-height: 1px;
+    }
+    .out-of-office {
+      margin: 1.5rem 0 1rem 0;
+      border-bottom: solid 1px $color__blue--dark;
+      padding-bottom: .4rem;
+      font-weight: 600;
+      color: $color__gray--medium;
+      .icon {
+        margin-left: 10px;
+        color: $color__blue--dark;
+      }
+    }
+    .reassign {
+      margin-top: 2rem;
+      font-weight: 600;
+      color: $color__gray--medium;
+      .icon {
+        margin-left: 10px;
+        color: $color__blue--dark;
+      }
+    }
+    .staff-info {
+      line-height: 1px;
+      margin-top: 1px;
+      span {
+        font-weight: 400;
+        color: $color__gray--dark;
+        padding-right: 2px;
+      }
+    }
+  }
+}
+.add-new-flex {
+  display: flex;
+  align-items: center;
+  button {
+    margin-left: 2rem;
+  }
+  h2 {
+    font-weight: 800;
+    color: $color__blue--dark;
+  }
+}
+.staff-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem;
+}

@@ -95,20 +95,18 @@ class PropertyManagerDashboard extends Component {
 
   render() {
     const { intl } = this.props;
-    return (
-      <div className="page">
-        <Header>
-          {() => (
-            <div>
-              <Navigation />
-              <Header.Label
-                label={intl.formatMessage(COMMON.HELLO)}
-                type="basic"
-              />
-              <SearchForm onSubmit={this.handleSearch} />
-            </div>
-          )}
-        </Header>
+    console.log(this.props.propertyManagers.propertyManagers);
+    return(  
+    <div className="page">
+      <Header>
+        {() => (
+          <div>
+            <Navigation />
+            <Header.Label label={intl.formatMessage(COMMON.HELLO)} type="basic" />
+            <SearchForm onSubmit={this.handleSearch} />
+          </div>
+        )}
+      </Header>
         <section className="property-dashboard-header">
           <div className="add-new">
             <h2 className="property-header">PROPERTY MANAGERS</h2>
