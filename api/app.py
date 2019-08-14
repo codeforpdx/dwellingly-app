@@ -233,7 +233,7 @@ class Users(Resource):
         return {"users": userList}
 
     def post(self):
-         uid = "user" + str(len(userList)) 
+         uid = "user" + str(len(userList))
          request_data = request.get_json()
 
          new_user = {
@@ -299,7 +299,7 @@ class Properties(Resource):
         return {"properties": propertyList}, 200 if propertyList else 404
 
     def post(self):
-        id = "property" + str(len(userList)) 
+        id = "property" + str(len(userList))
         request_data = request.get_json()
 
         new_property = {
@@ -364,7 +364,7 @@ class Emergency(Resource):
         return {"Emergency Numbers": emergencyList}, 200 if emergencyList else 404
 
     def post(self):
-        id = "00000000" + str(len(userList)) 
+        id = "00000000" + str(len(userList))
         request_data = request.get_json()
 
         #  "id": "00000001",
@@ -430,12 +430,12 @@ class Tenents(Resource):
         return {"Tenents": tenentsList}, 200 if tenentsList else 404
 
     def post(self):
-        id = "tenent" + str(len(userList)) 
+        id = "tenent" + str(len(userList))
         request_data = request.get_json()
         dateCreated = "Thu Aug 23 2018 16:40:35 GMT-0700 (Pacific Daylight Time)"
         dateUpdated = "Thu Aug 23 2018 15:54:48 GMT-0700 (Pacific Daylight Time)"
         #hard coded because not looking up DateTime right now
-        
+
     # "dateCreated": "Thu Aug 23 2018 16:40:35 GMT-0700 (Pacific Daylight Time)",
     # "dateUpdated": "Thu Aug 23 2018 15:54:48 GMT-0700 (Pacific Daylight Time)",
     # "lastName": "Smith",
@@ -500,18 +500,21 @@ class Leases(Resource):
         return {"Leases": leaseList}, 200 if leaseList else 404
 
     def post(self):
-        id = "LEASE" + str(len(leaseList)) 
+        id = "LEASE" + str(len(leaseList))
         request_data = request.get_json()
-        dateStart = "Sat Oct 06 2018 11:00:08 GMT-0700 (Pacific Daylight Time)"
-        dateEnd = "Thu Dec 06 2018 11:00:08 GMT-0700 (Pacific Daylight Time)"
-        dateUpdated = "Thu Sep 06 2018 11:00:08 GMT-0700 (Pacific Daylight Time)"
+        dt_PCT = datetime.datetime.now() #get the current time
+        pct_TZ = pytz.timezone('US/Pacific') #set the timezone
+        dt_PCT = pct_TZ.localize(dt_PTC) #mod the time to allow for timezones
+        dt = dt_PCT.astimezone(pytz.timesone('US/Pacific')) #create datetime by combining the non neive time and the timezone
+        fmt = '%a %b %d %Y %H:%M:%S GMT%z (Pacific Daylight Time)'
+        dateUpdated = dt.strftime(fmt)
 
         new_lease= {
           "id":id,
           "propertyId": request_data["propertyId"],
           "unit": request_data["unit"],
-          "dateStart": dateStart,
-          "dateEnd": dateEnd,
+          "dateStart": request_data["dateStart"],
+          "dateEnd": request_data["dateEnd"],
           "dateUpdated": dateUpdated
           }
         leaseList.append(new_lease)
@@ -555,7 +558,7 @@ class Tickets(Resource):
         return {"Tickets": ticketsList}, 200 if ticketsList else 404
 
     def post(self):
-        id = "ticket" + str(len(userList)) 
+        id = "ticket" + str(len(userList))
         request_data = request.get_json()
         sentDate = "Sat Oct 06 2018 11:00:08 GMT-0700 (Pacific Daylight Time)" #fix this
 
@@ -576,7 +579,7 @@ class Tickets(Resource):
 
 
 
-#connects the resouces to the url 
+#connects the resouces to the url
 api.add_resource(Users, "/v1/users")
 api.add_resource(User, "/v1/users/<string:uid>")
 api.add_resource(Properties, "/v1/properties")
