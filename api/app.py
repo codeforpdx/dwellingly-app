@@ -10,6 +10,7 @@ app.secret_key = 'dwellingly'
 api = Api(app)
 
 # jwt = JWT(app, authenticate, identity)
+#JWT is used to certify the authentication in the metadata of a request.
 
 userList = [
         {
