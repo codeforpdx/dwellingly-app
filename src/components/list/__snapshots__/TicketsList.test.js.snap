@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TicketsList Component renders empty state if items.length===0 1`] = `
+<div
+  className="list-group"
+>
+  <div
+    className="list-group__item list-group__item--empty"
+  >
+    <p>
+      Empty state goes here...
+    </p>
+  </div>
+</div>
+`;

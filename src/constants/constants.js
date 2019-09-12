@@ -64,7 +64,10 @@ export const ROUTES = {
   ROOT: '/',
   SETTINGS: '/settings',
   SIGNUP: '/signup',
+  STAFF_DASHBOARD: '/staff-dashboard',
+  TENANT_DASHBOARD: '/tenant-dashboard',
   TENANTS: '/tenants',
+  TENANT_DETAILS: '/tenant-details',
   TERMS_CONDITIONS: '/terms-conditions',
   TICKETS: '/tickets',
   USERS: '/users'

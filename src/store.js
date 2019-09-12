@@ -8,10 +8,7 @@ export const history = createHistory();
 
 const initialState = {};
 const enhancers = [];
-const middleware = [
-  thunk,
-  routerMiddleware(history),
-];
+const middleware = [thunk, routerMiddleware(history)];
 /* eslint-disable no-underscore-dangle */
 if (process.env.NODE_ENV === 'development') {
   const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
@@ -23,13 +20,13 @@ if (process.env.NODE_ENV === 'development') {
 /* eslint-enable */
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
-  ...enhancers,
+  ...enhancers
 );
 
 const store = createStore(
   connectRouter(history)(reducers),
   initialState,
-  composedEnhancers,
+  composedEnhancers
 );
 
 export default store;

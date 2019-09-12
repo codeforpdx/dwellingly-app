@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Cookies from 'universal-cookie';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropertyManagerHome from './PropertyManagerHome';
 // import UserControls from '../../components/user-controls/UserControls';
 import { ROLES, ROUTES } from '../../constants/constants';
 import { getUserRoleString } from '../../utils';
 
-import { dummyUser, properties, tenants } from '../../data';
+import { properties, tenants } from '../../data';
 
 class Home extends Component {
   constructor(props) {
@@ -14,8 +16,8 @@ class Home extends Component {
 
     this.tenants = tenants;
     this.properties = properties;
-
-    this.user = dummyUser;
+    this.cookies = new Cookies();
+    this.user = this.cookies.get('messengerUserRole');
   }
 
   componentDidMount() {
@@ -25,7 +27,7 @@ class Home extends Component {
   render() {
     const { match } = this.props;
     const { user } = this;
-    const roleStr = getUserRoleString(user.role, ROLES);
+    const roleStr = getUserRoleString(user, ROLES);
     return (
       // do check agains user roles
       <div className="page">
@@ -45,8 +47,12 @@ class Home extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.user
+});
+
 Home.propTypes = {
   match: PropTypes.shape({}).isRequired
 };
 
-export default Home;
+export default connect(mapStateToProps)(Home);

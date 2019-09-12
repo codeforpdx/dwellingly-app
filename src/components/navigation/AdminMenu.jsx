@@ -7,25 +7,22 @@ import { ROUTES } from '../../constants/constants';
 function AdminMenu({ handleToggleMenu, type, user }) {
   return (
     <dl>
-      {type === 'mobile' &&
-        handleToggleMenu && (
-          <button
-            className="menu__close-btn"
-            onClick={handleToggleMenu}
-            type="button">
-            <Icon icon="close" />
-          </button>
-        )}
+      {type === 'mobile' && handleToggleMenu && (
+        <button
+          className="menu__close-btn"
+          onClick={handleToggleMenu}
+          type="button">
+          <Icon icon="close" />
+        </button>
+      )}
       <dt className="menu__label">
         <Icon icon="userOutline" />
-        {user.name}
+        {user.firstName} {user.lastName}
       </dt>
 
       <dd>
         <NavLink to={ROUTES.ADMIN} activeClassName="menu__link--active">
-          <strong>
-            {/* <Icon icon="dashboard" /> */}  Dashboard
-          </strong>
+          <strong>{/* <Icon icon="dashboard" /> */} Dashboard</strong>
         </NavLink>
         {/* <NavLink to={ROUTES.OUT_OF_OFFICE} activeClassName="menu__link--active">
           <strong>
@@ -39,19 +36,15 @@ function AdminMenu({ handleToggleMenu, type, user }) {
       </dt>
       <dd>
         <NavLink to={ROUTES.ADD_TENANT} activeClassName="menu__link--active">
-          <strong>
-            Tenant
-          </strong>
+          <strong>Tenant</strong>
         </NavLink>
         <NavLink to={ROUTES.ADD_PROPERTY} activeClassName="menu__link--active">
-          <strong>
-            Property
-          </strong>
+          <strong>Property</strong>
         </NavLink>
-        <NavLink to={ROUTES.ADD_PROPERTY_MANAGER} activeClassName="menu__link--active">
-          <strong>
-            Property Manager
-          </strong>
+        <NavLink
+          to={ROUTES.ADD_PROPERTY_MANAGER}
+          activeClassName="menu__link--active">
+          <strong>Property Manager</strong>
         </NavLink>
       </dd>
       <dt className="menu__label">
@@ -60,15 +53,12 @@ function AdminMenu({ handleToggleMenu, type, user }) {
       <dd>
         <NavLink to={ROUTES.TENANTS} activeClassName="menu__link--active">
           <strong>
-            {/* <Icon icon="userOutlineNoBottom" /> */}Tenants
+            {/* <Icon icon="userOutlineNoBottom" /> */}
+            Tenants
           </strong>
         </NavLink>
-        <NavLink
-          to={ROUTES.PROPERTY_DASHBOARD}
-          activeClassName="menu__link--active">
-          <strong>
-            {/* <Icon icon="building" /> */} Properties
-          </strong>
+        <NavLink to={ROUTES.PROPERTIES} activeClassName="menu__link--active">
+          <strong>{/* <Icon icon="building" /> */} Properties</strong>
         </NavLink>
         <NavLink
           to={ROUTES.PROPERTY_MANAGERS}
@@ -86,8 +76,7 @@ function AdminMenu({ handleToggleMenu, type, user }) {
         </NavLink>
       </dd>
       <dt>
-        <NavLink
-          to={`${ROUTES.TICKETS}/open`}>
+        <NavLink to={`${ROUTES.TICKETS}/open`}>
           <strong>
             <Icon icon="ticketOutline" /> Tickets
           </strong>
@@ -135,12 +124,12 @@ AdminMenu.propTypes = {
   // intl: intlShape.isRequired,
   handleToggleMenu: PropTypes.func,
   type: PropTypes.string,
-  user: PropTypes.shape({}).isRequired
+  user: PropTypes.shape({}).isRequired,
 };
 
 AdminMenu.defaultProps = {
   handleToggleMenu: undefined,
-  type: 'mobile'
+  type: 'mobile',
 };
 
 export default AdminMenu;

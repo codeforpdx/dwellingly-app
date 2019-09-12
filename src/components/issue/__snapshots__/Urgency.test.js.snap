@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Urgency Component renders Input component when type===radio 1`] = `
+<fieldset
+  className=""
+>
+  <div
+    className="message message--light"
+  >
+    <p>
+      <strong>
+        Step 2: Select urgency level.
+      </strong>
+    </p>
+  </div>
+  <div
+    className="message"
+  >
+    <p>
+      This will help our JOIN staff prioritize open tickets.
+    </p>
+  </div>
+  <div
+    className="input inline-input"
+  >
+    <div
+      className="inline-input__radio "
+    >
+      <label
+        htmlFor="settings-issue-low"
+      >
+        <input
+          checked={false}
+          id="settings-issue-low"
+          name="urgency"
+          type="radio"
+          value="low"
+        />
+        <span
+          className="inline-input__radio-btn"
+        />
+        low
+      </label>
+    </div>
+  </div>
+  <div
+    className="input inline-input"
+  >
+    <div
+      className="inline-input__radio "
+    >
+      <label
+        htmlFor="settings-issue-med"
+      >
+        <input
+          checked={false}
+          id="settings-issue-med"
+          name="urgency"
+          type="radio"
+          value="med"
+        />
+        <span
+          className="inline-input__radio-btn"
+        />
+        med
+      </label>
+    </div>
+  </div>
+  <div
+    className="input inline-input"
+  >
+    <div
+      className="inline-input__radio "
+    >
+      <label
+        htmlFor="settings-issue-high"
+      >
+        <input
+          checked={false}
+          id="settings-issue-high"
+          name="urgency"
+          type="radio"
+          value="high"
+        />
+        <span
+          className="inline-input__radio-btn"
+        />
+        high
+      </label>
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`Urgency Component renders RadioArray component when type===issueRadioArray 1`] = `
+<fieldset
+  className=""
+>
+  <div
+    className="message message--light"
+  >
+    <p>
+      <strong>
+        Step 2: Select urgency level.
+      </strong>
+    </p>
+  </div>
+  <div
+    className="message"
+  >
+    <p>
+      This will help our JOIN staff prioritize open tickets.
+    </p>
+  </div>
+  <div
+    className="radio-array"
+  >
+    <div
+      className="radio-array__wrapper"
+    >
+      <label
+        htmlFor="low"
+      >
+        <input
+          checked={false}
+          id="low"
+          name="urgency"
+          onChange={[Function]}
+          type="radio"
+          value="low"
+        />
+        <span
+          className="radio-array__option"
+        >
+          low
+        </span>
+      </label>
+      <label
+        htmlFor="med"
+      >
+        <input
+          checked={false}
+          id="med"
+          name="urgency"
+          onChange={[Function]}
+          type="radio"
+          value="med"
+        />
+        <span
+          className="radio-array__option"
+        >
+          med
+        </span>
+      </label>
+      <label
+        htmlFor="high"
+      >
+        <input
+          checked={false}
+          id="high"
+          name="urgency"
+          onChange={[Function]}
+          type="radio"
+          value="high"
+        />
+        <span
+          className="radio-array__option"
+        >
+          high
+        </span>
+      </label>
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`Urgency Component renders correctly 1`] = `
+<fieldset
+  className=""
+>
+  <div
+    className="message message--light"
+  >
+    <p>
+      <strong>
+        Step 2: Select urgency level.
+      </strong>
+    </p>
+  </div>
+  <div
+    className="message"
+  >
+    <p>
+      This will help our JOIN staff prioritize open tickets.
+    </p>
+  </div>
+</fieldset>
+`;
