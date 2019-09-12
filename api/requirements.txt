@@ -1,0 +1,5 @@
+Flask
+Flask-JWT
+Flask-RESTful
+datetime 
+pytz
