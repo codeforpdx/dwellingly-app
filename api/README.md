@@ -1,12 +1,18 @@
-How to set up Dwelling Flask Testing Backend. 
-NOTE: no database setup here. Backend uses list-based live data 
+How to set up Dwelling Flask Testing Backend.
+NOTE: no database setup here. Backend uses list-based live data
 
-# Setup Python on  your system
-[Link to Guide](https://realpython.com/installing-python/ "Setup Python")
-# Run 
-    pip install --no-cache-dir -r api/requirements.txt
+# Setup Python on your system
+
+[Link to Guide](https://realpython.com/installing-python/ 'Setup Python')
+
 # Run
-    flask run 
+
+    pip3 install --no-cache-dir -r api/requirements.txt
+
+# Run
+
+    cd api
+    flask run
 
 ###Established Endpoints
 
@@ -20,7 +26,6 @@ NOTE: no database setup here. Backend uses list-based live data
 | PATCH  | `v1/users/:uid` | Updates a single user  |
 | PUT    | `v1/users/:uid` | Archives a single user |
 | DELETE | `v1/users/:uid` | Deletes a single user  |
-
 
 ```javascript
   {
@@ -49,7 +54,6 @@ NOTE: no database setup here. Backend uses list-based live data
 | PATCH  | `v1/properties/:uid` | Updates a single property  |
 | PUT    | `v1/properties/:uid` | Archives a single property |
 | DELETE | `v1/properties/:uid` | Deletes a single property  |
-
 
 ```javascript
      {
@@ -99,7 +103,6 @@ NOTE: no database setup here. Backend uses list-based live data
 | PUT    | `v1/tenants/:uid` | Archives a single tenant |
 | DELETE | `v1/tenants/:uid` | Deletes a single tenant  |
 
-
 ```javascript
     {
     "id": "tenent1",
@@ -115,7 +118,6 @@ NOTE: no database setup here. Backend uses list-based live data
 
 <br>
 
-
 #### ENDPOINT: TICKETS
 
 | method | route             | action                   |
@@ -126,7 +128,6 @@ NOTE: no database setup here. Backend uses list-based live data
 | PATCH  | `v1/tickets/:uid` | Updates a single ticket  |
 | PUT    | `v1/tickets/:uid` | Archives a single ticket |
 | DELETE | `v1/tickets/:uid` | Deletes a single ticket  |
-
 
 ```javascript
  {
@@ -167,6 +168,7 @@ NOTE: no database setup here. Backend uses list-based live data
     ]
   }
 ```
+
 <br>
 
 #### ENDPOINT: LEASES
