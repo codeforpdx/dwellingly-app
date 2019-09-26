@@ -1,5 +1,6 @@
 CodeforPDX:
 
-- Treasure Porth 
+- Treasure Porth
 - Wade Christensen
 - Hugh Harker
+- Ryan Thorn
