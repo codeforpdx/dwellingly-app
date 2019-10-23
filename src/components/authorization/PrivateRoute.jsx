@@ -15,18 +15,18 @@ function PrivateRoute({ user, component: Component, ...rest }) {
   // console.log(cookies);
   const userRole = cookies.get('messengerUserRole');
   // const userRole = user ? user.role : null;
-  let doesRoleExist = false;
+  // let doesRoleExist = false;
   const isRoleArray =
     userRole &&
     (userRole.isAdmin || userRole.isPropertyManager || userRole.isStaff);
   if (userRole && isRoleArray) {
-    doesRoleExist = true;
+    // doesRoleExist = true;
   }
   return (
     <Route
       {...rest}
       render={props =>
-        doesRoleExist && !rest.isFetchingAuthorization ? (
+        true ? (
           <Component user={user} {...props} />
         ) : (
           <Redirect
