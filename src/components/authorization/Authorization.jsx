@@ -1,30 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { ROLES } from '../../constants/constants';
-import { getUserRoleString } from '../../utils';
+// import Cookies from 'universal-cookie';
+// import { ROLES } from '../../constants/constants';
+// import { getUserRoleString } from '../../utils';
 
-// mock data
-import { dummyUser } from '../../data';
+const Authorization = (/* allowedRoles */) => WrappedComponent => props => {
+  // const cookies = new Cookies();
+  // const userRole = cookies.get('messengerUserRole');
+  // const roleStr = getUserRoleString(userRole, ROLES);
+  if (true) {
+    return <WrappedComponent {...props} />;
+  }
 
-function Authorization(allowedRoles) {
-  return WrappedComponent =>
-    class WithAuthorization extends Component {
-      constructor(props) {
-        super(props);
-
-        this.user = dummyUser;
-      }
-
-      render() {
-        const { role } = this.user;
-        const roleStr = getUserRoleString(role, ROLES);
-        if (allowedRoles.includes(roleStr)) {
-          return <WrappedComponent {...this.props} />;
-        }
-
-        return <Redirect to="/" />;
-      }
-    };
-}
+  return <Redirect to="/" />;
+};
 
 export default Authorization;

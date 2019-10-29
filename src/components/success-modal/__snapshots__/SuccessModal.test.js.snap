@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SuccessModal Component correctly renders SuccessModal component when show is true 1`] = `
+<div
+  className="full-window-modal"
+>
+  <div
+    className="modal-content"
+  >
+    <p
+      className="title"
+    />
+    <div
+      className="button-container"
+    >
+      <button
+        className="btn"
+        form="newPropertyForm"
+        id="yes-button"
+        type="button"
+      >
+        Add Another
+      </button>
+      <button
+        className="cancel"
+        type="button"
+      >
+        Return Home
+      </button>
+    </div>
+  </div>
+</div>
+`;

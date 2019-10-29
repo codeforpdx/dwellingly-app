@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+spec/coverage
 
 # production
 /build
@@ -23,3 +24,4 @@ firebase-debug.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.vscode/

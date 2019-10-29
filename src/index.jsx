@@ -48,10 +48,14 @@ import PropertyManagerDashboard from './pages/property-manager-dashboard/Propert
 import PropertyManagerDetails from './pages/property-manager-details/PropertyManagerDetails';
 import PropertyManagerDetailsTwo from './pages/property-manager-details-two/PropertyManagerDetailsTwo';
 import PropertyManagerTenantsDirectory from './pages/property-managers/PropertyManagerTenantsDirectory';
+import Reports from './pages/reports/Reports';
 import Settings from './pages/settings/Settings';
 import Signup from './pages/signup/Signup';
+import StaffDashboard from './pages/staff-dashboard/StaffDashboard';
+import TenantDashboard from './pages/tenant-dashboard/TenantDashboard';
 import Tenants from './pages/tenants/Tenants';
 import TenantDetails from './pages/tenant-details/TenantDetails';
+import TenantDetailsTwo from './pages/tenant-details-two/TenantDetailsTwo';
 import TermsConditions from './pages/terms-conditions/TermsConditions';
 import Tickets from './pages/tickets/Tickets';
 import WaitingForRole from './pages/waiting-for-role/WaitingForRole';
@@ -65,9 +69,29 @@ import { dummyUser } from './data';
 
 const user = dummyUser;
 
+// const select = state => state.user;
+// let currentValue;
+// const handleChange = () => {
+//   const previousValue = currentValue;
+//   currentValue = select(store.getState());
+//
+//   if (previousValue !== currentValue) {
+//     console.log(
+//       'User was this: ',
+//       previousValue,
+//       'Now its this: ',
+//       currentValue
+//     );
+//   }
+// };
+//
+// const unsubscribe = store.subscribe(handleChange);
+// unsubscribe();
+
 // Set up cookie stuff for translation
 const cookies = new Cookies();
 const lang = cookies.get('language');
+
 let validLang = SETTINGS.VALID_LOCALES.find(locale => locale === lang);
 
 if (!validLang) {
@@ -79,7 +103,7 @@ if (!validLang) {
 const StaffUser = Authorization([ROLES.ADMIN, ROLES.STAFF]);
 const AdminUser = Authorization([ROLES.ADMIN]);
 const userRole = getUserRoleString(user.role, ROLES);
-// Render the thing!
+
 ReactDOM.render(
   <IntlProvider locale={validLang} messages={translationMessages[validLang]}>
     <Provider store={store}>
@@ -155,15 +179,19 @@ ReactDOM.render(
             />
             <PrivateRoute path={ROUTES.ADMIN} component={AdminUser(Admin)} />
             <Route path={ROUTES.ADD_PROPERTY} component={NewPropertyForm} />
-            <Route path={`${ROUTES.PROPERTY_MANAGER_DETAILS}/:id`} component={StaffUser(PropertyManagerDetailsTwo)} />
+            <Route path={`${ROUTES.PROPERTY_MANAGER_DETAILS}/:id`} component={AdminUser(PropertyManagerDetailsTwo)} />
+            <Route path={`${ROUTES.TENANT_DETAILS}/:id`} component={AdminUser(TenantDetailsTwo)} />
             <Route path={ROUTES.ADD_STAFF_MEMBER} component={NewStaffMemberForm} />
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.PRIVACY} component={PrivacyPolicy} />
             <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
             <Route path={ROUTES.SIGNUP} component={Signup} />
             <Route path={ROUTES.TERMS_CONDITIONS} component={TermsConditions} />
+            <Route path={ROUTES.REPORTS} component={Reports} />
             <PrivateRoute path={`${ROUTES.PROPERTY_DASHBOARD}`} component={AdminUser(PropertyDashboard)} />
             <PrivateRoute path={`${ROUTES.PROPERTY_MANAGER_DASHBOARD}`} component={AdminUser(PropertyManagerDashboard)} />
+            <PrivateRoute path={`${ROUTES.STAFF_DASHBOARD}`} component={AdminUser(StaffDashboard)} />
+            <PrivateRoute path={`${ROUTES.TENANT_DASHBOARD}`} component={AdminUser(TenantDashboard)} />
             <Route path="/code-samples/card" component={CardSamples} />
             <Route path="/code-samples/header" component={HeaderSamples} />
             <PrivateRoute path={ROUTES.ROOT} component={Home} />
@@ -172,6 +200,6 @@ ReactDOM.render(
       </ConnectedRouter>
     </Provider>
   </IntlProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 registerServiceWorker();

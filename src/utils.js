@@ -7,15 +7,15 @@
  * @returns string
  */
 export function getUserRoleString(userRole, ROLES) {
-  let roleStr = '';
+  let roleStr;
   if (userRole) {
-    if (userRole.isPropertyManager === 'true') {
+    if (userRole.isPropertyManager === true) {
       roleStr = ROLES.PROPERTY_MANAGER;
     }
-    if (userRole.isStaff === 'true') {
+    if (userRole.isStaff === true) {
       roleStr = ROLES.STAFF;
     }
-    if (userRole.isAdmin === 'true') {
+    if (userRole.isAdmin === true) {
       roleStr = ROLES.ADMIN;
     }
   }
