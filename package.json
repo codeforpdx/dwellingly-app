@@ -33,7 +33,7 @@
     "jest": "^23.5.0",
     "prettier": "^1.13.7",
     "react-test-renderer": "^16.8.2",
-    "webpack-dev-server": "2.9.4"
+    "webpack-dev-server": "3.1.11"
   },
   "license": "MIT",
   "dependencies": {
