@@ -85,3 +85,9 @@ This script will provide terminal output and launch your default browser. The ap
 The app has hot reloading enabled, which means your browser window should referesh whenever you save a change to the project. Additionally, any linting errors will be printed in the terminal.
 
 Congratulations, you have successfully installed and started running the app. Scripts for running tests and creating a production build can be found in the [Contribution Guide](contribution_guide.md).
+
+## Front End Flow
+
+* `src/index.js` - contains the router, which imports and routes to all page components
+* `src/constants/constants.js` - contains the `ROUTES` object, which gives the exact pathing you would use as a URL to get to the different pages of the app.
+

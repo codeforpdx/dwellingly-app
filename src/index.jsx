@@ -1,3 +1,5 @@
+// heaversm TODO: Fix router - currently the default route loads the `Reports` component. Noticed that the REPORTS constant does not exist in the `constants.js` file. So we need to add that route, but also fix the routing so that the `/` (root) route goes to a login page / admin page / whatever route we want as the default.
+
 // REACT
 import React from 'react';
 import ReactDOM from 'react-dom';
