@@ -40,6 +40,8 @@ You should see something like `v8.11.3`
 
 If you do not have Node.js installed, visit the [Node.js website](https://nodejs.org/en/) for instructions. There are many ways to install Node.js, so don't worry if you find any of this confusing. You can always ask someone on the team for assistance.
 
+** Node.js version 12 is not compatible with npm build.  The latest compatible version is 'v11.15.0'
+
 Node installation should include npm, which will allow you to install the application. You can verify this by typing:
 
 `npm -v`
