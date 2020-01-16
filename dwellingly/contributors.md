@@ -4,3 +4,4 @@ CodeforPDX:
 - Wade Christensen
 - Hugh Harker
 - Sarah Krabacher
+- Marie Ehrman
