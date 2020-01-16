@@ -5,3 +5,4 @@ CodeforPDX:
 - Hugh Harker
 - Sarah Krabacher
 - Marie Ehrman
+- Max Hunter
