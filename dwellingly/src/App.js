@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
-import { LoginForm } from './pages/login';
-import { Home } from './pages/home';
+import { LoginForm } from './views/login';
+import { Home } from './views/home';
 
 function App() {
   return (
