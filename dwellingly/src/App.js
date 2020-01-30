@@ -1,29 +1,28 @@
 import React from 'react';
-import dwellinglyLogo from './assets/images/dwellingly.png'
-import codeforpdxLogo from './assets/codeforpdx/c4pdx.gif'
-
 import './App.css';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { LoginForm } from './pages/login';
+import { Home } from './pages/home';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={dwellinglyLogo} className="" alt="dwellingly" /> 
-        <img src={codeforpdxLogo} className="App-logo" alt="logo" />
-      
-        <a
-          className="App-link"
-          href="http://www.codeforpdx.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code for PDX
-        </a>
-        <p>
-          Community Built Civic Tech.
-        </p>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <header className="App-header">
+            <div className="App-navbar">
+              <ul>
+                <li><Link to="/login">Login</Link></li>
+                <li><Link to="/signup">Signup</Link></li>
+              </ul>
+            </div>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={LoginForm} />
+            <Route exact path="/signup" />
+          </Switch>
+        </header>
+      </div>
+    </BrowserRouter>
   );
 }
 
