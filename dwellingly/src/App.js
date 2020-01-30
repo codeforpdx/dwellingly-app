@@ -1,14 +1,15 @@
 import React from 'react';
-import logo from './c4pdx.gif';
-import dwellinglylogo from './dwellingly.png'
+import dwellinglyLogo from './assets/images/dwellingly.png'
+import codeforpdxLogo from './assets/codeforpdx/c4pdx.gif'
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={dwellinglylogo} className="" alt="dwellingly" /> 
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={dwellinglyLogo} className="" alt="dwellingly" /> 
+        <img src={codeforpdxLogo} className="App-logo" alt="logo" />
       
         <a
           className="App-link"
