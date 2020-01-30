@@ -2,32 +2,29 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Header from './index';
 
+import dwellinglylogo from '../../assets/images/dwellingly_logo_white.png';
+
 const setUp = (props = {}) => {
   const component = shallow(<Header {...props} />);
   return component;
 };
 
 describe('Header Component', () => {
-  it('should be true', () => {
-    const foo = true;
-    expect(foo).toBe(true);
-  });
-
-  it('Should render without errors', () => {
+  it('should render without errors', () => {
     const component = setUp();
-    const wrapper = component.find('.App-header');
+    const wrapper = component.find('header');
     expect(wrapper.length).toBe(1);
   });
 
-  it('Should render exactly 2 images', () => {
+  it('should render a image/logo', () => {
     const component = setUp();
     const wrapper = component.find('img');
-    expect(wrapper.length).toBe(2);
+    expect(wrapper.prop('src')).toEqual(dwellinglylogo);
   });
 
-  it('Should render a logo', () => {
+  it('should have a gradient background', () => {
     const component = setUp();
-    const wrapper = component.find('.App-logo');
-    expect(wrapper.length).toBe(1);
+    const wrapper = component.find('.navbar');
+    expect(wrapper.hasClass('bg-gradient')).toEqual(true);
   });
 });
