@@ -3,6 +3,8 @@ import './App.scss';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { LoginForm } from './views/login';
 import { Home } from './views/home';
+import { PrivateRoute } from './Auth';
+
 
 function App() {
   return (
@@ -15,14 +17,13 @@ function App() {
                 <Link to='/login'>Login</Link>
               </li>
               <li>
-                <Link to='/signup'>Signup</Link>
+                <Link to='/'>Home</Link>
               </li>
             </ul>
           </div>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <PrivateRoute exact path='/' component={Home} />
             <Route exact path='/login' component={LoginForm} />
-            <Route exact path='/signup' />
           </Switch>
         </header>
       </div>
