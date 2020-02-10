@@ -3,7 +3,8 @@ import './App.scss';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { LoginForm } from './views/login';
 import { Home } from './views/home';
-import Header from './components/Header';
+import { PrivateRoute } from './Auth';
+
 
 function App() {
   return (
@@ -20,9 +21,8 @@ function App() {
         </ul>
 
         <Switch>
-          <Route exact path='/' component={Home} />
+          <PrivateRoute exact path='/' component={Home} />
           <Route exact path='/login' component={LoginForm} />
-          <Route exact path='/signup' />
         </Switch>
       </div>
     </BrowserRouter>
