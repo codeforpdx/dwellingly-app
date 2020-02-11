@@ -1,17 +1,50 @@
 import React from 'react';
+import { Form, Field, Formik } from 'formik';
+import { tempAuth } from '../Auth';
 
 export class LoginForm extends React.Component {
-  render() {
-    return (
-      <div>
-        <form action='' method=''>
-          Username:
-          <input type='text' name='username' />
-          Password:
-          <input type='password' name='password' />
-          <input type='submit' name='submit' />
-        </form>
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props);
+    }
+
+    onSubmit = () => {
+        tempAuth.authenticate();
+    }
+
+    render() {
+        return (
+            <div>
+                <Formik
+                    onSubmit={ () => {
+                        this.onSubmit();
+                    }}
+                    enableReinitialize={true}
+                    render={
+                        ( props ) => {
+                            return (
+                                <>
+                                    <Form >
+                                        <Field 
+                                            type="text"
+                                            name="username"
+                                            placeholder="Username"
+                                            required
+                                        />
+                                        <Field
+                                            type="password"
+                                            name="password"
+                                            placeholder="Password"
+                                            required
+
+                                        />
+                                        <button type="submit">Login</button>
+                                    </Form>
+                                </>
+                            );
+                        }
+                    }
+                />
+            </div>
+        )
+    }
 }
