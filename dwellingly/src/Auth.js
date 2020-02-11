@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 export const tempAuth = {
     isAuthenticated: false,
-    authenticate(cb) {
+    authenticate() {
       login()
         .then( () => {
             this.isAuthenticated = true;
