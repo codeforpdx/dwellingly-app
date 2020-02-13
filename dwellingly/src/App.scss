@@ -1,7 +1,14 @@
 @import './scss/main.scss';
 
+html {
+
+  background-color:  #6f90fc;
+  padding-top: 100px
+}
+
 .App {
   text-align: center;
+  
 }
 
 .App-logo {
@@ -37,4 +44,45 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.form-container {
+    background-image: url("./assets/images/dwellingly_logo.png") no-repeat;
+    background-size: contain;
+    background-color: white;
+    width: 300px;
+    height: 500px;
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 black;
+    margin: auto;
+    text-align: center;
+}
+
+.form-field {
+
+
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid rgba(128, 128, 128, 0.681);
+  padding: 10px 10px;
+  width: 250px;
+  margin: 10px 0px 10px;
+}
+
+.login-button {
+  color: white;
+  background-color:  #6f90fc;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin-top: 10px
+
+}
+
+.form-logo {
+
+  background-image: url("./assets/images/dwellingly_logo.png") no-repeat;
+  background-size: contain;
+
 }
