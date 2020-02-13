@@ -23,21 +23,28 @@ export class LoginForm extends React.Component {
                         ( props ) => {
                             return (
                                 <>
-                                    <Form >
+                                    <Form className="form-container">
+                                        <div className="form-logo"></div>
                                         <Field 
+                                            className="form-field"
                                             type="text"
                                             name="username"
                                             placeholder="Username"
                                             required
                                         />
                                         <Field
+                                            className="form-field"
                                             type="password"
                                             name="password"
                                             placeholder="Password"
                                             required
 
                                         />
-                                        <button type="submit">Login</button>
+                                        <div></div>
+                                        <button className="login-button" type="submit">LOG IN</button>
+                                        <div>OR</div>
+                                        <button className="login-button" type="submit">LOG IN WITH GOOGLE</button>
+
                                     </Form>
                                 </>
                             );

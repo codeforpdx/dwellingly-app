@@ -8,6 +8,8 @@ import { PrivateRoute } from './Auth';
 
 function App() {
   return (
+
+
     <BrowserRouter>
       <div className='App'>
         <Header />
@@ -30,3 +32,6 @@ function App() {
 }
 
 export default App;
+
+// removed the header from here since we don't need it on the login screen
+// add the header to the "home" component
