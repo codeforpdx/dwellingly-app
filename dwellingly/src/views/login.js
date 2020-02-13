@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Field, Formik } from 'formik';
 import { tempAuth } from '../Auth';
+import dwellinglyLogo from '../assets/images/dwellingly_logo.png';
+
 
 export class LoginForm extends React.Component {
     constructor(props) {
@@ -24,7 +26,7 @@ export class LoginForm extends React.Component {
                             return (
                                 <>
                                     <Form className="form-container">
-                                        <div className="form-logo"></div>
+                                        <img className="logo" src={dwellinglyLogo}></img>
                                         <Field 
                                             className="form-field"
                                             type="text"
@@ -33,7 +35,7 @@ export class LoginForm extends React.Component {
                                             required
                                         />
                                         <Field
-                                            className="form-field"
+                                                                                    className="form-field"
                                             type="password"
                                             name="password"
                                             placeholder="Password"
