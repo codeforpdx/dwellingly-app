@@ -5,6 +5,7 @@ import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import { Dashboard } from './views/dashboard';
 import { Home } from './views/home';
+import { Dashboard } from './views/dashboard';
 import { PrivateRoute } from './Auth';
 import { Terms } from './views/terms';
 
@@ -29,10 +30,10 @@ function App() {
           </header> */}
 
           <Switch>
-            <PrivateRoute exact path='/' component={Home} />
             <Route exact path='/login' component={LoginForm} />
             <Route exact path='/terms' component={Terms} />
-            <Route exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/' component={Home} />
+            <PrivateRoute exact path='/dashboard' component={Dashboard} />
           </Switch>
       </div>
     </BrowserRouter>
