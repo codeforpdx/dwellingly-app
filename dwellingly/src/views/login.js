@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Field, Formik } from 'formik';
 import { tempAuth } from '../Auth';
+import dwellinglyLogo from '../assets/images/dwellingly_logo.png';
+
 
 export class LoginForm extends React.Component {
     constructor(props) {
@@ -13,7 +15,7 @@ export class LoginForm extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="login__container">
                 <Formik
                     onSubmit={ () => {
                         this.onSubmit();
@@ -23,21 +25,37 @@ export class LoginForm extends React.Component {
                         ( props ) => {
                             return (
                                 <>
-                                    <Form >
+                                    <Form className="form-container">
+                                        <img className="logo" src={dwellinglyLogo}></img>
                                         <Field 
+                                            className="form-field"
                                             type="text"
                                             name="username"
                                             placeholder="Username"
                                             required
                                         />
                                         <Field
+                                            className="form-field"
                                             type="password"
                                             name="password"
                                             placeholder="Password"
                                             required
 
                                         />
-                                        <button type="submit">Login</button>
+                                        <div></div>
+                                        <button className="login-button" type="submit">LOG IN</button>
+                                        <div className="login__or_container">
+                                            <div className="login__or">
+                                                <span className="login__divider"></span>
+                                                <span className="login__or_text">OR</span>
+                                            </div>
+                                        </div>
+                                        <button className="login-button" type="submit">LOG IN WITH GOOGLE</button>
+                                        <div className="login__account_container">
+                                            <a href="" className="login__account_forgot_password">Forgot Password</a>
+                                            <a href="" className="login__account__create">Create an Account</a>
+                                        </div>
+
                                     </Form>
                                 </>
                             );

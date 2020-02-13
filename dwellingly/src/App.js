@@ -9,9 +9,11 @@ import { Terms } from './views/terms';
 
 function App() {
   return (
+
+
     <BrowserRouter>
       <div className='App'>
-        <header className='App-header'>
+        {/* <header className='App-header'>
           <div className='App-navbar'>
             <ul>
               <li>
@@ -22,15 +24,19 @@ function App() {
               </li>
             </ul>
           </div>
+          </header> */}
+
           <Switch>
             <PrivateRoute exact path='/' component={Home} />
             <Route exact path='/login' component={LoginForm} />
             <Route exact path='/terms' component={Terms} />
           </Switch>
-        </header>
       </div>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+// removed the header from here since we don't need it on the login screen
+// add the header to the "home" component
