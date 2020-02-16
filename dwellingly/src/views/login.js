@@ -35,10 +35,10 @@ export class LoginForm extends React.Component {
                         ( props ) => {
                             return (
                                 <>
-                                    <Form className="form-container">
-                                        <img className="logo" src={dwellinglyLogo}></img>
+                                    <Form className="login__form-container">
+                                        <img className="login__logo" src={dwellinglyLogo}></img>
                                         <Field 
-                                            className="form-field"
+                                            className="form-field login__form-field"
                                             type="text"
                                             name="username"
                                             value={this.state.username}
@@ -46,7 +46,7 @@ export class LoginForm extends React.Component {
                                             required
                                         />
                                         <Field
-                                            className="form-field"
+                                            className="form-field login__form-field"
                                             type="password"
                                             name="password"
                                             value={this.state.password}
@@ -54,17 +54,17 @@ export class LoginForm extends React.Component {
                                             required
                                         />
                                         <div></div>
-                                        <button className="login-button" type="submit">LOG IN</button>
+                                        <button className="login__button" type="submit">LOG IN</button>
                                         <div className="login__or_container">
                                             <div className="login__or">
                                                 <span className="login__divider"></span>
                                                 <span className="login__or_text">OR</span>
                                             </div>
                                         </div>
-                                        <button className="login-button">LOG IN WITH GOOGLE</button>
+                                        <button className="login__button login__button--google">LOG IN WITH GOOGLE</button>
                                         <div className="login__account_container">
-                                            <a href="" className="login__account_forgot_password">Forgot Password</a>
-                                            <a href="" className="login__account__create">Create an Account</a>
+                                            <a href="" className="login__text_link login__account_forgot_password">Forgot Password</a>
+                                            <a href="" className="login__text_link login__account_create">Create an Account</a>
                                         </div>
 
                                     </Form>

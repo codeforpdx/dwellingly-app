@@ -1,4 +1,6 @@
 @import './scss/main.scss';
+@import './scss/pages/all';
+
 
 html {
 
@@ -11,7 +13,7 @@ html {
   text-align: center;
   min-height: 100vh;
 }
-
+  
 .container {
   flex-grow: 1;
   margin: 45px 50px;
@@ -26,76 +28,37 @@ html {
   line-height: 1.25;
 }
 
-.form-container {
-    // background: url("./assets/images/dwellingly_logo.png") no-repeat;
-    background-size: contain;
-    background-color: white;
-    width: 300px;
-    height: 500px;
-    padding: 20px 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 10px 0 rgba(black,.25);
-    margin: auto;
-    text-align: center;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-.form-field {
-
-
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: solid $lightGray;
-  padding: 10px 10px;
-  width: 250px;
-  margin: 10px 0px 10px;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    /* animation: App-logo-spin infinite 20s linear; */
+  }
 }
 
-.login-button {
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
   color: white;
-  background-color:  $blue;
-  border-radius: 20px;
-  padding: 5px 10px;
-  margin-top: 10px
-
 }
 
-.login {
-  &__container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: $gradient;
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
   }
-  &__or_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  &__or {
-    position: relative;
-    width: 50%;
-  }
-  &__divider {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    left: 0;
-    transform: translateY(-50%);
-    height: 2px;
-    background-color: $lightGray;
-    z-index: 1;
-  }
-  &__or_text {
-    background-color: white;
-    position: relative;
-    z-index: 2;
-    padding: 0 20px;
-  }
-  &__account_container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
+  to {
+    transform: rotate(360deg);
   }
 }
