@@ -13,19 +13,6 @@ function App() {
 
     <BrowserRouter>
       <div className='App'>
-        {/* <header className='App-header'>
-          <div className='App-navbar'>
-            <ul>
-              <li>
-                <Link to='/login'>Login</Link>
-              </li>
-              <li>
-                <Link to='/'>Home</Link>
-              </li>
-            </ul>
-          </div>
-          </header> */}
-
           <Switch>
             <Route exact path='/login' component={LoginForm} />
             <PrivateRoute exact path='/' component={Home} />
@@ -37,6 +24,3 @@ function App() {
 }
 
 export default App;
-
-// removed the header from here since we don't need it on the login screen
-// add the header to the "home" component
