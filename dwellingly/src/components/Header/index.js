@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import dwellinglylogo from '../../assets/images/dwellingly_logo_white.png';
 
 const Header = props => {
+  // Don't render header on login or signup pages
+  if (window.location.pathname === '/login' || window.location.pathname === '/signup') return null;
+
   return (
 
     <header className='App-header'>

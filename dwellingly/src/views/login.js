@@ -41,7 +41,7 @@ export class LoginForm extends React.Component {
                                             className="form-field login__form-field"
                                             type="text"
                                             name="username"
-                                            value={this.state.username}
+                                            value={props.values.username}
                                             placeholder="Username"
                                             required
                                         />
@@ -49,7 +49,7 @@ export class LoginForm extends React.Component {
                                             className="form-field login__form-field"
                                             type="password"
                                             name="password"
-                                            value={this.state.password}
+                                            value={props.values.password}
                                             placeholder="Password"
                                             required
                                         />

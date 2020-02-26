@@ -5,7 +5,7 @@ import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import { Dashboard } from './views/dashboard';
 import { PrivateRoute } from './Auth';
-
+import Header from './components/Header/index';
 
 function App() {
   return (
@@ -13,11 +13,13 @@ function App() {
 
     <BrowserRouter>
       <div className='App'>
-          <Switch>
-            <Route exact path='/login' component={LoginForm} />
-            <PrivateRoute exact path='/' component={Home} />
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
-          </Switch>
+        <Header />
+
+        <Switch>
+          <Route exact path='/login' component={LoginForm} />
+          <PrivateRoute exact path='/' component={Home} />
+          <PrivateRoute exact path='/dashboard' component={Dashboard} />
+        </Switch>
       </div>
     </BrowserRouter>
   );
