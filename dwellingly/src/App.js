@@ -10,19 +10,9 @@ import Header from './components/Header/index';
 
 function App() {
   return (
-
-
     <BrowserRouter>
       <div className='App'>
         <Header />
-        <ul>
-          <li>
-            <Link to='/signup'>Signup</Link>
-          </li>
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
-        </ul>
 
         <Switch>
           <Route exact path='/login' component={LoginForm} />
@@ -35,6 +25,3 @@ function App() {
 }
 
 export default App;
-
-// removed the header from here since we don't need it on the login screen
-// add the header to the "home" component

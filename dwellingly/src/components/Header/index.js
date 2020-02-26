@@ -14,21 +14,6 @@ const Header = props => {
         </Link>
       </div>
     </header>
-
-    // <header className='App-header'>
-    //   <img src={dwellinglylogo} className='' alt='dwellingly' />
-    //   <img src={PDXlogo} className='App-logo' alt='logo' />
-
-    //   <a
-    //     className='App-link'
-    //     href='http://www.codeforpdx.org'
-    //     target='_blank'
-    //     rel='noopener noreferrer'
-    //   >
-    //     Code for PDX
-    //   </a>
-    //   <p>Community Built Civic Tech.</p>
-    // </header>
   );
 };
 
