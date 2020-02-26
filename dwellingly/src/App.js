@@ -6,6 +6,7 @@ import { Home } from './views/home';
 import { Dashboard } from './views/dashboard';
 import { PrivateRoute } from './Auth';
 import { Terms } from './views/terms';
+import Header from './components/Header/index';
 
 
 function App() {
