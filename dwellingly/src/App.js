@@ -5,6 +5,7 @@ import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import { Dashboard } from './views/dashboard';
 import { PrivateRoute } from './Auth';
+import Header from './components/Header/index';
 
 
 function App() {
