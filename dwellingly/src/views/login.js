@@ -9,8 +9,8 @@ export class LoginForm extends React.Component {
         super(props);
 
         this.state = {
-            username: null,
-            password: null
+            username: "",
+            password: ""
         }
     }
 
