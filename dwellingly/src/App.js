@@ -9,12 +9,14 @@ import Header from './components/Header/index';
 
 function App() {
   return (
+
+
     <BrowserRouter>
       <div className='App'>
         <Switch>
           <Route exact path='/login' component={LoginForm} />
           <PrivateRoute exact path='/' component={Home} />
-          <PrivateRoute exact path='/dashboard' component={Dashboard} />
+          <Route exact path='/dashboard' component={Dashboard} />
         </Switch>
       </div>
     </BrowserRouter>

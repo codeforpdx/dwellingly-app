@@ -117,6 +117,7 @@
         color: $brandBlue;
         display: flex;
         justify-content: space-between;
+        margin-bottom: .75rem; //bc Bulma and negative margins
     }
     &__collapsible_header_title, &__collapsible_toggle {
         font-weight: bold;
@@ -133,8 +134,17 @@
         a {
             color: $darkGray;
         }
+        > .column:last-child {
+            text-align: right;
+        }
+        .select, .select select {
+            width: 100%;
+        }
     }
     &__collapsible_col {
+        &:last-child {
+            text-align: right;
+        }
         .subtext {
             color: $gray;
         }
@@ -154,5 +164,6 @@
         color: $blue;
         text-align: right;
         padding: 10px 45px;
+
     }
 }

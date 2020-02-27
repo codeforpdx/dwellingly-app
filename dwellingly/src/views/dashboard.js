@@ -52,7 +52,11 @@ export class Dashboard extends React.Component {
                             <div className="column dashboard__module">
                                 <div className="dashboard__module_header">
                                     <h3 className="dashboard__module_title h2">Reports</h3>
-                                    <a href="#" className="dashboard__module_title_link">></a>
+                                    <a href="#" className="dashboard__module_title_link">
+                                        <span className="icon">
+                                            <i className="fas fa-chevron-right"></i>
+                                        </span>
+                                    </a>
                                 </div>
                                 <div className="dashboard__module_row">
                                     <div className="dashboard__module_stat_container primary">
@@ -74,7 +78,11 @@ export class Dashboard extends React.Component {
                             <div className="column dashboard__module">
                                 <div className="dashboard__module_header">
                                     <h3 className="dashboard__module_title h2">New Property Managers</h3>
-                                    <a href="#" className="dashboard__module_title_link">></a>
+                                    <a href="#" className="dashboard__module_title_link">
+                                        <span className="icon">
+                                            <i className="fas fa-chevron-right"></i>
+                                        </span>
+                                    </a>
                                 </div>
                                 <div className="dashboard__module_row">
                                     <div className="dashboard__module_stat_container">
@@ -105,59 +113,71 @@ export class Dashboard extends React.Component {
                         <div className="collapsible">
                             <div className="dashboard__collapsible_header">
                                 <h3 className="dashboard__collapsible_header_title">NEW STAFF ASSIGNMENTS <span className="count">(3)</span></h3>
-                                <button href="#" className="dashboard__collapsible_toggle">></button>
+                                <button href="#" className="dashboard__collapsible_toggle">
+                                    <span className="icon">
+                                        <i className="fas fa-chevron-down"></i>
+                                    </span>
+                                </button>
                             </div>
-                            <div className="dashboard__collapsible_row">
-                                <div className="dashboard__collapsible_col">Tenant Name</div>
-                                <div className="dashboard__collapsible_col">
+                            <div className="dashboard__collapsible_row columns">
+                                <div className="dashboard__collapsible_col column">Tenant Name</div>
+                                <div className="dashboard__collapsible_col column">
                                     Meerkat Manner<br />
                                     <span class="subtext">Property Manager Name</span>
                                 </div>
-                                <div className="dashboard__colapsible_col select is-rounded">
-                                    <select>
-                                        <option>Staff Name</option>
-                                        <option>Staff Name 2</option>
-                                        <option>Staff Name 3</option>
-                                    </select>
+                                <div className="dashboard__colapsible_col column">
+                                    <div className="select is-rounded">
+                                        <select>
+                                            <option>Staff Name</option>
+                                            <option>Staff Name 2</option>
+                                            <option>Staff Name 3</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="dashboard__collapsible_row">
-                                <div className="dashboard__collapsible_col">Tenant Name</div>
-                                <div className="dashboard__collapsible_col">
+                            <div className="dashboard__collapsible_row columns">
+                                <div className="dashboard__collapsible_col column">Tenant Name</div>
+                                <div className="dashboard__collapsible_col column">
                                     Meerkat Manner<br />
                                     <span class="subtext">Property Manager Name</span>
                                 </div>
-                                <div className="dashboard__colapsible_col select is-rounded">
-                                    <select>
-                                        <option>Staff Name</option>
-                                        <option>Staff Name 2</option>
-                                        <option>Staff Name 3</option>
-                                    </select>
+                                <div className="dashboard__colapsible_col column">
+                                    <div className="select is-rounded">
+                                        <select>
+                                            <option>Staff Name</option>
+                                            <option>Staff Name 2</option>
+                                            <option>Staff Name 3</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div className="collapsible">
                             <div className="dashboard__collapsible_header">
                                 <h3 className="dashboard__collapsible_header_title">REQUEST FOR ACCESS</h3>
-                                <button href="#" className="dashboard__collapsible_toggle">></button>
+                                <button href="#" className="dashboard__collapsible_toggle">
+                                    <span className="icon">
+                                        <i className="fas fa-chevron-down"></i>
+                                    </span>
+                                </button>
                             </div>
-                            <div className="dashboard__collapsible_row">
-                                <div className="dashboard__collapsible_col">Leann Lovejoy</div>
-                                <div className="dashboard__collapsible_col">
+                            <div className="dashboard__collapsible_row columns">
+                                <div className="dashboard__collapsible_col column">Leann Lovejoy</div>
+                                <div className="dashboard__collapsible_col column">
                                     <a href="">propertymanager@email.com</a>
                                 </div>
-                                <div className="dashboard__collapsible_col">(503)123-1234</div>
+                                <div className="dashboard__collapsible_col column">(503)123-1234</div>
                                 <div className="dashboard__colapsible_col dashboard__collapsible_buttons">
                                     <button className="button is-primary is-rounded">ADD</button>
                                     <button className="button is-dark is-rounded">DECLINE</button>
                                 </div>
                             </div>
-                            <div className="dashboard__collapsible_row">
-                                <div className="dashboard__collapsible_col">Leann Lovejoy</div>
-                                <div className="dashboard__collapsible_col">
+                            <div className="dashboard__collapsible_row columns">
+                                <div className="dashboard__collapsible_col column">Leann Lovejoy</div>
+                                <div className="dashboard__collapsible_col column">
                                     <a href="">propertymanager@email.com</a>
                                 </div>
-                                <div className="dashboard__collapsible_col">(503)123-1234</div>
+                                <div className="dashboard__collapsible_col column">(503)123-1234</div>
                                 <div className="dashboard__colapsible_col dashboard__collapsible_buttons">
                                     <button className="button is-primary is-rounded">ADD</button>
                                     <button className="button is-dark is-rounded">DECLINE</button>
