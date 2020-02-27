@@ -2,7 +2,6 @@ import React from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
-import { Home } from './views/home';
 import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
@@ -34,29 +33,27 @@ export class App extends React.Component {
   }
 
   login = (username, password) => {
-    console.log("attempting to login");
     auth.authenticate(username, password)
       .then( response => {
         if (response) {
           //let parsedJwt = parseJwt(response.access_token);
           this.setState({
-            isAuthenticated: true,
-            accessJwt: response.accessToken,
-            refreshJwt: response.refreshToken,
-            /*
-            userId: parsedJwt.userId,
-            userFirst: parsedJwt.userFirst,
-            userLast: parsedJwt.userLast,
-            userEmail: parsedJwt.userEmail
-            */
-          }, () => {
-            console.log("Got here");
-            window.location.replace("/dashboard");
+            userSession: {
+              isAuthenticated: true,
+              accessJwt: response.data.access_token,
+              refreshJwt: response.data.refresh_token,
+              /*
+              userId: parsedJwt.userId,
+              userFirst: parsedJwt.userFirst,
+              userLast: parsedJwt.userLast,
+              userEmail: parsedJwt.userEmail
+              */
+            }
           });
         }
       })
     .catch( (error) => {
-      console.alert("Failed to login");
+      alert("Failed to login");
     })
   }
 
@@ -64,13 +61,15 @@ export class App extends React.Component {
     auth.signout()
       .then( () => {
         this.setState({
-          isAuthenticated: false,
-          accessJwt: '',
-          refreshJwt: '',
-          userId: '',
-          userFirst: '',
-          userLast: '',
-          userEmail: ''
+          userSession: {
+            isAuthenticated: false,
+            accessJwt: '',
+            refreshJwt: '',
+            userId: '',
+            userFirst: '',
+            userLast: '',
+            userEmail: ''
+          }
         })
         window.location.replace('/login');
       });
@@ -84,8 +83,8 @@ export class App extends React.Component {
             <Header />
 
             <Switch>
+              <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
-              <PrivateRoute exact path='/' component={Home} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
             </Switch>
           </div>
