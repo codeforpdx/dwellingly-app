@@ -1,47 +1,51 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import * as axios from 'axios';
+import { UserContext } from './App';
 
-export const tempAuth = {
-    isAuthenticated: false,
-    authenticate() {
-      login()
-        .then( () => {
-            this.isAuthenticated = true;
-            console.log("Successfully logged in.");
-        })
-        .catch( () => {
-            alert("Failure signing in");
-        })
-    },
-    signout() {
-      logout()
-        .then( () => {
-            this.isAuthenticated = false;
-            console.log("Successfully logged out.");
-            window.location.replace('/login');
-        })
-        .catch( () => {
-            alert("Failure signing out");
-        })
-    }
+export const auth = {
+  isAuthenticated: false,
+  async authenticate(username, password) {
+    return axios.post('http://localhost:5000/login', {
+      username: username,
+      password: password
+    })
+      .then((response) => {
+        if(response){
+          this.isAuthenticated = true;
+          console.log("Successfully logged in.");
+          return response;
+        }
+      })
+      .catch((error) => {
+        alert("Failure signing in");
+        return Promise.reject(error);
+      });
+  },
+  async signout() {
+    return new Promise((resolve, reject) => {
+      this.resolve();
+    })
+      .then((response) => {
+        this.isAuthenticated = false;
+        console.log("Successfully logged out.");
+        return Promise.resolve(response);
+      })
+      .catch((error) => {
+        alert("Failure signing out");
+        return Promise.reject(error);
+      })
   }
-
-const login = () => {
-  return new Promise( (resolve, reject) => {
-
-  })
 }
 
-const logout = () => {
-    return new Promise( (resolve, reject) => {
-
-    });
-}
-  
 export const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
-      tempAuth.isAuthenticated
-        ? <Component {...props} />
-        : <Redirect to='/login' />
-    )} />
-  )
+  <UserContext.Consumer>
+    { context => {
+      return <Route {...rest} render={(props) => (
+        context.user.isAuthenticated
+          ? <Component {...props} />
+          : <Redirect to='/login' />
+      )} />
+    }}
+  </UserContext.Consumer>
+)

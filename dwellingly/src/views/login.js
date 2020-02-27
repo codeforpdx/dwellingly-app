@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Field, Formik } from 'formik';
 import dwellinglyLogo from '../assets/images/dwellingly_logo.png';
 import { UserContext } from '../App';
+import { Redirect } from 'react-router';
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -16,7 +17,10 @@ export class LoginForm extends React.Component {
   render() {
     return (
       <UserContext.Consumer>
-        {({ login }) => (
+        {({ user, login }) => (
+          user.isAuthenticated
+          ? <Redirect to="/dashboard" />
+          :
           <div className="login__container">
             <Formik
               initialValues={{

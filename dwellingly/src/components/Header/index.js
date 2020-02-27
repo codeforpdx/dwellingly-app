@@ -4,7 +4,7 @@ import dwellinglylogo from '../../assets/images/dwellingly_logo_white.png';
 
 const Header = props => {
   // Don't render header on login or signup pages
-  if (window.location.pathname === '/login' || window.location.pathname === '/signup') return null;
+  if (window.location.pathname === '/login') return null;
 
   return (
 
