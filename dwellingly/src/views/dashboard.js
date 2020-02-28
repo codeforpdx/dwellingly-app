@@ -1,5 +1,34 @@
 import React from 'react';
 import dwellinglylogo from '../assets/images/dwellingly_logo_white.png';
+import DashboardModule from '../components/DashboardModule';
+
+const moduleData = {
+    openTickets: {
+        title: 'Open Tickets',
+        stats: [
+            [ //rows
+                {
+                    stat: 4,
+                    desc: 'New',
+                },
+                {
+                    stat: 2,
+                    desc: "Unseen for > 24 hours",
+                }
+            ],
+            [
+                {
+                    stat: 32,
+                    desc: 'In Progress'
+                },
+                {
+                    stat: 2,
+                    desc: 'In progress for > 1 week',
+                }
+            ]
+        ]
+    }
+}
 
 export class Dashboard extends React.Component {
     constructor(props) {
@@ -24,32 +53,10 @@ export class Dashboard extends React.Component {
                     <div className="dashboard__main">
                         <h2 className="page-title">Admin Dashboard</h2>
                         <div className="dashboard__modules_container">
+                            <DashboardModule
+                                data={moduleData.openTickets}
+                            />
                             <div className="dashboard__module">
-                                <div className="dashboard__module_header">
-                                    <h3 className="dashboard__module_title h2">Open Tickets</h3>
-                                </div>
-                                <div className="dashboard__module_row">
-                                    <div className="dashboard__module_stat_container primary">
-                                        <p className="dashboard__module_stat">4</p>
-                                        <p className="dashboard__module_desc">New</p>
-                                    </div>
-                                    <div className="dashboard__module_stat_container">
-                                        <p className="dashboard__module_stat">2</p>
-                                        <p className="dashboard__module_desc">Unseen for > 24 hours</p>
-                                    </div>
-                                </div>
-                                <div className="dashboard__module_row">
-                                    <div className="dashboard__module_stat_container primary">
-                                        <p className="dashboard__module_stat">32</p>
-                                        <p className="dashboard__module_desc">In Progress</p>
-                                    </div>
-                                    <div className="dashboard__module_stat_container">
-                                        <p className="dashboard__module_stat">2</p>
-                                        <p className="dashboard__module_desc">In progress for > 1 week</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="column dashboard__module">
                                 <div className="dashboard__module_header">
                                     <h3 className="dashboard__module_title h2">Reports</h3>
                                     <a href="#" className="dashboard__module_title_link">
