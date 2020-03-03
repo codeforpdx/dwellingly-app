@@ -1,0 +1,68 @@
+@import '../../scss/variables.scss';
+
+.dashboard {
+    &__module {
+        padding: 20px 20px 50px 20px;
+        width: 30%;
+        flex-basis: 30%;
+        flex-grow: 0;
+        color: white;
+
+        &:nth-child(1) {
+            background-color: $orange;
+        }
+        &:nth-child(2) {
+            background-color: $red;
+        }
+        &:nth-child(3) {
+            background-color: $blue;
+        }
+        a {
+            color: white;
+        }
+    }
+    &__module_header {
+        border-bottom: 2px solid white;
+        padding-bottom: 5px;
+        display: flex;
+    }
+    &__module_title {
+        display: inline-flex;
+        flex: 1 0;
+    }
+    &__module_title_link {
+        justify-self: flex-end;
+        font-weight: bold;
+    }
+    &__module_row {
+        border-bottom: 1px solid white;
+        padding-bottom: 5px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    &__module_stat_container {
+        display: flex;
+        justify-content: flex-start;
+        &.primary {
+            font-size: 18px;
+            .dashboard__module_stat {
+                font-weight: bold;
+            }
+        }
+    }
+    &__module_stat {
+        width: 20px;
+        text-align: right;
+        margin-right: 10px;
+    }
+    &__module_date {
+        width: 50px;
+        text-align: right;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+    &__module_subtext {
+        font-size: 14px;
+        display: block;
+    }
+}

@@ -1,24 +1,37 @@
 import React from 'react';
 
-function DashboardModule(props){
-    const {data} = props;
-    return(
+import './dashboardmodule.scss';
+
+function DashboardModule(props) {
+    const { data } = props;
+    return (
         <div className="dashboard__module">
             <div className="dashboard__module_header">
                 <h3 className="dashboard__module_title h2">{data.title}</h3>
+                {
+                    data.link && (
+                        <a href={data.link} className="dashboard__module_title_link">
+                            <span className="icon">
+                                <i className="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    )
+                }
             </div>
             {
-                data.stats.map((statRow,index)=>{
+                data.stats.map((statRow, index) => {
                     console.log(statRow);
                     return (
                         <div className="dashboard__module_row" key={`module_row--${index}`}>
                             {
-                                statRow.map((stat,statIndex)=>{
+                                statRow.map((stat, statIndex) => {
                                     console.log(stat.stat);
                                     return (
-                                        <div key={`stat_container--${statIndex}`}className={`dashboard__module_stat_container ${statIndex === 0 && 'primary'}`}>
-                                            <p className="dashboard__module_stat">{stat.stat}</p>
-                                            <p className="dashboard__module_desc">{stat.desc}</p>
+                                        <div key={`stat_container--${statIndex}`} className={`dashboard__module_stat_container ${statIndex === 0 && 'primary'}`}>
+                                            <p className={`dashboard__module_${data.isDate ? 'date' : 'stat'}`}>{stat.stat}</p>
+                                            <p className="dashboard__module_desc">{stat.desc}
+                                                {stat.subtext && <span className="dashboard__module_subtext">in the last week</span>}
+                                            </p>
                                         </div>
                                     )
                                 })
@@ -28,7 +41,7 @@ function DashboardModule(props){
                 })
             }
         </div >
-        );
+    );
 };
 
 export default DashboardModule;

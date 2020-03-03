@@ -1,34 +1,8 @@
 import React from 'react';
 import dwellinglylogo from '../assets/images/dwellingly_logo_white.png';
+import {MODULE_DATA} from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
-
-const moduleData = {
-    openTickets: {
-        title: 'Open Tickets',
-        stats: [
-            [ //rows
-                {
-                    stat: 4,
-                    desc: 'New',
-                },
-                {
-                    stat: 2,
-                    desc: "Unseen for > 24 hours",
-                }
-            ],
-            [
-                {
-                    stat: 32,
-                    desc: 'In Progress'
-                },
-                {
-                    stat: 2,
-                    desc: 'In progress for > 1 week',
-                }
-            ]
-        ]
-    }
-}
+import Collapsible from '../components/Collapsible';
 
 export class Dashboard extends React.Component {
     constructor(props) {
@@ -54,81 +28,22 @@ export class Dashboard extends React.Component {
                         <h2 className="page-title">Admin Dashboard</h2>
                         <div className="dashboard__modules_container">
                             <DashboardModule
-                                data={moduleData.openTickets}
+                                data={MODULE_DATA.openTickets}
                             />
-                            <div className="dashboard__module">
-                                <div className="dashboard__module_header">
-                                    <h3 className="dashboard__module_title h2">Reports</h3>
-                                    <a href="#" className="dashboard__module_title_link">
-                                        <span className="icon">
-                                            <i className="fas fa-chevron-right"></i>
-                                        </span>
-                                    </a>
-                                </div>
-                                <div className="dashboard__module_row">
-                                    <div className="dashboard__module_stat_container primary">
-                                        <p className="dashboard__module_stat">4</p>
-                                        <p className="dashboard__module_desc">Compliments
-                                        <span className="dashboard__module_subtext">in the last week</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="dashboard__module_row">
-                                    <div className="dashboard__module_stat_container primary">
-                                        <p className="dashboard__module_stat">12</p>
-                                        <p className="dashboard__module_desc">Closed tickets
-                                        <span className="dashboard__module_subtext">in the last week</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="column dashboard__module">
-                                <div className="dashboard__module_header">
-                                    <h3 className="dashboard__module_title h2">New Property Managers</h3>
-                                    <a href="#" className="dashboard__module_title_link">
-                                        <span className="icon">
-                                            <i className="fas fa-chevron-right"></i>
-                                        </span>
-                                    </a>
-                                </div>
-                                <div className="dashboard__module_row">
-                                    <div className="dashboard__module_stat_container">
-                                        <p className="dashboard__module_date">Today</p>
-                                        <p className="dashboard__module_desc">Compliments
-                                        <span className="dashboard__module_subtext">in the last week</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="dashboard__module_row">
-                                    <div className="dashboard__module_stat_container">
-                                        <p className="dashboard__module_date">02/04</p>
-                                        <p className="dashboard__module_desc">Property Manager Name
-                                        <span className="dashboard__module_subtext">Meerkat Manor</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="dashboard__module_row">
-                                    <div className="dashboard__module_stat_container">
-                                        <p className="dashboard__module_date">02/04</p>
-                                        <p className="dashboard__module_desc">Property Manager Name
-                                        <span className="dashboard__module_subtext">Meerkat Manor</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <DashboardModule
+                                data={MODULE_DATA.reports}
+                            />
+                            <DashboardModule
+                                data={MODULE_DATA.managers}
+                            />
                         </div>
-                        <div className="collapsible">
-                            <div className="dashboard__collapsible_header">
-                                <h3 className="dashboard__collapsible_header_title">NEW STAFF ASSIGNMENTS <span className="count">(3)</span></h3>
-                                <button href="#" className="dashboard__collapsible_toggle">
-                                    <span className="icon">
-                                        <i className="fas fa-chevron-down"></i>
-                                    </span>
-                                </button>
-                            </div>
-                            <div className="dashboard__collapsible_row columns">
-                                <div className="dashboard__collapsible_col column">Tenant Name</div>
-                                <div className="dashboard__collapsible_col column">
+                        <Collapsible
+                            title="New Staff Assignments"
+                            count="3"
+                        >
+                            <div className="collapsible__row columns">
+                                <div className="collapsible__col column">Tenant Name</div>
+                                <div className="collapsible__col column">
                                     Meerkat Manner<br />
                                     <span class="subtext">Property Manager Name</span>
                                 </div>
@@ -142,9 +57,9 @@ export class Dashboard extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="dashboard__collapsible_row columns">
-                                <div className="dashboard__collapsible_col column">Tenant Name</div>
-                                <div className="dashboard__collapsible_col column">
+                            <div className="collapsible__row columns">
+                                <div className="collapsible__col column">Tenant Name</div>
+                                <div className="collapsible__col column">
                                     Meerkat Manner<br />
                                     <span class="subtext">Property Manager Name</span>
                                 </div>
@@ -158,39 +73,33 @@ export class Dashboard extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="collapsible">
-                            <div className="dashboard__collapsible_header">
-                                <h3 className="dashboard__collapsible_header_title">REQUEST FOR ACCESS</h3>
-                                <button href="#" className="dashboard__collapsible_toggle">
-                                    <span className="icon">
-                                        <i className="fas fa-chevron-down"></i>
-                                    </span>
-                                </button>
-                            </div>
-                            <div className="dashboard__collapsible_row columns">
-                                <div className="dashboard__collapsible_col column">Leann Lovejoy</div>
-                                <div className="dashboard__collapsible_col column">
+                        </Collapsible>
+                        <Collapsible
+                            title="Request for Access"
+                        >
+                            <div className="collapsible__row columns">
+                                <div className="collapsible__col column">Leann Lovejoy</div>
+                                <div className="collapsible__col column">
                                     <a href="">propertymanager@email.com</a>
                                 </div>
-                                <div className="dashboard__collapsible_col column">(503)123-1234</div>
-                                <div className="dashboard__colapsible_col dashboard__collapsible_buttons">
+                                <div className="collapsible__col column">(503)123-1234</div>
+                                <div className="dashboard__colapsible_col collapsible__buttons">
                                     <button className="button is-primary is-rounded">ADD</button>
                                     <button className="button is-dark is-rounded">DECLINE</button>
                                 </div>
                             </div>
-                            <div className="dashboard__collapsible_row columns">
-                                <div className="dashboard__collapsible_col column">Leann Lovejoy</div>
-                                <div className="dashboard__collapsible_col column">
+                            <div className="collapsible__row columns">
+                                <div className="collapsible__col column">Leann Lovejoy</div>
+                                <div className="collapsible__col column">
                                     <a href="">propertymanager@email.com</a>
                                 </div>
-                                <div className="dashboard__collapsible_col column">(503)123-1234</div>
-                                <div className="dashboard__colapsible_col dashboard__collapsible_buttons">
+                                <div className="collapsible__col column">(503)123-1234</div>
+                                <div className="dashboard__colapsible_col collapsible__buttons">
                                     <button className="button is-primary is-rounded">ADD</button>
                                     <button className="button is-dark is-rounded">DECLINE</button>
                                 </div>
                             </div>
-                        </div>
+                        </Collapsible>
                     </div>
                     <footer className="dashboard__footer">
                         <p className="dashboard__footer_logo_text">
