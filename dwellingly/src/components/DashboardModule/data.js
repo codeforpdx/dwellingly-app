@@ -70,4 +70,25 @@ const MODULE_DATA = {
     }
 };
 
-export { MODULE_DATA };
+const ACCESS_REQUEST_DATA = [
+    {
+        id: 1,
+        name: "Leann Lovejoy",
+        email: "propertymanager@email.com",
+        phone: "(503)123-1234"
+    },
+    {
+        id: 2,
+        name: "Leann Lovejoy",
+        email: "propertymanager@email.com",
+        phone: "(503)123-1234"
+    },
+    {
+        id: 3,
+        name: "Leann Lovejoy",
+        email: "propertymanager@email.com",
+        phone: "(503)123-1234"
+    }
+];
+
+export { MODULE_DATA, ACCESS_REQUEST_DATA };

@@ -20,12 +20,10 @@ function DashboardModule(props) {
             </div>
             {
                 data.stats.map((statRow, index) => {
-                    console.log(statRow);
                     return (
                         <div className="dashboard__module_row" key={`module_row--${index}`}>
                             {
                                 statRow.map((stat, statIndex) => {
-                                    console.log(stat.stat);
                                     return (
                                         <div key={`stat_container--${statIndex}`} className={`dashboard__module_stat_container ${statIndex === 0 && 'primary'}`}>
                                             <p className={`dashboard__module_${data.isDate ? 'date' : 'stat'}`}>{stat.stat}</p>

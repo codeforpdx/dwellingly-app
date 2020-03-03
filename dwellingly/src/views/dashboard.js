@@ -1,12 +1,21 @@
 import React from 'react';
 import dwellinglylogo from '../assets/images/dwellingly_logo_white.png';
-import {MODULE_DATA} from '../components/DashboardModule/data';
+import {MODULE_DATA, ACCESS_REQUEST_DATA} from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
+import RequestItem from '../components/RequestItem';
 
 export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    handleAddClick(id){
+        console.log('add',id);
+    }
+
+    handleDeclineClick(id){
+        console.log('decline',id);
     }
 
     render() {
@@ -45,7 +54,7 @@ export class Dashboard extends React.Component {
                                 <div className="collapsible__col column">Tenant Name</div>
                                 <div className="collapsible__col column">
                                     Meerkat Manner<br />
-                                    <span class="subtext">Property Manager Name</span>
+                                    <span className="subtext">Property Manager Name</span>
                                 </div>
                                 <div className="dashboard__colapsible_col column">
                                     <div className="select is-rounded">
@@ -61,7 +70,7 @@ export class Dashboard extends React.Component {
                                 <div className="collapsible__col column">Tenant Name</div>
                                 <div className="collapsible__col column">
                                     Meerkat Manner<br />
-                                    <span class="subtext">Property Manager Name</span>
+                                    <span className="subtext">Property Manager Name</span>
                                 </div>
                                 <div className="dashboard__colapsible_col column">
                                     <div className="select is-rounded">
@@ -77,33 +86,16 @@ export class Dashboard extends React.Component {
                         <Collapsible
                             title="Request for Access"
                         >
-                            <div className="collapsible__row columns">
-                                <div className="collapsible__col column">Leann Lovejoy</div>
-                                <div className="collapsible__col column">
-                                    <a href="">propertymanager@email.com</a>
-                                </div>
-                                <div className="collapsible__col column">(503)123-1234</div>
-                                <div className="dashboard__colapsible_col collapsible__buttons">
-                                    <button className="button is-primary is-rounded">ADD</button>
-                                    <button className="button is-dark is-rounded">DECLINE</button>
-                                </div>
-                            </div>
-                            <div className="collapsible__row columns">
-                                <div className="collapsible__col column">Leann Lovejoy</div>
-                                <div className="collapsible__col column">
-                                    <a href="">propertymanager@email.com</a>
-                                </div>
-                                <div className="collapsible__col column">(503)123-1234</div>
-                                <div className="dashboard__colapsible_col collapsible__buttons">
-                                    <button className="button is-primary is-rounded">ADD</button>
-                                    <button className="button is-dark is-rounded">DECLINE</button>
-                                </div>
-                            </div>
+                            {
+                                ACCESS_REQUEST_DATA.map((requestItemData,index)=>{
+                                    return (<RequestItem key={`requestItem--${index}`} data={requestItemData} onDeclineClick={this.handleDeclineClick} onAddClick={this.handleAddClick}/>);
+                                })
+                            }
                         </Collapsible>
                     </div>
                     <footer className="dashboard__footer">
                         <p className="dashboard__footer_logo_text">
-                            <span class="bold">JOIN</span> 2018
+                            <span className="bold">JOIN</span> 2018
                         </p>
                     </footer>
                 </div>
