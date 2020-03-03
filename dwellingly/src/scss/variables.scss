@@ -1,23 +1,24 @@
-// colors
-$brandBlue: #053d6f;
-$gray: #8e8e93;
-$darkGray: #555555;
-$lightGray: #d1d1d1;
-$lighterGray: #eeeeee;
+// https://bulma.io/documentation/customize/with-node-sass/
+// https://bulma.io/documentation/customize/variables/
+
+// Dwellingly brand colors
 $blue: #51a3fc;
+$dark-blue: #053d6f;
+$gray: #8e8e93;
+$dark-gray: #555555;
+$light-gray: #d1d1d1;
+$light: #eeeeee;
 $orange: #fdbc49;
 $red: #fc575a;
 
+// Update Bulma's global variables
+$grey: $gray;
+$grey-dark: $dark-gray;
+$grey-light: $light-gray;
+$grey-lighter: $light;
 $gradient: linear-gradient(to bottom, #6f90fc 0%, #52baed 100%);
+$cyan: $blue;
 
-// Example: Set your brand colors
-// $purple: #8a4d76;
-// $pink: #fa7c91;
-// $brown: #757763;
-// $beige-light: #d0d1cd;
-// $beige-lighter: #eff0eb;
-
-// Example: Update Bulma's global variables
 // $family-sans-serif: 'Nunito', sans-serif;
 // $grey-dark: $brown;
 // $grey-light: $beige-light;
