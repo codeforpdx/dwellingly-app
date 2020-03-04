@@ -54,6 +54,23 @@
         padding: 10px 45px;
 
     }
+    &__save_assignments_button {
+        color: $lightGray;
+        background-color: $lighterGray;
+        font-weight: bold;
+        border: 0;
+        &.active {
+            background-color: $blue;
+            color: white;
+        }
+    }
+    &__assignments_container {
+        margin-bottom: 45px;
+    }
+    &__assignments_button_container {
+        margin-top: 20px;
+    }
+
 }
 
 .modal {

@@ -9,16 +9,17 @@ export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalActive: true
+            modalActive: false,
+            areStaffAssigned: false,
         }
     }
 
-    handleAddClick = (id)=> {
-        console.log('handle add access',id);
+    handleAddClick = (id) => {
+        console.log('handle add access', id);
         //TODO: route to add page with id (or switch the click handler within requestItem to a traditional link)
     }
 
-    handleDeclineClick = (id)=> {
+    handleDeclineClick = (id) => {
         //console.log('decline',id);
         this.setState({
             modalActive: true
@@ -26,11 +27,17 @@ export class Dashboard extends React.Component {
     }
 
     handleDenyAccess(doDeny) {
-        this.setState({modalActive: false});
-        if (doDeny){
+        this.setState({ modalActive: false });
+        if (doDeny) {
             console.log('handle deny access');
             //TODO: handle deny access
         }
+    }
+
+    handleStaffAssignmentChange = () => {
+        this.setState({
+            areStaffAssigned: true, //TODO: should handle which dropdowns are selected and check to make sure that not all values are none, in which case this state should be set to false
+        });
     }
 
     render() {
@@ -66,36 +73,45 @@ export class Dashboard extends React.Component {
                                 title="New Staff Assignments"
                                 count="3"
                             >
-                                <div className="collapsible__row columns">
-                                    <div className="collapsible__col column">Tenant Name</div>
-                                    <div className="collapsible__col column">
-                                        Meerkat Manner<br />
-                                        <span className="subtext">Property Manager Name</span>
-                                    </div>
-                                    <div className="dashboard__colapsible_col column">
-                                        <div className="select is-rounded">
-                                            <select>
-                                                <option>Staff Name</option>
-                                                <option>Staff Name 2</option>
-                                                <option>Staff Name 3</option>
-                                            </select>
+                                <div className="dashboard__assignments_container">
+                                    <div className="collapsible__row columns">
+                                        <div className="collapsible__col column">Tenant Name</div>
+                                        <div className="collapsible__col column">
+                                            Meerkat Manner<br />
+                                            <span className="subtext">Property Manager Name</span>
+                                        </div>
+                                        <div className="dashboard__colapsible_col column">
+                                            <div className="select is-rounded">
+                                                <select
+                                                    onChange={this.handleStaffAssignmentChange}
+                                                >
+                                                    <option>None</option>
+                                                    <option>Staff Name</option>
+                                                    <option>Staff Name 2</option>
+                                                    <option>Staff Name 3</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="collapsible__row columns">
-                                    <div className="collapsible__col column">Tenant Name</div>
-                                    <div className="collapsible__col column">
-                                        Meerkat Manner<br />
-                                        <span className="subtext">Property Manager Name</span>
-                                    </div>
-                                    <div className="dashboard__colapsible_col column">
-                                        <div className="select is-rounded">
-                                            <select>
-                                                <option>Staff Name</option>
-                                                <option>Staff Name 2</option>
-                                                <option>Staff Name 3</option>
-                                            </select>
+                                    <div className="collapsible__row columns">
+                                        <div className="collapsible__col column">Tenant Name</div>
+                                        <div className="collapsible__col column">
+                                            Meerkat Manner<br />
+                                            <span className="subtext">Property Manager Name</span>
                                         </div>
+                                        <div className="dashboard__colapsible_col column">
+                                            <div className="select is-rounded">
+                                                <select>
+                                                    <option>None</option>
+                                                    <option>Staff Name</option>
+                                                    <option>Staff Name 2</option>
+                                                    <option>Staff Name 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="dashboard__assignments_button_container">
+                                        <button className={`${this.state.areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}>SAVE ASSIGNMENTS</button>
                                     </div>
                                 </div>
                             </Collapsible>
@@ -117,7 +133,7 @@ export class Dashboard extends React.Component {
                     </div>
                 </div>
                 <div class={`modal ${this.state.modalActive && 'is-active'}`}>
-                    <div class="modal-background" onClick={()=>{this.handleDenyAccess(false)}}></div>
+                    <div class="modal-background" onClick={() => { this.handleDenyAccess(false) }}></div>
                     <div class="modal-content">
                         <div className="modal__message_container">
                             <div className="modal__message">
