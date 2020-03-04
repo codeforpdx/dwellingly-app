@@ -2,10 +2,8 @@ import React from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { LoginForm } from './views/login';
-import { Home } from './views/home';
 import { Dashboard } from './views/dashboard';
-import { PrivateRoute } from './Auth';
-import Header from './components/Header/index';
+import { Terms } from './views/terms';
 
 function App() {
   return (
@@ -15,7 +13,8 @@ function App() {
       <div className='App'>
         <Switch>
           <Route exact path='/login' component={LoginForm} />
-          <PrivateRoute exact path='/' component={Home} />
+          <Route exact path='/signup' />
+          <Route exact path='/terms' component={Terms} />
           <Route exact path='/dashboard' component={Dashboard} />
         </Switch>
       </div>

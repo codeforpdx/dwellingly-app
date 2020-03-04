@@ -38,3 +38,17 @@ html {
     transform: rotate(360deg);
   }
 }
+
+.container {
+  flex-grow: 1;
+  margin: 45px 50px;
+  position: relative;
+  width: auto;
+}
+
+.subtitle {
+  color: $dark-blue;
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1.25;
+}
