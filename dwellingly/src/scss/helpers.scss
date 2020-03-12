@@ -6,3 +6,32 @@
 .bg-gradient {
   background: $gradient;
 }
+
+.is-sidebar-menu{
+  padding-top: 9px;
+  float: left;
+  position: relative;
+  min-height: 100%;
+  max-width: 260px;
+  padding-bottom: 40px;
+}
+
+.is-menu-link{
+	padding-left: 2px;
+}
+
+.is-padding{
+	padding-bottom: 5px;
+}
+
+.is-logout-button{
+	position: absolute;
+    display: inline-block;
+    bottom: 0;
+}
+
+
+
+
+
+
