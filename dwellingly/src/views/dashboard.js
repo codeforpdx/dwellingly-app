@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
 import dwellinglylogo from '../assets/images/dwellingly_logo_white.png';
-import { MODULE_DATA, ACCESS_REQUEST_DATA, TENANT_DATA } from '../components/DashboardModule/data';
+import { MODULE_DATA, ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
-import StaffAssignment from '../components/StaffAssignment';
 
 export class Dashboard extends React.Component {
     constructor(props) {
@@ -75,20 +74,45 @@ export class Dashboard extends React.Component {
                                 count="3"
                             >
                                 <div className="dashboard__assignments_container">
-                                        {
-                                            TENANT_DATA.map((tenantDataItem, index) => {
-                                                return (
-                                                    <StaffAssignment
-                                                        data={tenantDataItem}
-                                                        key={`staffAssignment--${index}`}
-                                                        onStaffAssignmentChange={this.handleStaffAssignmentChange}
-                                                    />
-                                                )
-                                            })
-                                        }
-                                        <div className="dashboard__assignments_button_container">
-                                            <button className={`${this.state.areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}>SAVE ASSIGNMENTS</button>
+                                    <div className="collapsible__row columns">
+                                        <div className="collapsible__col column">Tenant Name</div>
+                                        <div className="collapsible__col column">
+                                            Meerkat Manner<br />
+                                            <span className="subtext">Property Manager Name</span>
                                         </div>
+                                        <div className="dashboard__colapsible_col column">
+                                            <div className="select is-rounded">
+                                                <select
+                                                    onChange={this.handleStaffAssignmentChange}
+                                                >
+                                                    <option>None</option>
+                                                    <option>Staff Name</option>
+                                                    <option>Staff Name 2</option>
+                                                    <option>Staff Name 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="collapsible__row columns">
+                                        <div className="collapsible__col column">Tenant Name</div>
+                                        <div className="collapsible__col column">
+                                            Meerkat Manner<br />
+                                            <span className="subtext">Property Manager Name</span>
+                                        </div>
+                                        <div className="dashboard__colapsible_col column">
+                                            <div className="select is-rounded">
+                                                <select>
+                                                    <option>None</option>
+                                                    <option>Staff Name</option>
+                                                    <option>Staff Name 2</option>
+                                                    <option>Staff Name 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="dashboard__assignments_button_container">
+                                        <button className={`${this.state.areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}>SAVE ASSIGNMENTS</button>
+                                    </div>
                                 </div>
                             </Collapsible>
                             <Collapsible
