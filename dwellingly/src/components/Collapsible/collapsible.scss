@@ -10,7 +10,7 @@
   }
   &__header {
     padding: 5px;
-    background-color: $lighterGray;
+    background-color: $grey-lighter;
     color: $brandBlue;
     display: flex;
     justify-content: space-between;
@@ -28,13 +28,13 @@
     background-color: transparent;
   }
   &__row {
-    border-bottom: 1px solid $lighterGray;
+    border-bottom: 1px solid $grey-lighter;
     padding: 20px 5px;
     margin: 0;
     display: flex;
     justify-content: space-between;
     a {
-      color: $darkGray;
+      color: $dark-gray;
     }
     > .column:last-child {
       text-align: right;

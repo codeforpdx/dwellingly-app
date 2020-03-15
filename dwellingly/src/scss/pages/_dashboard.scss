@@ -48,15 +48,15 @@
         
     }
     &__footer { //MH - temp
-        background-color: $lighterGray;
+        background-color: $grey-lighter;
         color: $blue;
         text-align: right;
         padding: 10px 45px;
 
     }
     &__save_assignments_button {
-        color: $lightGray;
-        background-color: $lighterGray;
+        color: $grey-light;
+        background-color: $grey-lighter;
         font-weight: bold;
         border: 0;
         &.active {
