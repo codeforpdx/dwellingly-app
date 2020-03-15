@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTicketAlt, faColumns, faUserPlus, faPlusCircle, faUserCog, faBook, faUserAlt, faPhoneAlt, faCog, faGhost } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from "react-router-dom";
 
+// A way to add dependencies to something?
+
 // comment before functions (what they do)
 // input/output is good too
 
@@ -253,8 +255,8 @@ export class NavMenu extends React.Component {
     <div className="is-hidden-mobile is-sidebar-menu bg-blue">
       <div className="menu">
         <ul className="menu-list">
-          <MenuLink name="{User Name}" isBold icon="user" href="/login"/>
-          <MenuLink name="Dashboard" isBold icon="dash" href="/signup"/>
+          <MenuLink name="{User Name}" isBold icon="user" href="/home"/>
+          <MenuLink name="Dashboard" isBold icon="dash" href="/dashboard"/>
 
           
           <MenuLink name="Add New" isBold icon="add" href="/add"/>
