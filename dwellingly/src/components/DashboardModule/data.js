@@ -91,4 +91,53 @@ const ACCESS_REQUEST_DATA = [
     }
 ];
 
-export { MODULE_DATA, ACCESS_REQUEST_DATA };
+const TENANT_DATA = [
+    {
+        id: 1,
+        name: "Tenant Name",
+        facility: {
+            id: 1,
+            name: "Facility 1",
+            manager: "Property Manager Name 1",
+            staff: [
+                {
+                    name: "Staff Name 1",
+                    id: 1,
+                },
+                {
+                    name: "Staff Name 2",
+                    id: 2,
+                },
+                {
+                    name: "Staff Name 3",
+                    id: 3,
+                }
+            ]
+        },
+    },
+    {
+        id: 2,
+        name: "Tenant Name 2",
+        facility: {
+            id: 2,
+            name: "Facility 2",
+            manager: "Property Manager Name 2",
+            staff: [
+                {
+                    name: "Staff Name 1",
+                    id: 1,
+                },
+                {
+                    name: "Staff Name 2",
+                    id: 2,
+                },
+                {
+                    name: "Staff Name 3",
+                    id: 3,
+                }
+            ]
+        }
+    }
+]
+
+export { MODULE_DATA, ACCESS_REQUEST_DATA, TENANT_DATA };
