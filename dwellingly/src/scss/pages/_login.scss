@@ -22,7 +22,7 @@
   }
   &__form-field {
     border: 0;
-    border-bottom: 1px solid $grey-light;
+    border-bottom: 1px solid $lightGray;
     padding: 10px 10px;
     width: 250px;
     margin: 0px;
@@ -56,7 +56,7 @@
     left: 0;
     transform: translateY(-50%);
     height: 2px;
-    background-color: $grey-light;
+    background-color: $lightGray;
     z-index: 1;
   }
   &__or_text {
