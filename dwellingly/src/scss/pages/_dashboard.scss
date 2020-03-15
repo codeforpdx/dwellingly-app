@@ -1,0 +1,99 @@
+.dashboard {
+    &__container {
+        display: flex;
+        min-height: 100vh;
+    }
+    &__sidebar_container {
+        width: 18.5vw;
+        background-color: $blue;
+        padding: 0 20px;
+    }
+    &__sidebar_user_container {
+        height: $headerHeight;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-weight: bold;
+        color: white;
+    }
+    &__sidebar_user_name {
+        font-size: 18px;
+        color: white;
+        margin-left: 8px;
+    }
+    &__main_container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    &__header {
+        background-image: $gradient;
+        height: $headerHeight;
+        justify-content: flex-start;
+        display: flex;
+        align-items: center;
+    }
+    &__header_logo {
+        width: 160px;
+    }
+    &__main {
+        background-color: white;
+        flex-grow: 1;
+        padding: 45px;
+    }
+    &__modules_container {
+        display: flex;
+        justify-content: space-between;
+        margin: 25px 0;
+        
+    }
+    &__footer { //MH - temp
+        background-color: $grey-lighter;
+        color: $blue;
+        text-align: right;
+        padding: 10px 45px;
+
+    }
+    &__save_assignments_button {
+        color: $grey-light;
+        background-color: $grey-lighter;
+        font-weight: bold;
+        border: 0;
+        &.active {
+            background-color: $blue;
+            color: white;
+        }
+    }
+    &__assignments_container {
+        margin-bottom: 45px;
+    }
+    &__assignments_button_container {
+        margin-top: 20px;
+    }
+
+}
+
+.modal {
+    &__message_container {
+        background-color: white;
+        padding: 40px 100px;
+        text-align: center;
+    }
+    &__message {
+        color: $brandBlue;
+        font-size: 18px;
+    }
+    &__button_container {
+        margin-top: 40px;
+        .button {
+            padding-left: 45px;
+            padding-right: 45px;
+            margin-left: 20px;
+            font-weight: bold;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+    
+}

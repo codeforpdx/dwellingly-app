@@ -5,7 +5,8 @@ import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import Header from './components/Header';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
-// <NavMenu />
+import { Dashboard } from './views/dashboard';
+import { Terms } from './views/terms';
 
 function App() {
   return (
@@ -13,20 +14,11 @@ function App() {
       <div className='App'>
         <NavMenu />
         <Header />
-        <ul>
-          <li>
-            <Link to='/signup'>Signup</Link>
-          </li>
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
-        </ul>
-
         <Switch>
-          <Route exact path='/' component={Home} />
           <Route exact path='/login' component={LoginForm} />
           <Route exact path='/signup' />
-          <Route exact path='/terms' />
+          <Route exact path='/terms' component={Terms} />
+          <Route exact path='/dashboard' component={Dashboard} />
         </Switch>
       </div>
     </BrowserRouter>
