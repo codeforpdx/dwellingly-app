@@ -7,18 +7,12 @@ const Header = props => {
   if (window.location.pathname === '/login') return null;
 
   return (
-
-    <header className='App-header'>
-    <div className='App-navbar'>
-      <ul>
-        <li>
-          <Link to='/login'>Login</Link>
-        </li>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-      </ul>
-    </div>
+    <header className='navbar bg-gradient'>
+      <div className='navbar-brand'>
+        <Link className='navbar-item' to='/'>
+          <img src={dwellinglylogo} alt='dwellingly logo' />
+        </Link>
+      </div>
     </header>
   );
 };
