@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bulma/css/bulma.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTicketAlt, faColumns, faUserPlus, faPlusCircle, faUserCog, faBook, faUserAlt, faPhoneAlt, faCog, faGhost } from '@fortawesome/free-solid-svg-icons';
+import { faTicketAlt, faColumns, faPlusCircle, faUserCog, faBook, faUserAlt, faPhoneAlt, faCog } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from "react-router-dom";
 
 // A way to add dependencies to something?
@@ -103,18 +103,17 @@ export class LogOutButton extends React.Component {
 }
 
 
-const MenuLink = props => {
+export const MenuLink = ({ icon, isBold, name, href }) => {
   let className = "is-size-7";
   
-  if (props.isBold){
+  if (isBold){
     className += " has-text-weight-bold";
   }
 
-  var menuIcon = null;
+  let menuIcon;
   // change this to the href?
   // could add link name here too
-  switch(props.icon){
-    // no default, it would just be null again
+  switch(icon){
     case "dash":
       menuIcon = faColumns;
       break;
@@ -142,6 +141,8 @@ const MenuLink = props => {
     case "settings":
       menuIcon = faCog;
       break;
+    default:
+      menuIcon = null;
   }
 
   // Using state
@@ -160,15 +161,17 @@ const MenuLink = props => {
   
   // is reports supposed to turn black?
 
+  console.log(locParts);
+
   // this seems to work
   if (locParts.length === 2){
     index = 1;
-    // props.href has the slash
-    if (locParts[index] === props.href.substring(1)){
+    // href has the slash
+    if (locParts[index] === href.substring(1)){
       className += " has-text-black";
     } else if (manage || add) {
       className += " has-text-black";
-    } else if (props.href.substring(1) === "reports"){
+    } else if (href.substring(1) === "reports"){
       className += " has-text-grey";
     } else {
       className += " has-text-white";
@@ -176,18 +179,18 @@ const MenuLink = props => {
     // add if for non-link links
     // could use menu-label <p> instead of menu-list <a>
     return (
-        <li className="is-padding">
-          <a href={props.href} className={className}>
-            <span className="icon is-small">
-              <FontAwesomeIcon icon={menuIcon} />
-            </span>
-            <span className="is-menu-link">
-            {props.name}
-            </span>
-          </a>
-        </li>
-      );
-  } 
+      <li className="is-padding">
+        <a href={href} className={className}>
+          <span className="icon is-small">
+            <FontAwesomeIcon icon={menuIcon} />
+          </span>
+          <span className="is-menu-link">
+            {name}
+          </span>
+        </a>
+      </li>
+    );
+  }
   // repetitive code 
 
   // This turns everything dark, but not black
@@ -209,42 +212,42 @@ const MenuLink = props => {
       setManage(false);
     }
 
-    if (locParts[index] === props.href.substring(1)){
+    if (locParts[index] === href.substring(1)){
       className += " has-text-black";
-    } else if (props.href.substring(1) === "reports"){
+    } else if (href.substring(1) === "reports"){
       className += " has-text-grey";
     } else {
       className += " has-text-white";
     }
     return (
-        <li className="is-padding">
-          <a href={props.href} className={className}>
-            <span className="icon is-small">
-              <FontAwesomeIcon icon={menuIcon} />
-            </span>
-            <span className="is-menu-link">
-            {props.name}
-            </span>
-          </a>
-        </li>
-      );
+      <li className="is-padding">
+        <a href={href} className={className}>
+          <span className="icon is-small">
+            <FontAwesomeIcon icon={menuIcon} />
+          </span>
+          <span className="is-menu-link">
+            {name}
+          </span>
+        </a>
+      </li>
+    );
   }
   // need this?
   else {
     // just for debugging
     className += " has-text-blue";
     return (
-        <li className="is-padding">
-          <a href={props.href} className={className}>
-            <span className="icon is-small">
-              <FontAwesomeIcon icon={menuIcon} />
-            </span>
-            <span className="is-menu-link">
-            {props.name}
-            </span>
-          </a>
-        </li>
-      );
+      <li className="is-padding">
+        <a href={href} className={className}>
+          <span className="icon is-small">
+            <FontAwesomeIcon icon={menuIcon} />
+          </span>
+          <span className="is-menu-link">
+            {name}
+          </span>
+        </a>
+      </li>
+    );
   }
 };
 
@@ -252,31 +255,30 @@ const MenuLink = props => {
 export class NavMenu extends React.Component {
   render() {
     return (
-    <div className="is-hidden-mobile is-sidebar-menu bg-blue">
-      <div className="menu">
-        <ul className="menu-list">
-          <MenuLink name="{User Name}" isBold icon="user" href="/home"/>
-          <MenuLink name="Dashboard" isBold icon="dash" href="/dashboard"/>
+      <div className="is-hidden-mobile is-sidebar-menu bg-blue">
+        <div className="menu">
+          <ul className="menu-list">
+            <MenuLink name="{User Name}" isBold icon="user" href="/home"/>
+            <MenuLink name="Dashboard" isBold icon="dash" href="/dashboard"/>
+            
+            <MenuLink name="Add New" isBold icon="add" href="/add"/>
+            <MenuLink name="Tenant" href="/add/tenant" />
+            <MenuLink name="Property" href="/add/property" />
+            <MenuLink name="Property Manager" href="/add/manager" />
 
-          
-          <MenuLink name="Add New" isBold icon="add" href="/add"/>
-          <MenuLink name="Tenant" href="/add/tenant" />
-          <MenuLink name="Property" href="/add/property" />
-          <MenuLink name="Property Manager" href="/add/manager" />
+            <MenuLink name="Manage" isBold icon="manage" href="/manage"/>
+            <MenuLink name="Tenants" href="/manage/tenants" />
+            <MenuLink name="Properties" href="/manage/properties" />
+            <MenuLink name="Property Managers" href="/manage/managers" />
 
-          <MenuLink name="Manage" isBold icon="manage" href="/manage"/>
-          <MenuLink name="Tenants" href="/manage/tenants" />
-          <MenuLink name="Properties" href="/manage/properties" />
-          <MenuLink name="Property Managers" href="/manage/managers" />
-
-          <MenuLink name="Tickets" isBold icon="ticket" href="/tickets"/>
-          <MenuLink name="Reports" isBold icon="report" href="/reports" />
-          <MenuLink name="JOIN Staff" isBold icon="staff" href="/staff" />
-          <MenuLink name="Emergency Numbers" isBold icon="emergency" href="/emergency" />
-          <MenuLink name="Settings" isBold icon="settings" href="/settings" />
-        </ul>
-      </div>
-      <LogOutButton />
+            <MenuLink name="Tickets" isBold icon="ticket" href="/tickets"/>
+            <MenuLink name="Reports" isBold icon="report" href="/reports" />
+            <MenuLink name="JOIN Staff" isBold icon="staff" href="/staff" />
+            <MenuLink name="Emergency Numbers" isBold icon="emergency" href="/emergency" />
+            <MenuLink name="Settings" isBold icon="settings" href="/settings" />
+          </ul>
+        </div>
+        <LogOutButton />
       </div>
     );
   }
