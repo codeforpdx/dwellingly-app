@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import Header from './components/Header';
@@ -15,10 +15,25 @@ function App() {
         <NavMenu />
         <Header />
         <Switch>
+          <Route exact path='/' component={Dashboard} />
+          <Route exact path='/home' component={Dashboard} />
+
           <Route exact path='/login' component={LoginForm} />
           <Route exact path='/signup' />
           <Route exact path='/terms' component={Terms} />
           <Route exact path='/dashboard' component={Dashboard} />
+
+          <Route exact path='/add/tenant' component={Dashboard} />
+          <Route exact path='/add/property' component={Dashboard} />
+          <Route exact path='/add/manager' component={Dashboard} />
+          <Route exact path='/manage/tenants' component={Dashboard} />
+          <Route exact path='/manage/properties' component={Dashboard} />
+          <Route exact path='/manage/managers' component={Dashboard} />
+          <Route exact path='/tickets' component={Dashboard} />
+          <Route exact path='/reports' component={Dashboard} />
+          <Route exact path='/staff' component={Dashboard} />
+          <Route exact path='/emergency' component={Dashboard} />
+          <Route exact path='/settings' component={Dashboard} />
         </Switch>
       </div>
     </BrowserRouter>
