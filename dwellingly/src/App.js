@@ -15,8 +15,7 @@ function App() {
         <NavMenu />
         <Header />
         <Switch>
-          <Route exact path='/' component={Dashboard} />
-          <Route exact path='/home' component={Dashboard} />
+          <Route exact path='/' component={Home} />
 
           <Route exact path='/login' component={LoginForm} />
           <Route exact path='/signup' />
