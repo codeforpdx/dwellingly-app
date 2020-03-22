@@ -3,40 +3,112 @@ import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
 import { Home } from './views/home';
-import Header from './components/Header';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
+import { PrivateRoute, auth } from './Auth';
+import Header from './components/Header/index';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div className='App'>
-        <NavMenu />
-        <Header />
-        <Switch>
-          <Route exact path='/home' component={Home} />
 
-          <Route exact path='/login' component={LoginForm} />
-          <Route exact path='/signup' />
-          <Route exact path='/terms' component={Terms} />
-          <Route exact path='/dashboard' component={Dashboard} />
+export const UserContext = React.createContext();
 
-          <Route exact path='/add/tenant' component={Dashboard} />
-          <Route exact path='/add/property' component={Dashboard} />
-          <Route exact path='/add/manager' component={Dashboard} />
-          <Route exact path='/manage/tenants' component={Dashboard} />
-          <Route exact path='/manage/properties' component={Dashboard} />
-          <Route exact path='/manage/managers' component={Dashboard} />
-          <Route exact path='/tickets' component={Dashboard} />
-          <Route exact path='/reports' component={Dashboard} />
-          <Route exact path='/staff' component={Dashboard} />
-          <Route exact path='/emergency' component={Dashboard} />
-          <Route exact path='/settings' component={Dashboard} />
-        </Switch>
-      </div>
-    </BrowserRouter>
-  );
+// const parseJwt = ( token ) => {
+//   var base64Payload = token.split( '.' )[1];
+//   var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
+//   return JSON.parse( atob( base64 ) );
+// }
+
+export class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      userSession: {
+        isAuthenticated: false,
+        accessJwt: '',
+        refreshJwt: '',
+        userId: '',
+        userFirst: '',
+        userLast: '',
+        userEmail: ''
+      }
+    }
+  }
+
+  login = (username, password) => {
+    auth.authenticate(username, password)
+      .then( response => {
+        if (response) {
+          //let parsedJwt = parseJwt(response.access_token);
+          this.setState({
+            userSession: {
+              isAuthenticated: true,
+              accessJwt: response.data.access_token,
+              refreshJwt: response.data.refresh_token,
+              /*
+              userId: parsedJwt.userId,
+              userFirst: parsedJwt.userFirst,
+              userLast: parsedJwt.userLast,
+              userEmail: parsedJwt.userEmail
+              */
+            }
+          });
+        }
+      })
+    .catch( (error) => {
+      alert("Failed to login");
+    })
+  }
+
+  logout = () => {
+    auth.signout()
+      .then( () => {
+        this.setState({
+          userSession: {
+            isAuthenticated: false,
+            accessJwt: '',
+            refreshJwt: '',
+            userId: '',
+            userFirst: '',
+            userLast: '',
+            userEmail: ''
+          }
+        })
+        window.location.replace('/login');
+      });
+  }
+
+  render() {
+    return (
+      <UserContext.Provider value={{ user: { ...this.state.userSession }, login: this.login, logout: this.logout }} >
+        <BrowserRouter>
+          <div className='App'>
+            <NavMenu />
+            <Header />
+            <Switch>
+              <PrivateRoute exact path='/' component={Dashboard} />
+              <Route exact path='/login' component={LoginForm} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <Route exact path='/terms' component={Terms} />
+
+              <Route exact path='/home' />
+              <Route exact path='/add/tenant' component={Dashboard} />
+              <Route exact path='/add/property' component={Dashboard} />
+              <Route exact path='/add/manager' component={Dashboard} />
+              <Route exact path='/manage/tenants' component={Dashboard} />
+              <Route exact path='/manage/properties' component={Dashboard} />
+              <Route exact path='/manage/managers' component={Dashboard} />
+              <Route exact path='/tickets' component={Dashboard} />
+              <Route exact path='/reports' component={Dashboard} />
+              <Route exact path='/staff' component={Dashboard} />
+              <Route exact path='/emergency' component={Dashboard} />
+              <Route exact path='/settings' component={Dashboard} />
+                </Switch>
+          </div>
+        </BrowserRouter>
+      </UserContext.Provider>
+    );
+  }
 }
 
 export default App;

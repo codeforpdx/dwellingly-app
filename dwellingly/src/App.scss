@@ -1,44 +1,10 @@
 @import './scss/main.scss';
 @import './scss/pages/all';
 
-html {
-  background-color:  #6f90fc;
-}
-
 .App {
   height: 100vh;
-  min-height: 100vh;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+  
 .container {
   flex-grow: 1;
   margin: 45px 50px;
@@ -47,7 +13,7 @@ html {
 }
 
 .subtitle {
-  color: $dark-blue;
+  color: $brandBlue;
   font-size: 1.25rem;
   font-weight: bold;
   line-height: 1.25;

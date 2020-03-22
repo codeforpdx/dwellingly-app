@@ -3,8 +3,6 @@
 @charset "utf-8";
 @import './variables.scss'; //MH - variables must come before bulma for proper override
 @import '../node_modules/bulma/bulma.sass'; //MH -keep if you want all of bulma
-@import './helpers.scss';
-@import './typography.scss';
 
 // Example: Import only what you need from Bulma
 // @import '../node_modules/bulma/sass/utilities/_all.sass';
@@ -20,3 +18,6 @@
 //@import '../../node_modules/bulma/sass/elements/_all.sass';
 //@import '../../node_modules/bulma/sass/grid/_all.sass';
 
+@import './helpers.scss';
+@import './typography.scss';
+@import '../../node_modules/bulma/sass/elements/_all.sass';
