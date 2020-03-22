@@ -14,11 +14,13 @@ import { useLocation, Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import "bulma/css/bulma.css";
 
-// How to make logout functionality?
+
 export class LogOutButton extends React.Component {
   render() {
     return (
-      <button className='button is-dark is-rounded is-logout-button is-small'>LOG OUT</button>
+      <div className="is-logout-button">
+        <button className='button is-dark is-rounded is-small'>LOG OUT</button>
+      </div>
     );
   }
 }
@@ -35,8 +37,9 @@ export const MenuLink = ({ icon, isBold, name, href }) => {
   // loop through the parts of the current location path (which are based on React Router in App)
   // the current link is "active" if any part of the current path matches the href in our props
   let isActiveLink = locParts.some(pathPart => pathPart === leafHrefString);
-    
-  const classNameBase = "is-size-7 " + (isBold || isActiveLink ? "has-text-weight-bold" : "");
+  
+  const linkable = (leafHrefString === "add" || leafHrefString === "manage") ? "is-inactive-link" : "";
+  const classNameBase = "is-size-7 " + (isBold ? "has-text-weight-bold " : "") + linkable;
   const linkDefaultColor = (leafHrefString === "reports") ? "has-text-grey" : "has-text-white";
   const linkColor = (isActiveLink) ? "has-text-black" : linkDefaultColor;
 
@@ -54,7 +57,6 @@ export const MenuLink = ({ icon, isBold, name, href }) => {
       </Link>
     </li>
   );
-
 };
 
 MenuLink.propTypes = {
@@ -64,35 +66,43 @@ MenuLink.propTypes = {
   href: PropTypes.string.isRequired,
 }
 
+export const NavMenu = () => {
+  const loc = useLocation();
+  if (loc.pathname === "/login" || loc.pathname === "/signup" || loc.pathname === "/terms"){
+    return null;
+  }
 
-export class NavMenu extends React.Component {
-  render() {
-    return (
-      <div className="is-hidden-mobile is-sidebar-menu bg-blue">
-        <div className="menu">
-          <ul className="menu-list">
-            <MenuLink name="{User Name}" isBold icon={faUserAlt} href="/"/>
-            <MenuLink name="Dashboard" isBold icon={faColumns} href="/dashboard"/>
-            
-            <MenuLink name="Add New" isBold icon={faPlusCircle} href="/add"/>
+  return (
+    <div className="is-hidden-mobile is-sidebar-menu bg-blue">
+      <div className="menu">
+        <ul className="menu-list">
+          <div className="is-username-link">
+            <MenuLink name="{User Name}" isBold icon={faUserAlt} href="/home"/>
+          </div>
+          <MenuLink name="Dashboard" isBold icon={faColumns} href="/dashboard"/>
+          
+          <MenuLink name="Add New" isBold icon={faPlusCircle} href="/add"/>
+          <div className="is-child-link">
             <MenuLink name="Tenant" href="/add/tenant" />
             <MenuLink name="Property" href="/add/property" />
             <MenuLink name="Property Manager" href="/add/manager" />
+          </div>
 
-            <MenuLink name="Manage" isBold icon={faUserCog} href="/manage"/>
+          <MenuLink name="Manage" isBold icon={faUserCog} href="/manage"/>
+          <div className="is-child-link">
             <MenuLink name="Tenants" href="/manage/tenants" />
             <MenuLink name="Properties" href="/manage/properties" />
             <MenuLink name="Property Managers" href="/manage/managers" />
+          </div>
 
-            <MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets"/>
-            <MenuLink name="Reports" isBold icon={faBook} href="/reports" />
-            <MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
-            <MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
-            <MenuLink name="Settings" isBold icon={faCog} href="/settings" />
-          </ul>
-        </div>
-        <LogOutButton />
+          <MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets"/>
+          <MenuLink name="Reports" isBold icon={faBook} href="/reports" />
+          <MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
+          <MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
+          <MenuLink name="Settings" isBold icon={faCog} href="/settings" />
+        </ul>
       </div>
-    );
-  }
+      <LogOutButton />
+    </div>
+  );
 }

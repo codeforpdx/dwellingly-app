@@ -7,12 +7,17 @@
   background: $gradient;
 }
 
+.bg-grey {
+  background: $gray;
+}
+
+// NavMenu
 .is-sidebar-menu{
   padding-top: 9px;
   float: left;
   position: relative;
   min-height: 100%;
-  max-width: 260px;
+  width: 237px;
   padding-bottom: 40px;
 }
 
@@ -25,11 +30,20 @@
 }
 
 .is-logout-button{
-	position: absolute;
-    display: inline-block;
-    bottom: 0;
+	padding-top: 400px;
+  padding-left: 20px;
 }
 
-.bg-grey {
-  background: $gray;
+.is-inactive-link{
+  pointer-events: none;
+  cursor: default;
 }
+
+.is-child-link{
+  padding-left: 15px;
+}
+
+.is-username-link{
+  padding-bottom: 30px;
+}
+
