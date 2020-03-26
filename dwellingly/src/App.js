@@ -92,17 +92,17 @@ export class App extends React.Component {
               <Route exact path='/terms' component={Terms} />
 
               <Route exact path='/home' />
-              <Route exact path='/add/tenant' component={Dashboard} />
-              <Route exact path='/add/property' component={Dashboard} />
-              <Route exact path='/add/manager' component={Dashboard} />
-              <Route exact path='/manage/tenants' component={Dashboard} />
-              <Route exact path='/manage/properties' component={Dashboard} />
-              <Route exact path='/manage/managers' component={Dashboard} />
-              <Route exact path='/tickets' component={Dashboard} />
-              <Route exact path='/reports' component={Dashboard} />
-              <Route exact path='/staff' component={Dashboard} />
-              <Route exact path='/emergency' component={Dashboard} />
-              <Route exact path='/settings' component={Dashboard} />
+              <Route exact path='/add/tenant' />
+              <Route exact path='/add/property' />
+              <Route exact path='/add/manager' />
+              <Route exact path='/manage/tenants' />
+              <Route exact path='/manage/properties' />
+              <Route exact path='/manage/managers' />
+              <Route exact path='/tickets' />
+              <Route exact path='/reports' />
+              <Route exact path='/staff' />
+              <Route exact path='/emergency' />
+              <Route exact path='/settings' />
                 </Switch>
           </div>
         </BrowserRouter>
