@@ -1,0 +1,37 @@
+.add-property {
+    &__form-container {
+    //     // background: url("./assets/images/dwellingly_logo.png") no-repeat;
+    //     background-size: contain;
+    //     background-color: white;
+    //     width: 300px;
+    //     padding: 20px 30px;
+    //     border-radius: 20px;
+    //     box-shadow: 0 0 10px 0 rgba(black, 0.25);
+    //     margin: auto;
+    //     text-align: center;
+        display: flex;
+        flex-direction: column;
+      }
+    &__container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+.add_property-field {
+    padding: 5px;
+    margin: 5px;
+}
+
+.error {
+    border: 2px solid #FF6565;
+}
+
+.error-message {
+    color: #FF6565;
+    height: 1em;
+    font-size: .8em;
+  }
