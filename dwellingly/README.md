@@ -4,6 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+
+
 ### `npm start`
 
 Runs the app in the development mode.<br />
@@ -28,6 +30,16 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
+
+
+## Creating Virtual env on windows
+open cmd and type
+### `python –m venv virtual`
+
+use CMD to navigate to the script folder in the project
+run the `Activate` file
+
+you have successfully started the env
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
