@@ -1,3 +1,5 @@
+// https://bulma.io/documentation/customize/with-node-sass/
+
 @charset "utf-8";
 @import './variables.scss'; //MH - variables must come before bulma for proper override
 @import '../node_modules/bulma/bulma.sass'; //MH -keep if you want all of bulma
@@ -18,3 +20,4 @@
 
 @import './helpers.scss';
 @import './typography.scss';
+@import '../../node_modules/bulma/sass/elements/_all.sass';
