@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Field, Formik, ErrorMessage } from 'formik';
+import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { UserContext } from '../App';
-import classNames from 'classnames';
 import * as axios from 'axios';
 
 const validationSchema = Yup.object().shape({
