@@ -1,37 +1,77 @@
 .add-property {
     &__form-container {
-    //     // background: url("./assets/images/dwellingly_logo.png") no-repeat;
-    //     background-size: contain;
-    //     background-color: white;
-    //     width: 300px;
-    //     padding: 20px 30px;
-    //     border-radius: 20px;
-    //     box-shadow: 0 0 10px 0 rgba(black, 0.25);
-    //     margin: auto;
-    //     text-align: center;
         display: flex;
         flex-direction: column;
+        max-width: 80%;
       }
+
     &__container {
         height: 100vh;
         display: flex;
-        justify-content: center;
-        align-items: center;
         flex-direction: column;
+        padding: 45px;
+    }
+
+    &__main_container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 25px 0;
+    }
+
+    &__assign-manager-container {
+        margin: 45px 0;
     }
 }
 
-.add_property-field {
-    padding: 5px;
-    margin: 5px;
+.form-row {
+    display: flex;
+    border-bottom: 1px solid $lightGray;
 }
 
-.error {
-    border: 2px solid #FF6565;
+.form-row:focus-within {
+    display: flex;
+    border-bottom: 2px solid $blue;
+    .form-field {
+        color: $blue;
+    }
 }
 
-.error-message {
-    color: #FF6565;
-    height: 1em;
-    font-size: .8em;
-  }
+.form-field {
+    border: none;
+    color: $darkGray;
+    font-weight: bold;
+}
+
+.button {
+    margin: 10px;
+    font-weight: bold;
+    color: $lightGray;
+    background-color: $lighterGray;
+    border: 0;
+    &.active {
+        background-color: $blue;
+        color: white;
+    }
+}
+
+Label {
+    color: $gray;
+}
+
+.section-title {
+    font-size: 18px;
+    color: $brandBlue;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+// .error {
+//     border: 2px solid #FF6565;
+// }
+
+// .error-message {
+//     color: #FF6565;
+//     height: 1em;
+//     font-size: .8em;
+//   }

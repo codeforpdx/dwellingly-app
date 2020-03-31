@@ -7,7 +7,7 @@ import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
-import { AddProperty } from './views/add-property';
+import { AddProperty } from './views/addProperty';
 
 export const UserContext = React.createContext();
 
