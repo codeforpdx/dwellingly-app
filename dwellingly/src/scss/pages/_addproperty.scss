@@ -27,13 +27,14 @@
 .form-row {
     display: flex;
     border-bottom: 1px solid $lightGray;
-}
-
-.form-row:focus-within {
-    display: flex;
-    border-bottom: 2px solid $blue;
-    .form-field {
-        color: $blue;
+    &:first-child {
+        border-top: 1px solid $lightGray;
+    }
+    &:focus-within {
+        border-bottom: 2px solid $blue;
+        .form-field {
+            color: $blue;
+        }
     }
 }
 
@@ -41,6 +42,9 @@
     border: none;
     color: $darkGray;
     font-weight: bold;
+    &::placeholder {
+        color: $lightGray;
+    }
 }
 
 .button {
