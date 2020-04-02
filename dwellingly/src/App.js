@@ -10,11 +10,11 @@ import Header from './components/Header/index';
 
 export const UserContext = React.createContext();
 
-// const parseJwt = ( token ) => {
-//   var base64Payload = token.split( '.' )[1];
-//   var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
-//   return JSON.parse( atob( base64 ) );
-// }
+const parseJwt = ( token ) => {
+  var base64Payload = token.split( '.' )[1];
+  var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
+  return JSON.parse( atob( base64 ) );
+}
 
 export class App extends React.Component {
   constructor(props) {
@@ -33,10 +33,49 @@ export class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if( this.checkForStoredAccessToken() ) {
+      this.setState({
+        userSession: {
+          isAuthenticated: true,
+          accessJwt: window.localStorage[ 'dwellinglyAccess' ],
+          refreshJwt: window.localStorage[ 'dwellinglyRefresh' ],
+        }
+      });
+    } else if( this.checkForStoredRefreshToken() ) {
+      //refresh access token using refresh token
+      console.log("Valid refresh token found");
+    }
+  }
+
+  checkForStoredAccessToken = () => {
+    var token = window.localStorage[ 'dwellinglyAccess' ];
+    if(token) {
+      var parsedToken = parseJwt(token);
+      if(parsedToken.exp * 1000 > Date.now()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  checkForStoredRefreshToken = () => {
+    var token = window.localStorage[ 'dwellinglyRefresh' ];
+    if(token) {
+      var parsedToken = parseJwt(token);
+      if(parsedToken.exp > Date.now()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   login = (username, password) => {
     auth.authenticate(username, password)
       .then( response => {
         if (response) {
+          window.localStorage[ 'dwellinglyAccess' ] = response.data.access_token;
+          window.localStorage[ 'dwellinglyRefresh' ] = response.data.refresh_token;
           //let parsedJwt = parseJwt(response.access_token);
           this.setState({
             userSession: {
