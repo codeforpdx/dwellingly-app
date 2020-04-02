@@ -132,9 +132,9 @@ export class Dashboard extends React.Component {
                         </footer>
                     </div>
                 </div>
-                <div class={`modal ${this.state.modalActive && 'is-active'}`}>
-                    <div class="modal-background" onClick={() => { this.handleDenyAccess(false) }}></div>
-                    <div class="modal-content">
+                <div className={`modal ${this.state.modalActive && 'is-active'}`}>
+                    <div className="modal-background" onClick={() => { this.handleDenyAccess(false) }}></div>
+                    <div className="modal-content">
                         <div className="modal__message_container">
                             <div className="modal__message">
                                 <h4>Are you sure you want to decline access?</h4>
