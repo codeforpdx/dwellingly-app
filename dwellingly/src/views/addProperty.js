@@ -6,8 +6,9 @@ import * as axios from 'axios';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
-        .min(2, "*Name must have at least 2 characters")
-        .max(100, "*Names can't be longer than 100 characters"),
+        .min(5, "*Name must have at least 2 characters")
+        .max(50, "*Names can't be longer than 100 characters")
+        .required("*Name is required"),
     address: Yup.string()
         .required("*Address is required"),
     city: Yup.string()
@@ -76,6 +77,7 @@ export class AddProperty extends Component {
                                                 value={values.name}
                                                 placeholder="Example Estate"
                                             />
+                                            {errors.name ? (<div className="error-message">{errors.name}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="address">Address</label>
@@ -86,7 +88,9 @@ export class AddProperty extends Component {
                                                 onChange={handleChange}
                                                 value={values.address}
                                                 placeholder="123 Main St"
+                                                error={errors.address}
                                             />
+                                            {errors.address ? (<div className="error-message">{errors.address}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="city">City</label>
@@ -98,6 +102,7 @@ export class AddProperty extends Component {
                                                 value={values.city}
                                                 placeholder="Portland"
                                             />
+                                            {errors.city ? (<div className="error-message">{errors.city}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="state">State</label>
@@ -109,6 +114,7 @@ export class AddProperty extends Component {
                                                 value={values.state}
                                                 placeholder="OR"
                                             />
+                                            {errors.state ? (<div className="error-message">{errors.state}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="zipcode">Zipcode</label>
@@ -120,6 +126,7 @@ export class AddProperty extends Component {
                                                 value={values.zipcode}
                                                 placeholder="97217"
                                             />
+                                            {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="zipcode">Units</label>
