@@ -88,7 +88,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <Route exact path='/add-property' component={AddProperty} />
+              <PrivateRoute exact path='/add-property' component={AddProperty} />
               <Route exact path='/terms' component={Terms} />
             </Switch>
           </div>
