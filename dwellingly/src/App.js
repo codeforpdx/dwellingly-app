@@ -87,23 +87,23 @@ export class App extends React.Component {
             <Header />
             <Switch>
               <PrivateRoute exact path='/' component={Dashboard} />
-              <Route exact path='/login' component={LoginForm} />
+              <PrivateRoute exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <Route exact path='/terms' component={Terms} />
+              <PrivateRoute exact path='/terms' component={Terms} />
 
-              <Route exact path='/home' />
-              <Route exact path='/add/tenant' />
-              <Route exact path='/add/property' />
-              <Route exact path='/add/manager' />
-              <Route exact path='/manage/tenants' />
-              <Route exact path='/manage/properties' />
-              <Route exact path='/manage/managers' />
-              <Route exact path='/tickets' />
-              <Route exact path='/reports' />
-              <Route exact path='/staff' />
-              <Route exact path='/emergency' />
-              <Route exact path='/settings' />
-                </Switch>
+              <PrivateRoute exact path='/home' component={Dashboard}/>
+              <PrivateRoute exact path='/add/tenant' />
+              <PrivateRoute exact path='/add/property' />
+              <PrivateRoute exact path='/add/manager' />
+              <PrivateRoute exact path='/manage/tenants' />
+              <PrivateRoute exact path='/manage/properties' />
+              <PrivateRoute exact path='/manage/managers' />
+              <PrivateRoute exact path='/tickets' />
+              <PrivateRoute exact path='/reports' />
+              <PrivateRoute exact path='/staff' />
+              <PrivateRoute exact path='/emergency' />
+              <PrivateRoute exact path='/settings' />
+            </Switch>
           </div>
         </BrowserRouter>
       </UserContext.Provider>
