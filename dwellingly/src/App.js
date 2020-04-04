@@ -87,22 +87,22 @@ export class App extends React.Component {
             <Header />
             <Switch>
               <PrivateRoute exact path='/' component={Dashboard} />
-              <PrivateRoute exact path='/login' component={LoginForm} />
+              <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute exact path='/terms' component={Terms} />
+              <Route exact path='/terms' component={Terms} />
 
               <PrivateRoute exact path='/home' component={Dashboard}/>
-              <PrivateRoute exact path='/add/tenant' />
-              <PrivateRoute exact path='/add/property' />
-              <PrivateRoute exact path='/add/manager' />
-              <PrivateRoute exact path='/manage/tenants' />
-              <PrivateRoute exact path='/manage/properties' />
-              <PrivateRoute exact path='/manage/managers' />
-              <PrivateRoute exact path='/tickets' />
-              <PrivateRoute exact path='/reports' />
-              <PrivateRoute exact path='/staff' />
-              <PrivateRoute exact path='/emergency' />
-              <PrivateRoute exact path='/settings' />
+              <PrivateRoute exact path='/add/tenant' component={Dashboard} />
+              <PrivateRoute exact path='/add/property' component={Dashboard}/>
+              <PrivateRoute exact path='/add/manager' component={Dashboard} />
+              <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
+              <PrivateRoute exact path='/manage/properties' component={Dashboard} />
+              <PrivateRoute exact path='/manage/managers' component={Dashboard} />
+              <PrivateRoute exact path='/tickets' component={Dashboard} />
+              <PrivateRoute exact path='/reports' component={Dashboard} />
+              <PrivateRoute exact path='/staff' component={Dashboard} />
+              <PrivateRoute exact path='/emergency' component={Dashboard} />
+              <PrivateRoute exact path='/settings' component={Dashboard} />
             </Switch>
           </div>
         </BrowserRouter>
