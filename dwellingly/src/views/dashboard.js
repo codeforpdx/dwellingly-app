@@ -121,7 +121,7 @@ export class Dashboard extends React.Component {
                         </footer>
                     </div>
                 </div>
-                <div class={`modal ${this.state.modalActive && 'is-active'}`}>
+                <div className={`modal ${this.state.modalActive && 'is-active'}`}>
                     <div className="modal-background" onClick={() => { this.handleDenyAccess(false) }}></div>
                     <div className="modal-content">
                         <div className="modal__message_container">

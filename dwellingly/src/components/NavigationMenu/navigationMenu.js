@@ -39,7 +39,8 @@ export const MenuLink = ({ icon, isBold, name, href }) => {
   let isActiveLink = locParts.some(pathPart => pathPart === leafHrefString);
   
   const linkable = (leafHrefString === "add" || leafHrefString === "manage") ? "is-inactive-link" : "";
-  const classNameBase = "is-size-7 " + (isBold ? "has-text-weight-bold " : "") + linkable;
+  const size = (leafHrefString === "home") ? "is-size-6 " : "is-size-7 ";
+  const classNameBase = size + (isBold ? "has-text-weight-bold " : "") + linkable;
   const linkDefaultColor = (leafHrefString === "reports") ? "has-text-grey" : "has-text-white";
   const linkColor = (isActiveLink) ? "has-text-black" : linkDefaultColor;
 
