@@ -83,8 +83,9 @@ export class App extends React.Component {
       <UserContext.Provider value={{ user: { ...this.state.userSession }, login: this.login, logout: this.logout }} >
         <BrowserRouter>
           <div className='App'>
-            <NavMenu />
-            <Header />
+            {this.state.userSession.isAuthenticated
+              && <><NavMenu />
+                  <Header /></>}
             <Switch>
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
