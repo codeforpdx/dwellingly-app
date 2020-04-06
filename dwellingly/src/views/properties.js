@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import UserContext from '../App';
+import { UserContext } from '../App';
 import * as axios from 'axios';
 
 
@@ -22,32 +22,38 @@ const selectRow = {
 };
 
 
-const getProperties = (context) => {
-    axios.get('http://localhost:5000/properties', { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
-    .then(function(response){
-        return response;
-    })
-    .catch(function(error){
-        alert(error);
-    })
-}
-
 export class Properties extends Component {
     constructor(props) {
         super(props);
-        console.log("constructor");
-        console.log(props)
         
         this.state = {
         properties: [],
         }
+
+        this.getProperties = this.getProperties.bind(this)
     }    
 
+    componentDidMount() {
+        this.getProperties(this.context);
+    }
+
+    getProperties = (context) => {
+        axios.get('http://localhost:5000/properties', { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+        .then((response) => {
+            this.setState({properties: response.data.properties});
+        })
+        .catch((error) => {
+            alert(error);
+            console.log(error);
+        })
+    }
+
     render() {
-        console.log("this.context")
-        console.log(this.context)
-        const user = this.props.context;
         return (
+            <UserContext.Consumer>
+                {session => {
+                    this.context = session;
+                    return (
                         <div className="properties__container">
                             <div className="section-header">
                                 <h2 className="page-title">Properties</h2>
@@ -57,16 +63,18 @@ export class Properties extends Component {
                                 <input></input>
                             </div>
                             <div className="properties-list">
-                                {/* <BootstrapTable
+                                <BootstrapTable
                                     keyField='id'
                                     data={ this.state.properties }
                                     columns={ columns }
                                     selectRow={ selectRow }
-                                    /> */}
+                                    />
                             </div>
                             
                         </div>
+                    )
+                }}
+            </UserContext.Consumer>
         )
     }
 }
-
