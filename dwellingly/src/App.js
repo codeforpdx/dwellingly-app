@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import { Dashboard } from './views/dashboard';
+import { Properties } from './views/properties';
 import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
@@ -87,6 +88,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/properties' component={Properties} />
               <Route exact path='/terms' component={Terms} />
             </Switch>
           </div>
