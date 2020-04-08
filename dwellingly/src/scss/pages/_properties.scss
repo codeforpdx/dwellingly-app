@@ -11,14 +11,18 @@
         .search-section {
             margin: 20px;
         }
+
+        .button {
+            margin-left: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: $blue;
+            border: 0;
+        }
+        .table-header {
+            background-color: $lightGray;
+        }
     }
     
 }
 
-.button {
-    margin-left: 20px;
-    font-weight: bold;
-    color: white;
-    background-color: $blue;
-    border: 0;
-}

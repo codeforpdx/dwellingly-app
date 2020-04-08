@@ -3,22 +3,32 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import { UserContext } from '../App';
 import * as axios from 'axios';
 
-
-
 const columns = [{
     dataField: 'name',
-    text: 'Name'
+    text: 'Name',
+    sort: true
+  }, {
+    dataField: 'manager',
+    text: 'Property Managers',
+    sort: true
   }, {
     dataField: 'address',
-    text: 'Address'
+    text: 'Address',
+    sort: true
   }, {
-    dataField: 'price',
-    text: 'Product Price'
+    dataField: 'address',
+    text: 'Tenants',
+    sort: true
+  }, {
+    dataField: 'created',
+    text: 'Added On',
+    sort: true
   }];
 
 const selectRow = {
   mode: 'checkbox',
-  clickToSelect: true
+  clickToSelect: true,
+  sort: true
 };
 
 
@@ -68,6 +78,8 @@ export class Properties extends Component {
                                     data={ this.state.properties }
                                     columns={ columns }
                                     selectRow={ selectRow }
+                                    bootstrap4={true}
+                                    headerClasses="table-header"
                                     />
                             </div>
                             
