@@ -44,18 +44,7 @@ export class Dashboard extends React.Component {
         return (
             <>
                 <div className="dashboard__container">
-                    <div className="dashboard__sidebar_container">
-                        <div className="dashboard__sidebar_user_container">
-                            <span className="icon dashboard__sidebar_user_icon">
-                                <i className="fas fa-user"></i>
-                            </span>
-                            <span className="dashboard__sidebar_user_name">Raymond Holt</span>
-                        </div>
-                    </div>
                     <div className="dashboard__main_container">
-                        <div className="dashboard__header">
-                            <img className="dashboard__header_logo" src={dwellinglylogo} />
-                        </div>
                         <div className="dashboard__main">
                             <h2 className="page-title">Admin Dashboard</h2>
                             <div className="dashboard__modules_container">
@@ -132,9 +121,9 @@ export class Dashboard extends React.Component {
                         </footer>
                     </div>
                 </div>
-                <div class={`modal ${this.state.modalActive && 'is-active'}`}>
-                    <div class="modal-background" onClick={() => { this.handleDenyAccess(false) }}></div>
-                    <div class="modal-content">
+                <div className={`modal ${this.state.modalActive && 'is-active'}`}>
+                    <div className="modal-background" onClick={() => { this.handleDenyAccess(false) }}></div>
+                    <div className="modal-content">
                         <div className="modal__message_container">
                             <div className="modal__message">
                                 <h4>Are you sure you want to decline access?</h4>

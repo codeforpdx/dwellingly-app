@@ -4,7 +4,7 @@ export class Home extends React.Component {
   render() {
     return (
       <>
-        <div class='container'>Home View</div>
+        <div className='container'>Home View</div>
       </>
     );
   }
