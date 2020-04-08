@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
 const formHandler = (data, context) => {
     axios.post('http://localhost:5000/properties', data, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then(function(response){
-            alert(response);
+            alert("Property Added!");
         })
         .catch(function(error){
             alert(error);
