@@ -43,6 +43,22 @@ export const auth = {
         alert("Failure signing out");
         return Promise.reject(error);
       })
+  },
+  async refreshAccess(refreshToken) {
+    return axios.post(`${process.env.REACT_APP_API_URL}/refresh`, {},
+      { headers: {"Authorization" : `Bearer ${refreshToken}`} }
+    )
+      .then((response) => {
+        if(parseJwt(response.data.access_token).exp * 1000 > Date.now()) {
+          return Promise.resolve(response);
+        } else {
+          return Promise.reject("Access token expired");
+        }
+      })
+      .catch((error) => {
+        console.log("Failure getting new access token using refresh token: " + refreshToken);
+        return Promise.reject(error);
+      });
   }
 }
 

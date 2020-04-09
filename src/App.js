@@ -2,7 +2,6 @@ import React from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
-import { Home } from './views/home';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
@@ -45,15 +44,31 @@ export class App extends React.Component {
         }
       });
     } else if( this.checkForStoredRefreshToken() ) {
-      //refresh access token using refresh token
-      console.log("Valid refresh token found");
+      auth.refreshAccess( window.localStorage[ 'dwellinglyRefresh' ] )
+        .then( response => {
+          window.localStorage[ 'dwellinglyAccess' ] = response.data.access_token;
+          //let parsedJwt = parseJwt(response.access_token);
+          this.setState({
+            userSession: {
+              isAuthenticated: true,
+              accessJwt: response.data.access_token,
+              /*
+              userId: parsedJwt.userId,
+              userFirst: parsedJwt.userFirst,
+              userLast: parsedJwt.userLast,
+              userEmail: parsedJwt.userEmail
+              */
+            }
+          });
+        });
     }
   }
 
   checkForStoredAccessToken = () => {
     var token = window.localStorage[ 'dwellinglyAccess' ];
-    if(token) {
+    if(token !== null && token !== undefined) {
       var parsedToken = parseJwt(token);
+      // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
       if(parsedToken.exp * 1000 > Date.now()) {
         return true;
       }
@@ -63,9 +78,10 @@ export class App extends React.Component {
 
   checkForStoredRefreshToken = () => {
     var token = window.localStorage[ 'dwellinglyRefresh' ];
-    if(token) {
+    if(token !== null && token !== undefined) {
       var parsedToken = parseJwt(token);
-      if(parsedToken.exp > Date.now()) {
+      // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
+      if(parsedToken.exp * 1000 > Date.now()) {
         return true;
       }
     }
