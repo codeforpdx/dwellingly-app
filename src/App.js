@@ -6,18 +6,12 @@ import { Home } from './views/home';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
-import { PrivateRoute, auth } from './Auth';
+import { PrivateRoute, auth, parseJwt } from './Auth';
 import Header from './components/Header/index';
 import { AddProperty } from './views/addProperty';
 
 
 export const UserContext = React.createContext();
-
-const parseJwt = ( token ) => {
-  var base64Payload = token.split( '.' )[1];
-  var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
-  return JSON.parse( atob( base64 ) );
-}
 
 export class App extends React.Component {
   constructor(props) {
