@@ -73,8 +73,8 @@ export class App extends React.Component {
     return false;
   }
 
-  login = (username, password) => {
-    auth.authenticate(username, password)
+  login = (email, password) => {
+    auth.authenticate(email, password)
       .then( response => {
         if (response) {
           window.localStorage[ 'dwellinglyAccess' ] = response.data.access_token;
