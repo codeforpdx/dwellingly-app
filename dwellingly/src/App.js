@@ -8,6 +8,7 @@ import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
+import { AddProperty } from './views/addProperty';
 
 
 export const UserContext = React.createContext();
@@ -94,7 +95,7 @@ export class App extends React.Component {
 
               <PrivateRoute exact path='/home' component={Dashboard}/>
               <PrivateRoute exact path='/add/tenant' component={Dashboard} />
-              <PrivateRoute exact path='/add/property' component={Dashboard}/>
+              <PrivateRoute exact path='/add/property' component={AddProperty}/>
               <PrivateRoute exact path='/add/manager' component={Dashboard} />
               <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
               <PrivateRoute exact path='/manage/properties' component={Dashboard} />

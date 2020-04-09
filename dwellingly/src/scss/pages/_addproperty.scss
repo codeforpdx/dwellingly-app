@@ -1,0 +1,85 @@
+.add-property {
+    &__form-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 80%;
+      }
+
+    &__container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 45px;
+    }
+
+    &__main_container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 25px 0;
+    }
+
+    &__assign-manager-container {
+        margin: 45px 0;
+    }
+}
+
+.form-row {
+    display: flex;
+    border-bottom: 1px solid $lightGray;
+    &:first-child {
+        border-top: 1px solid $lightGray;
+    }
+    &:focus-within {
+        border-bottom: 2px solid $blue;
+        .form-field {
+            color: $blue;
+        }
+    }
+}
+
+.form-field {
+    border: none;
+    color: $darkGray;
+    font-weight: bold;
+    &::placeholder {
+        color: $lightGray;
+    }
+}
+
+.error-message {
+    color: red;
+}
+
+.button {
+    margin: 10px;
+    font-weight: bold;
+    color: $lightGray;
+    background-color: $lighterGray;
+    border: 0;
+    &.active {
+        background-color: $blue;
+        color: white;
+    }
+}
+
+Label {
+    color: $gray;
+}
+
+.section-title {
+    font-size: 18px;
+    color: $brandBlue;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+// .error {
+//     border: 2px solid #FF6565;
+// }
+
+// .error-message {
+//     color: #FF6565;
+//     height: 1em;
+//     font-size: .8em;
+//   }
