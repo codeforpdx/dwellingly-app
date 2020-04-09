@@ -84,7 +84,7 @@ export function doCreateUserWithEmailAndPassword(
 // Sign In user with email address and password
 export function doSignInWithEmailAndPassword(email, password) {
   store.dispatch(initiateFirebaseCall());
-  console.log('login with username and password');
+  console.log('login with email and password');
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)

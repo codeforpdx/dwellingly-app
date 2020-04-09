@@ -5,9 +5,9 @@ import { UserContext } from './App';
 
 export const auth = {
   isAuthenticated: false,
-  async authenticate(username, password) {
+  async authenticate(email, password) {
     return axios.post(`${process.env.REACT_APP_API_URL}/login`, {
-      username: username,
+      email: email,
       password: password
     })
       .then((response) => {

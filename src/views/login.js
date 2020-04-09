@@ -9,7 +9,7 @@ export class LoginForm extends React.Component {
     super(props);
 
     this.state = {
-      username: undefined,
+      email: undefined,
       password: undefined
     }
   }
@@ -24,11 +24,11 @@ export class LoginForm extends React.Component {
           <div className="login__container">
             <Formik
               initialValues={{
-                username: "",
+                email: "",
                 password: ""
               }}
-              onSubmit={({ username, password }) => {
-                login(username, password);
+              onSubmit={({ email, password }) => {
+                login(email, password);
               }}
               enableReinitialize={true}
               render={
@@ -40,9 +40,9 @@ export class LoginForm extends React.Component {
                         <Field
                           className="form-field login__form-field"
                           type="text"
-                          name="username"
-                          value={this.state.username}
-                          placeholder="Username"
+                          name="email"
+                          value={this.state.email}
+                          placeholder="Email"
                           required
                         />
                         <Field
