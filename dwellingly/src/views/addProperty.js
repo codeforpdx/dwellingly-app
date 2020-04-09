@@ -16,10 +16,10 @@ const validationSchema = Yup.object().shape({
         .max(50, "*City can't be longer than 50 characters")
         .required("*City is required"),
     zipcode: Yup.string()
-        .max(50, "*City can't be longer than 20 characters")
+        .max(50, "*Zipcode can't be longer than 50 characters")
         .required("*Zipcode is required"),
     state: Yup.string()
-        .max(50, "*City can't be longer than 50 characters")
+        .max(50, "*State can't be longer than 50 characters")
         .required("*State is required")
 });
 

@@ -91,12 +91,11 @@ export class App extends React.Component {
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute exact path='/add-property' component={AddProperty} />
               <Route exact path='/terms' component={Terms} />
 
               <PrivateRoute exact path='/home' component={Dashboard}/>
               <PrivateRoute exact path='/add/tenant' component={Dashboard} />
-              <PrivateRoute exact path='/add/property' component={Dashboard}/>
+              <PrivateRoute exact path='/add/property' component={AddProperty}/>
               <PrivateRoute exact path='/add/manager' component={Dashboard} />
               <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
               <PrivateRoute exact path='/manage/properties' component={Dashboard} />
