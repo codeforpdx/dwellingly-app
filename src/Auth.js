@@ -18,7 +18,7 @@ export const checkForStoredAccessToken = () => {
   if(token !== null && token !== undefined) {
     var parsedToken = parseJwt(token);
     // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
-    if(parsedToken.exp * 1000 > Date.now()) {
+    if(!parsedToken.exp || parsedToken.exp * 1000 > Date.now()) {
       return true;
     }
   }
@@ -30,7 +30,7 @@ export const checkForStoredRefreshToken = () => {
   if(token !== null && token !== undefined) {
     var parsedToken = parseJwt(token);
     // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
-    if(parsedToken.exp * 1000 > Date.now()) {
+    if(!parsedToken.exp || parsedToken.exp * 1000 > Date.now()) {
       return true;
     }
   }
