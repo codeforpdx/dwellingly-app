@@ -5,7 +5,7 @@ import { LoginForm } from './views/login';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
-import { PrivateRoute, auth, parseJwt } from './Auth';
+import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStoredRefreshToken } from './Auth';
 import Header from './components/Header/index';
 import { AddProperty } from './views/addProperty';
 
@@ -31,7 +31,7 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    if( this.checkForStoredAccessToken() ) {
+    if( checkForStoredAccessToken() ) {
       let parsedJwt = parseJwt(window.localStorage[ 'dwellinglyAccess' ]);
       this.setState({
         userSession: {
@@ -46,33 +46,9 @@ export class App extends React.Component {
       }, () => {
         this.refreshJwtPeriodically();
       });
-    } else if( this.checkForStoredRefreshToken() ) {
+    } else if( checkForStoredRefreshToken() ) {
       this.refreshJwtPeriodically();
     }
-  }
-
-  checkForStoredAccessToken = () => {
-    var token = window.localStorage[ 'dwellinglyAccess' ];
-    if(token !== null && token !== undefined) {
-      var parsedToken = parseJwt(token);
-      // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
-      if(parsedToken.exp * 1000 > Date.now()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  checkForStoredRefreshToken = () => {
-    var token = window.localStorage[ 'dwellinglyRefresh' ];
-    if(token !== null && token !== undefined) {
-      var parsedToken = parseJwt(token);
-      // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
-      if(parsedToken.exp * 1000 > Date.now()) {
-        return true;
-      }
-    }
-    return false;
   }
 
   login = (email, password) => {

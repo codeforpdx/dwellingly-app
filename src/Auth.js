@@ -13,6 +13,30 @@ export const parseJwt = ( token ) => {
   }
 }
 
+export const checkForStoredAccessToken = () => {
+  var token = window.localStorage[ 'dwellinglyAccess' ];
+  if(token !== null && token !== undefined) {
+    var parsedToken = parseJwt(token);
+    // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
+    if(parsedToken.exp * 1000 > Date.now()) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export const checkForStoredRefreshToken = () => {
+  var token = window.localStorage[ 'dwellinglyRefresh' ];
+  if(token !== null && token !== undefined) {
+    var parsedToken = parseJwt(token);
+    // The multiply by 1000 is so that the JWT exp date and JS Date.now() match in millisecond length
+    if(parsedToken.exp * 1000 > Date.now()) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export const auth = {
   isAuthenticated: false,
   async authenticate(email, password) {
