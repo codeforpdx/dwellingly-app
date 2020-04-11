@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
+import { RequestAccess } from './views/requestAccess';
 import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
@@ -86,13 +87,14 @@ export class App extends React.Component {
             {this.state.userSession.isAuthenticated
               && <><NavMenu />
                   <Header /></>}
+
             <Switch>
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <Route exact path='/terms' component={Terms} />
-
-              <PrivateRoute exact path='/home' component={Dashboard}/>
+              
+              <PrivateRoute exact path='/home' component={Dashboard} />
               <PrivateRoute exact path='/add/tenant' component={Dashboard} />
               <PrivateRoute exact path='/add/property' component={Dashboard}/>
               <PrivateRoute exact path='/add/manager' component={Dashboard} />
@@ -104,6 +106,8 @@ export class App extends React.Component {
               <PrivateRoute exact path='/staff' component={Dashboard} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
               <PrivateRoute exact path='/settings' component={Dashboard} />
+              
+              <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
             </Switch>
           </div>
         </BrowserRouter>
