@@ -11,6 +11,7 @@ import { AddProperty } from './views/addProperty';
 
 
 export const UserContext = React.createContext();
+var refreshTimeout;
 
 export class App extends React.Component {
   constructor(props) {
@@ -42,25 +43,11 @@ export class App extends React.Component {
           lastName: parsedJwt.user_claims.lastName,
           email: parsedJwt.user_claims.email
         }
+      }, () => {
+        this.refreshJwtPeriodically();
       });
     } else if( this.checkForStoredRefreshToken() ) {
-      auth.refreshAccess( window.localStorage[ 'dwellinglyRefresh' ] )
-        .then( response => {
-          window.localStorage[ 'dwellinglyAccess' ] = response.data.access_token;
-          //let parsedJwt = parseJwt(response.access_token);
-          this.setState({
-            userSession: {
-              isAuthenticated: true,
-              accessJwt: response.data.access_token,
-              /*
-              userId: parsedJwt.userId,
-              userFirst: parsedJwt.userFirst,
-              userLast: parsedJwt.userLast,
-              userEmail: parsedJwt.userEmail
-              */
-            }
-          });
-        });
+      this.refreshJwtPeriodically();
     }
   }
 
@@ -105,12 +92,40 @@ export class App extends React.Component {
               lastName: parsedJwt.user_claims.lastName,
               email: parsedJwt.user_claims.email
             }
-          });
+          }, () => {
+          // Call to refresh the access token 3 minutes later
+          setTimeout( this.refreshJwtPeriodically, 180000 )
+        });
+        } else {
+          alert("Failed to login");
         }
-      })
-    .catch( (error) => {
-      alert("Failed to login");
-    })
+      });
+  }
+
+  refreshJwtPeriodically = () => {
+    auth.refreshAccess( window.localStorage[ 'dwellinglyRefresh' ] )
+        .then((response) => {
+          this.setState({
+            userSession: {
+              ...this.state.userSession,
+              isAuthenticated: true,
+              accessJwt: response.data.access_token,
+              /*
+              userId: parsedJwt.userId,
+              userFirst: parsedJwt.userFirst,
+              userLast: parsedJwt.userLast,
+              userEmail: parsedJwt.userEmail
+              */
+            }
+          }, () => {
+            refreshTimeout && clearTimeout(refreshTimeout);
+            // Call to refresh the access token 3 minutes later
+            setTimeout( this.refreshJwtPeriodically, 180000 );
+          })
+        })
+        .catch( error => {
+          console.log( "Failed to refresh access token: " + error );
+        } );
   }
 
   logout = () => {

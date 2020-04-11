@@ -4,9 +4,13 @@ import * as axios from 'axios';
 import { UserContext } from './App';
 
 export const parseJwt = ( token ) => {
-  var base64Payload = token.split( '.' )[1];
-  var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
-  return JSON.parse( atob( base64 ) );
+  if( token !== null && token !== undefined ) {
+    var base64Payload = token.split( '.' )[1];
+    var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
+    return JSON.parse( atob( base64 ) );
+  } else {
+    return '';
+  }
 }
 
 export const auth = {
@@ -49,11 +53,7 @@ export const auth = {
       { headers: {"Authorization" : `Bearer ${refreshToken}`} }
     )
       .then((response) => {
-        if(parseJwt(response.data.access_token).exp * 1000 > Date.now()) {
-          return Promise.resolve(response);
-        } else {
-          return Promise.reject("Access token expired");
-        }
+        return Promise.resolve(response);
       })
       .catch((error) => {
         console.log("Failure getting new access token using refresh token: " + refreshToken);
