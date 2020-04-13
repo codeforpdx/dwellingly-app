@@ -19,7 +19,7 @@ export class LoginForm extends React.Component {
       <UserContext.Consumer>
         {({ user, login }) => (
           user.isAuthenticated
-          ? <Redirect to="/properties" />
+          ? <Redirect to="/dashboard" />
           :
           <div className="login__container">
             <Formik

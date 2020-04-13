@@ -131,7 +131,6 @@ export class App extends React.Component {
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute exact path='/properties' component={Properties} />
               <Route exact path='/terms' component={Terms} />
 
               <PrivateRoute exact path='/home' component={Dashboard}/>
@@ -139,7 +138,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/add/property' component={AddProperty}/>
               <PrivateRoute exact path='/add/manager' component={Dashboard} />
               <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
-              <PrivateRoute exact path='/manage/properties' component={Dashboard} />
+              <PrivateRoute exact path='/manage/properties' component={Properties} />
               <PrivateRoute exact path='/manage/managers' component={Dashboard} />
               <PrivateRoute exact path='/tickets' component={Dashboard} />
               <PrivateRoute exact path='/reports' component={Dashboard} />

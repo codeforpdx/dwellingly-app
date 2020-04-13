@@ -16,11 +16,11 @@ const columns = [{
     text: 'Address',
     sort: true
   }, {
-    dataField: 'address',
+    dataField: 'tenants',
     text: 'Tenants',
     sort: true
   }, {
-    dataField: 'created',
+    dataField: 'dateAdded',
     text: 'Added On',
     sort: true
   }];
@@ -82,7 +82,6 @@ export class Properties extends Component {
                                     headerClasses="table-header"
                                     />
                             </div>
-                            
                         </div>
                     )
                 }}
