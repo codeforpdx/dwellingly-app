@@ -1,34 +1,53 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { UserContext } from '../App';
+import { Link } from "react-router-dom"
 import * as axios from 'axios';
 
 const columns = [{
     dataField: 'name',
     text: 'Name',
-    sort: true
+    sort: true,
+    headerStyle: () => {
+      return { width: "20%" };
+    }
   }, {
-    dataField: 'manager',
+    dataField: 'propertyManager',
     text: 'Property Managers',
-    sort: true
+    sort: true,
+    headerStyle: () => {
+      return { width: "20%" };
+    }
   }, {
     dataField: 'address',
     text: 'Address',
-    sort: true
+    sort: true,
+    headerStyle: () => {
+      return { width: "20%" };
+    }
   }, {
     dataField: 'tenants',
     text: 'Tenants',
-    sort: true
+    sort: true,
+    headerStyle: () => {
+      return { width: "10%" };
+    }
   }, {
     dataField: 'dateAdded',
     text: 'Added On',
-    sort: true
+    sort: true,
+    headerStyle: () => {
+      return { width: "10%" };
+    }
   }];
 
 const selectRow = {
   mode: 'checkbox',
   clickToSelect: true,
-  sort: true
+  sort: true,
+  headerColumnStyle: () => {
+    return { width: "5%" };
+  }
 };
 
 
@@ -67,7 +86,7 @@ export class Properties extends Component {
                         <div className="properties__container">
                             <div className="section-header">
                                 <h2 className="page-title">Properties</h2>
-                                <button className="button is-rounded" onClick={()=>{console.log("cancel pressed")}}>+ ADD NEW</button>
+                                <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
                             <div className="search-section">
                                 <input></input>

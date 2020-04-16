@@ -7,6 +7,7 @@
         .section-header {
             display: flex;
             flex-direction: row;
+            align-items: center;
         }
         .search-section {
             margin: 20px;
@@ -23,6 +24,4 @@
             background-color: $lightGray;
         }
     }
-    
 }
-
