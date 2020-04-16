@@ -1,0 +1,49 @@
+// Backgrounds
+.bg-blue {
+  background: $blue;
+}
+
+.bg-gradient {
+  background: $gradient;
+}
+
+.bg-grey {
+  background: $gray;
+}
+
+// NavMenu
+.is-sidebar-menu{
+  padding-top: 9px;
+  float: left;
+  position: relative;
+  min-height: 100%;
+  width: 250px;
+  padding-bottom: 40px;
+}
+
+.is-menu-link{
+	padding-left: 2px;
+}
+
+.is-padding{
+	padding-bottom: 5px;
+}
+
+.is-logout-button{
+	padding-top: 733px;
+  padding-left: 20px;
+}
+
+.is-inactive-link{
+  pointer-events: none;
+  cursor: default;
+}
+
+.is-child-link{
+  padding-left: 15px;
+}
+
+.is-username-link{
+  padding-bottom: 30px;
+}
+

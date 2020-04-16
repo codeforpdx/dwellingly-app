@@ -1,8 +1,11 @@
 import React from 'react';
+import Header from '../components/Header/index';
 
 export class Terms extends React.Component {
   render() {
     return (
+      <>
+      <Header/>
       <div class='container'>
         <h2 class='subtitle'>Terms and Conditions</h2>
         <p>
@@ -31,6 +34,7 @@ export class Terms extends React.Component {
           </button>
         </div>
       </div>
+      </>
     );
   }
 }
