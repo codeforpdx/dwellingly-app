@@ -6,6 +6,10 @@ $specialGrey: #C8C8C8;
 	width: 300px;
 }
 
+.drop-button-content {
+	font-weight: normal;
+}
+
 .drop-button-start {
 	padding-left: 250px;
 }
@@ -18,12 +22,16 @@ $specialGrey: #C8C8C8;
 	padding-left: 167px;
 }
 
-.dropdown-content-width {
-	width: 300px;
-}
-
 .radio-dropdown {
 	margin-right: 10px;
+}
+
+.dropdown-content-width {
+	width: 295px;
+}
+
+.dropdown-menu-place {
+	padding-left: 13px;
 }
 
 // Subtitles
@@ -71,15 +79,15 @@ $specialGrey: #C8C8C8;
 }
 
 .bottom-padding {
-	padding-bottom: 720px;
+	padding-bottom: 763px;
 }
 
 .bottom-padding-join {
-	padding-bottom: 683px;
+	padding-bottom: 726px;
 }
 
 .bottom-padding-property {
-	padding-bottom: 616px;
+	padding-bottom: 659px;
 }
 
 // JOIN Staff part
@@ -93,7 +101,7 @@ $specialGrey: #C8C8C8;
 
 // Buttons
 .cancel-button {
-	margin: 0 15px;
+	padding-bottom: 50px;
 }
 
 .access-button {
@@ -104,6 +112,12 @@ $specialGrey: #C8C8C8;
     padding: 7px 20px;
     font-weight: bold;
     font-size: 12px;
+}
+
+.set-access-button {
+	padding-top: 11px;
+	display: inline-block;
+	margin: 0 10px;
 }
 
 // Miscellaneous

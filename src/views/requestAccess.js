@@ -15,6 +15,12 @@ export const Footer = () => {
 	);
 }
 
+// New Issues:
+// Unbold the drop down label
+// grant-access button higher than cancel-button
+// edit text section too close to label
+// dropdown menu doesn't align with button
+
 export const DropDownItem = ({dropContent, clickHandle}) => {
 	return (
 		<div className="dropdown-item" >
@@ -91,14 +97,13 @@ export const RoleDropDown = () => {
 			  
 			  <div className="dropdown-trigger">
 			    <button className="button is-rounded drop-button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={handleClickDropdown} >
-			      <span> {dropContent} </span>
+			      <span className="drop-button-content"> {dropContent} </span>
 			      <span className={dropButton} >
 			        <i className="fas fa-angle-down" aria-hidden="true"></i>
 			      </span>
 			    </button>
 			  </div>
-
-			  <div className="dropdown-menu">
+			  <div className="dropdown-menu dropdown-menu-place">
 			    <div className="dropdown-content dropdown-content-width">
 			      <DropDownItem dropContent="JOIN Staff" clickHandle={handleClickJOIN} />
 			      <DropDownItem dropContent="Property Manager" clickHandle={handleClickProperty} />
@@ -130,7 +135,6 @@ export const InfoField = ({label, info}) => {
 	);
 }
 
-// git add src/App.js src/scss/pages/_all.scss src/views/dashboard.js src/scss/pages/_requestAccess.scss src/views/requestAccess.js
 export const RequestAccess = (props) => {
 	const id = props.match.params.id;
 	const data = ACCESS_REQUEST_DATA[id-1];
@@ -157,7 +161,9 @@ export const RequestAccess = (props) => {
 				<RoleDropDown />
 
 				<div className="button-padding">
-			      <button className="access-button"> GRANT ACCESS </button>
+					<div className="set-access-button">
+			      		<button className="access-button"> GRANT ACCESS </button>
+			      	</div>
 			      <button className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" onClick={handleCancelClick}> CANCEL </button>
 			    </div>
 			</div>
