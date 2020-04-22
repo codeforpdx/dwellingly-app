@@ -99,6 +99,11 @@ $specialGrey: #C8C8C8;
 	padding-right: 10px;
 }
 
+// Property search part
+.search-bar {
+  width: 400px;
+}
+
 // Buttons
 .cancel-button {
 	padding-bottom: 50px;
@@ -127,8 +132,4 @@ $specialGrey: #C8C8C8;
 	display: flex;
     flex-direction: column;
     
-}
-
-.search-bar {
-  width: 400px;
 }

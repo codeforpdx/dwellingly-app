@@ -15,17 +15,11 @@ export const Footer = () => {
 	);
 }
 
-// New Issues:
-// Unbold the drop down label
-// grant-access button higher than cancel-button
-// edit text section too close to label
-// dropdown menu doesn't align with button
-
 export const DropDownItem = ({dropContent, clickHandle}) => {
 	return (
-		<div className="dropdown-item" >
+		<div className="dropdown-item">
 	      	<label className="radio">
-		      	<input type="radio" name="answer" onClick={clickHandle} className="radio-dropdown" ></input>
+		      	<input type="radio" name="answer" onClick={clickHandle} className="radio-dropdown"></input>
 		      	{dropContent}
 		    </label>
 	    </div>
@@ -94,7 +88,6 @@ export const RoleDropDown = () => {
 	return (
 		<div className={bottomPad} >
 			<div className={dropDown}>
-			  
 			  <div className="dropdown-trigger">
 			    <button className="button is-rounded drop-button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={handleClickDropdown} >
 			      <span className="drop-button-content"> {dropContent} </span>
@@ -109,7 +102,6 @@ export const RoleDropDown = () => {
 			      <DropDownItem dropContent="Property Manager" clickHandle={handleClickProperty} />
 			    </div>
 			  </div>
-			
 			</div>
 
 			<div>
