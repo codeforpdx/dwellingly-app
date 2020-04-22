@@ -113,8 +113,9 @@ export class App extends React.Component {
             userLast: '',
             userEmail: ''
           }
+        }, () => {
+          window.location.replace('/login');
         })
-        window.location.replace('/login');
       });
   }
 

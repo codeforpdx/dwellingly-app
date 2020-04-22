@@ -13,14 +13,19 @@ import {
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import "bulma/css/bulma.css";
+import { UserContext } from '../../App';
 
 
 export class LogOutButton extends React.Component {
   render() {
     return (
-      <div className="is-logout-button">
-        <button className='button is-dark is-rounded is-small'>LOG OUT</button>
-      </div>
+      <UserContext.Consumer>
+        {({ logout }) => (
+          <div className="is-logout-button">
+            <button className='button is-dark is-rounded is-small' onClick={logout}>LOG OUT</button>
+          </div>
+        )}
+      </UserContext.Consumer>
     );
   }
 }

@@ -24,9 +24,11 @@ export const auth = {
   },
   async signout() {
     return new Promise((resolve, reject) => {
-      this.resolve();
+      resolve();
     })
       .then((response) => {
+        localStorage.removeItem( 'dwellinglyAccess' );
+        localStorage.removeItem( 'dwellinglyRefresh' );
         this.isAuthenticated = false;
         console.log("Successfully logged out.");
         return Promise.resolve(response);
