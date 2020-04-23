@@ -67,7 +67,7 @@ export class Properties extends Component {
     }
 
     getProperties = (context) => {
-        axios.get('http://localhost:5000/properties', { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+        axios.get(`${process.env.REACT_APP_API_URL}/properties`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
             this.setState({properties: response.data.properties});
         })
