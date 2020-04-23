@@ -28,21 +28,26 @@ export class App extends React.Component {
         isAuthenticated: false,
         accessJwt: '',
         refreshJwt: '',
-        userId: '',
-        userFirst: '',
-        userLast: '',
-        userEmail: ''
+        identity: '',
+        firstName: '',
+        lastName: '',
+        email: ''
       }
     }
   }
 
   componentDidMount() {
     if( this.checkForStoredAccessToken() ) {
+      let parsedJwt = parseJwt(window.localStorage[ 'dwellinglyAccess' ]);
       this.setState({
         userSession: {
           isAuthenticated: true,
           accessJwt: window.localStorage[ 'dwellinglyAccess' ],
           refreshJwt: window.localStorage[ 'dwellinglyRefresh' ],
+          identity: parsedJwt.identity,
+          firstName: parsedJwt.user_claims.firstName,
+          lastName: parsedJwt.user_claims.lastName,
+          email: parsedJwt.user_claims.email
         }
       });
     } else if( this.checkForStoredRefreshToken() ) {
@@ -79,18 +84,16 @@ export class App extends React.Component {
         if (response) {
           window.localStorage[ 'dwellinglyAccess' ] = response.data.access_token;
           window.localStorage[ 'dwellinglyRefresh' ] = response.data.refresh_token;
-          //let parsedJwt = parseJwt(response.access_token);
+          let parsedJwt = parseJwt(response.data.access_token);
           this.setState({
             userSession: {
               isAuthenticated: true,
               accessJwt: response.data.access_token,
               refreshJwt: response.data.refresh_token,
-              /*
-              userId: parsedJwt.userId,
-              userFirst: parsedJwt.userFirst,
-              userLast: parsedJwt.userLast,
-              userEmail: parsedJwt.userEmail
-              */
+              identity: parsedJwt.identity,
+              firstName: parsedJwt.user_claims.firstName,
+              lastName: parsedJwt.user_claims.lastName,
+              email: parsedJwt.user_claims.email
             }
           });
         }
@@ -108,13 +111,14 @@ export class App extends React.Component {
             isAuthenticated: false,
             accessJwt: '',
             refreshJwt: '',
-            userId: '',
-            userFirst: '',
-            userLast: '',
-            userEmail: ''
+            identity: '',
+            firstName: '',
+            lastName: '',
+            email: ''
           }
+        }, () => {
+          window.location.replace('/login');
         })
-        window.location.replace('/login');
       });
   }
 
