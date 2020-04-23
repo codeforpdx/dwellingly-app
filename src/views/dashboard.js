@@ -106,12 +106,7 @@ export const Dashboard = (props) => {
                                 })
                             }
                         </Collapsible>
-                    </div>
-                    <footer className="dashboard__footer">
-                        <p className="dashboard__footer_logo_text">
-                            <span className="bold">JOIN</span> 2018
-                    </p>
-                    </footer>
+                    </div>  
                 </div>
             </div>
             <div className={`modal ${modalActive && 'is-active'}`}>

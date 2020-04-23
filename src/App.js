@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
 import { Home } from './views/home';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
@@ -18,6 +18,16 @@ const parseJwt = ( token ) => {
   var base64Payload = token.split( '.' )[1];
   var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
   return JSON.parse( atob( base64 ) );
+}
+
+const Footer = () => {
+  return (
+    <footer className="dashboard__footer">
+      <p className="dashboard__footer_logo_text">
+          <span className="bold">JOIN</span> 2018
+      </p>
+    </footer>
+  );
 }
 
 export class App extends React.Component {
@@ -133,7 +143,6 @@ export class App extends React.Component {
               <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <Route exact path='/terms' component={Terms} />
-              
               <PrivateRoute exact path='/home' component={Dashboard} />
               <PrivateRoute exact path='/add/tenant' component={Dashboard} />
               <PrivateRoute exact path='/add/property' component={AddProperty}/>
@@ -146,9 +155,10 @@ export class App extends React.Component {
               <PrivateRoute exact path='/staff' component={Dashboard} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
               <PrivateRoute exact path='/settings' component={Dashboard} />
-              
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
             </Switch>
+            {this.state.userSession.isAuthenticated
+              && <Footer />}
           </div>
         </BrowserRouter>
       </UserContext.Provider>

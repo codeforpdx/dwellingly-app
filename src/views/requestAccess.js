@@ -5,16 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
-export const Footer = () => {
-	return (
-		<footer className="dashboard__footer">
-            <p className="dashboard__footer_logo_text">
-                <span className="bold">JOIN</span> 2018
-            </p>
-        </footer>
-	);
-}
-
 export const DropDownItem = ({dropContent, clickHandle}) => {
 	return (
 		<div className="dropdown-item">
@@ -26,25 +16,25 @@ export const DropDownItem = ({dropContent, clickHandle}) => {
 	);
 }
 
-export const PropertyPage = () => {
+export const PropertyManagerOptions = () => {
 	return (
 		<>
 			<div className="sub-title sub-title-padding"> PROPERTY </div>
 	    	<p className="control has-icons-left search-bar">
 	        	<input className="input is-rounded" type="text" placeholder="Search properties"></input>
 	        	<span className="icon is-small is-left">
-			      <FontAwesomeIcon icon={faSearch} />
+			    	<FontAwesomeIcon icon={faSearch} />
 			    </span>
 		    </p>
 		</>
 	);
 }
 
-export const JoinPage = () => {
+export const JoinStaffOptions = () => {
 	return (
 		<label className="checkbox make-admin-padding">
 			<span className="admin-check-padding">
-			  Make Admin
+				Make Admin
 			</span>
 			<input type="checkbox"></input>
 		</label>
@@ -88,25 +78,24 @@ export const RoleDropDown = () => {
 	return (
 		<div className={bottomPad} >
 			<div className={dropDown}>
-			  <div className="dropdown-trigger">
-			    <button className="button is-rounded drop-button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={handleClickDropdown} >
-			      <span className="drop-button-content"> {dropContent} </span>
-			      <span className={dropButton} >
-			        <i className="fas fa-angle-down" aria-hidden="true"></i>
-			      </span>
-			    </button>
-			  </div>
-			  <div className="dropdown-menu dropdown-menu-place">
-			    <div className="dropdown-content dropdown-content-width">
-			      <DropDownItem dropContent="JOIN Staff" clickHandle={handleClickJOIN} />
-			      <DropDownItem dropContent="Property Manager" clickHandle={handleClickProperty} />
+			    <div className="dropdown-trigger">
+				    <button className="button is-rounded drop-button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={handleClickDropdown} >
+					    <span className="drop-button-content"> {dropContent} </span>
+					    <span className={dropButton} >
+					    	<i className="fas fa-angle-down" aria-hidden="true"></i>
+					    </span>
+				    </button>
 			    </div>
-			  </div>
+			    <div className="dropdown-menu dropdown-menu-place">
+				  	<div className="dropdown-content dropdown-content-width">
+					    <DropDownItem dropContent="JOIN Staff" clickHandle={handleClickJOIN} />
+					    <DropDownItem dropContent="Property Manager" clickHandle={handleClickProperty} />
+				  	</div>
+			    </div>
 			</div>
-
 			<div>
-				{propertyPage && <PropertyPage />}
-				{joinPage && <JoinPage />}
+				{propertyPage && <PropertyManagerOptions />}
+				{joinPage && <JoinStaffOptions />}
 			</div>
 		</div>
 	);
@@ -141,25 +130,21 @@ export const RequestAccess = (props) => {
 		<>
 			<div className="request-page"> 
 				<div className="page-title"> Request Access </div>
-				
 				<div className="sub-title"> CONTACT </div>
 				<InfoField label={"First Name"} info={nameParts[0]} />
 				<InfoField label={"Last Name"} info={nameParts[1]} />
 				<InfoField label={"Phone"} info={data['phone']} />
 				<InfoField label={"Email"} info={data['email']} />
 				<hr className="line" ></hr>
-
 				<div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
 				<RoleDropDown />
-
 				<div className="button-padding">
 					<div className="set-access-button">
 			      		<button className="access-button"> GRANT ACCESS </button>
 			      	</div>
-			      <button className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" onClick={handleCancelClick}> CANCEL </button>
+			        <button className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" onClick={handleCancelClick}> CANCEL </button>
 			    </div>
 			</div>
-			<Footer />
 		</>
 	);
 }
