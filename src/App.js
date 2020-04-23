@@ -6,6 +6,7 @@ import { Home } from './views/home';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
 import { Terms } from './views/terms';
+import { Tickets } from './views/tickets';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
 import { AddProperty } from './views/addProperty';
@@ -143,7 +144,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
               <PrivateRoute exact path='/manage/properties' component={Dashboard} />
               <PrivateRoute exact path='/manage/managers' component={Dashboard} />
-              <PrivateRoute exact path='/tickets' component={Dashboard} />
+              <PrivateRoute exact path='/tickets' component={Tickets} />
               <PrivateRoute exact path='/reports' component={Dashboard} />
               <PrivateRoute exact path='/staff' component={Dashboard} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
