@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { UserContext } from '../App';
 import { Link } from "react-router-dom"
+import Accordion from '../components/Accordion';
 import * as axios from 'axios';
 
 const columns = [{
@@ -29,25 +30,17 @@ const columns = [{
     text: 'Created',
     sort: true,
     headerStyle: () => {
-      return { width: "10%" };
+      return { width: "20%" };
     }
   }, {
     dataField: 'dateAdded',
     text: 'Updated',
     sort: true,
     headerStyle: () => {
-      return { width: "10%" };
+      return { width: "20%" };
     }
   }];
 
-const selectRow = {
-  mode: 'checkbox',
-  clickToSelect: true,
-  sort: true,
-  headerColumnStyle: () => {
-    return { width: "5%" };
-  }
-};
 
 
 export class Tickets extends Component {
@@ -87,14 +80,42 @@ export class Tickets extends Component {
                                 <h2 className="page-title">Tickets</h2>
                             </div>
                             <div className="search-section">
-                                <input></input>
+                              <input class="input is-rounded" placeholder="Search by tenant, manager, property, or JOIN staff"></input>
                             </div>
+                            <Accordion
+                              icon={<i class="fas fa-filter"></i>}
+                              header={"Filters"}
+                            >
+                              <div className="section-row">
+                                <div className="filter-control">
+                                  <label>Opened From</label>
+                                  <input class="input is-rounded"></input>
+                                </div>
+                                <div className="filter-control">
+                                  <label>Category</label>
+                                  <div class="select is-rounded">
+                                    <select>
+                                      <option>All</option>
+                                      <option>Complaints</option>
+                                      <option>Maintenance</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div className="filter-control">
+                                  <label>Status</label>
+                                  <div class="buttons has-addons">
+                                    <button class="button is-rounded btn-group">New </button>
+                                    <button class="button is-rounded btn-group">In Progress</button>
+                                    <button class="button is-rounded btn-group">Closed</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </Accordion>
                             <div className="tickets-list">
                                 <BootstrapTable
                                     keyField='id'
                                     data={ this.state.tickets }
                                     columns={ columns }
-                                    selectRow={ selectRow }
                                     bootstrap4={true}
                                     headerClasses="table-header"
                                     />

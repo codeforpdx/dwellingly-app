@@ -13,15 +13,36 @@
             margin: 20px;
         }
 
-        .button {
-            margin-left: 20px;
-            font-weight: bold;
-            color: white;
-            background-color: $blue;
-            border: 0;
+        .filters-container {
+            background-color: $lighterGray;
+            margin-bottom: 10px;
+            padding: 10px;
+            color: $blue;
+            .fa-filter {
+                margin-right: 10px;
+            }
         }
+
         .table-header {
-            background-color: $lightGray;
+            background-color: $lighterGray;
         }
     }
+}
+
+.btn-group {
+  margin: 0;
+}
+
+.section-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+  .filter-control {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 10px;
+    }
+  }
 }
