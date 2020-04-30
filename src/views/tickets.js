@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import { UserContext } from '../App';
 import { Link } from "react-router-dom"
 import Accordion from '../components/Accordion';
@@ -41,7 +42,39 @@ const columns = [{
     }
   }];
 
+const pageButtonRenderer = ({
+  page,
+  active,
+  disable,
+  title,
+  onPageChange
+}) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    onPageChange(page);
+  };
+  const activeStyle = {};
+  if (active) {
+    activeStyle.backgroundColor = 'black';
+    activeStyle.color = 'white';
+  } else {
+    activeStyle.backgroundColor = 'gray';
+    activeStyle.color = 'black';
+  }
+  if (typeof page === 'string') {
+    activeStyle.backgroundColor = 'white';
+    activeStyle.color = 'black';
+  }
+  return (
+    <li className="page-item">
+      <a href="#" onClick={ handleClick } style={ activeStyle }>{ page }</a>
+    </li>
+  );
+};
 
+const options = {
+  pageButtonRenderer
+};
 
 export class Tickets extends Component {
     constructor(props) {
@@ -116,6 +149,7 @@ export class Tickets extends Component {
                                     keyField='id'
                                     data={ this.state.tickets }
                                     columns={ columns }
+                                    // pagination={ paginationFactory(options) }
                                     bootstrap4={true}
                                     headerClasses="table-header"
                                     />
