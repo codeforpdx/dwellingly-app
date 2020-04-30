@@ -1,0 +1,27 @@
+.properties {
+    &__container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 45px;
+        .section-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .search-section {
+            margin: 20px;
+        }
+
+        .button {
+            margin-left: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: $blue;
+            border: 0;
+        }
+        .table-header {
+            background-color: $lightGray;
+        }
+    }
+}
