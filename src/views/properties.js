@@ -39,7 +39,7 @@ const columns = [{
     headerStyle: () => {
       return { width: "10%" };
     }
-  }];
+}];
 
 const selectRow = {
   mode: 'checkbox',
@@ -89,7 +89,7 @@ export class Properties extends Component {
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
                             <div className="search-section">
-                                <input></input>
+                              <input class="input search is-rounded" placeholder="Search properties by name, address, or property manager"></input>
                             </div>
                             <div className="properties-list">
                                 <BootstrapTable
