@@ -71,9 +71,9 @@ export const RoleDropDown = () => {
 		if (!viewPropertyManagerOptions) setPropertyManagerOptions(true);
 	}
 
-	const bottomPad = (propertyPage) ? "bottom-padding-property" : (joinPage ? "bottom-padding-join" : "bottom-padding");
+	const bottomPad = (viewPropertyManagerOptions) ? "bottom-padding-property" : (viewJoinStaffOptions ? "bottom-padding-join" : "bottom-padding");
 	const dropDown = "dropdown is-rounded " + ((isActive) ? "is-active" : "");
-	const dropButton = "icon is-small " + ((propertyPage) ? "drop-button-prop" : (joinPage ? "drop-button-join" : "drop-button-start"));
+	const dropButton = "icon is-small " + ((viewPropertyManagerOptions) ? "drop-button-prop" : (viewJoinStaffOptions ? "drop-button-join" : "drop-button-start"));
 
 	return (
 		<div className={bottomPad} >
