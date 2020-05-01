@@ -44,8 +44,8 @@ export const JoinStaffOptions = () => {
 export const RoleDropDown = () => {
 	const [isActive, setIsActive] = useState(true);
 	const [dropContent, setDropContent] = useState("");
-	const [propertyPage, setPropertyPage] = useState(false);
-	const [joinPage, setJoinPage] = useState(false);
+	const [viewPropertyManagerOptions, setPropertyManagerOptions] = useState(false);
+	const [viewJoinStaffOptions, setJoinStaffOptions] = useState(false);
 
 	const handleClickDropdown = () => {
 		if (!isActive) setIsActive(true);
@@ -57,8 +57,8 @@ export const RoleDropDown = () => {
 		// Set dropdown button text
 		setDropContent("JOIN Staff");
 		// Use JOIN staff checkbox
-		if (propertyPage) setPropertyPage(false);
-		if (!joinPage) setJoinPage(true);
+		if (viewPropertyManagerOptions) setPropertyManagerOptions(false);
+		if (!viewJoinStaffOptions) setJoinStaffOptions(true);
 	}
 
 	const handleClickProperty = () => {
@@ -67,8 +67,8 @@ export const RoleDropDown = () => {
 		// Set dropdown button text
 		setDropContent("Property Manager");
 		// Use property search box
-		if (joinPage) setJoinPage(false);
-		if (!propertyPage) setPropertyPage(true);
+		if (viewJoinStaffOptions) setJoinStaffOptions(false);
+		if (!viewPropertyManagerOptions) setPropertyManagerOptions(true);
 	}
 
 	const bottomPad = (propertyPage) ? "bottom-padding-property" : (joinPage ? "bottom-padding-join" : "bottom-padding");
@@ -94,8 +94,8 @@ export const RoleDropDown = () => {
 			    </div>
 			</div>
 			<div>
-				{propertyPage && <PropertyManagerOptions />}
-				{joinPage && <JoinStaffOptions />}
+				{viewPropertyManagerOptions && <PropertyManagerOptions />}
+				{viewJoinStaffOptions && <JoinStaffOptions />}
 			</div>
 		</div>
 	);

@@ -9,6 +9,7 @@ import { RequestAccess } from './views/requestAccess';
 import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
+import Footer from './components/Footer/index';
 import { AddProperty } from './views/addProperty';
 
 
@@ -18,16 +19,6 @@ const parseJwt = ( token ) => {
   var base64Payload = token.split( '.' )[1];
   var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
   return JSON.parse( atob( base64 ) );
-}
-
-const Footer = () => {
-  return (
-    <footer className="dashboard__footer">
-      <p className="dashboard__footer_logo_text">
-          <span className="bold">JOIN</span> 2018
-      </p>
-    </footer>
-  );
 }
 
 export class App extends React.Component {
