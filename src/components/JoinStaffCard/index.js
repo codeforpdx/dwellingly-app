@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './joinStaffCard.scss';
 
-
-// name length affecting spacing
-// cancel button too far right, second line now
-// issues with name+cancel button
 const CancelButton = () => {
 	return(
 		<a className="cancel-button" >
@@ -39,6 +36,8 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 		);
 	}
 
+	const tinyLinkSpacing = !(tickets && tenants) ? "tiny-link" : "tiny-link-info";
+
 	return (
 		<>
 			<div className="card card-length">
@@ -46,9 +45,7 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 					<p className="name-font">
 				    	{name}
 				    </p>
-				    <p className="cancel-spacing">
-				    	{!admin && <CancelButton />}
-				    </p>
+				    {!admin && <CancelButton />}
 				</div>
 				<div className="card-content">
 					{admin && <AdminLabel />}
@@ -58,17 +55,17 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 				    <p className="info-font">
 				    	{email}
 				    </p>
-				    <div className="space"></div>
+				    <div className="empty-space"></div>
 				    <p className="tiny-font">
 				    	Set out of office
 				    </p>
 				    <hr className="card-divider" ></hr>
 				    {tickets && <InfoLabel type="tickets" />}
 				    {tenants && <InfoLabel type="tenants" />}
-				    <a href='#' className="tiny-link" > Reassign </a>
+				    <a href='#' className={tinyLinkSpacing}> Reassign </a>
 				</div>
 			</div>
-			<div className="space"></div>
+			<div className="card-separating-space"></div>
 		</>
 	);
 }

@@ -4,15 +4,14 @@ const JOIN_STAFF_DATA = [
         name: "Betty Jones",
         email: "betty@joinpdx.org",
         phone: "(503)123-1234",
-        tickets: 13,
+        tickets: 12,
         tenants: 58,
         admin: false
-
     },
     {
         id: 2,
         name: "Harry Goldstein",
-        email: "betty@joinpdx.org",
+        email: "tim@joinpdx.org",
         phone: "(503)123-1234",
         tickets: 12,
         tenants: 58,
@@ -20,17 +19,17 @@ const JOIN_STAFF_DATA = [
     },
     {
         id: 3,
-        name: "Tim Juniper",
+        name: "Raymond Holt",
         email: "tim@joinpdx.org",
         phone: "(503)123-1234",
         tickets: 12,
         tenants: 58,
-        admin: false
+        admin: true
     },
     {
         id: 4,
-        name: "Raymond Holt",
-        email: "tim@joinpdx.org",
+        name: "Tim Juniper",
+        email: "betty@joinpdx.org",
         phone: "(503)123-1234",
         tickets: 12,
         tenants: 58,
@@ -38,7 +37,7 @@ const JOIN_STAFF_DATA = [
     },
     {
         id: 5,
-        name: "Beyonce Knowles",
+        name: "Donna Sheridan",
         email: "tim@joinpdx.org",
         phone: "(503)123-1234",
         tickets: 12,
@@ -47,38 +46,37 @@ const JOIN_STAFF_DATA = [
     },
     {
         id: 6,
-        name: "Cassidy Erickson",
+        name: "Regina George",
         email: "tim@joinpdx.org",
         phone: "(503)123-1234",
         tickets: 12,
         tenants: 58,
         admin: false
+
     },
     {
-        id: 7,
-        name: "Regina George",
+        id: 7, 
+        name: "Cassidy Erickson",
         email: "tim@joinpdx.org",
         phone: "(503)123-1234",
         admin: false
     },
     {
         id: 8,
-        name: "Donna Sheridan",
+        name: "Chris Harrison",
         email: "tim@joinpdx.org",
         phone: "(503)123-1234",
         tickets: 12,
         tenants: 58,
-        admin: true
+        admin: false
     },
     {
         id: 9,
-        name: "Chris Harrison",
+        name: "Beyonce Knowles",
         email: "tim@joinpdx.org",
         phone: "(503)123-1234",
-        admin: true
-
+        admin: false
     }
-
 ];
 
 export { JOIN_STAFF_DATA };

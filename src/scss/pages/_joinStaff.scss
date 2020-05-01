@@ -1,12 +1,16 @@
 
 // Card
-.card-length {
-	width: 280px;
-	height: 250px;
-}
-
 .move-card {
 	padding-left: 400px;
+}
+
+// Spacing
+.columns-spacing {
+	padding-left: 30px;
+}
+ 
+.sep-cards {
+	padding-bottom: 30px;
 }
 
 // Divider
@@ -16,30 +20,14 @@
 	margin-bottom: 7px;
 }
 
-// Spacing
-.space {
-	padding-top: 20px;
-}
-
-.columns-spacing {
-	padding-left: 30px;
-}
- 
-.sep-cards {
-	padding-bottom: 30px;
-}
-
 // Title
 .title-font {
 	font-weight: bold;
 	font-size: 16px;
 	color: $brandBlue;
-	padding-top: 30px;
 	display: inline-block;
-	padding-right: 30px;
+	padding: 30px;
 	padding-left: 43px;
-	padding-bottom: 30px;
-	
 }
 
 .title-line {
@@ -49,63 +37,6 @@
 .title-spacing {
 	display: inline;
 	padding-top: 30px;
-}
-
-// Card Fonts
-.tiny-font {
-	font-size: 10px;
-	color: $lightGray;
-}
-
-.tiny-link {
-	font-size: 10px;
-}
-
-.info-font {
-	font-size: 13px;
-	color: $darkGray;
-}
-
-//
-
-.name-spacing {
-	padding-top: 10px;
-	padding-left: 24px;
-	//display: inline-block;
-	//position: absolute;
-	display: flex;
-    justify-content: space-between;
-}
-
-.name-font {
-	font-weight: bold;
-	font-size: 15px;
-	color: $brandBlue;
-	//display: inline;
-	//float: left;
-}
-
-// Need?
-.cancel-spacing {
-	//display: inline;
-	
-}
-
-.cancel-button {
-	padding-right: 20px;
-}
-
-//
-
-.number-font {
-	font-weight: bold;
-	display: inline-block;
-}
-
-.admin-label {
-	color: $blue;
-	font-size: 13px;
-	font-weight: bold;
 }
 
 .add-button {
