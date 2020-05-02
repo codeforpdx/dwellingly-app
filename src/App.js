@@ -11,6 +11,7 @@ import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStored
 import Header from './components/Header/index';
 import Footer from './components/Footer/index';
 import { AddProperty } from './views/addProperty';
+import Settings from './views/settings';
 
 
 export const UserContext = React.createContext();
