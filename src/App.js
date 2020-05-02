@@ -9,6 +9,7 @@ import { Terms } from './views/terms';
 import { PrivateRoute, auth } from './Auth';
 import Header from './components/Header/index';
 import { AddProperty } from './views/addProperty';
+import Settings from './views/settings';
 
 
 export const UserContext = React.createContext();
@@ -147,7 +148,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/reports' component={Dashboard} />
               <PrivateRoute exact path='/staff' component={Dashboard} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
-              <PrivateRoute exact path='/settings' component={Dashboard} />
+              <PrivateRoute exact path='/settings' component={Settings} />
             </Switch>
           </div>
         </BrowserRouter>
