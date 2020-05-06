@@ -112,14 +112,22 @@ export class Settings extends Component {
                                             {errors.name ? (<div className="error-message">{errors.name}</div>) : null}
                                         </div>
                                         <div className="container-footer">
-                                            <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
-                                            <button className="button is-dark is-rounded" onClick={()=>{console.log("cancel pressed")}}>CANCEL</button>
+                                            <button 
+                                                className={`${isValid && "active"} save_button button is-rounded`} 
+                                                type="submit" 
+                                                disabled={isSubmitting}>SAVE
+                                            </button>
+                                            <button 
+                                                className="button is-dark is-rounded" 
+                                                onClick={()=>{console.log("cancel pressed")}}>CANCEL
+                                            </button>
                                         </div>
+                                        <NavLink exact to='/change-password'>Change Password</NavLink>
+
                                     </Form>
                                 </div>
                                 )}
                         </Formik>
-                        <NavLink exact to='/change-password'></NavLink>
                     </div>
                 )
             }}
