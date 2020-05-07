@@ -122,9 +122,10 @@ export class Settings extends Component {
                                                 onClick={()=>{console.log("cancel pressed")}}>CANCEL
                                             </button>
                                         </div>
-                                        <NavLink exact to='/change-password'>Change Password</NavLink>
 
                                     </Form>
+                                    <NavLink exact to='/change-password'>Change Password</NavLink>
+
                                 </div>
                                 )}
                         </Formik>

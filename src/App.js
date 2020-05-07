@@ -152,7 +152,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/reports' component={Dashboard} />
               <PrivateRoute exact path='/staff' component={Dashboard} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
-              <PrivateRoute exact path='/settings' component={Dashboard} />
+              <PrivateRoute exact path='/settings' component={Settings} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
             </Switch>
             {this.state.userSession.isAuthenticated
