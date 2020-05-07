@@ -22,7 +22,7 @@ export const Dashboard = (props) => {
 
     useMountEffect(() => {
         axios
-            .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(userContext))
+            .get("/tenants", makeAuthHeaders(userContext))
             .then(({ data }) => {
                 const unstaffed = data.tenants.filter(tenant => !tenant.staff);
                 if(! unstaffed.length) return;
@@ -30,14 +30,14 @@ export const Dashboard = (props) => {
                 setUnstaffedTenants(unstaffed);
                 const adminUsersObj = { "userrole": "admin" };
                 return axios
-                    .post(`${process.env.REACT_APP_API_URL}/users/role`, adminUsersObj, makeAuthHeaders(userContext))
+                    .post("/users/role", adminUsersObj, makeAuthHeaders(userContext))
                     .then(({ data }) => setStaffList(data.users));
             })
             .catch(error => alert(error));
 
         const pendingUsersObj = { "userrole": "pending" };
         axios
-            .post(`${process.env.REACT_APP_API_URL}/users/role`, pendingUsersObj, makeAuthHeaders(userContext))
+            .post("/users/role", pendingUsersObj, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
             .catch(error => alert(error));
     });
@@ -78,7 +78,7 @@ export const Dashboard = (props) => {
             .filter(({ staff }) => staff)
             .map(({ id, staff }) => axios
             .put(
-                `${process.env.REACT_APP_API_URL}/tenants/${id}`, 
+                "/tenants/${id}",
                 { 'staffIDs': [staff] }, 
                 makeAuthHeaders(userContext)
             ));

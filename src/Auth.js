@@ -40,7 +40,7 @@ export const checkForStoredRefreshToken = () => {
 export const auth = {
   isAuthenticated: false,
   async authenticate(email, password) {
-    return axios.post(`${process.env.REACT_APP_API_URL}/login`, {
+    return axios.post("/login", {
       email: email,
       password: password
     })
@@ -73,7 +73,7 @@ export const auth = {
       })
   },
   async refreshAccess(refreshToken) {
-    return axios.post(`${process.env.REACT_APP_API_URL}/refresh`, {},
+    return axios.post("/refresh", {},
       { headers: {"Authorization" : `Bearer ${refreshToken}`} }
     )
       .then((response) => {
