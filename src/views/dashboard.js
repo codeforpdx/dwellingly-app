@@ -1,19 +1,31 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import dwellinglylogo from '../assets/images/dwellingly_logo_white.png';
-import { MODULE_DATA, ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
+import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
+import axios from 'axios';
+import UserContext from '../UserContext';
 
 export const Dashboard = (props) => {
     const [modalActive, setModalActive] = useState(false);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
+    const [usersPending, setUsersPending] = useState([]);
     const history = useHistory();
+    const userContext = useContext(UserContext);
+
+    useEffect(() => {
+        axios.post(
+            `${process.env.REACT_APP_API_URL}/users/role`,
+            { userrole: "pending" },
+            { headers: { "Authorization": `Bearer ${userContext.user.accessJwt}` } })
+            .then(res => setUsersPending(res.data.users));
+    }, []);
 
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
-        history.push(path);
+        history.push(path, usersPending.find(u => u.id === id));
     }
 
     const handleDeclineClick = (id) => {
@@ -101,12 +113,12 @@ export const Dashboard = (props) => {
                             title="Request for Access"
                         >
                             {
-                                ACCESS_REQUEST_DATA.map((requestItemData, index) => {
+                                usersPending.map((requestItemData, index) => {
                                     return (<RequestItem key={`requestItem--${index}`} data={requestItemData} onDeclineClick={handleDeclineClick} onAddClick={handleAddClick} />);
                                 })
                             }
                         </Collapsible>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <div className={`modal ${modalActive && 'is-active'}`}>
