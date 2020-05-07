@@ -12,6 +12,8 @@ export const Dashboard = (props) => {
     const [modalActive, setModalActive] = useState(false);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
     const [usersPending, setUsersPending] = useState([]);
+    const [declinedUserId, setDeclinedUserId] = useState("");
+    const [userPendingRequestCount, setUserPendingRequestCount] = useState(0);
     const history = useHistory();
     const userContext = useContext(UserContext);
 
@@ -20,31 +22,39 @@ export const Dashboard = (props) => {
             "/users/role",
             { userrole: "pending" },
             { headers: { "Authorization": `Bearer ${userContext.user.accessJwt}` } })
-            .then(res => setUsersPending(res.data.users));
-    }, []);
+            .then(res => {
+                setUsersPending(res.data.users);
+            });
+    }, [userPendingRequestCount]);
 
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
         history.push(path, usersPending.find(u => u.id === id));
-    }
+    };
 
     const handleDeclineClick = (id) => {
-        //console.log('decline',id);
+        setDeclinedUserId(id);
         setModalActive(true);
-    }
+    };
 
     const handleDenyAccess = (doDeny) => {
         setModalActive(false);
         if (doDeny) {
-            console.log('handle deny access');
-            //TODO: handle deny access
+            axios.delete(
+            `/user/${declinedUserId}`,
+            { headers: { "Authorization": `Bearer ${userContext.user.accessJwt}` } })
+            .then(res => {
+                setUserPendingRequestCount(c => c + 1);
+            }).catch(error => {
+                alert(error); // TODO: Proper error handling
+            });
         }
-    }
+    };
 
     const handleStaffAssignmentChange = () => {
         setAreStaffAssigned(true);
         //TODO: should handle which dropdowns are selected and check to make sure that not all values are none, in which case this state should be set to false
-    }
+    };
 
     return (
         <>
