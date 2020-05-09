@@ -15,7 +15,6 @@ import PropTypes from 'prop-types';
 import "bulma/css/bulma.css";
 import { UserContext } from '../../App';
 
-
 export class LogOutButton extends React.Component {
   render() {
     return (
@@ -109,7 +108,6 @@ export const NavMenu = () => {
               <MenuLink name="Settings" isBold icon={faCog} href="/settings" />
             </ul>
           </div>
-          <LogOutButton />
         </div>
       )}
     </UserContext.Consumer>

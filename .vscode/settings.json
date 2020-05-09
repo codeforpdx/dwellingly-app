@@ -1,9 +1,21 @@
 {
     "workbench.colorCustomizations": {
-      "titleBar.activeForeground": "#000",
-      "titleBar.inactiveForeground": "#000000CC",
+      "titleBar.activeForeground": "#15202b",
+      "titleBar.inactiveForeground": "#15202b99",
       "titleBar.activeBackground": "#00ff84",
-      "titleBar.inactiveBackground": "#035c47cc"
+      "titleBar.inactiveBackground": "#00ff8499",
+      "activityBar.activeBackground": "#33ff9d",
+      "activityBar.activeBorder": "#c280ff",
+      "activityBar.background": "#33ff9d",
+      "activityBar.foreground": "#15202b",
+      "activityBar.inactiveForeground": "#15202b99",
+      "activityBarBadge.background": "#c280ff",
+      "activityBarBadge.foreground": "#15202b",
+      "statusBar.background": "#00ff84",
+      "statusBar.border": "#00ff84",
+      "statusBar.foreground": "#15202b",
+      "statusBarItem.hoverBackground": "#00cc6a",
+      "titleBar.border": "#00ff84"
     },
     "editor.tabSize": 2,
     "emmet.syntaxProfiles": {
@@ -16,6 +28,8 @@
     },
     "emmet.includeLanguages": {
       "javascript": "javascriptreact"
-    }, 
+    },
+    "peacock.color": "#00ff84",
+    
   }
   
