@@ -2,23 +2,19 @@ import React from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
-import { Home } from './views/home';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
+import { RequestAccess } from './views/requestAccess';
 import { Properties } from './views/properties';
 import { Terms } from './views/terms';
-import { PrivateRoute, auth } from './Auth';
+import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStoredRefreshToken } from './Auth';
 import Header from './components/Header/index';
+import Footer from './components/Footer/index';
 import { AddProperty } from './views/addProperty';
 
 
 export const UserContext = React.createContext();
-
-const parseJwt = ( token ) => {
-  var base64Payload = token.split( '.' )[1];
-  var base64 = base64Payload.replace( '-', '+' ).replace( '_', '/' );
-  return JSON.parse( atob( base64 ) );
-}
+var refreshTimeout;
 
 export class App extends React.Component {
   constructor(props) {
@@ -38,7 +34,7 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    if( this.checkForStoredAccessToken() ) {
+    if( checkForStoredAccessToken() ) {
       let parsedJwt = parseJwt(window.localStorage[ 'dwellinglyAccess' ]);
       this.setState({
         userSession: {
@@ -50,33 +46,12 @@ export class App extends React.Component {
           lastName: parsedJwt.user_claims.lastName,
           email: parsedJwt.user_claims.email
         }
+      }, () => {
+        this.refreshJwtPeriodically();
       });
-    } else if( this.checkForStoredRefreshToken() ) {
-      //refresh access token using refresh token
-      console.log("Valid refresh token found");
+    } else if( checkForStoredRefreshToken() ) {
+      this.refreshJwtPeriodically();
     }
-  }
-
-  checkForStoredAccessToken = () => {
-    var token = window.localStorage[ 'dwellinglyAccess' ];
-    if(token) {
-      var parsedToken = parseJwt(token);
-      if(parsedToken.exp * 1000 > Date.now()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  checkForStoredRefreshToken = () => {
-    var token = window.localStorage[ 'dwellinglyRefresh' ];
-    if(token) {
-      var parsedToken = parseJwt(token);
-      if(parsedToken.exp > Date.now()) {
-        return true;
-      }
-    }
-    return false;
   }
 
   login = (email, password) => {
@@ -96,12 +71,40 @@ export class App extends React.Component {
               lastName: parsedJwt.user_claims.lastName,
               email: parsedJwt.user_claims.email
             }
-          });
+          }, () => {
+          // Call to refresh the access token 3 minutes later
+          setTimeout( this.refreshJwtPeriodically, 180000 )
+        });
+        } else {
+          alert("Failed to login");
         }
-      })
-    .catch( (error) => {
-      alert("Failed to login");
-    })
+      });
+  }
+
+  refreshJwtPeriodically = () => {
+    auth.refreshAccess( window.localStorage[ 'dwellinglyRefresh' ] )
+        .then((response) => {
+          this.setState({
+            userSession: {
+              ...this.state.userSession,
+              isAuthenticated: true,
+              accessJwt: response.data.access_token,
+              /*
+              userId: parsedJwt.userId,
+              userFirst: parsedJwt.userFirst,
+              userLast: parsedJwt.userLast,
+              userEmail: parsedJwt.userEmail
+              */
+            }
+          }, () => {
+            refreshTimeout && clearTimeout(refreshTimeout);
+            // Call to refresh the access token 3 minutes later
+            setTimeout( this.refreshJwtPeriodically, 180000 );
+          })
+        })
+        .catch( error => {
+          console.log( "Failed to refresh access token: " + error );
+        } );
   }
 
   logout = () => {
@@ -131,13 +134,13 @@ export class App extends React.Component {
             {this.state.userSession.isAuthenticated
               && <><NavMenu />
                   <Header /></>}
+
             <Switch>
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <Route exact path='/terms' component={Terms} />
-
-              <PrivateRoute exact path='/home' component={Dashboard}/>
+              <PrivateRoute exact path='/home' component={Dashboard} />
               <PrivateRoute exact path='/add/tenant' component={Dashboard} />
               <PrivateRoute exact path='/add/property' component={AddProperty}/>
               <PrivateRoute exact path='/add/manager' component={Dashboard} />
@@ -149,7 +152,10 @@ export class App extends React.Component {
               <PrivateRoute exact path='/staff' component={Dashboard} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
               <PrivateRoute exact path='/settings' component={Dashboard} />
+              <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
             </Switch>
+            {this.state.userSession.isAuthenticated
+              && <Footer />}
           </div>
         </BrowserRouter>
       </UserContext.Provider>
