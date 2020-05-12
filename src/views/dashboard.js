@@ -6,6 +6,7 @@ import { MODULE_DATA, ACCESS_REQUEST_DATA } from '../components/DashboardModule/
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
+import NewStaffItem from '../components/NewStaffItem';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -96,31 +97,6 @@ export const Dashboard = (props) => {
             });
     }
 
-    const staffOptions = staffList.map(({ id, firstName, lastName }) => (
-        <option key={id} value={id}>{`${firstName} ${lastName}`}</option>
-    ));
-
-    const unstaffedTenantItems = unstaffedTenants.map(({ id, firstName, lastName, propertyName, staff }) => (
-        <div key={id} className="collapsible__row columns">
-            <div className="collapsible__col column">{`${firstName} ${lastName}`}</div>
-            <div className="collapsible__col column">
-                {propertyName}<br />
-                <span className="subtext">Property Manager Name (fix this)</span>
-            </div>
-            <div className="dashboard__colapsible_col column">
-                <div className="select is-rounded">
-                    <select
-                        onChange={e => handleStaffAssignmentChange(e, id)}
-                        value={staff || 'default'}
-                    >
-                        <option value='default' disabled>Staff Name</option>
-                        {staffOptions}
-                    </select>
-                </div>
-            </div>
-        </div>
-    ));
-
     return (
         <>
             <div className="dashboard__container">
@@ -143,7 +119,11 @@ export const Dashboard = (props) => {
                             count={unstaffedTenants.length}
                         >
                             <div className="dashboard__assignments_container">
-                                {unstaffedTenantItems}
+                                {
+                                    unstaffedTenants.map(tenant => (
+                                        <NewStaffItem key={tenant.id} { ...tenant } handleStaffAssignmentChange={handleStaffAssignmentChange} staffList={staffList} />
+                                    ))
+                                }
                                 <div className="dashboard__assignments_button_container">
                                     <button 
                                         className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}
