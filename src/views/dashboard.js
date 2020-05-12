@@ -21,16 +21,13 @@ export const Dashboard = (props) => {
       axios
           .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(session))
           .then(({ data }) => {
-              const unstaffed = data.tenants.filter(t => !t.staff);
+              const unstaffed = data.tenants.filter(tenant => !tenant.staff);
               setUnstaffedTenants(unstaffed);
           })
           .catch((error) => {
               alert(error);
               console.log(error);
           })
-    }, [session]);
-
-    useEffect(() => {
       const data = { "userrole": "admin" };
       axios
           .post(`${process.env.REACT_APP_API_URL}/users/role`, data, makeAuthHeaders(session))
@@ -73,25 +70,29 @@ export const Dashboard = (props) => {
     }
 
     const handleStaffAssignment = () => {
-        const data = unstaffedTenants
+        if(!areStaffAssigned) return;
+
+        const tenantUpdateReqs = unstaffedTenants
             .filter(({ staff }) => staff)
-            .map(({ id, staff }) => ({ id, data: { 'staffIDs': [staff] } }));
-        data.forEach(({ id, data }) => {
-            axios
-                .put(`${process.env.REACT_APP_API_URL}/tenants/${id}`, data, makeAuthHeaders(session))
-                .then(({ data }) => {
-                    const updatedTenants = unstaffedTenants.filter(({ id }) => {
-                        const isTenantUpdatedCorrectly = data.id === id && data.staff && data.staff.length;
-                        // using filter to keep all but this updated tenant, so negate the result
-                        return !isTenantUpdatedCorrectly;
-                    });
-                    setUnstaffedTenants(updatedTenants);
-                })
-                .catch((error) => {
-                    alert(error);
-                    console.log(error);
-                })
-        })
+            .map(({ id, staff }) => axios
+            .put(
+                `${process.env.REACT_APP_API_URL}/tenants/${id}`, 
+                { 'staffIDs': [staff] }, 
+                makeAuthHeaders(session)
+            ));
+        axios.all(tenantUpdateReqs)
+            .then(axios.spread((...responses) => {
+                const updatedTenants = unstaffedTenants.filter(({ id }) => {
+                    const isTenantUpdated = responses.find(({ data }) => data.id === id);
+                    // using filter to keep all but this updated tenant, so negate the result
+                    return !isTenantUpdated;
+                });
+                setUnstaffedTenants(updatedTenants);
+            }))
+            .catch((errors) => {
+                alert(errors);
+                console.log(errors);
+            });
     }
 
     const staffOptions = staffList.map(({ id, firstName, lastName }) => (
