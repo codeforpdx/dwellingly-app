@@ -9,8 +9,14 @@
       max-height: 35px;
       .fa-chevron-down {
           transform: rotate(-90deg);
-          transition: transform 100ms;
       }
+  }
+  &.isDisabled {
+    .collapsible__header_title, 
+    .collapsible__toggle {
+      color: $gray;
+      cursor: default;
+    }
   }
   &__header {
     padding: 5px;
@@ -20,19 +26,18 @@
     justify-content: space-between;
     margin-bottom: 0.75rem; //bc Bulma and negative margins
   }
-  &__header_title {
-    text-transform: uppercase;
-  }
   &__header_title,
   &__toggle {
     font-weight: bold;
     border: 0;
     background-color: transparent;
+  }
+  &__header_title {
+    text-transform: uppercase;
     cursor: pointer;
   }
-  &__toggle.isDisabled {
-    color: $gray;
-    cursor: default;
+  &__toggle {
+    cursor: pointer;
   }
   &__row {
     border-bottom: 1px solid $lighterGray;
@@ -71,6 +76,6 @@
   }
   .fa-chevron-down {
     transform: rotate(0);
-    transition: transform 100ms;
+    transition: transform 250ms;
   }
 }

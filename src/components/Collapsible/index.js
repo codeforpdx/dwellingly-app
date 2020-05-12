@@ -4,19 +4,19 @@ import './collapsible.scss';
 function Collapsible(props) {
     const { children, title, count } = props;
     const countAsNumber = +(count || 0);
-    const [isCollapsed, setIsCollapsed] = useState(countAsNumber <= 0);
+    const [isCollapsed, setIsCollapsed] = useState(false);
     const toggleCollapsed = () => {
-        setIsCollapsed(countAsNumber ? !isCollapsed : true);
+        setIsCollapsed(countAsNumber ? !isCollapsed : false);
     }
 
     return (
-        <div className={`collapsible ${isCollapsed && 'isCollapsed'}`}>
+        <div className={`collapsible ${isCollapsed && 'isCollapsed'} ${!countAsNumber && 'isDisabled'}`}>
             <div className="collapsible__header">
-                <h3 className="collapsible__header_title">{title}
-                <span className="count"> ({countAsNumber})</span>
+                <h3 className="collapsible__header_title" onClick={toggleCollapsed}>
+                    {title}<span className="count"> ({countAsNumber})</span>
                 </h3>
                 <button 
-                    className={`collapsible__toggle ${countAsNumber && 'isDisabled'}`}
+                    className='collapsible__toggle'
                     onClick={toggleCollapsed}
                 >
                     <span className="icon">
