@@ -154,6 +154,7 @@ export const Dashboard = (props) => {
                         </Collapsible>
                         <Collapsible
                             title="Request for Access"
+                            count={ACCESS_REQUEST_DATA.length}
                         >
                             {
                                 ACCESS_REQUEST_DATA.map((requestItemData, index) => {
