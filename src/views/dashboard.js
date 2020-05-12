@@ -1,15 +1,48 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import dwellinglylogo from '../assets/images/dwellingly_logo_white.png';
+import * as axios from 'axios';
+import { UserContext } from '../App';
 import { MODULE_DATA, ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
+
 export const Dashboard = (props) => {
     const [modalActive, setModalActive] = useState(false);
+    const [staffList, setStaffList] = useState([]);
+    const [unstaffedTenants, setUnstaffedTenants] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
     const history = useHistory();
+    const session = useContext(UserContext);
+
+    useEffect(() => {
+      axios
+          .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(session))
+          .then(({ data }) => {
+              const unstaffed = data.tenants.filter(t => !t.staff);
+              setUnstaffedTenants(unstaffed);
+              console.log(unstaffed);
+          })
+          .catch((error) => {
+              alert(error);
+              console.log(error);
+          })
+    }, [session]);
+
+    useEffect(() => {
+      const data = { "userrole": "admin" };
+      axios
+          .post(`${process.env.REACT_APP_API_URL}/users/role`, data, makeAuthHeaders(session))
+          .then(({ data }) => {
+              setStaffList(data.users);
+            })
+          .catch((error) => {
+              alert(error);
+              console.log(error);
+          })
+    }, [session]);
 
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
@@ -29,10 +62,41 @@ export const Dashboard = (props) => {
         }
     }
 
-    const handleStaffAssignmentChange = () => {
-        setAreStaffAssigned(true);
-        //TODO: should handle which dropdowns are selected and check to make sure that not all values are none, in which case this state should be set to false
+    const handleStaffAssignmentChange = ({ target }, tenantId) => {
+        const updatedTenants = unstaffedTenants.map(tenant => {
+            if(tenant.id === tenantId) {
+                tenant.staff = target.value;
+                setAreStaffAssigned(true);
+            }
+            return tenant
+        });
+        setUnstaffedTenants(updatedTenants);
     }
+
+    const staffOptions = staffList.map(({ id, firstName, lastName }) => (
+        <option key={id} value={id}>{`${firstName} ${lastName}`}</option>
+    ));
+
+    const unstaffedTenantItems = unstaffedTenants.map(({ id, firstName, lastName, propertyName, staff }) => (
+        <div key={id} className="collapsible__row columns">
+            <div className="collapsible__col column">{`${firstName} ${lastName}`}</div>
+            <div className="collapsible__col column">
+                {propertyName}<br />
+                <span className="subtext">Property Manager Name (fix this)</span>
+            </div>
+            <div className="dashboard__colapsible_col column">
+                <div className="select is-rounded">
+                    <select
+                        onChange={e => handleStaffAssignmentChange(e, id)}
+                        value={staff || 'default'}
+                    >
+                        <option value='default' disabled>Staff Name</option>
+                        {staffOptions}
+                    </select>
+                </div>
+            </div>
+        </div>
+    ));
 
     return (
         <>
@@ -53,45 +117,10 @@ export const Dashboard = (props) => {
                         </div>
                         <Collapsible
                             title="New Staff Assignments"
-                            count="3"
+                            count={unstaffedTenants.length}
                         >
                             <div className="dashboard__assignments_container">
-                                <div className="collapsible__row columns">
-                                    <div className="collapsible__col column">Tenant Name</div>
-                                    <div className="collapsible__col column">
-                                        Meerkat Manner<br />
-                                        <span className="subtext">Property Manager Name</span>
-                                    </div>
-                                    <div className="dashboard__colapsible_col column">
-                                        <div className="select is-rounded">
-                                            <select
-                                                onChange={handleStaffAssignmentChange}
-                                            >
-                                                <option>None</option>
-                                                <option>Staff Name</option>
-                                                <option>Staff Name 2</option>
-                                                <option>Staff Name 3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="collapsible__row columns">
-                                    <div className="collapsible__col column">Tenant Name</div>
-                                    <div className="collapsible__col column">
-                                        Meerkat Manner<br />
-                                        <span className="subtext">Property Manager Name</span>
-                                    </div>
-                                    <div className="dashboard__colapsible_col column">
-                                        <div className="select is-rounded">
-                                            <select>
-                                                <option>None</option>
-                                                <option>Staff Name</option>
-                                                <option>Staff Name 2</option>
-                                                <option>Staff Name 3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                {unstaffedTenantItems}
                                 <div className="dashboard__assignments_button_container">
                                     <button className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}>SAVE ASSIGNMENTS</button>
                                 </div>
