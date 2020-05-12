@@ -23,7 +23,6 @@ export const Dashboard = (props) => {
           .then(({ data }) => {
               const unstaffed = data.tenants.filter(t => !t.staff);
               setUnstaffedTenants(unstaffed);
-              console.log(unstaffed);
           })
           .catch((error) => {
               alert(error);
@@ -71,6 +70,28 @@ export const Dashboard = (props) => {
             return tenant
         });
         setUnstaffedTenants(updatedTenants);
+    }
+
+    const handleStaffAssignment = () => {
+        const data = unstaffedTenants
+            .filter(({ staff }) => staff)
+            .map(({ id, staff }) => ({ id, data: { 'staffIDs': [staff] } }));
+        data.forEach(({ id, data }) => {
+            axios
+                .put(`${process.env.REACT_APP_API_URL}/tenants/${id}`, data, makeAuthHeaders(session))
+                .then(({ data }) => {
+                    const updatedTenants = unstaffedTenants.filter(({ id }) => {
+                        const isTenantUpdatedCorrectly = data.id === id && data.staff && data.staff.length;
+                        // using filter to keep all but this updated tenant, so negate the result
+                        return !isTenantUpdatedCorrectly;
+                    });
+                    setUnstaffedTenants(updatedTenants);
+                })
+                .catch((error) => {
+                    alert(error);
+                    console.log(error);
+                })
+        })
     }
 
     const staffOptions = staffList.map(({ id, firstName, lastName }) => (
@@ -122,7 +143,12 @@ export const Dashboard = (props) => {
                             <div className="dashboard__assignments_container">
                                 {unstaffedTenantItems}
                                 <div className="dashboard__assignments_button_container">
-                                    <button className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}>SAVE ASSIGNMENTS</button>
+                                    <button 
+                                        className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}
+                                        onClick={handleStaffAssignment}
+                                    >
+                                        SAVE ASSIGNMENTS
+                                    </button>
                                 </div>
                             </div>
                         </Collapsible>
