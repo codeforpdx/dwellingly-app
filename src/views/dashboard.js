@@ -80,11 +80,12 @@ export const Dashboard = (props) => {
                 { 'staffIDs': [staff] }, 
                 makeAuthHeaders(session)
             ));
+
         axios.all(tenantUpdateReqs)
             .then(axios.spread((...responses) => {
-                const updatedTenants = unstaffedTenants.filter(({ id }) => {
-                    const isTenantUpdated = responses.find(({ data }) => data.id === id);
-                    // using filter to keep all but this updated tenant, so negate the result
+                const updatedTenants = unstaffedTenants.filter(tenant => {
+                    const isTenantUpdated = responses.find(({ data }) => data.id === tenant.id);
+                    // using filter to keep non-updated tenants, so negate the result
                     return !isTenantUpdated;
                 });
                 setUnstaffedTenants(updatedTenants);
