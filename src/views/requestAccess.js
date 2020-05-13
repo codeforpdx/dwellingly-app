@@ -117,24 +117,28 @@ export const InfoField = ({label, info}) => {
 }
 
 export const RequestAccess = (props) => {
-	const id = props.match.params.id;
-	const data = ACCESS_REQUEST_DATA[id-1];
-	const nameParts = data['name'].split(" ");
+	// const id = props.match.params.id;
 
 	const history = useHistory();
 	const handleCancelClick = () => {
 		history.push('/dashboard');
 	}
 
+	const {
+		firstName,
+		lastName,
+		email
+	} = props.location.state;
+
 	return (
 		<>
 			<div className="request-page"> 
 				<div className="page-title"> Request Access </div>
 				<div className="sub-title"> CONTACT </div>
-				<InfoField label={"First Name"} info={nameParts[0]} />
-				<InfoField label={"Last Name"} info={nameParts[1]} />
-				<InfoField label={"Phone"} info={data['phone']} />
-				<InfoField label={"Email"} info={data['email']} />
+				<InfoField label={"First Name"} info={firstName} />
+				<InfoField label={"Last Name"} info={lastName} />
+				{/* <InfoField label={"Phone"} info={data['phone']} /> */}
+				<InfoField label={"Email"} info={email} />
 				<hr className="line" ></hr>
 				<div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
 				<RoleDropDown />

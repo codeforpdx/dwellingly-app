@@ -11,9 +11,8 @@ import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStored
 import Header from './components/Header/index';
 import Footer from './components/Footer/index';
 import { AddProperty } from './views/addProperty';
+import UserContext from './UserContext';
 
-
-export const UserContext = React.createContext();
 var refreshTimeout;
 
 export class App extends React.Component {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import * as axios from 'axios';
-import { UserContext } from '../App';
-import { MODULE_DATA, ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
+import axios from 'axios';
+import UserContext from '../UserContext';
+import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
@@ -15,35 +15,35 @@ export const Dashboard = (props) => {
     const [staffList, setStaffList] = useState([]);
     const [unstaffedTenants, setUnstaffedTenants] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
-    const history = useHistory();
-    const session = useContext(UserContext);
+    const [usersPending, setUsersPending] = useState([]);
+    const history = useHistory();  
+    const userContext = useContext(UserContext);
 
     useEffect(() => {
-      axios
-          .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(session))
-          .then(({ data }) => {
-              const unstaffed = data.tenants.filter(tenant => !tenant.staff);
-              setUnstaffedTenants(unstaffed);
-          })
-          .catch((error) => {
-              alert(error);
-              console.log(error);
-          })
-      const data = { "userrole": "admin" };
-      axios
-          .post(`${process.env.REACT_APP_API_URL}/users/role`, data, makeAuthHeaders(session))
-          .then(({ data }) => {
-              setStaffList(data.users);
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(userContext))
+            .then(({ data }) => {
+                const unstaffed = data.tenants.filter(tenant => !tenant.staff);
+                setUnstaffedTenants(unstaffed);
             })
-          .catch((error) => {
-              alert(error);
-              console.log(error);
-          })
-    }, [session]);
+            .catch(error => alert(error));
 
+        const adminUsersObj = { "userrole": "admin" };
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/users/role`, adminUsersObj, makeAuthHeaders(userContext))
+            .then(({ data }) => setStaffList(data.users))
+            .catch(error => alert(error));
+
+        const pendingUsersObj = { "userrole": "pending" };
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/users/role`, pendingUsersObj, makeAuthHeaders(userContext))
+            .then(({ data }) => setUsersPending(data.users))
+            .catch(error => alert(error));
+    }, [userContext]);
+  
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
-        history.push(path);
+        history.push(path, usersPending.find(u => u.id === id));
     }
 
     const handleDeclineClick = (id) => {
@@ -79,22 +79,18 @@ export const Dashboard = (props) => {
             .put(
                 `${process.env.REACT_APP_API_URL}/tenants/${id}`, 
                 { 'staffIDs': [staff] }, 
-                makeAuthHeaders(session)
+                makeAuthHeaders(userContext)
             ));
 
         axios.all(tenantUpdateReqs)
             .then(axios.spread((...responses) => {
-                const updatedTenants = unstaffedTenants.filter(tenant => {
-                    const isTenantUpdated = responses.find(({ data }) => data.id === tenant.id);
-                    // using filter to keep non-updated tenants, so negate the result
-                    return !isTenantUpdated;
+                const stillUnstaffed = unstaffedTenants.filter(tenant => {
+                    const isTenantUnchanged = !(responses.find(({ data }) => data.id === tenant.id));
+                    return isTenantUnchanged;
                 });
-                setUnstaffedTenants(updatedTenants);
+                setUnstaffedTenants(stillUnstaffed);
             }))
-            .catch((errors) => {
-                alert(errors);
-                console.log(errors);
-            });
+            .catch(errors => alert(errors));
     }
 
     return (
@@ -136,15 +132,15 @@ export const Dashboard = (props) => {
                         </Collapsible>
                         <Collapsible
                             title="Request for Access"
-                            count={ACCESS_REQUEST_DATA.length}
+                            count={usersPending.length}
                         >
                             {
-                                ACCESS_REQUEST_DATA.map((requestItemData, index) => {
+                                usersPending.map((requestItemData, index) => {
                                     return (<RequestItem key={`requestItem--${index}`} data={requestItemData} onDeclineClick={handleDeclineClick} onAddClick={handleAddClick} />);
                                 })
                             }
                         </Collapsible>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <div className={`modal ${modalActive && 'is-active'}`}>
