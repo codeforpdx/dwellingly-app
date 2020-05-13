@@ -24,14 +24,14 @@ export const Dashboard = (props) => {
             .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(userContext))
             .then(({ data }) => {
                 const unstaffed = data.tenants.filter(tenant => !tenant.staff);
-                setUnstaffedTenants(unstaffed);
-            })
-            .catch(error => alert(error));
+                if(! unstaffed.length) return;
 
-        const adminUsersObj = { "userrole": "admin" };
-        axios
-            .post(`${process.env.REACT_APP_API_URL}/users/role`, adminUsersObj, makeAuthHeaders(userContext))
-            .then(({ data }) => setStaffList(data.users))
+                setUnstaffedTenants(unstaffed);
+                const adminUsersObj = { "userrole": "admin" };
+                return axios
+                    .post(`${process.env.REACT_APP_API_URL}/users/role`, adminUsersObj, makeAuthHeaders(userContext))
+                    .then(({ data }) => setStaffList(data.users));
+            })
             .catch(error => alert(error));
 
         const pendingUsersObj = { "userrole": "pending" };
