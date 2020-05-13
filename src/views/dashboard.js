@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../UserContext';
+import useMountEffect from '../utils/useMountEffect';
 import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
@@ -19,7 +20,7 @@ export const Dashboard = (props) => {
     const history = useHistory();  
     const userContext = useContext(UserContext);
 
-    useEffect(() => {
+    useMountEffect(() => {
         axios
             .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(userContext))
             .then(({ data }) => {
@@ -39,7 +40,7 @@ export const Dashboard = (props) => {
             .post(`${process.env.REACT_APP_API_URL}/users/role`, pendingUsersObj, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
             .catch(error => alert(error));
-    }, [userContext]);
+    });
   
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
