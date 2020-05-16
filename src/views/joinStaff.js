@@ -33,6 +33,7 @@ export const JoinStaff = () => {
 					})}
 				</div>
 			</div>
+			<div className="staff-page-bottom-space"></div>
 		</>
 	);
 }
