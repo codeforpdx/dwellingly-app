@@ -1,0 +1,60 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.admin--header {
+  margin-bottom: .5em;
+}
+
+.newPropertyFormHeading {
+  text-align: left;
+  font-size: 1em;
+  text-transform: uppercase;
+  color: #003c71;
+  line-height: 1.5;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: .75em;
+}
+
+.newPropertyFormManagerHeading {
+  text-align: left;
+  font-size: 1em;
+  text-transform: uppercase;
+  color: #003c71;
+  line-height: 1.5;
+  padding-bottom: .75em;
+}
+
+.newPropertyFormSection {
+  padding: 1em;
+}
+
+.newPropertyFormSection .inline-input {
+  margin: 0;
+}
+
+.newPropertyFormSection .inline-input:first-child {
+  border-top: 1px solid #dddddd;
+}
+
+.newPropertyFormSection .inline-input:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+
+.newPropertyFormSection .btn {
+  margin-top: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+}
+
+@media screen and (min-width: 1200px) {
+  .newPropertyFormSection {
+    padding: 1em 0;
+  }
+}
+/*# sourceMappingURL=NewPropertyForm.css.map */

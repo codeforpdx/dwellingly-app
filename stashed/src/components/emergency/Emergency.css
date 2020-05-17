@@ -1,0 +1,172 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.emergencyNumberList {
+  margin: auto;
+}
+
+.emergencyNumberList .emergencyHeader {
+  padding: 1.3rem 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.emergencyNumberList .emergencyHeader h2 {
+  display: none;
+  color: #003c71;
+  text-align: left;
+  font-weight: 600;
+}
+
+.emergencyNumberList .emergencyHeader .createEmergencyNumberLink {
+  padding: 1em 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 400;
+}
+
+.emergencyNumberList .emergencyHeader .emergencyCreateNumberIcon {
+  width: 18px;
+  height: 18px;
+  margin-right: .5em;
+  border-radius: 50%;
+  background-color: #4ca1ff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.emergencyNumberList .emergencyHeader .emergencyCreateNumberIcon .icon {
+  position: relative;
+  top: 1px;
+  font-size: .6em;
+  color: #ffffff;
+}
+
+@media screen and (min-width: 1200px) {
+  .emergencyNumberList .emergencyHeader h2 {
+    display: initial;
+  }
+}
+
+.emergencyNumberRow {
+  border-bottom: 1px solid #eeeeee;
+  width: 100%;
+  padding: 0 1em;
+}
+
+.emergencyNumberItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px 0px;
+  font-size: 14px;
+}
+
+.emergencyNumberItem .emergencyNumberContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.emergencyNumberItem .emergencyNumberContainer .emergencyNumber:nth-child(2) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media screen and (min-width: 1200px) {
+  .emergencyNumberItem .emergencyNumberContainer .emergencyNumber:nth-child(2):before {
+    content: '| \00a0';
+  }
+}
+
+.emergencyNumberItem .emergencyTitle {
+  text-align: left;
+  max-width: 300px;
+  font-weight: 400;
+}
+
+.emergencyNumberItem .emergencyTitle .emergencyNumberDescription p {
+  font-weight: 300;
+  font-size: .9em;
+}
+
+.emergencyNumberItem .emergencyNumberEditButtons {
+  display: none;
+}
+
+@media screen and (min-width: 1200px) {
+  .emergencyNumberItem .emergencyNumberEditButtons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .emergencyNumberItem .emergencyNumberEditButtons .emergencyNumberIcon {
+    color: #858585;
+    font-size: 1.3em;
+    margin: 0 .7em;
+  }
+  .emergencyNumberItem .emergencyNumberEditButtons .emergencyNumberEditIcon {
+    cursor: pointer;
+    background-color: #858585;
+    color: #ffffff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    min-width: 22px;
+    height: 22px;
+    font-size: .78em;
+    border-radius: 50%;
+  }
+  .emergencyNumberItem .emergencyNumberEditButtons .emergencyNumberEditIcon .icon {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.emergencyNumberItem .emergencyNumber {
+  margin-right: 10px;
+}
+
+.emergencyNumberItem .emergencyNumber a {
+  font-weight: 600;
+}
+/*# sourceMappingURL=Emergency.css.map */

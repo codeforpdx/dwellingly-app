@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,aADW,CACT,EAAE,CAAC;EACH,MAAM,EAAE,cAAc;CACvB",
+    "sources": [
+        "SignUpForm.scss"
+    ],
+    "names": [],
+    "file": "SignUpForm.css"
+}

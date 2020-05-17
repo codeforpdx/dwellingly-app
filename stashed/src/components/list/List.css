@@ -1,0 +1,52 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+/* L I S T S */
+/* ==================================================== */
+.list-group__item {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 1px solid #dddddd;
+  color: inherit;
+  min-height: 4rem;
+  padding: 1rem 1rem 1rem 1.5rem;
+  text-align: left;
+  width: 100%;
+}
+
+.list-group__item--contact p {
+  line-height: 1.25em;
+  margin: 0;
+}
+
+.list-group__item--contact a.list-group__contact-number {
+  border-right: 1px solid #dddddd;
+  padding: 0 0.5em;
+}
+
+.list-group__item--contact a.list-group__contact-number:last-child {
+  border: 0;
+  padding-right: 0;
+}
+
+.list-group a.list-group__item {
+  color: inherit;
+}
+
+.list-group--contacts-list {
+  font-size: 0.875em;
+}
+
+/* end lists */
+/*# sourceMappingURL=List.css.map */

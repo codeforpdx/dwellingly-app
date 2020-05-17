@@ -1,0 +1,16 @@
+.page--signin .align-left {
+  text-align: left;
+}
+
+.page--signin .signup--google {
+  margin: 2rem 0 0;
+}
+
+.page--signin .signup--google h2 {
+  margin: 0 0 1rem 1rem;
+}
+
+.page--signin .signup-conditions {
+  margin: 2rem 0 1rem 1rem;
+}
+/*# sourceMappingURL=Signup.css.map */

@@ -1,0 +1,118 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.reports-window-modal {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.reports-modal-container {
+  width: 60%;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 1010;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.reports-modal-title-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 2em;
+}
+
+#reports-modal-card-content {
+  margin-bottom: 50px;
+}
+
+.close-icon-container {
+  text-align: right;
+  height: 1em;
+  color: #003c71;
+}
+
+.close-icon-container button {
+  color: #003c71;
+}
+
+#reports-modal-title {
+  padding-left: .8em;
+  padding-bottom: .5em;
+  margin: 0;
+  font-weight: normal;
+}
+
+#reports-modal-subtitle {
+  margin-left: 4.5em;
+  width: 60%;
+  margin-bottom: 1em;
+  font-weight: normal;
+  line-height: normal;
+}
+
+#scroll-container {
+  overflow-y: scroll;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  height: 300px;
+}
+
+.reports-ticket-card {
+  font-weight: normal;
+  padding: 1em .3em 1em 1em;
+  margin-bottom: 1em;
+  margin-right: 1em;
+  width: 47%;
+  border-radius: 10px;
+  background-color: #eeeeee;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: right;
+}
+
+.reports-ticket-card p {
+  color: #858585;
+}
+
+.reports-ticket-card-list {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  width: 75%;
+}
+
+.reports-ticket-card-issue-status {
+  color: #4ca1ff;
+  font-weight: normal;
+}
+
+.reports-ticket-card-tenant {
+  color: #003c71;
+  font-weight: normal;
+}
+
+.reports-ticket-card-sender {
+  color: #858585;
+  font-weight: normal;
+}
+
+#in-progress {
+  color: #ffbd3b;
+}
+/*# sourceMappingURL=ReportsTicketModal.css.map */

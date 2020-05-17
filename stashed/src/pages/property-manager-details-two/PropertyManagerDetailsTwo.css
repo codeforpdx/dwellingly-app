@@ -1,0 +1,150 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.name-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 35%;
+}
+
+.property-manager-name {
+  text-align: left;
+  color: #003c71;
+  font-size: 1.250em;
+  margin-top: 1.5em;
+  font-weight: bold;
+}
+
+#archive-button {
+  text-align: center;
+  padding-top: .3em;
+}
+
+#contact-heading {
+  border-bottom: 1px solid #dddddd;
+  margin-top: 1em;
+}
+
+.detail-section-heading {
+  text-align: left;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #003c71;
+  line-height: 1.5;
+  padding-bottom: .5em;
+}
+
+.contact-details-section {
+  padding: 1em 1em 1em 0;
+  margin-bottom: 2em;
+}
+
+.contact-details-section .inline-input {
+  margin: 0;
+}
+
+.contact-details-section .inline-input:first-child {
+  border-top: 1px solid #dddddd;
+}
+
+.contact-details-section .inline-input:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+
+@media screen and (min-width: 1200px) {
+  .contact-details-section {
+    padding: 1em 0;
+  }
+}
+
+.card-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 3em;
+}
+
+.card-container a {
+  color: inherit;
+}
+
+.property-card {
+  padding: 1em;
+  margin-bottom: 1.5em;
+  width: 48%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.tenant-card {
+  padding: 1em;
+  margin-bottom: 1.5em;
+  text-align: left;
+  width: 31%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.card-name {
+  color: #003c71;
+  font-weight: bold;
+}
+
+.property-card-list, .tenant-card-list {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+#property-manager-contact-table {
+  border-spacing: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  table-layout: fixed;
+  text-align: left;
+  width: 800px;
+  padding-right: 10px;
+}
+
+@media screen and (min-width: 1200px) {
+  #property-manager-contact-table {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+#property-manager-contact-table td {
+  border-bottom: 1px solid #dddddd;
+  padding: .5em 0;
+  vertical-align: top;
+}
+
+#property-manager-contact-table-cell {
+  width: 22%;
+}
+
+.pencil-icon-cell {
+  text-align: right;
+  color: grey;
+}
+/*# sourceMappingURL=PropertyManagerDetailsTwo.css.map */

@@ -1,0 +1,101 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.page--login {
+  background: -webkit-gradient(linear, left top, left bottom, from(#6d8dff), to(#4cb9ef));
+  background: linear-gradient(180deg, #6d8dff 0%, #4cb9ef 100%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.page--login .main.login-form {
+  width: 395px;
+  height: 596px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #ffffff;
+  border-radius: 40px;
+  -webkit-box-shadow: 0 2px 11px rgba(97, 97, 97, 0.5);
+          box-shadow: 0 2px 11px rgba(97, 97, 97, 0.5);
+}
+
+.page--login .main.login-form .width-wrapper {
+  padding: 0 1.3rem;
+}
+
+.page--login .main.login-form .width-wrapper img {
+  width: 100%;
+}
+
+.page--login .main.login-form .width-wrapper .login-separator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.page--login .main.login-form .width-wrapper .login-separator .separator {
+  width: 3em;
+  height: 1px;
+  margin: 0 1rem;
+  border-bottom: 1px solid #dddddd;
+}
+
+.page--login .main.login-form .width-wrapper.account-links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.page--login .main.login-form .width-wrapper.account-links a:first-child {
+  margin: 0.5rem 0;
+}
+
+.page--login .main.login-form .width-wrapper .form-meta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: none;
+}
+
+.page--login .main h2 {
+  color: #4ca1ff;
+}
+
+.page--login .main .login-conditions {
+  margin: 2rem 0 0 1rem;
+}
+/*# sourceMappingURL=Login.css.map */

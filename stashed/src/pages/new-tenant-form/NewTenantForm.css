@@ -1,0 +1,170 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.newTenantFormHeading {
+  text-align: left;
+  font-size: 1em;
+  text-transform: uppercase;
+  color: #003c71;
+  line-height: 1.5;
+}
+
+.newTenantFormSection {
+  padding: 1em;
+}
+
+.newTenantFormSection .inline-input {
+  margin: 0;
+}
+
+.newTenantFormSection .inline-input:first-child {
+  border-top: 1px solid #dddddd;
+}
+
+.newTenantFormSection .inline-input:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+
+.newTenantFormSection .btn {
+  margin-top: 1em;
+}
+
+@media screen and (min-width: 1200px) {
+  .newTenantFormSection {
+    padding: 1em 0;
+  }
+}
+
+.propertyFormCloseButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #4ca1ff;
+  margin: 1em;
+  padding-top: 1em;
+}
+
+.propertyFormCloseButton span {
+  cursor: pointer;
+}
+
+.propertyFormCloseButton .icon {
+  color: #171719;
+}
+
+.propertySearchResults {
+  text-align: left;
+}
+
+.propertySearchResults .input:last-of-type {
+  padding-bottom: 1em;
+}
+
+.propertySearchResults .addNewLink {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #4ca1ff;
+  padding: 1em 0;
+}
+
+.propertySearchResults .addNewLink .addIcon {
+  cursor: pointer;
+  height: 22px;
+  width: 22px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  margin-right: 1em;
+  background-color: #4ca1ff;
+  color: #ffffff;
+}
+
+.propertySearchResults .addNewLink .addIcon .icon {
+  font-size: 0.750em;
+  position: relative;
+  top: 1px;
+}
+
+.propertySearchResults .propertyResult {
+  padding: 0.5em;
+  margin: 0.5em 0;
+}
+
+.newTenantProperty {
+  max-width: 400px;
+  width: 100%;
+  margin-top: 1em;
+  padding: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 0.875em;
+  color: #858585;
+}
+
+.newTenantProperty h3 {
+  color: #003c71;
+}
+
+.newTenantProperty .editPropertyDetails {
+  text-align: center;
+}
+
+.newTenantProperty .editPropertyDetails .editIcon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #555555;
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.newTenantProperty .editPropertyDetails .editIcon .icon {
+  position: relative;
+  top: 1px;
+  left: 1px;
+}
+
+.input.inline-input select {
+  width: 70%;
+  height: 40px;
+  border: 1px solid #dddddd;
+  margin: 0.5em 0;
+}
+/*# sourceMappingURL=NewTenantForm.css.map */

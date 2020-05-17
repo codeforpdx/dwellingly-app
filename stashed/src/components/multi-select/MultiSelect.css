@@ -1,0 +1,37 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.selectedOptions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 20px;
+}
+
+.selectedOptions .selectedPill {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 3px 10px;
+  margin: 0 0.3rem;
+  border-radius: 18px;
+  background: #eeeeee;
+}
+
+.selectedOptions .selectedPill:first-child {
+  margin-left: 0;
+}
+
+.selectedOptions .selectedPill .pillClose {
+  cursor: pointer;
+  font-size: .7em;
+  margin-left: 8px;
+  margin-top: 1px;
+}
+/*# sourceMappingURL=MultiSelect.css.map */

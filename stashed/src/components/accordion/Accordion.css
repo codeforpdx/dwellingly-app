@@ -1,0 +1,175 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.admin__accordion {
+  margin: 1em;
+  margin-top: 1em;
+}
+
+.admin__accordion .btn--group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.admin__accordion .btn--group button:last-child {
+  margin-top: 0.625em;
+}
+
+@media screen and (min-width: 1200px) {
+  .admin__accordion .btn--group {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    margin-top: 1em;
+  }
+  .admin__accordion .btn--group button:last-child {
+    margin-left: 1em;
+    margin-top: 0;
+  }
+}
+
+.admin__accordion .accordion__label {
+  text-align: left;
+  width: 100%;
+  padding: 10px;
+  background-color: #eeeeee;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.admin__accordion .accordion__table,
+.admin__accordion .accordion__select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  font-size: .9em;
+  overflow: auto;
+}
+
+.admin__accordion .accordion__table table,
+.admin__accordion .accordion__select table {
+  border-spacing: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  table-layout: fixed;
+  text-align: left;
+  width: 800px;
+  padding-right: 10px;
+}
+
+@media screen and (min-width: 1200px) {
+  .admin__accordion .accordion__table table,
+  .admin__accordion .accordion__select table {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+.admin__accordion .accordion__table table td,
+.admin__accordion .accordion__select table td {
+  border-bottom: 1px solid #dddddd;
+  padding: 1em 0;
+  vertical-align: top;
+}
+
+.admin__accordion .accordion__table table td select,
+.admin__accordion .accordion__select table td select {
+  width: 100%;
+  height: 30px;
+  font-size: .9em;
+  font-weight: 100;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 14px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.admin__accordion .accordion__table button,
+.admin__accordion .accordion__select button {
+  margin: 1em 0;
+}
+
+.admin__accordion .accordion__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 1em;
+}
+
+@media screen and (min-width: 1200px) {
+  .admin__accordion .accordion__list {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+.admin__accordion .accordion__list .accordion__list--item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  padding: 1.25em 0;
+  border-bottom: 1px solid #dddddd;
+}
+
+.admin__accordion .accordion__list .accordion__list--item ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+@media screen and (min-width: 1200px) {
+  .admin__accordion .accordion__list .accordion__list--item {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    border: 0;
+  }
+}
+/*# sourceMappingURL=Accordion.css.map */

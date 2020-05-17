@@ -1,0 +1,49 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.main header:not(.hero) {
+  margin: 3em 0;
+}
+
+.main header:not(.hero) h1 {
+  font-weight: 700;
+}
+
+pre {
+  background: #2d2d2d;
+  color: #dddddd;
+  overflow: auto;
+  padding: 1em;
+}
+
+.code-sample {
+  margin: 5rem 0;
+}
+
+.code-sample dd {
+  margin: 0;
+}
+
+.code-sample .cards {
+  padding: 1rem;
+}
+
+.code-sample .cards .card:last-of-type {
+  margin-bottom: 0;
+}
+
+.code-sample .cards .card header.card__header {
+  margin: 0;
+}
+
+.code-sample .cards + pre {
+  margin-top: 0;
+}
+
+.code-sample .notes header {
+  margin: 0;
+}
+/*# sourceMappingURL=CodeSamples.css.map */

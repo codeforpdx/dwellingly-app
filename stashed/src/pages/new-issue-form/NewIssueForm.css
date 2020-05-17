@@ -1,0 +1,131 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+@media screen and (max-width: 1200px) {
+  .new-issue-form fieldset {
+    display: none;
+  }
+  .new-issue-form fieldset.active {
+    display: block;
+  }
+}
+
+.newIssueSummary .card__content {
+  padding: 0;
+}
+
+.newIssueSummary .newIssueSummaryInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  border-bottom: 1px solid #dddddd;
+}
+
+.newIssueSummary .newIssueSummaryInfo:last-child {
+  border-bottom: none;
+}
+
+.newIssueSummary .newIssueSummaryInfo .newIssueTitle {
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+}
+
+.newIssueSummary .newIssueSummaryInfo .newIssueTitle .title {
+  padding-right: 1em;
+}
+
+.newIssueSummary .newIssueSummaryInfo .newIssueSummaryEdit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: #ff5556;
+}
+
+.newIssueSent {
+  padding: 30px;
+  font-size: 4em;
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  position: absolute;
+  top: 30%;
+  right: 0;
+  left: 0;
+  -webkit-animation: fade 1s linear;
+          animation: fade 1s linear;
+}
+
+.newIssueSent.success {
+  color: #4ca1ff;
+}
+
+.newIssueSent.error {
+  color: #ff5556;
+}
+
+.newIssueSent .issueStatusText {
+  margin-top: .5rem;
+  font-size: 2rem;
+}
+
+.newIssueSent .issueStatusMessage {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.newIssueSent .summaryButton {
+  font-size: 1rem;
+  margin-top: .5rem;
+}
+
+@-webkit-keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/*# sourceMappingURL=NewIssueForm.css.map */

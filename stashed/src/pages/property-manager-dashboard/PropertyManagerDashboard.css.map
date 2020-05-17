@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "ACCA,uBAAuB;AAoCvB,mBAAmB;AAEnB,uBAAuB;AAIvB,mBAAmB;AAEnB,iBAAiB;AA8CjB,gBAAgB",
+    "sources": [
+        "PropertyManagerDashboard.scss",
+        "../../constants/constants.scss"
+    ],
+    "names": [],
+    "file": "PropertyManagerDashboard.css"
+}

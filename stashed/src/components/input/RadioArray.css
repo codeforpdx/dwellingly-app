@@ -1,0 +1,53 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.radio-array {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-weight: 500;
+  margin: 1em;
+  text-align: center;
+}
+
+.radio-array label {
+  position: relative;
+}
+
+.radio-array input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.radio-array input:checked + .radio-array__option {
+  background: #ffbd3b;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.radio-array__wrapper {
+  border: 1px solid #ffbd3b;
+  border-radius: 2em;
+}
+
+.radio-array__option {
+  border-radius: 2em;
+  cursor: pointer;
+  display: inline-block;
+  height: 2em;
+  line-height: 2em;
+  min-width: 5em;
+  padding: 0 0.5em;
+  -webkit-transition: background 0.2s ease-in-out, color 0.1s ease-in-out;
+  transition: background 0.2s ease-in-out, color 0.1s ease-in-out;
+}
+/*# sourceMappingURL=RadioArray.css.map */

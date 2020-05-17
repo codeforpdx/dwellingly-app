@@ -1,0 +1,125 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.navigation {
+  background-color: #4ca1ff;
+}
+
+/* MENU */
+.menu {
+  height: 100vh;
+  position: fixed;
+  text-align: left;
+  width: 100%;
+  z-index: 100;
+}
+
+.menu--desktop {
+  display: none;
+  height: auto;
+  position: relative;
+  width: 15em;
+}
+
+.menu a {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: #ffffff;
+  padding: 0.25em 1.5em;
+}
+
+.menu__bg {
+  background-color: rgba(37, 37, 37, 0.7);
+  height: 100vh;
+  position: absolute;
+  width: 100%;
+}
+
+.menu__groups {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4cb9ef), to(#6d8dff));
+  background-image: linear-gradient(180deg, #4cb9ef 0%, #6d8dff 100%);
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  color: #ffffff;
+  height: 100vh;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  width: 15em;
+}
+
+.menu__groups::-webkit-scrollbar {
+  display: none;
+}
+
+.menu__groups dl {
+  margin: 0;
+  padding: 3em 0;
+}
+
+.menu__groups dd {
+  margin: 0 0 1em 0;
+}
+
+.menu__close-btn {
+  color: #ffffff;
+  font-size: 1.3125em;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.menu__logged-in-user-avatar {
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  height: 2.5rem;
+  left: 1rem;
+  overflow: hidden;
+  position: absolute;
+  top: 1rem;
+  width: 2.5rem;
+}
+
+.menu__logged-in-user-avatar img {
+  width: 100%;
+}
+
+.menu__label {
+  padding: 1em 1.5em 0.5em 1.5em;
+}
+
+.menu__label .icon {
+  font-size: 1.25em;
+  margin-right: 0.5em;
+}
+
+@media only screen and (min-width: 1200px) {
+  .menu--desktop {
+    display: block;
+  }
+  .menu--desktop .menu__groups {
+    background-image: none;
+    height: auto;
+    overflow-y: auto;
+    position: relative;
+  }
+  .menu--mobile,
+  button.menu__btn {
+    display: none;
+  }
+}
+
+/* end menu */
+/*# sourceMappingURL=Navigation.css.map */

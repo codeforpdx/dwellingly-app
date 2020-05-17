@@ -1,0 +1,122 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+/* H E R O - H E A D E R S */
+/* ==================================================== */
+.hero {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#6d8dff), to(#4cb9ef));
+  background-image: linear-gradient(180deg, #6d8dff 0%, #4cb9ef 100%);
+  color: #ffffff;
+  position: relative;
+  text-align: center;
+}
+
+.hero .actions {
+  font-size: 0.875em;
+  position: absolute;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.hero .actions .action {
+  height: 3.57143em;
+  line-height: 3.57143em;
+  padding: 0 1rem;
+  position: absolute;
+  right: 0;
+}
+
+.hero .actions .action--left {
+  left: 0;
+  right: unset;
+}
+
+.hero .actions .icon {
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+
+.hero__wrapper--basic {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 0.875em;
+  min-height: 3.57143em;
+}
+
+.hero__wrapper--basic h2 {
+  font-size: 1.25em;
+}
+
+.hero__wrapper--contact {
+  padding: 1.5em 1em;
+}
+
+.hero__wrapper--contact h1 {
+  line-height: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.hero__wrapper--contact h1 .icon {
+  margin-right: 0.25em;
+  -webkit-transform: translateY(-2px);
+          transform: translateY(-2px);
+  vertical-align: middle;
+}
+
+.hero__wrapper--contact a {
+  color: #ffffff;
+}
+
+.hero__wrapper--contact p {
+  line-height: 1em;
+  margin: 0.25em 0;
+}
+
+.hero__wrapper--contact p.secondary {
+  font-weight: 500;
+}
+
+.hero__wrapper__actions {
+  margin-top: 0.5em;
+  position: initial;
+}
+
+.hero__wrapper__actions .btn {
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 0.875em;
+  margin: 0.5rem 0.25rem 0;
+  min-width: 10.28571em;
+}
+
+.hero__wrapper__actions .icon {
+  font-size: 1em;
+  -webkit-transform: translateY(1px);
+          transform: translateY(1px);
+}
+
+.hero__wrapper + .hero__wrapper--contact {
+  padding-top: 0;
+}
+
+.hero--form {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffaa55), to(#ffbd3b));
+  background-image: linear-gradient(180deg, #ffaa55 0%, #ffbd3b 100%);
+}
+
+.hero--tenant {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#ff7c5b), to(#ed4c4c));
+  background-image: linear-gradient(to top, #ff7c5b 0%, #ed4c4c 100%);
+}
+
+/* end hero/headers */
+/*# sourceMappingURL=Header.css.map */

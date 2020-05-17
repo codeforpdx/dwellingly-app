@@ -1,0 +1,47 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.make-admin {
+  text-align: left;
+  margin-top: 1em;
+  margin-right: 1em;
+}
+
+.admin-checkbox {
+  margin-left: 1em;
+}
+
+.new-staff-member-form-section {
+  padding: 1em;
+}
+
+.new-staff-member-form-section .inline-input {
+  margin: 0;
+}
+
+.new-staff-member-form-section .inline-input:first-child {
+  border-top: 1px solid #dddddd;
+}
+
+.new-staff-member-form-section .inline-input:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+
+.new-staff-member-form-section .btn {
+  margin-top: 3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+}
+
+@media screen and (min-width: 1200px) {
+  .new-staff-member-form-section {
+    padding: 1em 0;
+  }
+}
+/*# sourceMappingURL=NewStaffMemberForm.css.map */

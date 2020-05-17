@@ -1,0 +1,124 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.name-header-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 35%;
+}
+
+.reports-title {
+  text-align: left;
+  color: #003c71;
+  font-size: 1.250em;
+  margin-top: 1.5em;
+}
+
+.table-header-container {
+  background-color: #858585;
+  color: #ffffff;
+  font-weight: 500;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 790px;
+  height: 6em;
+  padding-right: 10px;
+  margin-top: 1em;
+}
+
+@media screen and (min-width: 1200px) {
+  .table-header-container {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+.table-header-text {
+  margin: 0;
+}
+
+.table-header-left {
+  width: 35%;
+  padding-left: 2em;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.table-header-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 36%;
+}
+
+.table-header-select {
+  width: 80%;
+  height: 2em;
+  -webkit-appearance: none;
+  border-radius: 40px;
+  color: #858585;
+  text-align: center;
+  padding-left: 10px;
+}
+
+#reports-table {
+  border-spacing: 0 .5em;
+  color: #003c71;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  table-layout: fixed;
+  text-align: left;
+  width: 800px;
+  padding-right: 10px;
+}
+
+@media screen and (min-width: 1200px) {
+  #reports-table {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+#reports-table td {
+  padding: 1em 0 1em;
+  background-color: #eeeeee;
+  vertical-align: top;
+  font-variant-numeric: tabular-nums;
+}
+
+#reports-issue-table-cell {
+  width: 10%;
+}
+
+.icon-container {
+  width: 10%;
+  text-align: center;
+}
+/*# sourceMappingURL=Reports.css.map */

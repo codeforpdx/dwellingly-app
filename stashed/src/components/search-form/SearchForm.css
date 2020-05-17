@@ -1,0 +1,49 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+/* S E A R C H */
+/* ==================================================== */
+.search {
+  background: rgba(255, 255, 255, 0.5);
+  color: #858585;
+  min-height: 3em;
+  padding: 0.5em 1em;
+}
+
+.search__wrapper {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #ffffff;
+  border-radius: 8px;
+  height: 2em;
+  width: 100%;
+}
+
+.search__wrapper .icon {
+  color: inherit;
+  margin-right: 0.25rem;
+}
+
+.search input {
+  -webkit-transition: width 0.1s ease-out;
+  transition: width 0.1s ease-out;
+  padding: 0.25em 0;
+  width: 67px;
+}
+
+.search input:focus, .search input.active {
+  width: calc(100% - 2em);
+}
+
+/* end search */
+/*# sourceMappingURL=SearchForm.css.map */

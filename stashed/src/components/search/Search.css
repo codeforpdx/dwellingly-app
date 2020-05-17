@@ -1,0 +1,183 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.searchContainer {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-top: 1em;
+}
+
+.searchContainer .searchContainerInner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.searchContainer .searchContainerInner .searchBar {
+  border: 1px solid #dddddd;
+  border-radius: 25px;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  padding: 0.350rem 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.searchContainer .searchContainerInner .searchBar.active {
+  opacity: .6;
+  letter-spacing: 0.077px;
+}
+
+.searchContainer .searchContainerInner .inline-input__label.sml-text {
+  font-size: .91rem;
+}
+
+.searchContainer .searchContainerInner .selectedOptions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 20px;
+}
+
+.searchContainer .searchContainerInner .selectedOptions .selectedPill {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 3px 10px;
+  margin: 0 0.3rem;
+  border-radius: 18px;
+  background: #eeeeee;
+}
+
+.searchContainer .searchContainerInner .selectedOptions .selectedPill:first-child {
+  margin-left: 0;
+}
+
+.searchContainer .searchContainerInner .selectedOptions .selectedPill .pillClose {
+  cursor: pointer;
+  font-size: .7em;
+  margin-left: 8px;
+  margin-top: 1px;
+}
+
+.searchContainer .pastSearch {
+  width: 100%;
+  background-color: white;
+  z-index: 1;
+  padding: 0.5em;
+  letter-spacing: 0.2px;
+  text-align: left;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.searchResultsContainer {
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  right: 0;
+  left: 0;
+  padding-top: 38px;
+  max-height: 300px;
+  max-width: 400px;
+  overflow: scroll;
+  -webkit-animation: height 0.1s linear;
+          animation: height 0.1s linear;
+  background-color: white;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+
+.searchResults {
+  width: 100%;
+  cursor: pointer;
+  padding: 0.5em 0.5em;
+  font-size: 0.875em;
+  color: #858585;
+}
+
+.searchResults:hover, .searchResults:focus {
+  background: #ececec;
+  outline: none;
+}
+
+.searchResults--multiple {
+  padding-left: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.searchResults--multiple:before {
+  content: "\2610";
+  color: #171719;
+  font-size: 1.2em;
+}
+
+.searchResults--multiple-active {
+  padding-left: 1em;
+}
+
+.searchResults--multiple-active:before {
+  content: "\2611";
+  font-size: 1.2em;
+  color: #171719;
+}
+
+@-webkit-keyframes height {
+  0% {
+    opacity: 0;
+    height: 0%;
+  }
+  50% {
+    height: 50%;
+  }
+  100% {
+    opacity: 1;
+    height: 100%;
+  }
+}
+
+@keyframes height {
+  0% {
+    opacity: 0;
+    height: 0%;
+  }
+  50% {
+    height: 50%;
+  }
+  100% {
+    opacity: 1;
+    height: 100%;
+  }
+}
+/*# sourceMappingURL=Search.css.map */

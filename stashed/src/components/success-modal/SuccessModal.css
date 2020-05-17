@@ -1,0 +1,63 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.full-window-modal {
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: auto;
+}
+
+.full-window-modal .modal-content {
+  padding: 2.2em 2.5em;
+  background: #ffffff;
+  width: 40%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  text-align: center;
+}
+
+.full-window-modal .modal-content:after {
+  content: "";
+  display: table;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.full-window-modal .modal-content .title {
+  margin: 0;
+  font-size: 1em;
+}
+
+.button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-top: 1.5em;
+}
+
+#yes-button {
+  width: 8em;
+}
+
+.cancel {
+  background: #858585;
+  border-radius: 20px;
+  color: #ffffff;
+  padding: 0 1rem;
+  width: 8em;
+}
+/*# sourceMappingURL=SuccessModal.css.map */

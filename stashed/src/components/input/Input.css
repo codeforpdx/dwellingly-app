@@ -1,0 +1,205 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+/* F O R M S */
+/* ==================================================== */
+.inline-input {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #dddddd;
+  font-size: 1rem;
+  margin: 0 1rem;
+  position: relative;
+  text-align: left;
+  /* BUTTON */
+  /* RADIO BUTTON */
+  /* TEXT */
+  /* DATE */
+  /* "TOGGLE" CHECKBOX */
+}
+
+.inline-input:last-of-type {
+  border: 0;
+}
+
+.inline-input.input--no-label:last-of-type {
+  border-bottom: 1px solid #dddddd;
+}
+
+.inline-input.input--no-label .inline-input__label {
+  display: none;
+}
+
+.inline-input.input--no-label input {
+  width: 100%;
+}
+
+.inline-input__button {
+  text-align: center;
+  width: 100%;
+}
+
+.inline-input__button a,
+.inline-input__button button {
+  display: block;
+  font-size: 1em;
+  padding: 0.75rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+.inline-input__radio {
+  width: 100%;
+}
+
+.inline-input__radio label {
+  cursor: pointer;
+  display: block;
+  padding: 0.75rem 0;
+  padding-left: 3em;
+  position: relative;
+}
+
+.inline-input__radio input[type='radio'] {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+
+.inline-input__radio input[type='radio']:checked + .inline-input__radio-btn {
+  background: #ffbd3b;
+}
+
+.inline-input__radio-btn {
+  border: 2px solid #ffbd3b;
+  border-radius: 50%;
+  display: block;
+  height: 1.25em;
+  left: 0.75em;
+  position: absolute;
+  top: 0.825em;
+  -webkit-transition: background 0.2s ease;
+  transition: background 0.2s ease;
+  width: 1.25em;
+}
+
+.inline-input__tel, .inline-input__text, .inline-input__date, .inline-input__email, .inline-input__number, .inline-input__password {
+  padding: 0.25em 0;
+  width: 100%;
+}
+
+.inline-input__tel label, .inline-input__text label, .inline-input__date label, .inline-input__email label, .inline-input__number label, .inline-input__password label {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.inline-input__tel .inline-input__label, .inline-input__text .inline-input__label, .inline-input__date .inline-input__label, .inline-input__email .inline-input__label, .inline-input__number .inline-input__label, .inline-input__password .inline-input__label {
+  display: inline-block;
+  padding-right: 1em;
+  width: 30%;
+}
+
+.inline-input__tel input, .inline-input__text input, .inline-input__date input, .inline-input__email input, .inline-input__number input, .inline-input__password input {
+  width: 70%;
+}
+
+.inline-input__date {
+  padding: 0.75rem 0;
+}
+
+.inline-input__date input {
+  font-weight: inherit;
+  width: auto;
+}
+
+.inline-input__toggle {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.switch input[type='checkbox'] {
+  display: none;
+}
+
+.switch input[type='checkbox']:checked + .switch__btn {
+  background: #4cd964;
+  border-color: #4cd964;
+}
+
+.switch input[type='checkbox']:checked + .switch__btn::after {
+  left: 1.5em;
+}
+
+.switch input[type='checkbox']:checked + .switch__btn:active::after {
+  margin-left: -0.5em;
+}
+
+.switch__btn {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 2em;
+  display: block;
+  font-size: 1em;
+  height: 2em;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transition: background 0.2s ease, border 0.2s ease;
+  transition: background 0.2s ease, border 0.2s ease;
+  width: 3.5em;
+}
+
+.switch__btn::after {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1.5em;
+  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.1), 0 3px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.1), 0 3px 1px rgba(0, 0, 0, 0.05);
+  content: '';
+  display: block;
+  height: calc(2em - 2px);
+  left: -1px;
+  padding: 0;
+  position: absolute;
+  -webkit-transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  top: -1px;
+  width: calc(2em - 2px);
+  z-index: 1;
+}
+
+.switch__btn:hover::after {
+  will-change: padding;
+}
+
+.switch__btn:active::after {
+  padding-right: 0.5em;
+}
+
+/* end forms */
+/*# sourceMappingURL=Input.css.map */

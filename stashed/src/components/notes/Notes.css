@@ -1,0 +1,47 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+/* N O T E S */
+/* ==================================================== */
+.notes {
+  font-size: 0.875em;
+}
+
+.notes header {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.note {
+  margin-top: 1em;
+}
+
+.note__meta {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: #858585;
+}
+
+.note__meta * {
+  margin: 0;
+}
+
+/* end notes */
+/*# sourceMappingURL=Notes.css.map */

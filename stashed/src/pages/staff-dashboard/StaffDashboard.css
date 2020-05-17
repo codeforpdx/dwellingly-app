@@ -1,0 +1,143 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.staff-dashboard-header {
+  margin: 0 2rem;
+}
+
+.staff-dashboard-header button:hover {
+  outline: none;
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+}
+
+.staff-dash-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: 0 2rem;
+}
+
+.staff-dash-container .staff-card {
+  width: 290px;
+  height: 270px;
+  font-size: 0.875em;
+  text-align: left;
+  padding: 1.3rem;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  color: #555555;
+}
+
+.staff-dash-container .staff-card:hover, .staff-dash-container .staff-card:focus {
+  outline: none;
+  -webkit-transform: scale(1.01);
+          transform: scale(1.01);
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.staff-dash-container .staff-card img {
+  margin-left: 10px;
+  width: 7px;
+}
+
+.staff-dash-container .staff-card .staff-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.staff-dash-container .staff-card .staff-header h2 {
+  color: #003c71;
+  font-weight: 800;
+}
+
+.staff-dash-container .staff-card .staff-header .icon {
+  color: #858585;
+}
+
+.staff-dash-container .staff-card .email-and-number {
+  margin-top: 2rem;
+  line-height: 1px;
+}
+
+.staff-dash-container .staff-card .out-of-office {
+  margin: 1.5rem 0 1rem 0;
+  border-bottom: solid 1px #003c71;
+  padding-bottom: .4rem;
+  font-weight: 600;
+  color: #858585;
+}
+
+.staff-dash-container .staff-card .out-of-office .icon {
+  margin-left: 10px;
+  color: #003c71;
+}
+
+.staff-dash-container .staff-card .reassign {
+  margin-top: 2rem;
+  font-weight: 600;
+  color: #858585;
+}
+
+.staff-dash-container .staff-card .reassign .icon {
+  margin-left: 10px;
+  color: #003c71;
+}
+
+.staff-dash-container .staff-card .staff-info {
+  line-height: 1px;
+  margin-top: 1px;
+}
+
+.staff-dash-container .staff-card .staff-info span {
+  font-weight: 400;
+  color: #555555;
+  padding-right: 2px;
+}
+
+.add-new-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.add-new-flex button {
+  margin-left: 2rem;
+}
+
+.add-new-flex h2 {
+  font-weight: 800;
+  color: #003c71;
+}
+
+.staff-banner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 2rem;
+}
+/*# sourceMappingURL=StaffDashboard.css.map */

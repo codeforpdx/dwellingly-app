@@ -1,0 +1,179 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+.admin__tiles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 1em;
+}
+
+@media screen and (min-width: 1200px) {
+  .admin__tiles {
+    margin: 2em 0;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+.admin__tiles .card {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: #ffffff;
+}
+
+.admin__tiles .card:first-child {
+  margin-left: 0;
+  background-color: #ffbd3b;
+}
+
+.admin__tiles .card:nth-child(2) {
+  background-color: #ff5556;
+}
+
+.admin__tiles .card:last-child {
+  margin-right: 0;
+  background-color: #4ca1ff;
+}
+
+@media screen and (min-width: 1200px) {
+  .admin__tiles .card {
+    margin: 0 1em;
+  }
+}
+
+.admin__tile {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.admin__tile--heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 1rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 1em;
+}
+
+.admin__tile--body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: .6em;
+}
+
+.admin__tile--body-inner {
+  border-bottom: 1px solid #ffffff;
+  margin-bottom: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+.admin__tile--body-inner .count--container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.admin__tile--body-inner .count--time {
+  font-size: .8em;
+  line-height: 1.4;
+}
+
+.admin__tile--body-inner .count--time .count--date {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.admin__tile--body-inner .count--time div {
+  margin-bottom: .8em;
+}
+
+.admin__tile--body-inner .count--time div p {
+  margin-bottom: 0;
+}
+
+.admin__tile--body-inner h3,
+.admin__tile--body-inner p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: left;
+  margin-bottom: .5em;
+}
+
+.admin__tile--body-inner h3 .count--number,
+.admin__tile--body-inner p .count--number {
+  padding-right: 0.5em;
+  width: 36px;
+  text-align: center;
+}
+
+.admin__tile--body-inner h3 .count--type,
+.admin__tile--body-inner p .count--type {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+}
+
+.admin__tile--body-inner ul {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin__tile--body-inner ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+/*# sourceMappingURL=Tile.css.map */

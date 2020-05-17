@@ -1,0 +1,381 @@
+/* V A R I A B L E S */
+/* end variables */
+/* F U N C T I O N S */
+/* end functions */
+/* M I X I N S */
+/* end mixins */
+/* C A R D S */
+/* ==================================================== */
+.cards {
+  background: #eeeeee;
+  padding: 1em 1em 0 1em;
+}
+
+@media screen and (min-width: 1200px) {
+  .cards {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+a .card,
+button .card {
+  color: #171719;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1em;
+  position: relative;
+  text-align: left;
+}
+
+.card:after {
+  content: "";
+  display: table;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.card__top {
+  background: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  min-height: 1em;
+}
+
+.card__bottom {
+  background: #ffffff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  min-height: 1em;
+}
+
+.card__header {
+  border-bottom: 1px solid #dddddd;
+  position: relative;
+}
+
+.card__header h1 {
+  font-size: 1.25em;
+  font-weight: 500;
+}
+
+.card__header h1 .icon {
+  margin-right: 0.25em;
+}
+
+.card__header h2 {
+  font-size: 0.875em;
+}
+
+.card__header .action {
+  color: #003c71;
+  height: 1.5em;
+  top: 0.5em;
+  right: 0.5em;
+  text-align: center;
+  width: 1.5em;
+}
+
+.card__header button.card__flag {
+  background: #ffffff;
+  border: 2px solid #ff5556;
+  bottom: 0.5rem;
+  color: #ff5556;
+  font-size: 0.8125em;
+  height: auto;
+  line-height: 1.5em;
+  padding: 0 0.75em;
+  right: 0.5rem;
+}
+
+.card__header button.card__flag--flagged {
+  background: #ff5556;
+  color: #ffffff;
+}
+
+.card__header button.card__flag .icon {
+  margin-right: 0.25em;
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+}
+
+.card__content {
+  padding: 1em;
+}
+
+.card__contact + .card__contact {
+  margin-top: 1em;
+}
+
+.card__contact h4 {
+  font-size: 0.875em;
+  margin-bottom: 0.42857em;
+}
+
+.card__contact p,
+.card__contact .title {
+  font-size: 0.875em;
+  line-height: 1em;
+  margin: 0.25em 0;
+}
+
+.card__summary {
+  font-weight: 500;
+  position: relative;
+}
+
+.card__summary--on-person p.meta {
+  color: inherit;
+}
+
+.card__summary .progress {
+  font-size: 0.875em;
+  margin: 0;
+}
+
+.card__summary .progress .icon {
+  margin-right: 0.25em;
+}
+
+.card__summary p {
+  line-height: 1em;
+  margin: 0.25rem 0;
+}
+
+.card__summary .meta {
+  font-size: 0.875em;
+  font-weight: 300;
+  margin: 0;
+}
+
+.card__message-and-action {
+  padding: 0.25em;
+  text-align: center;
+}
+
+.card__message-and-action p {
+  margin-bottom: 0.25em;
+}
+
+.card__message-and-action p .icon {
+  margin-right: 0.5em;
+}
+
+.card__message-and-action .btn {
+  font-size: 0.875em;
+}
+
+.card__action {
+  background: #003c71;
+  border-top-left-radius: 10px;
+  color: #ffffff;
+  font-size: 0.875em;
+  padding: 0.5rem 1rem;
+}
+
+.card__status {
+  border: 0;
+  border-radius: 0;
+  background: #ffbd3b;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 2em;
+  margin: 1rem 0 0 0;
+  padding: 0.5rem 1.5rem;
+  position: relative;
+  text-align: center;
+  text-align-last: center;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+  width: 100%;
+}
+
+.card--btn {
+  cursor: pointer;
+}
+
+.card--form::before {
+  background: radial-gradient(ellipse at center, #eeeeee 0%, #eeeeee 30%, transparent 30%);
+  background-size: 1em 1em;
+  background-repeat: repeat-x;
+  background-position: center center;
+  content: "";
+  display: block;
+  height: 20px;
+  position: absolute;
+  top: -0.6em;
+  width: 100%;
+  z-index: 1;
+}
+
+.card--lg {
+  background: transparent;
+}
+
+.card--lg .card__header {
+  padding: 1.5em;
+}
+
+.card--lg .card__content {
+  padding: 1em 1.5em 0 1.5em;
+}
+
+.card--lg .card__top {
+  padding-top: 0;
+}
+
+.card--lg .card__bottom .card__content,
+.card--lg.card--ticket .card__bottom .card__content {
+  padding-bottom: 1.5em;
+}
+
+.card--lg .card__contact p {
+  font-size: 1rem;
+}
+
+.card--sm .card__content {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0.5em 1em;
+}
+
+.card--sm .card__content .title {
+  margin: 0;
+}
+
+.card--sm .card__content .title .icon {
+  margin-right: 0.5em;
+}
+
+.card--sm .card__content time.meta {
+  font-size: 0.875em;
+}
+
+.card--closed {
+  overflow: hidden;
+}
+
+.card--closed .card__content {
+  min-height: 5em;
+  padding: 0.5em 1em;
+}
+
+.card--closed .card__summary .title {
+  margin-bottom: 0.5rem;
+}
+
+.card--closed .card__summary .title .icon {
+  border-bottom: 1px solid #ffbd3b;
+  margin-right: 0.5em;
+  padding-bottom: 0.25em;
+  text-align: center;
+  width: 1.25em;
+}
+
+.card--closed .card__summary .card__contact p,
+.card--closed .card__summary .card__contact .title {
+  margin: 0;
+}
+
+.card--closed .card__summary p {
+  margin: 0;
+}
+
+.card--ticket {
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.card--ticket .card__top,
+.card--ticket .card__bottom {
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card--ticket .card__bottom .card__content {
+  padding-bottom: 1em;
+}
+
+.card--ticket .card__content {
+  padding-bottom: 0.5em;
+}
+
+.card--ticket__ticket {
+  background: #ffffff;
+  height: 12px;
+  left: 6px;
+  position: relative;
+  width: calc(100% - (6px * 2));
+}
+
+.card--ticket__ticket-cutout {
+  display: block;
+  height: 12px;
+  overflow: hidden;
+  position: absolute;
+  width: 6px;
+}
+
+.card--ticket__ticket-cutout--left {
+  left: -6px;
+}
+
+.card--ticket__ticket-cutout--left::after {
+  background: rgba(0, 0, 0, 0);
+  border: 4px solid #ffffff;
+  border-radius: 10px;
+  content: "";
+  height: 12px;
+  position: absolute;
+  left: -10px;
+  top: -4px;
+  width: 12px;
+}
+
+.card--ticket__ticket-cutout--right {
+  right: -6px;
+}
+
+.card--ticket__ticket-cutout--right::after {
+  background: rgba(0, 0, 0, 0);
+  border: 4px solid #ffffff;
+  border-radius: 10px;
+  content: "";
+  height: 12px;
+  position: absolute;
+  right: -10px;
+  top: -4px;
+  width: 12px;
+}
+
+.card--ticket__ticket::after {
+  border: 0;
+  border-bottom: 1px dashed #dddddd;
+  content: "";
+  margin: 0;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  -webkit-transform: translateX(50%) translateY(-1px);
+          transform: translateX(50%) translateY(-1px);
+  width: calc(100% - 0.5rem);
+}
+
+/* end cards */
+/*# sourceMappingURL=Card.css.map */

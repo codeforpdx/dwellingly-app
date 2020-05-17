@@ -1,0 +1,85 @@
+.collapsible {
+  overflow: hidden;
+  -webkit-transition: max-height 500ms ease-in-out;
+  transition: max-height 500ms ease-in-out;
+  max-height: 1000px;
+  margin-bottom: 5px;
+}
+
+.collapsible.isCollapsed {
+  max-height: 35px;
+}
+
+.collapsible__header {
+  padding: 5px;
+  background-color: #eeeeee;
+  color: #053d6f;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.collapsible__header_title {
+  text-transform: uppercase;
+}
+
+.collapsible__header_title, .collapsible__toggle {
+  font-weight: bold;
+}
+
+.collapsible__toggle {
+  border: 0;
+  background-color: transparent;
+}
+
+.collapsible__row {
+  border-bottom: 1px solid #eeeeee;
+  padding: 20px 5px;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.collapsible__row a {
+  color: #555555;
+}
+
+.collapsible__row > .column:last-child {
+  text-align: right;
+}
+
+.collapsible__row .select,
+.collapsible__row .select select {
+  width: 100%;
+}
+
+.collapsible__col:last-child {
+  text-align: right;
+}
+
+.collapsible__col .subtext {
+  color: #8e8e93;
+}
+
+.collapsible__buttons {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+.collapsible__buttons button {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.collapsible__buttons button:first-child {
+  margin-left: 0;
+}
+/*# sourceMappingURL=collapsible.css.map */
