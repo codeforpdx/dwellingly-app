@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 
+
 export const InfoField = ({label, info}) => {
+	const infoField = "has-text-weight-bold placeholder " + ((label === "Phone") ? "phone-field" : (label === "Email" ? "email-field" : "name-field"));
 	return (
 		<div>
 			<hr className="line" ></hr>
-			<div className="info-field-align">
-				{label}
-				<div className="info-field-input">
-					<p className="has-text-weight-bold" contentEditable>
-				        {info}
-				    </p>
-			    </div>
-		    </div>
+			<span className="input-field"> {label}
+				<p className={infoField} contentEditable>
+			     	{info}
+			    </p>
+		    </span>
 	    </div>
 	);
 }
 
 export const AddStaffMember = () => {
 	const history = useHistory();
+	
 	const handleCancel = () => {
 		history.push('/staff')
 	}
@@ -31,10 +31,10 @@ export const AddStaffMember = () => {
 		<>
 			<div className="add-staff-page-spacing" >
 				<div className="page-title page-title-spacing" > Add a New Staff Member </div>
-				<InfoField label="First Name" info="IDK" />
-				<InfoField label="Last Name" info="IDK" />
-				<InfoField label="Phone" info="IDK" />
-				<InfoField label="Email" info="IDK" />
+				<InfoField label="First Name" info="Kiki" />
+				<InfoField label="Last Name" info="Smith" />
+				<InfoField label="Phone" info="(503) 123-1234" />
+				<InfoField label="Email" info="staff@joinpdx.org" />
 				<hr className="line" ></hr>
 				<label className="checkbox staff-make-admin-padding">
 					<span className="admin-check-padding make-admin-font">
