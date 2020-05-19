@@ -6,7 +6,7 @@ const CancelButton = () => {
 	return(
 		<a className="cancel-button" >
     		<span className="icon has-text-grey">
-			  <i className="fas fa-minus-circle"></i>
+				<i className="fas fa-minus-circle"></i>
 			</span>
     	</a>
 	);
