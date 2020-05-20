@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import UserContext from '../../UserContext';
-import Accordion from '../../components/Accordion';
+import UserContext from '../UserContext';
+import Accordion from '../components/Accordion';
+import TicketModal from '../components/Ticket';
 import * as axios from 'axios';
 import Search from "../../components/Search/index"
 import Toast from '../../utils/toast';
@@ -57,27 +58,27 @@ const pageButtonRenderer = ({
   if (title === 'previous page') {
     return (
       <li key={title} className="page-item">
-        <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Prev</a>
+        <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
   if (title === 'next page') {
     return (
       <li key={title} className="page-item">
-        <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Next</a>
+        <a href="#" onClick={ handleClick } title={title}className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
   if (active) {
     return (
       <li key={page} className="active page-item">
-        <a href="#" onClick={handleClick} title={title}>{page}</a>
+        <a href="#" onClick={ handleClick } title={title}>{ page }</a>
       </li>
     );
   }
   return (
     <li key={page} className="page-item">
-      <a href="#" onClick={handleClick} title={title}>{page}</a>
+      <a href="#" onClick={ handleClick } title={title}>{ page }</a>
     </li>
   );
 };
@@ -91,85 +92,103 @@ const options = {
 };
 
 export class Tickets extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      tickets: [],
+        this.state = {
+        tickets: [],
+        showModal: false,
+        }
+
+        this.getTickets = this.getTickets.bind(this)
+        this.toggleTicketModal = this.toggleTicketModal.bind(this)
+    }    
+
+    componentDidMount() {
+        this.getTickets(this.context);
     }
 
-    this.getTickets = this.getTickets.bind(this)
-  }
+    toggleTicketModal(event) {
+        event.preventDefault();
+        console.log("toggle");
+        console.log(this.state.showModal);
+        this.setState(prevState => ({
+            showModal: !prevState.showModal,
+        }));
+    }
 
-  componentDidMount() {
-    this.getTickets(this.context);
-  }
+    getTickets = (context) => {
+        axios.get(`/api/tickets`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+        .then((response) => {
+            this.setState({tickets: response.data.tickets});
+        })
+        .catch((error) => {
+            Toast(error, "error");
+            console.log(error);
+        })
+    }
 
-  getTickets = (context) => {
-    axios.get(`/api/tickets`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
-      .then((response) => {
-        this.setState({ tickets: response.data.tickets });
-      })
-      .catch((error) => {
-        Toast(error, "error");
-        console.log(error);
-      })
-  }
-
-  render() {
-    return (
-      <UserContext.Consumer>
-        {session => {
-          this.context = session;
-          return (
-            <>
-              <div className="section-header">
-                <h2 className="page-title">Tickets</h2>
-              </div>
-              <Search placeholderMessage="Search by tenant, manager, property, or JOIN staff" />
-              <Accordion
-                icon={<i className="fas fa-filter"></i>}
-                header={"Filters"}
-              >
-                <div className="section-row">
-                  <div className="filter-control">
-                    <label>Opened From</label>
-                    <input className="input is-rounded"></input>
-                  </div>
-                  <div className="filter-control">
-                    <label>Category</label>
-                    <div className="select is-rounded">
-                      <select>
-                        <option>All</option>
-                        <option>Complaints</option>
-                        <option>Maintenance</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="filter-control">
-                    <label>Status</label>
-                    <div className="buttons has-addons">
-                      <button className="button is-rounded btn-group">New </button>
-                      <button className="button is-rounded btn-group">In Progress</button>
-                      <button className="button is-rounded btn-group">Closed</button>
-                    </div>
-                  </div>
-                </div>
-              </Accordion>
-              <div className="tickets-list">
-                <BootstrapTable
-                  keyField='id'
-                  data={this.state.tickets}
-                  columns={columns}
-                  pagination={paginationFactory(options)}
-                  bootstrap4={true}
-                  headerClasses="table-header"
-                />
-              </div>
-            </>
-          )
-        }}
-      </UserContext.Consumer>
-    )
-  }
+    render() {
+        return (
+            <UserContext.Consumer>
+                {session => {
+                    this.context = session;
+                    return (
+                      <div>
+                        <div>
+                            <div className="section-header">
+                                <h2 className="page-title">Tickets</h2>
+                            </div>
+                            <Search placeholderMessage="Search by tenant, manager, property, or JOIN staff"/>
+                            <Accordion
+                              icon={<i className="fas fa-filter"></i>}
+                              header={"Filters"}
+                            >
+                              <div className="section-row">
+                                <div className="filter-control">
+                                  <label>Opened From</label>
+                                  <input className="input is-rounded"></input>
+                                </div>
+                                <div className="filter-control">
+                                  <label>Category</label>
+                                  <div className="select is-rounded">
+                                    <select>
+                                      <option>All</option>
+                                      <option>Complaints</option>
+                                      <option>Maintenance</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div className="filter-control">
+                                  <label>Status</label>
+                                  <div className="buttons has-addons">
+                                    <button className="button is-rounded btn-group">New </button>
+                                    <button className="button is-rounded btn-group">In Progress</button>
+                                    <button className="button is-rounded btn-group">Closed</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </Accordion>
+                            <div className="tickets-list">
+                                <BootstrapTable
+                                    keyField='id'
+                                    data={ this.state.tickets }
+                                    columns={ columns }
+                                    pagination={ paginationFactory(options) }
+                                    bootstrap4={true}
+                                    headerClasses="table-header"
+                                    />
+                            </div>
+                            <button onClick={this.toggleTicketModal}>modal</button>
+                        </div>
+                        <TicketModal 
+                          show={this.state.showModal}
+                          onClose={this.toggleTicketModal}>
+                        </TicketModal>
+                      </div>
+                    )
+                }}
+            </UserContext.Consumer>
+        )
+    }
 }
