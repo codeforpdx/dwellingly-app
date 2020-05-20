@@ -3,6 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../UserContext';
 import Accordion from '../components/Accordion';
+import TicketModal from '../components/Ticket';
 import * as axios from 'axios';
 import Search from "../components/Search/index"
 
@@ -95,13 +96,25 @@ export class Tickets extends Component {
 
         this.state = {
         tickets: [],
+        showModal: false,
         }
 
         this.getTickets = this.getTickets.bind(this)
-    }
+        this.toggleTicketModal = this.toggleTicketModal.bind(this)
+    }    
 
     componentDidMount() {
         this.getTickets(this.context);
+    }
+
+    toggleTicketModal(event) {
+      event.preventDefault();
+      console.log("toggle");
+      console.log(this.state.showModal);
+      this.setState(prevState => ({
+        
+        showModal: !prevState.showModal,
+      }));
     }
 
     getTickets = (context) => {
@@ -121,7 +134,8 @@ export class Tickets extends Component {
                 {session => {
                     this.context = session;
                     return (
-                        <>
+                      <div>
+                        <div>
                             <div className="section-header">
                                 <h2 className="page-title">Tickets</h2>
                             </div>
@@ -165,7 +179,13 @@ export class Tickets extends Component {
                                     headerClasses="table-header"
                                     />
                             </div>
-                        </>
+                            <button onClick={this.toggleTicketModal}>modal</button>
+                        </div>
+                        <TicketModal 
+                          show={this.state.showModal}
+                          onClose={this.toggleTicketModal}>
+                        </TicketModal>
+                      </div>
                     )
                 }}
             </UserContext.Consumer>
