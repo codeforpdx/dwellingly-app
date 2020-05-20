@@ -1,13 +1,29 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
-  return (
-    <footer className="dashboard__footer">
-      <p className="dashboard__footer_logo_text">
-          <span className="bold">JOIN</span> 2020
-      </p>
-    </footer>
-  );
-}
+	const amplifiedUrl = "https://www.amplifiedbydesign.com/";
+	const codeforpdxUrl = "https://www.codeforpdx.org/";
+	let renderAnchor = (url, innerText) => (
+		<a
+			target="_blank"
+			rel="noopener noreferrer"
+			className="is-menu-link"
+			href={url}
+		>
+			{innerText}
+		</a>
+	);
+
+	return (
+		<footer className="dashboard__footer">
+			<p className="dashboard__footer_logo_text">
+				<span className="bold">
+					Made with love by {renderAnchor(amplifiedUrl, "Amplified By Design")}{" "}
+					and {renderAnchor(codeforpdxUrl, "Code For PDX")}.
+				</span>
+			</p>
+		</footer>
+	);
+};
 
 export default Footer;
