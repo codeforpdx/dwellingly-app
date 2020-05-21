@@ -28,8 +28,8 @@ $border-radius: 8px;
 $border-radius--btn: 20px;
 $border-radius--card: 10px;
 $ticket__cutout-border--size: 4px;
-$ticket__cutout-border--radius: 10px;
-$ticket__cutout-size--height: 12px;
+$ticket__cutout-border--radius: 8px;
+$ticket__cutout-size--height: 18px;
 $ticket__cutout-size--width: 6px;
 $width__nav: 15em;
 $width__wrapper: 800px;
@@ -68,7 +68,7 @@ $mq--desktop: 1200px;
     height: $ticket__cutout-size--height;
     position: absolute;
     #{$position}: -$ticket__cutout-border--radius;
-    top: -$ticket__cutout-border--size;
+    top: 0px;
     width: $ticket__cutout-size--height;
   }
 }
