@@ -71,10 +71,10 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 }
 
 JoinStaffCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  phoneNumber: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  tickets: PropTypes.number,
-  tenants: PropTypes.number,
-  admin: PropTypes.bool,
+	name: PropTypes.string.isRequired,
+	phoneNumber: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
+	tickets: PropTypes.number,
+	tenants: PropTypes.number,
+	admin: PropTypes.bool,
 }
