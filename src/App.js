@@ -11,6 +11,7 @@ import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStored
 import Header from './components/Header/index';
 import Footer from './components/Footer/index';
 import { AddProperty } from './views/addProperty';
+import { JoinStaff } from './views/joinStaff';
 import UserContext from './UserContext';
 
 var refreshTimeout;
@@ -148,7 +149,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/manage/managers' component={Dashboard} />
               <PrivateRoute exact path='/tickets' component={Dashboard} />
               <PrivateRoute exact path='/reports' component={Dashboard} />
-              <PrivateRoute exact path='/staff' component={Dashboard} />
+              <PrivateRoute exact path='/staff' component={JoinStaff} />
               <PrivateRoute exact path='/emergency' component={Dashboard} />
               <PrivateRoute exact path='/settings' component={Dashboard} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
