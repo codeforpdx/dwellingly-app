@@ -31,6 +31,7 @@ $ticket__cutout-border--size: 4px;
 $ticket__cutout-border--radius: 8px;
 $ticket__cutout-size--height: 18px;
 $ticket__cutout-size--width: 6px;
+$ticket__cutout-sides: 23px;
 $width__nav: 15em;
 $width__wrapper: 800px;
 // media queries
@@ -62,14 +63,14 @@ $mq--desktop: 1200px;
   #{$position}: -$ticket__cutout-size--width;
   &::after {
     background: rgba(0, 0, 0, 0);
-    border: $ticket__cutout-border--size solid $color__white;
-    border-radius: $ticket__cutout-border--radius;
+    border: 5px solid $color__white;
+    border-radius: 50%;
     content: "";
-    height: $ticket__cutout-size--height;
+    height: $ticket__cutout-sides;
     position: absolute;
-    #{$position}: -$ticket__cutout-border--radius;
-    top: 0px;
-    width: $ticket__cutout-size--height;
+    #{$position}: -12px;
+    top: -2px;
+    width: $ticket__cutout-sides;
   }
 }
 
