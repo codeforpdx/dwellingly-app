@@ -1,28 +1,47 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import dwellinglylogo from '../assets/images/dwellingly_logo_white.png';
+import axios from 'axios';
+import UserContext from '../UserContext';
+import useMountEffect from '../utils/useMountEffect';
 import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import RequestItem from '../components/RequestItem';
-import axios from 'axios';
-import UserContext from '../UserContext';
+import NewStaffItem from '../components/NewStaffItem';
+
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 export const Dashboard = (props) => {
     const [modalActive, setModalActive] = useState(false);
+    const [staffList, setStaffList] = useState([]);
+    const [unstaffedTenants, setUnstaffedTenants] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
     const [usersPending, setUsersPending] = useState([]);
-    const history = useHistory();
+    const history = useHistory();  
     const userContext = useContext(UserContext);
 
-    useEffect(() => {
-        axios.post(
-            `${process.env.REACT_APP_API_URL}/users/role`,
-            { userrole: "pending" },
-            { headers: { "Authorization": `Bearer ${userContext.user.accessJwt}` } })
-            .then(res => setUsersPending(res.data.users));
-    }, []);
+    useMountEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/tenants`, makeAuthHeaders(userContext))
+            .then(({ data }) => {
+                const unstaffed = data.tenants.filter(tenant => !tenant.staff);
+                if(! unstaffed.length) return;
 
+                setUnstaffedTenants(unstaffed);
+                const adminUsersObj = { "userrole": "admin" };
+                return axios
+                    .post(`${process.env.REACT_APP_API_URL}/users/role`, adminUsersObj, makeAuthHeaders(userContext))
+                    .then(({ data }) => setStaffList(data.users));
+            })
+            .catch(error => alert(error));
+
+        const pendingUsersObj = { "userrole": "pending" };
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/users/role`, pendingUsersObj, makeAuthHeaders(userContext))
+            .then(({ data }) => setUsersPending(data.users))
+            .catch(error => alert(error));
+    });
+  
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
         history.push(path, usersPending.find(u => u.id === id));
@@ -41,9 +60,38 @@ export const Dashboard = (props) => {
         }
     }
 
-    const handleStaffAssignmentChange = () => {
-        setAreStaffAssigned(true);
-        //TODO: should handle which dropdowns are selected and check to make sure that not all values are none, in which case this state should be set to false
+    const handleStaffAssignmentChange = ({ target }, tenantId) => {
+        const updatedTenants = unstaffedTenants.map(tenant => {
+            if(tenant.id === tenantId) {
+                tenant.staff = target.value;
+                setAreStaffAssigned(true);
+            }
+            return tenant
+        });
+        setUnstaffedTenants(updatedTenants);
+    }
+
+    const handleStaffAssignment = () => {
+        if(!areStaffAssigned) return;
+
+        const tenantUpdateReqs = unstaffedTenants
+            .filter(({ staff }) => staff)
+            .map(({ id, staff }) => axios
+            .put(
+                `${process.env.REACT_APP_API_URL}/tenants/${id}`, 
+                { 'staffIDs': [staff] }, 
+                makeAuthHeaders(userContext)
+            ));
+
+        axios.all(tenantUpdateReqs)
+            .then(axios.spread((...responses) => {
+                const stillUnstaffed = unstaffedTenants.filter(tenant => {
+                    const isTenantUnchanged = !(responses.find(({ data }) => data.id === tenant.id));
+                    return isTenantUnchanged;
+                });
+                setUnstaffedTenants(stillUnstaffed);
+            }))
+            .catch(errors => alert(errors));
     }
 
     return (
@@ -65,52 +113,27 @@ export const Dashboard = (props) => {
                         </div>
                         <Collapsible
                             title="New Staff Assignments"
-                            count="3"
+                            count={unstaffedTenants.length}
                         >
                             <div className="dashboard__assignments_container">
-                                <div className="collapsible__row columns">
-                                    <div className="collapsible__col column">Tenant Name</div>
-                                    <div className="collapsible__col column">
-                                        Meerkat Manner<br />
-                                        <span className="subtext">Property Manager Name</span>
-                                    </div>
-                                    <div className="dashboard__colapsible_col column">
-                                        <div className="select is-rounded">
-                                            <select
-                                                onChange={handleStaffAssignmentChange}
-                                            >
-                                                <option>None</option>
-                                                <option>Staff Name</option>
-                                                <option>Staff Name 2</option>
-                                                <option>Staff Name 3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="collapsible__row columns">
-                                    <div className="collapsible__col column">Tenant Name</div>
-                                    <div className="collapsible__col column">
-                                        Meerkat Manner<br />
-                                        <span className="subtext">Property Manager Name</span>
-                                    </div>
-                                    <div className="dashboard__colapsible_col column">
-                                        <div className="select is-rounded">
-                                            <select>
-                                                <option>None</option>
-                                                <option>Staff Name</option>
-                                                <option>Staff Name 2</option>
-                                                <option>Staff Name 3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                {
+                                    unstaffedTenants.map(tenant => (
+                                        <NewStaffItem key={tenant.id} { ...tenant } handleStaffAssignmentChange={handleStaffAssignmentChange} staffList={staffList} />
+                                    ))
+                                }
                                 <div className="dashboard__assignments_button_container">
-                                    <button className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}>SAVE ASSIGNMENTS</button>
+                                    <button 
+                                        className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}
+                                        onClick={handleStaffAssignment}
+                                    >
+                                        SAVE ASSIGNMENTS
+                                    </button>
                                 </div>
                             </div>
                         </Collapsible>
                         <Collapsible
                             title="Request for Access"
+                            count={usersPending.length}
                         >
                             {
                                 usersPending.map((requestItemData, index) => {
