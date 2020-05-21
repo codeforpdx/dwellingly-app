@@ -315,9 +315,10 @@ button .card {
       &-cutout {
         display: block;
         height: $ticket__cutout-size--height;
+        width: $ticket__cutout-size--width;
+        
         overflow: hidden;
         position: absolute;
-        width: $ticket__cutout-size--width;
 
         &--left {
           @include ticket_cutout(left);
