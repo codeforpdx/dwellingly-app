@@ -13,21 +13,21 @@ class TicketModal extends Component {
     }
 
     return (
-      <div className="ticket-modal-window">
+      <div className="ticket-window-modal">
         <div className="ticket-modal-container">
           <Card types={[CARD_TYPES.TICKET]}>
             <Card.Top>
-              <Card.Content id="reports-modal-card-content">
+              <Card.Content id="ticket-modal-card-content">
                 <div className="card__summary">
                   <div className="close-icon-container">
                     <button type="button" onClick={this.props.onClose}>
                       <Icon id="close-icon"  icon="close"/></button>
                   </div>
-                  <div className="reports-modal-title-container">
+                  <div className="ticket-modal-title-container">
                     <Icon icon="comment"/>
-                    <h3 id="reports-modal-title" className="title">10 Property Damage</h3>
+                    <h3 id="ticket-modal-title" className="title">10 Property Damage</h3>
                   </div>
-                  <h5 id="reports-modal-subtitle" className="meta">There were 10 Property Damage tickets opened from 01/01/2018 - 12/31/2018</h5>
+                  <h5 id="ticket-modal-subtitle" className="meta">There were 10 Property Damage tickets opened from 01/01/2018 - 12/31/2018</h5>
                 </div>
               </Card.Content>
             </Card.Top>
