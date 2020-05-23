@@ -15,21 +15,6 @@ import PropTypes from 'prop-types';
 import "bulma/css/bulma.css";
 import UserContext from '../../UserContext'
 
-
-export class LogOutButton extends React.Component {
-  render() {
-    return (
-      <UserContext.Consumer>
-        {({ logout }) => (
-          <div className="is-logout-button">
-            <button className='button is-dark is-rounded is-small' onClick={logout}>LOG OUT</button>
-          </div>
-        )}
-      </UserContext.Consumer>
-    );
-  }
-}
-
 export const MenuLink = ({ icon, isBold, name, href }) => {
 
   // look at the href prop and find the last, most specific piece of the path
