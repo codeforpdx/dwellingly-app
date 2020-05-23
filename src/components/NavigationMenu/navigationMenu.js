@@ -94,7 +94,6 @@ export const NavMenu = () => {
               <MenuLink name="Settings" isBold icon={faCog} href="/settings" />
             </ul>
           </div>
-          <LogOutButton />
         </div>
       )}
     </UserContext.Consumer>
