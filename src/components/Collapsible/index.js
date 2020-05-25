@@ -2,23 +2,32 @@ import React, {useState} from 'react';
 import './collapsible.scss';
 
 function Collapsible(props) {
-    const { data, children, title, count } = props;
-
+    const { children, title, count } = props;
+    const countAsNumber = +(count || 0);
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const toggleCollapsed = () => {
+        setIsCollapsed(countAsNumber ? !isCollapsed : false);
+    }
 
     return (
-        <div className={`collapsible ${isCollapsed && 'isCollapsed'}`}>
+        <div className={`collapsible ${isCollapsed && 'isCollapsed'} ${!countAsNumber && 'isDisabled'}`}>
             <div className="collapsible__header">
-                <h3 className="collapsible__header_title">{title}
-                {count && <span className="count"> ({count})</span>}
+                <h3 className="collapsible__header_title" onClick={toggleCollapsed}>
+                    {title}<span className="count"> ({countAsNumber})</span>
                 </h3>
-                <button href="#" className="collapsible__toggle" onClick={()=>{ setIsCollapsed(!isCollapsed)}}>
+                <button 
+                    className='collapsible__toggle'
+                    onClick={toggleCollapsed}
+                >
                     <span className="icon">
                         <i className="fas fa-chevron-down"></i>
                     </span>
                 </button>
             </div>
-            {props.children}
+            {countAsNumber
+                ? children
+                : (<></>)
+            }
         </div>
     );
 };

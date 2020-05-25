@@ -1,0 +1,43 @@
+// Page layout
+.page-title-spacing {
+	padding-bottom: 15px;
+}
+
+.add-staff-page-length {
+	padding-top: 80px;
+	padding-bottom: 872px;
+}
+
+.add-staff-page-spacing {
+	padding-left: 290px;
+	padding-top: 30px;
+}
+
+// Buttons
+.save-new-staff-button {
+	color: white;
+    background-color: $blue;
+    border-radius: 20px;
+    border-width: 0px;
+    padding: 6px 20px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.save-button-spacing {
+	padding-top: 11px;
+	display: inline-block;
+}
+
+.cancel-new-staff {
+	margin: 10px 20px;
+}
+
+// Make Admin Checkbox
+.staff-make-admin-padding {
+	padding-top: 0px;
+}
+
+.make-admin-font {
+	font-size: 12px;
+}
