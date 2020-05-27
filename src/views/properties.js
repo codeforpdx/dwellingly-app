@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { UserContext } from '../App';
+import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
 
