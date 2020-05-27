@@ -1,21 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import dwellinglylogo from '../../assets/images/dwellingly_logo_white.png';
+import React from "react";
+import { Link } from "react-router-dom";
+import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
+import LogOutButton from "./LogOutButton";
 
 const Header = (props) => {
-	const LogOutButton = () => (
-		<UserContext.Consumer>
-			{({ logout }) => (
-				<button
-					className="button is-dark is-rounded is-small"
-					onClick={logout}
-				>
-					LOG OUT
-				</button>
-			)}
-		</UserContext.Consumer>
-	);
-
 	return (
     <header className="navbar bg-gradient">
       <div className="navbar-brand">
