@@ -135,14 +135,18 @@ const AddEmergencyContact = () => {
                             <FieldArray 
                                 name="numbers"
                                 render={numbersArrayFields => {
-                                    const addRow = () => numbersArrayFields.push({ number: "", numtype: "", extension: "" });
+                                    const addRowValid = (values.numbers[0].number !== "") && (!errors.numbers || !errors.numbers[values.numbers.length - 1].number);
+                                    const addRow = () => addRowValid && numbersArrayFields.push({ number: "", numtype: "", extension: "" });
+                                    
                                     return(
                                         <>
                                             {values.numbers.map((_, i) => (
                                                 <NumberSubForm key={i} i={i} values={values} errors={errors} handleChange={handleChange} />
                                             ))}
-                                            <div className="is-rounded form-add-rows" onClick={addRow}>
-                                                <i className="fas fa-plus-circle"></i> Add New Phone Number
+                                            <div className="form-add-rows-container">
+                                                <span className={`${addRowValid ? "active" : ""} is-rounded form-add-rows`} onClick={addRow}>
+                                                    <i className="fas fa-plus-circle"></i> Add New Phone Number
+                                                </span>
                                             </div>
                                         </>
                                     );

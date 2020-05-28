@@ -19,12 +19,19 @@
         flex-direction: column;
         max-width: 80%;
 
+        .form-add-rows-container {
+            margin-bottom: 45px;
+            display: flex;
+        }
         .form-add-rows {
-            color: #3273dc;
-            cursor: pointer;
             text-decoration: none;
             user-select: none;
-            margin-bottom: 45px;
+            visibility: hidden;
+            &.active {
+                visibility: visible;
+                cursor: pointer;
+                color: $blue;
+            }
         }
     }
 }
