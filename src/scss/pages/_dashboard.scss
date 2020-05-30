@@ -53,10 +53,14 @@
 		background-color: $lighterGray;
 		color: $blue;
 		text-align: center;
-		width: 81.5%;
+		margin: none;
+		width: 100%;
 		padding: 10px;
 		bottom: 0;
 		right: 0;
+		p {
+			margin-left: 18.5vw;
+		}
 	}
 	&__save_assignments_button {
 		color: $lightGray;
