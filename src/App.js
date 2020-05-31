@@ -20,6 +20,7 @@ import Header from "./components/Header/index";
 import Footer from "./components/Footer/index";
 import { AddProperty } from "./views/addProperty";
 import { Managers } from "./views/managers";
+import Manager from "./views/manager";
 import { JoinStaff } from "./views/joinStaff";
 import { AddStaffMember } from "./views/addStaffMember";
 import UserContext from "./UserContext";
@@ -197,6 +198,11 @@ export class App extends React.Component {
 								exact
 								path="/manage/managers"
 								component={Managers}
+							/>
+							<PrivateRoute
+								exact
+								path="/manage/manager/:id"
+								component={Manager}
 							/>
 							<PrivateRoute exact path="/tickets" component={Dashboard} />
 							<PrivateRoute exact path="/reports" component={Dashboard} />

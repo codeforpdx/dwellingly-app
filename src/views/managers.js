@@ -3,10 +3,12 @@ import BootstrapTable from "react-bootstrap-table-next";
 import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
+import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
 
 const columns = [
 	{
-		dataField: "name",
+		dataField: "fullName",
+
 		text: "Name",
 		sort: true,
 		headerStyle: () => {
@@ -14,32 +16,32 @@ const columns = [
 		},
 	},
 	{
-		dataField: "propertyManager",
-		text: "Property Managers",
+		dataField: "properties",
+		text: "Properties",
 		sort: true,
 		headerStyle: () => {
 			return { width: "20%" };
 		},
 	},
 	{
-		dataField: "address",
-		text: "Address",
+		dataField: "email",
+		text: "Email",
 		sort: true,
 		headerStyle: () => {
 			return { width: "20%" };
 		},
 	},
 	{
-		dataField: "tenants",
-		text: "Tenants",
+		dataField: "status",
+		text: "Status",
 		sort: true,
 		headerStyle: () => {
 			return { width: "10%" };
 		},
 	},
 	{
-		dataField: "dateAdded",
-		text: "Added On",
+		dataField: "lastUsage",
+		text: "Last Usage",
 		sort: true,
 		headerStyle: () => {
 			return { width: "10%" };
@@ -86,6 +88,7 @@ export class Managers extends Component {
 	};
 
 	render() {
+		console.log(PROPERTY_MANAGER_DATA);
 		return (
 			<UserContext.Consumer>
 				{(session) => {
@@ -104,7 +107,7 @@ export class Managers extends Component {
 							<div className="properties-list">
 								<BootstrapTable
 									keyField="id"
-									data={this.state.properties}
+									data={PROPERTY_MANAGER_DATA}
 									columns={columns}
 									selectRow={selectRow}
 									bootstrap4={true}
