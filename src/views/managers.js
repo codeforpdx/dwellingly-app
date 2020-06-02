@@ -8,7 +8,9 @@ import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
 const columns = [
 	{
 		dataField: "fullName",
-
+		formatter: (cell, row, rowIndex, formatExtraData) => {
+			return <Link to={`/manager/${row.id}`}>{row.fullName}</Link>;
+		},
 		text: "Name",
 		sort: true,
 		headerStyle: () => {
@@ -88,7 +90,6 @@ export class Managers extends Component {
 	};
 
 	render() {
-		console.log(PROPERTY_MANAGER_DATA);
 		return (
 			<UserContext.Consumer>
 				{(session) => {
