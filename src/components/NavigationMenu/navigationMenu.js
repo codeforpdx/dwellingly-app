@@ -13,7 +13,7 @@ import {
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import "bulma/css/bulma.css";
-import { UserContext } from '../../App';
+import UserContext from '../../UserContext'
 
 
 export class LogOutButton extends React.Component {

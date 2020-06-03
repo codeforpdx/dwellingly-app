@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
-import { UserContext } from '../App';
+import UserContext from '../UserContext';
 import * as axios from 'axios';
 
 const validationSchema = Yup.object().shape({
@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const formHandler = (data, context) => {
-    axios.post('http://localhost:5000/properties', data, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+    axios.post(`${process.env.REACT_APP_API_URL}/properties`, data, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then(function(response){
             alert("Property Added!");
         })
