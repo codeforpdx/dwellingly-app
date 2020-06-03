@@ -9,7 +9,7 @@ const columns = [
 	{
 		dataField: "fullName",
 		formatter: (cell, row, rowIndex, formatExtraData) => {
-			return <Link to={`/manager/${row.id}`}>{row.fullName}</Link>;
+			return <Link to={`/manage/manager/${row.id}`}>{row.fullName}</Link>;
 		},
 		text: "Name",
 		sort: true,
