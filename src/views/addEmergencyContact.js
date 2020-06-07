@@ -110,7 +110,7 @@ const AddEmergencyContact = (props) => {
         
         setEditMode(true);
         axios
-            .get(`${process.env.REACT_APP_API_URL}/emergencycontacts/${id}`, makeAuthHeaders(userContext))
+            .get(`/api/emergencycontacts/${id}`, makeAuthHeaders(userContext))
             .then(({ data }) => {
                 setContactValues(data);
                 setInitialized(true);
@@ -119,8 +119,8 @@ const AddEmergencyContact = (props) => {
     });
 
     const formHandler = data => {
-        const startPost = () => axios.post(`${process.env.REACT_APP_API_URL}/emergencycontacts`, data, makeAuthHeaders(userContext));
-        const startPut = () => axios.put(`${process.env.REACT_APP_API_URL}/emergencycontacts/${data.id}`, data, makeAuthHeaders(userContext));
+        const startPost = () => axios.post(`/api/emergencycontacts`, data, makeAuthHeaders(userContext));
+        const startPut = () => axios.put(`/api/emergencycontacts/${data.id}`, data, makeAuthHeaders(userContext));
         const axiosReq = () => editMode ? startPut() : startPost();            
 
         axiosReq()

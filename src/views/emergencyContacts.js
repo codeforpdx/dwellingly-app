@@ -48,7 +48,7 @@ const EmergencyContacts = () => {
 
     useMountEffect(() => {
       axios
-          .get(`${process.env.REACT_APP_API_URL}/emergencycontacts`, makeAuthHeaders(userContext))
+          .get(`/api/emergencycontacts`, makeAuthHeaders(userContext))
           .then(({ data }) => {
               setApiContacts(data.emergency_contacts);
           })
@@ -63,7 +63,7 @@ const EmergencyContacts = () => {
         const continueDelete = window.confirm('Are you sure you want to delete the emergency contact?');
         if(!continueDelete) return;
         axios
-            .delete(`${process.env.REACT_APP_API_URL}/emergencycontacts/${id}`, makeAuthHeaders(userContext))
+            .delete(`/api/emergencycontacts/${id}`, makeAuthHeaders(userContext))
             .then(() => {
                 setApiContacts(apiContacts.filter(contact => contact.id !== id));
             })
