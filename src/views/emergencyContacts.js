@@ -1,90 +1,73 @@
-import React from 'react';
-import { Link } from "react-router-dom"
+import React, { useContext } from 'react';
+import axios from 'axios';
+import UserContext from '../UserContext';
+import useMountEffect from '../utils/useMountEffect';
+import { Link, useHistory } from "react-router-dom"
 import { useState } from 'react';
 
-const fakeData = {
-    emergency_contacts: [
-        {
-            id: 1,
-            name: "Narcotics Anonymous",
-            description: "",
-            contact_numbers: [
-                {
-                    id: 1,
-                    number: "503-345-9839",
-                    numtype: "",
-                    extension: ""
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: "Washington Co. Crisis Team",
-            description: "Suicide prevention and referrals",
-            contact_numbers: [
-                {
-                    id: 2,
-                    number: "503-291-9111",
-                    numtype: "Call",
-                    extension: ""
-                },
-                {
-                    id: 3,
-                    number: "503-555-3321",
-                    numtype: "Text",
-                    extension: ""
-                }
-            ]
-        },
-        {
-            id: 3,
-            name: "Child Abuse/Reporting",
-            description: "",
-            contact_numbers: [
-                {
-                    id: 4,
-                    number: "503-730-3100",
-                    numtype: "",
-                    extension: ""
-                }
-            ]
-        },
-    ]
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
+
+const EmergencyContact = ({ isEditing, handleDelete, id, name, description, contact_numbers: contactNumbers }) => {
+    const history = useHistory();
+
+    const handleContactDelete = () => handleDelete(id);
+    const handleContactEdit = () => isEditing && history.push(`/edit/emergencycontact/${id}`);
+
+    return (
+        <div className="emergencyContact__row">
+            {isEditing && 
+                <div className="emergencyContact__delete_action" onClick={handleContactDelete}>
+                    <i className="fas fa-minus-circle icon"></i>
+                </div>
+            }
+            <div className={`emergencyContact__main_column ${isEditing ? 'active' : '' }`} onClick={handleContactEdit}>
+                {name}
+                <div className="subtext">{description}</div>
+            </div>
+            <div className="emergencyContact__contact_column">
+                {contactNumbers.map(({ numtype, number }, i) => {
+                    const label = numtype ? `${numtype}: ` : '';
+                    return (
+                        <div key={number} className="number-container">
+                            {(i >= 1) && <span>&nbsp;| </span>}
+                            <span className="emergencyContact__contact_action">
+                                {label}<a href={`tel:${number}`}>{number}</a>
+                            </span>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
 };
 
-const EmergencyContact = ({ isEditing, id, name, description, contact_numbers: contactNumbers }) => (
-    <div className="emergencyContact__row">
-        {isEditing && 
-            <div className="emergencyContact__delete_action" onClick={() => console.log('delete contact id: ' + id)}>
-                <i className="fas fa-minus-circle icon"></i>
-            </div>
-        }
-        <div className="emergencyContact__main_column">
-            {name}
-            <div className="subtext">{description}</div>
-        </div>
-        <div className="emergencyContact__contact_column">
-            {contactNumbers.map(({ numtype, number }, i) => {
-                const label = numtype ? `${numtype}: ` : '';
-                return (
-                    <div key={number}>
-                        {(i >= 1) && <span> | </span>}
-                        <span className="emergencyContact__contact_action">
-                            {label}<a href={`tel:${number}`}>{number}</a>
-                        </span>
-                    </div>
-                );
-            })}
-        </div>
-    </div>
-);
-
 const EmergencyContacts = () => {
+    const userContext = useContext(UserContext);
+    const [apiContacts, setApiContacts] = useState([]);
     const [editMode, setEditMode] = useState(false);
+
+    useMountEffect(() => {
+      axios
+          .get(`${process.env.REACT_APP_API_URL}/emergencycontacts`, makeAuthHeaders(userContext))
+          .then(({ data }) => {
+              setApiContacts(data.emergency_contacts);
+          })
+          .catch(error => alert(error));
+  });
 
     const handleStartEditing = () => setEditMode(true);
     const handleDoneEditing = () => {
         setEditMode(false);
+    }
+    const handleDelete = id => {
+        const continueDelete = window.confirm('Are you sure you want to delete the emergency contact?');
+        if(!continueDelete) return;
+        axios
+            .delete(`${process.env.REACT_APP_API_URL}/emergencycontacts/${id}`, makeAuthHeaders(userContext))
+            .then(() => {
+                setApiContacts(apiContacts.filter(contact => contact.id !== id));
+            })
+            .catch(error => alert(error));
     }
 
     return (
@@ -95,14 +78,14 @@ const EmergencyContacts = () => {
                     <div className="rounded" onClick={handleStartEditing}><i className="fas fa-pen icon"></i></div>
                 </div>
                 <Link className="is-rounded" to="/add/emergencyContact">
-                    <i className="fas fa-plus-circle"></i> Create Emergency Numbers
+                    <i className="fas fa-plus-circle"></i> Create Emergency Number
                 </Link>
             </div>
             <div className="table-row">
                 <div className="row_container">
                     {
-                        fakeData.emergency_contacts.map(contact => (
-                            <EmergencyContact key={contact.id} isEditing={editMode} { ...contact } />
+                        apiContacts.map(contact => (
+                            <EmergencyContact key={contact.id} isEditing={editMode} handleDelete={handleDelete} { ...contact } />
                         ))
                     }
                 </div>

@@ -59,11 +59,19 @@
                 flex-grow: 1;
                 margin-left: -.1rem;
                 font-weight: bold;
+
+                &.active {
+                    color: $blue;
+                    cursor: pointer;
+                }
             }
             &__contact_column {
                 text-align: right;
                 padding-right: 4.5rem;
                 font-weight: bold;
+                .number-container {
+                    display: inline-block;
+                }
             }
             &__contact_action {
                 overflow: hidden;
