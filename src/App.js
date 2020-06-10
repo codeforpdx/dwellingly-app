@@ -7,6 +7,7 @@ import { Dashboard } from './views/dashboard';
 import { RequestAccess } from './views/requestAccess';
 import { Properties } from './views/properties';
 import { Terms } from './views/terms';
+import { Tickets } from './views/tickets';
 import EmergencyContacts from './views/emergencyContacts';
 import AddEmergencyContact from './views/addEmergencyContact';
 import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStoredRefreshToken } from './Auth';
@@ -151,7 +152,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
               <PrivateRoute exact path='/manage/properties' component={Properties} />
               <PrivateRoute exact path='/manage/managers' component={Dashboard} />
-              <PrivateRoute exact path='/tickets' component={Dashboard} />
+              <PrivateRoute exact path='/tickets' component={Tickets} />
               <PrivateRoute exact path='/reports' component={Dashboard} />
               <PrivateRoute exact path='/staff' component={JoinStaff} />
               <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
