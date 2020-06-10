@@ -7,34 +7,34 @@ import Accordion from '../components/Accordion';
 import * as axios from 'axios';
 
 const columns = [{
-    dataField: 'name',
+    dataField: 'id',
     text: 'Ticket',
     headerStyle: () => {
       return { width: "20%" };
     }
   }, {
-    dataField: 'propertyManager',
+    dataField: 'sender',
     text: 'Sender',
     sort: true,
     headerStyle: () => {
       return { width: "20%" };
     }
   }, {
-    dataField: 'address',
+    dataField: 'assigned',
     text: 'Assigned To',
     sort: true,
     headerStyle: () => {
       return { width: "20%" };
     }
   }, {
-    dataField: 'tenants',
+    dataField: 'opened',
     text: 'Created',
     sort: true,
     headerStyle: () => {
       return { width: "20%" };
     }
   }, {
-    dataField: 'dateAdded',
+    dataField: 'updated',
     text: 'Updated',
     sort: true,
     headerStyle: () => {
@@ -94,7 +94,6 @@ export class Tickets extends Component {
     getTickets = (context) => {
         axios.get(`${process.env.REACT_APP_API_URL}/tickets`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
-            console.log(response.data.Tickets)
             this.setState({tickets: response.data.Tickets});
             console.log(this.state.tickets)
         })
