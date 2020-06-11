@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { UserContext } from '../App';
+import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
 
@@ -67,7 +67,7 @@ export class Properties extends Component {
     }
 
     getProperties = (context) => {
-        axios.get(`${process.env.REACT_APP_API_URL}/properties`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+        axios.get("/api/properties", { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
             this.setState({properties: response.data.properties});
         })

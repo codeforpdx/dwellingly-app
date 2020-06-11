@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Field, Formik } from 'formik';
 import dwellinglyLogo from '../assets/images/dwellingly_logo.png';
-import { UserContext } from '../App';
+import UserContext from '../UserContext';
 import { Redirect } from 'react-router';
 
 export class LoginForm extends React.Component {

@@ -73,8 +73,8 @@ const MODULE_DATA = {
 const ACCESS_REQUEST_DATA = [
     {
         id: 1,
-        name: "Leann Lovejoy",
-        email: "propertymanager@email.com",
+        name: "Leroy Possible",
+        email: "user4@dwellingly.org",
         phone: "(503)123-1234"
     },
     {
