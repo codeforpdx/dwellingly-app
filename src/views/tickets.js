@@ -92,7 +92,7 @@ export class Tickets extends Component {
     }
 
     getTickets = (context) => {
-        axios.get(`${process.env.REACT_APP_API_URL}/tickets`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+        axios.get(`/api/tickets`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
             this.setState({tickets: response.data.Tickets});
             console.log(this.state.tickets)
