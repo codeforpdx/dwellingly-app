@@ -2,6 +2,7 @@
   "name": "dwellingly",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
@@ -45,6 +46,6 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.2",
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.14.1"
   }
 }

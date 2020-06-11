@@ -1,22 +1,21 @@
-@import './scss/main.scss';
-@import './scss/pages/all';
+@import "./scss/main.scss";
+@import "./scss/pages/all";
 
 .App {
   overflow: hidden;
   min-height: 100vh;
-
 }
-  
+
 .container {
-  flex-grow: 1;
-  margin: 45px 50px;
-  position: relative;
-  width: auto;
+	flex-grow: 1;
+	margin: 45px 50px;
+	position: relative;
+	width: auto;
 }
 
 .subtitle {
-  color: $brandBlue;
-  font-size: 1.25rem;
-  font-weight: bold;
-  line-height: 1.25;
+	color: $brandBlue;
+	font-size: 1.25rem;
+	font-weight: bold;
+	line-height: 1.25;
 }

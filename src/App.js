@@ -7,10 +7,14 @@ import { Dashboard } from './views/dashboard';
 import { RequestAccess } from './views/requestAccess';
 import { Properties } from './views/properties';
 import { Terms } from './views/terms';
+import EmergencyContacts from './views/emergencyContacts';
+import AddEmergencyContact from './views/addEmergencyContact';
 import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStoredRefreshToken } from './Auth';
 import Header from './components/Header/index';
 import Footer from './components/Footer/index';
 import { AddProperty } from './views/addProperty';
+import { JoinStaff } from './views/joinStaff';
+import { AddStaffMember } from './views/addStaffMember';
 import UserContext from './UserContext';
 
 var refreshTimeout;
@@ -143,13 +147,16 @@ export class App extends React.Component {
               <PrivateRoute exact path='/add/tenant' component={Dashboard} />
               <PrivateRoute exact path='/add/property' component={AddProperty}/>
               <PrivateRoute exact path='/add/manager' component={Dashboard} />
+              <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
+              <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
               <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
               <PrivateRoute exact path='/manage/properties' component={Properties} />
               <PrivateRoute exact path='/manage/managers' component={Dashboard} />
               <PrivateRoute exact path='/tickets' component={Dashboard} />
               <PrivateRoute exact path='/reports' component={Dashboard} />
-              <PrivateRoute exact path='/staff' component={Dashboard} />
-              <PrivateRoute exact path='/emergency' component={Dashboard} />
+              <PrivateRoute exact path='/staff' component={JoinStaff} />
+              <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
+              <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
               <PrivateRoute exact path='/settings' component={Dashboard} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
             </Switch>
