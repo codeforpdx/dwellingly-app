@@ -9,7 +9,7 @@ const columns = [
 	{
 		dataField: "fullName",
 		formatter: (cell, row, rowIndex, formatExtraData) => {
-			return <Link to={`/manage/manager/${row.id}`}>{row.fullName}</Link>;
+			return <Link key={row.id} to={`/manage/manager/${row.id}`}>{row.fullName}</Link>;
 		},
 		text: "Name",
 		sort: true,
@@ -21,7 +21,7 @@ const columns = [
 		dataField: "properties",
 		formatter: (cell, row, rowIndex, formatExtraData) => {
 			return <ul>
-				{row.properties.map(property => <li>{property}</li>)}
+				{row.properties.map(property => <li key={property}>{property}</li>)}
 			</ul>
 		},
 		text: "Properties",

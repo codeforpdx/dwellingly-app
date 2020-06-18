@@ -1,0 +1,25 @@
+.manager {
+  &__container {
+    display: flex;
+    min-height: 100vh;
+  }
+  &__main {
+    background-color: white;
+    flex-grow: 1;
+    padding: 45px;
+  }
+  &__contact-info-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    &__row {
+      border-top: 1px solid $lightGray;
+        &:last-child {
+          border-bottom: 1px solid $lightGray;
+        }
+    }
+    &__row--title {
+      border: 1px solid blue;
+    }
+  }
+}
