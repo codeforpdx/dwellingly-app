@@ -42,11 +42,13 @@ export class SignupForm extends React.Component {
       }
     })
     .catch((error) => {
-      const failureMessage = "Account Could Not Be Created"
-      console.log(failureMessage);
-      console.log(error);
-      alert(failureMessage);
-      return Promise.reject(error);
+      if (error.response){
+        console.log(error.response.data.message)
+        alert(error.response.data.message)
+      } else {
+        alert(error)
+      }
+      return Promise.reject(error)
     })
   };
 
@@ -97,9 +99,9 @@ export class SignupForm extends React.Component {
             {
               (props) => {
                 return (
-                  <>
+                  <div className="login__form-container">
                     {/* <Header /> */}
-                    <Form className="login__form-container">
+                    <Form >
                       <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly Logo"></img>
                       <h2 className='subtitle'>Create an Account</h2>
                       <Field
@@ -126,7 +128,7 @@ export class SignupForm extends React.Component {
                         placeholder="Email"
                         required
                       />
-                      <ErrorMessage name="email" component="div"/>
+                      <ErrorMessage className="form-error" name="email" component="div"/>
                       <Field
                         className="form-field login__form-field"
                         type="password"
@@ -135,7 +137,7 @@ export class SignupForm extends React.Component {
                         placeholder="Password"
                         required
                       />
-                      <ErrorMessage name="password" component="div"/>
+                      <ErrorMessage className="form-error" name="password" component="div"/>
                       <Field
                         className="form-field login__form-field"
                         type="password"
@@ -144,7 +146,7 @@ export class SignupForm extends React.Component {
                         placeholder="Confirm Password"
                         required
                       />
-                      <ErrorMessage name="confirmPassword" component="div"/>
+                      <ErrorMessage className="form-error" name="confirmPassword" component="div"/>
                       
                       <div></div>
                       <button className="login__button" type="submit">SIGN UP</button>
@@ -154,9 +156,9 @@ export class SignupForm extends React.Component {
                           <span className="login__or_text">OR</span>
                         </div>
                       </div>
-                      <button className="login__button login__button--google">LOG IN WITH GOOGLE</button>
                     </Form>
-                  </>
+                    <button className="login__button login__button--google">LOG IN WITH GOOGLE</button>
+                  </div>
                 );
               }
             }
