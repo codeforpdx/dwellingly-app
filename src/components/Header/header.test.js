@@ -28,3 +28,11 @@ describe("Header Component", () => {
 		expect(wrapper.hasClass("bg-gradient")).toEqual(true);
 	});
 });
+
+describe('Logout Button', () => {
+  it("should render LogOutButton", () => {
+    const component = setUp();
+    const wrapper = component.find("LogOutButton");
+    expect(wrapper.length).toBe(1);
+  });
+});
