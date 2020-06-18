@@ -9,7 +9,11 @@ const columns = [
 	{
 		dataField: "fullName",
 		formatter: (cell, row, rowIndex, formatExtraData) => {
+<<<<<<< HEAD
 			return <Link to={`/manager/${row.id}`}>{row.fullName}</Link>;
+=======
+			return <Link to={`/manage/manager/${row.id}`}>{row.fullName}</Link>;
+>>>>>>> b2e7a7f02a0fd164ad4a46215b5666849dcfcf2c
 		},
 		text: "Name",
 		sort: true,
@@ -95,7 +99,6 @@ export class Managers extends Component {
 	};
 
 	render() {
-		console.log(PROPERTY_MANAGER_DATA);
 		return (
 			<UserContext.Consumer>
 				{(session) => {
