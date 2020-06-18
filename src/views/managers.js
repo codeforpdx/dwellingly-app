@@ -8,7 +8,9 @@ import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
 const columns = [
 	{
 		dataField: "fullName",
-
+		formatter: (cell, row, rowIndex, formatExtraData) => {
+			return <Link to={`/manager/${row.id}`}>{row.fullName}</Link>;
+		},
 		text: "Name",
 		sort: true,
 		headerStyle: () => {
@@ -17,6 +19,11 @@ const columns = [
 	},
 	{
 		dataField: "properties",
+		formatter: (cell, row, rowIndex, formatExtraData) => {
+			return <ul>
+				{row.properties.map(property => <li>{property}</li>)}
+			</ul>
+		},
 		text: "Properties",
 		sort: true,
 		headerStyle: () => {
