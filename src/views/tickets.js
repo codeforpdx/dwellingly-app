@@ -10,7 +10,7 @@ const columns = [{
     dataField: 'id',
     text: 'Ticket',
     headerStyle: () => {
-      return { width: "20%" };
+      return { width: "10%" };
     }
   }, {
     dataField: 'sender',
@@ -38,7 +38,7 @@ const columns = [{
     text: 'Updated',
     sort: true,
     headerStyle: () => {
-      return { width: "20%" };
+      return { width: "10%" };
     }
   }];
 
