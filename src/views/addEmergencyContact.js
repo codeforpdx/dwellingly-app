@@ -2,6 +2,8 @@ import React from 'react';
 import { Form, Field, Formik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 
+let resize = "resize";
+
 const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(3, "*Name must have at least 3 characters")
@@ -38,11 +40,11 @@ const FieldError = ({ error }) => {
     );
 };
 
-const NumberSubForm = ({ i, values, errors, handleChange }) => { 
+const NumberSubForm = ({ i, values, errors, handleChange }) => {
     const subFormErrors = errors.numbers && errors.numbers[i] ? errors.numbers[i] : null;
     return (
         <>
-            <div className="form-row columns">
+            <div className={`form-row columns ${resize}`}>
                 <label className="column is-one-quarter" htmlFor={`numbers[${i}].number`}>Phone Number</label>
                 <Field
                     className="column form-field"
@@ -54,7 +56,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
                 />
                 {subFormErrors && <FieldError error={subFormErrors.number} />}
             </div>
-            <div className="form-row columns">
+            <div className={`form-row columns ${resize}`}>
                 <label className="column is-one-quarter" htmlFor={`numbers[${i}].numtype`}>Phone Number Type</label>
                 <Field
                     className="column form-field"
@@ -66,7 +68,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
                 />
                 {subFormErrors && <FieldError error={subFormErrors.numtype} />}
             </div>
-            <div className="form-row columns">
+            <div className={`form-row columns ${resize}`}>
                 <label className="column is-one-quarter" htmlFor={`numbers[${i}].extension`}>Extension</label>
                 <Field
                     className="column form-field"
@@ -107,7 +109,7 @@ const AddEmergencyContact = () => {
                 {({ handleSubmit, handleChange, values, errors, isValid, isSubmitting }) => (
                     <div className="form-container add-emergency-contact__main_container">
                         <Form className="add-emergency-contact__form-container" onSubmit={handleSubmit}>
-                            <div className="form-row columns">
+                            <div className={`form-row columns ${resize}`}>
                                 <label className="column is-one-quarter" htmlFor="name">Contact Name</label>
                                 <Field
                                     className="column form-field"
@@ -119,7 +121,7 @@ const AddEmergencyContact = () => {
                                 />
                                 <FieldError error={errors.name} />
                             </div>
-                            <div className="form-row columns">
+                            <div className={`form-row columns ${resize}`}>
                                 <label className="column is-one-quarter" htmlFor="description">Organization Description</label>
                                 <Field
                                     className="column form-field"
@@ -132,12 +134,12 @@ const AddEmergencyContact = () => {
                                 />
                                 <FieldError error={errors.description} />
                             </div>
-                            <FieldArray 
+                            <FieldArray
                                 name="numbers"
                                 render={numbersArrayFields => {
                                     const addRowValid = (values.numbers[0].number !== "") && (!errors.numbers || !errors.numbers[values.numbers.length - 1].number);
                                     const addRow = () => addRowValid && numbersArrayFields.push({ number: "", numtype: "", extension: "" });
-                                    
+
                                     return(
                                         <>
                                             {values.numbers.map((_, i) => (
