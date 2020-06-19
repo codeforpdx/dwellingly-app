@@ -24,6 +24,7 @@
     }
 }
 
+
 .form-row {
     display: flex;
     border-bottom: 1px solid $lightGray;
@@ -35,6 +36,9 @@
         .form-field {
             color: $blue;
         }
+    }
+    &.resize {
+      line-height: 1;
     }
 }
 
