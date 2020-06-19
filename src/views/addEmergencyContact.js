@@ -2,7 +2,9 @@ import React from 'react';
 import { Form, Field, Formik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 
-let resize = "resize";
+let resize = "";
+
+//should be null to begin with. will update to "resize" with addrow onclick
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -137,8 +139,12 @@ const AddEmergencyContact = () => {
                             <FieldArray
                                 name="numbers"
                                 render={numbersArrayFields => {
+                                    const resizeInputs = () => resize = "resize";
+
                                     const addRowValid = (values.numbers[0].number !== "") && (!errors.numbers || !errors.numbers[values.numbers.length - 1].number);
-                                    const addRow = () => addRowValid && numbersArrayFields.push({ number: "", numtype: "", extension: "" });
+
+                                    const addRow = () => addRowValid && numbersArrayFields.push({ number: "", numtype: "", extension: "" })
+                                    resizeInputs();
 
                                     return(
                                         <>
