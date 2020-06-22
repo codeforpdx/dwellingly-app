@@ -40,6 +40,7 @@
     &.resize {
       line-height: 1;
       font-size: 0.8em;
+      margin-bottom: 0px;
     }
 }
 
@@ -65,6 +66,10 @@
     &.active {
         background-color: $blue;
         color: white;
+    }
+    &.resize {
+      height: 1.8em;
+      font-size: 0.8em;
     }
 }
 
