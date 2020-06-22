@@ -5,7 +5,7 @@
         flex-direction: column;
         padding: 45px;
     }
-    
+
     &__main_container {
         display: flex;
         flex-direction: column;
@@ -13,20 +13,21 @@
         margin: 25px 0;
         margin-top: 45px;
     }
-    
+
     &__form-container {
         display: flex;
         flex-direction: column;
         max-width: 80%;
 
         .form-add-rows-container {
-            margin-bottom: 45px;
+            // margin-bottom: 15px;
             display: flex;
         }
         .form-add-rows {
             text-decoration: none;
             user-select: none;
             visibility: hidden;
+            font-size: 0.8em;
             &.active {
                 visibility: visible;
                 cursor: pointer;
@@ -35,4 +36,3 @@
         }
     }
 }
-
