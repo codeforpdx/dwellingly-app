@@ -161,10 +161,10 @@ const AddEmergencyContact = () => {
                                 }}
                             />
                             <div className="container-footer">
-                                <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>
+                                <button className={`${isValid && "active"} save_button button is-rounded ${resize}`} type="submit" disabled={isSubmitting}>
                                     ADD EMERGENCY NUMBER
                                 </button>
-                                <button className="button is-dark is-rounded" onClick={() => console.log("cancel pressed")} type="button">
+                                <button className={`button is-dark is-rounded ${resize}`} onClick={() => console.log("cancel pressed")} type="button">
                                     CANCEL
                                 </button>
                             </div>
