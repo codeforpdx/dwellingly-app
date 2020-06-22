@@ -64,7 +64,7 @@ export class LoginForm extends React.Component {
                         <button className="login__button login__button--google">LOG IN WITH GOOGLE</button>
                         <div className="login__account_container">
                           <a href="" className="login__text_link login__account_forgot_password">Forgot Password</a>
-                          <a href="" className="login__text_link login__account_create">Create an Account</a>
+                          <a href="/signup" className="login__text_link login__account_create">Create an Account</a>
                         </div>
 
                       </Form>

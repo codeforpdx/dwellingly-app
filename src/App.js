@@ -2,6 +2,7 @@ import React from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { LoginForm } from './views/login';
+import { SignupForm } from './views/signup';
 import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
 import { Dashboard } from './views/dashboard';
 import { RequestAccess } from './views/requestAccess';
@@ -143,6 +144,7 @@ export class App extends React.Component {
             <Switch>
               <PrivateRoute exact path='/' component={Dashboard} />
               <Route exact path='/login' component={LoginForm} />
+              <Route exact path='/signup' component={SignupForm} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <Route exact path='/terms' component={Terms} />
               <PrivateRoute exact path='/home' component={Dashboard} />
