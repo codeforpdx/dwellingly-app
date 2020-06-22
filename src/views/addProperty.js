@@ -3,6 +3,8 @@ import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../UserContext';
 import * as axios from 'axios';
+import { withRouter } from 'react-router-dom'
+
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -33,14 +35,14 @@ const formHandler = (data, context) => {
         })
 }
 
-export class AddProperty extends Component {
+ class AddProperty extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
         propertyManagers: undefined,
         }
-    }    
+    }
 
     render() {
       return (
@@ -65,7 +67,7 @@ export class AddProperty extends Component {
                                 formHandler(values, session);
                                 resetForm();
                                 setSubmitting(false);
-                                
+
                             }}>
                             {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
                                 <div className="form-container add-property__main_container">
@@ -155,7 +157,7 @@ export class AddProperty extends Component {
                                         </div> */}
                                         <div className="container-footer">
                                             <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
-                                            <button className="button is-dark is-rounded" onClick={()=>{console.log("cancel pressed")}}>CANCEL</button>
+                                            <button className="button is-dark is-rounded" onClick={()=>{this.props.history.push('/manage/properties')}}>CANCEL</button>
                                         </div>
                                     </Form>
 
@@ -165,8 +167,10 @@ export class AddProperty extends Component {
                     </div>
                 )
             }}
-            
+
         </UserContext.Consumer>
       )
     }
 }
+
+export default AddProperty;
