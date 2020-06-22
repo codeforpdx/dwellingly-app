@@ -1,3 +1,5 @@
+$breakpoint-laptop: 1300px;
+
 .add-property {
     &__form-container {
         display: flex;
@@ -67,10 +69,12 @@
         background-color: $blue;
         color: white;
     }
-    &.resize {
-      height: 1.8em;
-      font-size: 0.8em;
-    }
+    @media (max-width: $breakpoint-laptop){
+      &.resize {
+        height: 1.8em;
+        font-size: 0.8em;
+      }
+   }
 }
 
 Label {
