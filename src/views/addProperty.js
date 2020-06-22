@@ -173,4 +173,4 @@ const formHandler = (data, context) => {
     }
 }
 
-export default AddProperty;
+export default withRouter(AddProperty);
