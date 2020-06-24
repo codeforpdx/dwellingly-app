@@ -3,7 +3,7 @@ import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../UserContext';
 import * as axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 
 const validationSchema = Yup.object().shape({
@@ -35,7 +35,7 @@ const formHandler = (data, context) => {
         })
 }
 
- class AddProperty extends Component {
+ export class AddProperty extends Component {
     constructor(props) {
         super(props);
 
@@ -157,7 +157,7 @@ const formHandler = (data, context) => {
                                         </div> */}
                                         <div className="container-footer">
                                             <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
-                                            <button className="button is-dark is-rounded" onClick={()=>{this.props.history.push('/manage/properties')}}>CANCEL</button>
+                                            <Link className="button is-dark is-rounded" to='/manage/properties'>CANCEL</Link>
                                         </div>
                                     </Form>
 
@@ -172,5 +172,3 @@ const formHandler = (data, context) => {
       )
     }
 }
-
-export default withRouter(AddProperty);
