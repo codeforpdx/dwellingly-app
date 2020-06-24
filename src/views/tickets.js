@@ -53,26 +53,39 @@ const pageButtonRenderer = ({
     e.preventDefault();
     onPageChange(page);
   };
-  const activeStyle = {};
-  if (active) {
-    activeStyle.backgroundColor = 'black';
-    activeStyle.color = 'white';
-  } else {
-    activeStyle.backgroundColor = 'gray';
-    activeStyle.color = 'black';
+  if (title == 'previous page') {
+    return (
+      <li className="page-item">
+        <a href="#" onClick={ handleClick } title={title} class='button is-rounded is-small' >Prev</a>
+      </li>
+    );
   }
-  if (typeof page === 'string') {
-    activeStyle.backgroundColor = 'white';
-    activeStyle.color = 'black';
+  if (title == 'next page') {
+    return (
+      <li className="page-item">
+        <a href="#" onClick={ handleClick } title={title}class='button is-rounded is-small' >Next</a>
+      </li>
+    );
+  }
+  if (active) {
+    return (
+      <li className="active page-item">
+        <a href="#" onClick={ handleClick } title={title}>{ page }</a>
+      </li>
+    );
   }
   return (
     <li className="page-item">
-      <a href="#" onClick={ handleClick } style={ activeStyle }>{ page }</a>
+      <a href="#" onClick={ handleClick } title={title}>{ page }</a>
     </li>
   );
 };
 
 const options = {
+  // pageStartIndex: 0,
+  sizePerPage: 5,
+  hideSizePerPage: true,
+  hidePageListOnlyOnePage: true,
   pageButtonRenderer
 };
 
@@ -150,7 +163,7 @@ export class Tickets extends Component {
                                     keyField='id'
                                     data={ this.state.tickets }
                                     columns={ columns }
-                                    // pagination={ paginationFactory(options) }
+                                    pagination={ paginationFactory(options) }
                                     bootstrap4={true}
                                     headerClasses="table-header"
                                     />
