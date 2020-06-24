@@ -39,10 +39,12 @@ $breakpoint-laptop: 1300px;
             color: $blue;
         }
     }
+    @media (max-width: $breakpoint-laptop){
     &.resize {
       line-height: 1;
       font-size: 0.8em;
     }
+  }
 }
 
 .form-field {
