@@ -12,7 +12,7 @@ import AddEmergencyContact from './views/addEmergencyContact';
 import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStoredRefreshToken } from './Auth';
 import Header from './components/Header/index';
 import Footer from './components/Footer/index';
-import AddProperty from './views/addProperty';
+import { AddProperty } from './views/addProperty';
 import { JoinStaff } from './views/joinStaff';
 import { AddStaffMember } from './views/addStaffMember';
 import UserContext from './UserContext';
