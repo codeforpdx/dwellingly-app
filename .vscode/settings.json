@@ -1,11 +1,5 @@
 {
-    "workbench.colorCustomizations": {
-      "titleBar.activeForeground": "#000",
-      "titleBar.inactiveForeground": "#000000CC",
-      "titleBar.activeBackground": "#00ff84",
-      "titleBar.inactiveBackground": "#035c47cc"
-    },
-    "editor.tabSize": 2,
+  "editor.tabSize": 2,
     "emmet.syntaxProfiles": {
       "jsx": {
         "self_closing_tags": true
