@@ -12,6 +12,8 @@ const validationSchema = Yup.object().shape({
     address: Yup.string()
         .max(250, "*Address can't be longer than 250 characters")
         .required("*Address is required"),
+    unit: Yup.string()
+        .max(50, "*Unit can't be longer than 50 characters"),
     city: Yup.string()
         .max(50, "*City can't be longer than 50 characters")
         .required("*City is required"),
@@ -54,6 +56,7 @@ export class AddProperty extends Component {
                             initialValues={{
                                 name: "",
                                 address: "",
+                                unit: "",
                                 city: "",
                                 state: "",
                                 zipcode: ""
@@ -95,6 +98,19 @@ export class AddProperty extends Component {
                                                 error={errors.address}
                                             />
                                             {errors.address ? (<div className="error-message">{errors.address}</div>) : null}
+                                        </div>
+                                        <div className="form-row columns">
+                                            <label className="column is-one-fifth" htmlFor="unit">Unit</label>
+                                            <Field
+                                                className="column form-field"
+                                                type="text"
+                                                name="unit"
+                                                onChange={handleChange}
+                                                value={values.unit}
+                                                placeholder="Unit number"
+                                                error={errors.unit}
+                                            />
+                                            {errors.unit ? (<div className="error-message">{errors.unit}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="city">City</label>
