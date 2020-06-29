@@ -120,7 +120,6 @@ export class Managers extends Component {
               <div className="search-section">
                 <input></input>
               </div>
-              {/* What's the expected onClick behavior? */}
               <div className="invite-button--container">
                 <button className="button is-rounded" type="submit">
                   <FontAwesomeIcon
