@@ -1,17 +1,21 @@
 .manager {
   &__container {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     min-height: 100vh;
-  }
-  &__main {
     background-color: white;
-    flex-grow: 1;
     padding: 45px;
-    .page-title {
-      flex-grow: 1;
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    &__title--section {
       display: flex;
       align-items: center;
       h2 {
+        font-size: 22px;
+        color: $brandBlue;
         font-weight: bold;
       }
       .rounded {
@@ -29,20 +33,30 @@
           color: $white;
         }
       }
-    }
   }
-  &__contact-info-container {
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-    &__row {
-      border-top: 1px solid $lightGray;
-      &:last-child {
-        border-bottom: 1px solid $lightGray;
+    &__content {
+      padding: 25px 0;
+      &__contact--info--container {
+        display: flex;
+        flex-direction: column;
+        margin: 25px 0;
+        max-width: 80%;
+        .row-title {
+          color: $gray;
+        }
       }
-    }
-    &__row--title {
-      border: 1px solid blue;
+      &__contact--form--container {
+        display: flex;
+        flex-direction: column;
+        margin: 25px 0;
+        max-width: 80%;
+        .row-title {
+          color: $gray;
+        }
+        .form-field {
+          color: $lightGray;
+        }
+      }
     }
   }
 }

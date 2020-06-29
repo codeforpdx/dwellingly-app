@@ -62,35 +62,47 @@ const Manager = () => {
     // Will need to handle submitting Formik, which I'll learn about
     // Will need to handle validating fields, which I'll learn about
     <div className="manager__container">
-      <div className="manager__main">
-        <div className="page-title">
-          <h2>{manager.fullName}</h2>
-          <div className="rounded" onClick={handleEditToggle}>
-            <i className="fas fa-pen icon"></i>
-          </div>
+      <div className="manager__container__title--section">
+        <h2>{manager.fullName}</h2>
+        <div className="rounded" onClick={handleEditToggle}>
+          <i className="fas fa-pen icon"></i>
         </div>
+      </div>
+      <div className="manager__container__content">
+        <h1 className="section-title">CONTACT</h1>
         {isEditing ? (
-          <form onSubmit={formik.handleSubmit}>
-            {Object.keys(formik.values).map(value =>
-              <div key={value}>
-                <label htmlFor={value}>{value}</label>
-                <input 
+          <form
+            className="manager__container__content__contact--form--container"
+            onSubmit={formik.handleSubmit}
+          >
+            {Object.keys(formik.values).map((value, index) => (
+              <div className="form-row columns" key={value}>
+                <label
+                  className="column is-one-quarter row-title"
+                  htmlFor={value}
+                >
+                  {contactInfoTitles[index]}
+                </label>
+                <input
+                  className="column is-three-quarters form-field"
                   name={value}
                   type="text"
                   onChange={formik.handleChange}
                   value={formik.values[value]}
                 />
               </div>
-            )}
-            
+            ))}
+
             <button type="submit">Save Changes</button>
           </form>
         ) : (
-          <div className="manager__contact-info-container">
+          <div className="manager__container__content__contact--info--container">
             {contactInfoFields.map((field, index) => (
-              <div className="manager__contact-info-container__row">
-                <span className="__row--title">{contactInfoTitles[index]}</span>
-                <span className="__row--value">{manager[field]}</span>
+              <div className="form-row columns">
+                <span className="column is-one-quarter row-title">
+                  {contactInfoTitles[index]}
+                </span>
+                <span className="column is-one-quarter">{manager[field]}</span>
               </div>
             ))}
           </div>
