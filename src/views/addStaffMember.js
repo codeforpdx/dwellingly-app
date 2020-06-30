@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 export const InfoField = ({label, info}) => {
@@ -17,11 +17,6 @@ export const InfoField = ({label, info}) => {
 }
 
 export const AddStaffMember = () => {
-	const history = useHistory();
-	
-	const handleCancel = () => {
-		history.push('/staff')
-	}
 
 	const handleSave = () => {
 		// TODO: Save the new staff member
@@ -47,7 +42,7 @@ export const AddStaffMember = () => {
 					<div className="save-button-spacing">
 						<button className="save-new-staff-button" onClick={handleSave} > SAVE </button>
 					</div>
-					<button className="button has-background-grey has-text-white is-rounded is-small has-text-weight-bold cancel-new-staff" onClick={handleCancel}> CANCEL </button>
+					<Link className="button has-background-grey has-text-white is-rounded is-small has-text-weight-bold cancel-new-staff" to='/staff'> CANCEL </Link>
 				</div>
 			</div>
 		</>
