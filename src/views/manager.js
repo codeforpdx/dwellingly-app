@@ -1,9 +1,35 @@
 import React, { useEffect, useState } from "react";
 import UserContext from "../UserContext";
-import { Formik } from "formik";
+import * as Yup from "yup";
+import { Formik, Form, Field } from "formik";
 import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
+
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .max(255, "Must be shorter than 255 Characters")
+    .required("Must enter a First Name"),
+  lastName: Yup.string()
+    .max(255, "Must be shorter than 255 Characters")
+    .required("Must enter a Last Name"),
+  phone: Yup.string()
+    .min(
+      5,
+      "*Number must contain at least 5 digits to be a valid phone/text number"
+    )
+    .max(20, "*Numbers can't be longer than 20 digits")
+    .required("*a valid phone number is required"),
+  email: Yup.string()
+    .email("Must be a valid email address")
+    .max(255, "Must be shorter than 255")
+    .required("Must enter an email"),
+});
+
+const FieldError = ({ error }) => {
+  if (!error) return null;
+  return <div className="field-error__message">{error}</div>;
+};
 
 const Manager = () => {
   const { id } = useParams();
@@ -85,7 +111,7 @@ const Manager = () => {
                 handleSubmit,
                 isSubmitting,
               }) => (
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                   {Object.keys(values).map((value, index) => (
                     <div className="form-row columns" key={value}>
                       <label
@@ -94,26 +120,30 @@ const Manager = () => {
                       >
                         {contactInfoTitles[index]}
                       </label>
-                      <input
+                      <Field
                         type="text"
                         name={value}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values[value]}
-                        className="column is-three-quarters contact-form__field--editing"
+                        className="column is-two-quarters contact-form__field--editing"
+                      />
+                      <FieldError
+                        error={errors[value]}
+                        className="column is-one-quarter"
                       />
                     </div>
                   ))}
-                  <button type="submit" disable={isSubmitting}>
+                  <button type="submit" disabled={isSubmitting}>
                     Save Changes
                   </button>
-                </form>
+                </Form>
               )}
             </Formik>
           ) : (
             <>
               {contactInfoFields.map((field, index) => (
-                <div className="form-row columns">
+                <div key={field} className="form-row columns">
                   <span className="column is-one-quarter row-title">
                     {contactInfoTitles[index]}
                   </span>

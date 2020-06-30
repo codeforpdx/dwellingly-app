@@ -72,6 +72,10 @@
             color: $lightGray;
           }
         }
+        .field-error__message {
+          color: red;
+          padding-top: 12.5px;
+        }
       }
     }
   }
