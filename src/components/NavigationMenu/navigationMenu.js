@@ -13,26 +13,8 @@ import {
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "bulma/css/bulma.css";
-import UserContext from "../../UserContext";
 
-export class LogOutButton extends React.Component {
-	render() {
-		return (
-			<UserContext.Consumer>
-				{({ logout }) => (
-					<div className="is-logout-button">
-						<button
-							className="button is-dark is-rounded is-small"
-							onClick={logout}
-						>
-							LOG OUT
-						</button>
-					</div>
-				)}
-			</UserContext.Consumer>
-		);
-	}
-}
+import UserContext from "../../UserContext";
 
 export const MenuLink = ({ icon, isBold, name, href }) => {
 	// look at the href prop and find the last, most specific piece of the path
@@ -122,31 +104,15 @@ export const NavMenu = () => {
 								<MenuLink name="Property Managers" href="/manage/managers" />
 							</div>
 
-							<MenuLink
-								name="Tickets"
-								isBold
-								icon={faTicketAlt}
-								href="/tickets"
-							/>
-							<MenuLink name="Reports" isBold icon={faBook} href="/reports" />
-							<MenuLink
-								name="JOIN Staff"
-								isBold
-								icon={faUserAlt}
-								href="/staff"
-							/>
-							<MenuLink
-								name="Emergency Numbers"
-								isBold
-								icon={faPhoneAlt}
-								href="/emergency"
-							/>
-							<MenuLink name="Settings" isBold icon={faCog} href="/settings" />
-						</ul>
-					</div>
-					<LogOutButton />
-				</div>
-			)}
-		</UserContext.Consumer>
-	);
-};
+              <MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets"/>
+              <MenuLink name="Reports" isBold icon={faBook} href="/reports" />
+              <MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
+              <MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
+              <MenuLink name="Settings" isBold icon={faCog} href="/settings" />
+            </ul>
+          </div>
+        </div>
+      )}
+    </UserContext.Consumer>
+  );
+}
