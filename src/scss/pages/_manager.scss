@@ -34,49 +34,80 @@
         }
       }
     }
-    .contact__section {
-      padding-top: 25px;
-      .contact-details {
-        display: flex;
-        flex-direction: column;
-        margin: 25px 0;
-        max-width: 80%;
-        .form-row {
+    &__contact {
+      &__section {
+        padding-top: 25px;
+        .contact-details {
           display: flex;
-          &:first-child {
-            border-top: 1px solid $lightGray;
-          }
-          &:focus-within {
-            border-bottom: 2px solid $blue;
-            .contact-form__field--editing {
-              color: $blue;
+          flex-direction: column;
+          margin: 25px 0;
+          max-width: 80%;
+          .form-row {
+            display: flex;
+            &:first-child {
+              border-top: 1px solid $lightGray;
+            }
+            &:focus-within {
+              border-bottom: 2px solid $blue;
+              .contact-form__field--editing {
+                color: $blue;
+              }
             }
           }
-        }
-        .contact-form__title {
-          color: $gray;
-        }
-        .contact-form__field--editing {
-          border: none;
-          color: $lightGray;
-          font-weight: bold;
-          &::placeholder {
-            color: $lightGray;
+          .contact-form__title {
+            color: $gray;
           }
-        }
-        .contact-form__field--not-editing {
-          border: none;
-          color: $darkGray;
-          font-weight: bold;
-          &::placeholder {
+          .contact-form__field--editing {
+            border: none;
             color: $lightGray;
+            font-weight: bold;
+            &::placeholder {
+              color: $lightGray;
+            }
           }
-        }
-        .field-error__message {
-          color: red;
-          padding-top: 12.5px;
+          .contact-form__field--not-editing {
+            border: none;
+            color: $darkGray;
+            font-weight: bold;
+            &::placeholder {
+              color: $lightGray;
+            }
+          }
+          .field-error__message {
+            color: red;
+            padding-top: 12.5px;
+          }
         }
       }
+    }
+  }
+  &__properties {
+    &__section {
+      padding-top: 25px;
+    }
+    &__container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+  }
+  &__property {
+    &__tile {
+      display: block;
+      width: 40%;
+      box-shadow: 0px 2px 4px $lightGray;
+      border-radius: 7px;
+      margin-right: 20px;
+      padding: 10px 15px;
+    }
+    &__name {
+      font-size: 18px;
+      color: $brandBlue;
+      font-weight: bold;
+    }
+    &__addres-line {
+      display: block;
+      color: $lightGray;
     }
   }
 }
