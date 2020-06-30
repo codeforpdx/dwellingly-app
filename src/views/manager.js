@@ -71,7 +71,7 @@ const Manager = () => {
           <i className="fas fa-pen icon"></i>
         </div>
       </div>
-      <div className="contact__section">
+      <div className="manager__container__contact__section">
         <h1 className="section-title">CONTACT</h1>
         <div className="contact-details">
           {isEditing ? (
@@ -154,8 +154,27 @@ const Manager = () => {
               ))}
             </>
           )}
+        </div>{" "}
+        {/* END contact-details */}
+      </div>{" "}
+      {/* END contact__section */}
+      <div className="manager__properties__section">
+        <h1 className="section-title">PROPERTIES</h1>
+        <div className="manager__properties__container">
+          {manager.properties.map((property) => (
+            <div key={property.name} className="manager__property__tile">
+              <h3 key={property.name} className="manager__property__name">
+                {property.name}
+              </h3>
+              <div className="manager__property__address">{property.streetAddress}</div>
+              <div className="manager__property__address">
+                {property.city}, {property.state} {property.zip}
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </div> {/* END  */}
+
     </div>
   );
 };

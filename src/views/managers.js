@@ -29,7 +29,7 @@ const columns = [
       return (
         <ul>
           {row.properties.map((property) => (
-            <li key={property}>{property}</li>
+            <li key={property.name}>{property.name}</li>
           ))}
         </ul>
       );

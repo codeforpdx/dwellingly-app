@@ -10,22 +10,20 @@ export const PROPERTY_MANAGER_DATA = [
 		email: "john.oliver@propertiespdx.org",
 
 		properties: [
-			"Jim's Mansion",
-			"Meerkat Mansion",
-			// {
-
-			// 	// streetAddress: "1234 Burnside Street",
-			// 	// city: "Portland",
-			// 	// state: "OR",
-			// 	// zip: "97211",
-			// },
-			// {
-			// 	name: "Meerkat Mansion",
-			// 	// streetAddress: "4552 Burnside Street",
-			// 	// city: "Portland",
-			// 	// state: "OR",
-			// 	// zip: "97231",
-			// },
+			{
+				name: "Jim's Mansion",
+				streetAddress: "1234 Burnside Street",
+				city: "Portland",
+				state: "OR",
+				zip: "97211",
+			},
+			{
+				name: "Meerkat Mansion",
+				streetAddress: "4552 Burnside Street",
+				city: "Portland",
+				state: "OR",
+				zip: "97231",
+			},
 		],
 		tenants: [
 			{
@@ -66,22 +64,20 @@ export const PROPERTY_MANAGER_DATA = [
 		lastUsage: "9/12/2019",
 
 		properties: [
-			"Bob's Mansion",
-			"Orange Courts",
-			// {
-			// 	name: "Bob's Mansion",
-			// 	// streetAddress: "1224 Hill Street",
-			// 	// city: "Portland",
-			// 	// state: "OR",
-			// 	// zip: "97777",
-			// },
-			// {
-			// 	name: "Orange Courts",
-			// 	// streetAddress: "2222 Dover Street",
-			// 	// city: "Portland",
-			// 	// state: "OR",
-			// 	// zip: "97341",
-			// },
+			{
+				name: "Bob's Mansion",
+				streetAddress: "1224 Hill Street",
+				city: "Portland",
+				state: "OR",
+				zip: "97777",
+			},
+			{
+				name: "Orange Courts",
+				streetAddress: "2222 Dover Street",
+				city: "Portland",
+				state: "OR",
+				zip: "97341",
+			},
 		],
 		tenants: [
 			{
