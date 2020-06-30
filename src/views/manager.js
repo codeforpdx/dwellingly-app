@@ -84,7 +84,7 @@ const Manager = () => {
                   {contactInfoTitles[index]}
                 </label>
                 <input
-                  className="column is-three-quarters form-field"
+                  className="column is-three-quarters contact-form__field--editing"
                   name={value}
                   type="text"
                   onChange={formik.handleChange}
@@ -102,7 +102,7 @@ const Manager = () => {
                 <span className="column is-one-quarter row-title">
                   {contactInfoTitles[index]}
                 </span>
-                <span className="column is-one-quarter">{manager[field]}</span>
+                <span className="column is-one-quarter contact-form__field--not-editing">{manager[field]}</span>
               </div>
             ))}
           </div>
