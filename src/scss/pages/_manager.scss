@@ -18,17 +18,18 @@
         font-weight: bold;
       }
       .rounded {
-        margin-left: 1rem;
+        margin-left: 16px;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 1em;
-        height: 1em;
+        width: 22px;
+        height: 22px;
+        border: $darkGray;
         border-radius: 50%;
         background-color: $darkGray;
         cursor: pointer;
         .icon {
-          font-size: 0.5em;
+          font-size: 12px;
           color: $white;
         }
       }
