@@ -67,9 +67,13 @@ const Manager = () => {
     <div className="manager__container">
       <div className="title__section">
         <h2>{manager.fullName}</h2>
-        <div className="rounded" onClick={handleEditToggle}>
+        <button
+          className="rounded"
+          onClick={handleEditToggle}
+          disabled={isEditing}
+        >
           <i className="fas fa-pen icon"></i>
-        </div>
+        </button>
       </div>
       <div className="manager__container__contact__section">
         <h1 className="section-title">CONTACT</h1>
@@ -181,7 +185,9 @@ const Manager = () => {
         <h1 className="section-title">TENANTS</h1>
         {manager.tenants.map((tenant) => (
           <div className="columns tenant__form-row" key={tenant.name}>
-            <div className="column is-one-quarter bold tenant__name">{tenant.name}</div>
+            <div className="column is-one-quarter bold tenant__name">
+              {tenant.name}
+            </div>
             <div className="column is-one-quarter">{tenant.property}</div>
             <div className="column is-one-quarter">{tenant.unit}</div>
             <div className="column is-one-quarter">{tenant.phone}</div>
