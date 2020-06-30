@@ -166,15 +166,28 @@ const Manager = () => {
               <h3 key={property.name} className="manager__property__name">
                 {property.name}
               </h3>
-              <div className="manager__property__address">{property.streetAddress}</div>
+              <div className="manager__property__address">
+                {property.streetAddress}
+              </div>
               <div className="manager__property__address">
                 {property.city}, {property.state} {property.zip}
               </div>
             </div>
           ))}
         </div>
-      </div> {/* END  */}
-
+      </div>{" "}
+      {/* END manager__properties__section */}
+      <div className="manager__tenants">
+        <h1 className="section-title">TENANTS</h1>
+        {manager.tenants.map((tenant) => (
+          <div className="columns tenant__form-row" key={tenant.name}>
+            <div className="column is-one-quarter bold tenant__name">{tenant.name}</div>
+            <div className="column is-one-quarter">{tenant.property}</div>
+            <div className="column is-one-quarter">{tenant.unit}</div>
+            <div className="column is-one-quarter">{tenant.phone}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
