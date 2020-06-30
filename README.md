@@ -30,7 +30,7 @@ From Terminal:
 #### Installing
 
 From terminal:
-- Navigate to app's directory: `cd dwellingly-app/dwellingly`
+- Navigate to app's directory: `cd dwellingly-app`
 - Install: `npm install`
 - Launch: `npm start`
 - React will open a browser page for you and navigate to `localhost:3000`
