@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from 'react-router-dom';
 import { ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+
 
 
 export const DropDownItem = ({dropContent, clickHandle}) => {
@@ -119,11 +120,6 @@ export const InfoField = ({label, info}) => {
 export const RequestAccess = (props) => {
 	// const id = props.match.params.id;
 
-	const history = useHistory();
-	const handleCancelClick = () => {
-		history.push('/dashboard');
-	}
-
 	const {
 		firstName,
 		lastName,
@@ -132,7 +128,7 @@ export const RequestAccess = (props) => {
 
 	return (
 		<>
-			<div className="request-page"> 
+			<div className="request-page">
 				<div className="page-title"> Request Access </div>
 				<div className="sub-title"> CONTACT </div>
 				<InfoField label={"First Name"} info={firstName} />
@@ -146,7 +142,7 @@ export const RequestAccess = (props) => {
 					<div className="set-access-button">
 			      		<button className="access-button"> GRANT ACCESS </button>
 			      	</div>
-			        <button className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" onClick={handleCancelClick}> CANCEL </button>
+			        <Link className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" to='/dashboard'> CANCEL </Link>
 			    </div>
 			</div>
 		</>
