@@ -48,16 +48,29 @@
           }
           &:focus-within {
             border-bottom: 2px solid $blue;
-            .form-field {
+            .contact-form__field--editing {
               color: $blue;
             }
           }
         }
-        .row-title {
+        .contact-form__title {
           color: $gray;
         }
-        .form-field {
+        .contact-form__field--editing {
+          border: none;
           color: $lightGray;
+          font-weight: bold;
+          &::placeholder {
+            color: $lightGray;
+          }
+        }
+        .contact-form__field--not-editing {
+          border: none;
+          color: $darkGray;
+          font-weight: bold;
+          &::placeholder {
+            color: $lightGray;
+          }
         }
       }
     }
