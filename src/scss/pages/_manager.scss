@@ -10,7 +10,7 @@
       font-size: 18px;
       margin-bottom: 10px;
     }
-    &__title--section {
+    .title__section {
       display: flex;
       align-items: center;
       h2 {
@@ -33,23 +33,26 @@
           color: $white;
         }
       }
-  }
-    &__content {
-      padding: 25px 0;
-      &__contact--info--container {
+    }
+    .contact__section {
+      padding-top: 25px;
+      .contact-details {
         display: flex;
         flex-direction: column;
         margin: 25px 0;
         max-width: 80%;
-        .row-title {
-          color: $gray;
+        .form-row {
+          display: flex;
+          &:first-child {
+            border-top: 1px solid $lightGray;
+          }
+          &:focus-within {
+            border-bottom: 2px solid $blue;
+            .form-field {
+              color: $blue;
+            }
+          }
         }
-      }
-      &__contact--form--container {
-        display: flex;
-        flex-direction: column;
-        margin: 25px 0;
-        max-width: 80%;
         .row-title {
           color: $gray;
         }

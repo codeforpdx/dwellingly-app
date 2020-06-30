@@ -62,17 +62,17 @@ const Manager = () => {
     // Will need to handle submitting Formik, which I'll learn about
     // Will need to handle validating fields, which I'll learn about
     <div className="manager__container">
-      <div className="manager__container__title--section">
+      <div className="title__section">
         <h2>{manager.fullName}</h2>
         <div className="rounded" onClick={handleEditToggle}>
           <i className="fas fa-pen icon"></i>
         </div>
       </div>
-      <div className="manager__container__content">
+      <div className="contact__section">
         <h1 className="section-title">CONTACT</h1>
         {isEditing ? (
           <form
-            className="manager__container__content__contact--form--container"
+            className="contact-details"
             onSubmit={formik.handleSubmit}
           >
             {Object.keys(formik.values).map((value, index) => (
@@ -96,7 +96,7 @@ const Manager = () => {
             <button type="submit">Save Changes</button>
           </form>
         ) : (
-          <div className="manager__container__content__contact--info--container">
+          <div className="contact-details">
             {contactInfoFields.map((field, index) => (
               <div className="form-row columns">
                 <span className="column is-one-quarter row-title">
