@@ -46,7 +46,9 @@ const Manager = () => {
       phone: values.phone,
       email: values.email,
     });
-    {/* fake API call to update data */}
+    {
+      /* fake API call to update data */
+    }
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
@@ -93,7 +95,7 @@ const Manager = () => {
               firstName: manager.firstName,
               lastName: manager.lastName,
               phone: manager.phone,
-              email: manager.email
+              email: manager.email,
             }}
             validationSchema={validationSchema}
             isEditing={isEditing}
@@ -119,8 +121,7 @@ const Manager = () => {
             </div>
           ))}
         </div>
-      </div>{" "}
-      {/* END manager__properties__section */}
+      </div>
       <div className="manager__tenants">
         <h1 className="section-title">TENANTS</h1>
         {manager.tenants.map((tenant) => (
