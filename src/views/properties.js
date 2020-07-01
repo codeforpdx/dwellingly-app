@@ -58,7 +58,8 @@ export class Properties extends Component {
         this.state = {
         properties: [],
         filteredProperties: [],
-        isFiltered: false
+        isFiltered: false,
+        searchQuery: null
         }
 
         this.getProperties = this.getProperties.bind(this)
