@@ -120,7 +120,7 @@ export class Properties extends Component {
                                 <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
                                    Search
                                 </button>
-                                <button className="save_button button is-rounded clear" onClick={this.clearSearch}type="submit">
+                                <button className="save_button button is-rounded clearButton" onClick={this.clearSearch}type="submit">
                                    Clear
                                 </button>
                             </div>
