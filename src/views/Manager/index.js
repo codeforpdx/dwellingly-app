@@ -77,7 +77,7 @@ const Manager = () => {
   return (
     <div className="manager__container">
       <div className="title__section">
-        <h2>{manager.fullName}</h2>
+        <h2>{manager.firstName} {manager.lastName}</h2>
         <button
           className={`rounded${isEditing ? "--is-editing" : ""}`}
           onClick={handleEditToggle}
