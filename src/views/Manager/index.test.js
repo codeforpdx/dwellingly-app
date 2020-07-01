@@ -1,34 +1,40 @@
 import React from "react";
-import Enzyme, { mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import ReactDOM from "react-dom";
-import { Route, MemoryRouter } from "react-router";
+import '@testing-library/jest-dom/extend-expect';
+import { render, fireEvent, waitForElement, wait } from '@testing-library/react';
+import { MemoryRouter } from "react-router";
 import Manager from "./index";
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe("Managers Component", () => {
-  const handleEditToggle = jest.fn();
-  const onFormikSubmit = jest.fn();
 
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(
+    wrapper = render(
       <MemoryRouter initialEntries={["manage/manager/1"]}>
         <Manager parms={{id: 1}}/>
       </MemoryRouter>
     );
   });
   it("Renders without errors", () => {
-    console.log(wrapper.debug());
     expect(wrapper).not.toBeNull();
   });
-  it("Sets isEditing true when pen icon is clicked", () => {
-    expect(wrapper.find("h2").text()).toEqual("Jim Oliver");
+  it("Show form when pen icon is clicked", () => {
+    fireEvent.click(wrapper.getByRole("button"));
+    expect(wrapper.getAllByRole("form")).toHaveLength(1);
+  });
+  it("Should update contact info when Formik field is edited", async () => {    
+    fireEvent.click(wrapper.getByRole("button"));
+    const firstNameInput = await waitForElement(() => wrapper.getByDisplayValue('Jim'));
+    const submitButton = await waitForElement(() => wrapper.getAllByRole('button')[0]);
+    fireEvent.change(firstNameInput, {
+      target: {
+        value: "Frank"
+      }
+    });
+    
+    fireEvent.click(submitButton);
+
+    wait(() => {
+      expect(wrapper.getByDisplayValue("Frank Oliver")).toHaveLength(1);
+    });
   });
 });
-
-// TEST todos
-// 1) test that component renders without errors
-// 2) test that when edit button is clicked, isEditing is true
-// 3) test that when form is edited after being clicked and saved, state of managers updates
