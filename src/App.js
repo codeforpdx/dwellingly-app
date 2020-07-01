@@ -19,7 +19,7 @@ import {
 import Header from "./components/Header/index";
 import Footer from "./components/Footer/index";
 import { AddProperty } from "./views/addProperty";
-import { Managers } from "./views/managers";
+import Managers from "./views/managers";
 import Manager from "./views/manager";
 import { JoinStaff } from "./views/joinStaff";
 import { AddStaffMember } from "./views/addStaffMember";

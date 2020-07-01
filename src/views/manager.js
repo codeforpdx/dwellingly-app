@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import UserContext from "../UserContext";
 import ToggleEditTable from "../components/ToggleEditTable";
 import * as Yup from "yup";
@@ -26,8 +26,11 @@ const validationSchema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
+const contactRowTitles = ["First Name", "Last Name", "Phone", "Email"];
+
 const Manager = () => {
   const { id } = useParams();
+  const userContext = useContext(UserContext);
   // can remove this once api is configured to return properties and tenants
   const dummyDataManagerInfo = PROPERTY_MANAGER_DATA.find(
     (manager) => manager.id === id
@@ -55,8 +58,6 @@ const Manager = () => {
       setEditingStatus(false);
     }, 500);
   };
-
-  const contactRowTitles = ["First Name", "Last Name", "Phone", "Email"];
 
   // use getManager once /users/?id api endpoint returns properties and tenants for property managers
   const getManager = (context) => {

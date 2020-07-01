@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
@@ -75,28 +75,18 @@ const selectRow = {
   },
 };
 
-export class Managers extends Component {
-  constructor(props) {
-    super(props);
+const Managers = () => {
+  const [properties, updateProperties] = useState([]);
+  const userContext = useContext(UserContext);
 
-    this.state = {
-      properties: [],
-    };
-
-    this.getProperties = this.getProperties.bind(this);
-  }
-
-  componentDidMount() {
-    this.getProperties(this.context);
-  }
-
-  getProperties = (context) => {
+  // re-purpose getProperties once API is configured to retrieve tenant and properties for Property Managers
+  const getProperties = (context) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/properties`, {
         headers: { Authorization: `Bearer ${context.user.accessJwt}` },
       })
       .then((response) => {
-        this.setState({ properties: response.data.properties });
+        console.log(response);
       })
       .catch((error) => {
         alert(error);
@@ -104,43 +94,36 @@ export class Managers extends Component {
       });
   };
 
-  render() {
-    return (
-      <UserContext.Consumer>
-        {(session) => {
-          this.context = session;
-          return (
-            <div className="managers__container">
-              <div className="section-header">
-                <h2 className="page-title">Property Managers</h2>
-                <Link className="button is-rounded" to="/add/property">
-                  + ADD NEW
-                </Link>
-              </div>
-              <div className="search-section">
-                <input></input>
-              </div>
-              <div className="invite-button--container">
-                <button className="button is-rounded" type="submit">
-                  <FontAwesomeIcon
-                    className="button__envelope-icon"
-                    icon={faEnvelope}
-                  />{" "}
-                  Invite
-                </button>
-              </div>
-              <BootstrapTable
-                keyField="id"
-                data={PROPERTY_MANAGER_DATA}
-                columns={columns}
-                selectRow={selectRow}
-                bootstrap4={true}
-                headerClasses="table-header"
-              />
-            </div>
-          );
-        }}
-      </UserContext.Consumer>
-    );
-  }
-}
+  return (
+    <div className="managers__container">
+      <div className="section-header">
+        <h2 className="page-title">Property Managers</h2>
+        <Link className="button is-rounded" to="/add/property">
+          + ADD NEW
+        </Link>
+      </div>
+      <div className="search-section">
+        <input></input>
+      </div>
+      <div className="invite-button--container">
+        <button className="button is-rounded" type="submit">
+          <FontAwesomeIcon
+            className="button__envelope-icon"
+            icon={faEnvelope}
+          />{" "}
+          Invite
+        </button>
+      </div>
+      <BootstrapTable
+        keyField="id"
+        data={PROPERTY_MANAGER_DATA}
+        columns={columns}
+        selectRow={selectRow}
+        bootstrap4={true}
+        headerClasses="table-header"
+      />
+    </div>
+  );
+};
+
+export default Managers;
