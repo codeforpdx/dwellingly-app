@@ -1,0 +1,40 @@
+// Colors
+$blue: #51a3fc;
+$lightGray: #d1d1d1;
+$gray: #8e8e93;
+
+.form {
+  &__row--editing {
+    color: $gray;
+    border-bottom: 1px solid $lightGray;
+    &:first-child {
+      border-top: 1px solid $lightGray;
+    }
+    &:focus-within {
+      border-bottom: 2px solid $blue;
+    }
+    .row-input {
+      border: none;
+      color: $lightGray;
+      font-weight: bold;
+    }
+  }
+  &__row--not-editing {
+    color: $gray;
+    border-bottom: 1px solid $lightGray;
+    &:first-of-type {
+    border-top: 1px solid $lightGray;
+    }
+    &:last-of-type {
+      margin-bottom: 12px;
+    }
+  }
+  &__field-error__message {
+    color: red;
+    padding-top: 12.5px;
+  }
+  &__submit {
+    position: absolute;
+    bottom: 0;
+  }
+}

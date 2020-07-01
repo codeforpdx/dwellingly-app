@@ -59,51 +59,6 @@
           flex-direction: column;
           margin: 25px 0 0 0;
           max-width: 80%;
-          .form-row {
-            display: flex;
-            &:first-child {
-              border-top: 1px solid $lightGray;
-            }
-            &:focus-within {
-              border-bottom: 2px solid $blue;
-              .contact-form__field--editing {
-                color: $blue;
-              }
-            }
-          }
-          .form-row--not-editing {
-            border-bottom: 1px solid $lightGray;
-            &:first-of-type {
-            border-top: 1px solid $lightGray;
-            }
-            &:last-of-type {
-              margin-bottom: 12px;
-            }
-          }
-          .contact-form {
-            position: relative;
-            &__title {
-              color: $gray;
-            }
-            &__field--editing {
-              border: none;
-              color: $lightGray;
-              font-weight: bold;
-            }
-            &__field--not-editing {
-              border: none;
-              color: $darkGray;
-              font-weight: bold;
-            }
-            &__submit {
-              position: absolute;
-              bottom: 0;
-            }
-          }
-          .field-error__message {
-            color: red;
-            padding-top: 12.5px;
-          }
         }
       }
     }
