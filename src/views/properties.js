@@ -96,9 +96,14 @@ export class Properties extends Component {
         isFiltered: true
       });
 
-      await console.log(this.state);
+      // await console.log(this.state);
 
   };
+
+    clearSearch = async () => {
+      await this.setState({isFiltered: false});
+      await console.log(this.state);
+    };
 
 
     render() {
@@ -116,6 +121,9 @@ export class Properties extends Component {
                               <input className="input search is-rounded" id="searchQuery" placeholder="Search properties by name, address, or property manager"></input>
                                 <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
                                    Search
+                                </button>
+                                <button className="save_button button is-rounded" onClick={this.clearSearch}type="submit">
+                                   Clear
                                 </button>
                             </div>
                             <div className="properties-list">
