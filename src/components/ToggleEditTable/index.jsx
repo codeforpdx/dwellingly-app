@@ -1,9 +1,11 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
+import "./toggleEditTable.scss";
+
 
 const FieldError = ({ error }) => {
   if (!error) return null;
-  return <div className="field-error__message">{error}</div>;
+  return <div className="form__field-error__message">{error}</div>;
 };
 
 const ToggleEditTable = ({
@@ -29,11 +31,8 @@ const ToggleEditTable = ({
       }) => (
         <Form onSubmit={handleSubmit}>
           {Object.keys(values).map((value, index) => (
-            <div className="form-row columns" key={value}>
-              <label
-                className="column is-one-quarter row-title"
-                htmlFor={value}
-              >
+            <div className="form__row--editing columns" key={value}>
+              <label className="column is-one-quarter" htmlFor={value}>
                 {rowTitles[index]}
               </label>
               <Field
@@ -42,7 +41,7 @@ const ToggleEditTable = ({
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values[value]}
-                className="column is-two-quarters contact-form__field--editing"
+                className="column is-two-quarters row-input"
               />
               <FieldError
                 error={errors[value]}
@@ -53,7 +52,7 @@ const ToggleEditTable = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="contact-form__submit"
+            className="form__submit"
           >
             Save Changes
           </button>
@@ -63,13 +62,9 @@ const ToggleEditTable = ({
   ) : (
     <>
       {Object.keys(tableData).map((rowValue, index) => (
-        <div key={rowValue} className="form-row--not-editing columns">
-          <span className="column is-one-quarter row-title">
-            {rowTitles[index]}
-          </span>
-          <span className="column is-one-quarter contact-form__field--not-editing">
-            {tableData[rowValue]}
-          </span>
+        <div key={rowValue} className="form__row--not-editing columns">
+          <span className="column is-one-quarter">{rowTitles[index]}</span>
+          <span className="column is-one-quarter">{tableData[rowValue]}</span>
         </div>
       ))}
     </>
