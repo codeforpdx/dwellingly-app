@@ -6,10 +6,7 @@
     min-height: 100vh;
     background-color: white;
     padding: 45px;
-    .section-title {
-      font-size: 18px;
-    }
-    .title__section {
+    .title__container {
       display: flex;
       align-items: center;
       h2 {
@@ -50,22 +47,28 @@
         }
       }
     }
-    &__contact {
-      &__section {
-        position: relative;
-        padding: 25px 0 25px 0;
-        .contact-details {
-          display: flex;
-          flex-direction: column;
-          margin: 25px 0 0 0;
-          max-width: 80%;
-        }
+    .manager__contact {
+      position: relative;
+      padding: 25px 0 25px 0;
+      .secondary-title {
+        font-size: 18px;
+        color: $brandBlue;
+        font-weight: bold;
+      }
+      .contact-details {
+        display: flex;
+        flex-direction: column;
+        margin: 25px 0 0 0;
+        max-width: 80%;
       }
     }
   }
   &__properties {
-    &__section {
-      padding: 25px 0;
+    padding: 15px 0 35px 0;
+    .secondary-title {
+      font-size: 18px;
+      color: $brandBlue;
+      font-weight: bold;
     }
     &__container {
       display: flex;
@@ -79,7 +82,7 @@
       width: 40%;
       box-shadow: 0px 2px 4px $lightGray;
       border-radius: 7px;
-      margin-right: 20px;
+      margin: 10px 20px 0 0;
       padding: 10px 15px;
     }
     &__name {
@@ -95,6 +98,11 @@
   &__tenants {
     padding: 25px 0;
     color: $gray;
+    .secondary-title {
+      font-size: 18px;
+      color: $brandBlue;
+      font-weight: bold;
+    }
     .tenant {
       &__name {
         color: $darkGray;
