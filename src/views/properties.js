@@ -99,6 +99,7 @@ export class Properties extends Component {
 
     setSearchQuery = () => {
       let searchQuery = document.getElementById("searchQuery").value;
+      console.log(searchQuery);
     };
 
 
@@ -115,7 +116,7 @@ export class Properties extends Component {
                             </div>
                             <div className="search-section">
                               <input className="input search is-rounded" id="searchQuery" placeholder="Search properties by name, address, or property manager"></input>
-                                <button className="save_button button is-rounded" type="submit">
+                                <button className="save_button button is-rounded" onClick={this.setSearchQuery}type="submit">
                                    Search
                                 </button>
                             </div>
