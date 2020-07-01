@@ -29,6 +29,10 @@
     }
     .table-header {
       background-color: $lightGray;
+      border: none;
     }
+  }
+  &__table {
+    width: 90%;
   }
 }

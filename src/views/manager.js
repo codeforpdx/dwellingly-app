@@ -49,9 +49,6 @@ const Manager = () => {
       phone: values.phone,
       email: values.email,
     });
-    {
-      /* fake API call to update data */
-    }
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
