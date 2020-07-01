@@ -68,7 +68,7 @@ const Manager = () => {
       <div className="title__section">
         <h2>{manager.fullName}</h2>
         <button
-          className="rounded"
+          className={`rounded${isEditing ? "--is-editing" : ""}`}
           onClick={handleEditToggle}
           disabled={isEditing}
         >
@@ -138,7 +138,7 @@ const Manager = () => {
                       />
                     </div>
                   ))}
-                  <button type="submit" disabled={isSubmitting}>
+                  <button type="submit" disabled={isSubmitting} className="contact-form__submit">
                     Save Changes
                   </button>
                 </Form>
@@ -147,7 +147,7 @@ const Manager = () => {
           ) : (
             <>
               {contactInfoFields.map((field, index) => (
-                <div key={field} className="form-row columns">
+                <div key={field} className="form-row--not-editing columns">
                   <span className="column is-one-quarter row-title">
                     {contactInfoTitles[index]}
                   </span>
