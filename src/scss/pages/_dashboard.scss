@@ -48,7 +48,7 @@
 	}
 	&__footer {
 		//MH - temp
-		position: relative;
+		position: fixed;
 		z-index: -100;
 		background-color: $lighterGray;
 		color: $blue;
