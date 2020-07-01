@@ -80,11 +80,11 @@ export class Properties extends Component {
         })
     }
 
-    //in future 'test1' will be the searchQuery state variable
+    //in future 'test1' will be the searchQuery state variable. Also, this may need to be async.
     searchProperties = (allProperties) => {
       let output = [];
 
-      for (i=0;i < allProperties.length; i++) {
+      for (var i=0;i < allProperties.length; i++) {
         if(Object.values(allProperties[i]).indexOf('test1') > -1) {
           output.push(allProperties[i]);
         }
@@ -96,6 +96,11 @@ export class Properties extends Component {
       });
 
   };
+
+    setSearchQuery = () => {
+      let searchQuery = document.getElementById("searchQuery").value;
+    };
+
 
     render() {
         return (
@@ -109,7 +114,10 @@ export class Properties extends Component {
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
                             <div className="search-section">
-                              <input className="input search is-rounded" placeholder="Search properties by name, address, or property manager"></input>
+                              <input className="input search is-rounded" id="searchQuery" placeholder="Search properties by name, address, or property manager"></input>
+                                <button className="save_button button is-rounded" type="submit">
+                                   Search
+                                </button>
                             </div>
                             <div className="properties-list">
                                 <BootstrapTable
