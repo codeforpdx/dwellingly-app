@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import UserContext from "../UserContext";
+import ToggleEditTable from "../components/ToggleEditTable";
 import * as Yup from "yup";
-import { Formik, Form, Field } from "formik";
 import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
@@ -26,11 +26,6 @@ const validationSchema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
-const FieldError = ({ error }) => {
-  if (!error) return null;
-  return <div className="field-error__message">{error}</div>;
-};
-
 const Manager = () => {
   const { id } = useParams();
   // can remove this once api is configured to return properties and tenants
@@ -42,9 +37,24 @@ const Manager = () => {
   const [isEditing, setEditingStatus] = useState(false);
 
   const handleEditToggle = () => setEditingStatus(!isEditing);
+  const onFormikSubmit = (values, { setSubmitting }) => {
+    setSubmitting(true);
+    setManager({
+      ...manager,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.phone,
+      email: values.email,
+    });
+    {/* fake API call to update data */}
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+      setEditingStatus(false);
+    }, 500);
+  };
 
-  const contactInfoFields = ["firstName", "lastName", "phone", "email"];
-  const contactInfoTitles = ["First Name", "Last Name", "Phone", "Email"];
+  const contactRowTitles = ["First Name", "Last Name", "Phone", "Email"];
 
   // use getManager once /users/?id api endpoint returns properties and tenants for property managers
   const getManager = (context) => {
@@ -78,90 +88,20 @@ const Manager = () => {
       <div className="manager__container__contact__section">
         <h1 className="section-title">CONTACT</h1>
         <div className="contact-details">
-          {isEditing ? (
-            <Formik
-              initialValues={{
-                firstName: manager.firstName,
-                lastName: manager.lastName,
-                phone: manager.phone,
-                email: manager.email,
-              }}
-              onSubmit={(values, { setSubmitting }) => {
-                setSubmitting(true);
-                setManager({
-                  ...manager,
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  phone: values.phone,
-                  email: values.email,
-                });
-                setEditingStatus(false);
-                {
-                  /* fake API call to update data */
-                }
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(false);
-                }, 500);
-              }}
-              validationSchema={validationSchema}
-            >
-              {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-              }) => (
-                <Form onSubmit={handleSubmit}>
-                  {Object.keys(values).map((value, index) => (
-                    <div className="form-row columns" key={value}>
-                      <label
-                        className="column is-one-quarter row-title"
-                        htmlFor={value}
-                      >
-                        {contactInfoTitles[index]}
-                      </label>
-                      <Field
-                        type="text"
-                        name={value}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values[value]}
-                        className="column is-two-quarters contact-form__field--editing"
-                      />
-                      <FieldError
-                        error={errors[value]}
-                        className="column is-one-quarter"
-                      />
-                    </div>
-                  ))}
-                  <button type="submit" disabled={isSubmitting} className="contact-form__submit">
-                    Save Changes
-                  </button>
-                </Form>
-              )}
-            </Formik>
-          ) : (
-            <>
-              {contactInfoFields.map((field, index) => (
-                <div key={field} className="form-row--not-editing columns">
-                  <span className="column is-one-quarter row-title">
-                    {contactInfoTitles[index]}
-                  </span>
-                  <span className="column is-one-quarter contact-form__field--not-editing">
-                    {manager[field]}
-                  </span>
-                </div>
-              ))}
-            </>
-          )}
-        </div>{" "}
-        {/* END contact-details */}
-      </div>{" "}
-      {/* END contact__section */}
+          <ToggleEditTable
+            tableData={{
+              firstName: manager.firstName,
+              lastName: manager.lastName,
+              phone: manager.phone,
+              email: manager.email
+            }}
+            validationSchema={validationSchema}
+            isEditing={isEditing}
+            rowTitles={contactRowTitles}
+            submitHandler={onFormikSubmit}
+          />
+        </div>
+      </div>
       <div className="manager__properties__section">
         <h1 className="section-title">PROPERTIES</h1>
         <div className="manager__properties__container">
@@ -199,3 +139,90 @@ const Manager = () => {
 };
 
 export default Manager;
+
+// {
+//   isEditing ? (
+//     <Formik
+//       initialValues={{
+//         firstName: manager.firstName,
+//         lastName: manager.lastName,
+//         phone: manager.phone,
+//         email: manager.email,
+//       }}
+//       onSubmit={(values, { setSubmitting }) => {
+//         setSubmitting(true);
+//         setManager({
+//           ...manager,
+//           firstName: values.firstName,
+//           lastName: values.lastName,
+//           phone: values.phone,
+//           email: values.email,
+//         });
+//         setEditingStatus(false);
+//         {
+//           /* fake API call to update data */
+//         }
+//         setTimeout(() => {
+//           alert(JSON.stringify(values, null, 2));
+//           setSubmitting(false);
+//         }, 500);
+//       }}
+//       validationSchema={validationSchema}
+//     >
+//       {({
+//         values,
+//         errors,
+//         touched,
+//         handleChange,
+//         handleBlur,
+//         handleSubmit,
+//         isSubmitting,
+//       }) => (
+//         <Form onSubmit={handleSubmit}>
+//           {Object.keys(values).map((value, index) => (
+//             <div className="form-row columns" key={value}>
+//               <label
+//                 className="column is-one-quarter row-title"
+//                 htmlFor={value}
+//               >
+//                 {contactInfoTitles[index]}
+//               </label>
+//               <Field
+//                 type="text"
+//                 name={value}
+//                 onChange={handleChange}
+//                 onBlur={handleBlur}
+//                 value={values[value]}
+//                 className="column is-two-quarters contact-form__field--editing"
+//               />
+//               <FieldError
+//                 error={errors[value]}
+//                 className="column is-one-quarter"
+//               />
+//             </div>
+//           ))}
+//           <button
+//             type="submit"
+//             disabled={isSubmitting}
+//             className="contact-form__submit"
+//           >
+//             Save Changes
+//           </button>
+//         </Form>
+//       )}
+//     </Formik>
+//   ) : (
+//     <>
+//       {contactInfoFields.map((field, index) => (
+//         <div key={field} className="form-row--not-editing columns">
+//           <span className="column is-one-quarter row-title">
+//             {contactInfoTitles[index]}
+//           </span>
+//           <span className="column is-one-quarter contact-form__field--not-editing">
+//             {manager[field]}
+//           </span>
+//         </div>
+//       ))}
+//     </>
+//   );
+// }
