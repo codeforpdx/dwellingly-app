@@ -80,6 +80,23 @@ export class Properties extends Component {
         })
     }
 
+    //in future 'test1' will be the searchQuery state variable
+    searchProperties = (allProperties) => {
+      let output = [];
+
+      for (i=0;i < allProperties.length; i++) {
+        if(Object.values(allProperties[i]).indexOf('test1') > -1) {
+          output.push(allProperties[i]);
+        }
+      };
+
+      this.setState({
+        filteredProperties: output,
+        isFiltered: true
+      });
+
+  };
+
     render() {
         return (
             <UserContext.Consumer>
