@@ -1,7 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import "./toggleEditTable.scss";
-
 
 const FieldError = ({ error }) => {
   if (!error) return null;
@@ -69,5 +69,13 @@ const ToggleEditTable = ({
       ))}
     </>
   );
+
+ToggleEditTable.propTypes = {
+  isEditing: PropTypes.bool.isRequired,
+  tableData: PropTypes.object.isRequired,
+  rowTitles: PropTypes.array.isRequired,
+  submitHandler: PropTypes.func.isRequired,
+  validationSchema: PropTypes.object.isRequired,
+};
 
 export default ToggleEditTable;
