@@ -97,9 +97,10 @@ export class Properties extends Component {
 
   };
 
-    setSearchQuery = () => {
+    setSearchQuery = async () => {
       let searchQuery = document.getElementById("searchQuery").value;
-      console.log(searchQuery);
+      await this.setState({searchQuery: searchQuery});
+      await console.log(this.state);
     };
 
 
