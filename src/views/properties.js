@@ -121,7 +121,7 @@ export class Properties extends Component {
                             <div className="properties-list">
                                 <BootstrapTable
                                     keyField='id'
-                                    data={ this.state.properties }
+                                    data={ this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties }
                                     columns={ columns }
                                     selectRow={ selectRow }
                                     bootstrap4={true}
