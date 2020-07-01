@@ -54,13 +54,15 @@ const selectRow = {
 export class Properties extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
         properties: [],
+        filteredProperties: [],
+        isFiltered: false
         }
 
         this.getProperties = this.getProperties.bind(this)
-    }    
+    }
 
     componentDidMount() {
         this.getProperties(this.context);
