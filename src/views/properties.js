@@ -58,8 +58,7 @@ export class Properties extends Component {
         this.state = {
         properties: [],
         filteredProperties: [],
-        isFiltered: false,
-        searchQuery: null
+        isFiltered: false
         }
 
         this.getProperties = this.getProperties.bind(this)
@@ -80,28 +79,26 @@ export class Properties extends Component {
         })
     }
 
-    //in future 'test1' will be the searchQuery state variable. Also, this may need to be async.
-    searchProperties = (allProperties) => {
+    searchProperties = async () => {
+      let allProperties = this.state.properties;
       let output = [];
+      let searchQuery = document.getElementById("searchQuery").value;
+
 
       for (var i=0;i < allProperties.length; i++) {
-        if(Object.values(allProperties[i]).indexOf('test1') > -1) {
+        if(Object.values(allProperties[i]).indexOf(searchQuery) > -1) {
           output.push(allProperties[i]);
         }
       };
 
-      this.setState({
+      await this.setState({
         filteredProperties: output,
         isFiltered: true
       });
 
-  };
-
-    setSearchQuery = async () => {
-      let searchQuery = document.getElementById("searchQuery").value;
-      await this.setState({searchQuery: searchQuery});
       await console.log(this.state);
-    };
+
+  };
 
 
     render() {
@@ -117,7 +114,7 @@ export class Properties extends Component {
                             </div>
                             <div className="search-section">
                               <input className="input search is-rounded" id="searchQuery" placeholder="Search properties by name, address, or property manager"></input>
-                                <button className="save_button button is-rounded" onClick={this.setSearchQuery}type="submit">
+                                <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
                                    Search
                                 </button>
                             </div>
