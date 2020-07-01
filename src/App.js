@@ -1,24 +1,29 @@
-import React from 'react';
-import './App.scss';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { LoginForm } from './views/login';
-import { SignupForm } from './views/signup';
-import { NavMenu } from './components/NavigationMenu/navigationMenu.js';
-import { Dashboard } from './views/dashboard';
-import { RequestAccess } from './views/requestAccess';
-import { Properties } from './views/properties';
-import { Tenants } from './views/tenants';
-import { Terms } from './views/terms';
-import { Tickets } from './views/tickets';
-import EmergencyContacts from './views/emergencyContacts';
-import AddEmergencyContact from './views/addEmergencyContact';
-import { PrivateRoute, auth, parseJwt, checkForStoredAccessToken, checkForStoredRefreshToken } from './Auth';
-import Header from './components/Header/index';
-import Footer from './components/Footer/index';
-import { AddProperty } from './views/addProperty';
-import { JoinStaff } from './views/joinStaff';
-import { AddStaffMember } from './views/addStaffMember';
-import UserContext from './UserContext';
+import React from "react";
+import "./App.scss";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { LoginForm } from "./views/login";
+import { NavMenu } from "./components/NavigationMenu/navigationMenu.js";
+import { Dashboard } from "./views/dashboard";
+import { RequestAccess } from "./views/requestAccess";
+import { Properties } from "./views/properties";
+import { Terms } from "./views/terms";
+import EmergencyContacts from "./views/emergencyContacts";
+import AddEmergencyContact from "./views/addEmergencyContact";
+import {
+	PrivateRoute,
+	auth,
+	parseJwt,
+	checkForStoredAccessToken,
+	checkForStoredRefreshToken,
+} from "./Auth";
+import Header from "./components/Header/index";
+import Footer from "./components/Footer/index";
+import { AddProperty } from "./views/addProperty";
+import Managers from "./views/managers";
+import Manager from "./views/manager";
+import { JoinStaff } from "./views/joinStaff";
+import { AddStaffMember } from "./views/addStaffMember";
+import UserContext from "./UserContext";
 
 var refreshTimeout;
 
