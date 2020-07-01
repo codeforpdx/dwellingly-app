@@ -103,6 +103,7 @@ export class Properties extends Component {
     clearSearch = async () => {
       await this.setState({isFiltered: false});
       await console.log(this.state);
+      document.getElementById("searchQuery").value = "";
     };
 
 
