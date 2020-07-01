@@ -79,7 +79,7 @@ export class Properties extends Component {
         })
     }
 
-    searchProperties = async () => {
+    searchProperties = () => {
       let allProperties = this.state.properties;
       let output = [];
       let searchQuery = document.getElementById("searchQuery").value;
@@ -91,18 +91,15 @@ export class Properties extends Component {
         }
       };
 
-      await this.setState({
+      this.setState({
         filteredProperties: output,
         isFiltered: true
       });
 
-      // await console.log(this.state);
-
   };
 
-    clearSearch = async () => {
-      await this.setState({isFiltered: false});
-      await console.log(this.state);
+    clearSearch = () => {
+      this.setState({isFiltered: false});
       document.getElementById("searchQuery").value = "";
     };
 
@@ -123,7 +120,7 @@ export class Properties extends Component {
                                 <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
                                    Search
                                 </button>
-                                <button className="save_button button is-rounded" onClick={this.clearSearch}type="submit">
+                                <button className="save_button button is-rounded clear" onClick={this.clearSearch}type="submit">
                                    Clear
                                 </button>
                             </div>
