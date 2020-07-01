@@ -76,8 +76,10 @@ const Manager = () => {
 
   return (
     <div className="manager__container">
-      <div className="title__section">
-        <h2>{manager.firstName} {manager.lastName}</h2>
+      <div className="title__container">
+        <h2>
+          {manager.firstName} {manager.lastName}
+        </h2>
         <button
           className={`rounded${isEditing ? "--is-editing" : ""}`}
           onClick={handleEditToggle}
@@ -86,8 +88,8 @@ const Manager = () => {
           <i className="fas fa-pen icon"></i>
         </button>
       </div>
-      <div className="manager__container__contact__section">
-        <h1 className="section-title">CONTACT</h1>
+      <div className="manager__contact">
+        <h1 className="secondary-title">CONTACT</h1>
         <div className="contact-details">
           <ToggleEditTable
             tableData={{
@@ -103,8 +105,8 @@ const Manager = () => {
           />
         </div>
       </div>
-      <div className="manager__properties__section">
-        <h1 className="section-title">PROPERTIES</h1>
+      <div className="manager__properties">
+        <h1 className="secondary-title">PROPERTIES</h1>
         <div className="manager__properties__container">
           {manager.properties.map((property) => (
             <div key={property.name} className="manager__property__tile">
