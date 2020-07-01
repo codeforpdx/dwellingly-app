@@ -121,6 +121,7 @@ const Managers = () => {
         selectRow={selectRow}
         bootstrap4={true}
         headerClasses="table-header"
+        wrapperClasses="managers__table"
       />
     </div>
   );
