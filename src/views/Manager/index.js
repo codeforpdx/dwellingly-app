@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import UserContext from "../UserContext";
-import ToggleEditTable from "../components/ToggleEditTable";
+import UserContext from "../../UserContext";
+import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
 import * as axios from "axios";
-import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
+import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
