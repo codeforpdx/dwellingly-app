@@ -1,3 +1,5 @@
+@import "../../scss/variables.scss";
+
 .tickets {
     &__container {
         height: 100vh;
@@ -23,10 +25,32 @@
             }
         }
 
+        .react-bootstrap-table-pagination {
+          display: flex;
+          justify-content: flex-end;
+          justify-items: right;
+        }
+
         .table-header {
             background-color: $lighterGray;
         }
     }
+}
+
+.pagination {
+  .page-item {
+    & a {color: $brandBlue;}
+    &.active {
+      a {color: $blue;}
+    }
+    .button {
+      // margin-left: 20px;
+      color: white;
+      background-color: $blue;
+      border: 0;
+      height: 2em;
+    }    
+  }
 }
 
 .btn-group {

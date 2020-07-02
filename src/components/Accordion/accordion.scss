@@ -5,6 +5,8 @@
   transition: max-height 500ms ease-in-out;
   max-height: 1000px;
   margin-bottom: .75rem;
+  display: flex;
+  flex-direction: column;
   &.isCollapsed {
       max-height: 45px;
   }

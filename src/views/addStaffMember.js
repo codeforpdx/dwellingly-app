@@ -8,8 +8,8 @@ export const InfoField = ({label, info}) => {
 		<div>
 			<hr className="line" ></hr>
 			<span className="input-field"> {label}
-				<p className={infoField} contentEditable>
-			     	{info}
+				<p className={infoField} contentEditable required>
+
 			    </p>
 		    </span>
 	    </div>
@@ -17,6 +17,7 @@ export const InfoField = ({label, info}) => {
 }
 
 export const AddStaffMember = () => {
+
 
 	const handleSave = () => {
 		// TODO: Save the new staff member
@@ -26,10 +27,10 @@ export const AddStaffMember = () => {
 		<>
 			<div className="add-staff-page-spacing" >
 				<div className="page-title page-title-spacing" > Add a New Staff Member </div>
-				<InfoField label="First Name" info="Kiki" />
-				<InfoField label="Last Name" info="Smith" />
-				<InfoField label="Phone" info="(503) 123-1234" />
-				<InfoField label="Email" info="staff@joinpdx.org" />
+				<InfoField label="First Name" />
+				<InfoField label="Last Name" />
+				<InfoField label="Phone" />
+				<InfoField label="Email" />
 				<hr className="line" ></hr>
 				<label className="checkbox staff-make-admin-padding">
 					<span className="admin-check-padding make-admin-font">
