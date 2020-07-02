@@ -12,8 +12,6 @@ const validationSchema = Yup.object().shape({
     address: Yup.string()
         .max(250, "*Address can't be longer than 250 characters")
         .required("*Address is required"),
-    unit: Yup.string()
-        .max(50, "*Unit can't be longer than 50 characters"),
     city: Yup.string()
         .max(50, "*City can't be longer than 50 characters")
         .required("*City is required"),
@@ -22,7 +20,9 @@ const validationSchema = Yup.object().shape({
         .required("*Zipcode is required"),
     state: Yup.string()
         .max(50, "*State can't be longer than 50 characters")
-        .required("*State is required")
+        .required("*State is required"),
+    units: Yup.string()
+        .max(50, "*Unit can't be longer than 50 characters"),
 });
 
 const formHandler = (data, context) => {
@@ -56,10 +56,10 @@ export class AddProperty extends Component {
                             initialValues={{
                                 name: "",
                                 address: "",
-                                unit: "",
                                 city: "",
                                 state: "",
-                                zipcode: ""
+                                zipcode: "",
+                                units: "",
                             }}
                             validationSchema={validationSchema}
                             onSubmit={(values, {setSubmitting, resetForm})=> {
@@ -100,19 +100,6 @@ export class AddProperty extends Component {
                                             {errors.address ? (<div className="error-message">{errors.address}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
-                                            <label className="column is-one-fifth" htmlFor="unit">Unit</label>
-                                            <Field
-                                                className="column form-field"
-                                                type="text"
-                                                name="unit"
-                                                onChange={handleChange}
-                                                value={values.unit}
-                                                placeholder="Unit number"
-                                                error={errors.unit}
-                                            />
-                                            {errors.unit ? (<div className="error-message">{errors.unit}</div>) : null}
-                                        </div>
-                                        <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="city">City</label>
                                             <Field
                                                 className="column form-field"
@@ -147,6 +134,19 @@ export class AddProperty extends Component {
                                                 placeholder="97217"
                                             />
                                             {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
+                                        </div>
+                                        <div className="form-row columns">
+                                            <label className="column is-one-fifth" htmlFor="units">Units</label>
+                                            <Field
+                                                className="column form-field"
+                                                type="text"
+                                                name="units"
+                                                onChange={handleChange}
+                                                value={values.units}
+                                                placeholder="Number of units"
+                                                error={errors.units}
+                                            />
+                                            {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
                                         </div>
                                         {/* This field needs to be included after
                                             the units parameter is added to the api endpoint */}
