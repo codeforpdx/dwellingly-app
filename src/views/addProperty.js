@@ -148,20 +148,7 @@ export class AddProperty extends Component {
                                             />
                                             {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
                                         </div>
-                                        {/* This field needs to be included after
-                                            the units parameter is added to the api endpoint */}
-                                        {/* <div className="form-row columns">
-                                            <label className="column is-one-fifth" htmlFor="zipcode">Units</label>
-                                            <Field
-                                                className="column form-field"
-                                                type="text"
-                                                name="units"
-                                                onChange={handleChange}
-                                                value={values.zipcode}
-                                                placeholder="10"
-                                            />
-                                        </div> */}
-
+                        
                                         {/* This element will use a list of property managers
                                             and will need to be implemented later. react-select
                                             can be used to select from list retrieved from endpoint */}
