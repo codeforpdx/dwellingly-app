@@ -43,16 +43,8 @@
 }
 
 .add-button {
-	background-color: $blue;
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	border-radius: 20px;
-	padding: 8px;
-	padding-left: 10px;
-	padding-right: 10px;
-	font-size: 13.3px;
-	border-width: 2px;
-	border-style: outset;
-	border-color: #767676;
+	color: white!important;
+	background-color: $blue!important;
+	margin-top: 25px;
+
 }
