@@ -82,11 +82,11 @@ export class Properties extends Component {
     searchProperties =  () => {
       let allProperties = this.state.properties;
       let output = [];
-      let searchQuery = document.getElementById("searchQuery").value;
+      let searchQuery = document.getElementById("searchQuery").value.toLowerCase().trim();
 
        if(searchQuery.length > 0){
           for (var i=0;i < allProperties.length; i++) {
-            if(Object.values(allProperties[i]).indexOf(searchQuery) > -1) {
+              if (Object.values(allProperties[i]).toString().toLowerCase().includes(searchQuery)){
               output.push(allProperties[i]);
             }
           };
