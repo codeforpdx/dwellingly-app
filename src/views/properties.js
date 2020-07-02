@@ -79,23 +79,23 @@ export class Properties extends Component {
         })
     }
 
-    searchProperties = () => {
+    searchProperties =  () => {
       let allProperties = this.state.properties;
       let output = [];
       let searchQuery = document.getElementById("searchQuery").value;
 
+       if(searchQuery.length > 0){
+          for (var i=0;i < allProperties.length; i++) {
+            if(Object.values(allProperties[i]).indexOf(searchQuery) > -1) {
+              output.push(allProperties[i]);
+            }
+          };
 
-      for (var i=0;i < allProperties.length; i++) {
-        if(Object.values(allProperties[i]).indexOf(searchQuery) > -1) {
-          output.push(allProperties[i]);
-        }
-      };
-
-      this.setState({
-        filteredProperties: output,
-        isFiltered: true
-      });
-
+          this.setState({
+            filteredProperties: output,
+            isFiltered: true
+          });
+      }
   };
 
     clearSearch = () => {
