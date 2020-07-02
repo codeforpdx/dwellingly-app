@@ -19,7 +19,7 @@ describe("Managers Component", () => {
   });
   it("Show form when pen icon is clicked", () => {
     fireEvent.click(wrapper.getByRole("button"));
-    expect(wrapper.getAllByRole("form")).toHaveLength(1);
+    expect(wrapper.getAllByRole("textbox")).toHaveLength(4);
   });
   it("Should update contact info when Formik field is edited", async () => {    
     fireEvent.click(wrapper.getByRole("button"));
