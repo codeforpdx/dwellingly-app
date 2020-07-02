@@ -22,7 +22,9 @@ const validationSchema = Yup.object().shape({
         .required("*Zipcode is required"),
     state: Yup.string()
         .max(50, "*State can't be longer than 50 characters")
-        .required("*State is required")
+        .required("*State is required"),
+    units: Yup.string()
+        .max(50, "*Unit can't be longer than 50 characters"),
 });
 
 const formHandler = (data, context) => {
@@ -58,7 +60,8 @@ const formHandler = (data, context) => {
                                 address: "",
                                 city: "",
                                 state: "",
-                                zipcode: ""
+                                zipcode: "",
+                                units: "",
                             }}
                             validationSchema={validationSchema}
                             onSubmit={(values, {setSubmitting, resetForm})=> {
@@ -134,20 +137,20 @@ const formHandler = (data, context) => {
                                             />
                                             {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
                                         </div>
-                                        {/* This field needs to be included after
-                                            the units parameter is added to the api endpoint */}
-                                        {/* <div className="form-row columns">
-                                            <label className="column is-one-fifth" htmlFor="zipcode">Units</label>
+                                        <div className="form-row columns">
+                                            <label className="column is-one-fifth" htmlFor="units">Units</label>
                                             <Field
                                                 className="column form-field"
                                                 type="text"
                                                 name="units"
                                                 onChange={handleChange}
-                                                value={values.zipcode}
-                                                placeholder="10"
+                                                value={values.units}
+                                                placeholder="Number of units"
+                                                error={errors.units}
                                             />
-                                        </div> */}
-
+                                            {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
+                                        </div>
+                        
                                         {/* This element will use a list of property managers
                                             and will need to be implemented later. react-select
                                             can be used to select from list retrieved from endpoint */}
