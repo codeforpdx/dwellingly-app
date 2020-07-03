@@ -5,6 +5,8 @@ import UserContext from '../UserContext';
 import { Form, Field, Formik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import useMountEffect from '../utils/useMountEffect';
+import { Link } from 'react-router-dom';
+
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -39,7 +41,7 @@ const FieldError = ({ error }) => {
     );
 };
 
-const NumberSubForm = ({ i, values, errors, handleChange }) => { 
+const NumberSubForm = ({ i, values, errors, handleChange }) => {
     const subFormErrors = errors.contact_numbers && errors.contact_numbers[i] ? errors.contact_numbers[i] : null;
     return (
         <>
@@ -107,7 +109,7 @@ const AddEmergencyContact = (props) => {
             setInitialized(true);
             return;
         }
-        
+
         setEditMode(true);
         axios
             .get(`/api/emergencycontacts/${id}`, makeAuthHeaders(userContext))
@@ -121,7 +123,7 @@ const AddEmergencyContact = (props) => {
     const formHandler = data => {
         const startPost = () => axios.post(`/api/emergencycontacts`, data, makeAuthHeaders(userContext));
         const startPut = () => axios.put(`/api/emergencycontacts/${data.id}`, data, makeAuthHeaders(userContext));
-        const axiosReq = () => editMode ? startPut() : startPost();            
+        const axiosReq = () => editMode ? startPut() : startPost();
 
         axiosReq()
             .then(() => {
@@ -130,7 +132,7 @@ const AddEmergencyContact = (props) => {
             .catch(error => alert(error));
         setLoading(true);
     }
-  
+
     return (
         <div className="add-emergency-contact__container">
             <h2 className="page-title">{editMode ? 'Edit' : 'Create'} Emergency Contact</h2>
@@ -176,12 +178,12 @@ const AddEmergencyContact = (props) => {
                                     />
                                     <FieldError error={errors.description} />
                                 </div>
-                                <FieldArray 
+                                <FieldArray
                                     name="contact_numbers"
                                     render={numbersArrayFields => {
                                         const addRowValid = (values.contact_numbers[0].number !== "") && (!errors.contact_numbers || !errors.contact_numbers[values.contact_numbers.length - 1].number);
                                         const addRow = () => addRowValid && numbersArrayFields.push({ number: "", numtype: "", extension: "" });
-                                    
+
                                         return(
                                             <>
                                                 {values.contact_numbers.map((_, i) => (
@@ -200,9 +202,9 @@ const AddEmergencyContact = (props) => {
                                     <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>
                                         {editMode ? 'UPDATE' : 'ADD'} EMERGENCY NUMBER
                                     </button>
-                                    <button className="button is-dark is-rounded" onClick={() => history.push('/emergency')} type="button">
+                                    <Link className="button is-dark is-rounded" to='/emergency'>
                                         CANCEL
-                                    </button>
+                                    </Link>
                                 </div>
                             </Form>
                         </div>
