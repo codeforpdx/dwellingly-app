@@ -13,38 +13,37 @@
 
 // NavMenu
 .is-sidebar-menu {
-	float: left;
-	position: relative;
-	min-height: 100vh;
-	width: 250px;
-	padding-bottom: 99999px;
+  float: left;
+  position: relative;
+  min-height: 100vh;
+  width: 250px;
+  padding-bottom: 99999px;
   margin-bottom: -99999px;
-	padding-top: 9px;
-	z-index: 0;
+  padding-top: 9px;
+  z-index: 0;
 }
 
-.is-menu-link{
-	padding-left: 2px;
+.is-menu-link {
+  padding-left: 2px;
 }
 
-.is-padding{
-	padding-bottom: 5px;
+.is-padding {
+  padding-bottom: 5px;
 }
 
-.is-logout-button{
-	padding-right: 30px;
+.is-logout-button {
+  padding-right: 30px;
 }
 
-.is-inactive-link{
+.is-inactive-link {
   pointer-events: none;
   cursor: default;
 }
 
-.is-child-link{
+.is-child-link {
   padding-left: 15px;
 }
 
-.is-username-link{
+.is-username-link {
   padding-bottom: 30px;
 }
-

@@ -6,68 +6,68 @@ $lightGray: #d1d1d1;
 
 // Card Shape
 .card-length {
-	width: 280px;
-	height: 250px;
+  width: 280px;
+  height: 250px;
 }
 
 .card-separating-space {
-	padding-top: 30px;
+  padding-top: 30px;
 }
 
 // Card Fonts
 .tiny-font {
-	font-size: 10px;
-	color: $lightGray;
+  font-size: 10px;
+  color: $lightGray;
 }
 
 .tiny-link {
-	font-size: 10px;
-	display: block;
-	padding-top: 0;
+  font-size: 10px;
+  display: block;
+  padding-top: 0;
 }
 
 .tiny-link-info {
-	font-size: 10px;
-	display: block;
-	padding-top: 20px;
+  font-size: 10px;
+  display: block;
+  padding-top: 20px;
 }
 
 .info-font {
-	font-size: 13px;
-	color: $darkGray;
+  font-size: 13px;
+  color: $darkGray;
 }
 
 .number-font {
-	font-weight: bold;
-	display: inline-block;
+  font-weight: bold;
+  display: inline-block;
 }
 
 // Name
 .name-font {
-	font-weight: bold;
-	font-size: 15px;
-	color: $brandBlue;
+  font-weight: bold;
+  font-size: 15px;
+  color: $brandBlue;
 }
 
 .name-spacing {
-	padding-top: 10px;
-	padding-left: 24px;
-	display: flex;
-    justify-content: space-between;
+  padding-top: 10px;
+  padding-left: 24px;
+  display: flex;
+  justify-content: space-between;
 }
 
 // Miscellaneous
 .cancel-button {
-	padding-right: 10px;
-	padding-bottom: 0px;
+  padding-right: 10px;
+  padding-bottom: 0px;
 }
 
 .admin-label {
-	color: $blue;
-	font-size: 13px;
-	font-weight: bold;
+  color: $blue;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .empty-space {
-	padding-top: 20px;
+  padding-top: 20px;
 }

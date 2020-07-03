@@ -2,47 +2,52 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 //import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../UserContext';
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
 // import Accordion from '../components/Accordion';
 import * as axios from 'axios';
 
-const columns = [{
+const columns = [
+  {
     dataField: 'name',
     text: 'Name',
     sort: true,
     headerStyle: () => {
-      return { width: "20%" };
-    }
-  }, {
+      return { width: '20%' };
+    },
+  },
+  {
     dataField: 'property',
     text: 'Property',
     sort: true,
     headerStyle: () => {
-      return { width: "20%" };
-    }
-  }, {
+      return { width: '20%' };
+    },
+  },
+  {
     dataField: 'address',
     text: 'Join Staff',
     sort: true,
     headerStyle: () => {
-      return { width: "20%" };
-    }
-  }, {
+      return { width: '20%' };
+    },
+  },
+  {
     dataField: 'tenants',
     text: 'Added On',
     sort: true,
     headerStyle: () => {
-      return { width: "20%" };
-    }
-}];
+      return { width: '20%' };
+    },
+  },
+];
 
 const selectRow = {
   mode: 'checkbox',
   clickToSelect: true,
   sort: true,
   headerColumnStyle: () => {
-    return { width: "5%" };
-  }
+    return { width: '5%' };
+  },
 };
 
 // const pageButtonRenderer = ({
@@ -80,59 +85,63 @@ const selectRow = {
 // };
 
 export class Tenants extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-        tenants: [],
-        }
+  constructor(props) {
+    super(props);
 
-        // this.getTenants = this.getTenants.bind(this)
-    }    
+    this.state = {
+      tenants: [],
+    };
 
-    componentDidMount() {
-        // this.getTenants(this.context);
-    }
+    // this.getTenants = this.getTenants.bind(this)
+  }
 
-    // getTenants = (context) => {
-    //     axios.get(`${process.env.REACT_APP_API_URL}/api/tenants`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
-    //     .then((response) => {
-    //         this.setState({properties: response.data.properties});
-    //     })
-    //     .catch((error) => {
-    //         alert(error);
-    //         console.log(error);
-    //     })
-    // }
+  componentDidMount() {
+    // this.getTenants(this.context);
+  }
 
-    render() {
-      return (
-          <UserContext.Consumer>
-              {session => {
-                  this.context = session;
-                  return (
-                      <div className="properties__container">
-                          <div className="section-header">
-                              <h2 className="page-title">Tenants</h2>
-                              <Link className="button is-rounded" to="/add/tenant">+ ADD NEW</Link>
-                          </div>
-                          <div className="search-section">
-                              <input className="input search is-rounded" placeholder="Search Tenants by name, property, or JOIN staff"></input>
-                            </div>
-                          <div className="properties-list">
-                              <BootstrapTable
-                                  keyField='id'
-                                  data={ this.state.tenants }
-                                  columns={ columns }
-                                  selectRow={ selectRow }
-                                  bootstrap4={true}
-                                  headerClasses="table-header"
-                                  />
-                          </div>
-                      </div>
-                  )
-              }}
-          </UserContext.Consumer>
-      )
+  // getTenants = (context) => {
+  //     axios.get(`${process.env.REACT_APP_API_URL}/api/tenants`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+  //     .then((response) => {
+  //         this.setState({properties: response.data.properties});
+  //     })
+  //     .catch((error) => {
+  //         alert(error);
+  //         console.log(error);
+  //     })
+  // }
+
+  render() {
+    return (
+      <UserContext.Consumer>
+        {(session) => {
+          this.context = session;
+          return (
+            <div className="properties__container">
+              <div className="section-header">
+                <h2 className="page-title">Tenants</h2>
+                <Link className="button is-rounded" to="/add/tenant">
+                  + ADD NEW
+                </Link>
+              </div>
+              <div className="search-section">
+                <input
+                  className="input search is-rounded"
+                  placeholder="Search Tenants by name, property, or JOIN staff"></input>
+              </div>
+              <div className="properties-list">
+                <BootstrapTable
+                  keyField="id"
+                  data={this.state.tenants}
+                  columns={columns}
+                  selectRow={selectRow}
+                  bootstrap4={true}
+                  headerClasses="table-header"
+                />
+              </div>
+            </div>
+          );
+        }}
+      </UserContext.Consumer>
+    );
   }
 }

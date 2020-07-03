@@ -1,4 +1,4 @@
-@import "../../scss/variables.scss";
+@import '../../scss/variables.scss';
 
 .collapsible {
   overflow: hidden;
@@ -6,13 +6,13 @@
   max-height: 1000px;
   margin-bottom: 5px;
   &.isCollapsed {
-      max-height: 35px;
-      .fa-chevron-down {
-          transform: rotate(-90deg);
-      }
+    max-height: 35px;
+    .fa-chevron-down {
+      transform: rotate(-90deg);
+    }
   }
   &.isDisabled {
-    .collapsible__header_title, 
+    .collapsible__header_title,
     .collapsible__toggle {
       color: $gray;
       cursor: default;

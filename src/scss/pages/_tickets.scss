@@ -1,47 +1,51 @@
-@import "../../scss/variables.scss";
+@import '../../scss/variables.scss';
 
 .tickets {
-    &__container {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        padding: 45px;
-        .section-header {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-        .search-section {
-            margin: 20px;
-        }
-
-        .filters-container {
-            background-color: $lighterGray;
-            margin-bottom: 10px;
-            padding: 10px;
-            color: $blue;
-            .fa-filter {
-                margin-right: 10px;
-            }
-        }
-
-        .react-bootstrap-table-pagination {
-          display: flex;
-          justify-content: flex-end;
-          justify-items: right;
-        }
-
-        .table-header {
-            background-color: $lighterGray;
-        }
+  &__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 45px;
+    .section-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
+    .search-section {
+      margin: 20px;
+    }
+
+    .filters-container {
+      background-color: $lighterGray;
+      margin-bottom: 10px;
+      padding: 10px;
+      color: $blue;
+      .fa-filter {
+        margin-right: 10px;
+      }
+    }
+
+    .react-bootstrap-table-pagination {
+      display: flex;
+      justify-content: flex-end;
+      justify-items: right;
+    }
+
+    .table-header {
+      background-color: $lighterGray;
+    }
+  }
 }
 
 .pagination {
   .page-item {
-    & a {color: $brandBlue;}
+    & a {
+      color: $brandBlue;
+    }
     &.active {
-      a {color: $blue;}
+      a {
+        color: $blue;
+      }
     }
     .button {
       // margin-left: 20px;
@@ -49,7 +53,7 @@
       background-color: $blue;
       border: 0;
       height: 2em;
-    }    
+    }
   }
 }
 

@@ -1,14 +1,14 @@
-@import "../../scss/variables.scss";
+@import '../../scss/variables.scss';
 
 .accordion {
   overflow: hidden;
   transition: max-height 500ms ease-in-out;
   max-height: 1000px;
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   display: flex;
   flex-direction: column;
   &.isCollapsed {
-      max-height: 45px;
+    max-height: 45px;
   }
   &__header {
     background-color: $lighterGray;

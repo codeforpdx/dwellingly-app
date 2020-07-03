@@ -1,102 +1,102 @@
 // Colors
-$specialGrey: #C8C8C8;
+$specialGrey: #c8c8c8;
 
 // Dropdown
 .drop-button {
-	width: 300px;
+  width: 300px;
 }
 
 .drop-button-content {
-	font-weight: normal;
+  font-weight: normal;
 }
 
 .drop-button-start {
-	padding-left: 250px;
+  padding-left: 250px;
 }
 
 .drop-button-prop {
-	padding-left: 110px;
+  padding-left: 110px;
 }
 
 .drop-button-join {
-	padding-left: 167px;
+  padding-left: 167px;
 }
 
 .radio-dropdown {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 .dropdown-content-width {
-	width: 295px;
+  width: 295px;
 }
 
 .dropdown-menu-place {
-	padding-left: 13px;
+  padding-left: 13px;
 }
 
 // Subtitles
 .sub-title {
-	color: $brandBlue;
-    font-weight: bold;
-    padding-top: 30px;
+  color: $brandBlue;
+  font-weight: bold;
+  padding-top: 30px;
 }
 
 .sub-title-padding {
-	padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 // Contact Section
 .line {
-	border: 1px solid $specialGrey;
-	margin-top: 10px; 
-	margin-bottom: 10px;
-	width: 800px;
+  border: 1px solid $specialGrey;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 800px;
 }
 
 .name-field {
-	width: 750px;
-	padding-left: 90px;
+  width: 750px;
+  padding-left: 90px;
 }
 
 .phone-field {
-	width: 750px;
-	padding-left: 121px;
+  width: 750px;
+  padding-left: 121px;
 }
 
 .email-field {
-	width: 750px;
-	padding-left: 127px;
+  width: 750px;
+  padding-left: 127px;
 }
 
 .input-field {
-	display: flex;
-  	flex-flow: row wrap;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 // Page Length
 .button-padding {
-	padding-bottom: 74px;
+  padding-bottom: 74px;
 }
 
 .bottom-padding {
-	padding-bottom: 763px;
+  padding-bottom: 763px;
 }
 
 .bottom-padding-join {
-	padding-bottom: 726px;
+  padding-bottom: 726px;
 }
 
 .bottom-padding-property {
-	padding-bottom: 659px;
+  padding-bottom: 659px;
 }
 
 // JOIN Staff part
 .make-admin-padding {
-	padding-top: 15px;
+  padding-top: 15px;
 }
 
 .admin-check-padding {
-	padding-right: 10px;
+  padding-right: 10px;
 }
 
 // Property search part
@@ -106,30 +106,29 @@ $specialGrey: #C8C8C8;
 
 // Buttons
 .cancel-button {
-	padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 .access-button {
-	color: white;
-    background-color: $blue;
-    border-radius: 20px;
-    border-width: 0px;
-    padding: 7px 20px;
-    font-weight: bold;
-    font-size: 12px;
+  color: white;
+  background-color: $blue;
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 7px 20px;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .set-access-button {
-	padding-top: 11px;
-	display: inline-block;
-	margin: 0 10px;
+  padding-top: 11px;
+  display: inline-block;
+  margin: 0 10px;
 }
 
 // Miscellaneous
 .request-page {
-	padding-left: 40px;
-	padding-top: 30px;
-	display: flex;
-    flex-direction: column;
-    
+  padding-left: 40px;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
 }

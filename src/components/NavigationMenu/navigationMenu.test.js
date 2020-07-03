@@ -24,7 +24,10 @@ describe('MenuLink Component', () => {
   });
 
   it('should use the class "has-text-black" when the href prop matches the path in useLocation()', () => {
-    const component = setUp(MenuLink, { name: 'Manage Managers', href: '/manage/managers' });
+    const component = setUp(MenuLink, {
+      name: 'Manage Managers',
+      href: '/manage/managers',
+    });
     const wrapper = component.find('Link');
     expect(wrapper.hasClass('has-text-black')).toBeTruthy();
   });
