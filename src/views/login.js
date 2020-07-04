@@ -36,7 +36,7 @@ export class LoginForm extends React.Component {
                   return (
                     <>
                       <Form className="login__form-container">
-                        <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly logo"></img>
+                        <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly Logo"></img>
                         <Field
                           className="form-field login__form-field"
                           type="text"

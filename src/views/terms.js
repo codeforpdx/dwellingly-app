@@ -6,8 +6,8 @@ export class Terms extends React.Component {
     return (
       <>
       <Header/>
-      <div class='container'>
-        <h2 class='subtitle'>Terms and Conditions</h2>
+      <div className='container'>
+        <h2 className='subtitle'>Terms and Conditions</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin cursus
           nibh a nisi vestibulum, id laoreet nibh blandit. Aliquam ut
@@ -25,11 +25,11 @@ export class Terms extends React.Component {
           elementum dignissim non vel quam.
         </p>
         <br />
-        <div class='buttons'>
-          <button class='button is-info has-text-weight-bold is-rounded'>
+        <div className='buttons'>
+          <button className='button is-info has-text-weight-bold is-rounded'>
             AGREE
           </button>
-          <button class='button has-background-grey has-text-weight-bold has-text-white is-rounded'>
+          <button className='button has-background-grey has-text-weight-bold has-text-white is-rounded'>
             DISAGREE
           </button>
         </div>

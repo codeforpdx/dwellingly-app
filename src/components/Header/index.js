@@ -11,9 +11,9 @@ const Header = (props) => {
           <img src={dwellinglylogo} alt="dwellingly logo" />
         </Link>
       </div>
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="is-logout-button">
+      <div className="navbar-end">
+        <div className="navbar-item">
+          <div className="is-logout-button">
             <LogOutButton />
           </div>
         </div>
