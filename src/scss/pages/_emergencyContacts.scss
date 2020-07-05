@@ -1,13 +1,5 @@
 .emergency_contacts {
     &__container {
-        height: 100vh;
-        flex-grow: 1;
-        max-width: 80%;
-        
-        display: flex;
-        flex-direction: column;
-        padding: 45px;
-        
         .section-header {
             display: flex;
             flex-direction: row;

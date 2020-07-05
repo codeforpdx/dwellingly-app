@@ -96,7 +96,7 @@ export class Properties extends Component {
                 {session => {
                     this.context = session;
                     return (
-                        <div className="properties__container">
+                        <div>
                             <div className="section-header">
                                 <h2 className="page-title">Properties</h2>
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>

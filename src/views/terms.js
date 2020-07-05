@@ -6,7 +6,7 @@ export class Terms extends React.Component {
     return (
       <>
       <Header/>
-      <div className='container'>
+      <div>
         <h2 className='subtitle'>Terms and Conditions</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin cursus

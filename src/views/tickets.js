@@ -121,7 +121,7 @@ export class Tickets extends Component {
                 {session => {
                     this.context = session;
                     return (
-                        <div className="tickets__container">
+                        <div className="tickets">
                             <div className="section-header">
                                 <h2 className="page-title">Tickets</h2>
                             </div>

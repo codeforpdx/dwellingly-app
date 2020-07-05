@@ -96,53 +96,49 @@ export const Dashboard = (props) => {
 
     return (
         <>
-            <div className="dashboard__container">
-                <div className="dashboard__main_container">
-                    <div className="dashboard__main">
-                        <h2 className="page-title">Admin Dashboard</h2>
-                        <div className="dashboard__modules_container">
-                            <DashboardModule
-                                data={MODULE_DATA.openTickets}
-                            />
-                            <DashboardModule
-                                data={MODULE_DATA.reports}
-                            />
-                            <DashboardModule
-                                data={MODULE_DATA.managers}
-                            />
-                        </div>
-                        <Collapsible
-                            title="New Staff Assignments"
-                            count={unstaffedTenants.length}
-                        >
-                            <div className="dashboard__assignments_container">
-                                {
-                                    unstaffedTenants.map(tenant => (
-                                        <NewStaffItem key={tenant.id} { ...tenant } handleStaffAssignmentChange={handleStaffAssignmentChange} staffList={staffList} />
-                                    ))
-                                }
-                                <div className="dashboard__assignments_button_container">
-                                    <button 
-                                        className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}
-                                        onClick={handleStaffAssignment}
-                                    >
-                                        SAVE ASSIGNMENTS
-                                    </button>
-                                </div>
-                            </div>
-                        </Collapsible>
-                        <Collapsible
-                            title="Request for Access"
-                            count={usersPending.length}
-                        >
-                            {
-                                usersPending.map((requestItemData, index) => {
-                                    return (<RequestItem key={`requestItem--${index}`} data={requestItemData} onDeclineClick={handleDeclineClick} onAddClick={handleAddClick} />);
-                                })
-                            }
-                        </Collapsible>
-                    </div>
+            <div id="dashboard-content">
+                <h2 className="page-title">Admin Dashboard</h2>
+                <div className="dashboard__modules_container">
+                    <DashboardModule
+                        data={MODULE_DATA.openTickets}
+                    />
+                    <DashboardModule
+                        data={MODULE_DATA.reports}
+                    />
+                    <DashboardModule
+                        data={MODULE_DATA.managers}
+                    />
                 </div>
+                <Collapsible
+                    title="New Staff Assignments"
+                    count={unstaffedTenants.length}
+                >
+                    <div className="dashboard__assignments_container">
+                        {
+                            unstaffedTenants.map(tenant => (
+                                <NewStaffItem key={tenant.id} { ...tenant } handleStaffAssignmentChange={handleStaffAssignmentChange} staffList={staffList} />
+                            ))
+                        }
+                        <div className="dashboard__assignments_button_container">
+                            <button 
+                                className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}
+                                onClick={handleStaffAssignment}
+                            >
+                                SAVE ASSIGNMENTS
+                            </button>
+                        </div>
+                    </div>
+                </Collapsible>
+                <Collapsible
+                    title="Request for Access"
+                    count={usersPending.length}
+                >
+                    {
+                        usersPending.map((requestItemData, index) => {
+                            return (<RequestItem key={`requestItem--${index}`} data={requestItemData} onDeclineClick={handleDeclineClick} onAddClick={handleAddClick} />);
+                        })
+                    }
+                </Collapsible>
             </div>
             <div className={`modal ${modalActive && 'is-active'}`}>
                 <div className="modal-background" onClick={() => { handleDenyAccess(false) }}></div>

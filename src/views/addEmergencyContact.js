@@ -134,7 +134,7 @@ const AddEmergencyContact = (props) => {
     }
 
     return (
-        <div className="add-emergency-contact__container">
+        <div>
             <h2 className="page-title">{editMode ? 'Edit' : 'Create'} Emergency Contact</h2>
             {loading &&
                 <div className='add-emergency-contact__loading'>Loading ...</div>
