@@ -148,32 +148,32 @@ export class App extends React.Component {
             {this.state.userSession.isAuthenticated
               && <><NavMenu />
                   <Header /></>}
-
-            <Switch>
-              <PrivateRoute exact path='/' component={Dashboard} />
-              <Route exact path='/login' component={LoginForm} />
-              <Route exact path='/signup' component={SignupForm} />
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <Route exact path='/terms' component={Terms} />
-              <PrivateRoute exact path='/home' component={Dashboard} />
-              <PrivateRoute exact path='/add/tenant' component={Dashboard} />
-              <PrivateRoute exact path='/add/property' component={AddProperty}/>
-              <PrivateRoute exact path='/add/manager' component={Dashboard} />
-              <PrivateRoute exact path='/manage/tenants' component={Tenants} />
-              <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
-              <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
-              <PrivateRoute exact path='/manage/tenants' component={Dashboard} />
-              <PrivateRoute exact path='/manage/properties' component={Properties} />
-              <PrivateRoute exact path='/manage/managers' component={Managers} />
-              <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
-              <PrivateRoute exact path='/tickets' component={Tickets} />
-              <PrivateRoute exact path='/reports' component={Dashboard} />
-              <PrivateRoute exact path='/staff' component={JoinStaff} />
-              <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
-              <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
-              <PrivateRoute exact path='/settings' component={Dashboard} />
-              <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
-            </Switch>
+              <Switch>
+                <Route exact path='/login' component={LoginForm} />
+                <Route exact path='/signup' component={SignupForm} />
+                <div className='main-container'>
+                  <Route exact path='/terms' component={Terms} />
+                  <PrivateRoute exact path='/' component={Dashboard} />
+                  <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                  <PrivateRoute exact path='/home' component={Dashboard} />
+                  <PrivateRoute exact path='/add/tenant' component={Dashboard} />
+                  <PrivateRoute exact path='/add/property' component={AddProperty}/>
+                  <PrivateRoute exact path='/add/manager' component={Dashboard} />
+                  <PrivateRoute exact path='/manage/tenants' component={Tenants} />
+                  <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
+                  <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
+                  <PrivateRoute exact path='/manage/properties' component={Properties} />
+                  <PrivateRoute exact path='/manage/managers' component={Managers} />
+                  <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
+                  <PrivateRoute exact path='/tickets' component={Tickets} />
+                  <PrivateRoute exact path='/reports' component={Dashboard} />
+                  <PrivateRoute exact path='/staff' component={JoinStaff} />
+                  <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
+                  <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
+                  <PrivateRoute exact path='/settings' component={Dashboard} />
+                  <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
+                </div>
+              </Switch>
             {this.state.userSession.isAuthenticated
               && <Footer />}
           </div>

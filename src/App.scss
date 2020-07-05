@@ -6,11 +6,14 @@
   min-height: 100vh;
 }
 
-.container {
-	flex-grow: 1;
-	margin: 45px 50px;
-	position: relative;
-	width: auto;
+.main-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: white;
+  margin-bottom: 40px;
+  padding: 25px;
 }
 
 .subtitle {
