@@ -32,7 +32,7 @@ const Button = ({
 Button.propTypes = {
   type: PropTypes.string,
   onClick: PropTypes.func,
-  cancelButton: PropTypes.bool,
+  isCancelButton: PropTypes.bool,
   isValidFlag: PropTypes.bool,
   disabledFlag: PropTypes.bool,
   children: PropTypes.string.isRequired,

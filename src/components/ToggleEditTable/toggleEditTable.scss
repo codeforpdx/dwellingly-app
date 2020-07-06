@@ -49,24 +49,9 @@ $darkGray: #555555;
     position: absolute;
     display: flex;
     justify-content: space-between;
+    width: 200px;
     bottom: -10px;
     left: 0;
     margin: 0;
-  }
-  &__button-save {
-    margin: 0 10px 0 0;
-    background: $blue;
-    color: white;
-    &:hover {
-      color: $darkGray;
-    }
-  }
-  &__button-cancel {
-    margin: 0;
-    background: $gray;
-    color: white;
-    &:hover {
-      color: $darkGray;
-    }
   }
 }
