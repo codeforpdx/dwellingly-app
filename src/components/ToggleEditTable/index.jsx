@@ -28,11 +28,15 @@ const ToggleEditTable = ({
         handleBlur,
         handleSubmit,
         isSubmitting,
+        isValid,
       }) => (
         <Form onSubmit={handleSubmit}>
           {Object.keys(values).map((value, index) => (
             <div className="form__row--editing columns" key={value}>
-              <label className="column is-one-quarter" htmlFor={value}>
+              <label
+                className="form__label column is-one-quarter"
+                htmlFor={value}
+              >
                 {rowTitles[index]}
               </label>
               <Field
@@ -49,13 +53,20 @@ const ToggleEditTable = ({
               />
             </div>
           ))}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="form__submit"
-          >
-            Save Changes
-          </button>
+          <div className="form__button-container">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`${
+                isValid && "form__button-save"
+              } button is-rounded`}
+            >
+              SAVE
+            </button>
+            <button className="form__button-cancel button is-rounded">
+              CANCEL
+            </button>
+          </div>
         </Form>
       )}
     </Formik>
@@ -63,7 +74,9 @@ const ToggleEditTable = ({
     <>
       {Object.keys(tableData).map((rowValue, index) => (
         <div key={rowValue} className="form__row--not-editing columns">
-          <span className="column is-one-quarter">{rowTitles[index]}</span>
+          <span className="form__label column is-one-quarter">
+            {rowTitles[index]}
+          </span>
           <span className="column is-one-quarter">{tableData[rowValue]}</span>
         </div>
       ))}
