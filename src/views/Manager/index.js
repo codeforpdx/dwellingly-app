@@ -57,6 +57,10 @@ const Manager = () => {
     }, 500);
   };
 
+  const onCancelClick = () => {
+    setEditingStatus(false);
+  }
+
   // use getManager once /users/?id api endpoint returns properties and tenants for property managers
   const getManager = (context) => {
     axios
@@ -102,6 +106,7 @@ const Manager = () => {
             isEditing={isEditing}
             rowTitles={contactRowTitles}
             submitHandler={onFormikSubmit}
+            cancelHandler={onCancelClick}
           />
         </div>
       </div>

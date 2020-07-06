@@ -13,6 +13,7 @@ const ToggleEditTable = ({
   tableData,
   rowTitles,
   submitHandler,
+  cancelHandler,
   validationSchema,
 }) =>
   isEditing ? (
@@ -63,7 +64,7 @@ const ToggleEditTable = ({
             >
               SAVE
             </button>
-            <button className="form__button-cancel button is-rounded">
+            <button className="form__button-cancel button is-rounded" onClick={cancelHandler}>
               CANCEL
             </button>
           </div>
@@ -88,6 +89,7 @@ ToggleEditTable.propTypes = {
   tableData: PropTypes.object.isRequired,
   rowTitles: PropTypes.array.isRequired,
   submitHandler: PropTypes.func.isRequired,
+  cancelHandler: PropTypes.func.isRequired,
   validationSchema: PropTypes.object.isRequired,
 };
 
