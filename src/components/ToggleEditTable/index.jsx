@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
+import Button from '../Button';
 import "./toggleEditTable.scss";
 
 const FieldError = ({ error }) => {
@@ -55,18 +56,16 @@ const ToggleEditTable = ({
             </div>
           ))}
           <div className="form__button-container">
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
-              className={`${
-                isValid && "form__button-save"
-              } button is-rounded`}
+              isValidFlag={isValid}
             >
               SAVE
-            </button>
-            <button className="form__button-cancel button is-rounded" onClick={cancelHandler}>
+            </Button>
+            <Button isCancelButton={true} onClick={cancelHandler}>
               CANCEL
-            </button>
+            </Button>
           </div>
         </Form>
       )}
