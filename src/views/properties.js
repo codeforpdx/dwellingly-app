@@ -105,6 +105,13 @@ export class Properties extends Component {
       document.getElementById("searchQuery").value = "";
     };
 
+    enterSearchHandler = (event) => {
+      var keyCode = event.keyCode;
+      if (keyCode === 13){
+        this.searchProperties();
+      }
+    };
+
 
     render() {
         return (
@@ -118,7 +125,7 @@ export class Properties extends Component {
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
                             <div className="search-section">
-                              <input className="input search is-rounded" id="searchQuery" placeholder="Search properties by name, address, or property manager"></input>
+                              <input className="input search is-rounded" id="searchQuery" onKeyDown={this.enterSearchHandler} placeholder="Search properties by name, address, or property manager"></input>
                                 <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
                                    Search
                                 </button>
