@@ -79,19 +79,21 @@ export class Properties extends Component {
         })
     }
 
-    searchProperties =  () => {
+    searchProperties = () => {
       let allProperties = this.state.properties;
       let output = [];
       let searchQuery = document.getElementById("searchQuery").value.toLowerCase().trim();
 
        if(searchQuery.length > 0){
           for (var i=0;i < allProperties.length; i++) {
-              if (Object.values(allProperties[i]).toString().toLowerCase().includes(searchQuery)){
-              output.push(allProperties[i]);
+              let property = Object.values(allProperties[i]);
+              property.shift();
+              if (property.toString().toLowerCase().includes(searchQuery)){
+                  output.push(allProperties[i]);
             }
           };
 
-          this.setState({
+      this.setState({
             filteredProperties: output,
             isFiltered: true
           });
@@ -121,7 +123,7 @@ export class Properties extends Component {
                                    Search
                                 </button>
                                 <button className="save_button button is-rounded clearButton" onClick={this.clearSearch}type="submit">
-                                   Clear
+                                   Clear Search
                                 </button>
                             </div>
                             <div className="properties-list">
