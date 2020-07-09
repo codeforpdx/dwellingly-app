@@ -1,6 +1,6 @@
 # Contributing
 
-This document provides some overall guidelines and suggestions for how to get started with contributing to the Dwellingly project. There are several features, enhancements, and fixes that we'd like to work on, so there are lots of opportunities to get started.
+This document provides some overall guidelines and suggestions for how to get started with the Dwellingly project. There are several features, enhancements, and fixes that we'd like to work on, so there are lots of opportunities for your contributions.
 
 ## Table of Contents
 - [First steps](#first-steps)
@@ -13,7 +13,7 @@ This document provides some overall guidelines and suggestions for how to get st
 ----
 ### First steps
 
-* [Set up your local dev environment](README.md#Getting-Started)
+* Set up your local dev environment [here](README.md#Getting-Started) and [here](https://github.com/codeforpdx/dwellinglybackend/blob/development/README.md#to-start-server)
 * Be sure to read our [Code of Conduct](http://www.codeforpdx.org/about/conduct)
 * Join our [Slack Workspace](https://codeforpdx.slack.com/) and say "Hi" in the #dwellingly-join channel
 * Come visit at a [Project Night](https://www.meetup.com/Code-for-PDX/events/) and get to know us
