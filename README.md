@@ -2,6 +2,10 @@
 
 This serves as the Frontend Repo of the Full Stack Application for [JOIN Organization's](https://joinpdx.org/) Dwellingly site being created per the [FIGMA designs](https://drive.google.com/file/d/1YqboQogczYm1HkyRqEtVSzeQ61T9hWU2/view). This site will eventually aid in supporting both tenants and landlords with a more streamlined rental property process.
 
+## Contributing
+
+[Here](contributing.md) is a guide to making contributions to this project on Github.
+
 ## Backend
 
 [Here](https://github.com/codeforpdx/dwellinglybackend) is a link to the Backend's Repo. It has its own README as well!
