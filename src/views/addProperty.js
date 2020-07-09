@@ -3,6 +3,8 @@ import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../UserContext';
 import * as axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -20,7 +22,9 @@ const validationSchema = Yup.object().shape({
         .required("*Zipcode is required"),
     state: Yup.string()
         .max(50, "*State can't be longer than 50 characters")
-        .required("*State is required")
+        .required("*State is required"),
+    units: Yup.string()
+        .max(50, "*Unit can't be longer than 50 characters"),
 });
 
 const formHandler = (data, context) => {
@@ -33,14 +37,14 @@ const formHandler = (data, context) => {
         })
 }
 
-export class AddProperty extends Component {
+ export class AddProperty extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
         propertyManagers: undefined,
         }
-    }    
+    }
 
     render() {
       return (
@@ -56,7 +60,8 @@ export class AddProperty extends Component {
                                 address: "",
                                 city: "",
                                 state: "",
-                                zipcode: ""
+                                zipcode: "",
+                                units: "",
                             }}
                             validationSchema={validationSchema}
                             onSubmit={(values, {setSubmitting, resetForm})=> {
@@ -65,7 +70,7 @@ export class AddProperty extends Component {
                                 formHandler(values, session);
                                 resetForm();
                                 setSubmitting(false);
-                                
+
                             }}>
                             {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
                                 <div className="form-container add-property__main_container">
@@ -132,20 +137,20 @@ export class AddProperty extends Component {
                                             />
                                             {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
                                         </div>
-                                        {/* This field needs to be included after
-                                            the units parameter is added to the api endpoint */}
-                                        {/* <div className="form-row columns">
-                                            <label className="column is-one-fifth" htmlFor="zipcode">Units</label>
+                                        <div className="form-row columns">
+                                            <label className="column is-one-fifth" htmlFor="units">Units</label>
                                             <Field
                                                 className="column form-field"
                                                 type="text"
                                                 name="units"
                                                 onChange={handleChange}
-                                                value={values.zipcode}
-                                                placeholder="10"
+                                                value={values.units}
+                                                placeholder="Number of units"
+                                                error={errors.units}
                                             />
-                                        </div> */}
-
+                                            {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
+                                        </div>
+                        
                                         {/* This element will use a list of property managers
                                             and will need to be implemented later. react-select
                                             can be used to select from list retrieved from endpoint */}
@@ -155,7 +160,7 @@ export class AddProperty extends Component {
                                         </div> */}
                                         <div className="container-footer">
                                             <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
-                                            <button className="button is-dark is-rounded" onClick={()=>{console.log("cancel pressed")}}>CANCEL</button>
+                                            <Link className="button is-dark is-rounded" to='/manage/properties'>CANCEL</Link>
                                         </div>
                                     </Form>
 
@@ -165,7 +170,7 @@ export class AddProperty extends Component {
                     </div>
                 )
             }}
-            
+
         </UserContext.Consumer>
       )
     }

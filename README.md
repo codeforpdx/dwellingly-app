@@ -1,6 +1,7 @@
 # Dwellingly App
 
 This serves as the Frontend Repo of the Full Stack Application for [JOIN Organization's](https://joinpdx.org/) Dwellingly site being created per the [FIGMA designs](https://drive.google.com/file/d/1YqboQogczYm1HkyRqEtVSzeQ61T9hWU2/view). This site will eventually aid in supporting both tenants and landlords with a more streamlined rental property process.
+[Addtional FIGMA Designs](https://drive.google.com/file/d/1wGLQI6d5-RK59E4P65wdotAXdNsSstRR/view?usp=sharing)
 
 ## Backend
 
@@ -30,7 +31,7 @@ From Terminal:
 #### Installing
 
 From terminal:
-- Navigate to app's directory: `cd dwellingly-app/dwellingly`
+- Navigate to app's directory: `cd dwellingly-app`
 - Install: `npm install`
 - Launch: `npm start`
 - React will open a browser page for you and navigate to `localhost:3000`
