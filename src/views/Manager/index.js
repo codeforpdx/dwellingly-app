@@ -26,8 +26,6 @@ const validationSchema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
-const contactRowTitles = ["First Name", "Last Name", "Phone", "Email"];
-
 const Manager = () => {
   const { pathname } = useLocation();
   const id = pathname.match(/\d/)[0];
@@ -39,6 +37,33 @@ const Manager = () => {
 
   const [manager, setManager] = useState(dummyDataManagerInfo);
   const [isEditing, setEditingStatus] = useState(false);
+
+  const tableData = [
+    {
+      key: "firstName",
+      label: "First Name",
+      value: manager.firstName,
+      inputType: "text",
+    },
+    {
+      key: "lastName",
+      label: "Last Name",
+      value: manager.lastName,
+      inputType: "text",
+    },
+    {
+      key: "phone",
+      label: "Phone",
+      value: manager.phone,
+      inputType: "text",
+    },
+    {
+      key: "email",
+      label: "Email",
+      value: manager.email,
+      inputType: "text",
+    },
+  ];
 
   const handleEditToggle = () => setEditingStatus(!isEditing);
   const onFormikSubmit = (values, { setSubmitting }) => {
@@ -59,7 +84,7 @@ const Manager = () => {
 
   const onCancelClick = () => {
     setEditingStatus(false);
-  }
+  };
 
   // use getManager once /users/?id api endpoint returns properties and tenants for property managers
   const getManager = (context) => {
@@ -96,15 +121,9 @@ const Manager = () => {
         <h1 className="secondary-title">CONTACT</h1>
         <div className="contact-details">
           <ToggleEditTable
-            tableData={{
-              firstName: manager.firstName,
-              lastName: manager.lastName,
-              phone: manager.phone,
-              email: manager.email,
-            }}
+            tableData={tableData}
             validationSchema={validationSchema}
             isEditing={isEditing}
-            rowTitles={contactRowTitles}
             submitHandler={onFormikSubmit}
             cancelHandler={onCancelClick}
           />

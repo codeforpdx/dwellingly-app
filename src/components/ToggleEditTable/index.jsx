@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
-import Button from '../Button';
+import Button from "../Button";
 import "./toggleEditTable.scss";
 
 const FieldError = ({ error }) => {
@@ -12,14 +12,20 @@ const FieldError = ({ error }) => {
 const ToggleEditTable = ({
   isEditing,
   tableData,
-  rowTitles,
   submitHandler,
   cancelHandler,
   validationSchema,
-}) =>
-  isEditing ? (
+}) => {
+
+  // create initialValues for Formik
+  const initValuesFromTableData = tableData.reduce((initValues, currDataObject) => {
+    initValues[currDataObject.key] = currDataObject.value;
+    return initValues;
+  }, {});
+
+  return isEditing ? (
     <Formik
-      initialValues={tableData}
+      initialValues={initValuesFromTableData}
       onSubmit={submitHandler}
       validationSchema={validationSchema}
     >
@@ -39,10 +45,10 @@ const ToggleEditTable = ({
                 className="form__label column is-one-quarter"
                 htmlFor={value}
               >
-                {rowTitles[index]}
+                {tableData[index].label}
               </label>
               <Field
-                type="text"
+                type={tableData[index].inputType}
                 name={value}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -56,11 +62,7 @@ const ToggleEditTable = ({
             </div>
           ))}
           <div className="form__button-container">
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              isValidFlag={isValid}
-            >
+            <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>
               SAVE
             </Button>
             <Button isCancelButton={true} onClick={cancelHandler}>
@@ -72,21 +74,30 @@ const ToggleEditTable = ({
     </Formik>
   ) : (
     <>
-      {Object.keys(tableData).map((rowValue, index) => (
-        <div key={rowValue} className="form__row--not-editing columns">
+      {tableData.map((dataObject) => (
+        <div key={dataObject.label} className="form__row--not-editing columns">
           <span className="form__label column is-one-quarter">
-            {rowTitles[index]}
+            {dataObject.label}
           </span>
-          <span className="column is-one-quarter">{tableData[rowValue]}</span>
+          <span className="column is-one-quarter">{dataObject.value}</span>
         </div>
       ))}
     </>
   );
+};
 
 ToggleEditTable.propTypes = {
   isEditing: PropTypes.bool.isRequired,
-  tableData: PropTypes.object.isRequired,
-  rowTitles: PropTypes.array.isRequired,
+  tableData: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      value: PropTypes.isRequired,
+      inputType: PropTypes.string.isRequired,
+      comp: PropTypes.element,
+      placeholder: PropTypes.string,
+    })
+  ),
   submitHandler: PropTypes.func.isRequired,
   cancelHandler: PropTypes.func.isRequired,
   validationSchema: PropTypes.object.isRequired,
