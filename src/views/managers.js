@@ -98,7 +98,7 @@ const Managers = () => {
     <div className="managers__container">
       <div className="section-header">
         <h2 className="page-title">Property Managers</h2>
-        <Link className="button is-rounded" to="/add/property">
+        <Link className="button is-rounded" to="/manage/managers">
           + ADD NEW
         </Link>
       </div>
