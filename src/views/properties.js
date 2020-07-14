@@ -54,13 +54,15 @@ const selectRow = {
 export class Properties extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
         properties: [],
+        filteredProperties: [],
+        isFiltered: false
         }
 
         this.getProperties = this.getProperties.bind(this)
-    }    
+    }
 
     componentDidMount() {
         this.getProperties(this.context);
@@ -77,6 +79,40 @@ export class Properties extends Component {
         })
     }
 
+    searchProperties = () => {
+      let allProperties = this.state.properties;
+      let output = [];
+      let searchQuery = document.getElementById("searchQuery").value.toLowerCase().trim();
+
+       if(searchQuery.length > 0){
+          for (var i=0;i < allProperties.length; i++) {
+              let property = Object.values(allProperties[i]);
+              property.shift();
+              if (property.toString().toLowerCase().includes(searchQuery)){
+                  output.push(allProperties[i]);
+            }
+          };
+
+      this.setState({
+            filteredProperties: output,
+            isFiltered: true
+          });
+      }
+  };
+
+    clearSearch = () => {
+      this.setState({isFiltered: false});
+      document.getElementById("searchQuery").value = "";
+    };
+
+    enterSearchHandler = (event) => {
+      var keyCode = event.keyCode;
+      if (keyCode === 13){
+        this.searchProperties();
+      }
+    };
+
+
     render() {
         return (
             <UserContext.Consumer>
@@ -89,12 +125,18 @@ export class Properties extends Component {
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
                             <div className="search-section">
-                              <input className="input search is-rounded" placeholder="Search properties by name, address, or property manager"></input>
+                              <input className="input search is-rounded" id="searchQuery" onKeyDown={this.enterSearchHandler} placeholder="Search properties by name, address, or property manager"></input>
+                                <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
+                                   Search
+                                </button>
+                                <button className="save_button button is-rounded clearButton" onClick={this.clearSearch}type="submit">
+                                   Clear Search
+                                </button>
                             </div>
                             <div className="properties-list">
                                 <BootstrapTable
                                     keyField='id'
-                                    data={ this.state.properties }
+                                    data={ this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties }
                                     columns={ columns }
                                     selectRow={ selectRow }
                                     bootstrap4={true}
