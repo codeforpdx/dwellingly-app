@@ -21,7 +21,7 @@ function Search(props) {
     };
 
     const searchProperties = () => {
-      let allProperties = this.state.properties;
+      let allProperties = input;
       let output = [];
       let searchQuery = document.getElementById("searchQuery").value.toLowerCase().trim();
 
@@ -39,6 +39,7 @@ function Search(props) {
             isFiltered: true
           });
       }
+      console.log('clicked');
   };
 
 
