@@ -45,10 +45,10 @@ function Search(props) {
     return (
       <div className="search-section">
         <input className="input search is-rounded" id="searchQuery" onKeyDown={enterSearchHandler} placeholder="Search properties by name, address, or property manager"></input>
-          <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
+          <button className="save_button button is-rounded" onClick={searchProperties}type="submit">
              Search
           </button>
-          <button className="save_button button is-rounded clearButton" onClick={this.clearSearch}type="submit">
+          <button className="save_button button is-rounded clearButton" onClick={clearSearch}type="submit">
              Clear Search
           </button>
       </div>
