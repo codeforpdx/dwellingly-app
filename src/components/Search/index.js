@@ -11,6 +11,8 @@ import './search.scss';
 
 //3. isFiltered (true/false) location (passed as isFilteredLocation prop).
 
+//4. The message you want displayed as a placeholder.
+
 //Functions: Need to write two functions in whatever parent component you import <Search> into.
 
 //1. Function to set 'isFiltered' state (T/F) in the parent component. Pass this function to <Search> via setIsFilteredStateFalse props. (See src/views/properties.js - setIsFilteredPropertiesFalse for example)
@@ -20,7 +22,7 @@ import './search.scss';
 //Search is designed to not include the ID as a searchable paramater.
 
 function Search(props) {
-    const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredStateFalse } = props;
+    const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredStateFalse, placeholderMessage } = props;
 
     const enterSearchHandler = (event) => {
       var keyCode = event.keyCode;
@@ -55,7 +57,7 @@ function Search(props) {
 
     return (
       <div className="search-section">
-        <input className="input search is-rounded" id="searchQueryComponent" onKeyDown={enterSearchHandler} placeholder="Search properties by name, address, or property manager"></input>
+        <input className="input search is-rounded" id="searchQueryComponent" onKeyDown={enterSearchHandler} placeholder={placeholderMessage}></input>
           <button className="save_button button is-rounded" onClick={searchProperties}type="submit">
              Search
           </button>
