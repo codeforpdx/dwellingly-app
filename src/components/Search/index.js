@@ -1,11 +1,23 @@
 import React, {useState} from 'react';
 import './search.scss';
 
-//Necessary for search to work: input data, where you want the data output, isFiltered (true/false) location
+//Necessary for <Search> to work:
 
-//Potential Error: I'm using shift() to remove the id of each property before filtering. depending on the data within each search, we may or may not want this.
+//Data (See src/views/properties.js):
 
-//maybe we need another prop for ommiting 'id' or any other thing that the developer doesn't want to give the user to search by
+//1. Input data (passed as input prop).
+
+// 2. Where you want the data output (passed as outputLocation prop).
+
+//3. isFiltered (true/false) location (passed as isFilteredLocation prop).
+
+//Functions: Need to write two functions in whatever parent component you import <Search> into.
+
+//1. Function to set 'isFiltered' state (T/F) in the parent component. Pass this function to <Search> via setIsFilteredStateFalse props. (See src/views/properties.js)
+
+//2. Function to set 'filteredResults' state within the parent component, and also 'isFiltered' state back to true. (See src/views/properties.js)
+
+//Search is designed to not include the ID as a searchable paramater.
 
 function Search(props) {
     const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredStateFalse } = props;
