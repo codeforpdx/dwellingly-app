@@ -6,7 +6,7 @@ import './search.scss';
 //Potential Error: I'm using shift() to remove the id of each property before filtering. depending on the data within each search, we may or may not want this.
 
 function Search(props) {
-    const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredState } = props;
+    const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredStateFalse } = props;
 
     const enterSearchHandler = (event) => {
       var keyCode = event.keyCode;
@@ -16,7 +16,7 @@ function Search(props) {
     };
 
     const clearSearch = () => {
-      props.setIsFilteredState();
+      props.setIsFilteredStateFalse();
       document.getElementById("searchQueryComponent").value = "";
 
     };
@@ -35,12 +35,11 @@ function Search(props) {
             }
           };
 
-      this.setState({
-            outputLocation: output,
-            isFilteredLocation: true
-          });
+  
+      props.setOutputState(output, true)
+
       }
-      console.log(input);
+
   };
 
 
