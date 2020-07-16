@@ -5,6 +5,8 @@ import './search.scss';
 
 //Potential Error: I'm using shift() to remove the id of each property before filtering. depending on the data within each search, we may or may not want this.
 
+//maybe we need another prop for ommiting 'id' or any other thing that the developer doesn't want to give the user to search by
+
 function Search(props) {
     const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredStateFalse } = props;
 
@@ -29,7 +31,8 @@ function Search(props) {
        if(searchQuery.length > 0){
           for (var i=0;i < allData.length; i++) {
               let dataPoint = Object.values(allData[i]);
-              dataPoint.shift();
+              // dataPoint.shift();
+              delete dataPoint.id;
               if (dataPoint.toString().toLowerCase().includes(searchQuery)){
                   output.push(allData[i]);
             }
@@ -39,7 +42,7 @@ function Search(props) {
       props.setOutputState(output, true)
 
       }
-
+      console.log(output);
   };
 
 
