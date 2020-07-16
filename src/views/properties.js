@@ -107,6 +107,7 @@ export class Properties extends Component {
                               isFilteredLocation={this.state.isFiltered}
                               setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
                               setOutputState={this.setOutputState}
+                              placeholderMessage="Search properties by name, address, or property manager"
                               />
 
                             <div className="properties-list">
