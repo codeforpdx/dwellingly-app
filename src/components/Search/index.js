@@ -7,7 +7,7 @@ import './search.scss';
 
 //1. Input data (passed as input prop).
 
-// 2. Where you want the data output (passed as outputLocation prop).
+//2. Where you want the data output (passed as outputLocation prop).
 
 //3. isFiltered (true/false) location (passed as isFilteredLocation prop).
 
@@ -43,18 +43,13 @@ function Search(props) {
        if(searchQuery.length > 0){
           for (var i=0;i < allData.length; i++) {
               let dataPoint = Object.values(allData[i]);
-              // dataPoint.shift();
               delete dataPoint.id;
               if (dataPoint.toString().toLowerCase().includes(searchQuery)){
                   output.push(allData[i]);
             }
           };
-
-
       props.setOutputState(output, true)
-
       }
-      console.log(output);
   };
 
 
