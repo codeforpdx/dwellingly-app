@@ -22,20 +22,20 @@ function Search(props) {
     };
 
     const searchProperties = () => {
-      let allProperties = input;
+      let allData = input;
       let output = [];
       let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
 
        if(searchQuery.length > 0){
-          for (var i=0;i < allProperties.length; i++) {
-              let property = Object.values(allProperties[i]);
-              property.shift();
-              if (property.toString().toLowerCase().includes(searchQuery)){
-                  output.push(allProperties[i]);
+          for (var i=0;i < allData.length; i++) {
+              let dataPoint = Object.values(allData[i]);
+              dataPoint.shift();
+              if (dataPoint.toString().toLowerCase().includes(searchQuery)){
+                  output.push(allData[i]);
             }
           };
 
-  
+
       props.setOutputState(output, true)
 
       }
