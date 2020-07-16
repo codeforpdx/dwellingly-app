@@ -3,6 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
+import Search from '../components/Search';
 
 const columns = [{
     dataField: 'name',
@@ -63,6 +64,20 @@ export class Properties extends Component {
 
         this.getProperties = this.getProperties.bind(this)
     }
+
+    setIsFilteredPropertiesFalse = async () => {
+      await this.setState({isFiltered: false});
+    }
+
+    setOutputState = async (output, isTrue) => {
+      await  this.setState({
+              filteredProperties: output,
+              isFiltered: isTrue
+              });
+      console.log(this.state);
+    }
+
+
 
     componentDidMount() {
         this.getProperties(this.context);
@@ -133,6 +148,14 @@ export class Properties extends Component {
                                    Clear Search
                                 </button>
                             </div>
+
+                            <Search
+                              input={this.state.properties} outputLocation={this.state.filteredProperties}
+                              isFilteredLocation={this.state.isFiltered}
+                              setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
+                              setOutputState={this.setOutputState}
+                              />
+
                             <div className="properties-list">
                                 <BootstrapTable
                                     keyField='id'
