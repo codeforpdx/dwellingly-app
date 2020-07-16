@@ -6,7 +6,7 @@ import './search.scss';
 //Potential Error: I'm using shift() to remove the id of each property before filtering. depending on the data within each search, we may or may not want this.
 
 function Search(props) {
-    const { input, outputLocation, isFilteredLocation } = props;
+    const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredState } = props;
 
     const enterSearchHandler = (event) => {
       var keyCode = event.keyCode;
@@ -16,14 +16,15 @@ function Search(props) {
     };
 
     const clearSearch = () => {
-      this.setState({isFiltered: false});
-      document.getElementById("searchQuery").value = "";
+      props.setIsFilteredState();
+      document.getElementById("searchQueryComponent").value = "";
+
     };
 
     const searchProperties = () => {
       let allProperties = input;
       let output = [];
-      let searchQuery = document.getElementById("searchQuery").value.toLowerCase().trim();
+      let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
 
        if(searchQuery.length > 0){
           for (var i=0;i < allProperties.length; i++) {
@@ -35,17 +36,17 @@ function Search(props) {
           };
 
       this.setState({
-            filteredProperties: output,
-            isFiltered: true
+            outputLocation: output,
+            isFilteredLocation: true
           });
       }
-      console.log('clicked');
+      console.log(input);
   };
 
 
     return (
       <div className="search-section">
-        <input className="input search is-rounded" id="searchQuery" onKeyDown={enterSearchHandler} placeholder="Search properties by name, address, or property manager"></input>
+        <input className="input search is-rounded" id="searchQueryComponent" onKeyDown={enterSearchHandler} placeholder="Search properties by name, address, or property manager"></input>
           <button className="save_button button is-rounded" onClick={searchProperties}type="submit">
              Search
           </button>
