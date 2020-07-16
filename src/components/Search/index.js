@@ -27,7 +27,7 @@ function Search(props) {
     const enterSearchHandler = (event) => {
       var keyCode = event.keyCode;
       if (keyCode === 13){
-        this.searchProperties();
+        searchProperties();
       }
     };
 
