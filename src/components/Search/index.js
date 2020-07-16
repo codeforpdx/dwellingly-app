@@ -3,7 +3,7 @@ import './search.scss';
 
 //Necessary for <Search> to work:
 
-//Data (See src/views/properties.js):
+//Data (See src/views/properties.js) (all should be state variables):
 
 //1. Input data (passed as input prop).
 
@@ -13,9 +13,9 @@ import './search.scss';
 
 //Functions: Need to write two functions in whatever parent component you import <Search> into.
 
-//1. Function to set 'isFiltered' state (T/F) in the parent component. Pass this function to <Search> via setIsFilteredStateFalse props. (See src/views/properties.js)
+//1. Function to set 'isFiltered' state (T/F) in the parent component. Pass this function to <Search> via setIsFilteredStateFalse props. (See src/views/properties.js - setIsFilteredPropertiesFalse for example)
 
-//2. Function to set 'filteredResults' state within the parent component, and also 'isFiltered' state back to true. (See src/views/properties.js)
+//2. Function to set 'filteredResults' state within the parent component, and also 'isFiltered' state back to true. (See src/views/properties.js - setOutputState for example)
 
 //Search is designed to not include the ID as a searchable paramater.
 
