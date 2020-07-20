@@ -19,6 +19,13 @@
     border-width: 0px;
     padding: 10px 20px;
     font-weight: bold;
+    &__google{
+      width: 100%;
+      &__text{
+        margin-top: 5px;
+        display: block;
+      }
+    }
   }
   &__form-field {
     border: 0;
@@ -80,6 +87,10 @@
     margin-bottom: 10px;
   }
 }
+.googleIcon{
+  height: 25px;
+  float: left;
+}
 
 @media (max-width: $breakpointMobile){
 
@@ -90,5 +101,15 @@
     &__form-field{
       width: 200px;
     }
+    &__button{
+      font-size: 12px;
+    }
+  }
+  .login__button__google{
+    width: 100%;
+    font-size: 12px;
+  }
+  .googleIcon{
+    margin-right: 3px;
   }
 }
