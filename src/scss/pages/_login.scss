@@ -80,3 +80,15 @@
     margin-bottom: 10px;
   }
 }
+
+@media (max-width: $breakpointMobile){
+
+  .login{
+    &__form-container{
+      width: 270px;
+    }
+    &__form-field{
+      width: 200px;
+    }
+  }
+}
