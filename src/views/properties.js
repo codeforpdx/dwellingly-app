@@ -3,6 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
+import Search from '../components/Search';
 
 const columns = [{
     dataField: 'name',
@@ -50,7 +51,6 @@ const selectRow = {
   }
 };
 
-
 export class Properties extends Component {
     constructor(props) {
         super(props);
@@ -62,6 +62,17 @@ export class Properties extends Component {
         }
 
         this.getProperties = this.getProperties.bind(this)
+    }
+
+    setIsFilteredPropertiesFalse = async () => {
+      await this.setState({isFiltered: false});
+    }
+
+    setOutputState = async (output, isTrue) => {
+      await  this.setState({
+              filteredProperties: output,
+              isFiltered: isTrue
+              });
     }
 
     componentDidMount() {
@@ -79,40 +90,6 @@ export class Properties extends Component {
         })
     }
 
-    searchProperties = () => {
-      let allProperties = this.state.properties;
-      let output = [];
-      let searchQuery = document.getElementById("searchQuery").value.toLowerCase().trim();
-
-       if(searchQuery.length > 0){
-          for (var i=0;i < allProperties.length; i++) {
-              let property = Object.values(allProperties[i]);
-              property.shift();
-              if (property.toString().toLowerCase().includes(searchQuery)){
-                  output.push(allProperties[i]);
-            }
-          };
-
-      this.setState({
-            filteredProperties: output,
-            isFiltered: true
-          });
-      }
-  };
-
-    clearSearch = () => {
-      this.setState({isFiltered: false});
-      document.getElementById("searchQuery").value = "";
-    };
-
-    enterSearchHandler = (event) => {
-      var keyCode = event.keyCode;
-      if (keyCode === 13){
-        this.searchProperties();
-      }
-    };
-
-
     render() {
         return (
             <UserContext.Consumer>
@@ -124,15 +101,15 @@ export class Properties extends Component {
                                 <h2 className="page-title">Properties</h2>
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
-                            <div className="search-section">
-                              <input className="input search is-rounded" id="searchQuery" onKeyDown={this.enterSearchHandler} placeholder="Search properties by name, address, or property manager"></input>
-                                <button className="save_button button is-rounded" onClick={this.searchProperties}type="submit">
-                                   Search
-                                </button>
-                                <button className="save_button button is-rounded clearButton" onClick={this.clearSearch}type="submit">
-                                   Clear Search
-                                </button>
-                            </div>
+
+                            <Search
+                              input={this.state.properties} outputLocation={this.state.filteredProperties}
+                              isFilteredLocation={this.state.isFiltered}
+                              setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
+                              setOutputState={this.setOutputState}
+                              placeholderMessage="Search properties by name, address, or property manager"
+                              />
+
                             <div className="properties-list">
                                 <BootstrapTable
                                     keyField='id'
