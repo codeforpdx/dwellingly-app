@@ -31,13 +31,13 @@ export const PropertyManagerOptions = () => {
 	);
 }
 
-export const JoinStaffOptions = () => {
+export const JoinStaffOptions = ({clickHandle}) => {
 	return (
 		<label className="checkbox make-admin-padding">
 			<span className="admin-check-padding">
 				Make Admin
 			</span>
-			<input type="checkbox"></input>
+			<input onChange={clickHandle} type="checkbox"></input>
 		</label>
 	);
 }
@@ -46,7 +46,8 @@ export const RoleDropDown = () => {
 	const [isActive, setIsActive] = useState(true);
 	const [dropContent, setDropContent] = useState("");
 	const [viewPropertyManagerOptions, setPropertyManagerOptions] = useState(false);
-	const [viewJoinStaffOptions, setJoinStaffOptions] = useState(false);
+  const [viewJoinStaffOptions, setJoinStaffOptions] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
 	const handleClickDropdown = () => {
 		if (!isActive) setIsActive(true);
@@ -67,15 +68,23 @@ export const RoleDropDown = () => {
 		if (isActive) setIsActive(false);
 		// Set dropdown button text
 		setDropContent("Property Manager");
-		// Use property search box
+    // Use property search box
+    setIsAdmin(false);
 		if (viewJoinStaffOptions) setJoinStaffOptions(false);
 		if (!viewPropertyManagerOptions) setPropertyManagerOptions(true);
-	}
+  }
+  
+  const handleCheckAdmin = (e) => {
+    setIsAdmin(!isAdmin);
+  }
 
 	const bottomPad = (viewPropertyManagerOptions) ? "bottom-padding-property" : (viewJoinStaffOptions ? "bottom-padding-join" : "bottom-padding");
 	const dropDown = "dropdown is-rounded " + ((isActive) ? "is-active" : "");
 	const dropButton = "icon is-small " + ((viewPropertyManagerOptions) ? "drop-button-prop" : (viewJoinStaffOptions ? "drop-button-join" : "drop-button-start"));
 
+
+  console.log("rendered");	
+	console.log(isAdmin);
 	return (
 		<div className={bottomPad} >
 			<div className={dropDown}>
@@ -96,7 +105,7 @@ export const RoleDropDown = () => {
 			</div>
 			<div>
 				{viewPropertyManagerOptions && <PropertyManagerOptions />}
-				{viewJoinStaffOptions && <JoinStaffOptions />}
+				{viewJoinStaffOptions && <JoinStaffOptions clickHandle={handleCheckAdmin}/>}
 			</div>
 		</div>
 	);
@@ -123,8 +132,13 @@ export const RequestAccess = (props) => {
 	const {
 		firstName,
 		lastName,
-		email
-	} = props.location.state;
+    email,
+    role
+  } = props.location.state;
+  
+  // getRole = () => {
+    
+  // }
 
 	return (
 		<>
