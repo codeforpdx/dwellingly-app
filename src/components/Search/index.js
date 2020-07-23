@@ -44,9 +44,9 @@ function Search(props) {
 
        if(searchQuery.length > 0){
           for (var i=0;i < allData.length; i++) {
-              let dataPoint = Object.values(allData[i]);
+              let dataPoint = allData[i];
               delete dataPoint.id;
-              if (dataPoint.toString().toLowerCase().includes(searchQuery)){
+              if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
                   output.push(allData[i]);
             }
           };
