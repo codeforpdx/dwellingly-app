@@ -44,10 +44,11 @@ function Search(props) {
 
        if(searchQuery.length > 0){
           for (var i=0;i < allData.length; i++) {
-              let dataPoint = allData[i];
+              let dataPoint = Object.assign({}, allData[i]);
               delete dataPoint.id;
               if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
                   output.push(allData[i]);
+                  console.log(allData[i]);
             }
           };
       props.setOutputState(output, true)
