@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Field, Formik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import * as Yup from 'yup';
-import { UserContext } from '../App';
+import UserContext from '../UserContext';
 import * as axios from 'axios';
 import Header from '../components/Header';
 
@@ -11,8 +11,6 @@ import Header from '../components/Header';
     // move the request button to the left
     // request password reset button functionality
     // recover account link functionality ... ?
-
-
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()

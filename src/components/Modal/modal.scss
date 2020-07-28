@@ -1,0 +1,12 @@
+.modal{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(189, 195, 199, 0.5);
+  &__modal-container {
+    max-width: 75%;
+    border-radius: 10px;
+  }
+}
