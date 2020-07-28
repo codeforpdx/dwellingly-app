@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { UserContext } from '../App';
+import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
 
@@ -39,7 +39,7 @@ const columns = [{
     headerStyle: () => {
       return { width: "10%" };
     }
-  }];
+}];
 
 const selectRow = {
   mode: 'checkbox',
@@ -67,7 +67,7 @@ export class Properties extends Component {
     }
 
     getProperties = (context) => {
-        axios.get(`${process.env.REACT_APP_API_URL}/properties`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+        axios.get("/api/properties", { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
             this.setState({properties: response.data.properties});
         })
@@ -89,7 +89,7 @@ export class Properties extends Component {
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
                             <div className="search-section">
-                                <input></input>
+                              <input className="input search is-rounded" placeholder="Search properties by name, address, or property manager"></input>
                             </div>
                             <div className="properties-list">
                                 <BootstrapTable

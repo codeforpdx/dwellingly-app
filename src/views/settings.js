@@ -14,9 +14,10 @@ const validationSchema = Yup.object().shape({
     phone: Yup.string()
         .max(20, "*Phone can't be longer than 20 characters")
         .required("*Phone Number is required"),
-
 });
 
+// TODO come back and get this to update user email/phone
+// MAYBE TODO see if we can get existing phone/email to be initial values for Formik
 const formHandler = (data, context) => {
     axios.post('http://localhost:5000/properties', 
           data, 
@@ -30,30 +31,18 @@ const formHandler = (data, context) => {
 }
 
 export class Settings extends Component {
-
     constructor(props) {
         super(props);
-        
         this.state = {
           phone: null,
           email: null
         }
     }    
 
-    // getData() {
-
-    //     axios.get(`http://localhost:5000/${user.id}`)
-
-    // }
-
-    // componentDidMount() {
-    //     this.getData();
-    // }
-
     render() {
 
       const user = this.context;
-      console.log(user);
+      console.log("user", user);
 
       return (
 
