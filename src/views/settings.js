@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
-import { UserContext } from '../App';
+import UserContext from "../UserContext";
 import * as axios from 'axios';
 
 const validationSchema = Yup.object().shape({
@@ -10,7 +10,7 @@ const validationSchema = Yup.object().shape({
         .min(5, "*Email must have at least 5 characters")
         .max(100, "*Email can't be longer than 100 characters")
         .required("*Email is required"),
-    //Validate phone number??
+    // Validate phone number??
     phone: Yup.string()
         .max(20, "*Phone can't be longer than 20 characters")
         .required("*Phone Number is required"),
@@ -34,27 +34,24 @@ export class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          phone: null,
+        //   phone: null,
           email: null
         }
     }    
 
     render() {
 
-      const user = this.context;
-      console.log("user", user);
-
       return (
-
         <UserContext.Consumer>
             {session => {
+                console.log("session", session);
                 return (
                     <div className="add-property__container">
                         <h2 className="page-title">Settings</h2>
 
                         <Formik
                             initialValues={{
-                                email: "",
+                                email: session.user.email,
                                 phone: ""
                             }}
                             validationSchema={validationSchema}
@@ -77,16 +74,15 @@ export class Settings extends Component {
                                     <h1 className="section-title">UPDATE CONTACT INFORMATION</h1>
                                     <Form className="add-property__form-container" onSubmit={handleSubmit}>
                                       <div className="form-row columns">
-                                            <label className="column is-one-fifth" htmlFor="phone">Phone</label>
+                                            <label className="column is-one-fifth" htmlFor="email">Email</label>
                                             <Field
                                                 className="column form-field"
                                                 type="text"
-                                                name="zipcode"
+                                                name="email"
                                                 onChange={handleChange}
-                                                value={values.zipcode}
-                                                placeholder="97217"
+                                                value={values.email}
                                             />
-                                            {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
+                                            {errors.email ? (<div className="error-message">{errors.email}</div>) : null}
                                         </div>
                                         <div className="form-row columns">
                                             <label className="column is-one-fifth" htmlFor="name">Email</label>
