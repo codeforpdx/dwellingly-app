@@ -1,0 +1,119 @@
+.manager {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: white;
+    padding: 45px;
+    .title__container {
+      display: flex;
+      align-items: center;
+      h2 {
+        font-size: 22px;
+        color: $brandBlue;
+        font-weight: bold;
+      }
+      .rounded {
+        margin-left: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 22px;
+        height: 22px;
+        border: $darkGray;
+        border-radius: 50%;
+        background-color: $darkGray;
+        cursor: pointer;
+        .icon {
+          font-size: 12px;
+          color: $white;
+        }
+      }
+      .rounded--is-editing {
+        margin-left: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 22px;
+        height: 22px;
+        border: $lightGray;
+        border-radius: 50%;
+        background-color: $lightGray;
+        cursor: pointer;
+        .icon {
+          font-size: 12px;
+          color: $white;
+        }
+      }
+    }
+    .manager__contact {
+      position: relative;
+      padding: 25px 0 25px 0;
+      .secondary-title {
+        font-size: 18px;
+        color: $brandBlue;
+        font-weight: bold;
+      }
+      .contact-details {
+        display: flex;
+        flex-direction: column;
+        margin: 25px 0 0 0;
+        max-width: 80%;
+      }
+    }
+  }
+  &__properties {
+    padding: 15px 0 35px 0;
+    .secondary-title {
+      font-size: 18px;
+      color: $brandBlue;
+      font-weight: bold;
+    }
+    &__container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+  }
+  &__property {
+    &__tile {
+      display: block;
+      width: 40%;
+      box-shadow: 0px 2px 4px $lightGray;
+      border-radius: 7px;
+      margin: 10px 20px 0 0;
+      padding: 10px 15px;
+    }
+    &__name {
+      font-size: 18px;
+      color: $brandBlue;
+      font-weight: bold;
+    }
+    &__addres-line {
+      display: block;
+      color: $lightGray;
+    }
+  }
+  &__tenants {
+    padding: 25px 0;
+    color: $gray;
+    .secondary-title {
+      font-size: 18px;
+      color: $brandBlue;
+      font-weight: bold;
+    }
+    .tenant {
+      &__name {
+        color: $darkGray;
+      }
+      &__form-row {
+        border-bottom: 1px solid $lightGray;
+        &:first-of-type {
+          margin-top: 10px;
+          border-top: 1px solid $lightGray;
+        }
+      }
+    }
+  }
+}

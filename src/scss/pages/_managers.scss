@@ -1,0 +1,38 @@
+.managers {
+  &__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 45px;
+    .section-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .search-section {
+      margin: 20px;
+    }
+    .button {
+      margin-left: 20px;
+      font-weight: bold;
+      color: white;
+      background-color: $blue;
+      border: 0;
+      &__envelope-icon {
+        margin: 0 5px;
+      }
+    }
+    .invite-button--container {
+      width: 90%;
+      background-color: $lightGray;
+      margin: 0 0 10px 0;
+    }
+    .table-header {
+      background-color: $lightGray;
+      border: none;
+    }
+  }
+  &__table {
+    width: 90%;
+  }
+}

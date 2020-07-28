@@ -3,6 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
+import Search from '../components/Search';
 
 const columns = [{
     dataField: 'name',
@@ -50,17 +51,29 @@ const selectRow = {
   }
 };
 
-
 export class Properties extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
         properties: [],
+        filteredProperties: [],
+        isFiltered: false
         }
 
         this.getProperties = this.getProperties.bind(this)
-    }    
+    }
+
+    setIsFilteredPropertiesFalse = async () => {
+      await this.setState({isFiltered: false});
+    }
+
+    setOutputState = async (output, isTrue) => {
+      await  this.setState({
+              filteredProperties: output,
+              isFiltered: isTrue
+              });
+    }
 
     componentDidMount() {
         this.getProperties(this.context);
@@ -88,13 +101,19 @@ export class Properties extends Component {
                                 <h2 className="page-title">Properties</h2>
                                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
                             </div>
-                            <div className="search-section">
-                              <input className="input search is-rounded" placeholder="Search properties by name, address, or property manager"></input>
-                            </div>
+
+                            <Search
+                              input={this.state.properties} outputLocation={this.state.filteredProperties}
+                              isFilteredLocation={this.state.isFiltered}
+                              setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
+                              setOutputState={this.setOutputState}
+                              placeholderMessage="Search properties by name, address, or property manager"
+                              />
+
                             <div className="properties-list">
                                 <BootstrapTable
                                     keyField='id'
-                                    data={ this.state.properties }
+                                    data={ this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties }
                                     columns={ columns }
                                     selectRow={ selectRow }
                                     bootstrap4={true}

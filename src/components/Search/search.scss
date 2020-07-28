@@ -1,0 +1,25 @@
+@import "../../scss/variables.scss";
+
+.search-section {
+    margin: 20px;
+    .search {
+      width: 60%;
+    }
+
+    .button {
+      margin-top: 0px;
+      margin-left: 15px;
+    }
+    .clearButton{
+      background-color: $red;
+    }
+
+}
+
+.button {
+    margin-left: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: $blue;
+    border: 0;
+}
