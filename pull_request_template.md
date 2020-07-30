@@ -11,3 +11,5 @@ Any special requirements to test?
 - [ ] Code is readable and formatted
 - [ ] There isn't any unnecessary commented-out code
 - [ ] There aren't any unnecessary commits or files changed (shouldn't touch the /stashed folder unless the issue requests it)
+
+If you're having trouble meeting this criteria, feel free to reach out on Slack for help!
