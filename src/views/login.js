@@ -61,7 +61,15 @@ export class LoginForm extends React.Component {
                             <span className="login__or_text">OR</span>
                           </div>
                         </div>
-                        <button className="login__button login__button--google">LOG IN WITH GOOGLE</button>
+                        <button className="login__button login__button__google">
+                          <div className="googleIconContainer">
+                            <img className="googleIcon" src="../../google-dwellingly-favicon.png"/>
+                          </div>
+                          <span className="login__button__google__text">
+                            LOG IN WITH GOOGLE
+                          </span>
+
+                        </button>
                         <div className="login__account_container">
                           <a href="" className="login__text_link login__account_forgot_password">Forgot Password</a>
                           <a href="/signup" className="login__text_link login__account_create">Create an Account</a>
