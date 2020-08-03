@@ -56,14 +56,14 @@ const pageButtonRenderer = ({
   if (title == 'previous page') {
     return (
       <li className="page-item">
-        <a href="#" onClick={ handleClick } title={title} class='button is-rounded is-small' >Prev</a>
+        <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
   if (title == 'next page') {
     return (
       <li className="page-item">
-        <a href="#" onClick={ handleClick } title={title}class='button is-rounded is-small' >Next</a>
+        <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
@@ -127,20 +127,20 @@ export class Tickets extends Component {
                                 <h2 className="page-title">Tickets</h2>
                             </div>
                             <div className="search-section">
-                              <input class="input is-rounded" placeholder="Search by tenant, manager, property, or JOIN staff"></input>
+                              <input className="input is-rounded" placeholder="Search by tenant, manager, property, or JOIN staff"></input>
                             </div>
                             <Accordion
-                              icon={<i class="fas fa-filter"></i>}
+                              icon={<i className="fas fa-filter"></i>}
                               header={"Filters"}
                             >
                               <div className="section-row">
                                 <div className="filter-control">
                                   <label>Opened From</label>
-                                  <input class="input is-rounded"></input>
+                                  <input className="input is-rounded"></input>
                                 </div>
                                 <div className="filter-control">
                                   <label>Category</label>
-                                  <div class="select is-rounded">
+                                  <div className="select is-rounded">
                                     <select>
                                       <option>All</option>
                                       <option>Complaints</option>
@@ -150,10 +150,10 @@ export class Tickets extends Component {
                                 </div>
                                 <div className="filter-control">
                                   <label>Status</label>
-                                  <div class="buttons has-addons">
-                                    <button class="button is-rounded btn-group">New </button>
-                                    <button class="button is-rounded btn-group">In Progress</button>
-                                    <button class="button is-rounded btn-group">Closed</button>
+                                  <div className="buttons has-addons">
+                                    <button className="button is-rounded btn-group">New </button>
+                                    <button className="button is-rounded btn-group">In Progress</button>
+                                    <button className="button is-rounded btn-group">Closed</button>
                                   </div>
                                 </div>
                               </div>

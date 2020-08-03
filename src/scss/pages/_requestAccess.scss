@@ -47,7 +47,6 @@ $specialGrey: #C8C8C8;
 
 // Contact Section
 .line {
-	border: 1px solid $specialGrey;
 	margin-top: 10px; 
 	margin-bottom: 10px;
 	width: 800px;
@@ -110,13 +109,14 @@ $specialGrey: #C8C8C8;
 }
 
 .access-button {
-	color: white;
-    background-color: $blue;
-    border-radius: 20px;
-    border-width: 0px;
-    padding: 7px 20px;
-    font-weight: bold;
-    font-size: 12px;
+  color: white;
+  cursor:pointer;
+  background-color: $blue;
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 7px 20px;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .set-access-button {

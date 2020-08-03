@@ -1,114 +1,34 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import * as axios from "axios";
+import UserContext from '../UserContext';
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
+const RoleDropDown = (props) => {
+  console.log(props.selectionOptions);
+  console.log(typeof props.selectionOptions);
+  let roles = props.selectionOptions;
+  return (
+    <div className="section-row">
+      <div className="select is-rounded">
+        <select
+        defaultValue="default"
+          onChange={e => props.selectionHandler(e.target.value)}>
+          <option value='default' disabled>Select Role</option>
+          {
+            props.selectionOptions.map((role) => 
+            <option>{role}</option>
+            )
+          }
+        </select>
+      </div>
 
-export const DropDownItem = ({dropContent, clickHandle}) => {
-	return (
-		<div className="dropdown-item">
-	      	<label className="radio">
-		      	<input type="radio" name="answer" onClick={clickHandle} className="radio-dropdown"></input>
-		      	{dropContent}
-		    </label>
-	    </div>
-	);
-}
-
-export const PropertyManagerOptions = () => {
-	return (
-		<>
-			<div className="sub-title sub-title-padding"> PROPERTY </div>
-	    	<p className="control has-icons-left search-bar">
-	        	<input className="input is-rounded" type="text" placeholder="Search properties"></input>
-	        	<span className="icon is-small is-left">
-			    	<FontAwesomeIcon icon={faSearch} />
-			    </span>
-		    </p>
-		</>
-	);
-}
-
-export const JoinStaffOptions = ({clickHandle}) => {
-	return (
-		<label className="checkbox make-admin-padding">
-			<span className="admin-check-padding">
-				Make Admin
-			</span>
-			<input onChange={clickHandle} type="checkbox"></input>
-		</label>
-	);
-}
-
-export const RoleDropDown = () => {
-	const [isActive, setIsActive] = useState(true);
-	const [dropContent, setDropContent] = useState("");
-	const [viewPropertyManagerOptions, setPropertyManagerOptions] = useState(false);
-  const [viewJoinStaffOptions, setJoinStaffOptions] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-	const handleClickDropdown = () => {
-		if (!isActive) setIsActive(true);
-	}
-
-	const handleClickJOIN = () => {
-		// Close dropdown
-		if (isActive) setIsActive(false);
-		// Set dropdown button text
-		setDropContent("JOIN Staff");
-		// Use JOIN staff checkbox
-		if (viewPropertyManagerOptions) setPropertyManagerOptions(false);
-		if (!viewJoinStaffOptions) setJoinStaffOptions(true);
-	}
-
-	const handleClickProperty = () => {
-		// Close dropdown
-		if (isActive) setIsActive(false);
-		// Set dropdown button text
-		setDropContent("Property Manager");
-    // Use property search box
-    setIsAdmin(false);
-		if (viewJoinStaffOptions) setJoinStaffOptions(false);
-		if (!viewPropertyManagerOptions) setPropertyManagerOptions(true);
-  }
-  
-  const handleCheckAdmin = (e) => {
-    setIsAdmin(!isAdmin);
-  }
-
-	const bottomPad = (viewPropertyManagerOptions) ? "bottom-padding-property" : (viewJoinStaffOptions ? "bottom-padding-join" : "bottom-padding");
-	const dropDown = "dropdown is-rounded " + ((isActive) ? "is-active" : "");
-	const dropButton = "icon is-small " + ((viewPropertyManagerOptions) ? "drop-button-prop" : (viewJoinStaffOptions ? "drop-button-join" : "drop-button-start"));
-
-
-  console.log("rendered");	
-	console.log(isAdmin);
-	return (
-		<div className={bottomPad} >
-			<div className={dropDown}>
-			    <div className="dropdown-trigger">
-				    <button className="button is-rounded drop-button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={handleClickDropdown} >
-					    <span className="drop-button-content"> {dropContent} </span>
-					    <span className={dropButton} >
-					    	<i className="fas fa-angle-down" aria-hidden="true"></i>
-					    </span>
-				    </button>
-			    </div>
-			    <div className="dropdown-menu dropdown-menu-place">
-				  	<div className="dropdown-content dropdown-content-width">
-					    <DropDownItem dropContent="JOIN Staff" clickHandle={handleClickJOIN} />
-					    <DropDownItem dropContent="Property Manager" clickHandle={handleClickProperty} />
-				  	</div>
-			    </div>
-			</div>
-			<div>
-				{viewPropertyManagerOptions && <PropertyManagerOptions />}
-				{viewJoinStaffOptions && <JoinStaffOptions clickHandle={handleCheckAdmin}/>}
-			</div>
-		</div>
-	);
+    </div>
+  )
 }
 
 // Section under CONTACT
@@ -119,20 +39,66 @@ export const InfoField = ({label, info}) => {
 			<hr className="line" ></hr>
 			<span className="input-field"> {label}
 				<p className={infoField} contentEditable>
-			        {info}
-			    </p>
+			    {info}
+			  </p>
 		    </span>
 	    </div>
 	);
 }
 
 export const RequestAccess = (props) => {
-	// const id = props.match.params.id;
+  // const id = props.match.params.id;
+  const userContext = useContext(UserContext);
+
+  const [selectionOptions, setSelectionOptions] = useState([]);
+  const [currentSelection, selectionHandler] = useState("");
+
+  useEffect(() => {
+    axios.get(`/api/roles`)
+    .then((response) => {
+      let data = JSON.parse(response.data);
+      // Remove 'PENDING' from List
+      data.shift()
+      console.log(Object.keys(data));
+      // let roleArray = Object.entries(data);
+      // console.log(roleArray);
+      // console.log(typeof roleArray);
+      setSelectionOptions(data);
+    })
+    .catch((error) => {
+      alert(error);
+      console.log(error);
+    });
+  }, []);
+
+  console.log(selectionOptions);
+  console.log(currentSelection);
+
+  const grantAccess = (role, id) => {
+    console.log(id)
+    console.log(role)
+    axios.patch(`/api/user/${id}`, {
+      role: role,
+    }, makeAuthHeaders(userContext))
+    .then((response) => {
+      alert("Role assigned successfully!");
+      console.log(response);
+      console.log(response.data);
+      
+    })
+    .catch((error) => {
+      alert(error);
+      console.log(error);
+    });
+
+  }
+
 
 	const {
 		firstName,
 		lastName,
     email,
+    id,
     role
   } = props.location.state;
   
@@ -151,13 +117,13 @@ export const RequestAccess = (props) => {
 				<InfoField label={"Email"} info={email} />
 				<hr className="line" ></hr>
 				<div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
-				<RoleDropDown />
+				<RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler}/>
 				<div className="button-padding">
 					<div className="set-access-button">
-			      		<button className="access-button"> GRANT ACCESS </button>
-			      	</div>
-			        <Link className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" to='/dashboard'> CANCEL </Link>
+            <button className="access-button" onClick={() => grantAccess(currentSelection, id)}> GRANT ACCESS </button>
 			    </div>
+          <Link className="button has-background-grey has-text-white is-rounded is-small has-text-weight-bold" to='/dashboard'> CANCEL </Link>
+			  </div>
 			</div>
 		</>
 	);
