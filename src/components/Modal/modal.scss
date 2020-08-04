@@ -1,12 +1,36 @@
-.modal{
+$brandBlue: #053d6f;
+$gray: #8e8e93;
+$blue: #51a3fc;
+
+.modal {
   display: flex;
   justify-content: center;
   align-content: center;
+  text-align: center;
+  font-size: 14px;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(189, 195, 199, 0.5);
-  &__modal-container {
-    max-width: 75%;
-    border-radius: 10px;
+  background-color: rgba(142, 142, 147, 0.5);
+  &__container {
+    width: 33vw;
+    min-width: 300px;
+    padding: 25px;
+    background-color: white;
+    border-radius: 7px;
+  }
+  &__title {
+    font-size: 18px;
+    color: $brandBlue;
+    font-weight: bold;
+    padding-bottom: 15px;
+  }
+  &__content {
+    color: $gray;
+    padding-bottom: 15px;
+  }
+  &__button-container {
+  }
+  &__link {
+    color: $blue;
   }
 }

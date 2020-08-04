@@ -165,7 +165,12 @@ export const Dashboard = (props) => {
                     }
                 </Collapsible>
             </div>
+<<<<<<< HEAD
             <div className={`modal ${modalActive.visible && 'is-active'}`}>
+=======
+            {/* TODO replace this with our modal! Marie and Darren are smart :) */}
+            {/* <div className={`modal ${modalActive && 'is-active'}`}>
+>>>>>>> style modal and add to forgotPassword view
                 <div className="modal-background" onClick={() => { handleDenyAccess(false) }}></div>
                 <div className="modal-content">
                     <div className="modal__message_container">
@@ -178,7 +183,7 @@ export const Dashboard = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }
