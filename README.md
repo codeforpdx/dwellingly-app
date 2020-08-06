@@ -40,3 +40,5 @@ From terminal:
 - React will open a browser page for you and navigate to `localhost:3000`
 
 ## Thank you for your help and happy coding!
+
+- This is an edit.  Do you edit?
