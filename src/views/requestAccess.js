@@ -1,7 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import * as axios from "axios";
 import UserContext from '../UserContext';
@@ -26,7 +23,6 @@ const RoleDropDown = (props) => {
           }
         </select>
       </div>
-
     </div>
   )
 }
@@ -46,7 +42,7 @@ export const InfoField = ({label, info, changeHandler}) => {
 }
 
 export const RequestAccess = (props) => {
-  // const id = props.match.params.id;
+  // Get context for API auth header
   const userContext = useContext(UserContext);
 
   const [roleObject, setRoleObject] = useState({});
@@ -75,9 +71,6 @@ export const RequestAccess = (props) => {
       console.log(error);
     });
   }, []);
-
-  console.log(selectionOptions);
-  console.log(currentSelection);
 
   const grantAccess = (role, firstName, lastName, email, id) => {
     // Get role index from roleObject
