@@ -16,9 +16,9 @@ const RoleDropDown = (props) => {
     <div className="section-row">
       <div className="select is-rounded">
         <select
-        defaultValue="default"
+          defaultValue='default'
           onChange={e => props.selectionHandler(e.target.value)}>
-          <option value='default' disabled>Select Role</option>
+          <option value='default' disabled defaultValue>Select Role</option>
           {
             props.selectionOptions.map((role) => 
             <option>{role}</option>
@@ -32,15 +32,14 @@ const RoleDropDown = (props) => {
 }
 
 // Section under CONTACT
-export const InfoField = ({label, info}) => {
+export const InfoField = ({label, info, changeHandler}) => {
 	const infoField = "has-text-weight-bold " + ((label === "Phone") ? "phone-field" : (label === "Email" ? "email-field" : "name-field"));
 	return (
 		<div>
 			<hr className="line" ></hr>
 			<span className="input-field"> {label}
-				<p className={infoField} contentEditable>
-			    {info}
-			  </p>
+				<input className={`contact-input ${infoField}`} type="text" defaultValue={info} onChange={(e) => changeHandler(e.target.value)}>
+			    </input>
 		    </span>
 	    </div>
 	);
@@ -50,20 +49,26 @@ export const RequestAccess = (props) => {
   // const id = props.match.params.id;
   const userContext = useContext(UserContext);
 
+  const [roleObject, setRoleObject] = useState({});
   const [selectionOptions, setSelectionOptions] = useState([]);
   const [currentSelection, selectionHandler] = useState("");
+  const [fName, setFirstName] = useState("");
+  const [lName, setLastName] = useState("");
+  const [emailAddress, setEmail] = useState("");
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL)
     axios.get(`/api/roles`)
     .then((response) => {
       let data = JSON.parse(response.data);
-      // Remove 'PENDING' from List
-      data.shift()
-      console.log(Object.keys(data));
-      // let roleArray = Object.entries(data);
-      // console.log(roleArray);
-      // console.log(typeof roleArray);
-      setSelectionOptions(data);
+      // Get key value object of all roles
+      setRoleObject(data);
+      // Get Role names
+      let roleArray = Object.keys(data);
+      // Removes "Pending" role
+      roleArray.shift();
+      // Get array of roles to map to selection options
+      setSelectionOptions(roleArray);
     })
     .catch((error) => {
       alert(error);
@@ -74,56 +79,55 @@ export const RequestAccess = (props) => {
   console.log(selectionOptions);
   console.log(currentSelection);
 
-  const grantAccess = (role, id) => {
-    console.log(id)
-    console.log(role)
+  const grantAccess = (role, firstName, lastName, email, id) => {
+    // Get role index from roleObject
+    let roleID = roleObject[role];
     axios.patch(`/api/user/${id}`, {
-      role: role,
+      role: roleID,
+      firstName: firstName,
+      lastName: lastName,
+      email: email
     }, makeAuthHeaders(userContext))
     .then((response) => {
-      alert("Role assigned successfully!");
-      console.log(response);
-      console.log(response.data);
-      
+      alert("User access granted!")
     })
     .catch((error) => {
       alert(error);
       console.log(error);
     });
-
   }
-
 
 	const {
 		firstName,
 		lastName,
     email,
-    id,
-    role
+    id
   } = props.location.state;
   
-  // getRole = () => {
-    
-  // }
+  useEffect(() => {
+    setFirstName(firstName);
+    setLastName(lastName);
+    setEmail(email);
+  }, []);
 
 	return (
 		<>
 			<div className="request-page">
 				<div className="page-title"> Request Access </div>
 				<div className="sub-title"> CONTACT </div>
-				<InfoField label={"First Name"} info={firstName} />
-				<InfoField label={"Last Name"} info={lastName} />
+				<InfoField label={"First Name"} changeHandler={setFirstName} info={firstName} />
+				<InfoField label={"Last Name"} changeHandler={setLastName} info={lastName} />
 				{/* <InfoField label={"Phone"} info={data['phone']} /> */}
-				<InfoField label={"Email"} info={email} />
+				<InfoField label={"Email"} changeHandler={setEmail} info={email} />
 				<hr className="line" ></hr>
 				<div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
 				<RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler}/>
 				<div className="button-padding">
 					<div className="set-access-button">
-            <button className="access-button" onClick={() => grantAccess(currentSelection, id)}> GRANT ACCESS </button>
+			      		<button className="access-button" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)}> GRANT ACCESS </button>
+			      	</div>
+			        <Link className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" to='/dashboard'> CANCEL </Link>
 			    </div>
-          <Link className="button has-background-grey has-text-white is-rounded is-small has-text-weight-bold" to='/dashboard'> CANCEL </Link>
-			  </div>
 			</div>
 		</>
 	);
