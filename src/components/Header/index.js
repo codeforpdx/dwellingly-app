@@ -1,9 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
 import LogOutButton from "./LogOutButton";
 
 const Header = (props) => {
+  const loc = useLocation();
+
+  if(loc.pathname === "/terms") {
+    return null;
+  }
 	return (
     <header className="navbar bg-gradient">
       <div className="navbar-brand">
