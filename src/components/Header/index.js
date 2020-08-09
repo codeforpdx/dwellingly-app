@@ -11,17 +11,11 @@ const Header = (props) => {
   }
 	return (
     <header className="navbar bg-gradient">
-      <div className="navbar-brand">
-        <Link className="navbar-item" to="/">
-          <img src={dwellinglylogo} alt="dwellingly logo" />
-        </Link>
-      </div>
-      <div className="navbar-end">
-        <div className="navbar-item">
-          <div className="is-logout-button">
-            <LogOutButton />
-          </div>
-        </div>
+      <Link className="navbar-item" id="header-logo" to="/">
+        <img src={dwellinglylogo} alt="dwellingly logo" />
+      </Link>
+      <div className="logout-button">
+        <LogOutButton />
       </div>
     </header>
   );
