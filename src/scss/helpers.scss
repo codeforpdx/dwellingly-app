@@ -11,64 +11,6 @@
   background: $gray;
 }
 
-// NavMenu
-.is-sidebar-menu {
-	float: left;
-	position: relative;
-	min-height: 100vh;
-	width: 250px;
-	padding-bottom: 99999px;
-  margin-bottom: -99999px;
-	padding-top: 9px;
-	z-index: 20;
-}
-
-.is-menu-link{
-	padding-left: 2px;
-}
-
-.is-padding{
-	padding-bottom: 5px;
-}
-
-.is-logout-button{
-	padding-right: 30px;
-}
-
-.is-inactive-link{
-  pointer-events: none;
-  cursor: default;
-}
-
-.is-child-link{
-  padding-left: 15px;
-}
-
-.is-username-link{
-  padding-bottom: 30px;
-}
-
-.navbar {
-  height: 66px !important;
-  z-index: 10 !important;
-  display: block !important;
-}
-
-#header-logo {
-  height: 66px !important;
-  float: left;
-  display: flex;
-  align-items: center;
-  &:hover {
-    background: none;
-  }
-}
-
-.logout-button {
-  padding: 0.5rem 0.75rem;
-  float: right;
-}
-
 .section-header {
   display: flex;
   flex-direction: row;
