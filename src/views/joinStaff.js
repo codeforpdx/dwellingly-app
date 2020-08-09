@@ -10,8 +10,10 @@ export const JoinStaff = () => {
 
 	return (
 		<>
-      <div className="title-font">JOIN Staff</div>
-      <Link className="button is-rounded add-button" to='/staff/add'> + ADD NEW </Link>
+      <div className="section-header">
+        <h2 className="page-title">JOIN Staff</h2>
+        <Link className="button" to='/staff/add'> + ADD NEW </Link>
+      </div>
 			<div className="columns columns-spacing">
 				<div className="column">
 					{JOIN_STAFF_DATA.slice(0, secondColumnStart).map((row, index) => {

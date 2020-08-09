@@ -1,12 +1,4 @@
 .dashboard {
-	&__container {
-		display: flex;
-		min-height: 100vh;
-		flex-direction: column;
-		flex-grow: 1;
-		background-color: white;
-		padding: 45px;
-	}
 	&__modules_container {
 		display: flex;
 		justify-content: space-between;

@@ -121,7 +121,7 @@ export class Tickets extends Component {
                 {session => {
                     this.context = session;
                     return (
-                        <div className="tickets">
+                        <>
                             <div className="section-header">
                                 <h2 className="page-title">Tickets</h2>
                             </div>
@@ -167,7 +167,7 @@ export class Tickets extends Component {
                                     headerClasses="table-header"
                                     />
                             </div>
-                        </div>
+                        </>
                     )
                 }}
             </UserContext.Consumer>
