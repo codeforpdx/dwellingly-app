@@ -13,11 +13,7 @@ function isValidEmail(email) {
 
 export class SignupForm extends React.Component {
 
-  async signup(firstName, lastName, email, password, confirmPassword){
-    console.log(firstName)
-    console.log(lastName)
-    console.log(password)
-    console.log(confirmPassword)
+  async signup(firstName, lastName, email, phone, password, confirmPassword){
 
     if (password !== confirmPassword){
       alert("Passwords Don't Match");
@@ -28,6 +24,7 @@ export class SignupForm extends React.Component {
       firstName: firstName,
       lastName: lastName,
       email: email,
+      phone: phone,
       password: password,
       confirmPassword: confirmPassword
     })
@@ -66,6 +63,7 @@ export class SignupForm extends React.Component {
               firstName: "",
               lastName: "",
               email: "",
+              phone: "",
               password: "",
               confirmPassword: "", 
             }}
@@ -78,7 +76,9 @@ export class SignupForm extends React.Component {
               else if (!isValidEmail(values.email)){
                 errors.email = "Invalid email format";
               }
-              
+              if (values.phone === ''){
+                errors.phone = "Phone Required";
+              }
               if (values.password === ''){
                 errors.password = 'Password Required';
               }
@@ -91,8 +91,8 @@ export class SignupForm extends React.Component {
 
               return errors;
             }}
-            onSubmit={({ firstName, lastName, email, password, confirmPassword }) => {
-              this.signup(firstName, lastName, email, password, confirmPassword);
+            onSubmit={({ firstName, lastName, email, phone, password, confirmPassword }) => {
+              this.signup(firstName, lastName, email, phone, password, confirmPassword);
             }}
             enableReinitialize={true}
           >
@@ -129,6 +129,14 @@ export class SignupForm extends React.Component {
                         required
                       />
                       <ErrorMessage className="form-error" name="email" component="div"/>
+                      <Field
+                        className="form-field login__form-field"
+                        type="text"
+                        name="phone"
+                        placeholder="Phone"
+                        required
+                      />
+                      <ErrorMessage className="form-error" name="phone" component="div"/>
                       <Field
                         className="form-field login__form-field"
                         type="password"
