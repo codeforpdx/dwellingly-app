@@ -37,6 +37,14 @@ export const Dashboard = (props) => {
 
         const pendingUsersObj = { "userrole": 0 };
         axios
+            .get("/api/widgets", makeAuthHeaders(userContext))
+            .then(({ data }) => {
+                console.log(data)
+            })
+            .catch(error => alert(error));
+
+        const pendingUsersObj = { "userrole": "pending" };
+        axios
             .post("/api/users/role", pendingUsersObj, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
             .catch(error => alert(error));
