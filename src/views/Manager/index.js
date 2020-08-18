@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
-import UserContext from "../../UserContext";
+import React, { useState } from "react";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
 
@@ -29,7 +28,6 @@ const validationSchema = Yup.object().shape({
 const Manager = () => {
   const { pathname } = useLocation();
   const id = pathname.match(/\d/)[0];
-  const userContext = useContext(UserContext);
   // can remove this once api is configured to return properties and tenants
   const dummyDataManagerInfo = PROPERTY_MANAGER_DATA.find(
     (manager) => manager.id === id
@@ -87,6 +85,7 @@ const Manager = () => {
   };
 
   // use getManager once /users/?id api endpoint returns properties and tenants for property managers
+  // eslint-disable-next-line no-unused-vars
   const getManager = (context) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/?id=${id}`, {

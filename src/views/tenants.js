@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-//import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
-// import Accordion from '../components/Accordion';
-import * as axios from 'axios';
 
 const columns = [{
     dataField: 'name',
