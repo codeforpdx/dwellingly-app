@@ -6,6 +6,8 @@ import SignupForm from "./signup";
 import UserContext from "../UserContext";
 
 const mockHistory = { push: jest.fn() };
+jest.spyOn(axios, 'post').mockResolvedValue({});
+jest.spyOn(window, 'alert').mockImplementation(() => {});
 
 const mockNotAuthenticatedUser = {
   isAuthenticated: false,
@@ -15,13 +17,10 @@ const mockInputEvent = { target: {value: "mock value"} };
 const mockInputEmailEvent = { target: {value: "mock@mockdomain.com"} };
 
 describe("signup component", () => {
-  let container = null;
+  let view = null;
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    jest.spyOn(axios, 'post').mockResolvedValue({});
-    jest.spyOn(window, 'alert').mockImplementation(() => {});
-    container = render(
+    view = render(
       <UserContext.Provider value={{ user: mockNotAuthenticatedUser }}>
         <SignupForm history={mockHistory} />
       </UserContext.Provider>
@@ -29,20 +28,20 @@ describe("signup component", () => {
   });
 
   it("should display an error when phone not populated", async() => {
-    const button = container.container.querySelector('button');
+    const button = view.container.querySelector('button');
     await wait(() => fireEvent.click(button));
     await screen.findByText("Phone number is required");
   });
 
   it("should display an error when passwords don't match", async() => {
-    const button = container.container.querySelector('button');
+    const button = view.container.querySelector('button');
     fireEvent.change(screen.getByPlaceholderText("Confirm Password"), mockInputEvent);
     await wait(() => fireEvent.click(button));
     await screen.findByText("Passwords must match");
   });
 
   it("should succeed when all fields are valid", async() => {
-    const button = container.container.querySelector('button');
+    const button = view.container.querySelector('button');
     fireEvent.change(screen.getByPlaceholderText("First Name"), mockInputEvent);
     fireEvent.change(screen.getByPlaceholderText("Last Name"), mockInputEvent);
     fireEvent.change(screen.getByPlaceholderText("Email"), mockInputEmailEvent);
