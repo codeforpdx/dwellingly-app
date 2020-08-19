@@ -4,6 +4,11 @@ import './dashboardmodule.scss';
 
 function DashboardModule(props) {
     const { data } = props;
+
+
+    if (data){
+        console.log("Debug:")
+        console.log(data)
     return (
         <div className="dashboard__module">
             <div className="dashboard__module_header">
@@ -40,6 +45,19 @@ function DashboardModule(props) {
             }
         </div >
     );
+        }
+    else {
+        return(
+            <div className="dashboard__module">
+            <div className="dashboard__module_header">
+                <h3 className="dashboard__module_title h2">Loading</h3>
+            </div>
+            
+               <h6>Loading...</h6>
+            
+        </div >
+        )
+    }
 };
 
 export default DashboardModule;
