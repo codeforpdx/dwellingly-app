@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { ACCESS_REQUEST_DATA } from '../components/DashboardModule/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-
-
 
 export const DropDownItem = ({dropContent, clickHandle}) => {
 	return (
@@ -123,7 +120,8 @@ export const RequestAccess = (props) => {
 	const {
 		firstName,
 		lastName,
-		email
+		email,
+		phone
 	} = props.location.state;
 
 	return (
@@ -133,7 +131,7 @@ export const RequestAccess = (props) => {
 				<div className="sub-title"> CONTACT </div>
 				<InfoField label={"First Name"} info={firstName} />
 				<InfoField label={"Last Name"} info={lastName} />
-				{/* <InfoField label={"Phone"} info={data['phone']} /> */}
+				<InfoField label={"Phone"} info={phone} />
 				<InfoField label={"Email"} info={email} />
 				<hr className="line" ></hr>
 				<div className="sub-title sub-title-padding"> ASSIGN ROLE </div>

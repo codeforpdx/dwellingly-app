@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './search.scss';
 
 //Necessary for <Search> to work:
@@ -22,7 +22,7 @@ import './search.scss';
 //Search is designed to not include the ID as a searchable paramater.
 
 function Search(props) {
-    const { input, outputLocation, isFilteredLocation, setOutputState, setIsFilteredStateFalse, placeholderMessage } = props;
+    const { input, placeholderMessage } = props;
 
     const enterSearchHandler = (event) => {
       var keyCode = event.keyCode;

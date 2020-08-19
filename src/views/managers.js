@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
@@ -76,10 +75,9 @@ const selectRow = {
 };
 
 const Managers = () => {
-  const [properties, updateProperties] = useState([]);
-  const userContext = useContext(UserContext);
 
   // re-purpose getProperties once API is configured to retrieve tenant and properties for Property Managers
+  // eslint-disable-next-line no-unused-vars
   const getProperties = (context) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/properties`, {
