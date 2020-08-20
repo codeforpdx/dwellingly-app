@@ -74,7 +74,7 @@ export const RequestAccess = (props) => {
 
   const grantAccess = (role, firstName, lastName, email, id) => {
     // Get role index from roleObject
-    let roleID = roleObject[role];
+    let roleID = parseInt(roleObject[role]);
     axios.patch(`/api/user/${id}`, {
       role: roleID,
       firstName: firstName,
