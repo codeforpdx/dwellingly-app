@@ -7,8 +7,7 @@ function DashboardModule(props) {
 
 
     if (data){
-        console.log("Debug:")
-        console.log(data)
+
     return (
         <div className="dashboard__module">
             <div className="dashboard__module_header">
