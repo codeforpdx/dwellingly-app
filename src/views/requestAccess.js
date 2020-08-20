@@ -126,7 +126,7 @@ export const RequestAccess = (props) => {
 
 	return (
 		<>
-			<div className="request-page">
+			<div>
 				<div className="page-title"> Request Access </div>
 				<div className="sub-title"> CONTACT </div>
 				<InfoField label={"First Name"} info={firstName} />

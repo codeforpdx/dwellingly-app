@@ -18,8 +18,8 @@ const Footer = () => {
 	);
 
 	return (
-		<footer className="dashboard__footer">
-			<p className="dashboard__footer_logo_text">
+		<footer className="dwellingly-footer">
+			<p>
 				<span className="bold">
 					Made with love by {renderAnchor(amplifiedUrl, "Amplified By Design")}{" "}
 					and {renderAnchor(codeforpdxUrl, "Code For PDX")}. Copyright ©{" "}

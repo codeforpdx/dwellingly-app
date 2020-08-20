@@ -93,17 +93,17 @@ const Managers = () => {
   };
 
   return (
-    <div className="managers__container">
+    <div className="managers">
       <div className="section-header">
         <h2 className="page-title">Property Managers</h2>
         <Link className="button is-rounded" to="/manage/managers">
           + ADD NEW
         </Link>
       </div>
-      <div className="search-section">
+      <div>
         <input></input>
       </div>
-      <div className="invite-button--container">
+      <div className="invite-button">
         <button className="button is-rounded" type="submit">
           <FontAwesomeIcon
             className="button__envelope-icon"

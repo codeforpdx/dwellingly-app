@@ -1,0 +1,22 @@
+// Styles for the Header component
+
+.navbar {
+  height: 66px !important;
+  z-index: 10 !important;
+  display: block !important;
+}
+
+#header-logo {
+  height: 66px !important;
+  float: left;
+  display: flex;
+  align-items: center;
+  &:hover {
+    background: none;
+  }
+}
+
+.logout-button {
+  padding: 0.5rem 0.75rem;
+  float: right;
+}
