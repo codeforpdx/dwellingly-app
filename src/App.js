@@ -2,7 +2,7 @@ import React from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { LoginForm } from "./views/login";
-import { SignupForm } from "./views/signup";
+import SignupForm from "./views/signup";
 import { NavMenu } from "./components/NavigationMenu/navigationMenu.js";
 import { Dashboard } from "./views/dashboard";
 import { RequestAccess } from "./views/requestAccess";

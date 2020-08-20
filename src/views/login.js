@@ -36,7 +36,7 @@ export class LoginForm extends React.Component {
                   return (
                     <>
                       <Form className="login__form-container">
-                        <img className="login__logo" src={dwellinglyLogo}></img>
+                        <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly logo"></img>
                         <Field
                           className="form-field login__form-field"
                           type="text"
@@ -63,7 +63,7 @@ export class LoginForm extends React.Component {
                         </div>
                         <button className="login__button login__button__google">
                           <div className="googleIconContainer">
-                            <img className="googleIcon" src="../../google-dwellingly-favicon.png"/>
+                            <img className="googleIcon" src="../../google-dwellingly-favicon.png" alt="Dwellingly icon"/>
                           </div>
                           <span className="login__button__google__text">
                             LOG IN WITH GOOGLE

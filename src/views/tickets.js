@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../UserContext';
-import { Link } from "react-router-dom"
 import Accordion from '../components/Accordion';
 import * as axios from 'axios';
 
@@ -53,14 +52,14 @@ const pageButtonRenderer = ({
     e.preventDefault();
     onPageChange(page);
   };
-  if (title == 'previous page') {
+  if (title === 'previous page') {
     return (
       <li className="page-item">
         <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
-  if (title == 'next page') {
+  if (title === 'next page') {
     return (
       <li className="page-item">
         <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Next</a>

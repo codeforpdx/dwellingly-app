@@ -1,171 +1,179 @@
-import React from 'react';
-import { Form, Field, Formik, ErrorMessage } from 'formik';
-import dwellinglyLogo from '../assets/images/dwellingly_logo.png';
-import UserContext from '../UserContext';
-import { Redirect } from 'react-router';
-//import Header from '../components/Header/index';
-import axios from 'axios';
+/* eslint-disable react/jsx-filename-extension */
+import React from "react";
+import PropTypes from "prop-types";
+import {
+  Form, Field, Formik, ErrorMessage,
+} from "formik";
+import { Redirect } from "react-router";
+import axios from "axios";
+import * as Yup from "yup";
+import UserContext from "../UserContext";
+import dwellinglyLogo from "../assets/images/dwellingly_logo.png";
 
-function isValidEmail(email) {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
-
-export class SignupForm extends React.Component {
-
-  async signup(firstName, lastName, email, password, confirmPassword){
-    console.log(firstName)
-    console.log(lastName)
-    console.log(password)
-    console.log(confirmPassword)
-
-    if (password !== confirmPassword){
-      alert("Passwords Don't Match");
-      return;
-    }
-
-    return axios.post("/api/register", {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword
-    })
-    .then((response) => {
-      if (response){
-        const success = 'Account Created Successfully!'
-        console.log(success);
-        alert(success);
-        //Redirect to login using the react router history
-        this.props.history.push('/login');
-        return response;
-      }
-    })
-    .catch((error) => {
-      if (error.response){
-        console.log(error.response.data.message)
-        alert(error.response.data.message)
+const SignupForm = ({ history }) => {
+  const signup = async (firstName, lastName, email, phone, password, confirmPassword) => {
+    let response;
+    try {
+      response = await axios.post("/api/register", {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        confirmPassword,
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message);
+        alert(error.response.data.message);
       } else {
-        alert(error)
+        alert(error);
       }
-      return Promise.reject(error)
-    })
+      return Promise.reject(error);
+    }
+    if (response) {
+      const success = "Account Created Successfully!";
+      console.log(success);
+      alert(success);
+      // Redirect to login using the react router history
+      history.push("/login");
+    }
+    return response;
   };
 
-  render() {
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .max(80, "Maximum length is 80 characters")
+      .required("First name is required"),
+    lastName: Yup.string()
+      .max(80, "Maximum length is 80 characters")
+      .required("Last name is required"),
+    phone: Yup.string()
+      .min(5, "Minimum length is 5 digits")
+      .max(25, "Maximum length is 25 digits")
+      .required("Phone number is required"),
+    email: Yup.string()
+      .email("Must be a valid email address")
+      .max(100, "Maximum length is 100 characters")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  });
 
-    return (
-      <UserContext.Consumer>
+  return (
+    <UserContext.Consumer>
       {({ user }) => (
         user.isAuthenticated
-        ? <Redirect to="/dashboard" />
-        :
-        <div className="login__container">
-          <Formik
-            initialValues={{
-              firstName: "",
-              lastName: "",
-              email: "",
-              password: "",
-              confirmPassword: "", 
-            }}
-            validate = {values => {
-              const errors = {};
+          ? <Redirect to="/dashboard" />
+          : (
+            <div className="login__container">
+              <Formik
+                validationSchema={validationSchema}
+                initialValues={{
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  phone: "",
+                  password: "",
+                  confirmPassword: "",
+                }}
+                onSubmit={({
+                  firstName, lastName, email, phone, password, confirmPassword,
+                }) => {
+                  signup(firstName, lastName, email, phone, password, confirmPassword);
+                }}
+                enableReinitialize
+              >
+                {
+            () => (
+              <div className="login__form-container">
+                {/* <Header /> */}
+                <Form>
+                  <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
+                  <h2 className="subtitle">
+                    Create an Account
+                  </h2>
+                  <Field
+                    className="form-field login__form-field"
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    required
+                  />
+                  <ErrorMessage className="form-error" name="firstName" component="div" />
+                  <Field
+                    className="form-field login__form-field"
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    required
+                  />
+                  <ErrorMessage className="form-error" name="lastName" component="div" />
+                  <Field
+                    className="form-field login__form-field"
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                    required
+                  />
+                  <ErrorMessage className="form-error" name="email" component="div" />
+                  <Field
+                    className="form-field login__form-field"
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone"
+                    required
+                  />
+                  <ErrorMessage className="form-error" name="phone" component="div" />
+                  <Field
+                    className="form-field login__form-field"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                  />
+                  <ErrorMessage className="form-error" name="password" component="div" />
+                  <Field
+                    className="form-field login__form-field"
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                  <ErrorMessage className="form-error" name="confirmPassword" component="div" />
 
-              if (values.email === ''){
-                errors.email = "Email Required";
-              }
-              else if (!isValidEmail(values.email)){
-                errors.email = "Invalid email format";
-              }
-              
-              if (values.password === ''){
-                errors.password = 'Password Required';
-              }
-              else if (values.password.length < 8){
-                errors.password = 'Password must be at least 8 characters long';
-              }
-              else if (values.password !== values.confirmPassword){
-                errors.confirmPassword = "Passwords Don't Match";
-              }
-
-              return errors;
-            }}
-            onSubmit={({ firstName, lastName, email, password, confirmPassword }) => {
-              this.signup(firstName, lastName, email, password, confirmPassword);
-            }}
-            enableReinitialize={true}
-          >
-            {
-              (props) => {
-                return (
-                  <div className="login__form-container">
-                    {/* <Header /> */}
-                    <Form >
-                      <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly Logo"></img>
-                      <h2 className='subtitle'>Create an Account</h2>
-                      <Field
-                        className="form-field login__form-field"
-                        type="text"
-                        name="firstName"
-                        // value={this.state.firstName}
-                        placeholder="First Name"
-                        required
-                      />
-                      <Field
-                        className="form-field login__form-field"
-                        type="text"
-                        name="lastName"
-                        //value={this.state.lastName}
-                        placeholder="Last Name"
-                        required
-                      />
-                      <Field
-                        className="form-field login__form-field"
-                        type="text"
-                        name="email"
-                        //value={this.state.email}
-                        placeholder="Email"
-                        required
-                      />
-                      <ErrorMessage className="form-error" name="email" component="div"/>
-                      <Field
-                        className="form-field login__form-field"
-                        type="password"
-                        name="password"
-                        //value={this.state.password}
-                        placeholder="Password"
-                        required
-                      />
-                      <ErrorMessage className="form-error" name="password" component="div"/>
-                      <Field
-                        className="form-field login__form-field"
-                        type="password"
-                        name="confirmPassword"
-                        //value={this.state.confirmPassword}
-                        placeholder="Confirm Password"
-                        required
-                      />
-                      <ErrorMessage className="form-error" name="confirmPassword" component="div"/>
-                      
-                      <div></div>
-                      <button className="login__button" type="submit">SIGN UP</button>
-                      <div className="login__or_container">
-                        <div className="login__or">
-                          <span className="login__divider"></span>
-                          <span className="login__or_text">OR</span>
-                        </div>
-                      </div>
-                    </Form>
-                    <button className="login__button login__button--google">LOG IN WITH GOOGLE</button>
+                  <div />
+                  <button className="login__button" type="submit">
+                    SIGN UP
+                  </button>
+                  <div className="login__or_container">
+                    <div className="login__or">
+                      <span className="login__divider" />
+                      <span className="login__or_text">
+                        OR
+                      </span>
+                    </div>
                   </div>
-                );
-              }
-            }
-          </Formik>
-        </div>
+                </Form>
+                <button className="login__button login__button--google" type="button">
+                  LOG IN WITH GOOGLE
+                </button>
+              </div>
+            )
+          }
+              </Formik>
+            </div>
+          )
       )}
     </UserContext.Consumer>
-    )
-  }
-}
+  );
+};
+
+SignupForm.propTypes = {
+  history: PropTypes.object.isRequired,
+};
+
+export default SignupForm;

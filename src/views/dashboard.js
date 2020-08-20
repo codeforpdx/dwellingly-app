@@ -78,7 +78,7 @@ export const Dashboard = (props) => {
             .filter(({ staff }) => staff)
             .map(({ id, staff }) => axios
             .put(
-                "/api/tenants/${id}",
+                `/api/tenants/${id}`,
                 { 'staffIDs': [staff] }, 
                 makeAuthHeaders(userContext)
             ));
