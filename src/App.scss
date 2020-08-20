@@ -1,6 +1,10 @@
 @import "./scss/main.scss";
 @import "./scss/pages/all";
 
+html {
+  overflow-y: auto !important;
+}
+
 .App {
   overflow: hidden;
   min-height: 100vh;
