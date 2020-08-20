@@ -27,7 +27,7 @@ const columns = [{
       return { width: "20%" };
     }
   }, {
-    dataField: 'tenants',
+    dataField: 'totalTenants',
     text: 'Tenants',
     sort: true,
     headerStyle: () => {
@@ -82,7 +82,9 @@ export class Properties extends Component {
     getProperties = (context) => {
         axios.get("/api/properties", { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
-            this.setState({properties: response.data.properties});
+            const { data : { properties } }  = response;
+            properties.forEach( property => property.totalTenants = property.tenantIDs.length )
+            this.setState({properties: properties});
         })
         .catch((error) => {
             alert(error);
