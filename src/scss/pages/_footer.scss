@@ -1,5 +1,5 @@
 .dwellingly-footer {
-  position: fixed;
+  position: relative;
   z-index: 10;
   background-color: $lighterGray;
   color: $blue;
@@ -7,7 +7,6 @@
   margin: none;
   width: 100%;
   padding: 10px;
-  bottom: 0;
   right: 0;
   p {
     margin-left: 18.5vw;
