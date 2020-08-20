@@ -106,7 +106,7 @@ export const RequestAccess = (props) => {
 	return (
 		<>
 			<div className="request-page">
-				<div className="page-title"> Request Access </div>
+				<div className="page-title"> Request for Access </div>
 				<div className="sub-title"> CONTACT </div>
 				<InfoField label={"First Name"} changeHandler={setFirstName} info={firstName} />
 				<InfoField label={"Last Name"} changeHandler={setLastName} info={lastName} />
