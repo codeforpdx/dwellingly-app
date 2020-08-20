@@ -96,7 +96,7 @@ export const Dashboard = (props) => {
 
     return (
         <>
-            <div id="dashboard-content">
+            <div>
                 <h2 className="page-title">Admin Dashboard</h2>
                 <div className="dashboard__modules_container">
                     <DashboardModule
