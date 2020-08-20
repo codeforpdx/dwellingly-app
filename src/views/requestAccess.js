@@ -17,8 +17,8 @@ const RoleDropDown = (props) => {
           onChange={e => props.selectionHandler(e.target.value)}>
           <option value='default' disabled defaultValue>Select Role</option>
           {
-            props.selectionOptions.map((role) => 
-            <option>{role}</option>
+            props.selectionOptions.map((role, index) => 
+            <option key={index}>{role}</option>
             )
           }
         </select>
@@ -117,7 +117,7 @@ export const RequestAccess = (props) => {
 				<RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler}/>
 				<div className="button-padding">
 					<div className="set-access-button">
-			      		<button className="access-button" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)}> GRANT ACCESS </button>
+			      		<button className="access-button" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)} disabled={currentSelection===""}> GRANT ACCESS </button>
 			      	</div>
 			        <Link className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" to='/dashboard'> CANCEL </Link>
 			    </div>
