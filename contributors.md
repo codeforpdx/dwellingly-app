@@ -6,3 +6,4 @@ CodeforPDX:
 - Sarah Krabacher
 - Marie Ehrman
 - Max Hunter
+- Chris Boe
