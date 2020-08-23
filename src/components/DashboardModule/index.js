@@ -32,7 +32,7 @@ function DashboardModule(props) {
                                         <div key={`stat_container--${statIndex}`} className={`dashboard__module_stat_container ${statIndex === 0 && 'primary'}`}>
                                             <p className={`dashboard__module_${data.isDate ? 'date' : 'stat'}`}>{stat.stat}</p>
                                             <p className="dashboard__module_desc">{stat.desc}
-                                                {stat.subtext && <span className="dashboard__module_subtext">in the last week</span>}
+                                                {stat.subtext && <span className="dashboard__module_subtext">{stat.subtext}</span>}
                                             </p>
                                         </div>
                                     )
