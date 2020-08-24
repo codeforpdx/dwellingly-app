@@ -27,13 +27,13 @@ const validationSchema = Yup.object().shape({
 
 const formHandler = (data, context) => {
   axios
-    .post("http://localhost:5000/properties", data, {
+    .patch(`http://localhost:5000/api/user/${context.user.identity}`, data, {
       headers: { Authorization: `Bearer ${context.user.accessJwt}` },
     })
-    .then(function (response) {
+    .then(response => {
       alert("Contact Info Updated!");
     })
-    .catch(function (error) {
+    .catch(error => {
       alert(error);
     });
 };
@@ -50,7 +50,7 @@ const Settings = () => {
             <Formik
               initialValues={{
                 email: session.user.email,
-                phone: "",
+                phone: session.user.phone,
               }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -86,22 +86,23 @@ const Settings = () => {
                         name="email"
                         onChange={handleChange}
                         value={values.email}
+                        placeholder="Enter your email address"
                       />
                       {errors.email ? (
                         <div className="error-message">{errors.email}</div>
                       ) : null}
                     </div>
                     <div className="form-row columns">
-                      <label className="column is-one-fifth" htmlFor="name">
-                        Email
+                      <label className="column is-one-fifth" htmlFor="phone">
+                        Phone
                       </label>
                       <Field
                         className="column form-field"
                         type="text"
-                        name="name"
+                        name="phone"
                         onChange={handleChange}
-                        value={values.name}
-                        placeholder="Example Estate"
+                        value={values.phone}
+                        placeholder="Enter your phone number"
                       />
                       {errors.name ? (
                         <div className="error-message">{errors.name}</div>

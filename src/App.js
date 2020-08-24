@@ -43,7 +43,8 @@ export class App extends React.Component {
         identity: '',
         firstName: '',
         lastName: '',
-        email: ''
+        email: '',
+        phone: '',
       }
     }
   }
@@ -51,19 +52,23 @@ export class App extends React.Component {
   componentDidMount() {
     if( checkForStoredAccessToken() ) {
       let parsedJwt = parseJwt(window.localStorage[ 'dwellinglyAccess' ]);
-      this.setState({
-        userSession: {
-          isAuthenticated: true,
-          accessJwt: window.localStorage[ 'dwellinglyAccess' ],
-          refreshJwt: window.localStorage[ 'dwellinglyRefresh' ],
-          identity: parsedJwt.identity,
-          firstName: parsedJwt.user_claims.firstName,
-          lastName: parsedJwt.user_claims.lastName,
-          email: parsedJwt.user_claims.email
+      this.setState(
+        {
+          userSession: {
+            isAuthenticated: true,
+            accessJwt: window.localStorage["dwellinglyAccess"],
+            refreshJwt: window.localStorage["dwellinglyRefresh"],
+            identity: parsedJwt.identity,
+            firstName: parsedJwt.user_claims.firstName,
+            lastName: parsedJwt.user_claims.lastName,
+            email: parsedJwt.user_claims.email,
+            phone: parsedJwt.user_claims.phone,
+          },
+        },
+        () => {
+          this.refreshJwtPeriodically();
         }
-      }, () => {
-        this.refreshJwtPeriodically();
-      });
+      );
     } else if( checkForStoredRefreshToken() ) {
       this.refreshJwtPeriodically();
     }
@@ -84,7 +89,8 @@ export class App extends React.Component {
               identity: parsedJwt.identity,
               firstName: parsedJwt.user_claims.firstName,
               lastName: parsedJwt.user_claims.lastName,
-              email: parsedJwt.user_claims.email
+              email: parsedJwt.user_claims.email,
+              phone: parsedJwt.user_claims.phone
             }
           }, () => {
           // Call to refresh the access token 3 minutes later
