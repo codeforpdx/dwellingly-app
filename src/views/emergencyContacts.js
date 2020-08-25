@@ -45,7 +45,6 @@ const EmergencyContact = ({ isEditing, handleDelete, id, name, description, cont
 const EmergencyContacts = () => {
     const userContext = useContext(UserContext);
     const [apiContacts, setApiContacts] = useState([]);
-    const [editMode, setEditMode] = useState(false);
     const { isEditing, setEditingStatus } = useEditingStatus()
 
     useMountEffect(() => {
