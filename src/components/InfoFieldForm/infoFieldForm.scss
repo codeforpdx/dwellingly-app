@@ -1,0 +1,75 @@
+// Colors
+$blue: #51a3fc;
+$lightGray: #d1d1d1;
+$gray: #8e8e93;
+$darkGray: #555555;
+$brandBlue: #053d6f;
+
+.form {
+  &__row--editing {
+    color: $gray;
+    margin-left: 0;
+    border-bottom: 1px solid $lightGray;
+    
+    // first-of-type vs. first-child
+    &:first-child {
+      border-top: 1px solid $lightGray;
+    }
+    &:focus-within {
+      border-bottom: 1px solid $blue;
+    }
+    .row-input {
+      border: none;
+      color: $darkGray;
+      font-weight: bold;
+      background-image: none;
+      &:focus {
+        color: $blue;
+        outline-width: 0px;
+        background-image: none;
+      }
+    }
+    &__button-container {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    bottom: -10px;
+    left: 0;
+    margin: 0;
+  }
+  }
+  &__field-error__message {
+    color: red;
+    padding-top: 12.5px;
+  }
+}
+
+.top-bar {
+    border-top: 1px solid $lightGray;
+}
+
+.form-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 25px 0 25px 0;
+    padding-left: 40px;
+    padding-right: 175px;
+}
+
+.form-spacing {
+    padding-bottom: 25px;
+}
+
+.section-spacing {
+    padding-top: 50px;
+}
+
+.sub-title {
+    color: $brandBlue;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+

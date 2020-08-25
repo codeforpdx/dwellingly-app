@@ -19,6 +19,7 @@ import { AddProperty } from './views/addProperty';
 import { JoinStaff } from './views/joinStaff';
 import { AddStaffMember } from './views/addStaffMember';
 import UserContext from './UserContext';
+import { TestForm } from './components/InfoFieldForm/test.js'
 
 var refreshTimeout;
 
@@ -162,7 +163,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/staff' component={JoinStaff} />
               <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
               <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
-              <PrivateRoute exact path='/settings' component={Dashboard} />
+              <PrivateRoute exact path='/settings' component={TestForm} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
             </Switch>
             {this.state.userSession.isAuthenticated
