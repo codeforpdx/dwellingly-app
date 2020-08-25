@@ -104,7 +104,7 @@ const Manager = () => {
 
   return (
     <div className="manager__container">
-      <TitleAndPen manager={manager} isEditing={isEditing} setEditingStatus={setEditingStatus} />
+      <TitleAndPen title={`${manager.firstName} ${manager.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
       <div className="manager__contact">
         <h1 className="secondary-title">CONTACT</h1>
         <div className="contact-details">

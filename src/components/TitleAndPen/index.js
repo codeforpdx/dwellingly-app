@@ -7,11 +7,11 @@ export function useEditingStatus() {
   return { isEditing, setEditingStatus }
 }
 
-export default function TitleAndPen({ manager, isEditing, setEditingStatus }) {
+export default function TitleAndPen({ title, isEditing, setEditingStatus }) {
   return (
     <div className="title__container">
       <h2>
-        {manager.firstName} {manager.lastName}
+        {title}
       </h2>
       <button
         className={`rounded${isEditing ? "--is-editing" : ""}`}

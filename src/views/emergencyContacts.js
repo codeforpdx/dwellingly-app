@@ -4,6 +4,7 @@ import UserContext from '../UserContext';
 import useMountEffect from '../utils/useMountEffect';
 import { Link, useHistory } from "react-router-dom"
 import { useState } from 'react';
+import TitleAndPen, { useEditingStatus } from '../components/TitleAndPen';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -15,12 +16,12 @@ const EmergencyContact = ({ isEditing, handleDelete, id, name, description, cont
 
     return (
         <div className="emergencyContact__row">
-            {isEditing && 
+            {isEditing &&
                 <div className="emergencyContact__delete_action" onClick={handleContactDelete}>
                     <i className="fas fa-minus-circle icon"></i>
                 </div>
             }
-            <div className={`emergencyContact__main_column ${isEditing ? 'active' : '' }`} onClick={handleContactEdit}>
+            <div className={`emergencyContact__main_column ${isEditing ? 'active' : ''}`} onClick={handleContactEdit}>
                 {name}
                 <div className="subtext">{description}</div>
             </div>
@@ -45,23 +46,23 @@ const EmergencyContacts = () => {
     const userContext = useContext(UserContext);
     const [apiContacts, setApiContacts] = useState([]);
     const [editMode, setEditMode] = useState(false);
+    const { isEditing, setEditingStatus } = useEditingStatus()
 
     useMountEffect(() => {
-      axios
-          .get(`/api/emergencycontacts`, makeAuthHeaders(userContext))
-          .then(({ data }) => {
-              setApiContacts(data.emergency_contacts);
-          })
-          .catch(error => alert(error));
-  });
+        axios
+            .get(`/api/emergencycontacts`, makeAuthHeaders(userContext))
+            .then(({ data }) => {
+                setApiContacts(data.emergency_contacts);
+            })
+            .catch(error => alert(error));
+    });
 
-    const handleStartEditing = () => setEditMode(true);
     const handleDoneEditing = () => {
-        setEditMode(false);
+        setEditingStatus(false);
     }
     const handleDelete = id => {
         const continueDelete = window.confirm('Are you sure you want to delete the emergency contact?');
-        if(!continueDelete) return;
+        if (!continueDelete) return;
         axios
             .delete(`/api/emergencycontacts/${id}`, makeAuthHeaders(userContext))
             .then(() => {
@@ -73,10 +74,8 @@ const EmergencyContacts = () => {
     return (
         <div className="emergency_contacts__container">
             <div className="section-header">
-                <div className="page-title">
-                    <h2>Emergency Numbers</h2>
-                    <div className="rounded" onClick={handleStartEditing}><i className="fas fa-pen icon"></i></div>
-                </div>
+                <TitleAndPen title="Emergency Numbers" isEditing={isEditing} setEditingStatus={setEditingStatus} />
+
                 <Link className="is-rounded" to="/add/emergencyContact">
                     <i className="fas fa-plus-circle"></i> Create Emergency Number
                 </Link>
@@ -85,12 +84,12 @@ const EmergencyContacts = () => {
                 <div className="row_container">
                     {
                         apiContacts.map(contact => (
-                            <EmergencyContact key={contact.id} isEditing={editMode} handleDelete={handleDelete} { ...contact } />
+                            <EmergencyContact key={contact.id} isEditing={isEditing} handleDelete={handleDelete} {...contact} />
                         ))
                     }
                 </div>
             </div>
-            {editMode &&
+            {isEditing &&
                 <div className="section-footer">
                     <button className="active button is-rounded" onClick={handleDoneEditing}>DONE</button>
                 </div>
