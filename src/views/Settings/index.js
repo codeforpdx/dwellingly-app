@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
 
 const formSubmitHandler = (context, data) => {
   axios
-    .patch(`http://localhost:5000/api/user/${context.user.identity}`, data, {
+    .patch(`/api/user/${context.user.identity}`, data, {
       headers: { Authorization: `Bearer ${context.user.accessJwt}` },
     })
     .then((response) => {
@@ -70,7 +70,7 @@ const Settings = () => {
               onSubmit={handleSubmit}
             >
               <div className="form-row columns">
-                <label className="column is-one-fifth" htmlFor="email">
+                <label className="column is-one-fifth" id="email" htmlFor="email">
                   Email
                 </label>
                 <Field
@@ -86,7 +86,7 @@ const Settings = () => {
                 ) : null}
               </div>
               <div className="form-row columns">
-                <label className="column is-one-fifth" htmlFor="phone">
+                <label className="column is-one-fifth" id="phone" htmlFor="phone">
                   Phone
                 </label>
                 <Field
