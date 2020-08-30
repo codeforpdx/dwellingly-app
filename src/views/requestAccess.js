@@ -6,9 +6,6 @@ import UserContext from '../UserContext';
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const RoleDropDown = (props) => {
-  console.log(props.selectionOptions);
-  console.log(typeof props.selectionOptions);
-  let roles = props.selectionOptions;
   return (
     <div className="section-row">
       <div className="select is-rounded">
@@ -53,7 +50,6 @@ export const RequestAccess = (props) => {
   const [emailAddress, setEmail] = useState("");
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_API_URL)
     axios.get(`/api/roles`)
     .then((response) => {
       let data = JSON.parse(response.data);
