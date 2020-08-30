@@ -11,40 +11,74 @@
   background: $gray;
 }
 
-// NavMenu
-.is-sidebar-menu {
-	float: left;
-	position: relative;
-	min-height: 100vh;
-	width: 250px;
-	padding-bottom: 99999px;
-  margin-bottom: -99999px;
-	padding-top: 9px;
-	z-index: 0;
+.section-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 25px;
+  button {
+    margin: 0px 0px 0px 25px;
+  }
 }
 
-.is-menu-link{
-	padding-left: 2px;
+.filters-container {
+  background-color: $lighterGray;
+  margin-bottom: 10px;
+  padding: 10px;
+  color: $blue;
+  .fa-filter {
+      margin-right: 10px;
+  }
 }
 
-.is-padding{
-	padding-bottom: 5px;
+.section-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+  .filter-control {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 10px;
+    }
+  }
 }
 
-.is-logout-button{
-	padding-right: 30px;
+.react-bootstrap-table-pagination {
+  display: flex;
+  justify-content: flex-end;
+  justify-items: right;
 }
 
-.is-inactive-link{
-  pointer-events: none;
-  cursor: default;
+.table-header {
+  background-color: $lighterGray;
 }
 
-.is-child-link{
-  padding-left: 15px;
+.pagination {
+  .page-item {
+    & a {color: $brandBlue;}
+    &.active {
+      a {color: $blue;}
+    }
+    .button {
+      // margin-left: 20px;
+      color: white;
+      background-color: $blue;
+      border: 0;
+      height: 2em;
+    }    
+  }
 }
 
-.is-username-link{
-  padding-bottom: 30px;
+.btn-group {
+  margin: 0;
 }
 
+.button {
+    margin-left: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: $blue;
+    border: 0;
+}

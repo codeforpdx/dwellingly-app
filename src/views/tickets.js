@@ -54,27 +54,27 @@ const pageButtonRenderer = ({
   };
   if (title === 'previous page') {
     return (
-      <li className="page-item">
+      <li key={title} className="page-item">
         <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
   if (title === 'next page') {
     return (
-      <li className="page-item">
-        <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Next</a>
+      <li key={title} className="page-item">
+        <a href="#" onClick={ handleClick } title={title}className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
   if (active) {
     return (
-      <li className="active page-item">
+      <li key={page} className="active page-item">
         <a href="#" onClick={ handleClick } title={title}>{ page }</a>
       </li>
     );
   }
   return (
-    <li className="page-item">
+    <li key={page} className="page-item">
       <a href="#" onClick={ handleClick } title={title}>{ page }</a>
     </li>
   );
@@ -121,7 +121,7 @@ export class Tickets extends Component {
                 {session => {
                     this.context = session;
                     return (
-                        <div className="tickets__container">
+                        <>
                             <div className="section-header">
                                 <h2 className="page-title">Tickets</h2>
                             </div>
@@ -167,7 +167,7 @@ export class Tickets extends Component {
                                     headerClasses="table-header"
                                     />
                             </div>
-                        </div>
+                        </>
                     )
                 }}
             </UserContext.Consumer>

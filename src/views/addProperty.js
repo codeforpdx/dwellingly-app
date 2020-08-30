@@ -51,7 +51,7 @@ const formHandler = (data, context) => {
         <UserContext.Consumer>
             {session => {
                 return (
-                    <div className="add-property__container">
+                    <div>
                         <h2 className="page-title">Add a New Property</h2>
 
                         <Formik
