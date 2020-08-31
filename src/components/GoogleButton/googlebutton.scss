@@ -1,0 +1,36 @@
+.login {
+
+  &__button{
+    color: white;
+    background-color: $blue;
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-width: 0px;
+    padding: 10px 20px;
+    font-weight: bold;
+
+  
+
+    &__google{
+      width: 100%;
+
+      &__text{
+        margin-top: 2px;
+        display: block;
+      }
+    }
+
+
+  }
+}
+
+.googleIconContainer{
+  
+}
+
+.googleIcon{
+  height: 20px;
+  float: left;
+
+}
