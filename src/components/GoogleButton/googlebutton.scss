@@ -1,36 +1,28 @@
+@import "../../scss/variables.scss";
+
 .login {
-
   &__button{
-    color: white;
-    background-color: $blue;
-    border-radius: 20px;
-    padding: 5px 10px;
-    margin-top: 10px;
-    border-width: 0px;
-    padding: 10px 20px;
-    font-weight: bold;
+      &__google{
+        width: 100%;
 
-  
-
-    &__google{
-      width: 100%;
-
-      &__text{
-        margin-top: 2px;
-        display: block;
+        &__text{
+          margin-top: 2px;
+          display: block;
+        }
       }
-    }
-
-
   }
 }
-
-.googleIconContainer{
-  
-}
-
 .googleIcon{
   height: 20px;
   float: left;
+}
 
+@media (max-width: $breakpointMobile){
+  .login__button__google{
+    width: 100%;
+    font-size: 12px;
+  }
+  .googleIcon{
+    margin-right: 3px;
+  }
 }
