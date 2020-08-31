@@ -19,14 +19,8 @@
     border-width: 0px;
     padding: 10px 20px;
     font-weight: bold;
-    &__google{
-      width: 100%;
-      &__text{
-        margin-top: 2px;
-        display: block;
-      }
-    }
   }
+
   &__form-field {
     border: 0;
     border-bottom: 1px solid $lightGray;
@@ -104,12 +98,5 @@
     &__button{
       font-size: 12px;
     }
-  }
-  .login__button__google{
-    width: 100%;
-    font-size: 12px;
-  }
-  .googleIcon{
-    margin-right: 3px;
   }
 }
