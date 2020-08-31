@@ -57,7 +57,8 @@ export const RequestAccess = (props) => {
       setRoleObject(data);
       // Get Role names
       let roleArray = Object.keys(data);
-      // Removes "Pending" role
+      // Removes "Pending" and "Tenant" role
+      roleArray.shift();
       roleArray.shift();
       // Get array of roles to map to selection options
       setSelectionOptions(roleArray);
