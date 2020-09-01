@@ -96,10 +96,13 @@
   //editing mobile form container
 
   .signup{
+
+
     &__form-container{
       // width: 270px;
       width: 100%;
       border-radius: 0px;
+      height: 100%;
     }
     &__form-field{
       // width: 200px;
@@ -107,6 +110,9 @@
     }
     &__button{
       font-size: 12px;
+      margin-top: 35px;
+      background-color: #ECECEC;
+      color: #D7D7D7;
     }
     &__logo {
       display: none;
@@ -120,8 +126,6 @@
 
         &__text-wrapper {
           margin-bottom: 20px;
-          
-
         }
     }
   }
