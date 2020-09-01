@@ -74,6 +74,10 @@ export class App extends React.Component {
     }
   }
 
+  setUser = (newContext) => {
+    return this.setState(newContext);
+  }
+
   login = (email, password) => {
     auth.authenticate(email, password)
       .then( response => {
@@ -149,7 +153,7 @@ export class App extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={{ user: { ...this.state.userSession }, login: this.login, logout: this.logout }} >
+      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, login: this.login, logout: this.logout }} >
         <BrowserRouter>
           <div className='App'>
             {this.state.userSession.isAuthenticated

@@ -22,8 +22,16 @@ const formSubmitHandler = (context, data) => {
       headers: { Authorization: `Bearer ${context.user.accessJwt}` },
     })
     .then((response) => {
-      context.user.phone = response.data.phone;
-      context.user.email = response.data.email;
+      context.handleSetUser({
+        userSession: {
+          ...context.user,
+          email: response.data.email,
+          phone: response.data.phone,
+        },
+      });
+
+      // TODO we need a way to get a new JWT token created here I think?
+      
       // replace with success notification
       alert("Saved Successfully!");
     })
@@ -35,8 +43,6 @@ const formSubmitHandler = (context, data) => {
 
 const Settings = () => {
   const context = useContext(UserContext);
-
-  useEffect(() => {}, [context.user.phone, context.user.email]);
 
   return (
     <div className="add-property__container">
@@ -70,7 +76,11 @@ const Settings = () => {
               onSubmit={handleSubmit}
             >
               <div className="form-row columns">
-                <label className="column is-one-fifth" id="email" htmlFor="email">
+                <label
+                  className="column is-one-fifth"
+                  id="email"
+                  htmlFor="email"
+                >
                   Email
                 </label>
                 <Field
@@ -86,7 +96,11 @@ const Settings = () => {
                 ) : null}
               </div>
               <div className="form-row columns">
-                <label className="column is-one-fifth" id="phone" htmlFor="phone">
+                <label
+                  className="column is-one-fifth"
+                  id="phone"
+                  htmlFor="phone"
+                >
                   Phone
                 </label>
                 <Field
