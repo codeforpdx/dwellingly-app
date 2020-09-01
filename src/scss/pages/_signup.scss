@@ -121,6 +121,14 @@
     }
     &__logo {
       display: none;
+
+    &__mobile {
+
+      width: 50%;
+      float: left;
+      padding-top: 5%;
+
+    }
     }
 
     &__mobile-heading {
