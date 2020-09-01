@@ -3,32 +3,9 @@
         .section-header {
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
             align-items: center;
             padding-bottom: 45px;
-
-            .page-title {
-                flex-grow: 1;
-                display: flex;
-                align-items: center;
-                h2 {
-                    font-weight: bold;
-                }
-                .rounded {
-                    margin-left: 1rem;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 1em;
-                    height: 1em;
-                    border-radius: 50%;
-                    background-color: $darkGray;
-                    cursor: pointer;
-                    .icon {
-                        font-size: .5em;
-                        color: $white;
-                    }
-                }
-            }
         }
 
         .row_container {

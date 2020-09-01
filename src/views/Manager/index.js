@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
+import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -34,7 +35,7 @@ const Manager = () => {
   );
 
   const [manager, setManager] = useState(dummyDataManagerInfo);
-  const [isEditing, setEditingStatus] = useState(false);
+  const { isEditing, setEditingStatus } = useEditingStatus()
 
   const tableData = [
     {
@@ -63,7 +64,6 @@ const Manager = () => {
     },
   ];
 
-  const handleEditToggle = () => setEditingStatus(!isEditing);
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
     setManager({
@@ -104,18 +104,7 @@ const Manager = () => {
 
   return (
     <div className="manager__container">
-      <div className="title__container">
-        <h2>
-          {manager.firstName} {manager.lastName}
-        </h2>
-        <button
-          className={`rounded${isEditing ? "--is-editing" : ""}`}
-          onClick={handleEditToggle}
-          disabled={isEditing}
-        >
-          <i className="fas fa-pen icon"></i>
-        </button>
-      </div>
+      <TitleAndPen title={`${manager.firstName} ${manager.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
       <div className="manager__contact">
         <h1 className="secondary-title">CONTACT</h1>
         <div className="contact-details">
