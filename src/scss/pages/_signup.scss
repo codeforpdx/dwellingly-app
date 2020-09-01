@@ -3,7 +3,7 @@
   &__mobile-heading {
     display: none;
   }
-  
+
   &__form-container {
     // background: url("./assets/images/dwellingly_logo.png") no-repeat;
     background-size: contain;
@@ -102,7 +102,8 @@
       border-radius: 0px;
     }
     &__form-field{
-      width: 200px;
+      // width: 200px;
+      width: 100%;
     }
     &__button{
       font-size: 12px;
@@ -113,6 +114,15 @@
 
     &__mobile-heading {
       display: block;
+      border-bottom: 1px solid #d1d1d1;
+      color: #2C5F89;
+      font-weight: bold;
+
+        &__text-wrapper {
+          margin-bottom: 20px;
+          
+
+        }
     }
   }
 

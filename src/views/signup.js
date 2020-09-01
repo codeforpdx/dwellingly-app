@@ -96,6 +96,9 @@ const SignupForm = ({ history }) => {
                   <h2 className="subtitle">
                     Create an Account
                   </h2>
+                  <h2 className="signup__mobile-heading">
+                    <div className="signup__mobile-heading__text-wrapper">Create an Account for Dwelling.ly </div>  
+                  </h2>
                   <Field
                     className="form-field signup__form-field"
                     type="text"
