@@ -1,4 +1,9 @@
 .signup {
+
+  &__mobile-heading {
+    display: none;
+  }
+  
   &__form-container {
     // background: url("./assets/images/dwellingly_logo.png") no-repeat;
     background-size: contain;
@@ -87,10 +92,14 @@
 }
 
 @media (max-width: $breakpointMobile){
+  
+  //editing mobile form container
 
   .signup{
     &__form-container{
-      width: 270px;
+      // width: 270px;
+      width: 100%;
+      border-radius: 0px;
     }
     &__form-field{
       width: 200px;
@@ -98,5 +107,16 @@
     &__button{
       font-size: 12px;
     }
+    &__logo {
+      display: none;
+    }
+
+    &__mobile-heading {
+      display: block;
+    }
+  }
+
+  .subtitle {
+    display: none;
   }
 }
