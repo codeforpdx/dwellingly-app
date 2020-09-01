@@ -4,6 +4,10 @@
     display: none;
   }
 
+  &__mobile-header {
+    display: none;
+  }
+
   &__form-container {
     // background: url("./assets/images/dwellingly_logo.png") no-repeat;
     background-size: contain;
@@ -103,16 +107,17 @@
       width: 100%;
       border-radius: 0px;
       height: 100%;
+      padding: 0px;
     }
     &__form-field{
       // width: 200px;
-      width: 100%;
+      width: 90%;
     }
     &__button{
       font-size: 12px;
       margin-top: 35px;
       background-color: #ECECEC;
-      color: #D7D7D7;
+      color: #8e8e93;
     }
     &__logo {
       display: none;
@@ -121,12 +126,22 @@
     &__mobile-heading {
       display: block;
       border-bottom: 1px solid #d1d1d1;
+      margin-left: 5%;
+      margin-right: 5%;
+
       color: #2C5F89;
-      font-weight: bold;
+      font-weight: 850;
 
         &__text-wrapper {
           margin-bottom: 20px;
+          text-align: left;
         }
+    }
+    &__mobile-header {
+      display: block;
+      height: 11%;
+      margin-bottom: 5%;
+      background-color: #51A3FC;
     }
   }
 
