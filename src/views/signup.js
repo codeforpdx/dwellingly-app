@@ -9,6 +9,7 @@ import axios from "axios";
 import * as Yup from "yup";
 import UserContext from "../UserContext";
 import dwellinglyLogo from "../assets/images/dwellingly_logo.png";
+import dwellinglyLogoMobile from "../assets/images/dwellingly_logo_white.png";
 import GoogleButton from "../components/GoogleButton"
 
 const SignupForm = ({ history }) => {
@@ -90,6 +91,9 @@ const SignupForm = ({ history }) => {
                 {
             () => (
               <div className= "signup__form-container">
+              <div className = "signup__mobile-header">
+                <img className= "signup__logo__mobile" src={dwellinglyLogoMobile}></img>
+              </div>
                 {/* <Header /> */}
                 <Form>
                   <img className= "signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
