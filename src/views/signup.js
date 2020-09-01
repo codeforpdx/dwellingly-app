@@ -69,7 +69,7 @@ const SignupForm = ({ history }) => {
         user.isAuthenticated
           ? <Redirect to="/dashboard" />
           : (
-            <div className="login__container">
+            <div className="signup__container">
               <Formik
                 validationSchema={validationSchema}
                 initialValues={{
@@ -89,15 +89,15 @@ const SignupForm = ({ history }) => {
               >
                 {
             () => (
-              <div className="login__form-container">
+              <div className= "signup__form-container">
                 {/* <Header /> */}
                 <Form>
-                  <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
+                  <img className= "signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
                   <h2 className="subtitle">
                     Create an Account
                   </h2>
                   <Field
-                    className="form-field login__form-field"
+                    className="form-field signup__form-field"
                     type="text"
                     name="firstName"
                     placeholder="First Name"
@@ -105,7 +105,7 @@ const SignupForm = ({ history }) => {
                   />
                   <ErrorMessage className="form-error" name="firstName" component="div" />
                   <Field
-                    className="form-field login__form-field"
+                    className="form-field signup__form-field"
                     type="text"
                     name="lastName"
                     placeholder="Last Name"
@@ -113,7 +113,7 @@ const SignupForm = ({ history }) => {
                   />
                   <ErrorMessage className="form-error" name="lastName" component="div" />
                   <Field
-                    className="form-field login__form-field"
+                    className="form-field signup__form-field"
                     type="text"
                     name="email"
                     placeholder="Email"
@@ -121,7 +121,7 @@ const SignupForm = ({ history }) => {
                   />
                   <ErrorMessage className="form-error" name="email" component="div" />
                   <Field
-                    className="form-field login__form-field"
+                    className="form-field signup__form-field"
                     type="text"
                     id="phone"
                     name="phone"
@@ -130,7 +130,7 @@ const SignupForm = ({ history }) => {
                   />
                   <ErrorMessage className="form-error" name="phone" component="div" />
                   <Field
-                    className="form-field login__form-field"
+                    className="form-field signup__form-field"
                     type="password"
                     name="password"
                     placeholder="Password"
@@ -138,7 +138,7 @@ const SignupForm = ({ history }) => {
                   />
                   <ErrorMessage className="form-error" name="password" component="div" />
                   <Field
-                    className="form-field login__form-field"
+                    className="form-field signup__form-field"
                     type="password"
                     name="confirmPassword"
                     placeholder="Confirm Password"
@@ -147,13 +147,13 @@ const SignupForm = ({ history }) => {
                   <ErrorMessage className="form-error" name="confirmPassword" component="div" />
 
                   <div />
-                  <button className="login__button" type="submit">
+                  <button className="signup__button" type="submit">
                     SIGN UP
                   </button>
-                  <div className="login__or_container">
-                    <div className="login__or">
-                      <span className="login__divider" />
-                      <span className="login__or_text">
+                  <div className="signup__or_container">
+                    <div className="signup__or">
+                      <span className="signup__divider" />
+                      <span className="signup__or_text">
                         OR
                       </span>
                     </div>
