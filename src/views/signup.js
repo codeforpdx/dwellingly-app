@@ -9,6 +9,7 @@ import axios from "axios";
 import * as Yup from "yup";
 import UserContext from "../UserContext";
 import dwellinglyLogo from "../assets/images/dwellingly_logo.png";
+import GoogleButton from "../components/GoogleButton"
 
 const SignupForm = ({ history }) => {
   const signup = async (firstName, lastName, email, phone, password, confirmPassword) => {
@@ -158,9 +159,7 @@ const SignupForm = ({ history }) => {
                     </div>
                   </div>
                 </Form>
-                <button className="login__button login__button--google" type="button">
-                  LOG IN WITH GOOGLE
-                </button>
+               <GoogleButton innerText ={"SIGN UP WITH GOOGLE"}/>
               </div>
             )
           }
