@@ -166,7 +166,10 @@ const SignupForm = ({ history }) => {
                     </div>
                   </div>
                 </Form>
-               <GoogleButton innerText ={"SIGN UP WITH GOOGLE"}/>
+                <div className="signup__googleButtonWrapper">
+                  <GoogleButton innerText ={"SIGN UP WITH GOOGLE"}/>
+                </div>
+               
               </div>
             )
           }

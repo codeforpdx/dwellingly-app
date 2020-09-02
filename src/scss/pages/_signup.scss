@@ -116,6 +116,7 @@
     &__button{
       font-size: 12px;
       margin-top: 35px;
+      margin-bottom: 5%;
       background-color: #ECECEC;
       color: #8e8e93;
     }
@@ -151,6 +152,14 @@
       margin-bottom: 5%;
       background-color: #51A3FC;
     }
+
+    &__googleButtonWrapper {
+      margin-left: 10%;
+      margin-right: 10%;
+      margin-top: 5%;
+    }
+
+
   }
 
   .subtitle {
