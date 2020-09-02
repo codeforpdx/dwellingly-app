@@ -105,7 +105,7 @@ const SignupForm = ({ history }) => {
                   </h2>
 
 
-                  <div className="signup__form-cell-container"> 
+                  <div className="signup__form-cell-container">
                     <Field
                       className="form-field signup__form-field"
                       type="text"
@@ -189,7 +189,7 @@ const SignupForm = ({ history }) => {
                 <div className="signup__googleButtonWrapper">
                   <GoogleButton innerText ={"SIGN UP WITH GOOGLE"}/>
                 </div>
-               
+                <div className="signup__privacyPolicyWrapper"> <p className="signup__privacyPolicyText">Privacy Policy</p></div>
               </div>
             )
           }

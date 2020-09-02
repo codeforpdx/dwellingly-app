@@ -95,15 +95,25 @@
   float: left;
 }
 
+//Below are media queries for mobile devices.
+
 @media screen and (max-width: $breakpointMobile) and (min-width: 322px) {
   
-  //editing mobile form container
 
   .form-error{
     color: red;
   }
 
   .signup{
+
+    &__privacyPolicyWrapper {
+      color: $blue;
+      float: left;
+      bottom: 0;
+      margin: 4%;
+      position: fixed;
+      font-weight: 500;
+    }
 
     &__form-cell-container{
       border-bottom: 1px solid $lightGray;
@@ -116,23 +126,19 @@
 
 
     &__form-container{
-      // width: 270px;
       width: 100%;
       border-radius: 0px;
       height: 100%;
       padding: 0px;
+
     }
     &__form-field{
-      
-      // width: 90%;
       width: 100%;
       border: none;
       padding: 7px 10px;
     }
     &__button{
       font-size: 12px;
-      // margin-top: 35px;
-      // margin-bottom: 5%;
       background-color: #ECECEC;
       color: #8e8e93;
     }
@@ -151,9 +157,6 @@
     &__mobile-heading {
       display: block;
       border-bottom: 1px solid #d1d1d1;
-      // margin-left: 5%;
-      // margin-right: 5%;
-
       color: #2C5F89;
       font-weight: 850;
 
@@ -166,13 +169,12 @@
       display: block;
       height: 11.5%;
       margin-bottom: 5%;
-      background-color: #51A3FC;
+      background-color: $blue;
     }
 
     &__googleButtonWrapper {
       margin-left: 10%;
       margin-right: 10%;
-      // margin-top: 5%;
     }
 
 
@@ -181,6 +183,7 @@
   .subtitle {
     display: none;
   }
+
 }
 
 
@@ -193,6 +196,15 @@
     }
   
     .signup{
+
+      &__privacyPolicyWrapper {
+        color: $blue;
+        float: left;
+        bottom: 0;
+        margin: 4%;
+        position: fixed;
+        font-weight: 500;
+      }
   
       &__form-cell-container{
         border-bottom: 1px solid $lightGray;
@@ -217,8 +229,6 @@
       }
       &__button{
         font-size: 12px;
-        // margin-top: 35px;
-        // margin-bottom: 5%;
         padding: 5px 10px;
         background-color: #ECECEC;
         color: #8e8e93;
@@ -230,7 +240,6 @@
   
           width: 50%;
           float: left;
-          // padding-top: 5%;
   
         }
       }
@@ -260,7 +269,6 @@
       &__googleButtonWrapper {
         margin-left: 10%;
         margin-right: 10%;
-        // margin-top: 5%;
       }
   
   
