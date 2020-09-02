@@ -127,11 +127,12 @@
       // width: 90%;
       width: 100%;
       border: none;
+      padding: 7px 10px;
     }
     &__button{
       font-size: 12px;
-      margin-top: 35px;
-      margin-bottom: 5%;
+      // margin-top: 35px;
+      // margin-bottom: 5%;
       background-color: #ECECEC;
       color: #8e8e93;
     }
@@ -171,7 +172,7 @@
     &__googleButtonWrapper {
       margin-left: 10%;
       margin-right: 10%;
-      margin-top: 5%;
+      // margin-top: 5%;
     }
 
 
@@ -212,6 +213,7 @@
       &__form-field{
         width: 100%;
         border: none;
+        padding: 7px 10px;
       }
       &__button{
         font-size: 12px;
