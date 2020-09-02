@@ -95,9 +95,13 @@
   float: left;
 }
 
-@media (max-width: $breakpointMobile){
+@media screen and (max-width: $breakpointMobile) and (min-width: 322px) {
   
   //editing mobile form container
+
+  .form-error{
+    color: red;
+  }
 
   .signup{
 
@@ -134,20 +138,20 @@
     &__logo {
       display: none;
 
-    &__mobile {
+      &__mobile {
 
-      width: 50%;
-      float: left;
-      padding-top: 5%;
+        width: 50%;
+        float: left;
+        padding-top: 5%;
 
-    }
+      }
     }
 
     &__mobile-heading {
       display: block;
       border-bottom: 1px solid #d1d1d1;
-      margin-left: 5%;
-      margin-right: 5%;
+      // margin-left: 5%;
+      // margin-right: 5%;
 
       color: #2C5F89;
       font-weight: 850;
@@ -159,7 +163,7 @@
     }
     &__mobile-header {
       display: block;
-      height: 11%;
+      height: 11.5%;
       margin-bottom: 5%;
       background-color: #51A3FC;
     }
@@ -176,4 +180,96 @@
   .subtitle {
     display: none;
   }
+}
+
+
+// special exceptions for iPhone 5
+
+@media (max-width: 321px){
+
+    //editing mobile form container
+
+    .form-error{
+      color: red;
+    }
+  
+    .signup{
+  
+      &__form-cell-container{
+        border-bottom: 1px solid $lightGray;
+      }
+  
+      &__form-field-container {
+        width: 90%;
+        margin-left: 5%;
+      }
+  
+  
+      &__form-container{
+        // width: 270px;
+        width: 100%;
+        border-radius: 0px;
+        height: 100%;
+        padding: 0px;
+      }
+      &__form-field{
+        
+        // width: 90%;
+        width: 100%;
+        border: none;
+      }
+      &__button{
+        font-size: 12px;
+        margin-top: 35px;
+        margin-bottom: 5%;
+        background-color: #ECECEC;
+        color: #8e8e93;
+      }
+      &__logo {
+        display: none;
+  
+        &__mobile {
+  
+          width: 50%;
+          float: left;
+          padding-top: 5%;
+  
+        }
+      }
+  
+      &__mobile-heading {
+        display: block;
+        border-bottom: 1px solid #d1d1d1;
+        // margin-left: 5%;
+        // margin-right: 5%;
+  
+        color: #2C5F89;
+        font-weight: 850;
+  
+          &__text-wrapper {
+            margin-bottom: 20px;
+            text-align: left;
+          }
+      }
+      &__mobile-header {
+        display: block;
+        height: 11.5%;
+        margin-bottom: 5%;
+        background-color: #51A3FC;
+      }
+  
+      &__googleButtonWrapper {
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 5%;
+      }
+  
+  
+    }
+  
+    .subtitle {
+      display: none;
+    }
+
+
 }
