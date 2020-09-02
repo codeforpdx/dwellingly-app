@@ -102,23 +102,21 @@ export const RequestAccess = (props) => {
 
 	return (
 		<>
-			<div className="request-page">
-				<div className="page-title"> Request for Access </div>
-				<div className="sub-title"> CONTACT </div>
-				<InfoField label={"First Name"} changeHandler={setFirstName} info={firstName} />
-				<InfoField label={"Last Name"} changeHandler={setLastName} info={lastName} />
-				{/* <InfoField label={"Phone"} info={data['phone']} /> */}
-				<InfoField label={"Email"} changeHandler={setEmail} info={email} />
-				<hr className="line" ></hr>
-				<div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
-				<RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler}/>
-				<div className="button-padding">
-					<div className="set-access-button">
-			      		<button className="access-button" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)} disabled={currentSelection===""}> GRANT ACCESS </button>
-			      	</div>
-			        <Link className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" to='/dashboard'> CANCEL </Link>
-			    </div>
-			</div>
+      <div className="page-title"> Request for Access </div>
+      <div className="sub-title"> CONTACT </div>
+      <InfoField label={"First Name"} changeHandler={setFirstName} info={firstName} />
+      <InfoField label={"Last Name"} changeHandler={setLastName} info={lastName} />
+      {/* <InfoField label={"Phone"} info={data['phone']} /> */}
+      <InfoField label={"Email"} changeHandler={setEmail} info={email} />
+      <hr className="line" ></hr>
+      <div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
+      <RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler}/>
+      <div className="button-padding">
+        <div className="set-access-button">
+              <button className="access-button" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)} disabled={currentSelection===""}> GRANT ACCESS </button>
+            </div>
+            <Link className="button has-background-grey has-text-white is-rounded is-small cancel-button has-text-weight-bold" to='/dashboard'> CANCEL </Link>
+        </div>
 		</>
 	);
 }
