@@ -1,38 +1,7 @@
 // Colors
 $specialGrey: #C8C8C8;
 
-// Dropdown
-.drop-button {
-	width: 300px;
-}
 
-.drop-button-content {
-	font-weight: normal;
-}
-
-.drop-button-start {
-	padding-left: 250px;
-}
-
-.drop-button-prop {
-	padding-left: 110px;
-}
-
-.drop-button-join {
-	padding-left: 167px;
-}
-
-.radio-dropdown {
-	margin-right: 10px;
-}
-
-.dropdown-content-width {
-	width: 295px;
-}
-
-.dropdown-menu-place {
-	padding-left: 13px;
-}
 
 // Subtitles
 .sub-title {
@@ -47,10 +16,18 @@ $specialGrey: #C8C8C8;
 
 // Contact Section
 .line {
-	border: 1px solid $specialGrey;
 	margin-top: 10px; 
 	margin-bottom: 10px;
 	width: 800px;
+}
+
+.contact-input {
+  border: none;
+  color: $darkGray;
+  font-weight: bold;
+  &::placeholder {
+      color: $lightGray;
+  }
 }
 
 .name-field {
@@ -73,50 +50,23 @@ $specialGrey: #C8C8C8;
   	flex-flow: row wrap;
 }
 
-// Page Length
-.button-padding {
-	padding-bottom: 74px;
-}
-
-.bottom-padding {
-	padding-bottom: 763px;
-}
-
-.bottom-padding-join {
-	padding-bottom: 726px;
-}
-
-.bottom-padding-property {
-	padding-bottom: 659px;
-}
-
-// JOIN Staff part
-.make-admin-padding {
-	padding-top: 15px;
-}
-
-.admin-check-padding {
-	padding-right: 10px;
-}
-
 // Property search part
 .search-bar {
   width: 400px;
 }
 
 // Buttons
-.cancel-button {
-	padding-bottom: 50px;
-}
+
 
 .access-button {
-	color: white;
-    background-color: $blue;
-    border-radius: 20px;
-    border-width: 0px;
-    padding: 7px 20px;
-    font-weight: bold;
-    font-size: 12px;
+  color: white;
+  cursor:pointer;
+  background-color: $blue;
+  border-radius: 20px;
+  border-width: 0px;
+  padding: 7px 20px;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .set-access-button {

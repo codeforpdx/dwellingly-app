@@ -28,14 +28,14 @@ export const Dashboard = (props) => {
                 if(! unstaffed.length) return;
 
                 setUnstaffedTenants(unstaffed);
-                const adminUsersObj = { "userrole": "admin" };
+                const adminUsersObj = { "userrole": 4 };
                 return axios
                     .post("/api/users/role", adminUsersObj, makeAuthHeaders(userContext))
                     .then(({ data }) => setStaffList(data.users));
             })
             .catch(error => alert(error));
 
-        const pendingUsersObj = { "userrole": "pending" };
+        const pendingUsersObj = { "userrole": 0 };
         axios
             .post("/api/users/role", pendingUsersObj, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
