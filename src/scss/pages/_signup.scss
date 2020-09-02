@@ -101,6 +101,15 @@
 
   .signup{
 
+    &__form-cell-container{
+      border-bottom: 1px solid $lightGray;
+    }
+
+    &__form-field-container {
+      width: 90%;
+      margin-left: 5%;
+    }
+
 
     &__form-container{
       // width: 270px;
@@ -110,8 +119,10 @@
       padding: 0px;
     }
     &__form-field{
-      // width: 200px;
-      width: 90%;
+      
+      // width: 90%;
+      width: 100%;
+      border: none;
     }
     &__button{
       font-size: 12px;

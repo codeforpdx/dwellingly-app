@@ -95,7 +95,7 @@ const SignupForm = ({ history }) => {
                 <img className= "signup__logo__mobile" src={dwellinglyLogoMobile}></img>
               </div>
                 {/* <Header /> */}
-                <Form>
+                <Form className="signup__form-field-container">
                   <img className= "signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
                   <h2 className="subtitle">
                     Create an Account
@@ -103,55 +103,75 @@ const SignupForm = ({ history }) => {
                   <h2 className="signup__mobile-heading">
                     <div className="signup__mobile-heading__text-wrapper">Create an Account for Dwelling.ly </div>  
                   </h2>
-                  <Field
-                    className="form-field signup__form-field"
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="firstName" component="div" />
-                  <Field
-                    className="form-field signup__form-field"
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="lastName" component="div" />
-                  <Field
-                    className="form-field signup__form-field"
-                    type="text"
-                    name="email"
-                    placeholder="Email"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="email" component="div" />
-                  <Field
-                    className="form-field signup__form-field"
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    placeholder="Phone"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="phone" component="div" />
-                  <Field
-                    className="form-field signup__form-field"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="password" component="div" />
-                  <Field
-                    className="form-field signup__form-field"
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="confirmPassword" component="div" />
+
+
+                  <div className="signup__form-cell-container"> 
+                    <Field
+                      className="form-field signup__form-field"
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
+                      required
+                    />
+                    <ErrorMessage className="form-error" name="firstName" component="div" />
+                  </div>
+
+
+                  <div className="signup__form-cell-container"> 
+                    <Field
+                      className="form-field signup__form-field"
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
+                      required
+                    />
+                    <ErrorMessage className="form-error" name="lastName" component="div" />
+                  </div>
+
+                  <div className="signup__form-cell-container"> 
+                    <Field
+                      className="form-field signup__form-field"
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                      required
+                    />
+                    <ErrorMessage className="form-error" name="email" component="div" />
+                  </div>
+
+                  <div className="signup__form-cell-container"> 
+                    <Field
+                      className="form-field signup__form-field"
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      placeholder="Phone"
+                      required
+                    />
+                    <ErrorMessage className="form-error" name="phone" component="div" />
+                  </div>
+
+                  <div className="signup__form-cell-container"> 
+                    <Field
+                      className="form-field signup__form-field"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                    />
+                    <ErrorMessage className="form-error" name="password" component="div" />
+                  </div>
+
+                  <div className="signup__form-cell-container"> 
+                    <Field
+                      className="form-field signup__form-field"
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                      required
+                    />
+                    <ErrorMessage className="form-error" name="confirmPassword" component="div" />
+                  </div>
 
                   <div />
                   <button className="signup__button" type="submit">
