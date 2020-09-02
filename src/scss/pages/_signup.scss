@@ -187,8 +187,6 @@
 
 @media (max-width: 321px){
 
-    //editing mobile form container
-
     .form-error{
       color: red;
     }
@@ -206,22 +204,20 @@
   
   
       &__form-container{
-        // width: 270px;
         width: 100%;
         border-radius: 0px;
         height: 100%;
         padding: 0px;
       }
       &__form-field{
-        
-        // width: 90%;
         width: 100%;
         border: none;
       }
       &__button{
         font-size: 12px;
-        margin-top: 35px;
-        margin-bottom: 5%;
+        // margin-top: 35px;
+        // margin-bottom: 5%;
+        padding: 5px 10px;
         background-color: #ECECEC;
         color: #8e8e93;
       }
@@ -232,7 +228,7 @@
   
           width: 50%;
           float: left;
-          padding-top: 5%;
+          // padding-top: 5%;
   
         }
       }
@@ -240,20 +236,21 @@
       &__mobile-heading {
         display: block;
         border-bottom: 1px solid #d1d1d1;
-        // margin-left: 5%;
-        // margin-right: 5%;
+
   
         color: #2C5F89;
         font-weight: 850;
   
           &__text-wrapper {
-            margin-bottom: 20px;
-            text-align: left;
+            margin-bottom: 5px;
+            text-align: center;
+            font-size: 14px;
           }
       }
+
       &__mobile-header {
         display: block;
-        height: 11.5%;
+        height: 6.5%;
         margin-bottom: 5%;
         background-color: #51A3FC;
       }
@@ -261,7 +258,7 @@
       &__googleButtonWrapper {
         margin-left: 10%;
         margin-right: 10%;
-        margin-top: 5%;
+        // margin-top: 5%;
       }
   
   
@@ -269,6 +266,13 @@
   
     .subtitle {
       display: none;
+    }
+
+    //below is to adjust the padding for the 'sign up with google button'
+    .login {
+      &__button {
+        padding: 5px 10px;
+      }
     }
 
 
