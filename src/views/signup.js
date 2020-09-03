@@ -5,6 +5,7 @@ import {
   Form, Field, Formik, ErrorMessage,
 } from "formik";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import * as Yup from "yup";
 import UserContext from "../UserContext";
@@ -189,7 +190,7 @@ const SignupForm = ({ history }) => {
                 <div className="signup__googleButtonWrapper">
                   <GoogleButton innerText ={"SIGN UP WITH GOOGLE"}/>
                 </div>
-                <div className="signup__privacyPolicyWrapper"> <p className="signup__privacyPolicyText">Privacy Policy</p></div>
+                <div className="signup__privacyPolicyWrapper"> <Link to="/" className="signup__privacyPolicyText">Privacy Policy</Link></div>
               </div>
             )
           }
