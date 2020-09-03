@@ -7,7 +7,7 @@
 
 // }
 
-@media screen and (max-width: $breakpointMobile) and (min-width: 322px) {
+@media screen and (max-width: $breakpointMobile) {
 
   .privacy-policy {
 
@@ -30,7 +30,36 @@
       
         //view height is working for some reason and not percentage...
 
+      &__heading{
+        color: #2C5F89;
+        font-weight: 850;
+        margin-left: 10px;
+        margin-top: 15px;
+      }
 
+      &__text {
+        margin-left: 10px;
+        margin-top: 10px;
+        font-size: 12px;
+      }
+
+    &__list{
+     margin-top: 15px;
+     list-style: inside;
+     margin-left: 15px;
+
+      &__item{
+        margin-top: 10px;
+      }
+
+    }
 
   }
+
+  // ul.unordered-pp-list{
+  //   margin-top: 15px;
+  //   list-style: inside;
+  //   margin-left: 15px;
+  // }
+
 };
