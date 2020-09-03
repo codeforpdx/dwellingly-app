@@ -47,7 +47,7 @@ const Settings = () => {
   const context = useContext(UserContext);
 
   return (
-    <div className="add-property__container">
+    <div>
       <h2 className="page-title">Settings</h2>
 
       <Formik
