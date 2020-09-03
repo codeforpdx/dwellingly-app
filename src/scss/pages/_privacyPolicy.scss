@@ -54,12 +54,18 @@
 
     }
 
-  }
+    &__signUpWrapper{
+      margin-top: 30px;
+      margin-left: 15px;
+      color: $blue;
+      font-weight: 500;
+      
+    }
 
-  // ul.unordered-pp-list{
-  //   margin-top: 15px;
-  //   list-style: inside;
-  //   margin-left: 15px;
-  // }
+    &__signUpText {
+      margin-bottom: 20px;
+    }
+
+  }
 
 };
