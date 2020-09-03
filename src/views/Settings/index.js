@@ -4,7 +4,6 @@ import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
 import UserContext from "../../UserContext";
 import * as axios from "axios";
-
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email()
@@ -22,6 +21,7 @@ const formSubmitHandler = (context, data) => {
       headers: { Authorization: `Bearer ${context.user.accessJwt}` },
     })
     .then((response) => {
+
       context.handleSetUser({
         userSession: {
           ...context.user,
@@ -30,10 +30,12 @@ const formSubmitHandler = (context, data) => {
         },
       });
 
-      // TODO we need a way to get a new JWT token created here I think?
-      
       // replace with success notification
       alert("Saved Successfully!");
+    })
+    .then(() => {
+      // TODO Can be optimized to save us an AJAX call by having the JWT sent from the PATCH request and updating local storage above instead of in the refreshJwtPeriodically function in App.js 
+      context.refreshJWT();
     })
     .catch((error) => {
       // replace with failure notification

@@ -126,6 +126,7 @@ export class App extends React.Component {
             // Call to refresh the access token 3 minutes later
             setTimeout( this.refreshJwtPeriodically, 180000 );
           })
+          localStorage.setItem("dwellinglyAccess", response.data.access_token);
         })
         .catch( error => {
           console.log( "Failed to refresh access token: " + error );
@@ -153,7 +154,7 @@ export class App extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, login: this.login, logout: this.logout }} >
+      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT:this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
         <BrowserRouter>
           <div className='App'>
             {this.state.userSession.isAuthenticated
