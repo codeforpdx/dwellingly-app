@@ -1,0 +1,34 @@
+// Privacy Policy Styles
+
+
+// .privacy-policy {
+
+
+
+// }
+
+@media screen and (max-width: $breakpointMobile) and (min-width: 322px) {
+
+  .privacy-policy {
+
+      &__mobile{
+        display: none;
+
+        &__logo {
+          width: 50%;
+          float: left;
+          padding-top: 5%;
+        }
+      }
+      
+        //view height is working for some reason and not percentage...
+
+
+    &__mobile-header {
+      height: 11.5vh;
+      margin-bottom: 5%;
+      background-color: $blue;
+
+    }
+  }
+};
