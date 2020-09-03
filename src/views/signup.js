@@ -190,7 +190,7 @@ const SignupForm = ({ history }) => {
                 <div className="signup__googleButtonWrapper">
                   <GoogleButton innerText ={"SIGN UP WITH GOOGLE"}/>
                 </div>
-                <div className="signup__privacyPolicyWrapper"> <Link to="/" className="signup__privacyPolicyText">Privacy Policy</Link></div>
+                <div className="signup__privacyPolicyWrapper"> <Link to="/privacypolicy" className="signup__privacyPolicyText">Privacy Policy</Link></div>
               </div>
             )
           }
