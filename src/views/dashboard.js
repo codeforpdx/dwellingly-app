@@ -36,10 +36,7 @@ export const Dashboard = (props) => {
             })
             .catch(error => alert(error));
 
-<<<<<<< HEAD
         const pendingUsersObj = { "userrole": 0 };
-=======
->>>>>>> b0811926fb6d0e2463e9822f0989f1ed1f027ba9
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
             .then(({ data }) => { 
@@ -47,10 +44,6 @@ export const Dashboard = (props) => {
             })
             .catch(error => alert(error));
 
-<<<<<<< HEAD
-=======
-        const pendingUsersObj = { "userrole": "pending" };
->>>>>>> b0811926fb6d0e2463e9822f0989f1ed1f027ba9
         axios
             .post("/api/users/role", pendingUsersObj, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
@@ -111,7 +104,6 @@ export const Dashboard = (props) => {
 
     return (
         <>
-<<<<<<< HEAD
             <div>
                 <h2 className="page-title">Admin Dashboard</h2>
                 <div className="dashboard__modules_container">
@@ -142,22 +134,6 @@ export const Dashboard = (props) => {
                             >
                                 SAVE ASSIGNMENTS
                             </button>
-=======
-            <div className="dashboard__container">
-                <div className="dashboard__main_container">
-                    <div className="dashboard__main">
-                        <h2 className="page-title">Admin Dashboard</h2>
-                        <div className="dashboard__modules_container">
-                            <DashboardModule
-                                data={widgetData.opentickets}
-                            />
-                            <DashboardModule
-                                data={widgetData.reports}
-                            />
-                            <DashboardModule
-                                data={widgetData.managers}
-                            />
->>>>>>> b0811926fb6d0e2463e9822f0989f1ed1f027ba9
                         </div>
                     </div>
                 </Collapsible>
