@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
-import UserContext from "../../UserContext";
+import React, { useState } from "react";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
+import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -29,14 +29,13 @@ const validationSchema = Yup.object().shape({
 const Manager = () => {
   const { pathname } = useLocation();
   const id = pathname.match(/\d/)[0];
-  const userContext = useContext(UserContext);
   // can remove this once api is configured to return properties and tenants
   const dummyDataManagerInfo = PROPERTY_MANAGER_DATA.find(
     (manager) => manager.id === id
   );
 
   const [manager, setManager] = useState(dummyDataManagerInfo);
-  const [isEditing, setEditingStatus] = useState(false);
+  const { isEditing, setEditingStatus } = useEditingStatus()
 
   const tableData = [
     {
@@ -65,7 +64,6 @@ const Manager = () => {
     },
   ];
 
-  const handleEditToggle = () => setEditingStatus(!isEditing);
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
     setManager({
@@ -87,6 +85,7 @@ const Manager = () => {
   };
 
   // use getManager once /users/?id api endpoint returns properties and tenants for property managers
+  // eslint-disable-next-line no-unused-vars
   const getManager = (context) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/?id=${id}`, {
@@ -105,18 +104,7 @@ const Manager = () => {
 
   return (
     <div className="manager__container">
-      <div className="title__container">
-        <h2>
-          {manager.firstName} {manager.lastName}
-        </h2>
-        <button
-          className={`rounded${isEditing ? "--is-editing" : ""}`}
-          onClick={handleEditToggle}
-          disabled={isEditing}
-        >
-          <i className="fas fa-pen icon"></i>
-        </button>
-      </div>
+      <TitleAndPen title={`${manager.firstName} ${manager.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
       <div className="manager__contact">
         <h1 className="secondary-title">CONTACT</h1>
         <div className="contact-details">

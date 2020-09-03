@@ -1,66 +1,8 @@
 .dashboard {
-	&__container {
-		display: flex;
-		min-height: 100vh;
-	}
-	&__sidebar_container {
-		width: 18.5vw;
-		background-color: $blue;
-		padding: 0 20px;
-	}
-	&__sidebar_user_container {
-		height: $headerHeight;
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		font-weight: bold;
-		color: white;
-	}
-	&__sidebar_user_name {
-		font-size: 18px;
-		color: white;
-		margin-left: 8px;
-	}
-	&__main_container {
-		display: flex;
-		flex-direction: column;
-		flex-grow: 1;
-	}
-	&__header {
-		background-image: $gradient;
-		height: $headerHeight;
-		justify-content: flex-start;
-		display: flex;
-		align-items: center;
-	}
-	&__header_logo {
-		width: 160px;
-	}
-	&__main {
-		background-color: white;
-		flex-grow: 1;
-		padding: 45px;
-	}
 	&__modules_container {
 		display: flex;
 		justify-content: space-between;
 		margin: 25px 0;
-	}
-	&__footer {
-		//MH - temp
-		position: fixed;
-		z-index: -100;
-		background-color: $lighterGray;
-		color: $blue;
-		text-align: center;
-		margin: none;
-		width: 100%;
-		padding: 10px;
-		bottom: 0;
-		right: 0;
-		p {
-			margin-left: 18.5vw;
-		}
 	}
 	&__save_assignments_button {
 		color: $lightGray;

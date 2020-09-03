@@ -2,7 +2,6 @@
   "name": "dwellingly",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
@@ -13,6 +12,7 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "formik": "^2.1.4",
+    "http-proxy-middleware": "^1.0.4",
     "react": "^16.13.1",
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-paginator": "^2.1.2",

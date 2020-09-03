@@ -6,3 +6,5 @@ CodeforPDX:
 - Sarah Krabacher
 - Marie Ehrman
 - Max Hunter
+- Marcus Jensen
+- Scott Harlan

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../UserContext';
-import { Link } from "react-router-dom"
 import Accordion from '../components/Accordion';
 import * as axios from 'axios';
 
@@ -53,29 +52,29 @@ const pageButtonRenderer = ({
     e.preventDefault();
     onPageChange(page);
   };
-  if (title == 'previous page') {
+  if (title === 'previous page') {
     return (
-      <li className="page-item">
-        <a href="#" onClick={ handleClick } title={title} class='button is-rounded is-small' >Prev</a>
+      <li key={title} className="page-item">
+        <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
-  if (title == 'next page') {
+  if (title === 'next page') {
     return (
-      <li className="page-item">
-        <a href="#" onClick={ handleClick } title={title}class='button is-rounded is-small' >Next</a>
+      <li key={title} className="page-item">
+        <a href="#" onClick={ handleClick } title={title}className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
   if (active) {
     return (
-      <li className="active page-item">
+      <li key={page} className="active page-item">
         <a href="#" onClick={ handleClick } title={title}>{ page }</a>
       </li>
     );
   }
   return (
-    <li className="page-item">
+    <li key={page} className="page-item">
       <a href="#" onClick={ handleClick } title={title}>{ page }</a>
     </li>
   );
@@ -122,25 +121,25 @@ export class Tickets extends Component {
                 {session => {
                     this.context = session;
                     return (
-                        <div className="tickets__container">
+                        <>
                             <div className="section-header">
                                 <h2 className="page-title">Tickets</h2>
                             </div>
                             <div className="search-section">
-                              <input class="input is-rounded" placeholder="Search by tenant, manager, property, or JOIN staff"></input>
+                              <input className="input is-rounded" placeholder="Search by tenant, manager, property, or JOIN staff"></input>
                             </div>
                             <Accordion
-                              icon={<i class="fas fa-filter"></i>}
+                              icon={<i className="fas fa-filter"></i>}
                               header={"Filters"}
                             >
                               <div className="section-row">
                                 <div className="filter-control">
                                   <label>Opened From</label>
-                                  <input class="input is-rounded"></input>
+                                  <input className="input is-rounded"></input>
                                 </div>
                                 <div className="filter-control">
                                   <label>Category</label>
-                                  <div class="select is-rounded">
+                                  <div className="select is-rounded">
                                     <select>
                                       <option>All</option>
                                       <option>Complaints</option>
@@ -150,10 +149,10 @@ export class Tickets extends Component {
                                 </div>
                                 <div className="filter-control">
                                   <label>Status</label>
-                                  <div class="buttons has-addons">
-                                    <button class="button is-rounded btn-group">New </button>
-                                    <button class="button is-rounded btn-group">In Progress</button>
-                                    <button class="button is-rounded btn-group">Closed</button>
+                                  <div className="buttons has-addons">
+                                    <button className="button is-rounded btn-group">New </button>
+                                    <button className="button is-rounded btn-group">In Progress</button>
+                                    <button className="button is-rounded btn-group">Closed</button>
                                   </div>
                                 </div>
                               </div>
@@ -168,7 +167,7 @@ export class Tickets extends Component {
                                     headerClasses="table-header"
                                     />
                             </div>
-                        </div>
+                        </>
                     )
                 }}
             </UserContext.Consumer>
