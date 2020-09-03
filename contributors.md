@@ -8,3 +8,4 @@ CodeforPDX:
 - Max Hunter
 - Marcus Jensen
 - Scott Harlan
+- Anthony So
