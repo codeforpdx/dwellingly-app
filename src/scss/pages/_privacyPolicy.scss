@@ -19,16 +19,18 @@
           float: left;
           padding-top: 5%;
         }
+
+        &__header {
+          height: 11.5vh;
+          margin-bottom: 5%;
+          background-color: $blue;
+    
+        }
       }
       
         //view height is working for some reason and not percentage...
 
 
-    &__mobile-header {
-      height: 11.5vh;
-      margin-bottom: 5%;
-      background-color: $blue;
 
-    }
   }
 };
