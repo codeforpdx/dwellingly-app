@@ -1,27 +1,29 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import UserContext from "../../UserContext";
 import * as axios from "axios";
+import UserContext from "../../UserContext";
+import Button from "../../components/Button";
+
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email()
+    .email("Must be a valid email")
     .min(5, "*Email must have at least 5 characters")
     .max(100, "*Email can't be longer than 100 characters")
     .required("*Email is required"),
   phone: Yup.string()
+    .min(7, "Phone must have at least 7 characters")
     .max(20, "*Phone can't be longer than 20 characters")
     .required("*Phone Number is required"),
 });
 
-const formSubmitHandler = (context, data) => {
+const handleFormSubmit = (context, data) => {
   axios
     .patch(`/api/user/${context.user.identity}`, data, {
       headers: { Authorization: `Bearer ${context.user.accessJwt}` },
     })
     .then((response) => {
-
       context.handleSetUser({
         userSession: {
           ...context.user,
@@ -30,17 +32,22 @@ const formSubmitHandler = (context, data) => {
         },
       });
 
-      // replace with success notification
+      // once Toast is implemented, replace with Toast notification
       alert("Saved Successfully!");
     })
     .then(() => {
-      // TODO Can be optimized to save us an AJAX call by having the JWT sent from the PATCH request and updating local storage above instead of in the refreshJwtPeriodically function in App.js 
       context.refreshJWT();
     })
     .catch((error) => {
-      // replace with failure notification
+      // once Toast is implemented, replace with Toast notification
       alert(error);
     });
+};
+
+// TODO make formCancelHandler() that resets form
+const handleFormCancel = () => {
+  // once Toast is implemented, replace with Toast notification
+  alert("Form Reset!");
 };
 
 const Settings = () => {
@@ -58,7 +65,7 @@ const Settings = () => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(true);
-          formSubmitHandler(context, values);
+          handleFormSubmit(context, values);
           setSubmitting(false);
         }}
       >
@@ -71,13 +78,10 @@ const Settings = () => {
           isValid,
           isSubmitting,
         }) => (
-          <div className="form-container add-property__main_container">
+          <div className="settings__main_container">
             <h1 className="section-title">UPDATE CONTACT INFORMATION</h1>
-            <Form
-              className="add-property__form-container"
-              onSubmit={handleSubmit}
-            >
-              <div className="form-row columns">
+            <Form className="settings__form-container" onSubmit={handleSubmit}>
+              <div className="form-row">
                 <label
                   className="column is-one-fifth"
                   id="email"
@@ -97,7 +101,7 @@ const Settings = () => {
                   <div className="error-message">{errors.email}</div>
                 ) : null}
               </div>
-              <div className="form-row columns">
+              <div className="form-row">
                 <label
                   className="column is-one-fifth"
                   id="phone"
@@ -117,32 +121,30 @@ const Settings = () => {
                   <div className="error-message">{errors.phone}</div>
                 ) : null}
               </div>
-              <div className="container-footer">
-                <button
-                  className={`${
-                    isValid && "active"
-                  } save_button button is-rounded`}
-                  type="submit"
-                  disabled={isSubmitting}
+              <div className="button-container">
+                <Button
+                  isCancelButton={false}
+                  type={"submit"}
+                  disabledFlag={isSubmitting}
+                  isValidFlag={isValid}
                 >
                   SAVE
-                </button>
-                <button
-                  className="button is-dark is-rounded"
-                  onClick={() => {
-                    console.log("cancel pressed");
-                  }}
+                </Button>
+                <Button
+                  isCancelButton={true}
+                  type={"reset"}
+                  onClick={handleFormCancel}
                 >
                   CANCEL
-                </button>
+                </Button>
               </div>
             </Form>
-            <Link exact="true" to="/change-password">
-              Change Password
-            </Link>
           </div>
         )}
       </Formik>
+      <Link exact="true" to="/change-password">
+        Change Password
+      </Link>
     </div>
   );
 };
