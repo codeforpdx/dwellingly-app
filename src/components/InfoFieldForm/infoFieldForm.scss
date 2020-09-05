@@ -9,11 +9,9 @@ $brandBlue: #053d6f;
   &__row--editing {
     color: $gray;
     margin-left: 0;
-    border-bottom: 1px solid $lightGray;
-    
-    // first-of-type vs. first-child
-    &:first-child {
-      border-top: 1px solid $lightGray;
+    border-top: 1px solid $lightGray;
+    &:last-child {
+      border-bottom: 1px solid $lightGray;
     }
     &:focus-within {
       border-bottom: 1px solid $blue;
@@ -29,7 +27,8 @@ $brandBlue: #053d6f;
         background-image: none;
       }
     }
-    &__button-container {
+  }
+  &__button-container {
     position: absolute;
     display: flex;
     justify-content: space-between;
@@ -38,6 +37,9 @@ $brandBlue: #053d6f;
     left: 0;
     margin: 0;
   }
+  
+  &__label {
+    padding-left: 0;
   }
   &__field-error__message {
     color: red;
@@ -45,31 +47,24 @@ $brandBlue: #053d6f;
   }
 }
 
-.top-bar {
-    border-top: 1px solid $lightGray;
-}
-
 .form-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin: 25px 0 25px 0;
-    padding-left: 40px;
-    padding-right: 175px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 25px 0 25px 0;
+  padding-left: 40px;
+  padding-right: 175px;
 }
 
 .form-spacing {
-    padding-bottom: 25px;
-}
-
-.section-spacing {
-    padding-top: 50px;
+  padding-bottom: 25px;
 }
 
 .sub-title {
-    color: $brandBlue;
-    font-weight: bold;
-    padding-bottom: 10px;
+  color: $brandBlue;
+  font-weight: bold;
+  padding-bottom: 25px;
 }
+
 
 

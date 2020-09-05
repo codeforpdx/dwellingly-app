@@ -1,25 +1,3 @@
-/*
-	Issues:
-		Errors appear on first type when values are filled, 
-		do not appear when there're blank values
-		Cannot currently type in boxes
-
-		When inserting components:
-			function form for components in components fields
-			jsx form for injectible components
-			Made the prop '.any', still errors on undefined
-
-		Should FieldError be included for component field?
-
-		Spacing in each section:
-			move label to beginning of field/line
-			Spacing btw sections is off
-
-		Top line for first field:
-			&:first-child not affecting correct child b/c of title
-			Top line only appears on some forms, topBar prop?
-
-*/
 import './infoFieldForm.scss';
 
 import React from 'react';
@@ -31,12 +9,12 @@ const FieldError = ({ error }) => {
   return <div className="form__field-error__message">{error}</div>;
 };
 
-export const FormikField = ({fieldLabel, fieldType, fieldName, fieldValue, fieldHTML, fieldKey, fieldError, handleChange, handleBlur, fieldComponent, fieldPlaceholder, fieldTopBar}) => {
+export const FormikField = ({fieldLabel, fieldType, fieldName, fieldValue, fieldHTML, fieldKey, fieldError, handleChange, handleBlur, fieldComponent, fieldPlaceholder}) => {
 
 	if (fieldComponent == null){
 		return (
 			<div className="form__row--editing columns " key={fieldKey} >
-				<label className="column is-one-quarter" htmlFor={fieldHTML}>
+				<label className="column is-one-quarter form__label" htmlFor={fieldHTML}>
 	            	{fieldLabel}
 	        	</label>
 				<Field
@@ -59,11 +37,13 @@ export const FormikField = ({fieldLabel, fieldType, fieldName, fieldValue, field
 		return (
 			<>
 				<div className="form__row--editing columns">
-					<label className="column is-one-quarter" htmlFor={fieldHTML}>
+					<label className="column is-one-quarter form__label" htmlFor={fieldHTML}>
 		            	{fieldLabel}
 		        	</label>
 					<Field
 		                name={fieldName}
+		                value={fieldValue}
+		                onChange={handleChange}
 		                component={fieldComponent}
 		                className="column is-two-quarters row-input"
 		        	/>
@@ -83,9 +63,8 @@ FormikField.propTypes = {
 	fieldError: PropTypes.string,
 	handleChange: PropTypes.func.isRequired,
 	handleBlur: PropTypes.func.isRequired,
-	fieldComponent: PropTypes.function,
+	fieldComponent: PropTypes.func,
 	fieldPlaceholder: PropTypes.string,
-	fieldTopBar: PropTypes.bool,
 }
 
 export const FormikForm = ({
@@ -102,7 +81,6 @@ export const FormikForm = ({
 			reducedContent[currentContent.key] = currentContent.value;
 			return reducedContent;
 		}, {});
-
 
 	return (
 		<Formik
@@ -121,17 +99,14 @@ export const FormikForm = ({
 		        <Form onSubmit={handleSubmit}>
 		        	<div className="form-spacing" >
 			        	{tableData.map((value, index) => (
-			        		<div key={index} className="section-spacing" >
-			        		{value.sectionTitle ? <div key={index}> <div key={index} className="sub-title " > {value.sectionTitle} </div> {value.sectionContent.map((field, ind) => (
-		            			field.isNotField ? <div key={field.key} className="" > {field.component} </div> : <FormikField key={field.key} fieldLabel={field.label} fieldType={field.inputType} fieldName={field.key} fieldValue={values[field.key]} fieldHTML={field.label} fieldKey={field.key} fieldError={errors[values[field.key]]} handleChange={handleSubmit} handleBlur={handleBlur} fieldPlaceholder={field.placeholder} fieldComponent={field.component} fieldTopBar={field.topBar} />
-		
+			        		<div key={index} >
+			        		{value.sectionTitle ? <div key={index}> <div key={index} className="sub-title" > {value.sectionTitle} </div> {value.sectionContent.map((field, ind) => (
+		            			field.isNotField ? <div key={field.key} > {field.component} </div> : <FormikField key={field.key} fieldLabel={field.label} fieldType={field.inputType} fieldName={field.key} fieldValue={values[field.key]} fieldHTML={field.key} fieldKey={field.key} fieldError={errors[field.key]} handleChange={handleChange} handleBlur={handleBlur} fieldPlaceholder={field.placeholder} fieldComponent={field.component} />
 		            		))} </div> : 
 			        		value.sectionContent.map((field, ind) => (
-		            			field.isNotField ? <div key={field.key} className="" > {field.component} </div> : <FormikField key={field.key} fieldLabel={field.label} fieldType={field.inputType} fieldName={field.key} fieldValue={values[field.key]} fieldHTML={field.label} fieldKey={field.key} fieldError={errors[values[field.key]]} handleChange={handleSubmit} handleBlur={handleBlur} fieldPlaceholder={field.placeholder} fieldComponent={field.component} fieldTopBar={field.topBar} />
-		
+		            			field.isNotField ? <div key={field.key} > {field.component} </div> : <FormikField key={field.key} fieldLabel={field.label} fieldType={field.inputType} fieldName={field.key} fieldValue={values[field.key]} fieldHTML={field.key} fieldKey={field.key} fieldError={errors[field.key]} handleChange={handleChange} handleBlur={handleBlur} fieldPlaceholder={field.placeholder} fieldComponent={field.component} />
 		            		))}
 		            		</div>
-			            	
 			        	))}
 		        	</div>
 		        	{restOfForm}
@@ -153,13 +128,9 @@ FormikForm.propTypes = {
 	  	placeholder: PropTypes.string,
 	  	component: PropTypes.any,
 	  	isNotField: PropTypes.bool,
-	  	topBar: PropTypes.bool,
 	})).isRequired
   })).isRequired,
   submitHandler: PropTypes.func.isRequired,
   validationSchema: PropTypes.object.isRequired,
   restOfForm: PropTypes.object.isRequired,
 };
-
-
-
