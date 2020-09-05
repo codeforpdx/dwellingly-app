@@ -7,13 +7,9 @@
 .columns-spacing {
 	padding-left: 30px;
 }
- 
+
 .sep-cards {
 	padding-bottom: 30px;
-}
-
-.staff-page-bottom-space {
-	padding-bottom: 377px;
 }
 
 // Divider
@@ -43,12 +39,8 @@
 }
 
 .add-button {
-	background-color: $blue;
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	border-radius: 20px;
-	padding: 8px;
-	padding-left: 10px;
-	padding-right: 10px;
+	color: white!important;
+	background-color: $blue!important;
+	margin-top: 25px;
+
 }

@@ -20,6 +20,7 @@
     padding: 10px 20px;
     font-weight: bold;
   }
+
   &__form-field {
     border: 0;
     border-bottom: 1px solid $lightGray;
@@ -78,5 +79,24 @@
   &__account_create {
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+}
+.googleIcon{
+  height: 20px;
+  float: left;
+}
+
+@media (max-width: $breakpointMobile){
+
+  .login{
+    &__form-container{
+      width: 270px;
+    }
+    &__form-field{
+      width: 200px;
+    }
+    &__button{
+      font-size: 12px;
+    }
   }
 }

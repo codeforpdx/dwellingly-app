@@ -24,7 +24,7 @@ describe("Header Component", () => {
 
 	it.skip("should have a gradient background", () => {
 		const component = setUp();
-		const wrapper = component.find(".navbar");
+		const wrapper = component.find("#header");
 		expect(wrapper.hasClass("bg-gradient")).toEqual(true);
 	});
 });
