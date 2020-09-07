@@ -1,14 +1,3 @@
-// Privacy Policy Styles
-
-
-// .privacy-policy {
-
-
-
-// }
-
-// @media screen and (max-width: $breakpointMobile) {
-
   .privacy-policy {
 
       &__mobile{
@@ -23,14 +12,12 @@
 
         &__header {
           height: 11.5vh;
-          // margin-bottom: 5%;
           margin-bottom: 2%;
           background-color: $blue;
     
         }
       }
       
-        //view height is working for some reason and not percentage...
 
       &__heading{
         color: #2C5F89;
@@ -70,8 +57,6 @@
     }
 
   }
-
-// };
 
 @media screen and (max-width: $breakpointMobile) {
 
