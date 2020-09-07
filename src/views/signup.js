@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Form, Field, Formik, ErrorMessage,
-} from "formik";
+import { Form, Field, Formik, ErrorMessage } from "formik";
 import { Redirect } from "react-router";
 import axios from "axios";
 import * as Yup from "yup";
@@ -11,7 +9,14 @@ import UserContext from "../UserContext";
 import dwellinglyLogo from "../assets/images/dwellingly_logo.png";
 
 const SignupForm = ({ history }) => {
-  const signup = async (firstName, lastName, email, phone, password, confirmPassword) => {
+  const signup = async (
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    confirmPassword
+  ) => {
     let response;
     try {
       response = await axios.post("/api/register", {
@@ -56,118 +61,161 @@ const SignupForm = ({ history }) => {
       .email("Must be a valid email address")
       .max(100, "Maximum length is 100 characters")
       .required("Email is required"),
-    password: Yup.string()
-      .required("Password is required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    password: Yup.string().required("Password is required"),
+    confirmPassword: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Passwords must match"
+    ),
   });
+
+  const handleClick = () => {
+    history.push("/login");
+  };
 
   return (
     <UserContext.Consumer>
-      {({ user }) => (
-        user.isAuthenticated
-          ? <Redirect to="/dashboard" />
-          : (
-            <div className="login__container">
-              <Formik
-                validationSchema={validationSchema}
-                initialValues={{
-                  firstName: "",
-                  lastName: "",
-                  email: "",
-                  phone: "",
-                  password: "",
-                  confirmPassword: "",
-                }}
-                onSubmit={({
-                  firstName, lastName, email, phone, password, confirmPassword,
-                }) => {
-                  signup(firstName, lastName, email, phone, password, confirmPassword);
-                }}
-                enableReinitialize
-              >
-                {
-            () => (
-              <div className="login__form-container">
-                {/* <Header /> */}
-                <Form>
-                  <img className="login__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
-                  <h2 className="subtitle">
-                    Create an Account
-                  </h2>
-                  <Field
-                    className="form-field login__form-field"
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="firstName" component="div" />
-                  <Field
-                    className="form-field login__form-field"
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="lastName" component="div" />
-                  <Field
-                    className="form-field login__form-field"
-                    type="text"
-                    name="email"
-                    placeholder="Email"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="email" component="div" />
-                  <Field
-                    className="form-field login__form-field"
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    placeholder="Phone"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="phone" component="div" />
-                  <Field
-                    className="form-field login__form-field"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="password" component="div" />
-                  <Field
-                    className="form-field login__form-field"
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    required
-                  />
-                  <ErrorMessage className="form-error" name="confirmPassword" component="div" />
+      {({ user }) =>
+        user.isAuthenticated ? (
+          <Redirect to="/dashboard" />
+        ) : (
+          <div className="login__container">
+            <Formik
+              validationSchema={validationSchema}
+              initialValues={{
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: "",
+                password: "",
+                confirmPassword: "",
+              }}
+              onSubmit={({
+                firstName,
+                lastName,
+                email,
+                phone,
+                password,
+                confirmPassword,
+              }) => {
+                signup(
+                  firstName,
+                  lastName,
+                  email,
+                  phone,
+                  password,
+                  confirmPassword
+                );
+              }}
+              enableReinitialize
+            >
+              {() => (
+                <div className="login__form-container">
+                  {/* <Header /> */}
+                  <Form>
+                    <img
+                      className="login__logo"
+                      src={dwellinglyLogo}
+                      alt="Dwellingly Logo"
+                    />
+                    <h2 className="subtitle">Create an Account</h2>
+                    <Field
+                      className="form-field login__form-field"
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
+                      required
+                    />
+                    <ErrorMessage
+                      className="form-error"
+                      name="firstName"
+                      component="div"
+                    />
+                    <Field
+                      className="form-field login__form-field"
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
+                      required
+                    />
+                    <ErrorMessage
+                      className="form-error"
+                      name="lastName"
+                      component="div"
+                    />
+                    <Field
+                      className="form-field login__form-field"
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                      required
+                    />
+                    <ErrorMessage
+                      className="form-error"
+                      name="email"
+                      component="div"
+                    />
+                    <Field
+                      className="form-field login__form-field"
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      placeholder="Phone"
+                      required
+                    />
+                    <ErrorMessage
+                      className="form-error"
+                      name="phone"
+                      component="div"
+                    />
+                    <Field
+                      className="form-field login__form-field"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                    />
+                    <ErrorMessage
+                      className="form-error"
+                      name="password"
+                      component="div"
+                    />
+                    <Field
+                      className="form-field login__form-field"
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                      required
+                    />
+                    <ErrorMessage
+                      className="form-error"
+                      name="confirmPassword"
+                      component="div"
+                    />
 
-                  <div />
-                  <button className="login__button" type="submit">
-                    SIGN UP
-                  </button>
-                  <div className="login__or_container">
-                    <div className="login__or">
-                      <span className="login__divider" />
-                      <span className="login__or_text">
-                        OR
-                      </span>
+                    <div />
+                    <button className="login__button" type="submit">
+                      SIGN UP
+                    </button>
+                    <div className="login__or_container">
+                      <div className="login__or">
+                        <span className="login__divider" />
+                        <span className="login__or_text">OR</span>
+                      </div>
                     </div>
-                  </div>
-                </Form>
-                <button className="login__button login__button--google" type="button">
-                  LOG IN WITH GOOGLE
-                </button>
-              </div>
-            )
-          }
-              </Formik>
-            </div>
-          )
-      )}
+                  </Form>
+                  <button
+                    className="login__button"
+                    type="button"
+                    onClick={handleClick}
+                  >
+                    LOG IN
+                  </button>
+                </div>
+              )}
+            </Formik>
+          </div>
+        )
+      }
     </UserContext.Consumer>
   );
 };
