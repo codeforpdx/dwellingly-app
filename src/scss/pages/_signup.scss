@@ -97,7 +97,7 @@
 
 //Below are media queries for mobile devices.
 
-@media screen and (max-width: $breakpointMobile) and (min-width: 322px) {
+@media screen and (max-width: 800px) and (min-width: 322px) {
   
 
   .form-error{
@@ -150,6 +150,8 @@
         width: 50%;
         float: left;
         padding-top: 5%;
+        max-height: 100px;
+        max-width: 300px;
 
       }
     }
