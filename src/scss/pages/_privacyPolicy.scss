@@ -7,7 +7,7 @@
 
 // }
 
-@media screen and (max-width: $breakpointMobile) {
+// @media screen and (max-width: $breakpointMobile) {
 
   .privacy-policy {
 
@@ -17,12 +17,14 @@
         &__logo {
           width: 50%;
           float: left;
-          padding-top: 5%;
+          padding-top: 2%;
+          max-width: 300px;
         }
 
         &__header {
           height: 11.5vh;
-          margin-bottom: 5%;
+          // margin-bottom: 5%;
+          margin-bottom: 2%;
           background-color: $blue;
     
         }
@@ -64,8 +66,22 @@
 
     &__signUpText {
       margin-bottom: 20px;
+      font-size: 15px;
     }
 
   }
 
-};
+// };
+
+@media screen and (max-width: $breakpointMobile) {
+
+  .privacy-policy{
+
+    &__mobile{
+
+      &__logo {
+        padding-top: 3%;
+      }
+    }
+  }
+}
