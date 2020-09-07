@@ -7,3 +7,6 @@ CodeforPDX:
 - Marie Ehrman
 - Max Hunter
 - Marcus Jensen
+- Scott Harlan
+- Anthony So
+- Yahya Hafez

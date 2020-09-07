@@ -10,6 +10,7 @@ import { Properties } from "./views/properties";
 import { Tenants } from "./views/tenants";
 import { Terms } from "./views/terms";
 import { Tickets } from "./views/tickets";
+import Settings from "./views/Settings";
 import EmergencyContacts from "./views/emergencyContacts";
 import AddEmergencyContact from "./views/addEmergencyContact";
 import PrivacyPolicy from "./views/privacyPolicy";
@@ -43,7 +44,8 @@ export class App extends React.Component {
         identity: '',
         firstName: '',
         lastName: '',
-        email: ''
+        email: '',
+        phone: '',
       }
     }
   }
@@ -51,22 +53,30 @@ export class App extends React.Component {
   componentDidMount() {
     if( checkForStoredAccessToken() ) {
       let parsedJwt = parseJwt(window.localStorage[ 'dwellinglyAccess' ]);
-      this.setState({
-        userSession: {
-          isAuthenticated: true,
-          accessJwt: window.localStorage[ 'dwellinglyAccess' ],
-          refreshJwt: window.localStorage[ 'dwellinglyRefresh' ],
-          identity: parsedJwt.identity,
-          firstName: parsedJwt.user_claims.firstName,
-          lastName: parsedJwt.user_claims.lastName,
-          email: parsedJwt.user_claims.email
+      this.setState(
+        {
+          userSession: {
+            isAuthenticated: true,
+            accessJwt: window.localStorage["dwellinglyAccess"],
+            refreshJwt: window.localStorage["dwellinglyRefresh"],
+            identity: parsedJwt.identity,
+            firstName: parsedJwt.user_claims.firstName,
+            lastName: parsedJwt.user_claims.lastName,
+            email: parsedJwt.user_claims.email,
+            phone: parsedJwt.user_claims.phone,
+          },
+        },
+        () => {
+          this.refreshJwtPeriodically();
         }
-      }, () => {
-        this.refreshJwtPeriodically();
-      });
+      );
     } else if( checkForStoredRefreshToken() ) {
       this.refreshJwtPeriodically();
     }
+  }
+
+  setUser = (newContext) => {
+    return this.setState(newContext);
   }
 
   login = (email, password) => {
@@ -84,7 +94,8 @@ export class App extends React.Component {
               identity: parsedJwt.identity,
               firstName: parsedJwt.user_claims.firstName,
               lastName: parsedJwt.user_claims.lastName,
-              email: parsedJwt.user_claims.email
+              email: parsedJwt.user_claims.email,
+              phone: parsedJwt.user_claims.phone
             }
           }, () => {
           // Call to refresh the access token 3 minutes later
@@ -116,6 +127,7 @@ export class App extends React.Component {
             // Call to refresh the access token 3 minutes later
             setTimeout( this.refreshJwtPeriodically, 180000 );
           })
+          localStorage.setItem("dwellinglyAccess", response.data.access_token);
         })
         .catch( error => {
           console.log( "Failed to refresh access token: " + error );
@@ -143,12 +155,13 @@ export class App extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={{ user: { ...this.state.userSession }, login: this.login, logout: this.logout }} >
+      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT:this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
         <BrowserRouter>
           <div className='App'>
             {this.state.userSession.isAuthenticated
               && <><NavMenu />
                   <Header /></>}
+
               <Switch>
                 <Route exact path='/login' component={LoginForm} />
                 <Route exact path='/signup' component={SignupForm} />
@@ -172,7 +185,7 @@ export class App extends React.Component {
                   <PrivateRoute exact path='/staff' component={JoinStaff} />
                   <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
                   <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
-                  <PrivateRoute exact path='/settings' component={Dashboard} />
+                  <PrivateRoute exact path='/settings' component={Settings} />
                   <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
                 </div>
               </Switch>
