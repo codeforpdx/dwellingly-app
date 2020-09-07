@@ -1,5 +1,11 @@
 .signup {
 
+  &__privacyPolicyWrapper {
+    color: $blue;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+
   &__mobile-heading {
     display: none;
   }
