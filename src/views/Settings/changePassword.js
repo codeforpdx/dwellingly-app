@@ -68,6 +68,7 @@ const ChangePassword = () => {
           isSubmitting,
         }) => (
           <div style={{ marginTop: "15px" }} >
+            {/*This is an extension of the settings page, so we can just reuse its styles*/}
             <Form className="settings__form-container" onSubmit={handleSubmit}>
               <div className="form-row">
                 <label
