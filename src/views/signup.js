@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Form, Field, Formik, ErrorMessage,
-} from "formik";
+import { Form, Field, Formik, ErrorMessage } from "formik";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -14,7 +12,14 @@ import dwellinglyLogoMobile from "../assets/images/dwellingly_logo_white.png";
 import GoogleButton from "../components/GoogleButton"
 
 const SignupForm = ({ history }) => {
-  const signup = async (firstName, lastName, email, phone, password, confirmPassword) => {
+  const signup = async (
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    confirmPassword
+  ) => {
     let response;
     try {
       response = await axios.post("/api/register", {
@@ -59,11 +64,16 @@ const SignupForm = ({ history }) => {
       .email("Must be a valid email address")
       .max(100, "Maximum length is 100 characters")
       .required("Email is required"),
-    password: Yup.string()
-      .required("Password is required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    password: Yup.string().required("Password is required"),
+    confirmPassword: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Passwords must match"
+    ),
   });
+
+  const handleClick = () => {
+    history.push("/login");
+  };
 
   return (
     <UserContext.Consumer>
@@ -114,6 +124,7 @@ const SignupForm = ({ history }) => {
                       placeholder="First Name"
                       required
                     />
+
                     <ErrorMessage className="form-error" name="firstName" component="div" />
                   </div>
 
@@ -126,6 +137,7 @@ const SignupForm = ({ history }) => {
                       placeholder="Last Name"
                       required
                     />
+
                     <ErrorMessage className="form-error" name="lastName" component="div" />
                   </div>
 
@@ -137,6 +149,7 @@ const SignupForm = ({ history }) => {
                       placeholder="Email"
                       required
                     />
+
                     <ErrorMessage className="form-error" name="email" component="div" />
                   </div>
 
@@ -149,6 +162,7 @@ const SignupForm = ({ history }) => {
                       placeholder="Phone"
                       required
                     />
+
                     <ErrorMessage className="form-error" name="phone" component="div" />
                   </div>
 
@@ -160,6 +174,7 @@ const SignupForm = ({ history }) => {
                       placeholder="Password"
                       required
                     />
+
                     <ErrorMessage className="form-error" name="password" component="div" />
                   </div>
 
@@ -171,6 +186,7 @@ const SignupForm = ({ history }) => {
                       placeholder="Confirm Password"
                       required
                     />
+
                     <ErrorMessage className="form-error" name="confirmPassword" component="div" />
                   </div>
 
