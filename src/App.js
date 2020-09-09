@@ -13,6 +13,7 @@ import { Tickets } from "./views/tickets";
 import Settings from "./views/Settings";
 import EmergencyContacts from "./views/emergencyContacts";
 import AddEmergencyContact from "./views/addEmergencyContact";
+import PrivacyPolicy from "./views/privacyPolicy";
 import {
 	PrivateRoute,
 	auth,
@@ -165,6 +166,7 @@ export class App extends React.Component {
                 <Route exact path='/login' component={LoginForm} />
                 <Route exact path='/signup' component={SignupForm} />
                 <Route exact path='/terms' component={Terms} />
+                <Route exact path='/privacypolicy' component={PrivacyPolicy}/>
                 <div className='main-container'>
                   <PrivateRoute exact path='/' component={Dashboard} />
                   <PrivateRoute exact path='/dashboard' component={Dashboard} />
