@@ -8,7 +8,6 @@ import * as Yup from "yup";
 import UserContext from "../UserContext";
 import dwellinglyLogo from "../assets/images/dwellingly_logo.png";
 import dwellinglyLogoMobile from "../assets/images/dwellingly_logo_white.png";
-import GoogleButton from "../components/GoogleButton"
 
 const SignupForm = ({ history }) => {
   const signup = async (
@@ -202,9 +201,12 @@ const SignupForm = ({ history }) => {
                     </div>
                   </div>
                 </Form>
-                <div className="signup__googleButtonWrapper">
-                  <GoogleButton innerText ={"SIGN UP WITH GOOGLE"}/>
-                </div>
+                <button
+                  className="login__button"
+                  type="button"
+                  onClick={handleClick}>
+                  LOG IN
+                </button>
                 <div className="signup__privacyPolicyWrapper"> <Link to="/privacypolicy" className="signup__privacyPolicyText">Privacy Policy</Link></div>
               </div>
             )
