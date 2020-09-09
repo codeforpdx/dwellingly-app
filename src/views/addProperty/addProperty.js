@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import UserContext from '../../UserContext';
 import * as axios from 'axios';
 import { Link } from 'react-router-dom';
+import Toast from '../../utils/toast';
 
 import './addProperty.scss'
 
@@ -32,10 +33,10 @@ const validationSchema = Yup.object().shape({
 const formHandler = (data, context) => {
     axios.post("/api/properties", data, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
         .then(function (response) {
-            alert("Property Added!");
+            Toast("Property Added!", "success");
         })
         .catch(function (error) {
-            alert(error);
+            Toast(error, "error");
         })
 }
 

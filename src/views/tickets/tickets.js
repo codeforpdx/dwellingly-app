@@ -5,6 +5,7 @@ import UserContext from '../../UserContext';
 import Accordion from '../../components/Accordion';
 import * as axios from 'axios';
 import Search from "../../components/Search/index"
+import Toast from '../../utils/toast';
 
 const columns = [{
   dataField: 'id',
@@ -110,7 +111,7 @@ export class Tickets extends Component {
         this.setState({ tickets: response.data.tickets });
       })
       .catch((error) => {
-        alert(error);
+        Toast(error, "error");
         console.log(error);
       })
   }

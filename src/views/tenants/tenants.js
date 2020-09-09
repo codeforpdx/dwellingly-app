@@ -4,6 +4,7 @@ import UserContext from '../../UserContext';
 import axios from "axios";
 import { Link } from "react-router-dom"
 import Search from "../../components/Search/index";
+import Toast from '../../utils/toast';
 
 const columns = [
   {
@@ -98,7 +99,7 @@ export class Tenants extends Component {
         this.setState({ tenants });
       })
       .catch((error) => {
-        alert(error);
+        Toast(error, "error");
         console.log(error);
       });
   };

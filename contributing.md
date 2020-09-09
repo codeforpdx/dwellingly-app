@@ -54,6 +54,12 @@ This document provides some overall guidelines and suggestions for how to get st
 
 > We appreciate any and all help with this Volunteer based project, and may check in on issues that are assigned to individuals that have not been updated in some time.
 
+## Adding user notifications
+
+If the issue you're addressing requires adding a notification to the user (success, error, etc.), you can import the "Toast" function we've set-up.
+ 
+ 1. Import "toast.js" from "./src/utils/toast.js". Depending on which file you're working on, you'll likely need to navigate up from your current  directory to be able to access the "utils" folder. An example of this could look like `import Toast from '../utils/toast';`
+ 2. Toast is a function which takes two arguments. The first is the string you would like displayed in the notification. If no text is provided, you will see an error notice in the browser console. The second argument is the type of notification you would like displayed, which dictates the color of the notification. The options for this are "success" (green), "error" (red), "warn" or "warning" (yellow), "info" or "default" (blue). If no second argument is passed, the notification will default to "info" and render a blue toast notification. An example of this could look like `Toast("Property Added!", "success");`
 
 ----
 ### Feature Branch

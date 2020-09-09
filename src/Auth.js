@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import * as axios from 'axios';
 import UserContext from './UserContext';
+import Toast from './utils/toast';
 
 export const parseJwt = ( token ) => {
   if( token !== null && token !== undefined ) {
@@ -47,12 +48,12 @@ export const auth = {
       .then((response) => {
         if(response){
           this.isAuthenticated = true;
-          console.log("Successfully logged in.");
+          Toast("Successfully logged in.", "success");
           return response;
         }
       })
       .catch((error) => {
-        alert("Failure signing in");
+        Toast("Failure signing in", "error");
         return Promise.reject(error);
       });
   },
@@ -64,11 +65,11 @@ export const auth = {
         localStorage.removeItem( 'dwellinglyAccess' );
         localStorage.removeItem( 'dwellinglyRefresh' );
         this.isAuthenticated = false;
-        console.log("Successfully logged out.");
+        Toast("Successfully logged out", "success");
         return Promise.resolve(response);
       })
       .catch((error) => {
-        alert("Failure signing out");
+        Toast("Failure signing out", "error");
         return Promise.reject(error);
       })
   },
