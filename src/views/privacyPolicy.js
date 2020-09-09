@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
 return(
   <div className-="privacy-policy__container">
     <div className = "privacy-policy__mobile__header">
-      <img className= "privacy-policy__mobile__logo" src={dwellinglyLogoMobile}></img>
+      <img className= "privacy-policy__mobile__logo" src={dwellinglyLogoMobile} alt="Dwellingly Logo" ></img>
     </div>
     <div className="privacy-policy__text-container">
       <h3 className="privacy-policy__heading">Privacy Policy</h3>

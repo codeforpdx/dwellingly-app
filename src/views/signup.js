@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import PropTypes from "prop-types";
 import { Form, Field, Formik, ErrorMessage } from "formik";
@@ -101,13 +100,13 @@ const SignupForm = ({ history }) => {
               >
                 {
             () => (
-              <div className= "signup__form-container">
-              <div className = "signup__mobile-header">
-                <img className= "signup__logo__mobile" src={dwellinglyLogoMobile}></img>
+              <div className="signup__form-container">
+              <div className="signup__mobile-header">
+                <img className="signup__logo__mobile" src={dwellinglyLogoMobile} alt="Dwellingly Logo" />
               </div>
                 {/* <Header /> */}
                 <Form className="signup__form-field-container">
-                  <img className= "signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
+                  <img className="signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
                   <h2 className="subtitle">
                     Create an Account
                   </h2>

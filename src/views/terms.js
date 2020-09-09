@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import dwellinglylogo from "../assets/images/dwellingly_logo_white.png";
 
 export const Terms = () => {
