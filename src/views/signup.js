@@ -63,8 +63,9 @@ const SignupForm = ({ history }) => {
       .max(100, "Maximum length is 100 characters")
       .required("Email is required"),
     password: Yup.string().required("Password is required"),
-    confirmPassword: Yup.string().oneOf(
-      [Yup.ref("password"), null],
+    confirmPassword: Yup.string()
+      .required("Password confirmation is required")
+      .oneOf([Yup.ref("password"), null],
       "Passwords must match"
     ),
   });
@@ -100,17 +101,20 @@ const SignupForm = ({ history }) => {
                 {
             () => (
               <div className="signup__form-container">
-              <div className="signup__mobile-header">
-                <img className="signup__logo__mobile" src={dwellinglyLogoMobile} alt="Dwellingly Logo" />
-              </div>
-                {/* <Header /> */}
+                <div className="signup__mobile-header">
+                  <header className="navbar bg-gradient">
+                    <Link className="navbar-item" id="header-logo" to="/">
+                      <img src={dwellinglyLogoMobile} alt="dwellingly logo" />
+                    </Link>
+                  </header>
+                </div>
                 <Form className="signup__form-field-container">
                   <img className="signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
                   <h2 className="signup__subtitle">
                     Create an Account
                   </h2>
-                  <h2 className="signup__mobile-heading">
-                    <div className="signup__mobile-heading__text-wrapper">Create an Account for Dwelling.ly </div>  
+                  <h2 className="section-title signup__mobile-heading">
+                    Create an Account for Dwelling.ly
                   </h2>
 
 
