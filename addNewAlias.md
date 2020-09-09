@@ -1,8 +1,10 @@
 # Create a Custom Terminal Command 
 
+## Mac Instructions
+
 Once you get both the back-end and the front-end set up and working, you can do the following to create a terminal command `dwellingly` to re-seed the database, start the server, build the application, and launch it with all in one step by doing the follow. This is not required, but could save some time. This process can be used to set up other custom commands as well.
 
-*Note that this has not been tested on Windows devices, and the commands are likely different
+*Note that this has not been tested on Windows devices and the proccess will likely differ.
 
 1. Open a terminal and navigate to your home folder with `~` or `cd ~`
 2.  Vim into your rc folder, so for me the command was `vi .zshrc`  since my shell is zsh. If you have bash, I believe you'd use `vi .bashrc`.
@@ -16,7 +18,7 @@ Once you get both the back-end and the front-end set up and working, you can do 
 
     Be sure to replace the square brackets with the actual absolute path to the back-end and front-end repos. For me, it looked like this in the end:
 
-    `alias dwellingly="cd ~/CodeForPDX/dwellinglybackend && pipenv run python manage.py recreate && pipenv run flask run &; cd ~/CodeForPDX/dwellingly-app && npm run build && npm start"`
+    `alias dwellingly="cd ~/CodeForPDX/dwellinglybackend && pipenv run python manage.py recreate && pipenv run flask run &; cd ~/CodeForPDX/dwellingly-app && npm start"`
 
 6. Click "ESC" to exit "insert" mode and return to "edit" mode. Now type "ZZ" (capitals are important!) or :wq to exit vim.
 7. You should be back in your shell. Here you have to source your rc file. Run the command source `~/.zshrc` or replace ".zshrc" with the name of the rc file for your shell from step 2
