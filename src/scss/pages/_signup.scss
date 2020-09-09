@@ -185,13 +185,10 @@
       margin-right: 10%;
     }
 
-
+    &__subtitle {
+      display: none;
+    }
   }
-
-  .subtitle {
-    display: none;
-  }
-
 }
 
 
@@ -279,11 +276,11 @@
         margin-right: 10%;
       }
   
+      &__subtitle {
+        display: none;
+      }
   
-    }
   
-    .subtitle {
-      display: none;
     }
 
     //below is to adjust the padding for the 'sign up with google button'

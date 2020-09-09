@@ -106,7 +106,7 @@ const SignupForm = ({ history }) => {
                 {/* <Header /> */}
                 <Form className="signup__form-field-container">
                   <img className="signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
-                  <h2 className="subtitle">
+                  <h2 className="signup__subtitle">
                     Create an Account
                   </h2>
                   <h2 className="signup__mobile-heading">
