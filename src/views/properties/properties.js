@@ -4,6 +4,7 @@ import UserContext from '../../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
 import Search from '../../components/Search';
+import Toast from '../../utils/toast';
 
 import './properties.scss'
 
@@ -97,7 +98,7 @@ export class Properties extends Component {
         this.setState({ properties: propertyRows });
       })
       .catch((error) => {
-        alert(error);
+        Toast(error, "error");
         console.log(error);
       })
   }

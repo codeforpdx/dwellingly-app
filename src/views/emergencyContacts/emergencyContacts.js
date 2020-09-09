@@ -5,6 +5,7 @@ import useMountEffect from '../../utils/useMountEffect';
 import { Link, useHistory } from "react-router-dom"
 import { useState } from 'react';
 import TitleAndPen, { useEditingStatus } from '../../components/TitleAndPen';
+import Toast from '../../utils/toast';
 
 import './emergencyContacts.scss'
 
@@ -55,7 +56,7 @@ const EmergencyContacts = () => {
             .then(({ data }) => {
                 setApiContacts(data.emergency_contacts);
             })
-            .catch(error => alert(error));
+            .catch(error => Toast(error, "error"));
     });
 
     const handleDoneEditing = () => {
@@ -69,7 +70,7 @@ const EmergencyContacts = () => {
             .then(() => {
                 setApiContacts(apiContacts.filter(contact => contact.id !== id));
             })
-            .catch(error => alert(error));
+            .catch(error => Toast(error, "error"));
     }
 
     return (
