@@ -96,10 +96,6 @@
     margin-bottom: 10px;
   }
 }
-.googleIcon{
-  height: 20px;
-  float: left;
-}
 
 //Below are media queries for mobile devices.
 
@@ -123,6 +119,7 @@
 
     &__form-cell-container{
       border-bottom: 1px solid $lightGray;
+      border-top: 1px solid $lightGray;
     }
 
     &__form-field-container {
@@ -162,36 +159,21 @@
       }
     }
 
+    
     &__mobile-heading {
       display: block;
-      border-bottom: 1px solid #d1d1d1;
-      color: #2C5F89;
-      font-weight: 850;
-
-        &__text-wrapper {
-          margin-bottom: 20px;
-          text-align: left;
-        }
+      margin: 10px 0 10px 0;
+      text-align: center;
     }
+
     &__mobile-header {
       display: block;
-      height: 11.5%;
-      margin-bottom: 5%;
-      background-color: $blue;
     }
 
-    &__googleButtonWrapper {
-      margin-left: 10%;
-      margin-right: 10%;
+    &__subtitle {
+      display: none;
     }
-
-
   }
-
-  .subtitle {
-    display: none;
-  }
-
 }
 
 
@@ -216,6 +198,7 @@
   
       &__form-cell-container{
         border-bottom: 1px solid $lightGray;
+        border-top: 1px solid $lightGray;
       }
   
       &__form-field-container {
@@ -254,36 +237,19 @@
   
       &__mobile-heading {
         display: block;
-        border-bottom: 1px solid #d1d1d1;
-
-  
-        color: #2C5F89;
-        font-weight: 850;
-  
-          &__text-wrapper {
-            margin-bottom: 5px;
-            text-align: center;
-            font-size: 14px;
-          }
+        margin: 10px 0 10px 0;
+        text-align: center;
       }
 
       &__mobile-header {
         display: block;
-        height: 6.5%;
-        margin-bottom: 5%;
-        background-color: #51A3FC;
       }
   
-      &__googleButtonWrapper {
-        margin-left: 10%;
-        margin-right: 10%;
+      &__subtitle {
+        display: none;
       }
   
   
-    }
-  
-    .subtitle {
-      display: none;
     }
 
     //below is to adjust the padding for the 'sign up with google button'

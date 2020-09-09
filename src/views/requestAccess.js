@@ -94,7 +94,7 @@ export const RequestAccess = (props) => {
     id
   } = props.location.state;
   
-  useEffect(() => {
+  useEffect((firstName, lastName, email) => {
     setFirstName(firstName);
     setLastName(lastName);
     setEmail(email);

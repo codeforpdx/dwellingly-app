@@ -106,8 +106,7 @@ export class Tickets extends Component {
     getTickets = (context) => {
         axios.get(`/api/tickets`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
-            this.setState({tickets: response.data.Tickets});
-            console.log(this.state.tickets)
+            this.setState({tickets: response.data.tickets});
         })
         .catch((error) => {
             alert(error);
