@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Form, Field, Formik } from "formik";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import UserContext from "../UserContext";
 import * as axios from "axios";
 import Modal from "../components/Modal";
-import Header from "../components/Header";
+import Button from "../components/Button";
+import dwellinglylogo from "../assets/images/dwellingly_logo_white.png";
 
 //TODO:
 // get the top line in the email field to go away - COME BACK TO THIS / NOTE IN PR
@@ -34,12 +35,11 @@ const ForgotPassword = () => {
     hasButtons: false,
   });
 
-  const formHandler = data => {
+  const formHandler = (data) => {
     console.log("its handling its biz!");
     setModalContent({
       titleText: "Success!",
-      contentText:
-        "Please check your email to reset your password.",
+      contentText: "Please check your email to reset your password.",
     });
     setIsModalOpen(true);
     //   axios
@@ -62,12 +62,18 @@ const ForgotPassword = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
 
   return (
     <>
-      <Header />
-      <div className="forgot-password__container">
+      <header className="navbar bg-gradient">
+        <div className="navbar-brand">
+          <Link className="navbar-item" to="/">
+            <img src={dwellinglylogo} alt="dwellingly logo" />
+          </Link>
+        </div>
+      </header>
+      <div className="forgot-password">
         <h2 className="page-title">Forgot Password</h2>
         {isModalOpen && (
           <Modal
@@ -98,22 +104,21 @@ const ForgotPassword = () => {
             isValid,
             isSubmitting,
           }) => (
-            <div className="form-container forgot-password__main_container">
-              <p className="para-text">
+            <div className="forgot-password__main_container">
+              <p className="forgot-password__para-text">
                 Forgot your password? It happens to all of us. To recover your
                 password, follow the instructions that relate to your account.
               </p>
-              <h1 className="section-title">EMAIL/PASSWORD USERS</h1>
-              <Form
-                className="forgot-password__form-container"
-                onSubmit={handleSubmit}
-              >
-                <div className="form-row columns">
+              <h1 className="forgot-password__section-title">
+                EMAIL/PASSWORD USERS
+              </h1>
+              <Form className="form-container" onSubmit={handleSubmit}>
+                <div className="form-container__form-row columns">
                   <label className="column is-one-fifth" htmlFor="name">
                     Email
                   </label>
                   <Field
-                    className="column form-field"
+                    className="column form-container__form-field"
                     type="text"
                     name="email"
                     onChange={handleChange}
@@ -121,29 +126,35 @@ const ForgotPassword = () => {
                     placeholder="Please enter your email address"
                   />
                   {errors.name ? (
-                    <div className="error-message">{errors.name}</div>
+                    <div className="form-container__error-message">
+                      {errors.name}
+                    </div>
                   ) : null}
                 </div>
-                <div className="forgot-password__container-footer">
-                  <button
-                    className={`${
-                      isValid && "active"
-                    } save_button button is-rounded`}
-                    type="submit"
-                    disabled={isSubmitting}
+                <div className={"form-container__button-container"}>
+                  <Button
+                    type={"submit"}
+                    isCancelButton={false}
+                    isValidFlag={isValid}
+                    disabledFlag={isSubmitting}
                   >
-                    REQUEST PASSWORD RESET
-                  </button>
-                  <div className="forgot-password__google-users">
-                    <NavLink to="/login">Return to log in</NavLink>
-                    <h1 className="section-title">GOOGLE ACCOUNT USERS</h1>
-                    <NavLink to="">Recover your account</NavLink>
-                  </div>
+                    REQUEST EMAIL PASSWORD RESET
+                  </Button>
                 </div>
               </Form>
             </div>
           )}
         </Formik>
+        {/* LEFT OFF TRYING TO STYLE THIS! */}
+        <div className="forgot-password__google-users">
+          <h1 className="forgot-password__section-title">
+            GOOGLE ACCOUNT USERS
+          </h1>
+          <Link to="">Recover your Google account</Link>
+        </div>
+        <Link to="/login" className={"forgot-password__login-link"}>
+          Return to log in
+        </Link>
       </div>
     </>
   );
