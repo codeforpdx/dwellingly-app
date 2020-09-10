@@ -23,6 +23,8 @@ const validationSchema = Yup.object().shape({
     .required("*Lease dates are required"),
 });
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
+
 export const AddTenant = () => {
   const context = useContext(UserContext);
   const [joinSelections, setJoinSelections] = useState([]);
@@ -31,14 +33,42 @@ export const AddTenant = () => {
   const [propertyOptions, setPropertyOptions] = useState([]);
 
   useEffect(() => {
-
-  });
+    axios.post("/api/users/role", { "userrole": 4 }, makeAuthHeaders(context))
+      .then(({ data }) => {
+        let users = data.users && data.users.length > 0
+          ? data.users.map( user => {
+            return {
+              ...user,
+              label: `${user.firstName} ${user.lastName}`,
+              value: user.id
+            }
+          })
+          : data.users
+        setJoinOptions(users);
+      });
+    axios.get("/api/properties", makeAuthHeaders(context))
+      .then(({ data }) => {
+        let properties = data.properties && data.properties.length > 0
+          ? data.properties.map( property => {
+            return {
+              ...property,
+              label: `${property.name}, ${property.address}`,
+              value: property.id
+            }
+          })
+          : data.properties
+        setPropertyOptions(properties);
+      });
+  }, []);
 
   const handleFormSubmit = (data) => {
+    let body = {
+      ...data,
+      propertyID: propertySelection.value,
+      staffIDs: joinSelections && joinSelections.map( staff => staff.value )
+    }
     axios
-      .post(`/api/tenants`, data, {
-        headers: { Authorization: `Bearer ${context.user.accessJwt}` },
-      })
+      .post(`/api/tenants`, body, makeAuthHeaders(context))
       .then((response) => {
         // once Toast is implemented, replace with Toast notification
         alert("Saved Successfully!");
@@ -152,11 +182,9 @@ export const AddTenant = () => {
               <div className="typeahead-section">
                 <Select
                   options={joinOptions}
-                  getOptionLabel={(option) => option.name}
                   isMulti
                   name="join-staff-search"
-                  isSearchable={true}
-                  isClearable={true}
+                  value={joinSelections}
                   onChange={setJoinSelections}
                   placeholder="Search JOIN Staff"
                   styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
@@ -166,11 +194,8 @@ export const AddTenant = () => {
               <div className="typeahead-section">
                 <Select
                   options={propertyOptions}
-                  getOptionLabel={(option) => option.name}
-                  isMulti={false}
                   name="property-search"
-                  isSearchable={true}
-                  isClearable={true}
+                  value={propertySelection}
                   onChange={setPropertySelection}
                   placeholder="Search properties"
                   styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
