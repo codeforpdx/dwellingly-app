@@ -159,6 +159,7 @@ export const AddTenant = () => {
                   isClearable={true}
                   onChange={setJoinSelections}
                   placeholder="Search JOIN Staff"
+                  styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
                 />
               </div>
               <h1 className="section-title">PROPERTY</h1>
@@ -172,6 +173,7 @@ export const AddTenant = () => {
                   isClearable={true}
                   onChange={setPropertySelection}
                   placeholder="Search properties"
+                  styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
                 />
                 <button
                   className="add-property-button"
