@@ -12,11 +12,19 @@ $blue: #51a3fc;
   height: 100vh;
   background-color: rgba(142, 142, 147, 0.5);
   &__container {
+    position: relative;
     width: 33vw;
     min-width: 300px;
     padding: 25px;
     background-color: white;
     border-radius: 7px;
+  }
+  &__close-icon {
+    position: absolute;
+    display: block;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
   }
   &__title {
     font-size: 18px;
