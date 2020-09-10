@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../UserContext';
@@ -111,14 +111,6 @@ export const Dashboard = (props) => {
             .catch(errors => alert(errors));
     }
 
-    useEffect(() => {
-        axios
-            .get("/api/users/", makeAuthHeaders(userContext))
-            .then(({data}) => {
-                console.log("here");
-                console.log(data)
-            });
-    }, []);
     return (
         <>
             <div>
