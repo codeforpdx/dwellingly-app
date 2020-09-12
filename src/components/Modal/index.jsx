@@ -8,39 +8,44 @@ import "./modal.scss";
 
 const Modal = ({
   titleText,
-  contentText,
+  content,
   hasButtons,
-  yesButtonHandler,
-  noButtonHandler,
+  confirmButtonHandler,
+  cancelButtonHandler,
+  confirmText,
+  cancelText,
   closeHandler,
+  hasRedirectButton,
+  redirectButtonPath,
+  redirectButtonText
 }) => (
     <div className="modal">
       <div className="modal__container">
         <FontAwesomeIcon className="modal__close-icon" size={"lg"} icon={faTimesCircle} onClick={closeHandler} />
         <div className="modal__title">{titleText}</div>
-        <div className="modal__content">{contentText}</div>
+        <div className="modal__content">{content}</div>
         {hasButtons ? (
           <div className="modal__button-container">
             <Button
               type={"submit"}
-              onClick={yesButtonHandler}
+              onClick={confirmButtonHandler}
               isCancelButton={false}
               isValidFlag={true}
             >
-              Yes
-          </Button>
+              {confirmText}
+            </Button>
             <Button
               type={"submit"}
-              onClick={noButtonHandler}
+              onClick={cancelButtonHandler}
               isCancelButton={true}
               isValidFlag={true}
             >
-              No
+              {cancelText}
           </Button>
           </div>
-        ) : (
-            <Link className="modal__link" to="/login">
-              Return to Log In
+        ) : hasRedirectButton && (
+            <Link className="modal__link" to={redirectButtonPath}>
+              {redirectButtonText}
             </Link>
           )}
       </div>
@@ -49,11 +54,16 @@ const Modal = ({
 
 Modal.propTypes = {
   titleText: PropTypes.string,
-  contentText: PropTypes.string,
+  content: PropTypes.object,
   hasButtons: PropTypes.bool,
-  yesButtonHandler: PropTypes.func,
-  noButtonHandler: PropTypes.func,
+  confirmButtonHandler: PropTypes.func,
+  cancelButtonHandler: PropTypes.func,
   closeHandler: PropTypes.func.isRequired,
+  confirmText: PropTypes.string,
+  cancelText: PropTypes.string,
+  hasRedirectButton: PropTypes.bool,
+  redirectButtonPath: PropTypes.string,
+  redirectButtonText: PropTypes.string
 };
 
 export default Modal;
