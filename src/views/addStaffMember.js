@@ -20,18 +20,36 @@ export const InfoField = ({label, info}) => {
 
 export const AddStaffMember = () => {
 
+	// delete this once form is redone
+	const dummyData = {
+		firstName: "John",
+		lastName: "Souza",
+		phone: "5555555555",
+		email: "emails@email.com",
+		password: "1234",
+		role: 3
+	}
 
 	const handleSave = () => {
 
-		data = ""
+		// TODO: 
+		// 1. Change dummy data to actual data
+		// 2. Create new API endpoint. Currently routes to register. Needs to go to an 
+		// endpoint that is JWT authorized and sends an email to the new email to set their password.
 
-		// axios.post("/api/properties", data, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
-        // .then(function(response){
-        //     alert("Staff Added!");
-        // })
-        // .catch(function(error){
-        //     alert(error);
-        // })
+		// NOTE: The newly created user will not appear in the users page. The users page is currently
+		// linked to static json data, not the database.
+
+		const data = dummyData 
+
+		axios.post("/api/register", data, { headers: {"Authorization" : `Bearer ${localStorage.getItem("token")}`} })
+        .then(function(response){
+			alert("Staff Added!");
+			console.log(response)
+        })
+        .catch(function(error){
+            alert(error);
+		})
 	}
 
 	return (
