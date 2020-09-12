@@ -18,6 +18,7 @@ export const Dashboard = (props) => {
     });
     const [staffList, setStaffList] = useState([]);
     const [unstaffedTenants, setUnstaffedTenants] = useState([]);
+    const [widgetData, setWidgetData] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
     const [usersPending, setUsersPending] = useState([]);
     const history = useHistory();  
@@ -39,6 +40,13 @@ export const Dashboard = (props) => {
             .catch(error => alert(error));
 
         const pendingUsersObj = { "userrole": 0 };
+        axios
+            .get("/api/widgets", makeAuthHeaders(userContext))
+            .then(({ data }) => { 
+                setWidgetData(data);
+            })
+            .catch(error => alert(error));
+
         axios
             .post("/api/users/role", pendingUsersObj, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
@@ -117,13 +125,13 @@ export const Dashboard = (props) => {
                 <h2 className="page-title">Admin Dashboard</h2>
                 <div className="dashboard__modules_container">
                     <DashboardModule
-                        data={MODULE_DATA.openTickets}
+                        data={widgetData.opentickets}
                     />
                     <DashboardModule
-                        data={MODULE_DATA.reports}
+                        data={widgetData.reports}
                     />
                     <DashboardModule
-                        data={MODULE_DATA.managers}
+                        data={widgetData.managers}
                     />
                 </div>
                 <Collapsible
