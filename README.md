@@ -39,4 +39,8 @@ From terminal:
 - Launch: `npm start`
 - React will open a browser page for you and navigate to `localhost:3000`
 
+## Optional
+
+- Instructions to create a custom terminal command (an alias) for faster startup [here](addNewAlias.md).
+
 ## Thank you for your help and happy coding!
