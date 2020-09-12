@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.scss";
+import axios from 'axios';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { LoginForm } from "./views/login";
 import SignupForm from "./views/signup";
@@ -29,6 +30,7 @@ import Manager from "./views/Manager";
 import { JoinStaff } from "./views/joinStaff";
 import { AddStaffMember } from "./views/addStaffMember";
 import UserContext from "./UserContext";
+import Tenant from "./views/Tenant";
 
 var refreshTimeout;
 
@@ -100,6 +102,7 @@ export class App extends React.Component {
           }, () => {
           // Call to refresh the access token 3 minutes later
           setTimeout( this.refreshJwtPeriodically, 180000 )
+          this.updateAxiosDefaults();
         });
         } else {
           alert("Failed to login");
@@ -126,6 +129,7 @@ export class App extends React.Component {
             refreshTimeout && clearTimeout(refreshTimeout);
             // Call to refresh the access token 3 minutes later
             setTimeout( this.refreshJwtPeriodically, 180000 );
+            this.updateAxiosDefaults();
           })
           localStorage.setItem("dwellinglyAccess", response.data.access_token);
         })
@@ -153,6 +157,13 @@ export class App extends React.Component {
       });
   }
 
+  /**
+   * Configure defaults for all axios requests in the App
+   */
+  updateAxiosDefaults = () => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.userSession.accessJwt}`;
+  }
+
   render() {
     return (
       <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT:this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
@@ -175,6 +186,7 @@ export class App extends React.Component {
                   <PrivateRoute exact path='/add/property' component={AddProperty}/>
                   <PrivateRoute exact path='/add/manager' component={Dashboard} />
                   <PrivateRoute exact path='/manage/tenants' component={Tenants} />
+                  <PrivateRoute exact path='/manage/tenants/:id' component={Tenant} />
                   <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
                   <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
                   <PrivateRoute exact path='/manage/properties' component={Properties} />
