@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import * as axios from 'axios';
+
 
 
 export const InfoField = ({label, info}) => {
@@ -20,7 +22,16 @@ export const AddStaffMember = () => {
 
 
 	const handleSave = () => {
-		// TODO: Save the new staff member
+
+		data = ""
+
+		// axios.post("/api/properties", data, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+        // .then(function(response){
+        //     alert("Staff Added!");
+        // })
+        // .catch(function(error){
+        //     alert(error);
+        // })
 	}
 
 	return (
