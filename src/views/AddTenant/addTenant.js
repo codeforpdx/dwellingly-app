@@ -5,7 +5,8 @@ import * as Yup from "yup";
 import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
-import Select from 'react-select';
+import { AddProperty } from '../addProperty';
+import Modal from '../../components/Modal';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -31,8 +32,14 @@ export const AddTenant = () => {
   const [joinOptions, setJoinOptions] = useState([]);
   const [propertySelection, setPropertySelection] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
+  const [showAddProperty, setShowAddProperty] = useState(false);
 
   useEffect(() => {
+    getRoles();
+    getProperties();
+  }, []);
+
+  const getRoles = () => {
     axios.post("/api/users/role", { "userrole": 4 }, makeAuthHeaders(context))
       .then(({ data }) => {
         let users = data.users && data.users.length > 0
@@ -46,6 +53,9 @@ export const AddTenant = () => {
           : data.users
         setJoinOptions(users);
       });
+  }
+
+  const getProperties = () => {
     axios.get("/api/properties", makeAuthHeaders(context))
       .then(({ data }) => {
         let properties = data.properties && data.properties.length > 0
@@ -58,8 +68,9 @@ export const AddTenant = () => {
           })
           : data.properties
         setPropertyOptions(properties);
+        setShowAddProperty(false);
       });
-  }, []);
+  }
 
   const handleFormSubmit = (data) => {
     let body = {
@@ -71,10 +82,7 @@ export const AddTenant = () => {
       .post(`/api/tenants`, body, makeAuthHeaders(context))
       .then((response) => {
         // once Toast is implemented, replace with Toast notification
-        alert("Saved Successfully!");
-      })
-      .then(() => {
-
+        alert("Tenant Created Successfully!");
       })
       .catch((error) => {
         // once Toast is implemented, replace with Toast notification
@@ -82,8 +90,8 @@ export const AddTenant = () => {
       });
   };
 
-  const handleAddPropertyClick = () => {
-    console.log("Open modal");
+  const handleAddPropertyCancel = () => {
+    setShowAddProperty(false);
   }
 
   return (
@@ -100,6 +108,7 @@ export const AddTenant = () => {
           lease: ""
         }}
         validationSchema={validationSchema}
+        validateOnBlur={false}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(true);
           handleFormSubmit(values);
@@ -180,7 +189,7 @@ export const AddTenant = () => {
               </div>
               <h1 className="section-title">ASSIGN JOIN STAFF</h1>
               <div className="typeahead-section">
-                <Select
+                {/* <Select
                   options={joinOptions}
                   isMulti
                   name="join-staff-search"
@@ -188,21 +197,22 @@ export const AddTenant = () => {
                   onChange={setJoinSelections}
                   placeholder="Search JOIN Staff"
                   styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
-                />
+                /> */}
               </div>
               <h1 className="section-title">PROPERTY</h1>
               <div className="typeahead-section">
-                <Select
+                {/* <Select
                   options={propertyOptions}
                   name="property-search"
                   value={propertySelection}
                   onChange={setPropertySelection}
                   placeholder="Search properties"
                   styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
-                />
+                /> */}
                 <button
                   className="add-property-button"
-                  onClick={handleAddPropertyClick}
+                  onClick={() => setShowAddProperty(!showAddProperty)}
+                  type="button"
                 >
                   <i className="fas fa-plus-circle icon-inline-space"></i>
                   Create New Property
@@ -272,7 +282,7 @@ export const AddTenant = () => {
               <div className="button-container">
                 <Button
                   isCancelButton={false}
-                  type={"submit"}
+                  type="submit"
                   disabledFlag={isSubmitting}
                   isValidFlag={isValid}
                 >
@@ -289,6 +299,14 @@ export const AddTenant = () => {
           </div>
         )}
       </Formik>
+      {showAddProperty && 
+        <Modal
+          titleText="Create New Property"
+          content={<AddProperty showPageTitle={false} postOnSubmit={getProperties} handleCancel={handleAddPropertyCancel}/>}
+          hasButtons={false}
+          closeHandler={handleAddPropertyCancel}
+        />
+        }
     </div>
   )
 };

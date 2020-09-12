@@ -176,11 +176,13 @@ export const Dashboard = (props) => {
             </div>
 
             {modalActive.visible && <Modal
-                contentText={"Are you sure you want to decline access?"}
+                content={"Are you sure you want to decline access?"}
                 hasButtons={true}
-                yesButtonHandler={() => handleDenyAccess(true)}
-                noButtonHandler={() => handleDenyAccess(false)}
-                closeHandler={() => setModalActive({ ...modalActive, visible: false })}
+                confirmButtonHandler={() => handleDenyAccess(true)}
+                cancelButtonHandler={() => handleDenyAccess(false)}
+                confirmText="Yes"
+                cancelText="No"
+                closeHandler={() => setModalActive({ ...modalActive, visible: false})}
             />}
         </>
     )
