@@ -108,7 +108,7 @@ export const Dashboard = (props) => {
                 <h2 className="page-title">Admin Dashboard</h2>
                 <div className="dashboard__modules_container">
                     <DashboardModule
-                        data={widgetData.openTickets}
+                        data={widgetData.opentickets}
                     />
                     <DashboardModule
                         data={widgetData.reports}
