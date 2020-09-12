@@ -5,6 +5,7 @@
       color: white;
       background-color: $blue;
       border: 0;
+      margin-bottom: 10px;
       &__envelope-icon {
         margin: 0 5px;
       }
@@ -20,5 +21,9 @@
     }
   &__table {
     width: 90%;
+  }
+
+  .section-header{
+    padding-bottom: 20px;
   }
 }
