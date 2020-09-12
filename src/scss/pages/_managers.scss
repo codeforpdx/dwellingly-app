@@ -5,6 +5,7 @@
       color: white;
       background-color: $blue;
       border: 0;
+      margin-bottom: 10px;
       &__envelope-icon {
         margin: 0 5px;
       }
@@ -20,5 +21,20 @@
     }
   &__table {
     width: 90%;
+  }
+  // .search{
+  //   margin-bottom: 30px;
+  //   width: 50%;
+  //   padding: 0.7rem;
+  //   border-radius: 20px;
+  //   outline: 0;
+  //   border: 2px solid rgba(0, 0, 0, 0.2);
+  //   &:focus{
+  //     box-shadow: 0 0 10px -4px black
+  //   }
+  // }
+
+  .section-header{
+    padding-bottom: 20px;
   }
 }
