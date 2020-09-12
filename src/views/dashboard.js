@@ -12,7 +12,10 @@ import NewStaffItem from '../components/NewStaffItem';
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 export const Dashboard = (props) => {
-    const [modalActive, setModalActive] = useState(false);
+    const [modalActive, setModalActive] = useState({
+        visible: false,
+        id: NaN,
+    });
     const [staffList, setStaffList] = useState([]);
     const [unstaffedTenants, setUnstaffedTenants] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
@@ -48,15 +51,29 @@ export const Dashboard = (props) => {
     }
 
     const handleDeclineClick = (id) => {
-        //console.log('decline',id);
-        setModalActive(true);
+        setModalActive({
+            visible: true,
+            id: id,
+        });
     }
 
-    const handleDenyAccess = (doDeny) => {
-        setModalActive(false);
-        if (doDeny) {
-            console.log('handle deny access');
-            //TODO: handle deny access
+    const handleDenyAccess = async (doDeny) => {
+        
+        //Hide modal on button click
+        setModalActive({ ...modalActive, visible: false });
+
+        try{
+            // If decline access request is confirmed, delete requesting user from the database 
+            if (doDeny) {
+                const requestorId = modalActive.id;
+                const { data } = await axios.delete(`/api/user/${requestorId}`, makeAuthHeaders(userContext));
+                
+                // If delete is successful, update state of usersPending, filtering out deleted user
+                if(data.Message === "User deleted") setUsersPending(usersPending.filter(user => user.id !== requestorId));
+            }
+        }
+        catch(err){
+            alert("There was an error processing your request. Please try again later");
         }
     }
 
@@ -140,7 +157,7 @@ export const Dashboard = (props) => {
                     }
                 </Collapsible>
             </div>
-            <div className={`modal ${modalActive && 'is-active'}`}>
+            <div className={`modal ${modalActive.visible && 'is-active'}`}>
                 <div className="modal-background" onClick={() => { handleDenyAccess(false) }}></div>
                 <div className="modal-content">
                     <div className="modal__message_container">
