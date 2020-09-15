@@ -1,8 +1,4 @@
-// Colors
-$blue: #51a3fc;
-$lightGray: #d1d1d1;
-$gray: #8e8e93;
-$darkGray: #555555;
+@import '../../scss/variables.scss';
 
 .styled-button {
   position: relative;
@@ -17,7 +13,7 @@ $darkGray: #555555;
   padding-bottom: calc(0.5em - 1px);
   padding-left: calc(1em + 0.25em);
   padding-right: calc(1em + 0.25em);
-  
+
   line-height: 1.5;
   font-size: 1rem;
   border: 1px solid #dbdbdb;
@@ -33,6 +29,15 @@ $darkGray: #555555;
       &:hover {
         color: $darkGray;
       }
+      &:active {
+        background-color: $lightGray;
+        outline: 0;
+      }
+      &:focus {
+        outline: 0;
+        box-shadow: 0 0 7px $darkGray;
+        border: none;
+      }
     }
     &--invalid {
       margin: 0;
@@ -40,6 +45,11 @@ $darkGray: #555555;
       background: white;
       &:hover {
         color: $darkGray;
+      }
+      &:focus {
+        outline: 0;
+        box-shadow: 0 0 7px $darkGray;
+        border: none;
       }
     }
   }
@@ -49,6 +59,15 @@ $darkGray: #555555;
     color: white;
     &:hover {
       color: $darkGray;
+    }
+    &:active {
+      background-color: $lightGray;
+      outline: 0;
+    }
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 7px $darkGray;
+      border: none;
     }
   }
 }

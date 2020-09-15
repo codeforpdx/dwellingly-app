@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../UserContext';
 import { Link } from "react-router-dom"
+import Search from "../components/Search/index";
 
 const columns = [{
     dataField: 'name',
@@ -114,7 +115,7 @@ export class Tenants extends Component {
                               <Link className="button is-rounded" to="/add/tenant">+ ADD NEW</Link>
                           </div>
                           <div className="search-section">
-                              <input className="input search is-rounded" placeholder="Search Tenants by name, property, or JOIN staff"></input>
+                              <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
                             </div>
                           <div className="properties-list">
                               <BootstrapTable

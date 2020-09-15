@@ -1,18 +1,33 @@
 import React from 'react';
 import './requestItem.scss';
+import Button from "../Button";
 
 function RequestItem(props) {
     const { data, onDeclineClick, onAddClick } = props;
-    const { firstName, lastName, email, id, role } = data;
+    const { firstName, lastName, email, id } = data;
     return (
         <div className="collapsible__row columns">
             <div className="collapsible__col column">{firstName} {lastName}</div>
             <div className="collapsible__col column">
-                <a href="">{email}</a>
+                <a href="#">{email}</a>
             </div>
             <div className="dashboard__colapsible_col collapsible__buttons">
-                <button className="button is-primary is-rounded" onClick={() => { onAddClick(id) }}>ADD</button>
-                <button className="button is-dark is-rounded" onClick={() => { onDeclineClick(id) }}>DECLINE</button>
+                <Button
+                    isCancelButton={false}
+                    type={"submit"}
+                    disabledFlag={false}
+                    isValidFlag={true}
+                    onClick={() => { onAddClick(id) }}
+                >
+                    ADD
+                </Button>
+                <Button
+                    isCancelButton={true}
+                    type={"reset"}
+                    onClick={() => { onDeclineClick(id) }}
+                >
+                    DECLINE
+                </Button>
             </div>
         </div>
     )
