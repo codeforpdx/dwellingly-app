@@ -2,7 +2,7 @@
   &__form-container {
     // background: url("./assets/images/dwellingly_logo.png") no-repeat;
     background-size: contain;
-    background-color: white;
+    background-color: $white;
     width: 300px;
     padding: 20px 30px;
     border-radius: 20px;
@@ -11,7 +11,7 @@
     text-align: center;
   }
   &__button {
-    color: white;
+    color: $white;
     background-color: $blue;
     border-radius: 20px;
     padding: 5px 10px;
@@ -61,7 +61,7 @@
     z-index: 1;
   }
   &__or_text {
-    background-color: white;
+    background-color: $white;
     position: relative;
     z-index: 2;
     padding: 0 20px;

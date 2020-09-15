@@ -66,8 +66,8 @@ const SignupForm = ({ history }) => {
     confirmPassword: Yup.string()
       .required("Password confirmation is required")
       .oneOf([Yup.ref("password"), null],
-      "Passwords must match"
-    ),
+        "Passwords must match"
+      ),
   });
 
   const handleClick = () => {
@@ -99,122 +99,128 @@ const SignupForm = ({ history }) => {
                 enableReinitialize
               >
                 {
-            () => (
-              <div className="signup__form-container">
-                <div className="signup__mobile-header">
-                  <header className="navbar bg-gradient">
-                    <Link className="navbar-item" id="header-logo" to="/">
-                      <img src={dwellinglyLogoMobile} alt="dwellingly logo" />
-                    </Link>
-                  </header>
-                </div>
-                <Form className="signup__form-field-container">
-                  <img className="signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
-                  <h2 className="signup__subtitle">
-                    Create an Account
+                  () => (
+                    <div className="signup__form-container">
+                      <div className="signup__mobile-header">
+                        <header className="navbar bg-gradient">
+                          <Link className="navbar-item" id="header-logo" to="/">
+                            <img src={dwellinglyLogoMobile} alt="dwellingly logo" />
+                          </Link>
+                        </header>
+                      </div>
+                      <Form className="signup__form-field-container">
+                        <img className="signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
+                        <h2 className="signup__subtitle">
+                          Create an Account
                   </h2>
-                  <h2 className="section-title signup__mobile-heading">
-                    Create an Account for Dwelling.ly
+                        <h2 className="section-title signup__mobile-heading">
+                          Create an Account for Dwelling.ly
                   </h2>
 
 
-                  <div className="signup__form-cell-container">
-                    <Field
-                      className="form-field signup__form-field"
-                      type="text"
-                      name="firstName"
-                      placeholder="First Name"
-                      required
-                    />
+                        <div className="signup__form-cell-container">
+                          <Field
+                            className="form-field signup__form-field"
+                            type="text"
+                            name="firstName"
+                            aria-label="first name input"
+                            placeholder="First Name"
+                            required
+                          />
 
-                    <ErrorMessage className="form-error" name="firstName" component="div" />
-                  </div>
+                          <ErrorMessage className="form-error" name="firstName" component="div" />
+                        </div>
 
 
-                  <div className="signup__form-cell-container"> 
-                    <Field
-                      className="form-field signup__form-field"
-                      type="text"
-                      name="lastName"
-                      placeholder="Last Name"
-                      required
-                    />
+                        <div className="signup__form-cell-container">
+                          <Field
+                            className="form-field signup__form-field"
+                            type="text"
+                            name="lastName"
+                            aria-label="last name input"
+                            placeholder="Last Name"
+                            required
+                          />
 
-                    <ErrorMessage className="form-error" name="lastName" component="div" />
-                  </div>
+                          <ErrorMessage className="form-error" name="lastName" component="div" />
+                        </div>
 
-                  <div className="signup__form-cell-container"> 
-                    <Field
-                      className="form-field signup__form-field"
-                      type="text"
-                      name="email"
-                      placeholder="Email"
-                      required
-                    />
+                        <div className="signup__form-cell-container">
+                          <Field
+                            className="form-field signup__form-field"
+                            type="text"
+                            name="email"
+                            aria-label="email input"
+                            placeholder="Email"
+                            required
+                          />
 
-                    <ErrorMessage className="form-error" name="email" component="div" />
-                  </div>
+                          <ErrorMessage className="form-error" name="email" component="div" />
+                        </div>
 
-                  <div className="signup__form-cell-container"> 
-                    <Field
-                      className="form-field signup__form-field"
-                      type="text"
-                      id="phone"
-                      name="phone"
-                      placeholder="Phone"
-                      required
-                    />
+                        <div className="signup__form-cell-container">
+                          <Field
+                            className="form-field signup__form-field"
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            aria-label="phone number input"
+                            placeholder="Phone"
+                            required
+                          />
 
-                    <ErrorMessage className="form-error" name="phone" component="div" />
-                  </div>
+                          <ErrorMessage className="form-error" name="phone" component="div" />
+                        </div>
 
-                  <div className="signup__form-cell-container"> 
-                    <Field
-                      className="form-field signup__form-field"
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      required
-                    />
+                        <div className="signup__form-cell-container">
+                          <Field
+                            className="form-field signup__form-field"
+                            type="password"
+                            name="password"
+                            aria-label="password input"
+                            placeholder="Password"
+                            required
+                          />
 
-                    <ErrorMessage className="form-error" name="password" component="div" />
-                  </div>
+                          <ErrorMessage className="form-error" name="password" component="div" />
+                        </div>
 
-                  <div className="signup__form-cell-container"> 
-                    <Field
-                      className="form-field signup__form-field"
-                      type="password"
-                      name="confirmPassword"
-                      placeholder="Confirm Password"
-                      required
-                    />
+                        <div className="signup__form-cell-container">
+                          <Field
+                            className="form-field signup__form-field"
+                            type="password"
+                            name="confirmPassword"
+                            aria-label="confirm password input"
+                            placeholder="Confirm Password"
+                            required
+                          />
 
-                    <ErrorMessage className="form-error" name="confirmPassword" component="div" />
-                  </div>
+                          <ErrorMessage className="form-error" name="confirmPassword" component="div" />
+                        </div>
 
-                  <div />
-                  <button className="signup__button" type="submit">
-                    SIGN UP
+                        <div />
+                        <button className="signup__button" type="submit">
+                          SIGN UP
                   </button>
-                  <div className="signup__or_container">
-                    <div className="signup__or">
-                      <span className="signup__divider" />
-                      <span className="signup__or_text">
-                        OR
+                        <div className="signup__or_container">
+                          <div className="signup__or">
+                            <span className="signup__divider" />
+                            <span className="signup__or_text">
+                              OR
                       </span>
-                    </div>
-                  </div>
-                </Form>
-                <button
-                  className="login__button"
-                  type="button"
-                  onClick={handleClick}>
-                  LOG IN
+                          </div>
+                        </div>
+                      </Form>
+                      <button
+                        className="login__button"
+                        type="button"
+                        onClick={handleClick}>
+                        LOG IN
                 </button>
-                <div className="signup__privacyPolicyWrapper"> <Link to="/privacypolicy" className="signup__privacyPolicyText">Privacy Policy</Link></div>
-              </div>
-            )
-          }
+                      <div className="signup__privacyPolicyWrapper"> <Link to="/privacypolicy" className="signup__privacyPolicyText">Privacy Policy</Link></div>
+                    </div>
+                  )
+                }
               </Formik>
             </div>
           )

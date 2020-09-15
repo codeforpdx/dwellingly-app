@@ -10,6 +10,7 @@ const NewStaffItem = ({ id, firstName, lastName, propertyName, staff, handleStaf
         <div className="dashboard__colapsible_col column">
             <div className="select is-rounded">
                 <select
+                    aria-label={`${propertyName} staff name select`}
                     onChange={e => handleStaffAssignmentChange(e, id)}
                     value={staff || 'default'}
                 >

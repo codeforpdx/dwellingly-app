@@ -107,8 +107,8 @@ export default class Input extends Component {
     const variantsClasses =
       variants.length > 0
         ? variants
-            .map(variant => `${blockClass}__${type}--${variant}`)
-            .join(' ')
+          .map(variant => `${blockClass}__${type}--${variant}`)
+          .join(' ')
         : '';
 
     return (

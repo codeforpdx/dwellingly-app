@@ -34,13 +34,13 @@ export const MenuLink = ({ icon, isBold, name, href }) => {
 			: "";
 	const size = leafHrefString === "home" ? "is-size-6 " : "is-size-7 ";
 	const classNameBase =
-		size + (isBold ? "has-text-weight-bold " : "") + linkable;
+		size + (isBold ? "has-text-weight-bold" : "") + linkable;
 	const linkDefaultColor =
 		leafHrefString === "reports" ? "has-text-grey" : "has-text-white";
 	const linkColor = isActiveLink ? "has-text-black" : linkDefaultColor;
 
 	return (
-		<li className="is-padding">
+		<div className="is-padding">
 			<Link to={href} className={`${classNameBase} ${linkColor}`}>
 				{icon && (
 					<span className="icon is-small">
@@ -49,7 +49,7 @@ export const MenuLink = ({ icon, isBold, name, href }) => {
 				)}
 				<span className="is-menu-link">{name}</span>
 			</Link>
-		</li>
+		</div>
 	);
 };
 
@@ -75,7 +75,7 @@ export const NavMenu = () => {
 			{({ user }) => (
 				<div className="is-hidden-mobile is-sidebar-menu bg-blue">
 					<div className="menu">
-						<ul className="menu-list">
+						<nav className="menu-list">
 							<div className="is-username-link">
 								<MenuLink
 									name={`${user.firstName} ${user.lastName}`}
@@ -104,15 +104,15 @@ export const NavMenu = () => {
 								<MenuLink name="Property Managers" href="/manage/managers" />
 							</div>
 
-              <MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets"/>
-              <MenuLink name="Reports" isBold icon={faBook} href="/reports" />
-              <MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
-              <MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
-              <MenuLink name="Settings" isBold icon={faCog} href="/settings" />
-            </ul>
-          </div>
-        </div>
-      )}
-    </UserContext.Consumer>
-  );
+							<MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets" />
+							<MenuLink name="Reports" isBold icon={faBook} href="/reports" />
+							<MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
+							<MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
+							<MenuLink name="Settings" isBold icon={faCog} href="/settings" />
+						</nav>
+					</div>
+				</div>
+			)}
+		</UserContext.Consumer>
+	);
 }

@@ -22,51 +22,51 @@ import './search.scss';
 //Search is designed to not include the ID as a searchable paramater.
 
 function Search(props) {
-    const { input, placeholderMessage } = props;
+  const { input, placeholderMessage } = props;
 
-    const enterSearchHandler = (event) => {
-      var keyCode = event.keyCode;
-      if (keyCode === 13){
-        searchProperties();
-      }
-    };
+  const enterSearchHandler = (event) => {
+    var keyCode = event.keyCode;
+    if (keyCode === 13) {
+      searchProperties();
+    }
+  };
 
-    const clearSearch = () => {
-      props.setIsFilteredStateFalse();
-      document.getElementById("searchQueryComponent").value = "";
+  const clearSearch = () => {
+    props.setIsFilteredStateFalse();
+    document.getElementById("searchQueryComponent").value = "";
 
-    };
+  };
 
-    const searchProperties = () => {
-      let allData = input;
-      let output = [];
-      let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
+  const searchProperties = () => {
+    let allData = input;
+    let output = [];
+    let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
 
-       if(searchQuery.length > 0){
-          for (var i=0;i < allData.length; i++) {
-              let dataPoint = Object.assign({}, allData[i]);
-              delete dataPoint.id;
-              if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
-                  output.push(allData[i]);
-                  console.log(allData[i]);
-            }
-          };
+    if (searchQuery.length > 0) {
+      for (var i = 0; i < allData.length; i++) {
+        let dataPoint = Object.assign({}, allData[i]);
+        delete dataPoint.id;
+        if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)) {
+          output.push(allData[i]);
+          console.log(allData[i]);
+        }
+      };
       props.setOutputState(output, true)
-      }
+    }
   };
 
 
-    return (
-      <div className="search-section">
-        <input className="input search is-rounded" id="searchQueryComponent" onKeyDown={enterSearchHandler} placeholder={placeholderMessage}></input>
-          <button className="save_button button is-rounded" onClick={searchProperties}type="submit">
-             Search
+  return (
+    <div className="search-section">
+      <input className="input search is-rounded" id="searchQueryComponent" aria-label="search input" onKeyDown={enterSearchHandler} placeholder={placeholderMessage}></input>
+      <button className="save_button button is-rounded" onClick={searchProperties} type="submit">
+        Search
           </button>
-          <button className="save_button button is-rounded clearButton" onClick={clearSearch}type="submit">
-             Clear Search
+      <button className="save_button button is-rounded clearButton" onClick={clearSearch} type="submit">
+        Clear Search
           </button>
-      </div>
-    );
+    </div>
+  );
 };
 
 export default Search;

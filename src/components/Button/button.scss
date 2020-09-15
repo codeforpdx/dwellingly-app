@@ -21,53 +21,56 @@
   border-radius: 290486px;
   font-weight: bold;
   white-space: nowrap;
+  cursor: pointer;
+  outline: none;
   &__commit-action {
     &--valid {
       margin: 0;
-      color: white;
+      color: $white;
       background: $blue;
       &:hover {
-        color: $darkGray;
+        color: $white;
+        border: 0;
+        box-shadow: 2px 2px 2px $gray;
       }
       &:active {
-        background-color: $lightGray;
-        outline: 0;
+        box-shadow: 0 0 0;
       }
       &:focus {
-        outline: 0;
-        box-shadow: 0 0 7px $darkGray;
-        border: none;
+        border: 1px solid black;
       }
     }
     &--invalid {
       margin: 0;
       color: $gray;
-      background: white;
+      background: $white;
       &:hover {
-        color: $darkGray;
+        color: $white;
+        border: 0;
+        box-shadow: 2px 2px 2px $gray;
+      }
+      &:active {
+        box-shadow: 0 0 0;
       }
       &:focus {
-        outline: 0;
-        box-shadow: 0 0 7px $darkGray;
-        border: none;
+        border: 1px solid black;
       }
     }
   }
   &__cancel {
     margin: 0;
     background: $gray;
-    color: white;
+    color: $white;
     &:hover {
-      color: $darkGray;
+      color: $white;
+      border: 0;
+      box-shadow: 2px 2px 2px $gray;
     }
     &:active {
-      background-color: $lightGray;
-      outline: 0;
+      box-shadow: 0 0 0;
     }
     &:focus {
-      outline: 0;
-      box-shadow: 0 0 7px $darkGray;
-      border: none;
+      border: 1px solid black;
     }
   }
 }

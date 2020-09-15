@@ -26,7 +26,7 @@ class Search extends Component {
   }
 
   handleBlur(event) {
-    if(this.node && this.node.contains(event.target)) {
+    if (this.node && this.node.contains(event.target)) {
       return
     }
     this.handleFocus(event);
@@ -34,10 +34,10 @@ class Search extends Component {
 
   handleFocus(event) {
     const { focus } = this.state;
-    if(focus && this.node && this.node.contains(event.target)) {
+    if (focus && this.node && this.node.contains(event.target)) {
       return
     }
-    if(focus) {
+    if (focus) {
       this.handleHideOptionsList();
     } else {
       this.handleShowOptionsList();
@@ -45,10 +45,10 @@ class Search extends Component {
   }
 
   handleTab(event) {
-    if(event.key !== 'Tab' || event.which !== 9) {
+    if (event.key !== 'Tab' || event.which !== 9) {
       return
-     }
-     this.handleBlur(event);
+    }
+    this.handleBlur(event);
   }
 
   handleShowOptionsList() {
@@ -70,12 +70,13 @@ class Search extends Component {
       text: this.props.filterSubset.map(item => data[item]).join(' ')
     };
 
-    if(!this.state.selectedOptions.find(({id}) => id === data.id)) {
+    if (!this.state.selectedOptions.find(({ id }) => id === data.id)) {
       this.setState(prevState => ({
-        selectedOptions: [...prevState.selectedOptions, newDataObj]}));
+        selectedOptions: [...prevState.selectedOptions, newDataObj]
+      }));
     } else {
       this.setState(prevState => ({
-        selectedOptions: prevState.selectedOptions.filter(({id}) => id !== data.id)
+        selectedOptions: prevState.selectedOptions.filter(({ id }) => id !== data.id)
       }));
     }
   }
@@ -83,7 +84,7 @@ class Search extends Component {
   handleSelection(searchedObj) {
     // New Tenant Form Callback
     this.props.onSearchSelection(searchedObj);
-    if(this.props.multiple) {
+    if (this.props.multiple) {
       this.handleUpdatingOptions(searchedObj);
     } else {
       this.handleHideOptionsList();
@@ -91,10 +92,10 @@ class Search extends Component {
   }
 
   handleSelectionClasses(data) {
-    if(this.props.multiple && this.state.selectedOptions.find(({id}) => id === data)) {
+    if (this.props.multiple && this.state.selectedOptions.find(({ id }) => id === data)) {
       return "searchResults--multiple-active"
     }
-    if(this.props.multiple) {
+    if (this.props.multiple) {
       return "searchResults--multiple"
     }
     return "searchResults"
@@ -119,21 +120,22 @@ class Search extends Component {
     return (
       <div className="searchContainer">
         <div className="searchContainerInner" ref={node => { this.node = node }}>
-        {/* needs class "input inline-input" */}
+          {/* needs class "input inline-input" */}
           <div className="align--left">
             <div>
-            <label htmlFor={id}>
-              {/* <span className={label.length > 20 ? "inline-input__label sml-text" : "inline-input__label"}>{label}</span> */}
-              <input
-                type="text"
-                id={id}
-                className="searchBar"
-                placeholder={placeholder}
-                onFocus={this.handleFocus}
-                onChange={this.handleSearch}
-                value={searchTerm} />
-            </label>
-            {/* <span className="dropdownIcon"><Icon icon="arrowRight" /></span> */}
+              <label htmlFor={id}>
+                {/* <span className={label.length > 20 ? "inline-input__label sml-text" : "inline-input__label"}>{label}</span> */}
+                <input
+                  type="text"
+                  id={id}
+                  aria-label={`${id} search input`}
+                  className="searchBar"
+                  placeholder={placeholder}
+                  onFocus={this.handleFocus}
+                  onChange={this.handleSearch}
+                  value={searchTerm} />
+              </label>
+              {/* <span className="dropdownIcon"><Icon icon="arrowRight" /></span> */}
             </div>
           </div>
           {(searchTerm && focus) && (

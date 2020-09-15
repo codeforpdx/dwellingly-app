@@ -11,6 +11,39 @@
   background: $gray;
 }
 
+.has-text-black {
+  filter: drop-shadow(1px 1px 3px rgba(255, 255, 255, 0.6));
+}
+
+.has-text-grey{
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.has-text-white, .has-text-black, .has-text-grey {
+  &:hover {
+    background-color: $transparentGray !important;
+  }
+}
+
+.is-primary {
+  background-color: $green !important;
+}
+
+.icon {
+  filter: none
+}
+
+.button {
+  color: $white !important;
+  &:hover {
+    box-shadow: 2px 2px 2px $gray;
+  }
+  &:focus {
+    border: 1px solid $black;
+  }
+}
+
+
 .section-header {
   display: flex;
   flex-direction: row;
@@ -63,7 +96,7 @@
     }
     .button {
       // margin-left: 20px;
-      color: white;
+      color: $white;
       background-color: $blue;
       border: 0;
       height: 2em;
@@ -78,7 +111,7 @@
 .button {
     margin-left: 20px;
     font-weight: bold;
-    color: white;
+    color: $white;
     background-color: $blue;
     border: 0;
 }

@@ -1,5 +1,6 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .page-title {
@@ -19,7 +20,6 @@ body {
 
 .form-error {
     font-size: 0.7em;
-    //color: "#a44a";
-    color: #a44a;
+    color: $errorRed;
     padding: 0.3em;
 }

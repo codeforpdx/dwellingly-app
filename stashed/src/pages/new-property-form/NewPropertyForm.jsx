@@ -46,13 +46,13 @@ class NewPropertyForm extends Component {
     const { name } = target;
     const { value } = target;
     this.setState(prevState => ({
-      properties: { ...prevState.properties, [name]: value}
+      properties: { ...prevState.properties, [name]: value }
     }));
   }
 
   handleSelectionFromSearch(nameSearched) {
     if
-    (Object.keys(nameSearched).includes('name')) {
+      (Object.keys(nameSearched).includes('name')) {
       this.setState({ propertyManagerSelected: nameSearched });
     }
   }
@@ -83,7 +83,7 @@ class NewPropertyForm extends Component {
     const propertyState = this.state.properties.state;
     const propertyZipCode = this.state.properties.zipCode;
     const propertyUnits = this.state.properties.numberOfUnits;
-    if(propertyName && propertyAddress && propertyCity && propertyState && propertyZipCode && propertyUnits){
+    if (propertyName && propertyAddress && propertyCity && propertyState && propertyZipCode && propertyUnits) {
       return true;
     }
     return false;
@@ -120,7 +120,7 @@ class NewPropertyForm extends Component {
               <Header.Label
                 label="JOIN Messenger Administration"
                 type="basic"
-                />
+              />
             </div>
           )}
         </Header>
@@ -140,7 +140,7 @@ class NewPropertyForm extends Component {
                   value={this.state.properties.name}
                   placeholder="Property Name"
                   onChange={this.handleChange}
-                  />
+                />
                 <Input
                   id="addressOne"
                   name="addressOne"
@@ -149,7 +149,7 @@ class NewPropertyForm extends Component {
                   value={this.state.properties.addressOne}
                   placeholder="Property Address"
                   onChange={this.handleChange}
-                  />
+                />
                 <Input
                   id="city"
                   name="city"
@@ -158,7 +158,7 @@ class NewPropertyForm extends Component {
                   value={this.state.properties.city}
                   placeholder="City"
                   onChange={this.handleChange}
-                  />
+                />
                 <Input
                   id="state"
                   name="state"
@@ -167,7 +167,7 @@ class NewPropertyForm extends Component {
                   value={this.state.properties.state}
                   placeholder="State"
                   onChange={this.handleChange}
-                  />
+                />
                 <Input
                   id="zipCode"
                   name="zipCode"
@@ -176,7 +176,7 @@ class NewPropertyForm extends Component {
                   value={this.state.properties.zipCode}
                   placeholder="Zip"
                   onChange={this.handleChange}
-                  />
+                />
                 <Input
                   id="numberOfUnits"
                   name="numberOfUnits"
@@ -185,7 +185,7 @@ class NewPropertyForm extends Component {
                   value={this.state.properties.numberOfUnits}
                   placeholder="Units"
                   onChange={this.handleChange}
-                  />
+                />
               </section>
               <section className="newPropertyFormSection">
                 <h2 className="newPropertyFormManagerHeading">Assign Property Managers</h2>
@@ -193,11 +193,11 @@ class NewPropertyForm extends Component {
                   <Search
                     searchData={propertyManagers}
                     value={this.state.propertyManagerSelected}
-                    placeholder= "Search Property Managers"
+                    placeholder="Search Property Managers"
                     filterSubset={['firstName', 'lastName', 'name']}
                     onSearchSelection={this.handleSelectionFromSearch}
                     multiple
-                    />
+                  />
                 </fieldset>
               </section>
               <section className="newPropertyFormSection">
@@ -221,19 +221,19 @@ class NewPropertyForm extends Component {
             ?
           </ConfirmationModal>
         )
-      }
-      {this.state.confirmingSubmit && (
-        <SuccessModal
-          show={this.state.showModal}
-          onClick={this.addAnotherProperty}
-          onClose={this.redirectToDashboard}>
-          Property Created Successfully!
-        </SuccessModal>
-      )
-    }
-  </div>
-);
-}
+        }
+        {this.state.confirmingSubmit && (
+          <SuccessModal
+            show={this.state.showModal}
+            onClick={this.addAnotherProperty}
+            onClose={this.redirectToDashboard}>
+            Property Created Successfully!
+          </SuccessModal>
+        )
+        }
+      </div>
+    );
+  }
 }
 
 NewPropertyForm.propTypes = {

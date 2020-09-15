@@ -1,22 +1,52 @@
 // https://bulma.io/documentation/customize/with-node-sass/
 // https://bulma.io/documentation/customize/variables/
 
-// colors
-$brandBlue: #053d6f;
-$gray: #8e8e93;
-$blue: #51a3fc;
-$orange: #fdbc49;
-$red: #fc575a;
-$darkGray: #555555;
-$lightGray: #d1d1d1;
-$lighterGray: #eeeeee;
-$white: #FFF;
-$breakpointMobile: 1200px;
+// colors (origional)
+// $brandBlue: #053d6f;
+// $gray: #8e8e93;
+// $blue: #51a3fc;
 
-$gradient: linear-gradient(to bottom, #6f90fc 0%, #52baed 100%);
+// $orange: #fdbc49;
+// $red: #fc575a;
+// $darkGray: #555555;
+// $lightGray: #d1d1d1;
+// $lighterGray: #eeeeee;
+// $white: #FFF;
+// $cyan: $blue;
+
+// $gradient: linear-gradient(to bottom, #6f90fc 0%, #52baed 100%);
+
+
+
+
+//colors
+$brandBlue: #053d6f;
+$blue: #195ba2; 
+$orange: #066330;
+$green: #066330;
+$red: #c1373a;
+
+$black: #000;
+$darkGray: #555555;
+$gray: #606060;
+$transparentGray: #cec2c225;
+$lightGray: #d1d1d1;
+$lighterGray: #ededed;
+$white: #FFF;
+
+$gradient: linear-gradient(to bottom, $brandBlue 0%, $blue 100%);
 
 $cyan: $blue;
+
+
+
+
+
+$specialGrey: #C8C8C8;
+$errorRed: rgba(205, 28, 28, 0.667);
+
 $headerHeight: 65px;
+$breakpointMobile: 1200px;
 
 
 //BULMA SPECIFIC

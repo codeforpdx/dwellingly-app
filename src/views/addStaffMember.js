@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 
-export const InfoField = ({label, info}) => {
+export const InfoField = ({ label, info }) => {
 	const infoField = "has-text-weight-bold placeholder " + ((label === "Phone") ? "phone-field" : (label === "Email" ? "email-field" : "name-field"));
 	return (
 		<div>
@@ -10,9 +10,9 @@ export const InfoField = ({label, info}) => {
 			<span className="input-field"> {label}
 				<p className={infoField} contentEditable required>
 
-			    </p>
-		    </span>
-	    </div>
+				</p>
+			</span>
+		</div>
 	);
 }
 
@@ -40,10 +40,14 @@ export const AddStaffMember = () => {
 				</label>
 				<div className="add-staff-page-length">
 					<br />
-					<div className="save-button-spacing">
+					{/* <div className="save-button-spacing">
 						<button className="save-new-staff-button" onClick={handleSave} > SAVE </button>
 					</div>
-					<Link className="button has-background-grey has-text-white is-rounded is-small has-text-weight-bold cancel-new-staff" to='/staff'> CANCEL </Link>
+					<Link className="button has-background-grey has-text-white is-rounded is-small has-text-weight-bold cancel-new-staff" to='/staff'> CANCEL </Link> */}
+
+					<button className="button has-background-blue is-rounded is-small" onClick={handleSave} > SAVE </button>
+					<Link className="button has-background-grey is-rounded is-small" to='/staff'> CANCEL </Link>
+
 				</div>
 			</div>
 		</>

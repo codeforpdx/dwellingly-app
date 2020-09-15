@@ -10,7 +10,9 @@ function DashboardModule(props) {
                 <h3 className="dashboard__module_title h2">{data.title}</h3>
                 {
                     data.link && (
-                        <a href={data.link} className="dashboard__module_title_link">
+                        <a href={data.link}
+                            aria-label={`${data.title} link`}
+                            className="dashboard__module_title_link">
                             <span className="icon">
                                 <i className="fas fa-chevron-right"></i>
                             </span>
