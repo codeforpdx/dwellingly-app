@@ -1,9 +1,10 @@
-import React, { Component, componentDidMount } from 'react';
+import React, { Component } from 'react';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../UserContext';
 import * as axios from 'axios';
 import { Link } from 'react-router-dom';
+import Select from 'react-select';
 
 
 const validationSchema = Yup.object().shape({
@@ -37,6 +38,12 @@ const formHandler = (data, context) => {
         })
 };
 
+// const filterManagers = () => {
+//     //filter Managers by role here. May need help getting and understanding the API endpoint for user
+//     const placeholderUser = {}
+//     return
+// }
+
 
 export class AddProperty extends Component {
     constructor(props) {
@@ -51,12 +58,18 @@ export class AddProperty extends Component {
         this.getManagers();
     };
 
+    //placeholder
+    getphManagers = () => {
+        let phMangers = [{ value: "manager1", label: "Mary Smith" }, { value: "manager2", label: "Peter Zuo" }];
+        return phMangers;
+    }
+
+    //May need help on understanding endpoints and getting a token if needed
+    //filter users by role here. Return data based on structure in getphManagers() [obj, obj]
     getManagers = () => {
         axios.get(`${process.env.REACT_APP_API_URL}`)
             .then((response) => {
-                //might need help getting user info here
                 console.log(response)
-                //filter users based on role property
             })
             .catch((error) => {
                 alert(error);
@@ -172,10 +185,10 @@ export class AddProperty extends Component {
                                             {/* This element will use a list of property managers
                                             and will need to be implemented later. react-select
                                             can be used to select from list retrieved from endpoint */}
-                                            {/* <div className=" add-property__assign-manager-container">
-                                            <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                            <input></input>
-                                        </div> */}
+                                            <div className=" add-property__assign-manager-container">
+                                                <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
+                                                <Select isMulti name="managers" options={this.getphManagers()} />
+                                            </div>
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
                                                 <Link className="button is-dark is-rounded" to='/manage/properties'>CANCEL</Link>

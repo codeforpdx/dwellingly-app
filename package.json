@@ -21,7 +21,11 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
+<<<<<<< HEAD
     "react-search-panel": "^1.0.7",
+=======
+    "react-select": "^3.1.0",
+>>>>>>> add select-react and placeholder options
     "yup": "^0.28.5"
   },
   "scripts": {
