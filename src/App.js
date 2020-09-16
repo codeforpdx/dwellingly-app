@@ -29,6 +29,7 @@ import Manager from "./views/Manager";
 import { JoinStaff } from "./views/joinStaff";
 import { AddStaffMember } from "./views/addStaffMember";
 import UserContext from "./UserContext";
+import ChangePassword from "./views/Settings/changePassword";
 
 var refreshTimeout;
 
@@ -186,6 +187,7 @@ export class App extends React.Component {
                   <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
                   <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
                   <PrivateRoute exact path='/settings' component={Settings} />
+                  <PrivateRoute exact path='/changePassword' component={ChangePassword} />
                   <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
                 </div>
               </Switch>
