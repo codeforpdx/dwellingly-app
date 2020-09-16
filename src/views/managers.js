@@ -5,6 +5,7 @@ import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import Search from "../components/Search/index"
 
 const columns = [
   {
@@ -101,7 +102,7 @@ const Managers = () => {
         </Link>
       </div>
       <div>
-        <input></input>
+        <Search placeholderMessage="Search property managers by name, property, or status"/>
       </div>
       <div className="invite-button">
         <button className="button is-rounded" type="submit">

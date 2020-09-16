@@ -4,11 +4,11 @@ import './joinStaffCard.scss';
 
 const CancelButton = () => {
 	return(
-		<a className="cancel-button" >
-    		<span className="icon has-text-grey">
+		<a href="#" className="cancel-button" >
+      <span className="icon has-text-grey">
 				<i className="fas fa-minus-circle"></i>
 			</span>
-    	</a>
+    </a>
 	);
 }
 
@@ -18,14 +18,14 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 		if (type === "tickets"){
 			return (
 				<div className="info-font">
-			    	<p className="number-font" >{tickets}</p> Open Tickets
-			    </div>
+          <p className="number-font" >{tickets}</p> Open Tickets
+        </div>
 			);
 		} else if (type === "tenants") {
 			return (
 				<div className="info-font">
-			    	<p className="number-font" >{tenants}</p> Tenants
-			    </div>
+          <p className="number-font" >{tenants}</p> Tenants
+        </div>
 			);
 		}
 	}

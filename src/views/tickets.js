@@ -4,6 +4,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../UserContext';
 import Accordion from '../components/Accordion';
 import * as axios from 'axios';
+import Search from "../components/Search/index"
 
 const columns = [{
     dataField: 'id',
@@ -106,8 +107,7 @@ export class Tickets extends Component {
     getTickets = (context) => {
         axios.get(`/api/tickets`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
         .then((response) => {
-            this.setState({tickets: response.data.Tickets});
-            console.log(this.state.tickets)
+            this.setState({tickets: response.data.tickets});
         })
         .catch((error) => {
             alert(error);
@@ -125,9 +125,7 @@ export class Tickets extends Component {
                             <div className="section-header">
                                 <h2 className="page-title">Tickets</h2>
                             </div>
-                            <div className="search-section">
-                              <input className="input is-rounded" placeholder="Search by tenant, manager, property, or JOIN staff"></input>
-                            </div>
+                            <Search placeholderMessage="Search by tenant, manager, property, or JOIN staff"/>
                             <Accordion
                               icon={<i className="fas fa-filter"></i>}
                               header={"Filters"}
