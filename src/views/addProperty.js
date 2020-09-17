@@ -199,7 +199,7 @@ export class AddProperty extends Component {
 
                                             <div className=" add-property__assign-manager-container">
                                                 <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                                <Select isMulti name="managers" options={this.getphManagers()} onChange={this.handleInputChange} value={this.state.assignedPropertyManagers} />
+                                                <Select isMulti name="managers" options={this.state.managerSelection} onChange={this.handleInputChange} value={this.state.assignedPropertyManagers} />
                                             </div>
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
