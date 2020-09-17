@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Field, Formik } from 'formik';
+import { Form, Field, Formik, isEmptyArray } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../UserContext';
 import * as axios from 'axios';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import { doPasswordReset } from '../../stashed/src/firebase/auth';
+import user from '../../stashed/src/dux/user';
 
 
 const validationSchema = Yup.object().shape({
@@ -44,25 +46,31 @@ export class AddProperty extends Component {
 
         this.state = {
             propertyManagers: undefined,
+            managerSelection: []
         }
+
+        this.getManagers = this.getManagers.bind(this);
     }
 
     componentDidMount() {
-        this.getManagers();
+        this.getManagers(this.context);
     };
 
-    //placeholder
-    getphManagers = () => {
-        let phMangers = [{ value: "manager1", label: "Mary Smith" }, { value: "manager2", label: "Peter Zuo" }];
-        return phMangers;
-    }
-
-    //May need help on understanding endpoints and getting a token if needed
-    //filter users by role here. Return data based on structure in getphManagers() [obj, obj]
-    getManagers = () => {
-        axios.get(`${process.env.REACT_APP_API_URL}`)
+    //context returns as undefined but it is defined in other components such as properties.js
+    getManagers = (context) => {
+        axios.get("/api/users/role", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
             .then((response) => {
                 console.log(response)
+                const { data: { managers } } = response;
+                const userSelection = response.filter(user => user.role === "2");
+                //expected userSelection = [{id: int, firstname: string, lastname: string, role: string}]
+                let managerSelection = [...this.state.managerSelection];
+                userSelection.forEach(function modifyManagers(user) {
+                    let manager = { value: user.id, label: user.firstname + " " + user.lastname }
+                    managerSelection.push(manager);
+                });
+                //expected ex [{ value: 1, label: "Mary Smith" }, { value: 2, label: "Peter Zuo" }];
+                this.setState({ managerSelection })
             })
             .catch((error) => {
                 alert(error);
@@ -76,6 +84,7 @@ export class AddProperty extends Component {
 
 
     render() {
+        console.log(this.state)
         return (
             <UserContext.Consumer>
                 {session => {
@@ -185,7 +194,7 @@ export class AddProperty extends Component {
                                             can be used to select from list retrieved from endpoint */}
                                             <div className=" add-property__assign-manager-container">
                                                 <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                                <Select isMulti name="managers" options={this.getphManagers()} onChange={this.handleInputChange} />
+                                                <Select isMulti name="managers" options={this.state.managerSelection} onChange={this.handleInputChange} />
                                             </div>
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
