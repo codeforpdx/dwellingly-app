@@ -11,6 +11,7 @@ $darkGray: #555555;
 $lightGray: #d1d1d1;
 $lighterGray: #eeeeee;
 $white: #FFF;
+$errorRed: red;
 $breakpointMobile: 1200px;
 
 $gradient: linear-gradient(to bottom, #6f90fc 0%, #52baed 100%);
@@ -23,6 +24,8 @@ $headerHeight: 65px;
 // Example: Set your brand colors
 $primary: $blue;
 $dark: $gray;
+$button-disabled-background-color: $lightGray !important;
+$button-disabled-opacity: 1;
 
 // $purple: #8a4d76;
 // $pink: #fa7c91;

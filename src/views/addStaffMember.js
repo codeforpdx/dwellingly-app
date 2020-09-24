@@ -4,7 +4,7 @@ import * as axios from 'axios';
 
 
 
-export const InfoField = ({label, info}) => {
+export const InfoField = ({ label, info }) => {
 	const infoField = "has-text-weight-bold placeholder " + ((label === "Phone") ? "phone-field" : (label === "Email" ? "email-field" : "name-field"));
 	return (
 		<div>
@@ -12,9 +12,9 @@ export const InfoField = ({label, info}) => {
 			<span className="input-field"> {label}
 				<p className={infoField} contentEditable required>
 
-			    </p>
-		    </span>
-	    </div>
+				</p>
+			</span>
+		</div>
 	);
 }
 
@@ -40,16 +40,16 @@ export const AddStaffMember = () => {
 		// NOTE: The newly created user will not appear in the users page. The users page is currently
 		// linked to static json data, not the database.
 
-		const data = dummyData 
+		const data = dummyData
 
-		axios.post("/api/register", data, { headers: {"Authorization" : `Bearer ${localStorage.getItem("token")}`} })
-        .then(function(response){
-			alert("Staff Added!");
-			console.log(response)
-        })
-        .catch(function(error){
-            alert(error);
-		})
+		axios.post("/api/register", data, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } })
+			.then(function (response) {
+				alert("Staff Added!");
+				console.log(response)
+			})
+			.catch(function (error) {
+				alert(error);
+			})
 	}
 
 	return (
@@ -69,10 +69,10 @@ export const AddStaffMember = () => {
 				</label>
 				<div className="add-staff-page-length">
 					<br />
-					<div className="save-button-spacing">
-						<button className="save-new-staff-button" onClick={handleSave} > SAVE </button>
-					</div>
-					<Link className="button has-background-grey has-text-white is-rounded is-small has-text-weight-bold cancel-new-staff" to='/staff'> CANCEL </Link>
+
+					<button className="button is-rounded is-primary mx-2" onClick={handleSave} > SAVE </button>
+
+					<Link className="button is-rounded is-dark ml-3" to='/staff'> CANCEL </Link>
 				</div>
 			</div>
 		</>

@@ -9,21 +9,24 @@ import './googlebutton.scss';
 // You can see working example within: src/views/login.js
 
 
-function GoogleButton(props){
+function GoogleButton(props) {
   const { innerText } = props;
 
 
 
-return (
-  <button className="login__button login__button__google">
-    <div className="googleIconContainer">
-      <img className="googleIcon" src="../../../google-dwellingly-favicon.png" alt="Dwellingly icon"/>
-    </div>
-    <span className="login__button__google__text">
-      {innerText}
-    </span>
-  </button>
-    );
+  return (
+    <button
+      className="login__button__google button is-primary is-rounded py-4 mt-2"
+    >
+
+      <img className="icon mr-3" src="../../../google-dwellingly-favicon.png" alt="Dwellingly icon" />
+
+      <span className="login__button__google__text">
+        {innerText}
+      </span>
+    </button>
+  );
+
 };
 
 export default GoogleButton;
