@@ -52,17 +52,17 @@
     color: red;
 }
 
-.button {
-    margin: 10px;
-    font-weight: bold;
-    color: $lightGray;
-    background-color: $lighterGray;
-    border: 0;
-    &.active {
-        background-color: $blue;
-        color: white;
-    }
-}
+// .button {
+//     margin: 10px;
+//     font-weight: bold;
+//     color: $lightGray;
+//     background-color: $lighterGray;
+//     border: 0;
+//     &.active {
+//         background-color: $blue;
+//         color: white;
+//     }
+// }
 
 Label {
     color: $gray;

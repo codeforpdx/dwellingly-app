@@ -1,7 +1,7 @@
 // Backgrounds
-.bg-blue {
-  background: $blue;
-}
+// .bg-blue {
+//   background: $blue;
+// }
 
 .bg-gradient {
   background: $gradient;
@@ -61,13 +61,13 @@
     &.active {
       a {color: $blue;}
     }
-    .button {
-      // margin-left: 20px;
-      color: white;
-      background-color: $blue;
-      border: 0;
-      height: 2em;
-    }    
+    // .button {
+    //   // margin-left: 20px;
+    //   color: white;
+    //   background-color: $blue;
+    //   border: 0;
+    //   height: 2em;
+    // }    
   }
 }
 
@@ -75,10 +75,10 @@
   margin: 0;
 }
 
-.button {
-    margin-left: 20px;
-    font-weight: bold;
-    color: white;
-    background-color: $blue;
-    border: 0;
-}
+// .button {
+//     margin-left: 20px;
+//     font-weight: bold;
+//     color: white;
+//     background-color: $blue;
+//     border: 0;
+// }

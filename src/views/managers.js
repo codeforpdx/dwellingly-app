@@ -97,19 +97,19 @@ const Managers = () => {
     <div className="managers">
       <div className="section-header">
         <h2 className="page-title">Property Managers</h2>
-        <Link className="button is-rounded" to="/manage/managers">
+        <Link className="button is-rounded is-primary ml-4" to="/manage/managers">
           + ADD NEW
         </Link>
       </div>
       <div>
-        <Search placeholderMessage="Search property managers by name, property, or status"/>
+        <Search placeholderMessage="Search property managers by name, property, or status" />
       </div>
       <div className="invite-button">
-        <button className="button is-rounded" type="submit">
+        <button className="button is-rounded is-primary mb-4" type="submit">
           <FontAwesomeIcon
-            className="button__envelope-icon"
+            className="button__envelope-icon mr-3"
             icon={faEnvelope}
-          />{" "}
+          />
           Invite
         </button>
       </div>

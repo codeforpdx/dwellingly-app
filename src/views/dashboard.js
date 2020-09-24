@@ -21,7 +21,7 @@ export const Dashboard = (props) => {
     const [widgetData, setWidgetData] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
     const [usersPending, setUsersPending] = useState([]);
-    const history = useHistory();  
+    const history = useHistory();
     const userContext = useContext(UserContext);
 
     useMountEffect(() => {
@@ -29,7 +29,7 @@ export const Dashboard = (props) => {
             .get("/api/tenants", makeAuthHeaders(userContext))
             .then(({ data }) => {
                 const unstaffed = data.tenants.filter(tenant => !tenant.staff);
-                if(! unstaffed.length) return;
+                if (!unstaffed.length) return;
 
                 setUnstaffedTenants(unstaffed);
                 const adminUsersObj = { "userrole": 4 };
@@ -42,7 +42,7 @@ export const Dashboard = (props) => {
         const pendingUsersObj = { "userrole": 0 };
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
-            .then(({ data }) => { 
+            .then(({ data }) => {
                 setWidgetData(data);
             })
             .catch(error => alert(error));
@@ -52,7 +52,7 @@ export const Dashboard = (props) => {
             .then(({ data }) => setUsersPending(data.users))
             .catch(error => alert(error));
     });
-  
+
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
         history.push(path, usersPending.find(u => u.id === id));
@@ -66,28 +66,28 @@ export const Dashboard = (props) => {
     }
 
     const handleDenyAccess = async (doDeny) => {
-        
+
         //Hide modal on button click
         setModalActive({ ...modalActive, visible: false });
 
-        try{
+        try {
             // If decline access request is confirmed, delete requesting user from the database 
             if (doDeny) {
                 const requestorId = modalActive.id;
                 const { data } = await axios.delete(`/api/user/${requestorId}`, makeAuthHeaders(userContext));
-                
+
                 // If delete is successful, update state of usersPending, filtering out deleted user
-                if(data.Message === "User deleted") setUsersPending(usersPending.filter(user => user.id !== requestorId));
+                if (data.Message === "User deleted") setUsersPending(usersPending.filter(user => user.id !== requestorId));
             }
         }
-        catch(err){
+        catch (err) {
             alert("There was an error processing your request. Please try again later");
         }
     }
 
     const handleStaffAssignmentChange = ({ target }, tenantId) => {
         const updatedTenants = unstaffedTenants.map(tenant => {
-            if(tenant.id === tenantId) {
+            if (tenant.id === tenantId) {
                 tenant.staff = target.value;
                 setAreStaffAssigned(true);
             }
@@ -97,16 +97,16 @@ export const Dashboard = (props) => {
     }
 
     const handleStaffAssignment = () => {
-        if(!areStaffAssigned) return;
+        if (!areStaffAssigned) return;
 
         const tenantUpdateReqs = unstaffedTenants
             .filter(({ staff }) => staff)
             .map(({ id, staff }) => axios
-            .put(
-                `/api/tenants/${id}`,
-                { 'staffIDs': [staff] }, 
-                makeAuthHeaders(userContext)
-            ));
+                .put(
+                    `/api/tenants/${id}`,
+                    { 'staffIDs': [staff] },
+                    makeAuthHeaders(userContext)
+                ));
 
         axios.all(tenantUpdateReqs)
             .then(axios.spread((...responses) => {
@@ -141,12 +141,13 @@ export const Dashboard = (props) => {
                     <div className="dashboard__assignments_container">
                         {
                             unstaffedTenants.map(tenant => (
-                                <NewStaffItem key={tenant.id} { ...tenant } handleStaffAssignmentChange={handleStaffAssignmentChange} staffList={staffList} />
+                                <NewStaffItem key={tenant.id} {...tenant} handleStaffAssignmentChange={handleStaffAssignmentChange} staffList={staffList} />
                             ))
                         }
                         <div className="dashboard__assignments_button_container">
-                            <button 
-                                className={`${areStaffAssigned && 'active'} dashboard__save_assignments_button button is-rounded`}
+                            <button
+                                className={`button is-primary is-rounded`}
+                                disabled={!areStaffAssigned}
                                 onClick={handleStaffAssignment}
                             >
                                 SAVE ASSIGNMENTS

@@ -13,21 +13,21 @@ const Button = ({
   isCancelButton ? (
     <button
       type={type}
-      className="styled-button__cancel styled-button"
+      className="button is-dark is-rounded"
       onClick={onClick}
     >
       {children}
     </button>
   ) : (
-    <button
-      type={type}
-      disabled={disabledFlag}
-      className={`styled-button__commit-action${isValidFlag ? "--valid" : "--invalid"} styled-button`}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
+      <button
+        type={type}
+        disabled={disabledFlag}
+        className="button is-primary is-rounded"
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    );
 
 Button.propTypes = {
   type: PropTypes.string,

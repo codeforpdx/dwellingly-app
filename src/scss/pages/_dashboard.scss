@@ -4,16 +4,6 @@
 		justify-content: space-between;
 		margin: 25px 0;
 	}
-	&__save_assignments_button {
-		color: $lightGray;
-		background-color: $lighterGray;
-		font-weight: bold;
-		border: 0;
-		&.active {
-			background-color: $blue;
-			color: white;
-		}
-	}
 	&__assignments_container {
 		margin-bottom: 45px;
 	}
@@ -24,7 +14,7 @@
 
 .modal {
 	&__message_container {
-		background-color: white;
+		background-color: $white;
 		padding: 40px 100px;
 		text-align: center;
 	}

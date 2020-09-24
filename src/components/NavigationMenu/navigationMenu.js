@@ -12,11 +12,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import "bulma/css/bulma.css";
 
 import UserContext from "../../UserContext";
 
-export const MenuLink = ({ icon, isBold, name, href }) => {
+export const MenuLink = ({ icon, isBold, name, href, passedClassName }) => {
 	// look at the href prop and find the last, most specific piece of the path
 	// this piece can be used as the id for this MenuLink
 	let leafHrefString = href.split("/").splice(-1, 1)[0];
@@ -30,7 +29,7 @@ export const MenuLink = ({ icon, isBold, name, href }) => {
 
 	const linkable =
 		leafHrefString === "add" || leafHrefString === "manage"
-			? "is-inactive-link"
+			? "is-unselectable"
 			: "";
 	const size = leafHrefString === "home" ? "is-size-6 " : "is-size-7 ";
 	const classNameBase =
@@ -40,14 +39,14 @@ export const MenuLink = ({ icon, isBold, name, href }) => {
 	const linkColor = isActiveLink ? "has-text-black" : linkDefaultColor;
 
 	return (
-		<li className="is-padding">
+		<li className={passedClassName ? `pb-2 ${passedClassName}` : "pb-2"}>
 			<Link to={href} className={`${classNameBase} ${linkColor}`}>
 				{icon && (
 					<span className="icon is-small">
 						<FontAwesomeIcon icon={icon} />
 					</span>
 				)}
-				<span className="is-menu-link">{name}</span>
+				<span className="pl-1">{name}</span>
 			</Link>
 		</li>
 	);
@@ -58,6 +57,7 @@ MenuLink.propTypes = {
 	isBold: PropTypes.bool,
 	name: PropTypes.string.isRequired,
 	href: PropTypes.string.isRequired,
+	passedClassName: PropTypes.string
 };
 
 export const NavMenu = () => {
@@ -73,17 +73,16 @@ export const NavMenu = () => {
 	return (
 		<UserContext.Consumer>
 			{({ user }) => (
-				<div className="is-hidden-mobile is-sidebar-menu bg-blue">
+				<div className="is-hidden-mobile has-background-primary sidebar-menu">
 					<div className="menu">
 						<ul className="menu-list">
-							<div className="is-username-link">
-								<MenuLink
-									name={`${user.firstName} ${user.lastName}`}
-									isBold
-									icon={faUserAlt}
-									href="/home"
-								/>
-							</div>
+							<MenuLink
+								name={`${user.firstName} ${user.lastName}`}
+								isBold
+								icon={faUserAlt}
+								href="/home"
+								passedClassName="pb-5"
+							/>
 							<MenuLink
 								name="Dashboard"
 								isBold
@@ -91,28 +90,28 @@ export const NavMenu = () => {
 								href="/dashboard"
 							/>
 							<MenuLink name="Add New" isBold icon={faPlusCircle} href="/add" />
-							<div className="is-child-link">
+							<li className="pl-4">
 								<MenuLink name="Tenant" href="/add/tenant" />
 								<MenuLink name="Property" href="/add/property" />
 								<MenuLink name="Property Manager" href="/add/manager" />
-							</div>
+							</li>
 
 							<MenuLink name="Manage" isBold icon={faUserCog} href="/manage" />
-							<div className="is-child-link">
+							<li className="pl-4">
 								<MenuLink name="Tenants" href="/manage/tenants" />
 								<MenuLink name="Properties" href="/manage/properties" />
 								<MenuLink name="Property Managers" href="/manage/managers" />
-							</div>
+							</li>
 
-              <MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets"/>
-              <MenuLink name="Reports" isBold icon={faBook} href="/reports" />
-              <MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
-              <MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
-              <MenuLink name="Settings" isBold icon={faCog} href="/settings" />
-            </ul>
-          </div>
-        </div>
-      )}
-    </UserContext.Consumer>
-  );
+							<MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets" />
+							<MenuLink name="Reports" isBold icon={faBook} href="/reports" />
+							<MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
+							<MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
+							<MenuLink name="Settings" isBold icon={faCog} href="/settings" />
+						</ul>
+					</div>
+				</div>
+			)}
+		</UserContext.Consumer>
+	);
 }
