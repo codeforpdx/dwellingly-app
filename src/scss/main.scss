@@ -1,25 +1,125 @@
 // https://bulma.io/documentation/customize/with-node-sass/
 
 @charset "utf-8";
-@import './variables.scss'; //MH - variables must come before bulma for proper override
+// colors
+$brandBlue: #053d6f;
+$gray: #8e8e93;
+$blue: #51a3fc;
+$orange: #fdbc49;
+$red: #fc575a;
+$darkGray: #555555;
+$lightGray: #d1d1d1;
+$lighterGray: #eeeeee;
+$white: #FFF;
+$errorRed: red;
+$breakpointMobile: 1200px;
+
+$gradient: linear-gradient(to bottom, #6f90fc 0%, #52baed 100%);
+
+$cyan: $blue;
+$headerHeight: 65px;
 
 
+//BULMA SPECIFIC
+// Example: Set your brand colors
+$primary: $blue;
+$dark: $gray;
+$button-disabled-background-color: $lightGray !important;
+$button-disabled-opacity: 1;
 @import '../../node_modules/bulma/bulma.sass'; //MH -keep if you want all of bulma
 
 // Example: Import only what you need from Bulma
 // @import '../node_modules/bulma/sass/elements/button.sass';
-// @import '../node_modules/bulma/sass/elements/container.sass';
-// @import '../node_modules/bulma/sass/elements/form.sass';
-// @import '../node_modules/bulma/sass/elements/title.sass';
-// @import '../node_modules/bulma/sass/components/navbar.sass';
-// @import '../node_modules/bulma/sass/layout/hero.sass';
-// @import '../node_modules/bulma/sass/layout/section.sass';
 
-// @import '../node_modules/bulma/sass/utilities/_all.sass';
-// @import '../node_modules/bulma/sass/base/_all.sass';
-// @import '../../node_modules/bulma/sass/elements/_all.sass';
-// @import '../../node_modules/bulma/sass/grid/_all.sass';
+.bg-gradient {
+  background: $gradient;
+}
 
-@import './helpers.scss';
-@import './typography.scss';
+.bg-grey {
+  background: $gray;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 25px;
+  button {
+    margin: 0px 0px 0px 25px;
+  }
+}
+
+.filters-container {
+  background-color: $lighterGray;
+  margin-bottom: 10px;
+  padding: 10px;
+  color: $blue;
+  .fa-filter {
+      margin-right: 10px;
+  }
+}
+
+.section-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+  .filter-control {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.react-bootstrap-table-pagination {
+  display: flex;
+  justify-content: flex-end;
+  justify-items: right;
+}
+
+.table-header {
+  background-color: $lighterGray;
+}
+
+.pagination {
+  .page-item {
+    & a {color: $brandBlue;}
+    &.active {
+      a {color: $blue;}
+    }
+  }
+}
+
+.btn-group {
+  margin: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.page-title {
+  font-size: 22px;
+  color: $brandBlue;
+  font-weight: bold;
+}
+
+.h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.form-error {
+  font-size: 0.7em;
+  //color: "#a44a";
+  color: #a44a;
+  padding: 0.3em;
+}
+
 @import '../../node_modules/react-bootstrap-table-next/dist/react-bootstrap-table2.min';
