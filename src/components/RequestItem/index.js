@@ -1,5 +1,6 @@
 import React from 'react';
 import './requestItem.scss';
+import Button from "../Button";
 
 function RequestItem(props) {
     const { data, onDeclineClick, onAddClick } = props;
@@ -11,8 +12,22 @@ function RequestItem(props) {
                 <a href="#">{email}</a>
             </div>
             <div className="dashboard__colapsible_col collapsible__buttons">
-                <button className="button is-primary is-rounded" onClick={() => { onAddClick(id) }}>ADD</button>
-                <button className="button is-dark is-rounded" onClick={() => { onDeclineClick(id) }}>DECLINE</button>
+                <Button
+                    isCancelButton={false}
+                    type={"submit"}
+                    disabledFlag={false}
+                    isValidFlag={true}
+                    onClick={() => { onAddClick(id) }}
+                >
+                    ADD
+                </Button>
+                <Button
+                    isCancelButton={true}
+                    type={"reset"}
+                    onClick={() => { onDeclineClick(id) }}
+                >
+                    DECLINE
+                </Button>
             </div>
         </div>
     )

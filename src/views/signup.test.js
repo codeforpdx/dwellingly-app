@@ -5,6 +5,8 @@ import '@testing-library/jest-dom/extend-expect';
 import SignupForm from "./signup";
 import UserContext from "../UserContext";
 
+import { MemoryRouter } from "react-router";
+
 const mockHistory = { push: jest.fn() };
 jest.spyOn(axios, 'post').mockResolvedValue({});
 jest.spyOn(window, 'alert').mockImplementation(() => {});
@@ -21,9 +23,11 @@ describe("signup component", () => {
 
   beforeEach(() => {
     view = render(
-      <UserContext.Provider value={{ user: mockNotAuthenticatedUser }}>
-        <SignupForm history={mockHistory} />
-      </UserContext.Provider>
+        <MemoryRouter>
+          <UserContext.Provider value={{ user: mockNotAuthenticatedUser }}>
+            <SignupForm history={mockHistory} />
+          </UserContext.Provider>
+        </MemoryRouter>
     );
   });
 

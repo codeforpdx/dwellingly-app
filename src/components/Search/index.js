@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import './search.scss';
 
 //Necessary for <Search> to work:
@@ -58,13 +60,10 @@ function Search(props) {
 
     return (
       <div className="search-section">
-        <input className="input search is-rounded" id="searchQueryComponent" onKeyDown={enterSearchHandler} placeholder={placeholderMessage}></input>
-          <button className="save_button button is-rounded" onClick={searchProperties}type="submit">
-             Search
-          </button>
-          <button className="save_button button is-rounded clearButton" onClick={clearSearch}type="submit">
-             Clear Search
-          </button>
+        <span className="search-icon_span">
+          <FontAwesomeIcon icon={faSearch} className="search-icon_svg" />
+        </span>
+        <input className="input search is-rounded" id="searchQueryComponent" type="search" onKeyDown={enterSearchHandler} placeholder={placeholderMessage}></input>
       </div>
     );
 };

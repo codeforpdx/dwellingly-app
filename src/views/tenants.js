@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import BootstrapTable from "react-bootstrap-table-next";
-import UserContext from "../UserContext";
+import React, { Component } from 'react';
+import BootstrapTable from 'react-bootstrap-table-next';
+import UserContext from '../UserContext';
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import Search from "../components/Search/index";
 
 const columns = [
   {
@@ -114,39 +115,34 @@ export class Tenants extends Component {
       });
   };
 
-  render() {
-    return (
-      <UserContext.Consumer>
-        {(session) => {
-          this.context = session;
-          return (
-            <div>
-              <div className="section-header">
-                <h2 className="page-title">Tenants</h2>
-                <Link className="button is-rounded" to="/add/tenant">
-                  + ADD NEW
-                </Link>
-              </div>
-              <div className="search-section">
-                <input
-                  className="input search is-rounded"
-                  placeholder="Search Tenants by name, property, or JOIN staff"
-                ></input>
-              </div>
-              <div className="properties-list">
-                <BootstrapTable
-                  keyField="id"
-                  data={this.state.tenants}
-                  columns={columns}
-                  selectRow={selectRow}
-                  bootstrap4={true}
-                  headerClasses="table-header"
-                />
-              </div>
-            </div>
-          );
-        }}
-      </UserContext.Consumer>
-    );
+    render() {
+      return (
+          <UserContext.Consumer>
+              {session => {
+                  this.context = session;
+                  return (
+                      <div>
+                          <div className="section-header">
+                              <h2 className="page-title">Tenants</h2>
+                              <Link className="button is-rounded" to="/add/tenant">+ ADD NEW</Link>
+                          </div>
+                          <div className="search-section">
+                              <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
+                            </div>
+                          <div className="properties-list">
+                              <BootstrapTable
+                                  keyField='id'
+                                  data={ this.state.tenants }
+                                  columns={ columns }
+                                  selectRow={ selectRow }
+                                  bootstrap4={true}
+                                  headerClasses="table-header"
+                                  />
+                          </div>
+                      </div>
+                  )
+              }}
+          </UserContext.Consumer>
+      )
   }
 }

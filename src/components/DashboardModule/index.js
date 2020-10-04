@@ -4,6 +4,10 @@ import './dashboardmodule.scss';
 
 function DashboardModule(props) {
     const { data } = props;
+
+
+    if (data){
+
     return (
         <div className="dashboard__module">
             <div className="dashboard__module_header">
@@ -28,7 +32,7 @@ function DashboardModule(props) {
                                         <div key={`stat_container--${statIndex}`} className={`dashboard__module_stat_container ${statIndex === 0 && 'primary'}`}>
                                             <p className={`dashboard__module_${data.isDate ? 'date' : 'stat'}`}>{stat.stat}</p>
                                             <p className="dashboard__module_desc">{stat.desc}
-                                                {stat.subtext && <span className="dashboard__module_subtext">in the last week</span>}
+                                                {stat.subtext && <span className="dashboard__module_subtext">{stat.subtext}</span>}
                                             </p>
                                         </div>
                                     )
@@ -40,6 +44,19 @@ function DashboardModule(props) {
             }
         </div >
     );
+        }
+    else {
+        return(
+            <div className="dashboard__module">
+            <div className="dashboard__module_header">
+                <h3 className="dashboard__module_title h2">Loading</h3>
+            </div>
+            
+               <h6>Loading...</h6>
+            
+        </div >
+        )
+    }
 };
 
 export default DashboardModule;

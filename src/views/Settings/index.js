@@ -142,7 +142,7 @@ const Settings = () => {
           </div>
         )}
       </Formik>
-      <Link exact="true" to="/change-password">
+      <Link exact="true" to="/changePassword">
         Change Password
       </Link>
     </div>
