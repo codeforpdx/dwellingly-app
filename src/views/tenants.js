@@ -17,25 +17,16 @@ const columns = [
     },
     text: "Name",
     sort: true,
-    headerStyle: () => {
-      return { width: "20%" };
-    },
   },
   {
     dataField: "propertyName",
     text: "Property",
     sort: true,
-    headerStyle: () => {
-      return { width: "20%" };
-    },
   },
   {
     dataField: "phone",
     text: "Phone",
     sort: true,
-    headerStyle: () => {
-      return { width: "20%" };
-    },
   },
 ];
 
@@ -104,9 +95,6 @@ export class Tenants extends Component {
       })
       .then((response) => {
         const tenants = response.data.tenants;
-        tenants.forEach(tenant => {
-          tenant["fullName"] = `${tenant.firstName} ${tenant.lastName}`;
-        });
         this.setState({ tenants });
       })
       .catch((error) => {
@@ -137,6 +125,7 @@ export class Tenants extends Component {
                                   selectRow={ selectRow }
                                   bootstrap4={true}
                                   headerClasses="table-header"
+                                  classes="table-responsive"
                                   />
                           </div>
                       </div>

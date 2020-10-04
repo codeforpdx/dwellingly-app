@@ -44,6 +44,19 @@ const Tenant = () => {
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
+  // Error handler for axios requests
+  const axiosErrorHandler = (error) => {
+    alert(error);
+    return Promise.reject({ ...error })
+  }
+
+  // Handle axios errors
+  const client = axios.create();
+  client.interceptors.response.use(
+    success => success,
+    error => axiosErrorHandler(error)
+  )
+
   /**
    * Handle activating edit form
    */
@@ -90,12 +103,12 @@ const Tenant = () => {
    * Get a tenant
    */
   const getTenant = async () => {
-    const tenantResponse = await axios.get(`/api/tenants/${id}`);
+    const tenantResponse = await client.get(`/api/tenants/${id}`);
     const tenant = tenantResponse.data;
     const propertyUrl = `/api/properties/${tenant.propertyName}`;
-    const propertyResponse = await axios.get(propertyUrl);
+    const propertyResponse = await client.get(propertyUrl);
     const property = propertyResponse.data;
-    const ticketsResponse = await axios.get(`/api/tickets?tenant=${tenant.id}`);
+    const ticketsResponse = await client.get(`/api/tickets?tenant=${tenant.id}`);
     const tickets = ticketsResponse.data;
     setState({ tenant, property, tickets });
 
@@ -152,19 +165,22 @@ const Tenant = () => {
     },
   ];
 
+  const STAFF_USER_ROLE = 3;
+
   /**
    * When staff search input text changes, call API to find matching users.
    */
   useEffect(() => {
     const loadStaff = async () => {
-      const staffResponse = await axios.post("/api/users/role", { userrole: 2, name: staffSearchText });
+      const staffResponse = await client.post("/api/users/role", {
+        userrole: STAFF_USER_ROLE,
+        name: staffSearchText
+      });
       const foundStaff = await staffResponse.data;
       const foundStaffChoices = getStaffChoice(foundStaff.users);
       setStaffSearchResults(foundStaffChoices);
     };
-    if (staffSearchText && staffSearchText.length > 0) {
-      loadStaff();
-    }
+    loadStaff();
   }, [staffSearchText]);
 
   /**
@@ -190,7 +206,7 @@ const Tenant = () => {
   };
 
   return (
-    <div className="manager__container">
+    <div>
       {tenant && (
         <div>
           <div className="title__container">
@@ -207,24 +223,20 @@ const Tenant = () => {
               <i className="fas fa-pen icon" />
             </button>
           </div>
-          <div className="manager__contact">
-            <h1 className="secondary-title">CONTACT</h1>
-            <div className="contact-details">
-              <ToggleEditTable
-                tableData={getTableData()}
-                validationSchema={validationSchema}
-                isEditing={isEditing}
-                submitHandler={onFormikSubmit}
-                cancelHandler={onCancelClick}
-              />
-            </div>
+
+          <div className="section-container">
+            <h2 className="section-title">CONTACT</h2>
+            <ToggleEditTable
+              tableData={getTableData()}
+              validationSchema={validationSchema}
+              isEditing={isEditing}
+              submitHandler={onFormikSubmit}
+              cancelHandler={onCancelClick}
+            />
           </div>
 
-          <div className="manager__contact">
-            <h1 className="secondary-title">JOIN STAFF</h1>
-          </div>
-
-          <div>
+          <div className="section-container">
+            <h2>JOIN STAFF</h2>
             <SearchPanel
               chips
               choices={staffSearchResults}
@@ -238,23 +250,22 @@ const Tenant = () => {
               small
               value={staffSearchText}
               variant={SearchPanelVariant.checkbox}
+              width={400}
             />
           </div>
 
-          <div className="manager__contact">
-            <h1 className="secondary-title">TICKETS</h1>
+          <div className="section-container">
+            <h2>TICKETS</h2>
+            <div className="tabs">
+              <ul>
+                {tabs.map((tab) => (
+                  <li key={tab.id} className={activeTab === tab.id ? "is-active" : ""}>
+                    <a onClick={() => setActiveTab(tab.id)}>{tab.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-
-          <div className="tabs">
-            <ul>
-              {tabs.map((tab) => (
-                <li key={tab.id} className={activeTab === tab.id ? "is-active" : ""}>
-                  <a href onClick={() => setActiveTab(tab.id)}>{tab.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
         </div>
       )}
     </div>

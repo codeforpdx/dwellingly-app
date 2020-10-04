@@ -28,6 +28,7 @@ const server = setupServer(
   rest.get("/api/tenants/42", (req, res, ctx) => res(ctx.json(mockTenant))),
   rest.get("/api/properties/mock1", (req, res, ctx) => res(ctx.json(mockProperty))),
   rest.get("/api/tickets?tenant=42", (req, res, ctx) => res(ctx.json({}))),
+  rest.post("/api/users/role", (req, res, ctx) => res(ctx.json([]))),
 );
 
 beforeAll(() => server.listen());
@@ -47,7 +48,7 @@ describe("Tenant Component", () => {
   });
 
   it("should call api so it renders a tenant first name", async () => {
-    await screen.findByText("Mock first");
+    await view.findByText("Mock first");
   });
 
   it("should call api so it renders a concatenated property address", async () => {
