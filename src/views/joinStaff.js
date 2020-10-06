@@ -36,7 +36,7 @@ export const JoinStaff = () => {
 				email={user.email} 
 				tickets={"7"} 
 				tentants={"7"} 
-				admin={user.role == 4 ? true : false} />
+				admin={user.role == 4} />
 		)
 	}
 	
