@@ -10,9 +10,9 @@ export const JoinStaff = () => {
 	const [staff, setStaff] = useState([])
 	const secondColumnStart = Math.floor(staff.length / 3)
 	const thirdColumnStart = (staff.length - Math.floor(staff.length / 3))
+	const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` }}
 
 	useEffect(() => {
-		const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` }}
 		const URLs = ['/api/user?r=3', '/api/user?r=4']
 		const fetchData = URL => {
 			return axios
