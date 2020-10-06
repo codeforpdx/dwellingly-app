@@ -11,16 +11,17 @@ export const JoinStaff = () => {
 	const secondColumnStart = Math.floor(staff.length / 3)
 	const thirdColumnStart = (staff.length - Math.floor(staff.length / 3))
 
-	const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` }}
-
 	useEffect(() => {
+		const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` }}
 		const URLs = ['/api/user?r=3', '/api/user?r=4']
 		const fetchData = URL => {
 			return axios
 				.get(URL, auth_headers)
-				.then( res => {
-					console.log(res)
+				.then(res => {
 					setStaff(...staff, res.data.users)
+				})
+				.catch(err => {
+					console.log(err)
 				})
 		}
 		Promise.all(URLs.map(url => fetchData(url)))
@@ -28,11 +29,17 @@ export const JoinStaff = () => {
 
 	const staffCard = (user) => {
 		return (
-			<JoinStaffCard key={user.id} name={`${user.firstName} ${user.lastName}`} phoneNumber={user.phone} email={user.email} tickets={"7"} tentants={"7"} admin={true} />
+			<JoinStaffCard 
+				key={user.id} 
+				name={`${user.firstName} ${user.lastName}`} 
+				phoneNumber={user.phone} 
+				email={user.email} 
+				tickets={"7"} 
+				tentants={"7"} 
+				admin={user.role == 4 ? true : false} />
 		)
 	}
 	
-
 	return (
 		<>
       <div className="section-header">
@@ -41,19 +48,13 @@ export const JoinStaff = () => {
       </div>
 			<div className="columns columns-spacing">
 				<div className="column">
-					{staff.slice(0, secondColumnStart).map((user, index) => {
-						return staffCard(user)
-					})}
+					{staff.slice(0, secondColumnStart).map((user, index) => {return staffCard(user)})}
 				</div>
 				<div className="column">
-					{staff.slice(secondColumnStart, thirdColumnStart).map((user, id) => {
-						return staffCard(user)
-					})}
+					{staff.slice(secondColumnStart, thirdColumnStart).map((user, index) => {return staffCard(user)})}
 				</div>
 				<div className="column">
-					{staff.slice(thirdColumnStart).map((user, id) => {
-						return staffCard(user)
-					})}
+					{staff.slice(thirdColumnStart).map((user, index) => {return staffCard(user)})}
 				</div>
 			</div>
 		</>
