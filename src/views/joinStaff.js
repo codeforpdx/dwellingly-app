@@ -25,6 +25,12 @@ export const JoinStaff = () => {
 		}
 		Promise.all(URLs.map(url => fetchData(url)))
 	}, [])
+
+	const staffCard = (user) => {
+		return (
+			<JoinStaffCard key={user.id} name={`${user.firstName} ${user.lastName}`} phoneNumber={user.phone} email={user.email} tickets={"7"} tentants={"7"} admin={true} />
+		)
+	}
 	
 
 	return (
@@ -36,25 +42,17 @@ export const JoinStaff = () => {
 			<div className="columns columns-spacing">
 				<div className="column">
 					{staff.slice(0, secondColumnStart).map((user, index) => {
-						return (
-							<JoinStaffCard key={user.id} name={`${user.firstName} ${user.lastName}`} phoneNumber={user.phone} email={user.email} tickets={"7"} tentants={"7"} admin={true} />
-						)
+						return staffCard(user)
 					})}
 				</div>
 				<div className="column">
-					{staff.slice(secondColumnStart, thirdColumnStart).map((row, id) => {
-
-						return (
-							<JoinStaffCard key={row.id} name={row.name} phoneNumber={row.phone} email={row.email} tickets={row.tickets} tenants={row.tenants} admin={row.admin} />
-						);
+					{staff.slice(secondColumnStart, thirdColumnStart).map((user, id) => {
+						return staffCard(user)
 					})}
 				</div>
 				<div className="column">
-					{staff.slice(thirdColumnStart).map((row, id) => {
-						console.log("hello")
-						return (
-							<JoinStaffCard key={row.id} name={row.name} phoneNumber={row.phone} email={row.email} tickets={row.tickets} tenants={row.tenants} admin={row.admin} />
-						);
+					{staff.slice(thirdColumnStart).map((user, id) => {
+						return staffCard(user)
 					})}
 				</div>
 			</div>
