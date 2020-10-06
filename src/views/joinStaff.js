@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 export const JoinStaff = () => {
 
 	const [staff, setStaff] = useState([])
-	const [secondColumnStart, setSecondColumnStart] = useState(0)
-	const [thirdColumnStart, setThirdColumnStart] = useState(0)
+	const secondColumnStart = Math.floor(staff.length / 3)
+	const thirdColumnStart = (staff.length - Math.floor(staff.length / 3))
 
 	const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` }}
 
@@ -19,13 +19,13 @@ export const JoinStaff = () => {
 			return axios
 				.get(URL, auth_headers)
 				.then( res => {
+					console.log(res)
 					setStaff(...staff, res.data.users)
-					setSecondColumnStart(Math.floor(staff.length / 3))
-					setThirdColumnStart(staff.length - Math.floor(staff.length / 3))
 				})
 		}
 		Promise.all(URLs.map(url => fetchData(url)))
 	}, [])
+	
 
 	return (
 		<>
@@ -36,9 +36,8 @@ export const JoinStaff = () => {
 			<div className="columns columns-spacing">
 				<div className="column">
 					{staff.slice(0, secondColumnStart).map((user, index) => {
-						console.log("hi")
 						return (
-							<JoinStaffCard key={user.id} name={user.firstName} phoneNumber={user.phone} email={user.email} tickets={7} tentants={user.tenants} admin={true} />
+							<JoinStaffCard key={user.id} name={`${user.firstName} ${user.lastName}`} phoneNumber={user.phone} email={user.email} tickets={"7"} tentants={"7"} admin={true} />
 						)
 					})}
 				</div>
@@ -52,6 +51,7 @@ export const JoinStaff = () => {
 				</div>
 				<div className="column">
 					{staff.slice(thirdColumnStart).map((row, id) => {
+						console.log("hello")
 						return (
 							<JoinStaffCard key={row.id} name={row.name} phoneNumber={row.phone} email={row.email} tickets={row.tickets} tenants={row.tenants} admin={row.admin} />
 						);
