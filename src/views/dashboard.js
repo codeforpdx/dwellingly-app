@@ -6,6 +6,7 @@ import useMountEffect from '../utils/useMountEffect';
 import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
+import Modal from '../components/Modal';
 import RequestItem from '../components/RequestItem';
 import NewStaffItem from '../components/NewStaffItem';
 
@@ -21,7 +22,7 @@ export const Dashboard = (props) => {
     const [widgetData, setWidgetData] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
     const [usersPending, setUsersPending] = useState([]);
-    const history = useHistory();  
+    const history = useHistory();
     const userContext = useContext(UserContext);
 
     useMountEffect(() => {
@@ -29,7 +30,7 @@ export const Dashboard = (props) => {
             .get("/api/tenants", makeAuthHeaders(userContext))
             .then(({ data }) => {
                 const unstaffed = data.tenants.filter(tenant => !tenant.staff);
-                if(! unstaffed.length) return;
+                if (!unstaffed.length) return;
 
                 setUnstaffedTenants(unstaffed);
                 const adminUsersObj = { "userrole": 4 };
@@ -52,7 +53,7 @@ export const Dashboard = (props) => {
             .then(({ data }) => setUsersPending(data.users))
             .catch(error => alert(error));
     });
-  
+
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
         history.push(path, usersPending.find(u => u.id === id));
@@ -87,7 +88,7 @@ export const Dashboard = (props) => {
 
     const handleStaffAssignmentChange = ({ target }, tenantId) => {
         const updatedTenants = unstaffedTenants.map(tenant => {
-            if(tenant.id === tenantId) {
+            if (tenant.id === tenantId) {
                 tenant.staff = target.value;
                 setAreStaffAssigned(true);
             }
@@ -97,7 +98,7 @@ export const Dashboard = (props) => {
     }
 
     const handleStaffAssignment = () => {
-        if(!areStaffAssigned) return;
+        if (!areStaffAssigned) return;
 
         const tenantUpdateReqs = unstaffedTenants
             .filter(({ staff }) => staff)
@@ -165,9 +166,8 @@ export const Dashboard = (props) => {
                     }
                 </Collapsible>
             </div>
-<<<<<<< HEAD
-            <div className={`modal ${modalActive.visible && 'is-active'}`}>
-=======
+
+            {/* <div className={`modal ${modalActive.visible && 'is-active'}`}> */}
             {/* TODO replace this with our modal! Marie and Darren are smart :) */}
             {/* <div className={`modal ${modalActive && 'is-active'}`}>
 >>>>>>> style modal and add to forgotPassword view
@@ -184,6 +184,13 @@ export const Dashboard = (props) => {
                     </div>
                 </div>
             </div> */}
+
+            {modalActive && <Modal
+                contentText={"Are you sure you want to decline access?"}
+                hasButtons={true}
+                yesButtonHandler={() => handleDenyAccess(true)}
+                noButtonHandler={() => handleDenyAccess(false)}
+            />}
         </>
     )
 }
