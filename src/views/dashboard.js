@@ -190,6 +190,7 @@ export const Dashboard = (props) => {
                 hasButtons={true}
                 yesButtonHandler={() => handleDenyAccess(true)}
                 noButtonHandler={() => handleDenyAccess(false)}
+                closeHandler={() => setModalActive(false)}
             />}
         </>
     )
