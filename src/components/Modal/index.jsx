@@ -53,7 +53,7 @@ Modal.propTypes = {
   hasButtons: PropTypes.bool,
   yesButtonHandler: PropTypes.func,
   noButtonHandler: PropTypes.func,
-  closeHandler: PropTypes.func,
+  closeHandler: PropTypes.func.isRequired,
 };
 
 export default Modal;
