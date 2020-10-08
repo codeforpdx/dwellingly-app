@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
+import RoleEnum from '../../RoleEnum.js'
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -165,7 +166,7 @@ const Tenant = () => {
     },
   ];
 
-  const STAFF_USER_ROLE = 3;
+  const STAFF_USER_ROLE = RoleEnum.STAFF;
 
   /**
    * When staff search input text changes, call API to find matching users.
