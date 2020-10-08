@@ -52,18 +52,6 @@
     color: $errorRed;
 }
 
-// .button {
-//     margin: 10px;
-//     font-weight: bold;
-//     color: $lightGray;
-//     background-color: $lighterGray;
-//     border: 0;
-//     &.active {
-//         background-color: $blue;
-//         color: white;
-//     }
-// }
-
 Label {
     color: $gray;
 }
@@ -74,13 +62,3 @@ Label {
     font-weight: bold;
     margin-bottom: 10px;
 }
-
-// .error {
-//     border: 2px solid #FF6565;
-// }
-
-// .error-message {
-//     color: #FF6565;
-//     height: 1em;
-//     font-size: .8em;
-//   }
