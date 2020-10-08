@@ -34,8 +34,8 @@ export const JoinStaff = () => {
 				name={`${user.firstName} ${user.lastName}`} 
 				phoneNumber={user.phone} 
 				email={user.email} 
-				tickets={"7"} 
-				tentants={"7"} 
+				tickets={user.tickets} 
+				tenants={user.tenants} 
 				admin={user.role == 4} />
 		)
 	}
