@@ -22,6 +22,7 @@ const ForgotPassword = () => {
   });
 
   const formHandler = (data) => {    
+    console.log(data);
     axios
       .post("http://localhost:5000/api/reset-password", data)
       .then(response => {

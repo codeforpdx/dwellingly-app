@@ -167,30 +167,12 @@ export const Dashboard = (props) => {
                 </Collapsible>
             </div>
 
-            {/* <div className={`modal ${modalActive.visible && 'is-active'}`}> */}
-            {/* TODO replace this with our modal! Marie and Darren are smart :) */}
-            {/* <div className={`modal ${modalActive && 'is-active'}`}>
->>>>>>> style modal and add to forgotPassword view
-                <div className="modal-background" onClick={() => { handleDenyAccess(false) }}></div>
-                <div className="modal-content">
-                    <div className="modal__message_container">
-                        <div className="modal__message">
-                            <h4>Are you sure you want to decline access?</h4>
-                        </div>
-                        <div className="modal__button_container">
-                            <button className="button is-primary is-rounded" onClick={() => { handleDenyAccess(true) }}>YES</button>
-                            <button className="button is-dark is-rounded" onClick={() => { handleDenyAccess(false) }}>NO</button>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-
-            {modalActive && <Modal
+            {modalActive.visible && <Modal
                 contentText={"Are you sure you want to decline access?"}
                 hasButtons={true}
                 yesButtonHandler={() => handleDenyAccess(true)}
                 noButtonHandler={() => handleDenyAccess(false)}
-                closeHandler={() => setModalActive(false)}
+                closeHandler={() => setModalActive({ ...modalActive, visible: false})}
             />}
         </>
     )
