@@ -11,7 +11,7 @@
 }
 
 .ticket-modal-container {
-  width: 60%;
+  width: 20%;
   top: 50%;
   left: 50%;
   position: fixed;
@@ -21,11 +21,7 @@
 
 .ticket-modal-title-container {
   display: flex;
-  margin-left: 2em;
-}
-
-#ticket-modal-card-content {
-  margin-bottom: 50px;
+  margin-left: 1em;
 }
 
 .close-icon-container {
@@ -41,15 +37,26 @@
 
 #ticket-modal-title {
   margin: 0;
-  font-weight: normal;
+  font-size: 1rem;
+  font-weight: bold;
+  color: $color__yellow;
 }
 
-#ticket-modal-subtitle {
-  margin-left: 4.5em;
+#ticket-modal-issue {
+  margin-left: 1.5em;
   width: 60%;
   margin-bottom: 1em;
-  font-weight: normal;
+  color: $color__blue--dark;
+  font-weight: bold;
   line-height: normal;
+}
+
+.ticket-details-section {
+  padding-bottom: 8px;
+}
+
+.ticket-detail-label {
+  color: #8e8e93;
 }
 
 #scroll-container {
@@ -63,9 +70,6 @@
 .reports-ticket-card {
   font-weight: normal;
   padding: 1em .3em 1em 1em;
-  margin-bottom: 1em;
-  margin-right: 1em;
-  width: 47%;
   border-radius: $border-radius--card;
   background-color: $color__gray--light;
   display: flex;
