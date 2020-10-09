@@ -12,6 +12,7 @@ import { Tenants } from "./views/tenants";
 import { Terms } from "./views/terms";
 import { Tickets } from "./views/tickets";
 import Settings from "./views/Settings";
+import ForgotPassword from "./views/ForgotPassword";
 import EmergencyContacts from "./views/emergencyContacts";
 import AddEmergencyContact from "./views/addEmergencyContact";
 import PrivacyPolicy from "./views/privacyPolicy";
@@ -179,6 +180,7 @@ export class App extends React.Component {
                 <Route exact path='/signup' component={SignupForm} />
                 <Route exact path='/terms' component={Terms} />
                 <Route exact path='/privacypolicy' component={PrivacyPolicy}/>
+                <Route exact path='/forgot-password' component={ForgotPassword} />
                 <div className='main-container'>
                   <PrivateRoute exact path='/' component={Dashboard} />
                   <PrivateRoute exact path='/dashboard' component={Dashboard} />
