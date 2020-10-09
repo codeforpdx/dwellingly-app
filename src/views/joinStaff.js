@@ -1,13 +1,45 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import UserContext from '../UserContext';
+import axios from 'axios'
 import { JoinStaffCard } from '../components/JoinStaffCard';
-import { JOIN_STAFF_DATA } from '../components/JoinStaffCard/data';
 import { Link } from 'react-router-dom';
 
 
 export const JoinStaff = () => {
-	const secondColumnStart = Math.floor(JOIN_STAFF_DATA.length / 3);
-	const thirdColumnStart = JOIN_STAFF_DATA.length - Math.floor(JOIN_STAFF_DATA.length / 3);
 
+	const [staff, setStaff] = useState([])
+	const secondColumnStart = Math.floor(staff.length / 3)
+	const thirdColumnStart = (staff.length - Math.floor(staff.length / 3))
+	const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` }}
+
+	useEffect(() => {
+		const URLs = ['/api/user?r=3', '/api/user?r=4']
+		const fetchData = URL => {
+			return axios
+				.get(URL, auth_headers)
+				.then(res => {
+					setStaff(...staff, res.data.users)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		}
+		Promise.all(URLs.map(url => fetchData(url)))
+	}, [])
+
+	const staffCard = (user) => {
+		return (
+			<JoinStaffCard 
+				key={user.id} 
+				name={`${user.firstName} ${user.lastName}`} 
+				phoneNumber={user.phone} 
+				email={user.email} 
+				tickets={user.tickets} 
+				tenants={user.tenants} 
+				admin={user.role == 4} />
+		)
+	}
+	
 	return (
 		<>
       <div className="section-header">
@@ -16,26 +48,13 @@ export const JoinStaff = () => {
       </div>
 			<div className="columns columns-spacing">
 				<div className="column">
-					{JOIN_STAFF_DATA.slice(0, secondColumnStart).map((row, index) => {
-						return (
-							<JoinStaffCard key={row.id} name={row.name} phoneNumber={row.phone} email={row.email} tickets={row.tickets} tenants={row.tenants} admin={row.admin} />
-						);
-					})}
+					{staff.slice(0, secondColumnStart).map((user, index) => {return staffCard(user)})}
 				</div>
 				<div className="column">
-					{JOIN_STAFF_DATA.slice(secondColumnStart, thirdColumnStart).map((row, id) => {
-
-						return (
-							<JoinStaffCard key={row.id} name={row.name} phoneNumber={row.phone} email={row.email} tickets={row.tickets} tenants={row.tenants} admin={row.admin} />
-						);
-					})}
+					{staff.slice(secondColumnStart, thirdColumnStart).map((user, index) => {return staffCard(user)})}
 				</div>
 				<div className="column">
-					{JOIN_STAFF_DATA.slice(thirdColumnStart).map((row, id) => {
-						return (
-							<JoinStaffCard key={row.id} name={row.name} phoneNumber={row.phone} email={row.email} tickets={row.tickets} tenants={row.tenants} admin={row.admin} />
-						);
-					})}
+					{staff.slice(thirdColumnStart).map((user, index) => {return staffCard(user)})}
 				</div>
 			</div>
 		</>
