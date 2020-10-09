@@ -12,6 +12,7 @@
 
 .ticket-modal-container {
   width: 20%;
+  min-width: 300px;
   top: 50%;
   left: 50%;
   position: fixed;
@@ -67,7 +68,14 @@
   height: 300px;
 }
 
-.reports-ticket-card {
+.ticket-card-bottom-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: $color__gray--dark;
+  padding-bottom: 20px;
+}
+
+.ticket-card-note {
   font-weight: normal;
   padding: 1em .3em 1em 1em;
   border-radius: $border-radius--card;
@@ -75,11 +83,13 @@
   display: flex;
   text-align: right;
   p {
-    color: $color__gray--medium;
+    color: $color__blue--dark;
+    font-weight: normal;
+    font-size: 14px;
   }
 }
 
-.reports-ticket-card-list {
+.ticket-card-notes-list {
   list-style: none;
   text-align: left;
   padding: 0;
@@ -87,17 +97,17 @@
   width: 75%;
 }
 
-.reports-ticket-card-issue-status {
+.ticket-card-notes-issue-status {
   color: $color__blue;
   font-weight: normal;
 }
 
-.reports-ticket-card-tenant {
-  color: $color__blue--dark;
-  font-weight: normal;
+.ticket-card-note-header-row {
+  padding-bottom: 30px;
+  font-size: 14px;
 }
 
-.reports-ticket-card-sender {
+.ticket-card-note-header {
   color: $color__gray--medium;
   font-weight: normal;
 }

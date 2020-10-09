@@ -9,7 +9,7 @@ export const TicketModal = (props) => {
       return null;
     }
     const { assigned, issue, opened, sender,
-      status, tenant, updated, urgency} = props.ticket;
+      status, tenant, updated, urgency, notes } = props.ticket;
 
     return (
       <div className="ticket-window-modal">
@@ -55,14 +55,27 @@ export const TicketModal = (props) => {
             </Card.Top>
             <Card.Bottom>
               <Card.Content>
-                <div className="reports-ticket-card">
-                  <ul className="reports-ticket-card-list">
-                    <li className="reports-ticket-card-issue-status">RESOLVED</li>
-                    <li className="reports-ticket-card-tenant">Megan Collins</li>
-                    <li className="reports-ticket-card-sender">Sender: Tara McKenzie</li>
-                  </ul>
-                  <p>03/12/18</p>
+                <div className="ticket-card-bottom-header">
+                  NOTES {notes ? notes.length : 0}
                 </div>
+                {notes
+                  ? notes.map( note => {
+                    return (
+                      <>
+                        <div className="ticket-card-note-header-row">
+                          <p style={{ float: "left" }} className="ticket-card-note-header">{note.user}</p>
+                          <p style={{ float: "right" }} className="ticket-card-note-header">{note.created}</p>
+                        </div>
+                        <div className="ticket-card-note">
+                          <p>{note.text}</p>
+                        </div>
+                      </>
+                    )
+                  })
+                  : <div className="ticket-card-note">
+                    <p>No Notes found</p>
+                  </div>
+                  }
               </Card.Content>
             </Card.Bottom>
           </Card>
