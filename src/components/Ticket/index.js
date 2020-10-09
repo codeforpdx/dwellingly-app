@@ -1,33 +1,55 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Card from '../card/Card';
 import { CARD_TYPES } from '../../constants/';
 import Icon from '../icon/Icon';
 import './TicketModal.scss';
 
-class TicketModal extends Component {
-  render() {
-    // Render nothing if the "show" prop is false
-    if(!this.props.show) {
+export const TicketModal = (props) => {
+    if(!props.show || !props.ticket) {
       return null;
     }
+    const { assigned, issue, opened, sender,
+      status, tenant, updated, urgency} = props.ticket;
 
     return (
       <div className="ticket-window-modal">
         <div className="ticket-modal-container">
           <Card types={[CARD_TYPES.TICKET]}>
             <Card.Top>
-              <Card.Content id="ticket-modal-card-content">
+              <Card.Content>
                 <div className="card__summary">
                   <div className="close-icon-container">
-                    <button type="button" onClick={this.props.onClose}>
+                    <button type="button" onClick={props.onClose}>
                       <Icon id="close-icon"  icon="close"/></button>
                   </div>
                   <div className="ticket-modal-title-container">
                     <Icon icon="comment"/>
-                    <h3 id="ticket-modal-title" className="title">10 Property Damage</h3>
+                    <h3 id="ticket-modal-title" className="subtitle">{status.toUpperCase()}</h3>
                   </div>
-                  <h5 id="ticket-modal-subtitle" className="meta">There were 10 Property Damage tickets opened from 01/01/2018 - 12/31/2018</h5>
+                  <h5 id="ticket-modal-issue" className="meta">{issue}</h5>
+                  <hr/>
+                  <div>
+                    <div style={{ float: "left" }}>
+                      <div className="ticket-details-section">
+                        <p className="ticket-detail-label">SENDER</p>
+                        <p>{sender}</p>
+                      </div>
+                      <div className="ticket-details-section">
+                        <p className="ticket-detail-label">TENANT</p>
+                        <p>{tenant}</p>
+                      </div>
+                    </div>
+                    <div className="ticket-details-section" style={{ float: "right", textAlign: "right" }}>
+                      <div className="ticket-details-section">
+                        <p className="ticket-detail-label">URGENCY</p>
+                        <p>{urgency.toUpperCase()}</p>
+                      </div>
+                      <div className="ticket-details-section">
+                        <p className="ticket-detail-label">SENT</p>
+                        <p>{opened}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Card.Content>
             </Card.Top>
@@ -47,7 +69,4 @@ class TicketModal extends Component {
         </div>
       </div>
     );
-  }
 }
-
-export default TicketModal
