@@ -3,7 +3,7 @@ import UserContext from '../UserContext';
 import axios from 'axios'
 import { JoinStaffCard } from '../components/JoinStaffCard';
 import { Link } from 'react-router-dom';
-import RoleEnum from './Enums/RoleEnum.js';
+import RoleEnum from '../Enums/RoleEnum.js';
 
 
 export const JoinStaff = () => {
