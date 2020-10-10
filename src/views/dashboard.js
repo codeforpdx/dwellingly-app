@@ -9,7 +9,7 @@ import Collapsible from '../components/Collapsible';
 import Modal from '../components/Modal';
 import RequestItem from '../components/RequestItem';
 import NewStaffItem from '../components/NewStaffItem';
-import RoleEnum from '../RoleEnum';
+import RoleEnum from '../Enums/RoleEnum';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 

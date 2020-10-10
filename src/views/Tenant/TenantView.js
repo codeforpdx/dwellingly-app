@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
-import RoleEnum from '../../RoleEnum.js'
+import RoleEnum from '../../Enums/RoleEnum.js'
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
