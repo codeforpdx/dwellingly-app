@@ -9,6 +9,7 @@ import Collapsible from '../components/Collapsible';
 import Modal from '../components/Modal';
 import RequestItem from '../components/RequestItem';
 import NewStaffItem from '../components/NewStaffItem';
+import RoleEnum from '../Enums/RoleEnum';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -33,14 +34,14 @@ export const Dashboard = (props) => {
                 if (!unstaffed.length) return;
 
                 setUnstaffedTenants(unstaffed);
-                const adminUsersObj = { "userrole": 4 };
+                const adminUsersObj = { "userrole": RoleEnum.ADMIN };
                 return axios
                     .post("/api/users/role", adminUsersObj, makeAuthHeaders(userContext))
                     .then(({ data }) => setStaffList(data.users));
             })
             .catch(error => alert(error));
 
-        const pendingUsersObj = { "userrole": 0 };
+        const pendingUsersObj = { "userrole": RoleEnum.PENDING };
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
             .then(({ data }) => { 

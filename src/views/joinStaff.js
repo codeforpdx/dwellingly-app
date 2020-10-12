@@ -3,6 +3,7 @@ import UserContext from '../UserContext';
 import axios from 'axios'
 import { JoinStaffCard } from '../components/JoinStaffCard';
 import { Link } from 'react-router-dom';
+import RoleEnum from '../Enums/RoleEnum.js';
 
 
 export const JoinStaff = () => {
@@ -36,7 +37,7 @@ export const JoinStaff = () => {
 				email={user.email} 
 				tickets={user.tickets} 
 				tenants={user.tenants} 
-				admin={user.role == 4} />
+				admin={user.role == RoleEnum.ADMIN} />
 		)
 	}
 	

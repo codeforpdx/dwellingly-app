@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import * as axios from 'axios';
+import RoleEnum from "../Enums/RoleEnum";
 
 
 
@@ -27,7 +28,7 @@ export const AddStaffMember = () => {
 		phone: "5555555555",
 		email: "emails@email.com",
 		password: "1234",
-		role: 3
+		role: RoleEnum.STAFF
 	}
 
 	const handleSave = () => {
