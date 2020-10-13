@@ -13,7 +13,7 @@ const columns = [{
     return { width: "20%" };
   }
 }, {
-  dataField: 'propertyManager',
+  dataField: 'propertyManagerName',
   text: 'Property Managers',
   sort: true,
   headerStyle: () => {

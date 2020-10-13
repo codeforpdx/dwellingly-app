@@ -11,6 +11,19 @@
   background: $gray;
 }
 
+.section-container {
+  padding-top: 25px;
+  h2 {
+    font-size: 18px;
+    color: $brandBlue;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+  .section-title {
+    padding-bottom: 10px;
+  }
+}
+
 .section-header {
   display: flex;
   flex-direction: row;
@@ -53,6 +66,10 @@
 
 .table-header {
   background-color: $lighterGray;
+}
+
+.table-responsive {
+  width: 100%;
 }
 
 .pagination {

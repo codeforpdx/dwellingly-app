@@ -6,8 +6,10 @@ import useMountEffect from '../utils/useMountEffect';
 import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
+import Modal from '../components/Modal';
 import RequestItem from '../components/RequestItem';
 import NewStaffItem from '../components/NewStaffItem';
+import RoleEnum from '../Enums/RoleEnum';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -21,7 +23,7 @@ export const Dashboard = (props) => {
     const [widgetData, setWidgetData] = useState([]);
     const [areStaffAssigned, setAreStaffAssigned] = useState(false);
     const [usersPending, setUsersPending] = useState([]);
-    const history = useHistory();  
+    const history = useHistory();
     const userContext = useContext(UserContext);
 
     useMountEffect(() => {
@@ -29,17 +31,17 @@ export const Dashboard = (props) => {
             .get("/api/tenants", makeAuthHeaders(userContext))
             .then(({ data }) => {
                 const unstaffed = data.tenants.filter(tenant => !tenant.staff);
-                if(! unstaffed.length) return;
+                if (!unstaffed.length) return;
 
                 setUnstaffedTenants(unstaffed);
-                const adminUsersObj = { "userrole": 4 };
+                const adminUsersObj = { "userrole": RoleEnum.ADMIN };
                 return axios
                     .post("/api/users/role", adminUsersObj, makeAuthHeaders(userContext))
                     .then(({ data }) => setStaffList(data.users));
             })
             .catch(error => alert(error));
 
-        const pendingUsersObj = { "userrole": 0 };
+        const pendingUsersObj = { "userrole": RoleEnum.PENDING };
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
             .then(({ data }) => { 
@@ -52,7 +54,7 @@ export const Dashboard = (props) => {
             .then(({ data }) => setUsersPending(data.users))
             .catch(error => alert(error));
     });
-  
+
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
         history.push(path, usersPending.find(u => u.id === id));
@@ -87,7 +89,7 @@ export const Dashboard = (props) => {
 
     const handleStaffAssignmentChange = ({ target }, tenantId) => {
         const updatedTenants = unstaffedTenants.map(tenant => {
-            if(tenant.id === tenantId) {
+            if (tenant.id === tenantId) {
                 tenant.staff = target.value;
                 setAreStaffAssigned(true);
             }
@@ -97,7 +99,7 @@ export const Dashboard = (props) => {
     }
 
     const handleStaffAssignment = () => {
-        if(!areStaffAssigned) return;
+        if (!areStaffAssigned) return;
 
         const tenantUpdateReqs = unstaffedTenants
             .filter(({ staff }) => staff)
@@ -165,20 +167,14 @@ export const Dashboard = (props) => {
                     }
                 </Collapsible>
             </div>
-            <div className={`modal ${modalActive.visible && 'is-active'}`}>
-                <div className="modal-background" onClick={() => { handleDenyAccess(false) }}></div>
-                <div className="modal-content">
-                    <div className="modal__message_container">
-                        <div className="modal__message">
-                            <h4>Are you sure you want to decline access?</h4>
-                        </div>
-                        <div className="modal__button_container">
-                            <button className="button is-primary is-rounded" onClick={() => { handleDenyAccess(true) }}>YES</button>
-                            <button className="button is-dark is-rounded" onClick={() => { handleDenyAccess(false) }}>NO</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            {modalActive.visible && <Modal
+                contentText={"Are you sure you want to decline access?"}
+                hasButtons={true}
+                yesButtonHandler={() => handleDenyAccess(true)}
+                noButtonHandler={() => handleDenyAccess(false)}
+                closeHandler={() => setModalActive({ ...modalActive, visible: false})}
+            />}
         </>
     )
 }
