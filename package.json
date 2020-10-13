@@ -23,9 +23,13 @@
     "react-scripts": "^3.4.1",
 <<<<<<< HEAD
     "react-search-panel": "^1.0.7",
+<<<<<<< HEAD
 =======
     "react-select": "^3.1.0",
 >>>>>>> add select-react and placeholder options
+=======
+    "react-select": "^3.1.0",
+>>>>>>> reinstall react-select
     "yup": "^0.28.5"
   },
   "scripts": {
