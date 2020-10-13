@@ -83,6 +83,10 @@ export class Properties extends Component {
     axios.get("/api/properties", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
         const { data: { properties } } = response;
+<<<<<<< HEAD
+=======
+        console.log(properties);
+>>>>>>> commit before pull
         properties.forEach(property => property.totalTenants = property.tenantIDs.length)
         this.setState({ properties: properties });
       })
@@ -101,7 +105,11 @@ export class Properties extends Component {
             <div>
               <div className="section-header">
                 <h2 className="page-title">Properties</h2>
+<<<<<<< HEAD
                 <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>
+=======
+                <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
+>>>>>>> commit before pull
               </div>
 
               <Search
