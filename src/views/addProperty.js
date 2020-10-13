@@ -59,7 +59,8 @@ export class AddProperty extends Component {
 
     // context returns as undefined but it is defined in other components such as properties.js
     getManagers = (context) => {
-        axios.get("/api/users/role", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
+        console.log(context);
+        axios.get("/api/users", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
             .then((response) => {
                 console.log(response)
                 const { data: { managers } } = response;
@@ -89,9 +90,8 @@ export class AddProperty extends Component {
         //an array of assigned managers ids is pushed to state and submitted in formhandler
     };
 
-
+    static contextType = UserContext;
     render() {
-        console.log(this.state)
         return (
             <UserContext.Consumer>
                 {session => {
