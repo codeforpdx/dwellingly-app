@@ -10,3 +10,4 @@ CodeforPDX:
 - Scott Harlan
 - Anthony So
 - Yahya Hafez
+- Chris Boe
