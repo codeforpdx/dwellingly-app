@@ -28,12 +28,12 @@ const validationSchema = Yup.object().shape({
             extension: Yup.string()
                 .max(10, "*Extension can't be longer than 10 digits"),
         })
-        .required("*Numbers (at least one) must be provided")
+            .required("*Numbers (at least one) must be provided")
     )
 });
 
 const FieldError = ({ error }) => {
-    if(!error) return null;
+    if (!error) return null;
     return (
         <div className="error-message">
             {error}
@@ -105,7 +105,7 @@ const AddEmergencyContact = (props) => {
 
     useMountEffect(() => {
         const id = props.match.params.id;
-        if(!id && id !== 0) {
+        if (!id && id !== 0) {
             setInitialized(true);
             return;
         }
@@ -184,7 +184,7 @@ const AddEmergencyContact = (props) => {
                                         const addRowValid = (values.contact_numbers[0].number !== "") && (!errors.contact_numbers || !errors.contact_numbers[values.contact_numbers.length - 1].number);
                                         const addRow = () => addRowValid && numbersArrayFields.push({ number: "", numtype: "", extension: "" });
 
-                                        return(
+                                        return (
                                             <>
                                                 {values.contact_numbers.map((_, i) => (
                                                     <NumberSubForm key={i} i={i} values={values} errors={errors} handleChange={handleChange} />
@@ -198,8 +198,8 @@ const AddEmergencyContact = (props) => {
                                         );
                                     }}
                                 />
-                                <div className="container-footer">
-                                    <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>
+                                <div>
+                                    <button className="button is-primary is-rounded mr-5" type="submit" disabled={isSubmitting}>
                                         {editMode ? 'UPDATE' : 'ADD'} EMERGENCY NUMBER
                                     </button>
                                     <Link className="button is-dark is-rounded" to='/emergency'>
