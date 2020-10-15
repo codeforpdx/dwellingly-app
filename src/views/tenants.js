@@ -1,46 +1,42 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../UserContext';
+import axios from "axios";
 import { Link } from "react-router-dom"
 import Search from "../components/Search/index";
 
-const columns = [{
-  dataField: 'name',
-  text: 'Name',
-  sort: true,
-  headerStyle: () => {
-    return { width: "20%" };
-  }
-}, {
-  dataField: 'property',
-  text: 'Property',
-  sort: true,
-  headerStyle: () => {
-    return { width: "20%" };
-  }
-}, {
-  dataField: 'address',
-  text: 'Join Staff',
-  sort: true,
-  headerStyle: () => {
-    return { width: "20%" };
-  }
-}, {
-  dataField: 'tenants',
-  text: 'Added On',
-  sort: true,
-  headerStyle: () => {
-    return { width: "20%" };
-  }
-}];
+const columns = [
+  {
+    dataField: "fullName",
+    formatter: (cell, row, rowIndex, formatExtraData) => {
+      return (
+        <Link key={row.id} to={`/manage/tenants/${row.id}`}>
+          {row.fullName}
+        </Link>
+      );
+    },
+    text: "Name",
+    sort: true,
+  },
+  {
+    dataField: "propertyName",
+    text: "Property",
+    sort: true,
+  },
+  {
+    dataField: "phone",
+    text: "Phone",
+    sort: true,
+  },
+];
 
 const selectRow = {
-  mode: 'checkbox',
+  mode: "checkbox",
   clickToSelect: true,
   sort: true,
   headerColumnStyle: () => {
     return { width: "5%" };
-  }
+  },
 };
 
 // const pageButtonRenderer = ({
@@ -83,54 +79,59 @@ export class Tenants extends Component {
 
     this.state = {
       tenants: [],
-    }
+    };
 
-    // this.getTenants = this.getTenants.bind(this)
+    this.getTenants = this.getTenants.bind(this);
   }
 
   componentDidMount() {
-    // this.getTenants(this.context);
+    this.getTenants(this.context);
   }
 
-  // getTenants = (context) => {
-  //     axios.get(`${process.env.REACT_APP_API_URL}/api/tenants`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
-  //     .then((response) => {
-  //         this.setState({properties: response.data.properties});
-  //     })
-  //     .catch((error) => {
-  //         alert(error);
-  //         console.log(error);
-  //     })
-  // }
+  getTenants = (context) => {
+    axios
+      .get(`/api/tenants`, {
+        headers: { Authorization: `Bearer ${context.user.accessJwt}` },
+      })
+      .then((response) => {
+        const tenants = response.data.tenants;
+        this.setState({ tenants });
+      })
+      .catch((error) => {
+        alert(error);
+        console.log(error);
+      });
+  };
 
-  render() {
-    return (
-      <UserContext.Consumer>
-        {session => {
-          this.context = session;
-          return (
-            <div>
-              <div className="section-header">
-                <h2 className="page-title">Tenants</h2>
-                <Link className="button is-primary is-rounded ml-4" to="/add/tenant">+ ADD NEW</Link>
-              </div>
-              <div className="search-section">
-                <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
-              </div>
-              <div className="properties-list">
-                <BootstrapTable
-                  keyField='id'
-                  data={this.state.tenants}
-                  columns={columns}
-                  selectRow={selectRow}
-                  bootstrap4={true}
-                  headerClasses="table-header"
-                />
-              </div>
-            </div>
-          )
-        }}
-      </UserContext.Consumer>
-    )
+    render() {
+      return (
+          <UserContext.Consumer>
+              {session => {
+                  this.context = session;
+                  return (
+                      <div>
+                          <div className="section-header">
+                              <h2 className="page-title">Tenants</h2>
+                              <Link className="button is-primary is-rounded ml-4" to="/add/tenant">+ ADD NEW</Link>
+                          </div>
+                          <div className="search-section">
+                              <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
+                            </div>
+                          <div className="properties-list">
+                              <BootstrapTable
+                                  keyField='id'
+                                  data={ this.state.tenants }
+                                  columns={ columns }
+                                  selectRow={ selectRow }
+                                  bootstrap4={true}
+                                  headerClasses="table-header"
+                                  classes="table-responsive"
+                                  />
+                          </div>
+                      </div>
+                  )
+              }}
+          </UserContext.Consumer>
+      )
   }
 }

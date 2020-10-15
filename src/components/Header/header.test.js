@@ -4,6 +4,13 @@ import Header from "./index";
 
 import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
 
+
+jest.mock("react-router-dom", () => ({
+	...jest.requireActual("react-router-dom"),
+	useLocation: () => ({ pathname: "/manage/managers" }),
+	useParams: jest.fn(),
+}));
+
 const setUp = (props = {}) => {
 	const component = shallow(<Header {...props} />);
 	return component;

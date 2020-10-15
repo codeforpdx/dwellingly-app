@@ -3,6 +3,7 @@ import { Form, Field, Formik } from 'formik';
 import dwellinglyLogo from '../assets/images/dwellingly_logo.png';
 import UserContext from '../UserContext';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom'
 import GoogleButton from '../components/GoogleButton';
 
 export class LoginForm extends React.Component {
@@ -62,11 +63,11 @@ export class LoginForm extends React.Component {
                               <span className="login__or_text">OR</span>
                             </div>
                           </div>
-                          <GoogleButton innerText={"LOG IN WITH GOOGLE"} />
-                          <div className="login__account_container">
-                            <a href="#" className="login__text_link login__account_forgot_password">Forgot Password</a>
-                            <a href="/signup" className="login__text_link login__account_create">Create an Account</a>
-                          </div>
+                        <GoogleButton innerText={"LOG IN WITH GOOGLE"}/>
+                        <div className="login__account_container">
+                          <Link to="/forgot-password" className="login__text_link login__account_forgot_password">Forgot Password</Link>
+                          <Link to="/signup" className="login__text_link login__account_create">Create an Account</Link>
+                        </div>
 
                         </Form>
                       </>

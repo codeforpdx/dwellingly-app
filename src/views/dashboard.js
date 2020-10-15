@@ -6,8 +6,10 @@ import useMountEffect from '../utils/useMountEffect';
 import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
+import Modal from '../components/Modal';
 import RequestItem from '../components/RequestItem';
 import NewStaffItem from '../components/NewStaffItem';
+import RoleEnum from '../Enums/RoleEnum';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -32,14 +34,14 @@ export const Dashboard = (props) => {
                 if (!unstaffed.length) return;
 
                 setUnstaffedTenants(unstaffed);
-                const adminUsersObj = { "userrole": 4 };
+                const adminUsersObj = { "userrole": RoleEnum.ADMIN };
                 return axios
                     .post("/api/users/role", adminUsersObj, makeAuthHeaders(userContext))
                     .then(({ data }) => setStaffList(data.users));
             })
             .catch(error => alert(error));
 
-        const pendingUsersObj = { "userrole": 0 };
+        const pendingUsersObj = { "userrole": RoleEnum.PENDING };
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
             .then(({ data }) => {
@@ -166,20 +168,14 @@ export const Dashboard = (props) => {
                     }
                 </Collapsible>
             </div>
-            <div className={`modal ${modalActive.visible && 'is-active'}`}>
-                <div className="modal-background" onClick={() => { handleDenyAccess(false) }}></div>
-                <div className="modal-content">
-                    <div className="modal__message_container">
-                        <div className="modal__message">
-                            <h4>Are you sure you want to decline access?</h4>
-                        </div>
-                        <div className="modal__button_container">
-                            <button className="button is-primary is-rounded" onClick={() => { handleDenyAccess(true) }}>YES</button>
-                            <button className="button is-dark is-rounded" onClick={() => { handleDenyAccess(false) }}>NO</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            {modalActive.visible && <Modal
+                contentText={"Are you sure you want to decline access?"}
+                hasButtons={true}
+                yesButtonHandler={() => handleDenyAccess(true)}
+                noButtonHandler={() => handleDenyAccess(false)}
+                closeHandler={() => setModalActive({ ...modalActive, visible: false})}
+            />}
         </>
     )
 }
