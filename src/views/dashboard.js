@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../UserContext';
 import useMountEffect from '../utils/useMountEffect';
-import { MODULE_DATA } from '../components/DashboardModule/data';
 import DashboardModule from '../components/DashboardModule';
 import Collapsible from '../components/Collapsible';
 import Modal from '../components/Modal';
@@ -41,7 +40,6 @@ export const Dashboard = (props) => {
             })
             .catch(error => alert(error));
 
-        const pendingUsersObj = { "userrole": RoleEnum.PENDING };
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
             .then(({ data }) => { 
@@ -49,11 +47,15 @@ export const Dashboard = (props) => {
             })
             .catch(error => alert(error));
 
-        axios
-            .post("/api/users/role", pendingUsersObj, makeAuthHeaders(userContext))
-            .then(({ data }) => setUsersPending(data.users))
-            .catch(error => alert(error));
+        getPendingUsers();
     });
+
+    const getPendingUsers = () => {
+      axios
+          .post("/api/users/role", { "userrole": RoleEnum.PENDING }, makeAuthHeaders(userContext))
+          .then(({ data }) => setUsersPending(data.users))
+          .catch(error => alert(error));
+    }
 
     const handleAddClick = (id) => {
         const path = '/request-access/' + id;
@@ -76,10 +78,11 @@ export const Dashboard = (props) => {
             // If decline access request is confirmed, delete requesting user from the database 
             if (doDeny) {
                 const requestorId = modalActive.id;
-                const { data } = await axios.delete(`/api/user/${requestorId}`, makeAuthHeaders(userContext));
+                axios.delete(`/api/user/${requestorId}`, makeAuthHeaders(userContext))
+                    .then( response => {
+                        getPendingUsers();
+                    });
                 
-                // If delete is successful, update state of usersPending, filtering out deleted user
-                if(data.Message === "User deleted") setUsersPending(usersPending.filter(user => user.id !== requestorId));
             }
         }
         catch(err){
