@@ -9,3 +9,13 @@
 	padding-top: 9px;
 	z-index: 20;
 }
+
+.menu-list a {
+	&:hover {
+		background: none;
+	}
+}
+
+.is-child-link{	
+  padding-left: 15px;	
+}
