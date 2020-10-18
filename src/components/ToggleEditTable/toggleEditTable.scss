@@ -1,8 +1,4 @@
-// Colors
-$blue: #51a3fc;
-$lightGray: #d1d1d1;
-$gray: #8e8e93;
-$darkGray: #555555;
+@import "../../scss/variables.scss";
 
 .form {
   &__row--editing {
@@ -42,7 +38,7 @@ $darkGray: #555555;
     }
   }
   &__field-error__message {
-    color: red;
+    color: $errorRed;
     padding-top: 12.5px;
   }
   &__button-container {

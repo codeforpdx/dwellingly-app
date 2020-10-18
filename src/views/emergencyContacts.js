@@ -90,7 +90,7 @@ const EmergencyContacts = () => {
             </div>
             {isEditing &&
                 <div className="section-footer">
-                    <button className="active button is-rounded" onClick={handleDoneEditing}>DONE</button>
+                    <button className="button is-rounded is-primary mt-4" onClick={handleDoneEditing}>DONE</button>
                 </div>
             }
         </div>
