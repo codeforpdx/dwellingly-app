@@ -27,14 +27,14 @@ const columns = [{
     return { width: "20%" };
   }
 }, {
-  dataField: 'opened',
+  dataField: 'created_at',
   text: 'Created',
   sort: true,
   headerStyle: () => {
     return { width: "20%" };
   }
 }, {
-  dataField: 'updated',
+  dataField: 'updated_at',
   text: 'Updated',
   sort: true,
   headerStyle: () => {
