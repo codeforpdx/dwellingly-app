@@ -2,34 +2,34 @@ import React from "react";
 import "./App.scss";
 import axios from 'axios';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { LoginForm } from "./views/login";
-import SignupForm from "./views/signup";
-import { NavMenu } from "./components/NavigationMenu/navigationMenu.js";
-import { Dashboard } from "./views/dashboard";
-import { RequestAccess } from "./views/requestAccess";
-import { Properties } from "./views/properties";
-import { Tenants } from "./views/tenants";
-import { Terms } from "./views/terms";
-import { Tickets } from "./views/tickets";
+import { LoginForm } from "./views/login/login";
+import SignupForm from "./views/signup/signup";
+import { NavMenu } from "./views/NavigationMenu/navigationMenu.js";
+import { Dashboard } from "./views/dashboard/dashboard";
+import { RequestAccess } from "./views/requestAccess/requestAccess";
+import { Properties } from "./views/properties/properties";
+import { Tenants } from "./views/tenants/tenants";
+import { Terms } from "./views/terms/terms";
+import { Tickets } from "./views/tickets/tickets";
 import Settings from "./views/Settings";
 import ForgotPassword from "./views/ForgotPassword";
-import EmergencyContacts from "./views/emergencyContacts";
-import AddEmergencyContact from "./views/addEmergencyContact";
-import PrivacyPolicy from "./views/privacyPolicy";
+import EmergencyContacts from "./views/emergencyContacts/emergencyContacts";
+import AddEmergencyContact from "./views/addEmergencyContact/addEmergencyContact";
+import PrivacyPolicy from "./views/privacyPolicy/privacyPolicy";
 import {
-	PrivateRoute,
-	auth,
-	parseJwt,
-	checkForStoredAccessToken,
-	checkForStoredRefreshToken,
+  PrivateRoute,
+  auth,
+  parseJwt,
+  checkForStoredAccessToken,
+  checkForStoredRefreshToken,
 } from "./Auth";
 import Header from "./components/Header/index";
 import Footer from "./components/Footer/index";
-import { AddProperty } from "./views/addProperty";
-import Managers from "./views/managers";
+import { AddProperty } from "./views/addProperty/addProperty";
+import Managers from "./views/managers/managers";
 import Manager from "./views/Manager";
-import { JoinStaff } from "./views/joinStaff";
-import { AddStaffMember } from "./views/addStaffMember";
+import { JoinStaff } from "./views/joinStaff/joinStaff";
+import { AddStaffMember } from "./views/addStaffMember/addStaffMember";
 import UserContext from "./UserContext";
 import Tenant from "./views/Tenant";
 import ChangePassword from "./views/Settings/changePassword";
@@ -55,8 +55,8 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    if( checkForStoredAccessToken() ) {
-      let parsedJwt = parseJwt(window.localStorage[ 'dwellinglyAccess' ]);
+    if (checkForStoredAccessToken()) {
+      let parsedJwt = parseJwt(window.localStorage['dwellinglyAccess']);
       this.setState(
         {
           userSession: {
@@ -74,7 +74,7 @@ export class App extends React.Component {
           this.refreshJwtPeriodically();
         }
       );
-    } else if( checkForStoredRefreshToken() ) {
+    } else if (checkForStoredRefreshToken()) {
       this.refreshJwtPeriodically();
     }
   }
@@ -85,10 +85,10 @@ export class App extends React.Component {
 
   login = (email, password) => {
     auth.authenticate(email, password)
-      .then( response => {
+      .then(response => {
         if (response) {
-          window.localStorage[ 'dwellinglyAccess' ] = response.data.access_token;
-          window.localStorage[ 'dwellinglyRefresh' ] = response.data.refresh_token;
+          window.localStorage['dwellinglyAccess'] = response.data.access_token;
+          window.localStorage['dwellinglyRefresh'] = response.data.refresh_token;
           let parsedJwt = parseJwt(response.data.access_token);
           this.setState({
             userSession: {
@@ -102,10 +102,10 @@ export class App extends React.Component {
               phone: parsedJwt.user_claims.phone
             }
           }, () => {
-          // Call to refresh the access token 3 minutes later
-          setTimeout( this.refreshJwtPeriodically, 180000 )
-          this.updateAxiosDefaults();
-        });
+            // Call to refresh the access token 3 minutes later
+            setTimeout(this.refreshJwtPeriodically, 180000)
+            this.updateAxiosDefaults();
+          });
         } else {
           alert("Failed to login");
         }
@@ -113,36 +113,36 @@ export class App extends React.Component {
   }
 
   refreshJwtPeriodically = () => {
-    auth.refreshAccess( window.localStorage[ 'dwellinglyRefresh' ] )
-        .then((response) => {
-          this.setState({
-            userSession: {
-              ...this.state.userSession,
-              isAuthenticated: true,
-              accessJwt: response.data.access_token,
-              /*
-              userId: parsedJwt.userId,
-              userFirst: parsedJwt.userFirst,
-              userLast: parsedJwt.userLast,
-              userEmail: parsedJwt.userEmail
-              */
-            }
-          }, () => {
-            refreshTimeout && clearTimeout(refreshTimeout);
-            // Call to refresh the access token 3 minutes later
-            setTimeout( this.refreshJwtPeriodically, 180000 );
-            this.updateAxiosDefaults();
-          })
-          localStorage.setItem("dwellinglyAccess", response.data.access_token);
+    auth.refreshAccess(window.localStorage['dwellinglyRefresh'])
+      .then((response) => {
+        this.setState({
+          userSession: {
+            ...this.state.userSession,
+            isAuthenticated: true,
+            accessJwt: response.data.access_token,
+            /*
+            userId: parsedJwt.userId,
+            userFirst: parsedJwt.userFirst,
+            userLast: parsedJwt.userLast,
+            userEmail: parsedJwt.userEmail
+            */
+          }
+        }, () => {
+          refreshTimeout && clearTimeout(refreshTimeout);
+          // Call to refresh the access token 3 minutes later
+          setTimeout(this.refreshJwtPeriodically, 180000);
+          this.updateAxiosDefaults();
         })
-        .catch( error => {
-          console.log( "Failed to refresh access token: " + error );
-        } );
+        localStorage.setItem("dwellinglyAccess", response.data.access_token);
+      })
+      .catch(error => {
+        console.log("Failed to refresh access token: " + error);
+      });
   }
 
   logout = () => {
     auth.signout()
-      .then( () => {
+      .then(() => {
         this.setState({
           userSession: {
             isAuthenticated: false,
@@ -168,43 +168,43 @@ export class App extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT:this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
+      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT: this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
         <BrowserRouter>
           <div className='App'>
             {this.state.userSession.isAuthenticated
               && <><NavMenu />
-                  <Header /></>}
+                <Header /></>}
 
-              <Switch>
-                <Route exact path='/login' component={LoginForm} />
-                <Route exact path='/signup' component={SignupForm} />
-                <Route exact path='/terms' component={Terms} />
-                <Route exact path='/privacypolicy' component={PrivacyPolicy}/>
-                <Route exact path='/forgot-password' component={ForgotPassword} />
-                <div className='main-container'>
-                  <PrivateRoute exact path='/' component={Dashboard} />
-                  <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                  <PrivateRoute exact path='/home' component={Dashboard} />
-                  <PrivateRoute exact path='/add/tenant' component={Dashboard} />
-                  <PrivateRoute exact path='/add/property' component={AddProperty}/>
-                  <PrivateRoute exact path='/add/manager' component={Dashboard} />
-                  <PrivateRoute exact path='/manage/tenants' component={Tenants} />
-                  <PrivateRoute exact path='/manage/tenants/:id' component={Tenant} />
-                  <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
-                  <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
-                  <PrivateRoute exact path='/manage/properties' component={Properties} />
-                  <PrivateRoute exact path='/manage/managers' component={Managers} />
-                  <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
-                  <PrivateRoute exact path='/tickets' component={Tickets} />
-                  <PrivateRoute exact path='/reports' component={Dashboard} />
-                  <PrivateRoute exact path='/staff' component={JoinStaff} />
-                  <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
-                  <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
-                  <PrivateRoute exact path='/settings' component={Settings} />
-                  <PrivateRoute exact path='/changePassword' component={ChangePassword} />
-                  <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
-                </div>
-              </Switch>
+            <Switch>
+              <Route exact path='/login' component={LoginForm} />
+              <Route exact path='/signup' component={SignupForm} />
+              <Route exact path='/terms' component={Terms} />
+              <Route exact path='/privacypolicy' component={PrivacyPolicy} />
+              <Route exact path='/forgot-password' component={ForgotPassword} />
+              <div className='main-container'>
+                <PrivateRoute exact path='/' component={Dashboard} />
+                <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                <PrivateRoute exact path='/home' component={Dashboard} />
+                <PrivateRoute exact path='/add/tenant' component={Dashboard} />
+                <PrivateRoute exact path='/add/property' component={AddProperty} />
+                <PrivateRoute exact path='/add/manager' component={Dashboard} />
+                <PrivateRoute exact path='/manage/tenants' component={Tenants} />
+                <PrivateRoute exact path='/manage/tenants/:id' component={Tenant} />
+                <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
+                <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
+                <PrivateRoute exact path='/manage/properties' component={Properties} />
+                <PrivateRoute exact path='/manage/managers' component={Managers} />
+                <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
+                <PrivateRoute exact path='/tickets' component={Tickets} />
+                <PrivateRoute exact path='/reports' component={Dashboard} />
+                <PrivateRoute exact path='/staff' component={JoinStaff} />
+                <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
+                <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
+                <PrivateRoute exact path='/settings' component={Settings} />
+                <PrivateRoute exact path='/changePassword' component={ChangePassword} />
+                <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
+              </div>
+            </Switch>
             {this.state.userSession.isAuthenticated
               && <Footer />}
           </div>

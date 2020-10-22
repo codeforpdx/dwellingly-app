@@ -1,5 +1,7 @@
 import React from "react";
 
+import './footer.scss'
+
 const Footer = () => {
 	const amplifiedUrl = "https://www.amplifiedbydesign.com/";
 	const codeforpdxUrl = "https://www.codeforpdx.org/";

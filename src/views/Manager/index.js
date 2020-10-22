@@ -6,6 +6,8 @@ import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 
+import './manager.scss'
+
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(255, "Must be shorter than 255 Characters")
