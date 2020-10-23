@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
@@ -6,6 +6,7 @@ import { PROPERTY_MANAGER_DATA } from "./dummyData/pManagerData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../components/Search/index"
+import UserContext from '../UserContext';
 
 const columns = [
   {
@@ -57,7 +58,7 @@ const columns = [
     },
   },
   {
-    dataField: "lastUsage",
+    dataField: "lastActive",
     text: "Last Usage",
     sort: true,
     headerStyle: () => {
@@ -75,24 +76,85 @@ const selectRow = {
   },
 };
 
+const convertManagersDataForTable = (managersArray) => {
+  const convertedManagers = managersArray.map(manager => {
+    manager.fullName = `${manager.firstName} ${manager.lastName}`;
+
+    // not exactly sure if this is how we're hoping to implement this?
+    // wondering if there's some missing field from the backend that we need to get
+    // when hitting the api?
+    if (manager.lastActive || !manager.archived) {
+      manager.status = "Active";
+    } else if (manager.archived) {
+      manager.status = "Archived";
+    } else {
+      manager.status = "Pending";
+    }
+    return manager;
+  });
+
+  return convertedManagers;
+};
+
+const payload = {
+  userrole: "2"
+};
+
+const makeHeader = (context) => {
+  return { Authorization: `Bearer ${context.user.accessJwt}` };
+};
+
+
+const getManagers = (header, storeInState) => {
+  axios
+    .post(`${process.env.REACT_APP_PROXY}/api/users/role`, 
+    payload, 
+    header
+    )
+    .then((response) => {
+      const convertedData = convertManagersDataForTable(response.data.users);
+      storeInState(convertedData);
+    })
+    .catch((error) => {
+      alert(error);
+      console.log(error);
+    });
+};
+
+// DUMMY DATA
+// email: "john.oliver@propertiespdx.org" - CHECK
+// firstName: "Jim" - CHECK
+// fullName: "Jim Oliver" - CHECK
+// id: "1" - CHECK
+// lastName: "Oliver" - CHECK
+// lastUsage: "9/12/2019" - CHECK
+// phone: "(503) 123-1234" - CHECK
+// properties: (2) [{…}, {…}] - CHECKish need to investigate
+// status: "Active" - CHECK
+// tenants: (4) [{…}, {…}, {…}, {…}]
+
+// API
+// email: "MisterSir@dwellingly.org"
+// firstName: "Mr."
+// lastName: "Sir"
+// lastActive: "2020-10-07 17:52:06 "
+// phone: "555-555-5555"
+// properties: [{…}]
+// archived: false
+// id: 4
+// created: "2020-10-07 17:52:06 "
+// role: 2
+
+console.log("PROPERTY_MANAGER_DATA", PROPERTY_MANAGER_DATA);
+
 const Managers = () => {
+  const [managersData, setManagersData] = useState();
 
-  // re-purpose getProperties once API is configured to retrieve tenant and properties for Property Managers
-  // eslint-disable-next-line no-unused-vars
-  const getProperties = (context) => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/properties`, {
-        headers: { Authorization: `Bearer ${context.user.accessJwt}` },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        alert(error);
-        console.log(error);
-      });
-  };
-
+  const userContext = useContext(UserContext);
+  const axiosHeader = makeHeader(userContext);
+  
+  useEffect(() => getManagers(axiosHeader, setManagersData), []);
+  
   return (
     <div className="managers">
       <div className="section-header">
@@ -113,15 +175,15 @@ const Managers = () => {
           Invite
         </button>
       </div>
-      <BootstrapTable
+      {managersData && <BootstrapTable
         keyField="id"
-        data={PROPERTY_MANAGER_DATA}
+        data={managersData}
         columns={columns}
         selectRow={selectRow}
         bootstrap4={true}
         headerClasses="table-header"
         wrapperClasses="managers__table"
-      />
+      />}
     </div>
   );
 };
