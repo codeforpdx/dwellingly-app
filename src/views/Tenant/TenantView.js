@@ -88,7 +88,7 @@ const Tenant = () => {
    * Convert an array of staff to an array of SearchPanelItems
    * @param {*} staffArray
    */
-  const getStaffChoice = (staffArray) => {
+  const getStaffChoices = (staffArray) => {
     const staffChoices = [];
     if (staffArray && Array.isArray(staffArray)) {
       staffArray.forEach((staff) => {
@@ -113,7 +113,7 @@ const Tenant = () => {
     const tickets = ticketsResponse.data;
     setState({ tenant, property, tickets });
 
-    const currentStaff = getStaffChoice(tenant.staff);
+    const currentStaff = getStaffChoices(tenant.staff);
 
     setStaffSelections(currentStaff);
   };
@@ -178,7 +178,7 @@ const Tenant = () => {
         name: staffSearchText
       });
       const foundStaff = await staffResponse.data;
-      const foundStaffChoices = getStaffChoice(foundStaff.users);
+      const foundStaffChoices = getStaffChoices(foundStaff.users);
       setStaffSearchResults(foundStaffChoices);
     };
     loadStaff();

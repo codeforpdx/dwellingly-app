@@ -5,8 +5,11 @@ import * as Yup from "yup";
 import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
-import { AddProperty } from '../addProperty';
+import { AddProperty } from '../addProperty/addProperty';
 import Modal from '../../components/Modal';
+import { SearchPanel, SearchPanelVariant } from "react-search-panel";
+import RoleEnum from '../../Enums/RoleEnum.js';
+import './_addTenant.scss';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -17,7 +20,7 @@ const validationSchema = Yup.object().shape({
     .min(7, "*Phone Number must have at least 7 characters")
     .max(20, "*Phone Number can't be longer than 20 characters")
     .required("*Phone Number is required"),
-  number: Yup.number(),
+  unitNum: Yup.number(),
   occupants: Yup.number()
     .required("*Number of Occupants is required"),
   lease: Yup.string()
@@ -28,32 +31,35 @@ const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${u
 
 export const AddTenant = () => {
   const context = useContext(UserContext);
-  const [joinSelections, setJoinSelections] = useState([]);
-  const [joinOptions, setJoinOptions] = useState([]);
+  const [staffSearchText, setStaffSearchText] = useState("");
+  const [staffSearchResults, setStaffSearchResults] = useState([]);
+  const [staffSelections, setStaffSelections] = useState(null);
   const [propertySelection, setPropertySelection] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
   const [showAddProperty, setShowAddProperty] = useState(false);
 
   useEffect(() => {
-    getRoles();
     getProperties();
   }, []);
 
-  const getRoles = () => {
-    axios.post("/api/users/role", { "userrole": 4 }, makeAuthHeaders(context))
-      .then(({ data }) => {
-        let users = data.users && data.users.length > 0
-          ? data.users.map( user => {
-            return {
-              ...user,
-              label: `${user.firstName} ${user.lastName}`,
-              value: user.id
-            }
+  useEffect(() => {
+    axios.post("/api/users/role", {
+      userrole: RoleEnum.STAFF,
+      name: staffSearchText
+    })
+      .then( staffResponse => {
+        let users = staffResponse.data.users;
+        let choices = users
+          ? users.map( u => {
+            return { key: u.id, description: `${u.firstName} ${u.lastName}`}
           })
-          : data.users
-        setJoinOptions(users);
-      });
-  }
+          : [];
+        setStaffSearchResults(choices);
+      })
+      .catch( errors => {
+        alert(errors);
+      })
+  }, [staffSearchText]);
 
   const getProperties = () => {
     axios.get("/api/properties", makeAuthHeaders(context))
@@ -76,7 +82,7 @@ export const AddTenant = () => {
     let body = {
       ...data,
       propertyID: propertySelection.value,
-      staffIDs: joinSelections && joinSelections.map( staff => staff.value )
+      staffIDs: staffSelections && staffSelections.map( staff => staff.key )
     }
     axios
       .post(`/api/tenants`, body, makeAuthHeaders(context))
@@ -93,6 +99,28 @@ export const AddTenant = () => {
   const handleAddPropertyCancel = () => {
     setShowAddProperty(false);
   }
+
+  /**
+   * Handle staff search input
+   * @param {*} event
+   */
+  const handleChangeSearch = (event) => {
+    const { value } = event.target;
+    if (!value || value.length === 0) {
+      setStaffSearchResults([]);
+      setStaffSearchText("");
+    } else {
+      setStaffSearchText(value);
+    }
+  };
+
+  /**
+   * Handle change in staff selections of search panel
+   * @param {*} selectedChoices
+   */
+  const handleChangeStaffSelections = (selectedChoices) => {
+    setStaffSelections(selectedChoices);
+  };
 
   return (
     <div>
@@ -189,18 +217,25 @@ export const AddTenant = () => {
               </div>
               <h1 className="section-title">ASSIGN JOIN STAFF</h1>
               <div className="typeahead-section">
-                {/* <Select
-                  options={joinOptions}
-                  isMulti
-                  name="join-staff-search"
-                  value={joinSelections}
-                  onChange={setJoinSelections}
-                  placeholder="Search JOIN Staff"
-                  styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
-                /> */}
+                <SearchPanel
+                  chips
+                  choices={staffSearchResults}
+                  clearLabel="Clear search text"
+                  maximumHeight={400}
+                  onChange={handleChangeSearch}
+                  onClear={handleChangeSearch}
+                  onSelectionChange={handleChangeStaffSelections}
+                  placeholder="Search JOIN staff"
+                  preSelectedChoices={staffSelections}
+                  small
+                  value={staffSearchText}
+                  variant={SearchPanelVariant.checkbox}
+                  width={400}
+                />
               </div>
               <h1 className="section-title">PROPERTY</h1>
               <div className="typeahead-section">
+
                 {/* <Select
                   options={propertyOptions}
                   name="property-search"
@@ -230,9 +265,9 @@ export const AddTenant = () => {
                 <Field
                   className="column form-field"
                   type="text"
-                  name="number"
+                  name="unitNum"
                   onChange={handleChange}
-                  value={values.number}
+                  value={values.unitNum}
                   placeholder="Unit Number (Optional)"
                 />
                 {errors.number ? (
