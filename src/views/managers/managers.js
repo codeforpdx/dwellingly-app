@@ -2,7 +2,7 @@ import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
-import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
+import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index"
