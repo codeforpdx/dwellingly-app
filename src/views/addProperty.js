@@ -88,7 +88,6 @@ export class AddProperty extends Component {
 
     static contextType = UserContext;
     render() {
-        console.log(this.state);
         return (
             <UserContext.Consumer>
                 {session => {
