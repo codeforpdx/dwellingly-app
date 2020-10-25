@@ -43,10 +43,10 @@ export const JoinStaff = () => {
 	
 	return (
 		<>
-      <div className="section-header">
-        <h2 className="page-title">JOIN Staff</h2>
-        <Link className="button" to='/staff/add'> + ADD NEW </Link>
-      </div>
+			<div className="section-header">
+				<h2 className="page-title">JOIN Staff</h2>
+				<Link className="button is-rounded is-primary ml-4" to='/staff/add'> + ADD NEW </Link>
+			</div>
 			<div className="columns columns-spacing">
 				<div className="column">
 					{staff.slice(0, secondColumnStart).map((user, index) => {return staffCard(user)})}

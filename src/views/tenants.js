@@ -112,7 +112,7 @@ export class Tenants extends Component {
                       <div>
                           <div className="section-header">
                               <h2 className="page-title">Tenants</h2>
-                              <Link className="button is-rounded" to="/add/tenant">+ ADD NEW</Link>
+                              <Link className="button is-primary is-rounded ml-4" to="/add/tenant">+ ADD NEW</Link>
                           </div>
                           <div className="search-section">
                               <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />

@@ -1,19 +1,7 @@
 .managers {
-    .button {
-      margin-left: 20px;
-      font-weight: bold;
-      color: white;
-      background-color: $blue;
-      border: 0;
-      margin-bottom: 10px;
-      &__envelope-icon {
-        margin: 0 5px;
-      }
-    }
-    .invite-button {
-      width: 90%;
+    .invite-button-container {
       background-color: $lightGray;
-      margin: 0 0 10px 0;
+      margin-bottom: 10px;
     }
     .table-header {
       background-color: $lightGray;

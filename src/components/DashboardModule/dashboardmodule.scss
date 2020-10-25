@@ -6,7 +6,7 @@
         width: 30%;
         flex-basis: 30%;
         flex-grow: 0;
-        color: white;
+        color: $white;
 
         &:nth-child(1) {
             background-color: $orange;
@@ -18,7 +18,7 @@
             background-color: $blue;
         }
         a {
-            color: white;
+            color: $white;
         }
     }
     &__module_header {

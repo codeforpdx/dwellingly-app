@@ -158,8 +158,16 @@ export class AddProperty extends Component {
                                             <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
                                             <input></input>
                                         </div> */}
+<<<<<<< HEAD
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
+=======
+                                            <div className="container-footer mt-3">
+                                                <button
+                                                    className="button is-primary is-rounded mr-5"
+                                                    type="submit"
+                                                    disabled={isSubmitting}>SAVE</button>
+>>>>>>> 7529eeac94d8f66d5deb23f4b13ad7ee3df5ffd7
                                                 <Link className="button is-dark is-rounded" to='/manage/properties'>CANCEL</Link>
                                             </div>
                                         </Form>

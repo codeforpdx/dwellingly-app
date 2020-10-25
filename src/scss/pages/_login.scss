@@ -1,6 +1,5 @@
 .login {
   &__form-container {
-    // background: url("./assets/images/dwellingly_logo.png") no-repeat;
     background-size: contain;
     background-color: white;
     width: 300px;
@@ -9,16 +8,6 @@
     box-shadow: 0 0 10px 0 rgba(black, 0.25);
     margin: auto;
     text-align: center;
-  }
-  &__button {
-    color: white;
-    background-color: $blue;
-    border-radius: 20px;
-    padding: 5px 10px;
-    margin-top: 10px;
-    border-width: 0px;
-    padding: 10px 20px;
-    font-weight: bold;
   }
 
   &__form-field {

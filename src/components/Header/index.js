@@ -6,17 +6,16 @@ import LogOutButton from "./LogOutButton";
 const Header = (props) => {
   const loc = useLocation();
 
-  if(loc.pathname === "/terms") {
+  if (loc.pathname === "/terms") {
     return null;
   }
-	return (
-    <header className="navbar bg-gradient">
-      <Link className="navbar-item" id="header-logo" to="/">
+  return (
+    <header className="navbar-brand bg-gradient navbar-container">
+      <Link className="navbar-item" to="/">
         <img src={dwellinglylogo} alt="dwellingly logo" />
       </Link>
-      <div className="logout-button">
-        <LogOutButton />
-      </div>
+
+      <LogOutButton />
     </header>
   );
 };

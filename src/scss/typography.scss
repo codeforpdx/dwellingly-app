@@ -19,7 +19,6 @@ body {
 
 .form-error {
     font-size: 0.7em;
-    //color: "#a44a";
-    color: #a44a;
+    color: $errorRed;
     padding: 0.3em;
 }

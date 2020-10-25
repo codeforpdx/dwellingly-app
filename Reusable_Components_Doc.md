@@ -17,30 +17,7 @@ _____
 * **Will be used in**: Tenants (figma pg 30), Properties (figma pg 49)
 * **Additional info**: While isEditing and setEditingStatus can be initiated in the parent scope with useState(), for convience they are in a hook that can be imported by name from the same file. (i.e <import TitleAndPen, { useEditingStatus } from '../components/TitleAndPen';>) \
 You would then call it like this: <const { isEditing, setEditingStatus } = useEditingStatus()>
-_____
 
-
-
-
-## Reusable Components Documentation
-
-*If you make a component that might be reused in the future please document it here in the following format. Also thank you for making them!*
-
-### **Name**: ___ 
-* **File path**: ___
-* **Input/Props**: ___
-* **Currently in use**: ___
-* **Will be used in**: ___
-* **Additional info**: ___
-_____
-
-### **Name**: TitleAndPen
-* **File path**: "src/components/TitleAndPen"
-* **Input/Props**: {title, isEditing, setEditingStatus}
-* **Currently used in**: emergencyContacts, Manager
-* **Will be used in**: Tenants (figma pg 30), Properties (figma pg 49)
-* **Additional info**: While isEditing and setEditingStatus can be initiated in the parent scope with useState(), for convience they are in a hook that can be imported by name from the same file. (i.e <import TitleAndPen, { useEditingStatus } from '../components/TitleAndPen';>) \
-You would then call it like this: <const { isEditing, setEditingStatus } = useEditingStatus()>
 _____
 
 ### **Name**: ToggleEditTable
@@ -139,7 +116,18 @@ String. This is whatever is contained between `<Button>` and `</Button>`. It sho
 
 _____
 
-
-
-
-
+### **Name**: Modal 
+* **File path**: “src/components/Modal”
+* **Input/Props**: {titleText, contentText, hasButtons, yesButtonHandler, noButtonHandler, closeHandler}
+* **Currently used in**: ForgotPassword, Dashboard
+* **Will be used in**: 
+	* Request For Access (figma pg 5)
+	* Create an Account (figma pg 26)
+	* Add a New Property (figma pg. 35)
+	* property managers (figma pg 36)
+	* JOIN Staff (figma pg. 38)
+	* contact page (figma pg. 51 & 58)
+	* and anywhere else that a Modal is needed! :)
+* **Additional info**: The only prop that is required is the closeHandler (so that users can actually close the modal!) 
+	* Note that if you set hasButtons to true, the button text is “Yes” and “No”. (see figma pg. 5 for an example) 
+	* If hasButtons is false, it will display a link stating “Return to Log In” instead. If you need different text here, you'll need to refactor this component to support changing that text.
