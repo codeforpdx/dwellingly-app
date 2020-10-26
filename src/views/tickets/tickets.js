@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import UserContext from '../UserContext';
-import Accordion from '../components/Accordion';
-import { TicketModal } from '../components/Ticket';
+import UserContext from '../../UserContext';
+import Accordion from '../../components/Accordion';
+import { TicketModal } from '../../components/TicketModal';
 import * as axios from 'axios';
 import Search from "../../components/Search/index"
 import Toast from '../../utils/toast';

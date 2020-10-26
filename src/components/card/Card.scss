@@ -1,9 +1,78 @@
-@import "../../constants/constants.scss";
+@import "../../scss/variables.scss";
+
+
+// measurements
+$border-radius: 8px;
+$border-radius--btn: 20px;
+$border-radius--card: 10px;
+$ticket__cutout-border--size: 4px;
+$ticket__cutout-border--radius: 8px;
+$ticket__cutout-size--height: 18px;
+$ticket__cutout-size--width: 6px;
+$ticket__cutout-sides: 23px;
+$width__nav: 15em;
+$width__wrapper: 800px;
+// media queries
+$mq--desktop: 1200px;
+
+/* F U N C T I O N S */
+@function emify($target, $context) {
+  @return ($target/$context) * 1em;
+}
+/* end functions */
+
+/* M I X I N S */
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+@mixin dialog_shadow {
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+@mixin ticket_cutout($position) {
+  #{$position}: -$ticket__cutout-size--width;
+  &::after {
+    background: rgba(0, 0, 0, 0);
+    border: 5px solid $white;
+    border-radius: 50%;
+    content: "";
+    height: $ticket__cutout-sides;
+    position: absolute;
+    #{$position}: -12px;
+    top: -2px;
+    width: $ticket__cutout-sides;
+  }
+}
+
+@mixin flex_align($position) {
+  align-items: center;
+  display: flex;
+  justify-content: $position;
+}
+
+@mixin hidden_scrolling {
+  box-sizing: content-box;
+  overflow-y: auto;
+  // overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* end mixins */
 
 /* C A R D S */
 /* ==================================================== */
 .cards {
-  background: $color__gray--light;
+  background: $lightGray;
   padding: 1em 1em 0 1em;
 
   @media screen and (min-width: $mq--desktop) {
@@ -14,11 +83,11 @@
 
 a .card,
 button .card {
-  color: $color__black;
+  color: $black;
 }
 
 .card {
-  background: $color__white;
+  background: $white;
   border-radius: $border-radius--card;
   @include dialog_shadow;
   @include clearfix;
@@ -27,21 +96,21 @@ button .card {
   text-align: left;
 
   &__top {
-    background: $color__white;
+    background: $white;
     border-top-left-radius: $border-radius--card;
     border-top-right-radius: $border-radius--card;
     min-height: 1em;
   }
 
   &__bottom {
-    background: $color__white;
+    background: $white;
     border-bottom-left-radius: $border-radius--card;
     border-bottom-right-radius: $border-radius--card;
     min-height: 1em;
   }
 
   &__header {
-    border-bottom: 1px solid $color__gray--border;
+    border-bottom: 1px solid $lightGray;
     position: relative;
 
     h1 {
@@ -58,7 +127,7 @@ button .card {
     }
 
     .action {
-      color: $color__blue--dark;
+      color: $darkBlue;
       height: 1.5em;
       top: 0.5em;
       right: 0.5em;
@@ -67,10 +136,10 @@ button .card {
     }
 
     button.card__flag {
-      background: $color__white;
-      border: 2px solid $color__red;
+      background: $white;
+      border: 2px solid $red;
       bottom: 0.5rem;
-      color: $color__red;
+      color: $red;
       font-size: emify(13, 16);
       height: auto;
       line-height: 1.5em;
@@ -78,8 +147,8 @@ button .card {
       right: 0.5rem;
 
       &--flagged {
-        background: $color__red;
-        color: $color__white;
+        background: $red;
+        color: $white;
       }
 
       .icon {
@@ -160,9 +229,9 @@ button .card {
   }
 
   &__action {
-    background: $color__blue--dark;
+    background: $darkBlue;
     border-top-left-radius: $border-radius--card;
-    color: $color__white;
+    color: $white;
     font-size: emify(14, 16);
     padding: 0.5rem 1rem;
   }
@@ -170,8 +239,8 @@ button .card {
   &__status {
     border: 0;
     border-radius: 0;
-    background: $color__yellow;
-    color: $color__white;
+    background: $orange;
+    color: $white;
     cursor: pointer;
     font-size: 1em;
     font-weight: 700;
@@ -194,8 +263,8 @@ button .card {
     &::before {
       background: radial-gradient(
         ellipse at center,
-        $color__gray--light 0%,
-        $color__gray--light 30%,
+        $lightGray 0%,
+        $lightGray 30%,
         transparent 30%
       );
       background-size: 1em 1em;
@@ -268,7 +337,7 @@ button .card {
         margin-bottom: 0.5rem;
 
         .icon {
-          border-bottom: 1px solid $color__yellow;
+          border-bottom: 1px solid $orange;
           margin-right: 0.5em;
           padding-bottom: 0.25em;
           text-align: center;
@@ -307,7 +376,7 @@ button .card {
     }
 
     &__ticket {
-      background: $color__white;
+      background: $white;
       height: $ticket__cutout-size--height;
       left: $ticket__cutout-size--width;
       position: relative;
@@ -332,7 +401,7 @@ button .card {
 
       &::after {
         border: 0;
-        border-bottom: 1px dashed $color__gray--border;
+        border-bottom: 1px dashed $lightGray;
         content: "";
         margin: 0;
         position: absolute;
