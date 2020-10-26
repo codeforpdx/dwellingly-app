@@ -36,7 +36,7 @@ const columns = [{
     return { width: "10%" };
   }
 }, {
-  dataField: 'dateAdded',
+  dataField: 'created_at',
   text: 'Added On',
   sort: true,
   headerStyle: () => {
