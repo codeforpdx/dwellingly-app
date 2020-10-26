@@ -3,8 +3,10 @@ import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
 import * as axios from "axios";
-import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
+import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
+
+import './manager.scss'
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()

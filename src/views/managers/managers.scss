@@ -1,0 +1,18 @@
+@import "../../scss/variables.scss";
+.managers {
+    .invite-button-container {
+      background-color: $lightGray;
+      margin-bottom: 10px;
+    }
+    .table-header {
+      background-color: $lightGray;
+      border: none;
+    }
+  &__table {
+    width: 90%;
+  }
+
+  .section-header{
+    padding-bottom: 20px;
+  }
+}
