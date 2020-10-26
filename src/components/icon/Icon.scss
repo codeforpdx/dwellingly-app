@@ -1,4 +1,4 @@
-@import '../../constants/constants.scss';
+@import '../../scss/variables.scss';
 
 /* I C O N S */
 /* ==================================================== */
@@ -15,11 +15,11 @@
   }
 
   &--comment {
-    color: $color__blue;
+    color: $blue;
   }
 
   &--heart {
-    color: $color__red;
+    color: $red;
   }
 
   &--phone {
@@ -39,9 +39,5 @@
       height: 100%;
     }
   }
-
-  // &--comment {
-  //   transform: translateY(emify(1, 16) * -1);
-  // }
 }
 /* end icons */

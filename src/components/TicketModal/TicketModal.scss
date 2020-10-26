@@ -1,4 +1,5 @@
-@import "../../constants/constants.scss";
+@import "../../scss/variables.scss";
+@import "../card/Card.scss";
 
 .ticket-window-modal {
   z-index: 5000;
@@ -28,11 +29,11 @@
 .close-icon-container {
   text-align: right;
   height: 1em;
-  color: $color__blue--dark;
+  color: $darkBlue;
   button {
     background: none;
     border: none;
-    color: $color__blue--dark;
+    color: $darkBlue;
   }
 }
 
@@ -40,14 +41,14 @@
   margin: 0;
   font-size: 1rem;
   font-weight: bold;
-  color: $color__yellow;
+  color: $orange;
 }
 
 #ticket-modal-issue {
   margin-left: 1.5em;
   width: 60%;
   margin-bottom: 1em;
-  color: $color__blue--dark;
+  color: $darkBlue;
   font-weight: bold;
   line-height: normal;
 }
@@ -71,7 +72,7 @@
 .ticket-card-bottom-header {
   font-size: 16px;
   font-weight: bold;
-  color: $color__gray--dark;
+  color: $darkGray;
   padding-bottom: 20px;
 }
 
@@ -79,11 +80,11 @@
   font-weight: normal;
   padding: 1em .3em 1em 1em;
   border-radius: $border-radius--card;
-  background-color: $color__gray--light;
+  background-color: $lightGray;
   display: flex;
   text-align: right;
   p {
-    color: $color__blue--dark;
+    color: $darkBlue;
     font-weight: normal;
     font-size: 14px;
   }
@@ -98,7 +99,7 @@
 }
 
 .ticket-card-notes-issue-status {
-  color: $color__blue;
+  color: $blue;
   font-weight: normal;
 }
 
@@ -108,10 +109,10 @@
 }
 
 .ticket-card-note-header {
-  color: $color__gray--medium;
+  color: $mediumGray;
   font-weight: normal;
 }
 
 #in-progress {
-  color: $color__yellow;
+  color: $orange;
 }

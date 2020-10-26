@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../card/Card';
-import { CARD_TYPES } from '../../constants/';
+import { CARD_TYPES } from '../../constants';
 import Icon from '../icon/Icon';
 import './TicketModal.scss';
 
@@ -8,8 +8,8 @@ export const TicketModal = (props) => {
     if(!props.show || !props.ticket) {
       return null;
     }
-    const { assigned, issue, opened, sender,
-      status, tenant, updated, urgency, notes } = props.ticket;
+    const { assigned, issue, created_at, sender,
+      status, tenant, updated_at, urgency, notes } = props.ticket;
 
     return (
       <div className="ticket-window-modal">
@@ -46,7 +46,7 @@ export const TicketModal = (props) => {
                       </div>
                       <div className="ticket-details-section">
                         <p className="ticket-detail-label">SENT</p>
-                        <p>{opened}</p>
+                        <p>{created_at}</p>
                       </div>
                     </div>
                   </div>
@@ -64,7 +64,7 @@ export const TicketModal = (props) => {
                       <>
                         <div className="ticket-card-note-header-row">
                           <p style={{ float: "left" }} className="ticket-card-note-header">{note.user}</p>
-                          <p style={{ float: "right" }} className="ticket-card-note-header">{note.created}</p>
+                          <p style={{ float: "right" }} className="ticket-card-note-header">{note.created_at}</p>
                         </div>
                         <div className="ticket-card-note">
                           <p>{note.text}</p>
