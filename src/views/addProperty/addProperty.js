@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Form, Field, Formik } from 'formik';
+import { Form, Field, Formik, isEmptyArray } from 'formik';
 import * as Yup from 'yup';
-import UserContext from '../../UserContext';
+import UserContext from '../UserContext';
 import * as axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import Select from 'react-select';
+// import { doPasswordReset } from '../../stashed/src/firebase/auth';
+// import user from '../../stashed/src/dux/user';
+import RoleEnum from '../Enums/RoleEnum';
 import './addProperty.scss'
 
 
@@ -27,6 +30,7 @@ const validationSchema = Yup.object().shape({
         .required("*State is required"),
     units: Yup.string()
         .max(50, "*Unit can't be longer than 50 characters"),
+    managers: Yup.array()
 });
 
 const formHandler = (data, context) => {
@@ -37,17 +41,53 @@ const formHandler = (data, context) => {
         .catch(function (error) {
             alert(error);
         })
-}
+};
 
 export class AddProperty extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            propertyManagers: undefined,
+            assignedPropertyManagers: [],
+            managerSelection: []
         }
+
+        this.getManagers = this.getManagers.bind(this);
     }
 
+    componentDidMount() {
+        this.getManagers(this.context);
+    };
+
+    getManagers = (context) => {
+        axios.get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
+            .then((response) => {
+                let managerSelection = [...this.state.managerSelection];
+                const userSelection = response.data.users;
+                userSelection.forEach(function modifyManagers(user) {
+                    let manager = { value: user.id, label: user.firstName + " " + user.lastName }
+                    managerSelection.push(manager);
+                });
+                this.setState({ managerSelection })
+            })
+            .catch((error) => {
+                alert(error);
+                console.log(error);
+            })
+    };
+
+    handleInputChange = (selectedManagers) => {
+        if (selectedManagers === null) {
+            selectedManagers = [];
+        }
+        let assignedPropertyManagers = [];
+        selectedManagers.forEach(function modifyManagers(manager) {
+            assignedPropertyManagers.push(manager.value);
+        });
+        this.setState({ assignedPropertyManagers });
+    };
+
+    static contextType = UserContext;
     render() {
         return (
             <UserContext.Consumer>
@@ -64,6 +104,7 @@ export class AddProperty extends Component {
                                     state: "",
                                     zipcode: "",
                                     units: "",
+                                    managers: []
                                 }}
                                 validationSchema={validationSchema}
                                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -153,23 +194,17 @@ export class AddProperty extends Component {
                                                 {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
                                             </div>
 
-                                            {/* This element will use a list of property managers
-                                            and will need to be implemented later. react-select
-                                            can be used to select from list retrieved from endpoint */}
-                                            {/* <div className=" add-property__assign-manager-container">
-                                            <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                            <input></input>
-                                        </div> */}
-<<<<<<< HEAD
-                                            <div className="container-footer">
-                                                <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
-=======
+                                            <div className=" add-property__assign-manager-container">
+                                                <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
+                                                <Field style={{ display: 'none' }} name="managers" value={this.state.assignedPropertyManagers} />
+                                                <Select isMulti options={this.state.managerSelection} onChange={this.handleInputChange} />
+
+                                            </div>
                                             <div className="container-footer mt-3">
                                                 <button
                                                     className="button is-primary is-rounded mr-5"
                                                     type="submit"
                                                     disabled={isSubmitting}>SAVE</button>
->>>>>>> 7529eeac94d8f66d5deb23f4b13ad7ee3df5ffd7
                                                 <Link className="button is-dark is-rounded" to='/manage/properties'>CANCEL</Link>
                                             </div>
                                         </Form>
