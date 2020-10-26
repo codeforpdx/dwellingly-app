@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
 import LogOutButton from "./LogOutButton";
 
+import './header.scss'
+
 const Header = (props) => {
   const loc = useLocation();
 

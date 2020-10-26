@@ -7,6 +7,8 @@ import Modal from "../../components/Modal";
 import Button from "../../components/Button";
 import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
 
+import './forgotPassword.scss'
+
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("*Please enter a valid email")
@@ -21,7 +23,7 @@ const ForgotPassword = () => {
     hasButtons: false,
   });
 
-  const formHandler = (data) => {    
+  const formHandler = (data) => {
     console.log(data);
     axios
       .post("http://localhost:5000/api/reset-password", data)
@@ -85,46 +87,46 @@ const ForgotPassword = () => {
             isValid,
             isSubmitting,
           }) => (
-            <div className="forgot-password__main_container">
-              <p className="forgot-password__para-text">
-                Forgot your password? It happens to all of us. To recover your
-                password, follow the instructions that relate to your account.
+              <div className="forgot-password__main_container">
+                <p className="forgot-password__para-text">
+                  Forgot your password? It happens to all of us. To recover your
+                  password, follow the instructions that relate to your account.
               </p>
-              <h1 className="forgot-password__section-title">
-                EMAIL/PASSWORD USERS
+                <h1 className="forgot-password__section-title">
+                  EMAIL/PASSWORD USERS
               </h1>
-              <Form className="form-container" onSubmit={handleSubmit}>
-                <div className="form-container__form-row columns">
-                  <label className="column is-one-fifth" htmlFor="name">
-                    Email
+                <Form className="form-container" onSubmit={handleSubmit}>
+                  <div className="form-container__form-row columns">
+                    <label className="column is-one-fifth" htmlFor="name">
+                      Email
                   </label>
-                  <Field
-                    className="column form-container__form-field"
-                    type="text"
-                    name="email"
-                    onChange={handleChange}
-                    value={values.name}
-                    placeholder="Please enter your email address"
-                  />
-                  {errors.name ? (
-                    <div className="form-container__error-message">
-                      {errors.name}
-                    </div>
-                  ) : null}
-                </div>
-                <div className={"form-container__button-container"}>
-                  <Button
-                    type={"submit"}
-                    isCancelButton={false}
-                    isValidFlag={isValid}
-                    disabledFlag={isSubmitting}
-                  >
-                    REQUEST EMAIL PASSWORD RESET
+                    <Field
+                      className="column form-container__form-field"
+                      type="text"
+                      name="email"
+                      onChange={handleChange}
+                      value={values.name}
+                      placeholder="Please enter your email address"
+                    />
+                    {errors.name ? (
+                      <div className="form-container__error-message">
+                        {errors.name}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className={"form-container__button-container"}>
+                    <Button
+                      type={"submit"}
+                      isCancelButton={false}
+                      isValidFlag={isValid}
+                      disabledFlag={isSubmitting}
+                    >
+                      REQUEST EMAIL PASSWORD RESET
                   </Button>
-                </div>
-              </Form>
-            </div>
-          )}
+                  </div>
+                </Form>
+              </div>
+            )}
         </Formik>
         <div className="forgot-password__google-users">
           <h1 className="forgot-password__section-title">
