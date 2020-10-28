@@ -31,15 +31,16 @@ const validationSchema = Yup.object().shape({
 
 const getManager = (context, managerId, storeInState) => {
   axios
-    .post(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
+    .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
     { Authorization: `Bearer ${context.user.accessJwt}` }
     )
     .then((response) => {
       const manager = response.data;
       storeInState(manager);
     })
-    .catch(error => {
-      Toast(error.message);
+    .catch((error) => {
+      alert(error);
+      console.log(error);
     });
 };
 
@@ -149,19 +150,19 @@ const updateManager = (payload) => {
             </div>
           ))}
         </div>
-        <div className="manager__tenants">
-          <h1 className="section-title">TENANTS</h1>
-          {manager.tenants.map((tenant) => (
-            <div className="columns tenant__form-row" key={tenant.name}>
-              <div className="column is-one-quarter bold tenant__name">
-                {tenant.name}
-              </div>
-              <div className="column is-one-quarter">{tenant.property}</div>
-              <div className="column is-one-quarter">{tenant.unit}</div>
-              <div className="column is-one-quarter">{tenant.phone}</div>
+      </div>
+      <div className="manager__tenants">
+        <h1 className="section-title">TENANTS</h1>
+        {managerData.tenants.map((tenant) =>
+          <div key={tenant.id} className="columns tenant__form-row">
+            <div className="column is-one-quarter bold tenant__name">
+              {tenant.fullName}
             </div>
-          ))}
-        </div>
+            <div className="column is-one-quarter">{tenant.propertyName}</div>
+            <div className="column is-one-quarter">Unit #{tenant.unitNum}</div>
+            <div className="column is-one-quarter">{tenant.phone}</div>
+          </div>
+        )}
       </div>
     </div>
   ) : null;
