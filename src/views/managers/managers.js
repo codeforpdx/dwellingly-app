@@ -81,7 +81,8 @@ const selectRow = {
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
-
+    
+    // #####################################################
     // not exactly sure if this is how we're hoping to implement this?
     // wondering if there's some missing field from the backend that we need to get
     // when hitting the api?
@@ -121,32 +122,6 @@ const getManagers = (header, storeInState) => {
       console.log(error);
     });
 };
-
-// DUMMY DATA
-// email: "john.oliver@propertiespdx.org" - CHECK
-// firstName: "Jim" - CHECK
-// fullName: "Jim Oliver" - CHECK
-// id: "1" - CHECK
-// lastName: "Oliver" - CHECK
-// lastUsage: "9/12/2019" - CHECK
-// phone: "(503) 123-1234" - CHECK
-// properties: (2) [{…}, {…}] - CHECKish need to investigate
-// status: "Active" - CHECK
-// tenants: (4) [{…}, {…}, {…}, {…}]
-
-// API
-// email: "MisterSir@dwellingly.org"
-// firstName: "Mr."
-// lastName: "Sir"
-// lastActive: "2020-10-07 17:52:06 "
-// phone: "555-555-5555"
-// properties: [{…}]
-// archived: false
-// id: 4
-// created: "2020-10-07 17:52:06 "
-// role: 2
-
-console.log("PROPERTY_MANAGER_DATA", PROPERTY_MANAGER_DATA);
 
 const Managers = () => {
   const [managersData, setManagersData] = useState();
