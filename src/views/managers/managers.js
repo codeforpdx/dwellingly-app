@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
-import { PROPERTY_MANAGER_DATA } from "../pManagerData";
+import roleEnum from '../Enums/RoleEnum';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index"
@@ -83,9 +83,8 @@ const convertManagersDataForTable = (managersArray) => {
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
     
     // #####################################################
-    // not exactly sure if this is how we're hoping to implement this?
-    // wondering if there's some missing field from the backend that we need to get
-    // when hitting the api?
+    // not exactly sure if this is how we're hoping to implement displaying the "status" field?
+    // I took my best guess with it for now :)
     if (manager.lastActive || !manager.archived) {
       manager.status = "Active";
     } else if (manager.archived) {
@@ -100,7 +99,7 @@ const convertManagersDataForTable = (managersArray) => {
 };
 
 const payload = {
-  userrole: "2"
+  userrole: `${roleEnum.PROPERTY_MANAGER}`
 };
 
 const makeHeader = (context) => {
