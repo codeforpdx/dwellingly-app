@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
 import * as axios from "axios";
-import { PROPERTY_MANAGER_DATA } from "../dummyData/pManagerData";
+import UserContext from '../../UserContext';
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 
 const validationSchema = Yup.object().shape({
@@ -26,40 +26,57 @@ const validationSchema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
+const getManager = (context, managerId, storeInState) => {
+  axios
+    .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
+    { Authorization: `Bearer ${context.user.accessJwt}` }
+    )
+    .then((response) => {
+      const manager = response.data;
+      storeInState(manager);
+    })
+    .catch((error) => {
+      alert(error);
+      console.log(error);
+    });
+};
+
 const Manager = () => {
   const { pathname } = useLocation();
   const id = pathname.match(/\d/)[0];
-  // can remove this once api is configured to return properties and tenants
-  const dummyDataManagerInfo = PROPERTY_MANAGER_DATA.find(
-    (manager) => manager.id === id
-  );
 
-  const [manager, setManager] = useState(dummyDataManagerInfo);
+  const userContext = useContext(UserContext);
+  
+  const [managerData, setManager] = useState();
+  useEffect(() => {
+    getManager(userContext, id, setManager);
+  }, []);
+
   const { isEditing, setEditingStatus } = useEditingStatus()
 
-  const tableData = [
+  const tableData = managerData && [
     {
       key: "firstName",
       label: "First Name",
-      value: manager.firstName,
+      value: managerData.firstName,
       inputType: "text",
     },
     {
       key: "lastName",
       label: "Last Name",
-      value: manager.lastName,
+      value: managerData.lastName,
       inputType: "text",
     },
     {
       key: "phone",
       label: "Phone",
-      value: manager.phone,
+      value: managerData.phone,
       inputType: "text",
     },
     {
       key: "email",
       label: "Email",
-      value: manager.email,
+      value: managerData.email,
       inputType: "text",
     },
   ];
@@ -67,7 +84,7 @@ const Manager = () => {
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
     setManager({
-      ...manager,
+      ...managerData,
       firstName: values.firstName,
       lastName: values.lastName,
       phone: values.phone,
@@ -84,27 +101,9 @@ const Manager = () => {
     setEditingStatus(false);
   };
 
-  // use getManager once /users/?id api endpoint returns properties and tenants for property managers
-  // eslint-disable-next-line no-unused-vars
-  const getManager = (context) => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/?id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${context.user.accessJwt}`,
-        },
-      })
-      .then((response) => {
-        setManager({ manager: response.data.manager });
-      })
-      .catch((error) => {
-        alert(error);
-        console.log(error);
-      });
-  };
-
-  return (
+  return managerData ? (
     <div className="manager__container">
-      <TitleAndPen title={`${manager.firstName} ${manager.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
+      <TitleAndPen title={`${managerData.firstName} ${managerData.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
       <div className="manager__contact">
         <h1 className="secondary-title">CONTACT</h1>
         <div className="contact-details">
@@ -120,9 +119,9 @@ const Manager = () => {
       <div className="manager__properties">
         <h1 className="secondary-title">PROPERTIES</h1>
         <div className="manager__properties__container">
-          {manager.properties.map((property) => (
-            <div key={property.name} className="manager__property__tile">
-              <h3 key={property.name} className="manager__property__name">
+          {managerData.properties.map((property) => (
+            <div key={property.id} className="manager__property__tile">
+              <h3 className="manager__property__name">
                 {property.name}
               </h3>
               <div className="manager__property__address">
@@ -137,19 +136,19 @@ const Manager = () => {
       </div>
       <div className="manager__tenants">
         <h1 className="section-title">TENANTS</h1>
-        {manager.tenants.map((tenant) => (
-          <div className="columns tenant__form-row" key={tenant.name}>
+        {managerData.tenants.map((tenant) =>
+          <div key={tenant.id} className="columns tenant__form-row">
             <div className="column is-one-quarter bold tenant__name">
-              {tenant.name}
+              {tenant.fullName}
             </div>
-            <div className="column is-one-quarter">{tenant.property}</div>
-            <div className="column is-one-quarter">{tenant.unit}</div>
+            <div className="column is-one-quarter">{tenant.propertyName}</div>
+            <div className="column is-one-quarter">Unit #{tenant.unitNum}</div>
             <div className="column is-one-quarter">{tenant.phone}</div>
           </div>
-        ))}
+        )}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default Manager;
