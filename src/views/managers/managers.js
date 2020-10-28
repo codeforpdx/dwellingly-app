@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
-import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index";
@@ -81,7 +80,6 @@ const selectRow = {
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
-
     if (manager.lastActive || !manager.archived) {
       manager.status = "Active";
     } else if (manager.archived) {
