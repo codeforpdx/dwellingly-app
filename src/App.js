@@ -16,6 +16,7 @@ import ForgotPassword from "./views/ForgotPassword";
 import EmergencyContacts from "./views/emergencyContacts/emergencyContacts";
 import AddEmergencyContact from "./views/addEmergencyContact/addEmergencyContact";
 import PrivacyPolicy from "./views/privacyPolicy/privacyPolicy";
+import NoMatch from "./views/noMatch/noMatch";
 import {
   PrivateRoute,
   auth,
@@ -51,7 +52,7 @@ export class App extends React.Component {
         email: '',
         phone: '',
       }
-    }
+    };
   }
 
   componentDidMount() {
@@ -81,7 +82,7 @@ export class App extends React.Component {
 
   setUser = (newContext) => {
     return this.setState(newContext);
-  }
+  };
 
   login = (email, password) => {
     auth.authenticate(email, password)
@@ -103,14 +104,14 @@ export class App extends React.Component {
             }
           }, () => {
             // Call to refresh the access token 3 minutes later
-            setTimeout(this.refreshJwtPeriodically, 180000)
+            setTimeout(this.refreshJwtPeriodically, 180000);
             this.updateAxiosDefaults();
           });
         } else {
           alert("Failed to login");
         }
       });
-  }
+  };
 
   refreshJwtPeriodically = () => {
     auth.refreshAccess(window.localStorage['dwellinglyRefresh'])
@@ -132,13 +133,13 @@ export class App extends React.Component {
           // Call to refresh the access token 3 minutes later
           setTimeout(this.refreshJwtPeriodically, 180000);
           this.updateAxiosDefaults();
-        })
+        });
         localStorage.setItem("dwellinglyAccess", response.data.access_token);
       })
       .catch(error => {
         console.log("Failed to refresh access token: " + error);
       });
-  }
+  };
 
   logout = () => {
     auth.signout()
@@ -155,16 +156,16 @@ export class App extends React.Component {
           }
         }, () => {
           window.location.replace('/login');
-        })
+        });
       });
-  }
+  };
 
   /**
    * Configure defaults for all axios requests in the App
    */
   updateAxiosDefaults = () => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.userSession.accessJwt}`;
-  }
+  };
 
   render() {
     return (
@@ -203,6 +204,7 @@ export class App extends React.Component {
                 <PrivateRoute exact path='/settings' component={Settings} />
                 <PrivateRoute exact path='/changePassword' component={ChangePassword} />
                 <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
+                <Route path='*' component={NoMatch} />
               </div>
             </Switch>
             {this.state.userSession.isAuthenticated
