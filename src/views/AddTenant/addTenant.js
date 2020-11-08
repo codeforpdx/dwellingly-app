@@ -34,8 +34,10 @@ export const AddTenant = () => {
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
+  const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
+  const [propertySearchResults, setPropertySearchResults] = useState([]);
   const [showAddProperty, setShowAddProperty] = useState(false);
 
   useEffect(() => {
@@ -61,19 +63,25 @@ export const AddTenant = () => {
       })
   }, [staffSearchText]);
 
+  useEffect(() => {
+    let choices = propertyOptions.filter( 
+      p => p.description.includes(propertySearchText))
+    setPropertySearchResults(choices);
+  }, [propertySearchText])
+
   const getProperties = () => {
     axios.get("/api/properties", makeAuthHeaders(context))
       .then(({ data }) => {
         let properties = data.properties && data.properties.length > 0
           ? data.properties.map( property => {
             return {
-              ...property,
-              label: `${property.name}, ${property.address}`,
-              value: property.id
+              key: property.id,
+              description: `${property.name}, ${property.address}`
             }
           })
           : data.properties
         setPropertyOptions(properties);
+        setPropertySearchResults(properties);
         setShowAddProperty(false);
       });
   }
@@ -81,7 +89,7 @@ export const AddTenant = () => {
   const handleFormSubmit = (data) => {
     let body = {
       ...data,
-      propertyID: propertySelection.value,
+      propertyID: propertySelection[0].key,
       staffIDs: staffSelections && staffSelections.map( staff => staff.key )
     }
     axios
@@ -104,13 +112,27 @@ export const AddTenant = () => {
    * Handle staff search input
    * @param {*} event
    */
-  const handleChangeSearch = (event) => {
+  const handleStaffSearch = (event) => {
     const { value } = event.target;
     if (!value || value.length === 0) {
       setStaffSearchResults([]);
       setStaffSearchText("");
     } else {
       setStaffSearchText(value);
+    }
+  };
+
+  /**
+   * Handle property search input
+   * @param {*} event
+   */
+  const handlePropertySearch = (event) => {
+    const { value } = event.target;
+    if (!value || value.length === 0) {
+      setPropertySearchResults(propertyOptions);
+      setPropertySearchText("");
+    } else {
+      setPropertySearchText(value);
     }
   };
 
@@ -131,7 +153,7 @@ export const AddTenant = () => {
           firstName: "",
           lastName: "",
           phone: "",
-          number: "",
+          unitNum: "",
           occupants: "",
           lease: ""
         }}
@@ -221,9 +243,8 @@ export const AddTenant = () => {
                   chips
                   choices={staffSearchResults}
                   clearLabel="Clear search text"
-                  maximumHeight={400}
-                  onChange={handleChangeSearch}
-                  onClear={handleChangeSearch}
+                  onChange={handleStaffSearch}
+                  onClear={handleStaffSearch}
                   onSelectionChange={handleChangeStaffSelections}
                   placeholder="Search JOIN staff"
                   preSelectedChoices={staffSelections}
@@ -231,19 +252,25 @@ export const AddTenant = () => {
                   value={staffSearchText}
                   variant={SearchPanelVariant.checkbox}
                   width={400}
+                  shadow
                 />
               </div>
               <h1 className="section-title">PROPERTY</h1>
               <div className="typeahead-section">
-
-                {/* <Select
-                  options={propertyOptions}
-                  name="property-search"
-                  value={propertySelection}
-                  onChange={setPropertySelection}
-                  placeholder="Search properties"
-                  styles={{ control: styles => ({ ...styles, borderRadius: "30px" }) }}
-                /> */}
+                  <SearchPanel
+                    chips
+                    clearLabel="Clear search text"
+                    placeholder="Search Properties"
+                    small
+                    width={400}
+                    variant={SearchPanelVariant.radio}
+                    choices={propertySearchResults}
+                    value={propertySearchText}
+                    onSelectionChange={setPropertySelection}
+                    onChange={handlePropertySearch}
+                    onClear={handlePropertySearch}
+                    shadow
+                  />
                 <button
                   className="add-property-button"
                   onClick={() => setShowAddProperty(!showAddProperty)}
@@ -324,7 +351,7 @@ export const AddTenant = () => {
                   SAVE
                 </Button>
                 <Link
-                  className="styled-button__cancel styled-button"
+                  className="button is-dark is-rounded"
                   to="/manage/tenants"
                 >
                   CANCEL
