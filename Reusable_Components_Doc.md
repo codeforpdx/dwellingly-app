@@ -131,3 +131,18 @@ _____
 * **Additional info**: The only prop that is required is the closeHandler (so that users can actually close the modal!) 
 	* Note that if you set hasButtons to true, the button text is “Yes” and “No”. (see figma pg. 5 for an example) 
 	* If hasButtons is false, it will display a link stating “Return to Log In” instead. If you need different text here, you'll need to refactor this component to support changing that text.
+
+
+## **Name**: Toast
+
+* **File path**: src/utils/toast
+* **Input/Props**: {txt = '', type = ''}
+* **Currently in use**: App, Auth, Manager/index, manager, Settings/index, addEmergencyContact, addProperty, dashboard, emergencyContacts, properties, requestAccess, signup, tenants, tickets
+* **Will be used in**: All components requiring toast notifications
+* **Additional info**:
+    To add a toast notification:
+
+1.  Import "toast.js" from "./src/utils/toast.js". Depending on which file you're working on, you'll likely need to navigate up from your current directory to be able to access the "utils" folder. An example of this could look like `import Toast from '../utils/toast';`
+2.  Toast is a function which takes two arguments. The first is the string you would like displayed in the notification. If no text is provided, you will see an error notice in the browser console. The second argument is the type of notification you would like displayed, which dictates the color of the notification. The options for this are "success" (green), "error" (red), "warn" or "warning" (yellow), "info" or "default" (blue). If no second argument is passed, the notification will default to "info" and render a blue toast notification. An example of this could look like `Toast("Property Added!", "success");`
+
+---

@@ -48,16 +48,16 @@ export const Dashboard = (props) => {
             .then(({ data }) => {
                 setWidgetData(data);
             })
-            .catch(error => Toast(error, "error")
+            .catch(error => Toast(error, "error"));
 
         getPendingUsers();
     });
 
-    const getPendingUsers = () => {
-        axios
+    const getPendingUsers = async () => {
+        await axios
             .post("/api/users/role", { "userrole": RoleEnum.PENDING }, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
-            .catch(error => Toast(error, "error")
+            .catch(error => Toast(error, "error"));
     }
 
     const handleAddClick = (id) => {
