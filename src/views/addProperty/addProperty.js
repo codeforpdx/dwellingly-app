@@ -4,6 +4,7 @@ import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../../UserContext';
 import * as axios from 'axios';
+import Toast from '../../utils/toast';
 
 import './addProperty.scss'
 
@@ -37,13 +38,13 @@ const validationSchema = Yup.object().shape({
     const formHandler = (data) => {
         axios.post("/api/properties", data, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
             .then(function(response){
-                alert("Property Added!");
+                Toast("Property Added!", "success");
                 if(props && typeof(props.postAddProperty) === 'function') {
                     props.postAddProperty();
                 }
             })
             .catch(function(error){
-                alert(error);
+                Toast(error.message, "error");
             })
     }
 

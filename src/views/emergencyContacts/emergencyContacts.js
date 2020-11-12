@@ -56,7 +56,7 @@ const EmergencyContacts = () => {
             .then(({ data }) => {
                 setApiContacts(data.emergency_contacts);
             })
-            .catch(error => Toast(error, "error"));
+            .catch(error => Toast(error.message, "error"));
     });
 
     const handleDoneEditing = () => {
@@ -70,7 +70,7 @@ const EmergencyContacts = () => {
             .then(() => {
                 setApiContacts(apiContacts.filter(contact => contact.id !== id));
             })
-            .catch(error => Toast(error, "error"));
+            .catch(error => Toast(error.message, "error"));
     }
 
     return (

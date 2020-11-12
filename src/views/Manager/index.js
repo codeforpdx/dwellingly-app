@@ -100,7 +100,7 @@ const Manager = () => {
         setManager({ manager: response.data.manager });
       })
       .catch((error) => {
-        Toast(error, "error");
+        Toast(error.message, "error");
         console.log(error);
       });
   };

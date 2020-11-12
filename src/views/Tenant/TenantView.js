@@ -5,6 +5,7 @@ import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import RoleEnum from '../../Enums/RoleEnum.js'
+import Toast from '../../utils/toast';
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -47,7 +48,7 @@ const Tenant = () => {
 
   // Error handler for axios requests
   const axiosErrorHandler = (error) => {
-    alert(error);
+    Toast(error.message, "error");
     return Promise.reject({ ...error })
   }
 

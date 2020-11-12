@@ -137,7 +137,7 @@ export class Tickets extends Component {
           this.setState({tickets: response.data.tickets});
       })
       .catch((error) => {
-          Toast(error, "error");
+          Toast(error.message, "error");
           console.log(error);
       })
   }
