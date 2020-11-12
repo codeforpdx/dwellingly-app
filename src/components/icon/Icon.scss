@@ -1,0 +1,43 @@
+@import '../../scss/variables.scss';
+
+/* I C O N S */
+/* ==================================================== */
+.icon {
+  display: inline-block;
+  font-size: 1em;
+  line-height: 1em;
+  vertical-align: text-top;
+
+  svg {
+    height: 1em;
+    fill: currentColor;
+    width: 1em;
+  }
+
+  &--comment {
+    color: $blue;
+  }
+
+  &--heart {
+    color: $red;
+  }
+
+  &--phone {
+    transform: translateY(2px);
+  }
+
+  &--notebookOutline {
+    transform: scale(0.8);
+  }
+
+  &--logo {
+    width: 85px;
+    height: 92px;
+    margin-bottom: 1.2rem;
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+/* end icons */

@@ -1,0 +1,118 @@
+@import "../../scss/variables.scss";
+@import "../card/Card.scss";
+
+.ticket-window-modal {
+  z-index: 5000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.ticket-modal-container {
+  width: 20%;
+  min-width: 300px;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 1010;
+  transform: translate(-50%, -50%);
+}
+
+.ticket-modal-title-container {
+  display: flex;
+  margin-left: 1em;
+}
+
+.close-icon-container {
+  text-align: right;
+  height: 1em;
+  color: $darkBlue;
+  button {
+    background: none;
+    border: none;
+    color: $darkBlue;
+  }
+}
+
+#ticket-modal-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: $orange;
+}
+
+#ticket-modal-issue {
+  margin-left: 1.5em;
+  width: 60%;
+  margin-bottom: 1em;
+  color: $darkBlue;
+  font-weight: bold;
+  line-height: normal;
+}
+
+.ticket-details-section {
+  padding-bottom: 8px;
+}
+
+.ticket-detail-label {
+  color: #8e8e93;
+}
+
+#scroll-container {
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 300px;
+}
+
+.ticket-card-bottom-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: $darkGray;
+  padding-bottom: 20px;
+}
+
+.ticket-card-note {
+  font-weight: normal;
+  padding: 1em .3em 1em 1em;
+  border-radius: $border-radius--card;
+  background-color: $lightGray;
+  display: flex;
+  text-align: right;
+  p {
+    color: $darkBlue;
+    font-weight: normal;
+    font-size: 14px;
+  }
+}
+
+.ticket-card-notes-list {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  width: 75%;
+}
+
+.ticket-card-notes-issue-status {
+  color: $blue;
+  font-weight: normal;
+}
+
+.ticket-card-note-header-row {
+  padding-bottom: 30px;
+  font-size: 14px;
+}
+
+.ticket-card-note-header {
+  color: $mediumGray;
+  font-weight: normal;
+}
+
+#in-progress {
+  color: $orange;
+}
