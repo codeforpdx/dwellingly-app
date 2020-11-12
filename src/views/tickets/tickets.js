@@ -8,6 +8,8 @@ import * as axios from 'axios';
 import Search from "../../components/Search/index"
 import Toast from '../../utils/toast';
 
+import './tickets.scss';
+
 
 const pageButtonRenderer = ({
   page,
@@ -85,11 +87,12 @@ export class Tickets extends Component {
     sort: true,
     formatter: (cell, row) => <button 
       onClick={() => this.toggleTicketModal( row )}
-      className="link-button">
-        {cell}  View
+      className="link-button cell-align-left">
+        <p className="cell-header">{row.tenant}</p>
+        <p className="cell-subheader">{row.issue}</p>
       </button>,
     headerStyle: () => {
-      return { width: "10%" };
+      return { width: "20%" };
     }
   }, {
     dataField: 'sender',
@@ -106,18 +109,25 @@ export class Tickets extends Component {
       return { width: "20%" };
     }
   }, {
+    dataField: 'status',
+    text: 'Status',
+    sort: true,
+    headerStyle: () => {
+      return { width: "10%" };
+    }
+  }, {
     dataField: 'created_at',
     text: 'Created',
     sort: true,
     headerStyle: () => {
-      return { width: "20%" };
+      return { width: "15%" };
     }
   }, {
     dataField: 'updated_at',
     text: 'Updated',
     sort: true,
     headerStyle: () => {
-      return { width: "10%" };
+      return { width: "15%" };
     }
   }];
 
@@ -181,6 +191,7 @@ export class Tickets extends Component {
                                   pagination={ paginationFactory(options) }
                                   bootstrap4={true}
                                   headerClasses="table-header"
+                                  classes="full-size-table"
                                   />
                           </div>
                       </div>
