@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
+import Toast from '../../utils/toast';
 
 import './settings.scss'
 
@@ -35,21 +36,21 @@ const handleFormSubmit = (context, data) => {
       });
 
       // once Toast is implemented, replace with Toast notification
-      alert("Saved Successfully!");
+      Toast("Saved Successfully!", "success");
     })
     .then(() => {
       context.refreshJWT();
     })
     .catch((error) => {
       // once Toast is implemented, replace with Toast notification
-      alert(error);
+      Toast(error, "error");
     });
 };
 
 // TODO make formCancelHandler() that resets form
 const handleFormCancel = () => {
   // once Toast is implemented, replace with Toast notification
-  alert("Form Reset!");
+  Toast("Form Reset!", "success");
 };
 
 const Settings = () => {

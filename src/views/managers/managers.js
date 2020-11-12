@@ -6,6 +6,7 @@ import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index"
+import Toast from '../../utils/toast';
 
 import './managers.scss'
 
@@ -90,7 +91,7 @@ const Managers = () => {
         console.log(response);
       })
       .catch((error) => {
-        alert(error);
+        Toast(error, "error");
         console.log(error);
       });
   };

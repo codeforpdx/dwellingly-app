@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import * as axios from "axios";
 import UserContext from '../../UserContext';
+import Toast from '../../utils/toast';
 
 import './requestAccess.scss'
 
@@ -66,7 +67,7 @@ export const RequestAccess = (props) => {
         setSelectionOptions(roleArray);
       })
       .catch((error) => {
-        alert(error);
+        Toast(error, "error");
         console.log(error);
       });
   }, []);
@@ -84,7 +85,7 @@ export const RequestAccess = (props) => {
         alert("User access granted!")
       })
       .catch((error) => {
-        alert(error);
+        Toast(error, "error");
         console.log(error);
       });
   }
