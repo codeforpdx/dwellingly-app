@@ -6,8 +6,8 @@ import * as axios from 'axios';
 import { Link } from 'react-router-dom';
 import Toast from '../../utils/toast';
 import Select from 'react-select';
-import { doPasswordReset } from '../../stashed/src/firebase/auth';
-import user from '../../stashed/src/dux/user';
+// import { doPasswordReset } from '../../stashed/src/firebase/auth';
+// import user from '../../stashed/src/dux/user';
 
 import './addProperty.scss'
 
@@ -31,6 +31,7 @@ const validationSchema = Yup.object().shape({
         .required("*State is required"),
     units: Yup.string()
         .max(50, "*Unit can't be longer than 50 characters"),
+    managers: Yup.array()
 });
 
 const formHandler = (data, context) => {
@@ -49,7 +50,7 @@ export class AddProperty extends Component {
 
         this.state = {
             propertyManagers: undefined,
-            managerSelection: []
+            managerSelection: undefined
         }
 
         this.getManagers = this.getManagers.bind(this);
@@ -59,7 +60,7 @@ export class AddProperty extends Component {
         this.getManagers(this.context);
     };
 
-    //context returns as undefined but it is defined in other components such as properties.js
+    // context returns as undefined but it is defined in other components such as properties.js
     getManagers = (context) => {
         axios.get("/api/users/role", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
             .then((response) => {
@@ -82,6 +83,7 @@ export class AddProperty extends Component {
     };
 
     handleInputChange = (propertyManagers) => {
+        //expected ex [{ value: 1, label: "Mary Smith" }, { value: 2, label: "Peter Zuo" }]
         this.setState({ propertyManagers });
     };
 
@@ -103,6 +105,7 @@ export class AddProperty extends Component {
                                     state: "",
                                     zipcode: "",
                                     units: "",
+                                    managers: ""
                                 }}
                                 validationSchema={validationSchema}
                                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -192,12 +195,9 @@ export class AddProperty extends Component {
                                                 {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
                                             </div>
 
-                                            {/* This element will use a list of property managers
-                                            and will need to be implemented later. react-select
-                                            can be used to select from list retrieved from endpoint */}
                                             <div className=" add-property__assign-manager-container">
                                                 <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                                <Select isMulti name="managers" options={this.state.managerSelection} onChange={this.handleInputChange} />
+                                                <Select isMulti name="managers" options={this.getphManagers()} onChange={this.handleInputChange} value={this.state.propertyManagers} />
                                             </div>
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
