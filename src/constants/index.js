@@ -7,9 +7,8 @@ export const CARD_TYPES = {
   TICKET: 'ticket'
 };
 
-export const STATUS_OPTIONS = {
+export const TICKET_STATUS_OPTIONS = {
   NEW: 'New',
   IN_PROGRESS: 'In Progress',
-  RESOLVED: 'Resolved',
-  REOPEN: 'Reopen'
+  CLOSED: 'Closed'
 };
