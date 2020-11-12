@@ -103,7 +103,8 @@ export class Properties extends Component {
               <div className="section-header">
                 <h2 className="page-title">Properties</h2>
                 <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link>
-              </div>
+                {/* <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link> */}
+              </div >
 
               <Search
                 input={this.state.properties} outputLocation={this.state.filteredProperties}
@@ -123,10 +124,11 @@ export class Properties extends Component {
                   headerClasses="table-header"
                 />
               </div>
-            </div>
+            </div >
           )
-        }}
-      </UserContext.Consumer>
+        }
+        }
+      </UserContext.Consumer >
     )
   }
 }
