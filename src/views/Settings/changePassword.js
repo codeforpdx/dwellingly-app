@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
+import Toast from '../../utils/toast';
 
 const validationSchema = Yup.object().shape({
   current: Yup.string()
@@ -30,14 +31,14 @@ const ChangePassword = () => {
       })
       .then((response) => {
         // once Toast is implemented, replace with Toast notification
-        alert("Saved Successfully!");
+        Toast("Saved Successfully!", "success");
       })
       .then(() => {
         history.push("/settings");
       })
       .catch((error) => {
         // once Toast is implemented, replace with Toast notification
-        alert(error);
+        Toast(error.message, "error");
       });
   };
 

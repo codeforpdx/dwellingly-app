@@ -36,7 +36,7 @@ const SignupForm = ({ history }) => {
         console.log(error.response.data.message);
         Toast(error.response.data.message, "error");
       } else {
-        Toast(error, "error");
+        Toast(error.message, "error");
       }
       return Promise.reject(error);
     }

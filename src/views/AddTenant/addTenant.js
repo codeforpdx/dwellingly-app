@@ -10,6 +10,7 @@ import Modal from '../../components/Modal';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import RoleEnum from '../../Enums/RoleEnum.js';
 import './_addTenant.scss';
+import Toast from '../../utils/toast';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -58,8 +59,8 @@ export const AddTenant = () => {
           : [];
         setStaffSearchResults(choices);
       })
-      .catch( errors => {
-        alert(errors);
+      .catch( error => {
+        Toast(error.message, "error");
       })
   }, [staffSearchText]);
 
@@ -95,12 +96,11 @@ export const AddTenant = () => {
     axios
       .post(`/api/tenants`, body, makeAuthHeaders(context))
       .then((response) => {
-        // once Toast is implemented, replace with Toast notification
-        alert("Tenant Created Successfully!");
+        Toast("Tenant Created Successfully!", "success");
       })
       .catch((error) => {
-        // once Toast is implemented, replace with Toast notification
-        alert(error);
+        Toast(error.message, "error");
+        console.log(error);
       });
   };
 

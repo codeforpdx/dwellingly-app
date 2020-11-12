@@ -4,6 +4,7 @@ import axios from 'axios'
 import { JoinStaffCard } from '../../components/JoinStaffCard';
 import { Link } from 'react-router-dom';
 import RoleEnum from '../../Enums/RoleEnum.js';
+import Toast from '../../utils/toast';
 
 
 export const JoinStaff = () => {
@@ -22,7 +23,8 @@ export const JoinStaff = () => {
 					setStaff(...staff, res.data.users)
 				})
 				.catch(err => {
-					console.log(err)
+					Toast(err, "error");
+					console.log(err);
 				})
 		}
 		Promise.all(URLs.map(url => fetchData(url)))

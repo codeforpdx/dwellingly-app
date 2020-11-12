@@ -67,7 +67,7 @@ export const RequestAccess = (props) => {
         setSelectionOptions(roleArray);
       })
       .catch((error) => {
-        Toast(error, "error");
+        Toast(error.message, "error");
         console.log(error);
       });
   }, []);
@@ -82,10 +82,10 @@ export const RequestAccess = (props) => {
       email: email
     }, makeAuthHeaders(userContext))
       .then((response) => {
-        alert("User access granted!")
+        Toast("User access granted!", "success")
       })
       .catch((error) => {
-        Toast(error, "error");
+        Toast(error.message, "error");
         console.log(error);
       });
   }

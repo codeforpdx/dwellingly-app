@@ -41,14 +41,14 @@ export const Dashboard = (props) => {
                     .post("/api/users/role", adminUsersObj, makeAuthHeaders(userContext))
                     .then(({ data }) => setStaffList(data.users));
             })
-            .catch(error => Toast(error, "error"));
+            .catch(error => Toast(error.message, "error"));
 
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
             .then(({ data }) => {
                 setWidgetData(data);
             })
-            .catch(error => Toast(error, "error"));
+            .catch(error => Toast(error.message, "error"));
 
         getPendingUsers();
     });
@@ -57,7 +57,7 @@ export const Dashboard = (props) => {
         await axios
             .post("/api/users/role", { "userrole": RoleEnum.PENDING }, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
-            .catch(error => Toast(error, "error"));
+            .catch(error => Toast(error.message, "error"));
     }
 
     const handleAddClick = (id) => {
@@ -124,7 +124,7 @@ export const Dashboard = (props) => {
                 });
                 setUnstaffedTenants(stillUnstaffed);
             }))
-            .catch(errors => Toast(errors, "error"));
+            .catch(error => Toast(error.message, "error"));
     }
 
     return (

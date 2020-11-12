@@ -43,7 +43,7 @@ const handleFormSubmit = (context, data) => {
     })
     .catch((error) => {
       // once Toast is implemented, replace with Toast notification
-      Toast(error, "error");
+      Toast(error.message, "error");
     });
 };
 
