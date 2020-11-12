@@ -49,8 +49,8 @@ export class AddProperty extends Component {
         super(props);
 
         this.state = {
-            propertyManagers: undefined,
-            managerSelection: undefined
+            assignedPropertyManagers: [],
+            managerSelection: []
         }
 
         this.getManagers = this.getManagers.bind(this);
@@ -84,7 +84,12 @@ export class AddProperty extends Component {
 
     handleInputChange = (propertyManagers) => {
         //expected ex [{ value: 1, label: "Mary Smith" }, { value: 2, label: "Peter Zuo" }]
-        this.setState({ propertyManagers });
+        let assignedPropertyManagers = [...this.state.assignedPropertyManagers];
+        propertyManagers.forEach(function modifyManagers(manager) {
+            assignedPropertyManagers.push(manager.value);
+        });
+        this.setState({ assignedPropertyManagers });
+        //an array of assigned managers ids is pushed to state and submitted in formhandler
     };
 
 
@@ -197,7 +202,7 @@ export class AddProperty extends Component {
 
                                             <div className=" add-property__assign-manager-container">
                                                 <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                                <Select isMulti name="managers" options={this.getphManagers()} onChange={this.handleInputChange} value={this.state.propertyManagers} />
+                                                <Select isMulti name="managers" options={this.getphManagers()} onChange={this.handleInputChange} value={this.state.assignedPropertyManagers} />
                                             </div>
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
