@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, componentDidMount } from 'react';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../../UserContext';
@@ -38,7 +38,8 @@ const formHandler = (data, context) => {
         .catch(function (error) {
             Toast(error, "error");
         })
-}
+};
+
 
 export class AddProperty extends Component {
     constructor(props) {
@@ -48,6 +49,23 @@ export class AddProperty extends Component {
             propertyManagers: undefined,
         }
     }
+
+    componentDidMount() {
+        this.getManagers();
+    };
+
+    getManagers = () => {
+        axios.get(`${process.env.REACT_APP_API_URL}`)
+            .then((response) => {
+                //might need help getting user info here
+                console.log(response)
+                //filter users based on role property
+            })
+            .catch((error) => {
+                alert(error);
+                console.log(error);
+            })
+    };
 
     render() {
         return (
