@@ -107,7 +107,7 @@ export class AddProperty extends Component {
                                     state: "",
                                     zipcode: "",
                                     units: "",
-                                    managers: ""
+                                    managers: []
                                 }}
                                 validationSchema={validationSchema}
                                 onSubmit={(values, { setSubmitting, resetForm }) => {
