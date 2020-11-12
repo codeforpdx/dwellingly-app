@@ -38,13 +38,6 @@ const formHandler = (data, context) => {
         })
 };
 
-// const filterManagers = () => {
-//     //filter Managers by role here. May need help getting and understanding the API endpoint for user
-//     const placeholderUser = {}
-//     return
-// }
-
-
 export class AddProperty extends Component {
     constructor(props) {
         super(props);
@@ -76,6 +69,11 @@ export class AddProperty extends Component {
                 console.log(error);
             })
     };
+
+    handleInputChange = (propertyManagers) => {
+        this.setState({ propertyManagers });
+    };
+
 
     render() {
         return (
@@ -187,7 +185,7 @@ export class AddProperty extends Component {
                                             can be used to select from list retrieved from endpoint */}
                                             <div className=" add-property__assign-manager-container">
                                                 <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                                <Select isMulti name="managers" options={this.getphManagers()} />
+                                                <Select isMulti name="managers" options={this.getphManagers()} onChange={this.handleInputChange} />
                                             </div>
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
