@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { CARD_TYPES, STATUS_OPTIONS } from '../../constants';
+import { CARD_TYPES, TICKET_STATUS_OPTIONS } from '../../constants';
 import Icon from '../icon/Icon';
 import './Card.scss';
 
@@ -16,13 +16,13 @@ import './Card.scss';
  */
 class Card extends Component {
   static Top({ types, status, children }) {
-    // quickly convert STATUS_OPTIONS object to array
-    const statuses = Object.keys(STATUS_OPTIONS).map(key => ({
+    // quickly convert TICKET_STATUS_OPTIONS object to array
+    const statuses = Object.keys(TICKET_STATUS_OPTIONS).map(key => ({
       key,
-      value: STATUS_OPTIONS[key]
+      value: TICKET_STATUS_OPTIONS[key]
     }));
-    const closedArr = [STATUS_OPTIONS.REOPEN, STATUS_OPTIONS.RESOLVED];
-    const openArr = [STATUS_OPTIONS.NEW, STATUS_OPTIONS.IN_PROGRESS];
+    const closedArr = [TICKET_STATUS_OPTIONS.CLOSED];
+    const openArr = [TICKET_STATUS_OPTIONS.NEW, TICKET_STATUS_OPTIONS.IN_PROGRESS];
     return (
       <div>
         <div className="card__top">
@@ -37,7 +37,7 @@ class Card extends Component {
                   key={key}
                   value={value}
                   disabled={
-                    value !== STATUS_OPTIONS.RESOLVED &&
+                    value !== TICKET_STATUS_OPTIONS.CLOSED &&
                     ((closedArr.includes(status) && openArr.includes(value)) ||
                       (closedArr.includes(value) && openArr.includes(status)))
                   }>
