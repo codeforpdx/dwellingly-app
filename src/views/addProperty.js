@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Select from 'react-select';
 // import { doPasswordReset } from '../../stashed/src/firebase/auth';
 // import user from '../../stashed/src/dux/user';
+import RoleEnum from '../Enums/RoleEnum';
 
 
 const validationSchema = Yup.object().shape({
@@ -57,21 +58,15 @@ export class AddProperty extends Component {
         this.getManagers(this.context);
     };
 
-    // context returns as undefined but it is defined in other components such as properties.js
     getManagers = (context) => {
-        console.log(context);
-        axios.get("/api/users", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
+        axios.get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
             .then((response) => {
-                console.log(response)
-                const { data: { managers } } = response;
-                const userSelection = response.filter(user => user.role === "2");
-                //expected userSelection = [{id: int, firstname: string, lastname: string, role: string}]
                 let managerSelection = [...this.state.managerSelection];
+                const userSelection = response.data.users;
                 userSelection.forEach(function modifyManagers(user) {
-                    let manager = { value: user.id, label: user.firstname + " " + user.lastname }
+                    let manager = { value: user.id, label: user.firstName + " " + user.lastName }
                     managerSelection.push(manager);
                 });
-                //expected ex [{ value: 1, label: "Mary Smith" }, { value: 2, label: "Peter Zuo" }];
                 this.setState({ managerSelection })
             })
             .catch((error) => {
@@ -80,18 +75,20 @@ export class AddProperty extends Component {
             })
     };
 
-    handleInputChange = (propertyManagers) => {
-        //expected ex [{ value: 1, label: "Mary Smith" }, { value: 2, label: "Peter Zuo" }]
-        let assignedPropertyManagers = [...this.state.assignedPropertyManagers];
-        propertyManagers.forEach(function modifyManagers(manager) {
+    handleInputChange = (selectedManagers) => {
+        if (selectedManagers === null) {
+            selectedManagers = [];
+        }
+        let assignedPropertyManagers = [];
+        selectedManagers.forEach(function modifyManagers(manager) {
             assignedPropertyManagers.push(manager.value);
         });
         this.setState({ assignedPropertyManagers });
-        //an array of assigned managers ids is pushed to state and submitted in formhandler
     };
 
     static contextType = UserContext;
     render() {
+        console.log(this.state);
         return (
             <UserContext.Consumer>
                 {session => {
@@ -199,7 +196,9 @@ export class AddProperty extends Component {
 
                                             <div className=" add-property__assign-manager-container">
                                                 <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                                <Select isMulti name="managers" options={this.state.managerSelection} onChange={this.handleInputChange} value={this.state.assignedPropertyManagers} />
+                                                <Field style={{ display: 'none' }} name="managers" value={this.state.assignedPropertyManagers} />
+                                                <Select isMulti options={this.state.managerSelection} onChange={this.handleInputChange} />
+
                                             </div>
                                             <div className="container-footer">
                                                 <button className={`${isValid && "active"} save_button button is-rounded`} type="submit" disabled={isSubmitting}>SAVE</button>
