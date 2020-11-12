@@ -113,6 +113,7 @@ export class Properties extends Component {
               <div className="section-header">
                 <h2 className="page-title">Properties</h2>
                 <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>
+                {/* <Link className="button is-rounded" to="/add/property">+ ADD NEW</Link> */}
               </div>
 
               <Search
