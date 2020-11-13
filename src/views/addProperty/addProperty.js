@@ -1,16 +1,14 @@
-import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
-import { Form, Field, Formik } from "formik";
-import * as Yup from "yup";
-import UserContext from "../../UserContext";
-import * as axios from "axios";
-import Toast from "../../utils/toast";
-import Select from "react-select";
+import React, { Component } from 'react';
+import { Form, Field, Formik } from 'formik';
+import * as Yup from 'yup';
+import UserContext from '../../UserContext';
+import * as axios from 'axios';
+import { Link } from 'react-router-dom';
+import Toast from '../../utils/toast';
+import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
+import RoleEnum from '../../Enums/RoleEnum';
+import './addProperty.scss'
 
-// import { doPasswordReset } from '../../stashed/src/firebase/auth';
-// import user from '../../stashed/src/dux/user';
-import RoleEnum from "../../Enums/RoleEnum";
-import "./addProperty.scss";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -56,14 +54,16 @@ export class AddProperty extends Component {
     this.state = {
       assignedPropertyManagers: [],
       managerSelection: [],
-    };
+      managerSearch: ''
+    }
 
     this.getManagers = this.getManagers.bind(this);
   }
 
   componentDidMount() {
     this.getManagers(this.context);
-  }
+  };
+
 
   getManagers = (context) => {
     axios
@@ -88,18 +88,16 @@ export class AddProperty extends Component {
       });
   };
 
-  handleInputChange = (selectedManagers) => {
-    if (selectedManagers === null) {
-      selectedManagers = [];
-    }
-    let assignedPropertyManagers = [];
-    selectedManagers.forEach(function modifyManagers(manager) {
-      assignedPropertyManagers.push(manager.value);
-    });
-    this.setState({ assignedPropertyManagers });
+  handleSearchChange = ({ target }) => {
+    console.log(target.value);
+  };
+
+  handleSelectionChange = (selectedManagers) => {
+    console.log(selectedManagers);
   };
 
   static contextType = UserContext;
+
   render() {
     return (
       <UserContext.Consumer>
