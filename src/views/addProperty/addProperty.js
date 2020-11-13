@@ -56,7 +56,6 @@ export class AddProperty extends Component {
       managerSelection: [],
       managerSearch: ''
     }
-
     this.getManagers = this.getManagers.bind(this);
   }
 
@@ -82,21 +81,21 @@ export class AddProperty extends Component {
       })
   };
 
-
   handleSearchChange = ({ target }) => {
-    console.log(target.value);
-  };
+    let managerSearch = target.value
+    if (!managerSearch || managerSearch.length === 0) managerSearch = '';
+    this.setState({ managerSearch })
+  }
 
-  handleSelectionChange = (selectedManagers) => {
-    console.log(selectedManagers);
+  handleSelectionChange = (assignedPropertyManagers) => {
+    this.setState({ assignedPropertyManagers })
   };
 
   static contextType = UserContext;
-
   render() {
     return (
       <UserContext.Consumer>
-        {(session) => {
+        {session => {
           return (
             <div>
               <h2 className="page-title">Add a New Property</h2>
@@ -109,7 +108,7 @@ export class AddProperty extends Component {
                   state: "",
                   zipcode: "",
                   units: "",
-                  managers: [],
+                  managers: []
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -118,171 +117,113 @@ export class AddProperty extends Component {
                   formHandler(values, session);
                   resetForm();
                   setSubmitting(false);
-                }}
-              >
-                {({
-                  handleSubmit,
-                  handleChange,
-                  values,
-                  errors,
-                  touched,
-                  isValid,
-                  isSubmitting,
-                }) => (
-                    <div className="form-container add-property__main_container">
-                      <h1 className="section-title">PROPERTY INFORMATION</h1>
-                      <Form
-                        className="add-property__form-container"
-                        onSubmit={handleSubmit}
-                      >
-                        <div className="form-row columns">
-                          <label className="column is-one-fifth" htmlFor="name">
-                            Name
-                        </label>
-                          <Field
-                            className="column form-field"
-                            type="text"
-                            name="name"
-                            onChange={handleChange}
-                            value={values.name}
-                            placeholder="Example Estate"
-                          />
-                          {errors.name ? (
-                            <div className="error-message">{errors.name}</div>
-                          ) : null}
-                        </div>
-                        <div className="form-row columns">
-                          <label
-                            className="column is-one-fifth"
-                            htmlFor="address"
-                          >
-                            Address
-                        </label>
-                          <Field
-                            className="column form-field"
-                            type="text"
-                            name="address"
-                            onChange={handleChange}
-                            value={values.address}
-                            placeholder="123 Main St"
-                            error={errors.address}
-                          />
-                          {errors.address ? (
-                            <div className="error-message">{errors.address}</div>
-                          ) : null}
-                        </div>
-                        <div className="form-row columns">
-                          <label className="column is-one-fifth" htmlFor="city">
-                            City
-                        </label>
-                          <Field
-                            className="column form-field"
-                            type="text"
-                            name="city"
-                            onChange={handleChange}
-                            value={values.city}
-                            placeholder="Portland"
-                          />
-                          {errors.city ? (
-                            <div className="error-message">{errors.city}</div>
-                          ) : null}
-                        </div>
-                        <div className="form-row columns">
-                          <label className="column is-one-fifth" htmlFor="state">
-                            State
-                        </label>
-                          <Field
-                            className="column form-field"
-                            type="text"
-                            name="state"
-                            onChange={handleChange}
-                            value={values.state}
-                            placeholder="OR"
-                          />
-                          {errors.state ? (
-                            <div className="error-message">{errors.state}</div>
-                          ) : null}
-                        </div>
-                        <div className="form-row columns">
-                          <label
-                            className="column is-one-fifth"
-                            htmlFor="zipcode"
-                          >
-                            Zipcode
-                        </label>
-                          <Field
-                            className="column form-field"
-                            type="text"
-                            name="zipcode"
-                            onChange={handleChange}
-                            value={values.zipcode}
-                            placeholder="97217"
-                          />
-                          {errors.zipcode ? (
-                            <div className="error-message">{errors.zipcode}</div>
-                          ) : null}
-                        </div>
-                        <div className="form-row columns">
-                          <label className="column is-one-fifth" htmlFor="units">
-                            Units
-                        </label>
-                          <Field
-                            className="column form-field"
-                            type="text"
-                            name="units"
-                            onChange={handleChange}
-                            value={values.units}
-                            placeholder="Number of units"
-                            error={errors.units}
-                          />
-                          {errors.units ? (
-                            <div className="error-message">{errors.units}</div>
-                          ) : null}
-                        </div>
 
-                        <div className=" add-property__assign-manager-container">
-                          <h3 className="section-title">
-                            ASSIGN PROPERTY MANAGERS
-                        </h3>
-                          <Field
-                            style={{ display: "none" }}
-                            name="managers"
-                            value={this.state.assignedPropertyManagers}
-                          />
-                          <SearchPanel
-                            chips
-                            choices={this.state.managerSelection}
-                            onChange={this.handleSearchChange}
-                            onSelectionChange={this.handleSelectionChange}
-                            placeholder="Search Property Managers"
-                            selectedChoices={values.managers}
-                            value={this.state.managerSearch}
-                            variant={SearchPanelVariant.checkbox}
-                          />
-                        </div>
+                }}>
+                {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
+                  <div className="form-container add-property__main_container">
+                    <h1 className="section-title">PROPERTY INFORMATION</h1>
+                    <Form className="add-property__form-container" onSubmit={handleSubmit}>
+                      <div className="form-row columns">
+                        <label className="column is-one-fifth" htmlFor="name">Name</label>
+                        <Field
+                          className="column form-field"
+                          type="text"
+                          name="name"
+                          onChange={handleChange}
+                          value={values.name}
+                          placeholder="Example Estate"
+                        />
+                        {errors.name ? (<div className="error-message">{errors.name}</div>) : null}
+                      </div>
+                      <div className="form-row columns">
+                        <label className="column is-one-fifth" htmlFor="address">Address</label>
+                        <Field
+                          className="column form-field"
+                          type="text"
+                          name="address"
+                          onChange={handleChange}
+                          value={values.address}
+                          placeholder="123 Main St"
+                          error={errors.address}
+                        />
+                        {errors.address ? (<div className="error-message">{errors.address}</div>) : null}
+                      </div>
+                      <div className="form-row columns">
+                        <label className="column is-one-fifth" htmlFor="city">City</label>
+                        <Field
+                          className="column form-field"
+                          type="text"
+                          name="city"
+                          onChange={handleChange}
+                          value={values.city}
+                          placeholder="Portland"
+                        />
+                        {errors.city ? (<div className="error-message">{errors.city}</div>) : null}
+                      </div>
+                      <div className="form-row columns">
+                        <label className="column is-one-fifth" htmlFor="state">State</label>
+                        <Field
+                          className="column form-field"
+                          type="text"
+                          name="state"
+                          onChange={handleChange}
+                          value={values.state}
+                          placeholder="OR"
+                        />
+                        {errors.state ? (<div className="error-message">{errors.state}</div>) : null}
+                      </div>
+                      <div className="form-row columns">
+                        <label className="column is-one-fifth" htmlFor="zipcode">Zipcode</label>
+                        <Field
+                          className="column form-field"
+                          type="text"
+                          name="zipcode"
+                          onChange={handleChange}
+                          value={values.zipcode}
+                          placeholder="97217"
+                        />
+                        {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
+                      </div>
+                      <div className="form-row columns">
+                        <label className="column is-one-fifth" htmlFor="units">Units</label>
+                        <Field
+                          className="column form-field"
+                          type="text"
+                          name="units"
+                          onChange={handleChange}
+                          value={values.units}
+                          placeholder="Number of units"
+                          error={errors.units}
+                        />
+                        {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
+                      </div>
 
+                      <div className=" add-property__assign-manager-container">
+                        <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
+                        <SearchPanel
+                          chips
+                          choices={this.state.managerSelection}
+                          onChange={this.handleSearchChange}
+                          onSelectionChange={this.handleSelectionChange}
+                          placeholder="Search Property Managers"
+                          selectedChoices={this.state.assignedPropertyManagers}
+                          value={this.state.managerSearch}
+                          variant={SearchPanelVariant.checkbox}
+                        />
+                      </div>
+                      <div className="container-footer mt-3">
+                        <button
+                          className="button is-primary is-rounded mr-5"
+                          type="submit"
+                          disabled={isSubmitting}>SAVE</button>
+                        <Link className="button is-dark is-rounded" to='/manage/properties'>CANCEL</Link>
+                      </div>
+                    </Form>
 
-                        <div className="container-footer mt-3">
-                          <button
-                            className="button is-primary is-rounded mr-5"
-                            type="submit"
-                            disabled={isSubmitting}
-                          >
-                            SAVE
-                        </button>
-                          <Link
-                            className="button is-dark is-rounded"
-                            to="/manage/properties"
-                          >
-                            CANCEL
-                        </Link>
-                        </div>
-                      </Form>
-                    </div>
-                  )
-                }
+                  </div>
+                )}
               </Formik>
-            </div >
+            </div>
           );
         }
         }
