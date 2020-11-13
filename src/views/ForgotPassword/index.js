@@ -61,9 +61,12 @@ const ForgotPassword = () => {
         {isModalOpen && (
           <Modal
             titleText={modalContent.titleText}
-            contentText={modalContent.contentText}
+            content={modalContent.contentText}
             hasButtons={false}
             closeHandler={closeModal}
+            hasRedirectButton={true}
+            redirectButtonPath="/login"
+            redirectButtonText="Return to Login"
           />
         )}
         <Formik

@@ -119,7 +119,7 @@ const AddEmergencyContact = (props) => {
                 setContactValues(data);
                 setInitialized(true);
             })
-            .catch(error => Toast(error, "error"));
+            .catch(error => Toast(error.message, "error"));
     });
 
     const formHandler = data => {
@@ -131,7 +131,7 @@ const AddEmergencyContact = (props) => {
             .then(() => {
                 history.push('/emergency');
             })
-            .catch(error => Toast(error, "error"));
+            .catch(error => Toast(error.message, "error"));
         setLoading(true);
     }
 

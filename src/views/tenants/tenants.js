@@ -99,7 +99,7 @@ export class Tenants extends Component {
         this.setState({ tenants });
       })
       .catch((error) => {
-        Toast(error, "error");
+        Toast(error.message, "error");
         console.log(error);
       });
   };

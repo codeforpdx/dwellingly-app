@@ -91,7 +91,7 @@ const Managers = () => {
         console.log(response);
       })
       .catch((error) => {
-        Toast(error, "error");
+        Toast(error.message, "error");
         console.log(error);
       });
   };

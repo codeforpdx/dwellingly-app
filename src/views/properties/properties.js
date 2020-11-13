@@ -98,7 +98,7 @@ export class Properties extends Component {
         this.setState({ properties: propertyRows });
       })
       .catch((error) => {
-        Toast(error, "error");
+        Toast(error.message, "error");
         console.log(error);
       })
   }
