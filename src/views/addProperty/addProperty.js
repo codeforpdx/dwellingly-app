@@ -64,29 +64,24 @@ export class AddProperty extends Component {
     this.getManagers(this.context);
   };
 
-
   getManagers = (context) => {
-    axios
-      .get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, {
-        headers: { Authorization: `Bearer ${context.user.accessJwt}` },
-      })
+    axios.get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
-        let managerSelection = [...this.state.managerSelection];
-        const userSelection = response.data.users;
-        userSelection.forEach(function modifyManagers(user) {
-          let manager = {
-            value: user.id,
-            label: user.firstName + " " + user.lastName,
-          };
-          managerSelection.push(manager);
+        // template for managerSelection array: [{key:'1', description:'manager1'}, {key:'2', description:'manager2'}]
+        const managerSelection = response.data.users.map(({ id, firstName, lastName, email }) => {
+          return ({
+            key: id,
+            description: `${firstName} ${lastName} (${email})`
+          });
         });
-        this.setState({ managerSelection });
+        this.setState({ managerSelection })
       })
       .catch((error) => {
         alert(error);
         console.log(error);
-      });
+      })
   };
+
 
   handleSearchChange = ({ target }) => {
     console.log(target.value);
@@ -254,12 +249,19 @@ export class AddProperty extends Component {
                             name="managers"
                             value={this.state.assignedPropertyManagers}
                           />
-                          <Select
-                            isMulti
-                            options={this.state.managerSelection}
-                            onChange={this.handleInputChange}
+                          <SearchPanel
+                            chips
+                            choices={this.state.managerSelection}
+                            onChange={this.handleSearchChange}
+                            onSelectionChange={this.handleSelectionChange}
+                            placeholder="Search Property Managers"
+                            selectedChoices={values.managers}
+                            value={this.state.managerSearch}
+                            variant={SearchPanelVariant.checkbox}
                           />
                         </div>
+
+
                         <div className="container-footer mt-3">
                           <button
                             className="button is-primary is-rounded mr-5"
@@ -277,12 +279,14 @@ export class AddProperty extends Component {
                         </div>
                       </Form>
                     </div>
-                  )}
+                  )
+                }
               </Formik>
-            </div>
+            </div >
           );
-        }}
-      </UserContext.Consumer>
+        }
+        }
+      </UserContext.Consumer >
     );
   }
 }
