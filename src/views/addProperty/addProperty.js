@@ -61,10 +61,10 @@ export class AddProperty extends Component {
   getManagers = (context) => {
     axios.get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
-        const managerSelection = response.data.users.map(({ id, firstName, lastName, email }) => {
+        const managerSelection = response.data.users.map(({ id, firstName, lastName }) => {
           return ({
             key: id,
-            description: `${firstName} ${lastName} (${email})`
+            description: `${firstName} ${lastName}`
           });
         });
         this.setState({ managerSelection })
@@ -193,16 +193,18 @@ export class AddProperty extends Component {
 
                       <div className=" add-property__assign-manager-container">
                         <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                        <SearchPanel
-                          chips
-                          choices={this.state.managerSelection}
-                          onChange={this.handleSearchChange}
-                          onSelectionChange={this.handleSelectionChange}
-                          placeholder="Search Property Managers"
-                          selectedChoices={this.state.assignedPropertyManagers}
-                          value={this.state.managerSearch}
-                          variant={SearchPanelVariant.checkbox}
-                        />
+                        <div className="typeahead-section">
+                          <SearchPanel
+                            chips
+                            choices={this.state.managerSelection}
+                            onChange={this.handleSearchChange}
+                            onSelectionChange={this.handleSelectionChange}
+                            placeholder="Search Property Managers"
+                            selectedChoices={this.state.assignedPropertyManagers}
+                            value={this.state.managerSearch}
+                            variant={SearchPanelVariant.checkbox}
+                          />
+                        </div>
                       </div>
                       <div className="container-footer mt-3">
                         <button
