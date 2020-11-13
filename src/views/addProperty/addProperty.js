@@ -27,25 +27,20 @@ const validationSchema = Yup.object().shape({
   state: Yup.string()
     .max(50, "*State can't be longer than 50 characters")
     .required("*State is required"),
-  units: Yup.string().max(50, "*Unit can't be longer than 50 characters"),
-  managers: Yup.array(),
+  units: Yup.string()
+    .max(50, "*Unit can't be longer than 50 characters"),
+  managers: Yup.array()
 });
 
-const formHandler = (data) => {
-  axios
-    .post("/api/properties", data, {
-      headers: { Authorization: `Bearer ${context.user.accessJwt}` },
-    })
+const formHandler = (data, context) => {
+  axios.post("/api/properties", data, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
     .then(function (response) {
       Toast("Property Added!", "success");
-      if (props && typeof props.postAddProperty === "function") {
-        props.postAddProperty();
-      }
     })
     .catch(function (error) {
-      Toast(error.message, "error");
-    });
-};
+      Toast(error, "error");
+    })
+}
 
 export class AddProperty extends Component {
   constructor(props) {
@@ -66,7 +61,6 @@ export class AddProperty extends Component {
   getManagers = (context) => {
     axios.get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
-        // template for managerSelection array: [{key:'1', description:'manager1'}, {key:'2', description:'manager2'}]
         const managerSelection = response.data.users.map(({ id, firstName, lastName, email }) => {
           return ({
             key: id,
@@ -117,7 +111,6 @@ export class AddProperty extends Component {
                   formHandler(values, session);
                   resetForm();
                   setSubmitting(false);
-
                 }}>
                 {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
                   <div className="form-container add-property__main_container">
@@ -224,10 +217,10 @@ export class AddProperty extends Component {
                 )}
               </Formik>
             </div>
-          );
-        }
-        }
-      </UserContext.Consumer >
-    );
+          )
+        }}
+
+      </UserContext.Consumer>
+    )
   }
 }
