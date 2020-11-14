@@ -111,11 +111,12 @@ export class AddProperty extends Component {
                   city: '',
                   state: '',
                   zipcode: '',
-                  units: '',
-                  managers: []
+                  units: ''
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
+                  values.propertyManagerIDs = this.state.assignedPropertyManagers.map(manager => manager.key);
+                  
                   console.log('submitting', values);
                   setSubmitting(true);
                   formHandler(values, session);
