@@ -65,6 +65,9 @@
 .typeahead-section {
   margin-bottom: 50px;
   width: 60%;
+  fieldset {
+    overflow: auto;
+  }
 }
 
 .form-first-row {
