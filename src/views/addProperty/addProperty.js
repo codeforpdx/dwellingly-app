@@ -48,6 +48,7 @@ export class AddProperty extends Component {
 
     this.state = {
       assignedPropertyManagers: [],
+      managerOptions: [],
       managerSelection: [],
       managerSearch: ''
     }
@@ -58,16 +59,25 @@ export class AddProperty extends Component {
     this.getManagers(this.context);
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.managerSearch === prevState.managerSearch) return;
+
+    let choices = this.state.managerOptions.filter(
+      manager => manager.description.toLowerCase().includes(this.state.managerSearch.toLowerCase())
+    );
+    this.setState({ managerSelection: choices });
+  }
+
   getManagers = (context) => {
     axios.get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
-        const managerSelection = response.data.users.map(({ id, firstName, lastName }) => {
+        const managerOptions = response.data.users.map(({ id, firstName, lastName }) => {
           return ({
             key: id,
             description: `${firstName} ${lastName}`
           });
         });
-        this.setState({ managerSelection })
+        this.setState({ managerOptions, managerSelection: managerOptions })
       })
       .catch((error) => {
         alert(error);
