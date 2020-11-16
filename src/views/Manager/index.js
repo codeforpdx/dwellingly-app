@@ -43,7 +43,7 @@ const getManager = (context, managerId, storeInState) => {
       storeInState(manager);
     })
     .catch((error) => {
-      alert(error);
+      alert(`Error attempting to save: ${error}`);
       console.log(error);
     });
 };
@@ -93,20 +93,37 @@ const Manager = () => {
     },
   ];
 
+const updateManager = (payload) => {
+  axios
+    .patch(`${process.env.REACT_APP_PROXY}/api/user/${id}`, 
+    payload, 
+    { Authorization: `Bearer ${userContext.user.accessJwt}` }
+    )
+    .then(response => {
+      setManager({
+        ...managerData,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        phone: response.data.phone,
+        email: response.data.email,
+      });
+      setEditingStatus(false);
+    })
+    .catch((error) => {
+      alert(error);
+      console.log(error);
+    });
+};
+
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
-    setManager({
-      ...managerData,
+    const newValues = {
       firstName: values.firstName,
       lastName: values.lastName,
       phone: values.phone,
       email: values.email,
-    });
-    setTimeout(() => {
-      Toast(JSON.stringify(values, null, 2), "info");
-      setSubmitting(false);
-      setEditingStatus(false);
-    }, 500);
+    };
+    updateManager(newValues);
   };
 
   const onCancelClick = () => {
