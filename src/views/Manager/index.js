@@ -3,11 +3,7 @@ import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
 import * as axios from "axios";
-<<<<<<< HEAD
-import { PROPERTY_MANAGER_DATA } from "../pManagerData";
-=======
 import UserContext from '../../UserContext';
->>>>>>> populate manager view with backend data
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 import Toast from '../../utils/toast';
 
@@ -52,10 +48,6 @@ const Manager = () => {
   const { pathname } = useLocation();
   const id = pathname.match(/\d/)[0];
 
-<<<<<<< HEAD
-  const [manager, setManager] = useState(dummyDataManagerInfo);
-  const { isEditing, setEditingStatus } = useEditingStatus();
-=======
   const userContext = useContext(UserContext);
   
   const [managerData, setManager] = useState();
@@ -64,7 +56,6 @@ const Manager = () => {
   }, []);
 
   const { isEditing, setEditingStatus } = useEditingStatus()
->>>>>>> populate manager view with backend data
 
   const tableData = managerData && [
     {
@@ -134,13 +125,16 @@ const updateManager = (payload) => {
   // eslint-disable-next-line no-unused-vars
   const getManager = (context) => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users/?id=${id}`, {
+      .get(`${process.env.REACT_APP_PROXY}/api/user/${id}`, {
         headers: {
           Authorization: `Bearer ${context.user.accessJwt}`,
         },
       })
       .then((response) => {
-        setManager({ manager: response.data.manager });
+        setManager({ 
+          ...managerData,
+          ...response.data
+        });
       })
       .catch((error) => {
         Toast(error.message, "error");
@@ -148,38 +142,7 @@ const updateManager = (payload) => {
       });
   };
 
-  return (
-<<<<<<< HEAD
-    <div className='main-container'>
-      <div className="manager__container">
-        <TitleAndPen title={`${manager.firstName} ${manager.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
-        <div className="manager__contact">
-          <h1 className="secondary-title">CONTACT</h1>
-          <div className="contact-details">
-            <ToggleEditTable
-              tableData={tableData}
-              validationSchema={validationSchema}
-              isEditing={isEditing}
-              submitHandler={onFormikSubmit}
-              cancelHandler={onCancelClick}
-            />
-          </div>
-        </div>
-        <div className="manager__properties">
-          <h1 className="secondary-title">PROPERTIES</h1>
-          <div className="manager__properties__container">
-            {manager.properties.map((property) => (
-              <div key={property.name} className="manager__property__tile">
-                <h3 key={property.name} className="manager__property__name">
-                  {property.name}
-                </h3>
-                <div className="manager__property__address">
-                  {property.streetAddress}
-                </div>
-                <div className="manager__property__address">
-                  {property.city}, {property.state} {property.zip}
-                </div>
-=======
+  return managerData ? (
     <div className="manager__container">
       <TitleAndPen title={`${managerData.firstName} ${managerData.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
       <div className="manager__contact">
@@ -204,10 +167,9 @@ const updateManager = (payload) => {
               </h3>
               <div className="manager__property__address">
                 {property.streetAddress}
->>>>>>> populate manager view with backend data
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
         <div className="manager__tenants">
           <h1 className="section-title">TENANTS</h1>
@@ -223,22 +185,6 @@ const updateManager = (payload) => {
           ))}
         </div>
       </div>
-<<<<<<< HEAD
-=======
-      <div className="manager__tenants">
-        <h1 className="section-title">TENANTS</h1>
-        {managerData.tenants.map((tenant) =>
-          <div key={tenant.id} className="columns tenant__form-row">
-            <div className="column is-one-quarter bold tenant__name">
-              {tenant.fullName}
-            </div>
-            <div className="column is-one-quarter">{tenant.propertyName}</div>
-            <div className="column is-one-quarter">Unit #{tenant.unitNum}</div>
-            <div className="column is-one-quarter">{tenant.phone}</div>
-          </div>
-        )}
-      </div>
->>>>>>> populate manager view with backend data
     </div>
   ) : null;
 };

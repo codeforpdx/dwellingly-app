@@ -2,12 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
-import roleEnum from '../Enums/RoleEnum';
+import roleEnum from '../../Enums/RoleEnum';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
-import UserContext from '../UserContext';
+import UserContext from '../../UserContext';
 import './managers.scss';
 
 const columns = [

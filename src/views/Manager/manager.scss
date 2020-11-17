@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    max-width: 80%;
     .manager__contact {
       position: relative;
       padding: 25px 0 25px 0;
@@ -16,7 +17,6 @@
         display: flex;
         flex-direction: column;
         margin: 25px 0 0 0;
-        max-width: 80%;
       }
     }
   }
