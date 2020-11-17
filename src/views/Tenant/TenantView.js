@@ -6,6 +6,7 @@ import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import RoleEnum from '../../Enums/RoleEnum.js'
 import Toast from '../../utils/toast';
+import CalendarModal, { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -39,6 +40,7 @@ const Tenant = () => {
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
+  const [dateRange, setDateRange] = useCalendarState()
 
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
@@ -235,6 +237,7 @@ const Tenant = () => {
               submitHandler={onFormikSubmit}
               cancelHandler={onCancelClick}
             />
+            <CalendarModal dateRange={dateRange} setDateRange={setDateRange} />
           </div>
 
           <div className="section-container">

@@ -146,3 +146,22 @@ _____
 2.  Toast is a function which takes two arguments. The first is the string you would like displayed in the notification. If no text is provided, you will see an error notice in the browser console. The second argument is the type of notification you would like displayed, which dictates the color of the notification. The options for this are "success" (green), "error" (red), "warn" or "warning" (yellow), "info" or "default" (blue). If no second argument is passed, the notification will default to "info" and render a blue toast notification. An example of this could look like `Toast("Property Added!", "success");`
 
 ---
+
+### **Name**: CalendarModal
+* **File path**: src/components/CalendarModal/CalendarModal
+* **Input/Props**: dateRange, setDateRange
+* **Currently in use**: TenantView, AddTenant
+* **Will be used in**: Anywhere a two date range is needed
+* **Additional info**: 
+  1. "dateRange" is [startDate, endDate] (as Date objects) 
+  2. "setDateRange" is a setState Func
+  3. To initialize with either,
+    ```
+    const [dateRange, setDateRange] = useState([new Date(), new Date()]) 
+    ```
+  or the custom hook that has been supplied for the state.
+    ```
+    import CalendarModal, {useCalendarState} from '<filepath>/CalendarModal/CalendarModal'
+    const [dateRange, setDateRange] = useCalendarState()
+    ```
+_____
