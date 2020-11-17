@@ -1,0 +1,18 @@
+@import "../../scss/variables.scss";
+
+.calendar {
+  &__icon {
+    position: relative;
+    top: -5.5rem;
+    
+    float: right;
+    color: $gray;
+    &:hover, &:focus, &:active {
+      cursor: pointer;
+      color: $blue
+    }
+    &.open {
+      color: $blue
+    }
+  }
+}

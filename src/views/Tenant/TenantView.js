@@ -237,7 +237,7 @@ const Tenant = () => {
               submitHandler={onFormikSubmit}
               cancelHandler={onCancelClick}
             />
-            <CalendarModal dateRange={dateRange} setDateRange={setDateRange} />
+            {isEditing && <CalendarModal dateRange={dateRange} setDateRange={setDateRange} />}
           </div>
 
           <div className="section-container">
