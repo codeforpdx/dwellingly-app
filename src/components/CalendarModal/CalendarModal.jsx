@@ -7,12 +7,13 @@ import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import './calendarModal.scss'
 import Modal from '../Modal';
 
-export default function CalendarModal({ dateRange, setDateRange, title = "Date Range" }) {
+export default function CalendarModal({ dateRange, setDateRange, title = "Date Range", iconYPosition = "" }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (<div>
     <FontAwesomeIcon
       className={`calendar__icon ${isOpen && 'open'}`}
+      style={{ top: iconYPosition }}
       size={"lg"}
       icon={faCalendarAlt}
       onClick={() => setIsOpen(true)} />
@@ -21,6 +22,7 @@ export default function CalendarModal({ dateRange, setDateRange, title = "Date R
       closeHandler={() => setIsOpen(false)}
       content={
         <Calendar
+          className="calendar__input"
           onChange={setDateRange}
           value={dateRange}
           selectRange />}

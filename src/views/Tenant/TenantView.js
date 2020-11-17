@@ -237,7 +237,12 @@ const Tenant = () => {
               submitHandler={onFormikSubmit}
               cancelHandler={onCancelClick}
             />
-            {isEditing && <CalendarModal dateRange={dateRange} setDateRange={setDateRange} />}
+            {isEditing && <CalendarModal
+              title="Lease Range"
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              iconYPosition="-5.5rem"
+            />}
           </div>
 
           <div className="section-container">

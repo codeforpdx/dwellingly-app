@@ -2,9 +2,7 @@
 
 .calendar {
   &__icon {
-    position: relative;
-    top: -5.5rem;
-    
+    position: relative;    
     float: right;
     color: $gray;
     &:hover, &:focus, &:active {
@@ -14,5 +12,8 @@
     &.open {
       color: $blue
     }
+  }
+  &__input {
+    margin: 1rem auto;
   }
 }
