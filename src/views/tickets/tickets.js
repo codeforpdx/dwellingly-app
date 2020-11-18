@@ -170,7 +170,7 @@ export class Tickets extends Component {
                             input={this.state.tickets}
                             outputLocation={this.state.filteredTickets}
                             isFilteredLocation={this.state.isFiltered}
-                            setIsFilteredStateFalse={this.setIsFilteredTicketFalse}
+                            setIsFilteredStateFalse={this.setIsFilteredTicketsFalse}
                             setOutputState={this.setOutputState}
                             placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
                           />
