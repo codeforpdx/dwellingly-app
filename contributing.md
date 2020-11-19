@@ -54,7 +54,6 @@ This document provides some overall guidelines and suggestions for how to get st
 
 > We appreciate any and all help with this Volunteer based project, and may check in on issues that are assigned to individuals that have not been updated in some time.
 
-
 ----
 ### Feature Branch
 

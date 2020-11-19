@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
+import Toast from '../../utils/toast';
 
 import './manager.scss'
 
@@ -76,7 +77,7 @@ const Manager = () => {
       email: values.email,
     });
     setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+      Toast(JSON.stringify(values, null, 2), "info");
       setSubmitting(false);
       setEditingStatus(false);
     }, 500);
@@ -99,7 +100,7 @@ const Manager = () => {
         setManager({ manager: response.data.manager });
       })
       .catch((error) => {
-        alert(error);
+        Toast(error.message, "error");
         console.log(error);
       });
   };

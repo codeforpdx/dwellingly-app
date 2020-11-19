@@ -4,6 +4,7 @@ import UserContext from '../../UserContext';
 import { Link } from "react-router-dom"
 import * as axios from 'axios';
 import Search from '../../components/Search';
+import Toast from '../../utils/toast';
 
 import './properties.scss'
 
@@ -15,7 +16,7 @@ const columns = [{
     return { width: "20%" };
   }
 }, {
-  dataField: 'propertyManager',
+  dataField: 'propertyManagerNames',
   text: 'Property Managers',
   sort: true,
   headerStyle: () => {
@@ -85,11 +86,19 @@ export class Properties extends Component {
     axios.get("/api/properties", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
         const { data: { properties } } = response;
-        properties.forEach(property => property.totalTenants = property.tenantIDs.length)
-        this.setState({ properties: properties });
+        let propertyRows = properties.map(property => ({
+          id: property.id,
+          name: property.name,
+          propertyManagerNames: property.propertyManagerName &&
+            property.propertyManagerName.join(", "),
+          address: property.address,
+          totalTenants: property.tenantIDs && property.tenantIDs.length,
+          created_at: property.created_at
+        }) );
+        this.setState({ properties: propertyRows });
       })
       .catch((error) => {
-        alert(error);
+        Toast(error.message, "error");
         console.log(error);
       })
   }
@@ -107,7 +116,8 @@ export class Properties extends Component {
               </div>
 
               <Search
-                input={this.state.properties} outputLocation={this.state.filteredProperties}
+                input={this.state.properties}
+                outputLocation={this.state.filteredProperties}
                 isFilteredLocation={this.state.isFiltered}
                 setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
                 setOutputState={this.setOutputState}

@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import UserContext from "../../UserContext";
 import dwellinglyLogo from "../../assets/images/dwellingly_logo.png";
 import dwellinglyLogoMobile from "../../assets/images/dwellingly_logo_white.png";
+import Toast from '../../utils/toast';
 
 import './signup.scss'
 
@@ -33,16 +34,16 @@ const SignupForm = ({ history }) => {
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message);
-        alert(error.response.data.message);
+        Toast(error.response.data.message, "error");
       } else {
-        alert(error);
+        Toast(error.message, "error");
       }
       return Promise.reject(error);
     }
     if (response) {
       const success = "Account Created Successfully!";
       console.log(success);
-      alert(success);
+      Toast(success, "success");
       // Redirect to login using the react router history
       history.push("/login");
     }

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import * as axios from 'axios';
 import RoleEnum from "../../Enums/RoleEnum";
+import Toast from '../../utils/toast';
 
 import './addStaffMember.scss'
 
@@ -47,11 +48,11 @@ export const AddStaffMember = () => {
 
 		axios.post("/api/register", data, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } })
 			.then(function (response) {
-				alert("Staff Added!");
+				Toast("Staff Added!", "success");
 				console.log(response)
 			})
 			.catch(function (error) {
-				alert(error);
+				Toast(error.message, "error");
 			})
 	}
 

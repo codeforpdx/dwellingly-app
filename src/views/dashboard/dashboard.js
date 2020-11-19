@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../UserContext';
 import useMountEffect from '../../utils/useMountEffect';
+import Toast from "../../utils/toast"
 import DashboardModule from '../../components/DashboardModule';
 import Collapsible from '../../components/Collapsible';
 import Modal from '../../components/Modal';
@@ -40,23 +41,23 @@ export const Dashboard = (props) => {
                     .post("/api/users/role", adminUsersObj, makeAuthHeaders(userContext))
                     .then(({ data }) => setStaffList(data.users));
             })
-            .catch(error => alert(error));
+            .catch(error => Toast(error.message, "error"));
 
         axios
             .get("/api/widgets", makeAuthHeaders(userContext))
             .then(({ data }) => {
                 setWidgetData(data);
             })
-            .catch(error => alert(error));
+            .catch(error => Toast(error.message, "error"));
 
         getPendingUsers();
     });
 
-    const getPendingUsers = () => {
-        axios
+    const getPendingUsers = async () => {
+        await axios
             .post("/api/users/role", { "userrole": RoleEnum.PENDING }, makeAuthHeaders(userContext))
             .then(({ data }) => setUsersPending(data.users))
-            .catch(error => alert(error));
+            .catch(error => Toast(error.message, "error"));
     }
 
     const handleAddClick = (id) => {
@@ -87,8 +88,8 @@ export const Dashboard = (props) => {
 
             }
         }
-        catch (err) {
-            alert("There was an error processing your request. Please try again later");
+        catch(err){
+            Toast("There was an error processing your request. Please try again later", "error");
         }
     }
 
@@ -123,7 +124,7 @@ export const Dashboard = (props) => {
                 });
                 setUnstaffedTenants(stillUnstaffed);
             }))
-            .catch(errors => alert(errors));
+            .catch(error => Toast(error.message, "error"));
     }
 
     return (
@@ -175,11 +176,13 @@ export const Dashboard = (props) => {
             </div>
 
             {modalActive.visible && <Modal
-                contentText={"Are you sure you want to decline access?"}
+                content={"Are you sure you want to decline access?"}
                 hasButtons={true}
-                yesButtonHandler={() => handleDenyAccess(true)}
-                noButtonHandler={() => handleDenyAccess(false)}
-                closeHandler={() => setModalActive({ ...modalActive, visible: false })}
+                confirmButtonHandler={() => handleDenyAccess(true)}
+                cancelButtonHandler={() => handleDenyAccess(false)}
+                confirmText="Yes"
+                cancelText="No"
+                closeHandler={() => setModalActive({ ...modalActive, visible: false})}
             />}
         </>
     )

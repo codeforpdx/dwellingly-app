@@ -92,18 +92,18 @@ export const NavMenu = () => {
 								href="/dashboard"
 							/>
 							<MenuLink name="Add New" isBold icon={faPlusCircle} href="/add" />
-							<li className="pl-4 is-child-link">
+							<div className="pl-4 is-child-link">
 								<MenuLink name="Tenant" href="/add/tenant" />
 								<MenuLink name="Property" href="/add/property" />
 								<MenuLink name="Property Manager" href="/add/manager" />
-							</li>
+							</div>
 
 							<MenuLink name="Manage" isBold icon={faUserCog} href="/manage" />
-							<li className="pl-4 is-child-link">
+							<div className="pl-4 is-child-link">
 								<MenuLink name="Tenants" href="/manage/tenants" />
 								<MenuLink name="Properties" href="/manage/properties" />
 								<MenuLink name="Property Managers" href="/manage/managers" />
-							</li>
+							</div>
 
 							<MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets" />
 							<MenuLink name="Reports" isBold icon={faBook} href="/reports" />

@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../../UserContext';
 import * as axios from 'axios';
-import { Link } from 'react-router-dom';
+import Toast from '../../utils/toast';
 
 import './addProperty.scss'
 
@@ -29,154 +30,149 @@ const validationSchema = Yup.object().shape({
         .max(50, "*Unit can't be longer than 50 characters"),
 });
 
-const formHandler = (data, context) => {
-    axios.post("/api/properties", data, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
-        .then(function (response) {
-            alert("Property Added!");
-        })
-        .catch(function (error) {
-            alert(error);
-        })
-}
 
-export class AddProperty extends Component {
-    constructor(props) {
-        super(props);
+ export const AddProperty = (props) => {
+    const context = useContext(UserContext);
+    const history = useHistory();
 
-        this.state = {
-            propertyManagers: undefined,
+    const formHandler = (data) => {
+        axios.post("/api/properties", data, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+            .then(function(response){
+                Toast("Property Added!", "success");
+                if(props && typeof(props.postAddProperty) === 'function') {
+                    props.postAddProperty();
+                }
+            })
+            .catch(function(error){
+                Toast(error.message, "error");
+            })
+    }
+
+    const handleCancel = () => {
+        if( props && typeof(props.handleCancel) === 'function') {
+            props.handleCancel();
+        } else {
+            history.push('/manage/properties');
         }
     }
 
-    render() {
-        return (
-            <UserContext.Consumer>
-                {session => {
-                    return (
-                        <div>
-                            <h2 className="page-title">Add a New Property</h2>
+    return (
+        <div>
+            {props.showPageTitle && <h2 className="page-title">Add a New Property</h2>}
 
-                            <Formik
-                                initialValues={{
-                                    name: "",
-                                    address: "",
-                                    city: "",
-                                    state: "",
-                                    zipcode: "",
-                                    units: "",
-                                }}
-                                validationSchema={validationSchema}
-                                onSubmit={(values, { setSubmitting, resetForm }) => {
-                                    console.log("submitting", values);
-                                    setSubmitting(true);
-                                    formHandler(values, session);
-                                    resetForm();
-                                    setSubmitting(false);
-
-                                }}>
-                                {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
-                                    <div className="form-container add-property__main_container">
-                                        <h1 className="section-title">PROPERTY INFORMATION</h1>
-                                        <Form className="add-property__form-container" onSubmit={handleSubmit}>
-                                            <div className="form-row columns">
-                                                <label className="column is-one-fifth" htmlFor="name">Name</label>
-                                                <Field
-                                                    className="column form-field"
-                                                    type="text"
-                                                    name="name"
-                                                    onChange={handleChange}
-                                                    value={values.name}
-                                                    placeholder="Example Estate"
-                                                />
-                                                {errors.name ? (<div className="error-message">{errors.name}</div>) : null}
-                                            </div>
-                                            <div className="form-row columns">
-                                                <label className="column is-one-fifth" htmlFor="address">Address</label>
-                                                <Field
-                                                    className="column form-field"
-                                                    type="text"
-                                                    name="address"
-                                                    onChange={handleChange}
-                                                    value={values.address}
-                                                    placeholder="123 Main St"
-                                                    error={errors.address}
-                                                />
-                                                {errors.address ? (<div className="error-message">{errors.address}</div>) : null}
-                                            </div>
-                                            <div className="form-row columns">
-                                                <label className="column is-one-fifth" htmlFor="city">City</label>
-                                                <Field
-                                                    className="column form-field"
-                                                    type="text"
-                                                    name="city"
-                                                    onChange={handleChange}
-                                                    value={values.city}
-                                                    placeholder="Portland"
-                                                />
-                                                {errors.city ? (<div className="error-message">{errors.city}</div>) : null}
-                                            </div>
-                                            <div className="form-row columns">
-                                                <label className="column is-one-fifth" htmlFor="state">State</label>
-                                                <Field
-                                                    className="column form-field"
-                                                    type="text"
-                                                    name="state"
-                                                    onChange={handleChange}
-                                                    value={values.state}
-                                                    placeholder="OR"
-                                                />
-                                                {errors.state ? (<div className="error-message">{errors.state}</div>) : null}
-                                            </div>
-                                            <div className="form-row columns">
-                                                <label className="column is-one-fifth" htmlFor="zipcode">Zipcode</label>
-                                                <Field
-                                                    className="column form-field"
-                                                    type="text"
-                                                    name="zipcode"
-                                                    onChange={handleChange}
-                                                    value={values.zipcode}
-                                                    placeholder="97217"
-                                                />
-                                                {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
-                                            </div>
-                                            <div className="form-row columns">
-                                                <label className="column is-one-fifth" htmlFor="units">Units</label>
-                                                <Field
-                                                    className="column form-field"
-                                                    type="text"
-                                                    name="units"
-                                                    onChange={handleChange}
-                                                    value={values.units}
-                                                    placeholder="Number of units"
-                                                    error={errors.units}
-                                                />
-                                                {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
-                                            </div>
-
-                                            {/* This element will use a list of property managers
-                                            and will need to be implemented later. react-select
-                                            can be used to select from list retrieved from endpoint */}
-                                            {/* <div className=" add-property__assign-manager-container">
-                                            <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
-                                            <input></input>
-                                        </div> */}
-                                            <div className="container-footer mt-3">
-                                                <button
-                                                    className="button is-primary is-rounded mr-5"
-                                                    type="submit"
-                                                    disabled={isSubmitting}>SAVE</button>
-                                                <Link className="button is-dark is-rounded" to='/manage/properties'>CANCEL</Link>
-                                            </div>
-                                        </Form>
-
-                                    </div>
-                                )}
-                            </Formik>
-                        </div>
-                    )
+            <Formik
+                initialValues={{
+                    name: "",
+                    address: "",
+                    city: "",
+                    state: "",
+                    zipcode: "",
+                    units: "",
                 }}
+                enableReinitialize={true}
+                validationSchema={validationSchema}
+                onSubmit={(values, {setSubmitting, resetForm})=> {
+                    console.log("submitting", values);
+                    setSubmitting(true);
+                    formHandler(values);
+                    resetForm();
+                    setSubmitting(false);
+                }}>
+                {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
+                    <div className="form-container add-property__main_container">
+                        <h1 className="section-title">PROPERTY INFORMATION</h1>
+                        <Form className="add-property__form-container" onSubmit={handleSubmit}>
+                            <div className="form-row columns">
+                                <label className="column is-one-fifth" htmlFor="name">Name</label>
+                                <Field
+                                    className="column form-field"
+                                    type="text"
+                                    name="name"
+                                    onChange={handleChange}
+                                    value={values.name}
+                                    placeholder="Example Estate"
+                                />
+                                {errors.name ? (<div className="error-message">{errors.name}</div>) : null}
+                            </div>
+                            <div className="form-row columns">
+                                <label className="column is-one-fifth" htmlFor="address">Address</label>
+                                <Field
+                                    className="column form-field"
+                                    type="text"
+                                    name="address"
+                                    onChange={handleChange}
+                                    value={values.address}
+                                    placeholder="123 Main St"
+                                    error={errors.address}
+                                />
+                                {errors.address ? (<div className="error-message">{errors.address}</div>) : null}
+                            </div>
+                            <div className="form-row columns">
+                                <label className="column is-one-fifth" htmlFor="city">City</label>
+                                <Field
+                                    className="column form-field"
+                                    type="text"
+                                    name="city"
+                                    onChange={handleChange}
+                                    value={values.city}
+                                    placeholder="Portland"
+                                />
+                                {errors.city ? (<div className="error-message">{errors.city}</div>) : null}
+                            </div>
+                            <div className="form-row columns">
+                                <label className="column is-one-fifth" htmlFor="state">State</label>
+                                <Field
+                                    className="column form-field"
+                                    type="text"
+                                    name="state"
+                                    onChange={handleChange}
+                                    value={values.state}
+                                    placeholder="OR"
+                                />
+                                {errors.state ? (<div className="error-message">{errors.state}</div>) : null}
+                            </div>
+                            <div className="form-row columns">
+                                <label className="column is-one-fifth" htmlFor="zipcode">Zipcode</label>
+                                <Field
+                                    className="column form-field"
+                                    type="text"
+                                    name="zipcode"
+                                    onChange={handleChange}
+                                    value={values.zipcode}
+                                    placeholder="97217"
+                                />
+                                {errors.zipcode ? (<div className="error-message">{errors.zipcode}</div>) : null}
+                            </div>
+                            <div className="form-row columns">
+                                <label className="column is-one-fifth" htmlFor="units">Units</label>
+                                <Field
+                                    className="column form-field"
+                                    type="text"
+                                    name="units"
+                                    onChange={handleChange}
+                                    value={values.units}
+                                    placeholder="Number of units"
+                                    error={errors.units}
+                                />
+                                {errors.units ? (<div className="error-message">{errors.units}</div>) : null}
+                            </div>
+            
+                            {/* This element will use a list of property managers
+                                and will need to be implemented later. react-select
+                                can be used to select from list retrieved from endpoint */}
+                            {/* <div className=" add-property__assign-manager-container">
+                                <h3 className="section-title">ASSIGN PROPERTY MANAGERS</h3>
+                                <input></input>
+                            </div> */}
+                            <div className="container-footer mt-3">
+                                <button className="button is-primary is-rounded mr-5" type="submit" disabled={isSubmitting}>SAVE</button>
+                                <button className="button is-dark is-rounded" type="button" onClick={handleCancel}>CANCEL</button>
+                            </div>
+                        </Form>
 
-            </UserContext.Consumer>
-        )
-    }
+                    </div>
+                    )}
+            </Formik>
+        </div>
+    )
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import 'react-toastify/dist/ReactToastify.min.css';
 import "./App.scss";
 import axios from 'axios';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -31,9 +32,12 @@ import Managers from "./views/managers/managers";
 import Manager from "./views/Manager";
 import { JoinStaff } from "./views/joinStaff/joinStaff";
 import { AddStaffMember } from "./views/addStaffMember/addStaffMember";
+import { AddTenant } from "./views/AddTenant/addTenant";
 import UserContext from "./UserContext";
 import Tenant from "./views/Tenant";
 import ChangePassword from "./views/Settings/changePassword";
+import { ToastContainer } from 'react-toastify';
+
 
 var refreshTimeout;
 
@@ -108,7 +112,7 @@ export class App extends React.Component {
             this.updateAxiosDefaults();
           });
         } else {
-          alert("Failed to login");
+          this.notify('Failed to login', 'warn');
         }
       });
   };
@@ -169,10 +173,10 @@ export class App extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT: this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
-        <BrowserRouter>
-          <div className='App'>
-            {this.state.userSession.isAuthenticated
+        <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT:this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
+          <BrowserRouter>
+            <div className='App'>
+              {this.state.userSession.isAuthenticated
               && <><NavMenu />
                 <Header /></>}
 
@@ -186,7 +190,7 @@ export class App extends React.Component {
                 <PrivateRoute exact path='/' component={Dashboard} />
                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
                 <PrivateRoute exact path='/home' component={Dashboard} />
-                <PrivateRoute exact path='/add/tenant' component={Dashboard} />
+                <PrivateRoute exact path='/add/tenant' component={AddTenant} />
                 <PrivateRoute exact path='/add/property' component={AddProperty} />
                 <PrivateRoute exact path='/add/manager' component={Dashboard} />
                 <PrivateRoute exact path='/manage/tenants' component={Tenants} />
@@ -211,6 +215,18 @@ export class App extends React.Component {
               && <Footer />}
           </div>
         </BrowserRouter>
+        <ToastContainer
+          position="bottom-right"
+          toastClassName="toast"
+          pauseOnFocusLoss
+          autoClose={4000}
+          hideProgressBar
+          pauseOnHover
+          closeOnClick
+          newestOnTop
+          rtl={false}
+          draggable
+        />
       </UserContext.Provider>
     );
   }

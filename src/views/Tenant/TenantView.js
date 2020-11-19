@@ -5,6 +5,7 @@ import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import RoleEnum from '../../Enums/RoleEnum.js'
+import Toast from '../../utils/toast';
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -47,7 +48,7 @@ const Tenant = () => {
 
   // Error handler for axios requests
   const axiosErrorHandler = (error) => {
-    alert(error);
+    Toast(error.message, "error");
     return Promise.reject({ ...error })
   }
 
@@ -88,7 +89,7 @@ const Tenant = () => {
    * Convert an array of staff to an array of SearchPanelItems
    * @param {*} staffArray
    */
-  const getStaffChoice = (staffArray) => {
+  const getStaffChoices = (staffArray) => {
     const staffChoices = [];
     if (staffArray && Array.isArray(staffArray)) {
       staffArray.forEach((staff) => {
@@ -113,7 +114,7 @@ const Tenant = () => {
     const tickets = ticketsResponse.data;
     setState({ tenant, property, tickets });
 
-    const currentStaff = getStaffChoice(tenant.staff);
+    const currentStaff = getStaffChoices(tenant.staff);
 
     setStaffSelections(currentStaff);
   };
@@ -178,7 +179,7 @@ const Tenant = () => {
         name: staffSearchText
       });
       const foundStaff = await staffResponse.data;
-      const foundStaffChoices = getStaffChoice(foundStaff.users);
+      const foundStaffChoices = getStaffChoices(foundStaff.users);
       setStaffSearchResults(foundStaffChoices);
     };
     loadStaff();

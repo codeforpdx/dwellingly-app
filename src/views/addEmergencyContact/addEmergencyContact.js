@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import useMountEffect from '../../utils/useMountEffect';
 import { Link } from 'react-router-dom';
 import './addEmergencyContact.scss'
+import Toast from '../../utils/toast';
 
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
@@ -118,7 +119,7 @@ const AddEmergencyContact = (props) => {
                 setContactValues(data);
                 setInitialized(true);
             })
-            .catch(error => alert(error));
+            .catch(error => Toast(error.message, "error"));
     });
 
     const formHandler = data => {
@@ -130,7 +131,7 @@ const AddEmergencyContact = (props) => {
             .then(() => {
                 history.push('/emergency');
             })
-            .catch(error => alert(error));
+            .catch(error => Toast(error.message, "error"));
         setLoading(true);
     }
 
