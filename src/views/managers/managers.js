@@ -5,10 +5,10 @@ import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import Search from "../../components/Search/index"
+import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 
-import './managers.scss'
+import './managers.scss';
 
 const columns = [
   {
@@ -97,34 +97,37 @@ const Managers = () => {
   };
 
   return (
-    <div className="managers">
-      <div className="section-header">
-        <h2 className="page-title">Property Managers</h2>
-        <Link className="button is-rounded is-primary ml-4" to="/manage/managers">
-          + ADD NEW
+    <div className='main-container'>
+
+      <div className="managers">
+        <div className="section-header">
+          <h2 className="page-title">Property Managers</h2>
+          <Link className="button is-rounded is-primary ml-4" to="/manage/managers">
+            + ADD NEW
         </Link>
-      </div>
-      <div>
-        <Search placeholderMessage="Search property managers by name, property, or status" />
-      </div>
-      <div className="invite-button-container py-3">
-        <button className="button is-rounded is-primary ml-3" type="submit">
-          <FontAwesomeIcon
-            className="button__envelope-icon mr-3"
-            icon={faEnvelope}
-          />
+        </div>
+        <div>
+          <Search placeholderMessage="Search property managers by name, property, or status" />
+        </div>
+        <div className="invite-button-container py-3">
+          <button className="button is-rounded is-primary ml-3" type="submit">
+            <FontAwesomeIcon
+              className="button__envelope-icon mr-3"
+              icon={faEnvelope}
+            />
           Invite
         </button>
+        </div>
+        <BootstrapTable
+          keyField="id"
+          data={PROPERTY_MANAGER_DATA}
+          columns={columns}
+          selectRow={selectRow}
+          bootstrap4={true}
+          headerClasses="table-header"
+          wrapperClasses="managers__table"
+        />
       </div>
-      <BootstrapTable
-        keyField="id"
-        data={PROPERTY_MANAGER_DATA}
-        columns={columns}
-        selectRow={selectRow}
-        bootstrap4={true}
-        headerClasses="table-header"
-        wrapperClasses="managers__table"
-      />
     </div>
   );
 };

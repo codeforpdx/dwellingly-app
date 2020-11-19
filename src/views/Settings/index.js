@@ -7,7 +7,7 @@ import UserContext from "../../UserContext";
 import Button from "../../components/Button";
 import Toast from '../../utils/toast';
 
-import './settings.scss'
+import './settings.scss';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -57,97 +57,99 @@ const Settings = () => {
   const context = useContext(UserContext);
 
   return (
-    <div>
-      <h2 className="page-title">Settings</h2>
+    <div className='main-container'>
+      <div>
+        <h2 className="page-title">Settings</h2>
 
-      <Formik
-        initialValues={{
-          email: context.user.email,
-          phone: context.user.phone,
-        }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setSubmitting(true);
-          handleFormSubmit(context, values);
-          setSubmitting(false);
-        }}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          values,
-          errors,
-          touched,
-          isValid,
-          isSubmitting,
-        }) => (
-            <div className="settings__main_container">
-              <h1 className="section-title">UPDATE CONTACT INFORMATION</h1>
-              <Form className="settings__form-container" onSubmit={handleSubmit}>
-                <div className="form-row">
-                  <label
-                    className="column is-one-fifth"
-                    id="email"
-                    htmlFor="email"
-                  >
-                    Email
+        <Formik
+          initialValues={{
+            email: context.user.email,
+            phone: context.user.phone,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            setSubmitting(true);
+            handleFormSubmit(context, values);
+            setSubmitting(false);
+          }}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            values,
+            errors,
+            touched,
+            isValid,
+            isSubmitting,
+          }) => (
+              <div className="settings__main_container">
+                <h1 className="section-title">UPDATE CONTACT INFORMATION</h1>
+                <Form className="settings__form-container" onSubmit={handleSubmit}>
+                  <div className="form-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="email"
+                      htmlFor="email"
+                    >
+                      Email
                 </label>
-                  <Field
-                    className="column form-field"
-                    type="text"
-                    name="email"
-                    onChange={handleChange}
-                    value={values.email}
-                    placeholder="Enter your email address"
-                  />
-                  {errors.email ? (
-                    <div className="error-message">{errors.email}</div>
-                  ) : null}
-                </div>
-                <div className="form-row">
-                  <label
-                    className="column is-one-fifth"
-                    id="phone"
-                    htmlFor="phone"
-                  >
-                    Phone
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="email"
+                      onChange={handleChange}
+                      value={values.email}
+                      placeholder="Enter your email address"
+                    />
+                    {errors.email ? (
+                      <div className="error-message">{errors.email}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="phone"
+                      htmlFor="phone"
+                    >
+                      Phone
                 </label>
-                  <Field
-                    className="column form-field"
-                    type="text"
-                    name="phone"
-                    onChange={handleChange}
-                    value={values.phone}
-                    placeholder="Enter your phone number"
-                  />
-                  {errors.phone ? (
-                    <div className="error-message">{errors.phone}</div>
-                  ) : null}
-                </div>
-                <div className="button-container">
-                  <Button
-                    isCancelButton={false}
-                    type={"submit"}
-                    disabledFlag={isSubmitting}
-                    isValidFlag={isValid}
-                  >
-                    SAVE
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="phone"
+                      onChange={handleChange}
+                      value={values.phone}
+                      placeholder="Enter your phone number"
+                    />
+                    {errors.phone ? (
+                      <div className="error-message">{errors.phone}</div>
+                    ) : null}
+                  </div>
+                  <div className="button-container">
+                    <Button
+                      isCancelButton={false}
+                      type={"submit"}
+                      disabledFlag={isSubmitting}
+                      isValidFlag={isValid}
+                    >
+                      SAVE
                 </Button>
-                  <Button
-                    isCancelButton={true}
-                    type={"reset"}
-                    onClick={handleFormCancel}
-                  >
-                    CANCEL
+                    <Button
+                      isCancelButton={true}
+                      type={"reset"}
+                      onClick={handleFormCancel}
+                    >
+                      CANCEL
                 </Button>
-                </div>
-              </Form>
-            </div>
-          )}
-      </Formik>
-      <Link exact="true" to="/changePassword">
-        Change Password
+                  </div>
+                </Form>
+              </div>
+            )}
+        </Formik>
+        <Link exact="true" to="/changePassword">
+          Change Password
       </Link>
+      </div>
     </div>
   );
 };

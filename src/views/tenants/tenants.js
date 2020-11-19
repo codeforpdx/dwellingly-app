@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../../UserContext';
 import axios from "axios";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 
@@ -110,29 +110,31 @@ export class Tenants extends Component {
         {session => {
           this.context = session;
           return (
-            <div>
-              <div className="section-header">
-                <h2 className="page-title">Tenants</h2>
-                <Link className="button is-primary is-rounded ml-4" to="/add/tenant">+ ADD NEW</Link>
-              </div>
-              <div className="search-section">
-                <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
-              </div>
-              <div className="properties-list">
-                <BootstrapTable
-                  keyField='id'
-                  data={this.state.tenants}
-                  columns={columns}
-                  selectRow={selectRow}
-                  bootstrap4={true}
-                  headerClasses="table-header"
-                  classes="table-responsive"
-                />
+            <div className='main-container'>
+              <div>
+                <div className="section-header">
+                  <h2 className="page-title">Tenants</h2>
+                  <Link className="button is-primary is-rounded ml-4" to="/add/tenant">+ ADD NEW</Link>
+                </div>
+                <div className="search-section">
+                  <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
+                </div>
+                <div className="properties-list">
+                  <BootstrapTable
+                    keyField='id'
+                    data={this.state.tenants}
+                    columns={columns}
+                    selectRow={selectRow}
+                    bootstrap4={true}
+                    headerClasses="table-header"
+                    classes="table-responsive"
+                  />
+                </div>
               </div>
             </div>
-          )
+          );
         }}
       </UserContext.Consumer>
-    )
+    );
   }
 }
