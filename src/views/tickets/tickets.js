@@ -5,7 +5,7 @@ import UserContext from '../../UserContext';
 import Accordion from '../../components/Accordion';
 import { TicketModal } from '../../components/TicketModal';
 import * as axios from 'axios';
-import Search from "../../components/Search/index"
+import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 
 import './tickets.scss';
@@ -25,27 +25,27 @@ const pageButtonRenderer = ({
   if (title === 'previous page') {
     return (
       <li key={title} className="page-item">
-        <a href="#" onClick={ handleClick } title={title} className='button is-rounded is-small' >Prev</a>
+        <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
   if (title === 'next page') {
     return (
       <li key={title} className="page-item">
-        <a href="#" onClick={ handleClick } title={title}className='button is-rounded is-small' >Next</a>
+        <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
   if (active) {
     return (
       <li key={page} className="active page-item">
-        <a href="#" onClick={ handleClick } title={title}>{ page }</a>
+        <a href="#" onClick={handleClick} title={title}>{page}</a>
       </li>
     );
   }
   return (
     <li key={page} className="page-item">
-      <a href="#" onClick={ handleClick } title={title}>{ page }</a>
+      <a href="#" onClick={handleClick} title={title}>{page}</a>
     </li>
   );
 };
@@ -65,10 +65,10 @@ export class Tickets extends Component {
     this.state = {
       tickets: [],
       selectedTicket: null
-    }
+    };
 
-    this.getTickets = this.getTickets.bind(this)
-    this.toggleTicketModal = this.toggleTicketModal.bind(this)
+    this.getTickets = this.getTickets.bind(this);
+    this.toggleTicketModal = this.toggleTicketModal.bind(this);
   }
 
   componentDidMount() {
@@ -80,17 +80,17 @@ export class Tickets extends Component {
       selectedTicket: prevState.selectedTicket ? null : ticket
     }));
   }
-  
+
   columns = [{
     dataField: 'id',
     text: 'Ticket',
     sort: true,
-    formatter: (cell, row) => <button 
-      onClick={() => this.toggleTicketModal( row )}
+    formatter: (cell, row) => <button
+      onClick={() => this.toggleTicketModal(row)}
       className="link-button cell-align-left">
-        <p className="cell-header">{row.tenant}</p>
-        <p className="cell-subheader">{row.issue}</p>
-      </button>,
+      <p className="cell-header">{row.tenant}</p>
+      <p className="cell-subheader">{row.issue}</p>
+    </button>,
     headerStyle: () => {
       return { width: "20%" };
     }
@@ -132,78 +132,80 @@ export class Tickets extends Component {
   }];
 
   getTickets = (context) => {
-      axios.get(`/api/tickets`, { headers: {"Authorization" : `Bearer ${context.user.accessJwt}`} })
+    axios.get(`/api/tickets`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
-          this.setState({tickets: response.data.tickets});
+        this.setState({ tickets: response.data.tickets });
       })
       .catch((error) => {
-          Toast(error.message, "error");
-          console.log(error);
-      })
-  }
+        Toast(error.message, "error");
+        console.log(error);
+      });
+  };
 
   render() {
-      return (
-          <UserContext.Consumer>
-              {session => {
-                  this.context = session;
-                  return (
-                    <div>
-                      <div>
-                          <div className="section-header">
-                              <h2 className="page-title">Tickets</h2>
-                          </div>
-                          <Search placeholderMessage="Search by tenant, manager, property, or JOIN staff"/>
-                          <Accordion
-                            icon={<i className="fas fa-filter"></i>}
-                            header="Filters"
-                          >
-                            <div className="section-row">
-                              <div className="filter-control">
-                                <label>Opened From</label>
-                                <input className="input is-rounded"></input>
-                              </div>
-                              <div className="filter-control">
-                                <label>Category</label>
-                                <div className="select is-rounded">
-                                  <select>
-                                    <option>All</option>
-                                    <option>Complaints</option>
-                                    <option>Maintenance</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="filter-control">
-                                <label>Status</label>
-                                <div className="buttons has-addons">
-                                  <button className="button is-rounded btn-group">New </button>
-                                  <button className="button is-rounded btn-group">In Progress</button>
-                                  <button className="button is-rounded btn-group">Closed</button>
-                                </div>
-                              </div>
-                            </div>
-                          </Accordion>
-                          <div>
-                              <BootstrapTable
-                                  keyField="id"
-                                  data={ this.state.tickets }
-                                  columns={ this.columns }
-                                  pagination={ paginationFactory(options) }
-                                  bootstrap4={true}
-                                  headerClasses="table-header"
-                                  classes="full-size-table"
-                                  />
-                          </div>
+    return (
+      <UserContext.Consumer>
+        {session => {
+          this.context = session;
+          return (
+            <div className='main-container'>
+              <div>
+                <div>
+                  <div className="section-header">
+                    <h2 className="page-title">Tickets</h2>
+                  </div>
+                  <Search placeholderMessage="Search by tenant, manager, property, or JOIN staff" />
+                  <Accordion
+                    icon={<i className="fas fa-filter"></i>}
+                    header="Filters"
+                  >
+                    <div className="section-row">
+                      <div className="filter-control">
+                        <label>Opened From</label>
+                        <input className="input is-rounded"></input>
                       </div>
-                      <TicketModal
-                        show={this.state.selectedTicket}
-                        onClose={this.toggleTicketModal}
-                        ticket={this.state.selectedTicket}>
-                      </TicketModal>
+                      <div className="filter-control">
+                        <label>Category</label>
+                        <div className="select is-rounded">
+                          <select>
+                            <option>All</option>
+                            <option>Complaints</option>
+                            <option>Maintenance</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="filter-control">
+                        <label>Status</label>
+                        <div className="buttons has-addons">
+                          <button className="button is-rounded btn-group">New </button>
+                          <button className="button is-rounded btn-group">In Progress</button>
+                          <button className="button is-rounded btn-group">Closed</button>
+                        </div>
+                      </div>
                     </div>
-                  )
-              }}
-          </UserContext.Consumer>
-      )
+                  </Accordion>
+                  <div>
+                    <BootstrapTable
+                      keyField="id"
+                      data={this.state.tickets}
+                      columns={this.columns}
+                      pagination={paginationFactory(options)}
+                      bootstrap4={true}
+                      headerClasses="table-header"
+                      classes="full-size-table"
+                    />
+                  </div>
+                </div>
+                <TicketModal
+                  show={this.state.selectedTicket}
+                  onClose={this.toggleTicketModal}
+                  ticket={this.state.selectedTicket}>
+                </TicketModal>
+              </div>
+            </div>
+          );
+        }}
+      </UserContext.Consumer>
+    );
   }
 }

@@ -78,7 +78,7 @@ export const Dashboard = (props) => {
         setModalActive({ ...modalActive, visible: false });
 
         try {
-            // If decline access request is confirmed, delete requesting user from the database 
+            // If decline access request is confirmed, delete requesting user from the database
             if (doDeny) {
                 const requestorId = modalActive.id;
                 axios.delete(`/api/user/${requestorId}`, makeAuthHeaders(userContext))
@@ -128,7 +128,7 @@ export const Dashboard = (props) => {
     }
 
     return (
-        <>
+      <div className='main-container'>
             <div>
                 <h2 className="page-title">Admin Dashboard</h2>
                 <div className="dashboard__modules_container">
@@ -184,6 +184,6 @@ export const Dashboard = (props) => {
                 cancelText="No"
                 closeHandler={() => setModalActive({ ...modalActive, visible: false})}
             />}
-        </>
+        </div>
     )
 }

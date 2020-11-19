@@ -180,37 +180,37 @@ export class App extends React.Component {
               && <><NavMenu />
                 <Header /></>}
 
-            <div className='main-container'>
-              <Switch>
-                <Route exact path='/login' component={LoginForm} />
-                <Route exact path='/signup' component={SignupForm} />
-                <Route exact path='/terms' component={Terms} />
-                <Route exact path='/privacypolicy' component={PrivacyPolicy} />
-                <Route exact path='/forgot-password' component={ForgotPassword} />
-                <PrivateRoute exact path='/' component={Dashboard} />
-                <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                <PrivateRoute exact path='/home' component={Dashboard} />
-                <PrivateRoute exact path='/add/tenant' component={AddTenant} />
-                <PrivateRoute exact path='/add/property' component={AddProperty} />
-                <PrivateRoute exact path='/add/manager' component={Dashboard} />
-                <PrivateRoute exact path='/manage/tenants' component={Tenants} />
-                <PrivateRoute exact path='/manage/tenants/:id' component={Tenant} />
-                <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
-                <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
-                <PrivateRoute exact path='/manage/properties' component={Properties} />
-                <PrivateRoute exact path='/manage/managers' component={Managers} />
-                <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
-                <PrivateRoute exact path='/tickets' component={Tickets} />
-                <PrivateRoute exact path='/reports' component={Dashboard} />
-                <PrivateRoute exact path='/staff' component={JoinStaff} />
-                <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
-                <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
-                <PrivateRoute exact path='/settings' component={Settings} />
-                <PrivateRoute exact path='/changePassword' component={ChangePassword} />
-                <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
-                <Route path='*' component={NoMatch} />
-              </Switch>
-            </div>
+
+            <Switch>
+              <Route exact path='/login' component={LoginForm} />
+              <Route exact path='/signup' component={SignupForm} />
+              <Route exact path='/terms' component={Terms} />
+              <Route exact path='/privacypolicy' component={PrivacyPolicy} />
+              <Route exact path='/forgot-password' component={ForgotPassword} />
+              <PrivateRoute exact path='/' component={Dashboard} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/home' component={Dashboard} />
+              <PrivateRoute exact path='/add/tenant' component={AddTenant} />
+              <PrivateRoute exact path='/add/property' component={AddProperty} />
+              <PrivateRoute exact path='/add/manager' component={Dashboard} />
+              <PrivateRoute exact path='/manage/tenants' component={Tenants} />
+              <PrivateRoute exact path='/manage/tenants/:id' component={Tenant} />
+              <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
+              <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
+              <PrivateRoute exact path='/manage/properties' component={Properties} />
+              <PrivateRoute exact path='/manage/managers' component={Managers} />
+              <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
+              <PrivateRoute exact path='/tickets' component={Tickets} />
+              <PrivateRoute exact path='/reports' component={Dashboard} />
+              <PrivateRoute exact path='/staff' component={JoinStaff} />
+              <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
+              <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
+              <PrivateRoute exact path='/settings' component={Settings} />
+              <PrivateRoute exact path='/changePassword' component={ChangePassword} />
+              <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
+              <Route path='*' component={NoMatch} />
+            </Switch>
+            
             {this.state.userSession.isAuthenticated
               && <Footer />}
           </div>
