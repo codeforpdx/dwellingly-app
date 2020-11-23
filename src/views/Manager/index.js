@@ -30,16 +30,15 @@ const validationSchema = Yup.object().shape({
 
 const getManager = (context, managerId, storeInState) => {
   axios
-    .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
+    .post(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
     { Authorization: `Bearer ${context.user.accessJwt}` }
     )
     .then((response) => {
       const manager = response.data;
       storeInState(manager);
     })
-    .catch((error) => {
-      alert(`Error attempting to save: ${error}`);
-      console.log(error);
+    .catch(error => {
+      Toast(error.message);
     });
 };
 
@@ -98,10 +97,10 @@ const updateManager = (payload) => {
         email: response.data.email,
       });
       setEditingStatus(false);
+      Toast("Save successful!");
     })
     .catch((error) => {
-      alert(error);
-      console.log(error);
+        Toast(error.message);
     });
 };
 
@@ -118,27 +117,6 @@ const updateManager = (payload) => {
 
   const onCancelClick = () => {
     setEditingStatus(false);
-  };
-
-  // use getManager once /users/?id api endpoint returns properties and tenants for property managers
-  // eslint-disable-next-line no-unused-vars
-  const getManager = (context) => {
-    axios
-      .get(`${process.env.REACT_APP_PROXY}/api/user/${id}`, {
-        headers: {
-          Authorization: `Bearer ${context.user.accessJwt}`,
-        },
-      })
-      .then((response) => {
-        setManager({ 
-          ...managerData,
-          ...response.data
-        });
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
-      });
   };
 
   return managerData ? (
