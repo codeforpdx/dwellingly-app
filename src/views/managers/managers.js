@@ -13,7 +13,7 @@ import './managers.scss';
 const columns = [
   {
     dataField: "fullName",
-    formatter: (cell, row, rowIndex, formatExtraData) => {
+    formatter: (cell, row) => {
       return (
         <Link key={row.id} to={`/manage/manager/${row.id}`}>
           {row.fullName}
@@ -28,7 +28,7 @@ const columns = [
   },
   {
     dataField: "properties",
-    formatter: (cell, row, rowIndex, formatExtraData) => {
+    formatter: (cell, row) => {
       return (
         <ul>
           {row.properties.map((property) => (
@@ -78,6 +78,7 @@ const selectRow = {
   },
 };
 
+// transforms data from API into a format that can be used for bootstrap-table-next
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
@@ -121,8 +122,8 @@ const getManagers = (header, storeInState) => {
 const Managers = () => {
   const [managersData, setManagersData] = useState();
 
-  const userContext = useContext(UserContext);
-  const axiosHeader = makeHeader(userContext);
+  const retreivedUserContext = useContext(UserContext);
+  const axiosHeader = makeHeader(retreivedUserContext);
   
   useEffect(() => getManagers(axiosHeader, setManagersData), []);
   

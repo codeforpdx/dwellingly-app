@@ -4,7 +4,7 @@ import { render, fireEvent, waitForElement, wait } from '@testing-library/react'
 import { MemoryRouter } from "react-router";
 import Manager from "./index";
 
-describe("Managers Component", () => {
+describe("Manager Component", () => {
 
   let wrapper;
   beforeEach(() => {
@@ -37,4 +37,7 @@ describe("Managers Component", () => {
       expect(wrapper.getByDisplayValue("Frank Oliver")).toHaveLength(1);
     });
   });
+  // TESTS TODO
+  // IT GETS MANAGER DATA?
+  // IT SAVES MANAGER DATA?
 });
