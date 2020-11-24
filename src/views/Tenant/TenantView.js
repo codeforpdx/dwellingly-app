@@ -40,7 +40,8 @@ const Tenant = () => {
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
-  const [dateRange, setDateRange] = useCalendarState()
+
+  const calendarState = useCalendarState()
 
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
@@ -239,8 +240,7 @@ const Tenant = () => {
             />
             {isEditing && <CalendarModal
               title="Lease Range"
-              dateRange={dateRange}
-              setDateRange={setDateRange}
+              calendarState={calendarState}
               iconYPosition="-5.5rem"
             />}
           </div>

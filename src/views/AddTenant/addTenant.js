@@ -41,7 +41,7 @@ export const AddTenant = () => {
   const [propertyOptions, setPropertyOptions] = useState([]);
   const [propertySearchResults, setPropertySearchResults] = useState([]);
   const [showAddProperty, setShowAddProperty] = useState(false);
-  const [dateRange, setDateRange] = useCalendarState()
+  const calendarState = useCalendarState()
 
   useEffect(() => {
     getProperties();
@@ -344,8 +344,7 @@ export const AddTenant = () => {
                   ) : null}
                   <CalendarModal
                     title="Lease Range"
-                    dateRange={dateRange}
-                    setDateRange={setDateRange}
+                    calendarState={calendarState}
                     iconYPosition="0.8rem"
                   />
                 </div>

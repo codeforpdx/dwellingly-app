@@ -1,19 +1,51 @@
 @import "../../scss/variables.scss";
 
-.calendar {
-  &__icon {
-    position: relative;    
-    float: right;
-    color: $gray;
-    &:hover, &:focus, &:active {
-      cursor: pointer;
-      color: $blue
+.calendarModal {
+  .calendar {
+    &__icon {
+      position: relative;    
+      float: right;
+      color: $gray;
+      &:hover, &:focus, &:active {
+        cursor: pointer;
+        color: $blue
+      }
+      &.open {
+        color: $blue
+      }
     }
-    &.open {
-      color: $blue
+    &__input {
+      margin: 0 0.5rem;
+    }
+    &__container {
+      display: flex;
+      justify-content: center;
     }
   }
-  &__input {
-    margin: 1rem auto;
+  
+  .modal {
+    &__container {
+      padding: 1rem;
+      width: 770px;
+    }
+  }
+  
+  @media screen and (max-width: 770px) {
+    .calendar {
+      &__input {
+        margin: 0.5rem
+      }
+      &__container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .modal {
+      &__container {
+        width: 400px;
+      }
+    }
   }
 }
+
+

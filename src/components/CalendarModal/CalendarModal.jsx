@@ -6,11 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import './calendarModal.scss'
 import Modal from '../Modal';
+import { useEffect } from 'react';
 
-export default function CalendarModal({ dateRange, setDateRange, title = "Date Range", iconYPosition = "" }) {
+export default function CalendarModal({ calendarState, title = "Date Range", iconYPosition = "" }) {
   const [isOpen, setIsOpen] = useState(false)
 
-  return (<div>
+  const { startDate, endDate, setStart, setEnd } = calendarState
+
+  return (<div className="calendarModal">
     <FontAwesomeIcon
       className={`calendar__icon ${isOpen && 'open'}`}
       style={{ top: iconYPosition }}
@@ -20,12 +23,23 @@ export default function CalendarModal({ dateRange, setDateRange, title = "Date R
     {isOpen && (<Modal
       titleText={title}
       closeHandler={() => setIsOpen(false)}
-      content={
+      content={<div className="calendar__container">
+        <label>
+          Start Date
         <Calendar
-          className="calendar__input"
-          onChange={setDateRange}
-          value={dateRange}
-          selectRange />}
+            className="calendar__input"
+            onChange={setStart}
+            value={startDate} />
+        </label>
+        <label>
+          End Date
+        <Calendar
+            className="calendar__input"
+            onChange={setEnd}
+            value={endDate} />
+        </label>
+      </div>
+      }
     />)
     }
   </div >)
@@ -33,7 +47,8 @@ export default function CalendarModal({ dateRange, setDateRange, title = "Date R
 
 const today = new Date()
 export function useCalendarState() {
-  const [dateRange, setDateRange] = useState([today, today])
+  const [startDate, setStart] = useState(today)
+  const [endDate, setEnd] = useState(today)
 
-  return [dateRange, setDateRange]
+  return { startDate, endDate, setStart, setEnd }
 }

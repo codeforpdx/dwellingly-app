@@ -149,20 +149,20 @@ _____
 
 ### **Name**: CalendarModal
 * **File path**: src/components/CalendarModal/CalendarModal
-* **Input/Props**: title, dateRange, setDateRange, iconYPosition
+* **Input/Props**: title, calendarState, iconYPosition
 * **Currently in use**: TenantView, AddTenant
 * **Will be used in**: Anywhere a two date range is needed
 * **Additional info**: 
-  1. "dateRange" is [startDate, endDate] (as Date objects) 
-  2. "setDateRange" is a setState Func
+  1. "calendarState" is structured as follows:
+    ```
+    {startDate, endDate, setStart, setEnd} = calendarState
+    ```
+    Only startDate and endDate should ever be accesed (and then read only) the setState funcs are passed automatically to the calendars.
+  2. "calendarState" comes from the custom hook provided in the component file.
   3. Calendar icon is set to float:right and may need adjusting on the Y axis. Use iconYPosition to adjust this preferably with rem so it will adjust with text sizing. e.i "-3rem" to shift it up or "4rem" to shift down.
-  4. Initialize with either,
-    ```
-    const [dateRange, setDateRange] = useState([new Date(), new Date()]) 
-    ```
-  or the custom hook that has been supplied for the state.
+  4. Initialize with 
     ```
     import CalendarModal, {useCalendarState} from '<filepath>/CalendarModal/CalendarModal'
-    const [dateRange, setDateRange] = useCalendarState()
+    const calendarState = useCalendarState()
     ```
 _____
