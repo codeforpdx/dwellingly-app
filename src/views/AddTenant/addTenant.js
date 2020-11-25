@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
-import { AddProperty } from '../addProperty/addProperty';
 import Modal from '../../components/Modal';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import RoleEnum from '../../Enums/RoleEnum.js';
@@ -43,7 +42,7 @@ export const AddTenant = () => {
 
   useEffect(() => {
     getProperties();
-  }, []);
+  }, [getProperties]);
 
   useEffect(() => {
     axios.post("/api/users/role", {
@@ -70,7 +69,7 @@ export const AddTenant = () => {
     setPropertySearchResults(choices);
   }, [propertySearchText]);
 
-  const getProperties = () => {
+  const getProperties = useCallback(() => {
     axios.get("/api/properties", makeAuthHeaders(context))
       .then(({ data }) => {
         let properties = data.properties && data.properties.length > 0
