@@ -11,6 +11,7 @@ import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import RoleEnum from '../../Enums/RoleEnum.js';
 import './_addTenant.scss';
 import Toast from '../../utils/toast';
+import useMountEffect from '../../utils/useMountEffect';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -41,9 +42,7 @@ export const AddTenant = () => {
   const [propertySearchResults, setPropertySearchResults] = useState([]);
   const [showAddProperty, setShowAddProperty] = useState(false);
 
-  useEffect(() => {
-    getProperties();
-  }, []);
+  useMountEffect(() => getProperties());
 
   useEffect(() => {
     axios.post("/api/users/role", {
@@ -66,9 +65,9 @@ export const AddTenant = () => {
 
   useEffect(() => {
     let choices = propertyOptions.filter( 
-      p => p.description.includes(propertySearchText))
+      p => p.description.toLowerCase().includes(propertySearchText.toLowerCase()))
     setPropertySearchResults(choices);
-  }, [propertySearchText])
+  }, [propertySearchText, propertyOptions])
 
   const getProperties = () => {
     axios.get("/api/properties", makeAuthHeaders(context))
