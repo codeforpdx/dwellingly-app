@@ -28,7 +28,7 @@ export const JoinStaff = () => {
         });
     };
     Promise.all(URLs.map(url => fetchData(url)));
-  }, [auth_headers, staff]);
+  }, []);
 
   const staffCard = (user) => {
     return (
@@ -39,7 +39,7 @@ export const JoinStaff = () => {
         email={user.email}
         tickets={user.tickets}
         tenants={user.tenants}
-        admin={user.role == RoleEnum.ADMIN} />
+        admin={user.role === RoleEnum.ADMIN} />
     );
   };
 

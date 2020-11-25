@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 import * as axios from 'axios';
 import RoleEnum from "../../Enums/RoleEnum";
 import Toast from '../../utils/toast';
-
 import './addStaffMember.scss';
-
-
-
 export const InfoField = ({ label, info }) => {
   const infoField = "has-text-weight-bold placeholder " + ((label === "Phone") ? "phone-field" : (label === "Email" ? "email-field" : "name-field"));
   return (

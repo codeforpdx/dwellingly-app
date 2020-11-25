@@ -58,7 +58,6 @@ export const AddProperty = (props) => {
 
   return (
     <div className='main-container'>
-
       <div>
         {props.showPageTitle && <h2 className="page-title">Add a New Property</h2>}
 

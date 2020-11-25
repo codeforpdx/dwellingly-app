@@ -173,10 +173,10 @@ export class App extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT: this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
-        <BrowserRouter>
-          <div className='App'>
-            {this.state.userSession.isAuthenticated
+        <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT:this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
+          <BrowserRouter>
+            <div className='App'>
+              {this.state.userSession.isAuthenticated
               && <><NavMenu />
                 <Header /></>}
 
@@ -210,7 +210,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
               <Route path='*' component={NoMatch} />
             </Switch>
-            
+
             {this.state.userSession.isAuthenticated
               && <Footer />}
           </div>
