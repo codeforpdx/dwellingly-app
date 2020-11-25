@@ -163,7 +163,11 @@ export const AddTenant = () => {
         validateOnBlur={false}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(true);
-          handleFormSubmit(values);
+          handleFormSubmit({
+            ...values,
+            dateTimeStart: calendarState.startDate,
+            dateTimeEnd: calendarState.endDate
+          });
           setSubmitting(false);
         }}
       >
@@ -336,7 +340,8 @@ export const AddTenant = () => {
                     type="text"
                     name="lease"
                     onChange={handleChange}
-                    value={values.lease}
+                    // value={values.lease}
+                    value={`${calendarState.startDate.toDateString()} - ${calendarState.endDate.toDateString()}`}
                     placeholder="Lease dates (Start and End)"
                   />
                   {errors.lease ? (
