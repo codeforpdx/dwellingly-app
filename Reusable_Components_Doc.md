@@ -146,3 +146,21 @@ _____
 2.  Toast is a function which takes two arguments. The first is the string you would like displayed in the notification. If no text is provided, you will see an error notice in the browser console. The second argument is the type of notification you would like displayed, which dictates the color of the notification. The options for this are "success" (green), "error" (red), "warn" or "warning" (yellow), "info" or "default" (blue). If no second argument is passed, the notification will default to "info" and render a blue toast notification. An example of this could look like `Toast("Property Added!", "success");`
 
 ---
+### **Name**: CalendarModal
+* **File path**: src/components/CalendarModal/CalendarModal
+* **Input/Props**: calendarState, title (optional), iconYPosition (optional)
+* **Currently in use**: TenantView, AddTenant
+* **Will be used in**: Anywhere a two date range is needed
+* **Additional info**: 
+  1. "calendarState" is structured as follows:
+    ```
+    {startDate, endDate, setStart, setEnd} = calendarState
+    ```
+    Only startDate and endDate should ever be accesed (and then read only) the setState funcs are passed automatically to the calendars.
+  2. "calendarState" comes from the custom hook provided in the component file.
+  3. Calendar icon is set to float:right and may need adjusting on the Y axis. Use iconYPosition to adjust this preferably with rem so it will adjust with text sizing. e.i "-3rem" to shift it up or "4rem" to shift down.
+  4. Initialize with 
+    ```
+    import CalendarModal, {useCalendarState} from '<filepath>/CalendarModal/CalendarModal'
+    const calendarState = useCalendarState()
+    ```
