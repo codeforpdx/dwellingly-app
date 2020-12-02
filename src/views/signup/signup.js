@@ -65,7 +65,13 @@ const SignupForm = ({ history }) => {
       .email("Must be a valid email address")
       .max(100, "Maximum length is 100 characters")
       .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Minimum Length is 8 characters")
+      .matches(/[a-z]/, 'Password must contain at least one lowercase character')
+      .matches(/[A-Z]/, 'Password must contain one uppercase character')
+      .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'at least 1 number or special char (@,!,#, etc).')
+      ,
     confirmPassword: Yup.string()
       .required("Password confirmation is required")
       .oneOf([Yup.ref("password"), null],
