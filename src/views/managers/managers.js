@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
@@ -78,11 +78,35 @@ const selectRow = {
   },
 };
 
-const Managers = () => {
+export class Managers extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      managers: PROPERTY_MANAGER_DATA,
+      filteredManagers: [],
+      isFiltered: false
+    }
+  }
+
+  setIsFilteredManagersFalse = async () => {
+    await this.setState({isFiltered: false});
+  }
+
+  setOutputState = async (output, isTrue) => {
+    await  this.setState({
+      filteredManagers: output,
+      isFiltered: isTrue
+    });
+  }
+
+  componentDidMount() {
+    this.setState({managers: PROPERTY_MANAGER_DATA})
+  }
 
   // re-purpose getProperties once API is configured to retrieve tenant and properties for Property Managers
   // eslint-disable-next-line no-unused-vars
-  const getProperties = (context) => {
+  getProperties = (context) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/properties`, {
         headers: { Authorization: `Bearer ${context.user.accessJwt}` },
@@ -96,37 +120,45 @@ const Managers = () => {
       });
   };
 
-  return (
-    <div className="managers">
-      <div className="section-header">
-        <h2 className="page-title">Property Managers</h2>
-        <Link className="button is-rounded is-primary ml-4" to="/manage/managers">
-          + ADD NEW
-        </Link>
-      </div>
-      <div>
-        <Search placeholderMessage="Search property managers by name, property, or status" />
-      </div>
-      <div className="invite-button-container py-3">
-        <button className="button is-rounded is-primary ml-3" type="submit">
-          <FontAwesomeIcon
-            className="button__envelope-icon mr-3"
-            icon={faEnvelope}
+  render() {
+    return (
+        <div className="managers">
+          <div className="section-header">
+            <h2 className="page-title">Property Managers</h2>
+            <Link className="button is-rounded is-primary ml-4" to="/manage/managers">
+              + ADD NEW
+            </Link>
+          </div>
+
+          <Search
+              input={this.state.managers} outputLocation={this.state.filteredManagers}
+              isFilteredLocation={this.state.isFiltered}
+              setIsFilteredStateFalse={this.setIsFilteredManagersFalse}
+              setOutputState={this.setOutputState}
+              placeholderMessage="Search properties by name, address, or property manager"
           />
-          Invite
-        </button>
-      </div>
-      <BootstrapTable
-        keyField="id"
-        data={PROPERTY_MANAGER_DATA}
-        columns={columns}
-        selectRow={selectRow}
-        bootstrap4={true}
-        headerClasses="table-header"
-        wrapperClasses="managers__table"
-      />
-    </div>
-  );
+
+          <div className="invite-button-container py-3">
+            <button className="button is-rounded is-primary ml-3" type="submit">
+              <FontAwesomeIcon
+                  className="button__envelope-icon mr-3"
+                  icon={faEnvelope}
+              />{" "}
+              Invite
+            </button>
+          </div>
+          <BootstrapTable
+              keyField="id"
+              data={ this.state.isFiltered === true ? this.state.filteredManagers : this.state.managers }
+              columns={columns}
+              selectRow={selectRow}
+              bootstrap4={true}
+              headerClasses="table-header"
+              wrapperClasses="managers__table"
+          />
+        </div>
+
+    );
+  }
 };
 
-export default Managers;
