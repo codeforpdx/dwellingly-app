@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
     .min(8, "Minimum Length is 8 characters")
     .matches(/[a-z]/, 'Password must contain at least one lowercase character')
     .matches(/[A-Z]/, 'Password must contain one uppercase character')
-    .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'at least 1 number or special char (@,!,#, etc).'),
+    .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'Password must contain at least 1 number or special char (@,!,#, etc)'),
   confirm: Yup.string()
     .required("New Passwords must match")
     .oneOf([Yup.ref("new"), null], "New Passwords must match"),

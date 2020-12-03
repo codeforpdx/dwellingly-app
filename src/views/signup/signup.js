@@ -70,7 +70,7 @@ const SignupForm = ({ history }) => {
       .min(8, "Minimum Length is 8 characters")
       .matches(/[a-z]/, 'Password must contain at least one lowercase character')
       .matches(/[A-Z]/, 'Password must contain one uppercase character')
-      .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'at least 1 number or special char (@,!,#, etc).'),
+      .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'Password must contain at least 1 number or special char (@,!,#, etc)'),
     confirmPassword: Yup.string()
       .required("Password confirmation is required")
       .oneOf([Yup.ref("password"), null],
