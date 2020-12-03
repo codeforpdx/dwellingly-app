@@ -64,7 +64,9 @@ export class Tickets extends Component {
 
     this.state = {
       tickets: [],
-      selectedTicket: null
+      selectedTicket: null,
+      filteredTickets: [],
+      isFiltered: false
     }
 
     this.getTickets = this.getTickets.bind(this)
@@ -142,6 +144,17 @@ export class Tickets extends Component {
       })
   }
 
+  setIsFilteredTicketsFalse = async () => {
+    await this.setState({ isFiltered: false });
+  }
+
+  setOutputState = async (output, isTrue) => {
+    await this.setState({
+      filteredTickets: output,
+      isFiltered: isTrue
+    });
+  }
+
   render() {
       return (
           <UserContext.Consumer>
@@ -153,7 +166,14 @@ export class Tickets extends Component {
                           <div className="section-header">
                               <h2 className="page-title">Tickets</h2>
                           </div>
-                          <Search placeholderMessage="Search by tenant, manager, property, or JOIN staff"/>
+                          <Search
+                            input={this.state.tickets}
+                            outputLocation={this.state.filteredTickets}
+                            isFilteredLocation={this.state.isFiltered}
+                            setIsFilteredStateFalse={this.setIsFilteredTicketsFalse}
+                            setOutputState={this.setOutputState}
+                            placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
+                          />
                           <Accordion
                             icon={<i className="fas fa-filter"></i>}
                             header="Filters"
@@ -186,7 +206,7 @@ export class Tickets extends Component {
                           <div>
                               <BootstrapTable
                                   keyField="id"
-                                  data={ this.state.tickets }
+                                  data={ this.state.isFiltered === true ? this.state.filteredTickets : this.state.tickets}
                                   columns={ this.columns }
                                   pagination={ paginationFactory(options) }
                                   bootstrap4={true}

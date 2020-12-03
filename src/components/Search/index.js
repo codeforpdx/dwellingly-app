@@ -26,11 +26,19 @@ import './search.scss';
 function Search(props) {
     const { input, placeholderMessage } = props;
 
-    const enterSearchHandler = (event) => {
-      var keyCode = event.keyCode;
-      if (keyCode === 13){
-        searchProperties();
+    let timerId
+    const throttleFunction = (func, delay) => {
+      if(timerId) {
+        return
       }
+      timerId = setTimeout(() => {
+        func()
+        timerId = undefined
+      }, delay)
+    }
+
+    const onChangeHandler = () => {
+      throttleFunction(searchInput, 800)
     };
 
     const clearSearch = () => {
@@ -39,7 +47,7 @@ function Search(props) {
 
     };
 
-    const searchProperties = () => {
+    const searchInput = () => {
       let allData = input;
       let output = [];
       let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
@@ -50,10 +58,11 @@ function Search(props) {
               delete dataPoint.id;
               if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
                   output.push(allData[i]);
-                  console.log(allData[i]);
             }
           };
       props.setOutputState(output, true)
+      } else {
+        props.setIsFilteredStateFalse();
       }
   };
 
@@ -63,7 +72,7 @@ function Search(props) {
         <span className="search-icon_span">
           <FontAwesomeIcon icon={faSearch} className="search-icon_svg" />
         </span>
-        <input className="input search is-rounded" id="searchQueryComponent" type="search" onKeyDown={enterSearchHandler} placeholder={placeholderMessage}></input>
+        <input className="input search is-rounded" id="searchQueryComponent" type="search" onChange={onChangeHandler} placeholder={placeholderMessage}></input>
       </div>
     );
 };
