@@ -9,14 +9,14 @@ import Modal from '../Modal';
 import { useEffect } from 'react';
 
 export default function CalendarModal({ calendarState, title = "Date Range", iconYPosition = "", resetOnClose = true }) {
-  const { startDate, endDate, setStart, setEnd } = calendarState
+  const { dateTimeStart, dateTimeEnd, setStart, setEnd } = calendarState
 
   const [isOpen, setIsOpen] = useState(false)
   const [isError, setIsError] = useState(false)
-  const [tempStart, setTempStart] = useState(startDate)
-  const [tempEnd, setTempEnd] = useState(endDate)
+  const [tempStart, setTempStart] = useState(dateTimeStart)
+  const [tempEnd, setTempEnd] = useState(dateTimeEnd)
 
-  const validRange = tempStart <= tempEnd
+  const validRange = tempStart < tempEnd
 
   const handleConfirm = () => {
     if (validRange) {
@@ -30,8 +30,8 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
   }
   const handleCancel = () => {
     if (resetOnClose) {
-      setTempStart(startDate)
-      setTempEnd(endDate)
+      setTempStart(dateTimeStart)
+      setTempEnd(dateTimeEnd)
     }
     setIsOpen(false)
     setIsError(false)
@@ -78,8 +78,8 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
 
 const today = new Date()
 export function useCalendarState(startDateInit = today, endDateInit = today) {
-  const [startDate, setStart] = useState(startDateInit)
-  const [endDate, setEnd] = useState(endDateInit)
+  const [dateTimeStart, setStart] = useState(startDateInit)
+  const [dateTimeEnd, setEnd] = useState(endDateInit)
 
-  return { startDate, endDate, setStart, setEnd }
+  return { dateTimeStart, dateTimeEnd, setStart, setEnd }
 }

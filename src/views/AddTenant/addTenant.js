@@ -24,10 +24,7 @@ const validationSchema = Yup.object().shape({
     .max(20, "*Phone Number can't be longer than 20 characters")
     .required("*Phone Number is required"),
   unitNum: Yup.number(),
-  occupants: Yup.number()
-    .required("*Number of Occupants is required"),
-  lease: Yup.string()
-    .required("*Lease dates are required"),
+  occupants: Yup.number(),
 });
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
@@ -44,6 +41,7 @@ export const AddTenant = () => {
   const [showAddProperty, setShowAddProperty] = useState(false);
 
   const calendarState = useCalendarState()
+  const { dateTimeStart, dateTimeEnd, } = calendarState
 
   useMountEffect(() => getProperties());
 
@@ -157,13 +155,18 @@ export const AddTenant = () => {
           phone: "",
           unitNum: "",
           occupants: "",
-          lease: ""
         }}
         validationSchema={validationSchema}
         validateOnBlur={false}
         onSubmit={(values, { setSubmitting }) => {
+          const toSubmit = {
+            ...values,
+            dateTimeStart,
+            dateTimeEnd,
+          }
+
           setSubmitting(true);
-          handleFormSubmit(values);
+          handleFormSubmit(toSubmit);
           setSubmitting(false);
         }}
       >
@@ -335,8 +338,9 @@ export const AddTenant = () => {
                     className="column form-field"
                     type="text"
                     name="lease"
-                    onChange={handleChange}
-                    value={values.lease}
+                    onChange={null}
+                    value={dateTimeEnd !== dateTimeStart ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` : ""}
+
                     placeholder="Lease dates (Start and End)"
                   />
                   <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
