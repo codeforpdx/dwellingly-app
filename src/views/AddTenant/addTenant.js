@@ -45,10 +45,6 @@ export const AddTenant = () => {
 
   const calendarState = useCalendarState()
 
-  useEffect(() => {
-    console.log(calendarState.startDate, calendarState.endDate)
-  }, [calendarState])
-
   useMountEffect(() => getProperties());
 
   useEffect(() => {

@@ -6,18 +6,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import './calendarModal.scss'
 import Modal from '../Modal';
+import { useEffect } from 'react';
 
 export default function CalendarModal({ calendarState, title = "Date Range", iconYPosition = "", resetOnClose = true }) {
   const { startDate, endDate, setStart, setEnd } = calendarState
 
   const [isOpen, setIsOpen] = useState(false)
+  const [isError, setIsError] = useState(false)
   const [tempStart, setTempStart] = useState(startDate)
   const [tempEnd, setTempEnd] = useState(endDate)
 
+  const validRange = tempStart <= tempEnd
+
   const handleConfirm = () => {
-    setStart(tempStart)
-    setEnd(tempEnd)
-    setIsOpen(false)
+    if (validRange) {
+      setIsError(false)
+      setStart(tempStart)
+      setEnd(tempEnd)
+      setIsOpen(false)
+    } else {
+      setIsError(true)
+    }
   }
   const handleCancel = () => {
     if (resetOnClose) {
@@ -25,6 +34,7 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
       setTempEnd(endDate)
     }
     setIsOpen(false)
+    setIsError(false)
   }
 
   return (<div className="calendarModal">
@@ -36,7 +46,7 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
       onClick={() => setIsOpen(true)} />
     {isOpen && (<Modal
       titleText={title}
-      closeHandler={() => setIsOpen(false)}
+      closeHandler={handleCancel}
       hasButtons
       confirmText="Confirm"
       cancelText="Cancel"
@@ -50,6 +60,7 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
             onChange={setTempStart}
             value={tempStart} />
         </div>
+        {isError && <aside className="error-message">End Date must come after the Start Date</aside>}
         <div>
           <label>End Date</label>
           <Calendar
@@ -61,6 +72,7 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
       }
     />)
     }
+
   </div >)
 }
 
