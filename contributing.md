@@ -14,8 +14,8 @@ This document provides some overall guidelines and suggestions for how to get st
 ### First steps
 
 * Set up your local dev environment [here](README.md#Getting-Started) and [here](https://github.com/codeforpdx/dwellinglybackend/blob/development/README.md#to-start-server)
-* Be sure to read our [Code of Conduct](http://www.codeforpdx.org/about/conduct)
-* Join our [Slack Workspace](https://codeforpdx.slack.com/) and say "Hi" in the #dwellingly-join channel
+* Be sure to read our [Code of Conduct](https://github.com/codeforpdx/codeofconduct)
+* Join our [Slack Workspace](https://join.slack.com/t/codeforpdx/shared_invite/zt-4msr5np3-n5qBye3GG~4hA_7XZkczgA) and say "Hi" in the #dwellingly-join channel
 * Come visit at a [Project Night](https://www.meetup.com/Code-for-PDX/events/) and get to know us
 
 ----
