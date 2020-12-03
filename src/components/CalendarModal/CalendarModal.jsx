@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import './calendarModal.scss'
 import Modal from '../Modal';
-import { useEffect } from 'react';
 
 export default function CalendarModal({ calendarState, title = "Date Range", iconYPosition = "", resetOnClose = true }) {
   const { dateTimeStart, dateTimeEnd, setStart, setEnd } = calendarState

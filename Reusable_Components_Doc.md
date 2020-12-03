@@ -154,7 +154,7 @@ _____
 * **Additional info**: 
   1. "calendarState" is structured as follows:
     ```
-    {startDate, endDate, setStart, setEnd} = calendarState
+    {dateTimeStart, dateTimeEnd, setStart, setEnd} = calendarState
     ```
     Only startDate and endDate should ever be accesed (and then read only) the setState funcs are passed automatically to the calendars.
   2. "calendarState" comes from the custom hook provided in the component file. You can provide this hook start and end dates, otherwise it will default to both dates as the current date.
