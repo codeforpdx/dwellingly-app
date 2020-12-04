@@ -11,16 +11,12 @@ function DashboardModule(props) {
     return (
         <div className="dashboard__module">
             <div className="dashboard__module_header">
-                <h3 className="dashboard__module_title h2">{data.title}</h3>
-                {
-                    data.link && (
-                        <a href={data.link} className="dashboard__module_title_link">
-                            <span className="icon">
-                                <i className="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    )
-                }
+                <a href={data.link || "#"}>
+                    <h3 className="dashboard__module_title h2">{data.title}</h3>
+                    <span className="icon dashboard__module_title_linik">
+                        <i className="fas fa-chevron-right"></i>
+                    </span>
+                </a>
             </div>
             {
                 data.stats.map((statRow, index) => {
