@@ -31,15 +31,6 @@ const columns = [
   },
 ];
 
-const selectRow = {
-  mode: "checkbox",
-  clickToSelect: true,
-  sort: true,
-  headerColumnStyle: () => {
-    return { width: "5%" };
-  },
-};
-
 // const pageButtonRenderer = ({
 //   page,
 //   active,
@@ -74,15 +65,55 @@ const selectRow = {
 //   pageButtonRenderer
 // };
 
+const ArchiveButtonRender = ({ selectedRows }) =>{
+  if(selectedRows.length > 0){
+    return(
+      <button className="button is-danger is-rounded ml-4" >Archive Tenant</button>
+      )
+  }
+}
+
 export class Tenants extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       tenants: [],
+      selectedRows: [],
     };
 
     this.getTenants = this.getTenants.bind(this);
+    this.onRowSelect = this.onRowSelect.bind(this);
+  }
+
+  onRowSelect(rowId){
+    const { selectedRows } = this.state;
+    
+    if (selectedRows.includes(rowId)){
+      var i= selectedRows.indexOf(rowId);
+      if (i > -1) {
+        selectedRows.splice(i, 1);
+      }
+    }else{
+      selectedRows.push(rowId)
+    }
+    console.log(selectedRows)
+  }
+
+  onRowSelectAll(rows){
+    const { selectedRows } = this.state;
+    const length = rows.length
+    if(rows.length === selectedRows.length && selectedRows.length > 0 ){
+      selectedRows.splice(0,selectedRows.length)
+      console.log("reset")
+    } else {
+      rows.forEach(row => {
+        console.log(row.id)
+        selectedRows.push(row.id)
+      });
+    }
+   
+    console.log(selectedRows)
   }
 
   componentDidMount() {
@@ -105,6 +136,26 @@ export class Tenants extends Component {
   };
 
   render() {
+    // this.state.selectRow.onSelect = (row, isSelect, rowIndex, e) => {
+    //   console.log("execute function")
+    //   this.onRowSelect(row.id)
+    // }
+    
+    const selectRow = {
+      mode: "checkbox",
+      clickToSelect: true,
+      sort: true,
+      onSelect: (row) => {
+        this.onRowSelect(row.id)
+      },
+      onSelectAll: (isSelect, rows, e) => {
+        this.onRowSelectAll( rows )
+      },
+      headerColumnStyle: () => {
+        return { width: "5%" };
+      } 
+    }
+
     return (
       <UserContext.Consumer>
         {session => {
@@ -128,6 +179,7 @@ export class Tenants extends Component {
                   headerClasses="table-header"
                   classes="table-responsive"
                 />
+             
               </div>
             </div>
           )
