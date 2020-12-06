@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
 
 const getManager = (context, managerId, storeInState) => {
   axios
-    .post(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
+    .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
     { Authorization: `Bearer ${context.user.accessJwt}` }
     )
     .then((response) => {
