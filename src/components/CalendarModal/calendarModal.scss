@@ -1,0 +1,59 @@
+@import "../../scss/variables.scss";
+
+.calendarModal {
+  .calendar {
+    &__icon {
+      position: relative;    
+      float: right;
+      color: $gray;
+      &:hover, &:focus, &:active {
+        cursor: pointer;
+        color: $blue
+      }
+      &.open {
+        color: $blue
+      }
+    }
+    &__input {
+      margin: 0 0.5rem;
+    }
+    &__container {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .error-message {
+    position: absolute;
+    top: 3.5rem;
+
+    font-style: italic;
+  }
+  
+  .modal {
+    &__container {
+      padding: 1rem;
+      width: 770px;
+    }
+  }
+  
+  @media screen and (max-width: 770px) {
+    .calendar {
+      &__input {
+        margin: 0.5rem
+      }
+      &__container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .error-message {
+      top: 2.5rem
+    }
+    .modal {
+      &__container {
+        width: 400px;
+      }
+    }
+  }
+}

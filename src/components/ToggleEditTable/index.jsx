@@ -38,52 +38,52 @@ const ToggleEditTable = ({
         isSubmitting,
         isValid,
       }) => (
-        <Form onSubmit={handleSubmit}>
-          {Object.keys(values).map((value, index) => (
-            <div className="form__row--editing columns" key={value}>
-              <label
-                className="form__label column is-one-quarter"
-                htmlFor={value}
-              >
-                {tableData[index].label}
-              </label>
-              <Field
-                type={tableData[index].inputType}
-                name={value}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values[value]}
-                className="column is-two-quarters row-input"
-              />
-              <FieldError
-                error={errors[value]}
-                className="column is-one-quarter"
-              />
+          <Form onSubmit={handleSubmit}>
+            {Object.keys(values).map((value, index) => {
+              return (<div className="form__row--editing columns" key={value}>
+                <label
+                  className="form__label column is-one-quarter"
+                  htmlFor={value}
+                >
+                  {tableData[index].label}
+                </label>
+                <Field
+                  type={tableData[index].inputType}
+                  name={value}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values[value]}
+                  className="column is-two-quarters row-input"
+                />
+                <FieldError
+                  error={errors[value]}
+                  className="column is-one-quarter"
+                />
+              </div>)
+            })}
+            <div className="form__button-container">
+              <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>
+                SAVE
+            </Button>
+              <Button isCancelButton={true} onClick={cancelHandler}>
+                CANCEL
+            </Button>
             </div>
-          ))}
-          <div className="form__button-container">
-            <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>
-              SAVE
-            </Button>
-            <Button isCancelButton={true} onClick={cancelHandler}>
-              CANCEL
-            </Button>
-          </div>
-        </Form>
-      )}
+          </Form>
+        )}
     </Formik>
   ) : (
-    <>
-      {tableData.map((dataObject) => (
-        <div key={dataObject.label} className="form__row--not-editing columns">
-          <span className="form__label column is-one-quarter">
-            {dataObject.label}
-          </span>
-          <span className="column is-one-quarter">{dataObject.value}</span>
-        </div>
-      ))}
-    </>
-  );
+      <>
+        {tableData.map((dataObject) => (
+          <div key={dataObject.label} className="form__row--not-editing columns">
+            <span className="form__label column is-one-quarter">
+              {dataObject.label}
+            </span>
+            <span className="column is-one-quarter">{dataObject.value}</span>
+          </div>
+        ))}
+      </>
+    );
 };
 
 ToggleEditTable.propTypes = {

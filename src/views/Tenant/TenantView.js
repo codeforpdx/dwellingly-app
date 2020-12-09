@@ -164,7 +164,7 @@ const Tenant = () => {
       value: property.unit,
       inputType: "text",
       comp: <div />,
-    },
+    }
   ];
 
   const STAFF_USER_ROLE = RoleEnum.STAFF;
