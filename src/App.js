@@ -44,16 +44,33 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userSession: {
-        isAuthenticated: false,
-        accessJwt: '',
-        refreshJwt: '',
-        identity: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
+    if (checkForStoredAccessToken()) {
+      let parsedJwt = parseJwt(window.localStorage['dwellinglyAccess']);
+      this.state = {
+        userSession: {
+          isAuthenticated: true,
+          accessJwt: window.localStorage["dwellinglyAccess"],
+          refreshJwt: window.localStorage["dwellinglyRefresh"],
+          identity: parsedJwt.identity,
+          firstName: parsedJwt.user_claims.firstName,
+          lastName: parsedJwt.user_claims.lastName,
+          email: parsedJwt.user_claims.email,
+          phone: parsedJwt.user_claims.phone
+        }
+      }
+    }
+    else {
+      this.state = {
+        userSession: {
+          isAuthenticated: false,
+          accessJwt: '',
+          refreshJwt: '',
+          identity: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+        }
       }
     }
   }
@@ -71,7 +88,7 @@ export class App extends React.Component {
             firstName: parsedJwt.user_claims.firstName,
             lastName: parsedJwt.user_claims.lastName,
             email: parsedJwt.user_claims.email,
-            phone: parsedJwt.user_claims.phone,
+            phone: parsedJwt.user_claims.phone
           },
         },
         () => {
