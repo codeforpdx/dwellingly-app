@@ -82,6 +82,7 @@ const selectRow = {
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
+    
     if (manager.lastActive || !manager.archived) {
       manager.status = "Active";
     } else if (manager.archived) {
