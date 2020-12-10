@@ -36,7 +36,7 @@ import UserContext from "./UserContext";
 import Tenant from "./views/Tenant";
 import ChangePassword from "./views/Settings/changePassword";
 import { ToastContainer } from 'react-toastify';
-
+import NoMatch from "./views/noMatch/noMatch";
 
 var refreshTimeout;
 
@@ -223,6 +223,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/settings' component={Settings} />
               <PrivateRoute exact path='/changePassword' component={ChangePassword} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
+              <Route path='*' component={NoMatch} />
             </Switch>
             {this.state.userSession.isAuthenticated
               && <Footer />}
