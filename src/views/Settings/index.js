@@ -22,7 +22,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const handleFormSubmit = (context, data) => {
-  console.log("data: ", data);
   axios
     .patch(`/api/user/${context.user.identity}`, data, {
       headers: { Authorization: `Bearer ${context.user.accessJwt}` },

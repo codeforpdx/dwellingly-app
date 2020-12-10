@@ -83,9 +83,6 @@ const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
     
-    // #####################################################
-    // not exactly sure if this is how we're hoping to implement displaying the "status" field?
-    // I took my best guess with it for now :)
     if (manager.lastActive || !manager.archived) {
       manager.status = "Active";
     } else if (manager.archived) {
