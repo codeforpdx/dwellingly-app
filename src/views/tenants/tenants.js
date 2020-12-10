@@ -65,7 +65,7 @@ const columns = [
 //   pageButtonRenderer
 // };
 
-const ArchiveButtonRender = ({ selectedRows }) =>{
+const archiveButtonRender = ({ selectedRows }) =>{
   if(selectedRows.length > 0){
     return(
       <button className="button is-danger is-rounded ml-4" >Archive Tenant</button>
@@ -86,6 +86,26 @@ export class Tenants extends Component {
     this.onRowSelect = this.onRowSelect.bind(this);
   }
 
+  handleArchiveClick= () =>{
+    const { selectedRows } = this.state;
+    axios
+    .delete(`/api/tenants/multiple`, {
+      headers: { Authorization: `Bearer ${this.context.user.accessJwt}` },
+      tenant_ids: selectedRows 
+    })
+    .then((response) => {
+      if(response === 200){
+        console.log("eff em")
+      }
+      const tenants = response.data.tenants;
+      this.setState({ tenants });
+    })
+    .catch((error) => {
+      Toast(error.message, "error");
+      console.log(error);
+    });
+  }
+
   onRowSelect(rowId){
     const { selectedRows } = this.state;
     
@@ -102,7 +122,6 @@ export class Tenants extends Component {
 
   onRowSelectAll(rows){
     const { selectedRows } = this.state;
-    const length = rows.length
     if(rows.length === selectedRows.length && selectedRows.length > 0 ){
       selectedRows.splice(0,selectedRows.length)
       console.log("reset")
@@ -179,7 +198,8 @@ export class Tenants extends Component {
                   headerClasses="table-header"
                   classes="table-responsive"
                 />
-             
+                <button className="button is-danger is-rounded ml-4" onClick={this.handleArchiveClick} >Archive Tenant</button>
+              
               </div>
             </div>
           )
