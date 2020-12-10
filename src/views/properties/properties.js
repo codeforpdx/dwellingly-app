@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../../UserContext';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import * as axios from 'axios';
 import Search from '../../components/Search';
 import Toast from '../../utils/toast';
 
-import './properties.scss'
+import './properties.scss';
 
 const columns = [{
   dataField: 'name',
@@ -62,21 +62,21 @@ export class Properties extends Component {
       properties: [],
       filteredProperties: [],
       isFiltered: false
-    }
+    };
 
-    this.getProperties = this.getProperties.bind(this)
+    this.getProperties = this.getProperties.bind(this);
   }
 
   setIsFilteredPropertiesFalse = async () => {
     await this.setState({ isFiltered: false });
-  }
+  };
 
   setOutputState = async (output, isTrue) => {
     await this.setState({
       filteredProperties: output,
       isFiltered: isTrue
     });
-  }
+  };
 
   componentDidMount() {
     this.getProperties(this.context);
@@ -94,14 +94,14 @@ export class Properties extends Component {
           address: property.address,
           totalTenants: property.tenantIDs && property.tenantIDs.length,
           created_at: property.created_at
-        }) );
+        }));
         this.setState({ properties: propertyRows });
       })
       .catch((error) => {
         Toast(error.message, "error");
         console.log(error);
-      })
-  }
+      });
+  };
 
   render() {
     return (
@@ -109,35 +109,37 @@ export class Properties extends Component {
         {session => {
           this.context = session;
           return (
-            <div>
-              <div className="section-header">
-                <h2 className="page-title">Properties</h2>
-                <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>
-              </div>
+            <div className='main-container'>
+              <div>
+                <div className="section-header">
+                  <h2 className="page-title">Properties</h2>
+                  <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>
+                </div>
 
-              <Search
-                input={this.state.properties}
-                outputLocation={this.state.filteredProperties}
-                isFilteredLocation={this.state.isFiltered}
-                setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
-                setOutputState={this.setOutputState}
-                placeholderMessage="Search properties by name, address, or property manager"
-              />
-
-              <div className="properties-list">
-                <BootstrapTable
-                  keyField='id'
-                  data={this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties}
-                  columns={columns}
-                  selectRow={selectRow}
-                  bootstrap4={true}
-                  headerClasses="table-header"
+                <Search
+                  input={this.state.properties}
+                  outputLocation={this.state.filteredProperties}
+                  isFilteredLocation={this.state.isFiltered}
+                  setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
+                  setOutputState={this.setOutputState}
+                  placeholderMessage="Search properties by name, address, or property manager"
                 />
+
+                <div className="properties-list">
+                  <BootstrapTable
+                    keyField='id'
+                    data={this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties}
+                    columns={columns}
+                    selectRow={selectRow}
+                    bootstrap4={true}
+                    headerClasses="table-header"
+                  />
+                </div>
               </div>
             </div>
-          )
+          );
         }}
       </UserContext.Consumer>
-    )
+    );
   }
 }
