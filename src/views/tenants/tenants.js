@@ -88,14 +88,17 @@ export class Tenants extends Component {
 
   handleArchiveClick= () =>{
     const { selectedRows } = this.state;
+ 
     axios
-    .delete(`/api/tenants/multiple`, {
+    .delete(`/api/tenants`, {
       headers: { Authorization: `Bearer ${this.context.user.accessJwt}` },
-      tenant_ids: selectedRows 
+      data: {
+        tenant_ids: selectedRows
+      }
     })
     .then((response) => {
       if(response === 200){
-        console.log("eff em")
+        Toast("Tenants Deleted");
       }
       const tenants = response.data.tenants;
       this.setState({ tenants });
