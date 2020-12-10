@@ -38,9 +38,8 @@ const getManager = (context, managerId, storeInState) => {
       const manager = response.data;
       storeInState(manager);
     })
-    .catch((error) => {
-      alert(error);
-      console.log(error);
+    .catch(error => {
+      Toast(error.message);
     });
 };
 
