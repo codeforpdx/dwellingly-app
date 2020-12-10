@@ -7,7 +7,7 @@ import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 import Toast from '../../utils/toast';
 
-import './manager.scss'
+import './manager.scss';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -38,7 +38,7 @@ const Manager = () => {
   );
 
   const [manager, setManager] = useState(dummyDataManagerInfo);
-  const { isEditing, setEditingStatus } = useEditingStatus()
+  const { isEditing, setEditingStatus } = useEditingStatus();
 
   const tableData = [
     {
@@ -106,50 +106,52 @@ const Manager = () => {
   };
 
   return (
-    <div className="manager__container">
-      <TitleAndPen title={`${manager.firstName} ${manager.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
-      <div className="manager__contact">
-        <h1 className="secondary-title">CONTACT</h1>
-        <div className="contact-details">
-          <ToggleEditTable
-            tableData={tableData}
-            validationSchema={validationSchema}
-            isEditing={isEditing}
-            submitHandler={onFormikSubmit}
-            cancelHandler={onCancelClick}
-          />
+    <div className='main-container'>
+      <div className="manager__container">
+        <TitleAndPen title={`${manager.firstName} ${manager.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
+        <div className="manager__contact">
+          <h1 className="secondary-title">CONTACT</h1>
+          <div className="contact-details">
+            <ToggleEditTable
+              tableData={tableData}
+              validationSchema={validationSchema}
+              isEditing={isEditing}
+              submitHandler={onFormikSubmit}
+              cancelHandler={onCancelClick}
+            />
+          </div>
         </div>
-      </div>
-      <div className="manager__properties">
-        <h1 className="secondary-title">PROPERTIES</h1>
-        <div className="manager__properties__container">
-          {manager.properties.map((property) => (
-            <div key={property.name} className="manager__property__tile">
-              <h3 key={property.name} className="manager__property__name">
-                {property.name}
-              </h3>
-              <div className="manager__property__address">
-                {property.streetAddress}
+        <div className="manager__properties">
+          <h1 className="secondary-title">PROPERTIES</h1>
+          <div className="manager__properties__container">
+            {manager.properties.map((property) => (
+              <div key={property.name} className="manager__property__tile">
+                <h3 key={property.name} className="manager__property__name">
+                  {property.name}
+                </h3>
+                <div className="manager__property__address">
+                  {property.streetAddress}
+                </div>
+                <div className="manager__property__address">
+                  {property.city}, {property.state} {property.zip}
+                </div>
               </div>
-              <div className="manager__property__address">
-                {property.city}, {property.state} {property.zip}
+            ))}
+          </div>
+        </div>
+        <div className="manager__tenants">
+          <h1 className="section-title">TENANTS</h1>
+          {manager.tenants.map((tenant) => (
+            <div className="columns tenant__form-row" key={tenant.name}>
+              <div className="column is-one-quarter bold tenant__name">
+                {tenant.name}
               </div>
+              <div className="column is-one-quarter">{tenant.property}</div>
+              <div className="column is-one-quarter">{tenant.unit}</div>
+              <div className="column is-one-quarter">{tenant.phone}</div>
             </div>
           ))}
         </div>
-      </div>
-      <div className="manager__tenants">
-        <h1 className="section-title">TENANTS</h1>
-        {manager.tenants.map((tenant) => (
-          <div className="columns tenant__form-row" key={tenant.name}>
-            <div className="column is-one-quarter bold tenant__name">
-              {tenant.name}
-            </div>
-            <div className="column is-one-quarter">{tenant.property}</div>
-            <div className="column is-one-quarter">{tenant.unit}</div>
-            <div className="column is-one-quarter">{tenant.phone}</div>
-          </div>
-        ))}
       </div>
     </div>
   );

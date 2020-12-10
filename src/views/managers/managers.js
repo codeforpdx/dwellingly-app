@@ -1,14 +1,14 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import * as axios from "axios";
 import { PROPERTY_MANAGER_DATA } from "../pManagerData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import Search from "../../components/Search/index"
+import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 
-import './managers.scss'
+import './managers.scss';
 
 const columns = [
   {
@@ -86,22 +86,22 @@ export class Managers extends Component {
       managers: PROPERTY_MANAGER_DATA,
       filteredManagers: [],
       isFiltered: false
-    }
+    };
   }
 
   setIsFilteredManagersFalse = async () => {
-    await this.setState({isFiltered: false});
-  }
+    await this.setState({ isFiltered: false });
+  };
 
   setOutputState = async (output, isTrue) => {
-    await  this.setState({
+    await this.setState({
       filteredManagers: output,
       isFiltered: isTrue
     });
-  }
+  };
 
   componentDidMount() {
-    this.setState({managers: PROPERTY_MANAGER_DATA})
+    this.setState({ managers: PROPERTY_MANAGER_DATA });
   }
 
   // re-purpose getProperties once API is configured to retrieve tenant and properties for Property Managers
@@ -122,6 +122,7 @@ export class Managers extends Component {
 
   render() {
     return (
+      <div className='main-container'>
         <div className="managers">
           <div className="section-header">
             <h2 className="page-title">Property Managers</h2>
@@ -131,34 +132,34 @@ export class Managers extends Component {
           </div>
 
           <Search
-              input={this.state.managers} outputLocation={this.state.filteredManagers}
-              isFilteredLocation={this.state.isFiltered}
-              setIsFilteredStateFalse={this.setIsFilteredManagersFalse}
-              setOutputState={this.setOutputState}
-              placeholderMessage="Search properties by name, address, or property manager"
+            input={this.state.managers} outputLocation={this.state.filteredManagers}
+            isFilteredLocation={this.state.isFiltered}
+            setIsFilteredStateFalse={this.setIsFilteredManagersFalse}
+            setOutputState={this.setOutputState}
+            placeholderMessage="Search properties by name, address, or property manager"
           />
 
           <div className="invite-button-container py-3">
             <button className="button is-rounded is-primary ml-3" type="submit">
               <FontAwesomeIcon
-                  className="button__envelope-icon mr-3"
-                  icon={faEnvelope}
+                className="button__envelope-icon mr-3"
+                icon={faEnvelope}
               />{" "}
               Invite
             </button>
           </div>
           <BootstrapTable
-              keyField="id"
-              data={ this.state.isFiltered === true ? this.state.filteredManagers : this.state.managers }
-              columns={columns}
-              selectRow={selectRow}
-              bootstrap4={true}
-              headerClasses="table-header"
-              wrapperClasses="managers__table"
+            keyField="id"
+            data={this.state.isFiltered === true ? this.state.filteredManagers : this.state.managers}
+            columns={columns}
+            selectRow={selectRow}
+            bootstrap4={true}
+            headerClasses="table-header"
+            wrapperClasses="managers__table"
           />
         </div>
+      </div>
 
     );
   }
 };
-

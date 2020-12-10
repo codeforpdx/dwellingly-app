@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
-import RoleEnum from '../../Enums/RoleEnum.js'
+import RoleEnum from '../../Enums/RoleEnum.js';
 import Toast from '../../utils/toast';
 
 // Configure validation schema for edit form
@@ -49,15 +49,15 @@ const Tenant = () => {
   // Error handler for axios requests
   const axiosErrorHandler = (error) => {
     Toast(error.message, "error");
-    return Promise.reject({ ...error })
-  }
+    return Promise.reject({ ...error });
+  };
 
   // Handle axios errors
   const client = axios.create();
   client.interceptors.response.use(
     success => success,
     error => axiosErrorHandler(error)
-  )
+  );
 
   /**
    * Handle activating edit form
@@ -91,7 +91,7 @@ const Tenant = () => {
    */
   const getStaffChoices = (staffArray) => {
     const staffChoices = [];
-    if (staffArray && Array.isArray(staffArray)) {
+    if(staffArray && Array.isArray(staffArray)) {
       staffArray.forEach((staff) => {
         const name = `${staff.firstName} ${staff.lastName}`;
         const staffChoice = { key: staff.id, description: name };
@@ -191,7 +191,7 @@ const Tenant = () => {
    */
   const handleChangeSearch = (event) => {
     const { value } = event.target;
-    if (!value || value.length === 0) {
+    if(!value || value.length === 0) {
       setStaffSearchResults([]);
       setStaffSearchText("");
     } else {
@@ -208,68 +208,70 @@ const Tenant = () => {
   };
 
   return (
-    <div>
-      {tenant && (
-        <div>
-          <div className="title__container">
-            <h2>
-              {tenant.firstName}
-              {" "}
-              {tenant.lastName}
-            </h2>
-            <button
-              className={`rounded${isEditing ? "--is-editing" : ""}`}
-              onClick={handleEditToggle}
-              disabled={isEditing}
-            >
-              <i className="fas fa-pen icon" />
-            </button>
-          </div>
+    <div className='main-container'>
+      <div>
+        {tenant && (
+          <div>
+            <div className="title__container">
+              <h2>
+                {tenant.firstName}
+                {" "}
+                {tenant.lastName}
+              </h2>
+              <button
+                className={`rounded${isEditing ? "--is-editing" : ""}`}
+                onClick={handleEditToggle}
+                disabled={isEditing}
+              >
+                <i className="fas fa-pen icon" />
+              </button>
+            </div>
 
-          <div className="section-container">
-            <h2 className="section-title">CONTACT</h2>
-            <ToggleEditTable
-              tableData={getTableData()}
-              validationSchema={validationSchema}
-              isEditing={isEditing}
-              submitHandler={onFormikSubmit}
-              cancelHandler={onCancelClick}
-            />
-          </div>
+            <div className="section-container">
+              <h2 className="section-title">CONTACT</h2>
+              <ToggleEditTable
+                tableData={getTableData()}
+                validationSchema={validationSchema}
+                isEditing={isEditing}
+                submitHandler={onFormikSubmit}
+                cancelHandler={onCancelClick}
+              />
+            </div>
 
-          <div className="section-container">
-            <h2>JOIN STAFF</h2>
-            <SearchPanel
-              chips
-              choices={staffSearchResults}
-              clearLabel="Clear search text"
-              maximumHeight={200}
-              onChange={handleChangeSearch}
-              onClear={handleChangeSearch}
-              onSelectionChange={handleChangeStaffSelections}
-              placeholder="Search JOIN staff"
-              preSelectedChoices={staffSelections}
-              small
-              value={staffSearchText}
-              variant={SearchPanelVariant.checkbox}
-              width={400}
-            />
-          </div>
+            <div className="section-container">
+              <h2>JOIN STAFF</h2>
+              <SearchPanel
+                chips
+                choices={staffSearchResults}
+                clearLabel="Clear search text"
+                maximumHeight={200}
+                onChange={handleChangeSearch}
+                onClear={handleChangeSearch}
+                onSelectionChange={handleChangeStaffSelections}
+                placeholder="Search JOIN staff"
+                preSelectedChoices={staffSelections}
+                small
+                value={staffSearchText}
+                variant={SearchPanelVariant.checkbox}
+                width={400}
+              />
+            </div>
 
-          <div className="section-container">
-            <h2>TICKETS</h2>
-            <div className="tabs">
-              <ul>
-                {tabs.map((tab) => (
-                  <li key={tab.id} className={activeTab === tab.id ? "is-active" : ""}>
-                    <a onClick={() => setActiveTab(tab.id)}>{tab.label}</a>
-                  </li>
-                ))}
-              </ul>
+            <div className="section-container">
+              <h2>TICKETS</h2>
+              <div className="tabs">
+                <ul>
+                  {tabs.map((tab) => (
+                    <li key={tab.id} className={activeTab === tab.id ? "is-active" : ""}>
+                      <a onClick={() => setActiveTab(tab.id)}>{tab.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

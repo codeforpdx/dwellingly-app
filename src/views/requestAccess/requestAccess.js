@@ -4,7 +4,7 @@ import * as axios from "axios";
 import UserContext from '../../UserContext';
 import Toast from '../../utils/toast';
 
-import './requestAccess.scss'
+import './requestAccess.scss';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -24,8 +24,8 @@ const RoleDropDown = (props) => {
         </select>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // Section under CONTACT
 export const InfoField = ({ label, info, changeHandler }) => {
@@ -39,7 +39,7 @@ export const InfoField = ({ label, info, changeHandler }) => {
       </span>
     </div>
   );
-}
+};
 
 export const RequestAccess = (props) => {
   // Get context for API auth header
@@ -82,13 +82,13 @@ export const RequestAccess = (props) => {
       email: email
     }, makeAuthHeaders(userContext))
       .then((response) => {
-        Toast("User access granted!", "success")
+        Toast("User access granted!", "success");
       })
       .catch((error) => {
         Toast(error.message, "error");
         console.log(error);
       });
-  }
+  };
 
   const {
     firstName,
@@ -105,20 +105,22 @@ export const RequestAccess = (props) => {
 
   return (
     <>
-      <div className="page-title"> Request for Access </div>
-      <div className="sub-title"> CONTACT </div>
-      <InfoField label={"First Name"} changeHandler={setFirstName} info={firstName} />
-      <InfoField label={"Last Name"} changeHandler={setLastName} info={lastName} />
-      {/* <InfoField label={"Phone"} info={data['phone']} /> */}
-      <InfoField label={"Email"} changeHandler={setEmail} info={email} />
-      <hr className="line" ></hr>
-      <div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
-      <RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler} />
-      <div className="mt-2">
-        <button className="button is-small is-rounded is-primary mx-4" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)} disabled={currentSelection === ""}> GRANT ACCESS </button>
+      <div className='main-container'>
+        <div className="page-title"> Request for Access </div>
+        <div className="sub-title"> CONTACT </div>
+        <InfoField label={"First Name"} changeHandler={setFirstName} info={firstName} />
+        <InfoField label={"Last Name"} changeHandler={setLastName} info={lastName} />
+        {/* <InfoField label={"Phone"} info={data['phone']} /> */}
+        <InfoField label={"Email"} changeHandler={setEmail} info={email} />
+        <hr className="line" ></hr>
+        <div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
+        <RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler} />
+        <div className="mt-2">
+          <button className="button is-small is-rounded is-primary mx-4" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)} disabled={currentSelection === ""}> GRANT ACCESS </button>
 
-        <Link className="button is-rounded is-small is-dark" to='/dashboard'> CANCEL </Link>
+          <Link className="button is-rounded is-small is-dark" to='/dashboard'> CANCEL </Link>
+        </div>
       </div>
     </>
   );
-}
+};
