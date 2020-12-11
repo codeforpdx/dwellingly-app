@@ -198,7 +198,11 @@ export const RequestAccess = (props) => {
       {showAddProperty &&
         <Modal
           titleText="Create New Property"
-          content={<AddProperty showPageTitle={false} postOnSubmit={getProperties} handleCancel={handleAddPropertyCancel} />}
+          content={<AddProperty
+            showPageTitle={false}
+            postOnSubmit={getProperties}
+            handleCancel={handleAddPropertyCancel}
+            />}
           hasButtons={false}
           closeHandler={handleAddPropertyCancel}
         />
