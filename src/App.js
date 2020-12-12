@@ -27,7 +27,7 @@ import {
 import Header from "./components/Header/index";
 import Footer from "./components/Footer/index";
 import { AddProperty } from "./views/addProperty/addProperty";
-import { Managers } from "./views/managers/managers";
+import Managers from "./views/managers/managers";
 import Manager from "./views/Manager";
 import { JoinStaff } from "./views/joinStaff/joinStaff";
 import { AddStaffMember } from "./views/addStaffMember/addStaffMember";

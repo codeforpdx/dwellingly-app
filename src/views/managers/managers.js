@@ -129,7 +129,7 @@ const Managers = () => {
   useEffect(() => getManagers(axiosHeader, setManagersData), []);
   
   return (
-    <div className="managers">
+    <div className="managers main-container">
       <div className="section-header">
         <h2 className="page-title">Property Managers</h2>
         <Link className="button is-rounded is-primary ml-4" to="/manage/managers">
