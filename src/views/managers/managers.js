@@ -123,8 +123,8 @@ const getManagers = (header, storeInState) => {
 const Managers = () => {
   const [managersData, setManagersData] = useState();
 
-  const retreivedUserContext = useContext(UserContext);
-  const axiosHeader = makeHeader(retreivedUserContext);
+  const retrievedUserContext = useContext(UserContext);
+  const axiosHeader = makeHeader(retrievedUserContext);
   
   useEffect(() => getManagers(axiosHeader, setManagersData), []);
   
