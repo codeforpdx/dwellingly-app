@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import Button from "../Button";
 import "./toggleEditTable.scss";
+import CalendarModal from "../CalendarModal/CalendarModal";
 
 const FieldError = ({ error }) => {
   if (!error) return null;
@@ -15,6 +16,7 @@ const ToggleEditTable = ({
   submitHandler,
   cancelHandler,
   validationSchema,
+  calendarState
 }) => {
 
   // create initialValues for Formik
@@ -22,6 +24,8 @@ const ToggleEditTable = ({
     initValues[currDataObject.key] = currDataObject.value;
     return initValues;
   }, {});
+
+  const { dateTimeStart, dateTimeEnd } = calendarState
 
   return isEditing ? (
     <Formik
@@ -40,6 +44,8 @@ const ToggleEditTable = ({
       }) => (
           <Form onSubmit={handleSubmit}>
             {Object.keys(values).map((value, index) => {
+              const isCalendar = tableData[index].inputType === "calendar"
+
               return (<div className="form__row--editing columns" key={value}>
                 <label
                   className="form__label column is-one-quarter"
@@ -50,11 +56,15 @@ const ToggleEditTable = ({
                 <Field
                   type={tableData[index].inputType}
                   name={value}
-                  onChange={handleChange}
+                  onChange={isCalendar ? null : handleChange}
                   onBlur={handleBlur}
-                  value={values[value]}
+                  value={
+                    isCalendar
+                      ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
+                      : values[value]}
                   className="column is-two-quarters row-input"
                 />
+                {isCalendar && <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />}
                 <FieldError
                   error={errors[value]}
                   className="column is-one-quarter"
@@ -79,7 +89,11 @@ const ToggleEditTable = ({
             <span className="form__label column is-one-quarter">
               {dataObject.label}
             </span>
-            <span className="column is-one-quarter">{dataObject.value}</span>
+            <span className="column is-one-quarter">{
+              (dataObject.inputType === "calendar")
+                ? `${dataObject.value.dateTimeStart.toDateString()} - ${dataObject.value.dateTimeEnd.toDateString()}`
+                : dataObject.value
+            }</span>
           </div>
         ))}
       </>
@@ -101,6 +115,7 @@ ToggleEditTable.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   cancelHandler: PropTypes.func.isRequired,
   validationSchema: PropTypes.object.isRequired,
+  calendarState: PropTypes.object
 };
 
 export default ToggleEditTable;
