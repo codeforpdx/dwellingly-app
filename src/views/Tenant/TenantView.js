@@ -6,6 +6,7 @@ import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import RoleEnum from '../../Enums/RoleEnum.js';
 import Toast from '../../utils/toast';
+import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -40,6 +41,9 @@ const Tenant = () => {
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
 
+  const calendarState = useCalendarState(state.property?.dateTimeStart, state.property?.dateTimeEnd)
+  const { dateTimeStart, dateTimeEnd } = calendarState
+
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
     { id: "Closed", label: "Closed" },
@@ -71,6 +75,8 @@ const Tenant = () => {
       lastName: values.lastName,
       phone: values.phone,
       email: values.email,
+      dateTimeStart,
+      dateTimeEnd
     });
     setTimeout(() => {
       setSubmitting(false);
@@ -91,7 +97,7 @@ const Tenant = () => {
    */
   const getStaffChoices = (staffArray) => {
     const staffChoices = [];
-    if(staffArray && Array.isArray(staffArray)) {
+    if (staffArray && Array.isArray(staffArray)) {
       staffArray.forEach((staff) => {
         const name = `${staff.firstName} ${staff.lastName}`;
         const staffChoice = { key: staff.id, description: name };
@@ -164,6 +170,15 @@ const Tenant = () => {
       value: property.unit,
       inputType: "text",
       comp: <div />,
+    },
+    {
+      key: "lease",
+      label: "Lease",
+      value: {
+        dateTimeStart: property.dateTimeStart || new Date(),
+        dateTimeEnd: property.dateTimeEnd || new Date()
+      },
+      inputType: "calendar",
     }
   ];
 
@@ -191,7 +206,7 @@ const Tenant = () => {
    */
   const handleChangeSearch = (event) => {
     const { value } = event.target;
-    if(!value || value.length === 0) {
+    if (!value || value.length === 0) {
       setStaffSearchResults([]);
       setStaffSearchText("");
     } else {
@@ -235,6 +250,7 @@ const Tenant = () => {
                 isEditing={isEditing}
                 submitHandler={onFormikSubmit}
                 cancelHandler={onCancelClick}
+                calendarState={calendarState}
               />
             </div>
 
