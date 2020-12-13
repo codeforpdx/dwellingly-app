@@ -25,9 +25,9 @@
     max-width: 80%;
     .form-row {
       display: flex;
-      border-bottom: 1px solid $lightGray;
+      border-bottom: 1px solid $black;
       &:first-child {
-        border-top: 1px solid $lightGray;
+        border-top: 1px solid $black;
       }
       &:focus-within {
         border-bottom: 1px solid $blue;
@@ -37,10 +37,11 @@
       }
       .form-field {
         border: none;
-        color: $darkGray;
+        color: $black;
         font-weight: bold;
+        font-size: 18px;
         &::placeholder {
-          color: $lightGray;
+          color: $darkGray;
         }
         &:focus {
           outline: 0;
@@ -50,7 +51,7 @@
         color: red;
       }
       label {
-        color: $gray;
+        color: $black;
         padding-left: 0;
         margin-left: 0;
       }
