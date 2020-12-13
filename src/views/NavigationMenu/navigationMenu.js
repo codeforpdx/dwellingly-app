@@ -38,7 +38,7 @@ export const MenuLink = ({ icon, isBold, name, href, passedClassName }) => {
 		size + (isBold ? "has-text-weight-bold " : "") + linkable;
 	const linkDefaultColor =
 		leafHrefString === "reports" ? "has-text-grey" : "has-text-white";
-	const linkColor = isActiveLink ? "has-text-black" : linkDefaultColor;
+	const linkColor = isActiveLink ? "has-text-warning" : linkDefaultColor;
 
 	return (
 		<li className={passedClassName ? `pb-2 ${passedClassName}` : "pb-2"}>
