@@ -76,10 +76,12 @@
 }
 
 .add-property-button {
-  padding: 30px 0 0 10px;
-  color: #51a3fc;
-  background: none;
+  margin-top: 10px;
+  padding: 10px;
+  color: $white;
+  background-color: $blue;
   border: none;
+  border-radius: 35px;
   font-size: 16px;
   &:focus {
     outline: none;
