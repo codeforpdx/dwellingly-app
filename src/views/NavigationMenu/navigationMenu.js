@@ -33,7 +33,7 @@ export const MenuLink = ({ icon, isBold, name, href, passedClassName }) => {
 		leafHrefString === "add" || leafHrefString === "manage"
 			? "is-unselectable"
 			: "";
-	const size = leafHrefString === "home" ? "is-size-6 " : "is-size-7 ";
+	const size = leafHrefString === "home" ? "is-size-5-desktop " : "is-size-6-desktop ";
 	const classNameBase =
 		size + (isBold ? "has-text-weight-bold " : "") + linkable;
 	const linkDefaultColor =
@@ -48,7 +48,7 @@ export const MenuLink = ({ icon, isBold, name, href, passedClassName }) => {
 						<FontAwesomeIcon icon={icon} />
 					</span>
 				)}
-				<span className="pl-1">{name}</span>
+				<span className="pl-2">{name}</span>
 			</Link>
 		</li>
 	);
