@@ -5,11 +5,11 @@
 $brandBlue: #053d6f;
 $gray: #8e8e93;
 $mediumGray: #858585 !default;
-$blue: #51a3fc;
+$blue: #0D47A1;
 $lighterBlue: #4ca1ff !default;
 $darkBlue: #003c71 !default;
-$orange: #fdbc49;
-$red: #fc575a;
+$orange: #F57F17;
+$red: #B71C1C;
 $darkGray: #555555;
 $lightGray: #d1d1d1;
 $lighterGray: #eeeeee;
@@ -19,7 +19,7 @@ $errorRed: red;
 
 $breakpointMobile: 1200px;
 
-$gradient: linear-gradient(to bottom, #6f90fc 0%, #52baed 100%);
+$gradient: linear-gradient(to right, $blue 0%, $lighterBlue 100%);
 
 $cyan: $blue;
 $headerHeight: 65px;
