@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
+import UserContext from "../../UserContext";
 import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
@@ -25,9 +26,12 @@ const validationSchema = Yup.object().shape({
     .required("*a valid phone number is required"),
 });
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
+
 const Tenant = () => {
   // Get input tenant id
   const { id } = useParams();
+  const context = useContext(UserContext);
 
   const initialState = {
     tenant: null,
@@ -67,6 +71,8 @@ const Tenant = () => {
    * Handle activating edit form
    */
   const handleEditToggle = () => setEditingStatus(!isEditing);
+
+
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
     setState({
@@ -78,10 +84,18 @@ const Tenant = () => {
       dateTimeStart,
       dateTimeEnd
     });
-    setTimeout(() => {
-      setSubmitting(false);
-      setEditingStatus(false);
-    }, 500);
+    console.log(values);
+    axios
+      .put(`/api/tenants/` + id, values, makeAuthHeaders(context))
+      .then((response) => {
+        Toast("Tenant Updated Successfully!", "success");
+        setSubmitting(false);
+        setEditingStatus(false);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error);
+      });
   };
 
   /**
