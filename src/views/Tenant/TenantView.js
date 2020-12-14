@@ -75,20 +75,19 @@ const Tenant = () => {
 
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
-    setState({
-      ...state,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      phone: values.phone,
-      email: values.email,
-      dateTimeStart,
-      dateTimeEnd
-    });
-    console.log(values);
     axios
       .put(`/api/tenants/` + id, values, makeAuthHeaders(context))
       .then((response) => {
         Toast("Tenant Updated Successfully!", "success");
+        setState({
+          ...state, 
+          tenant: {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            phone: values.phone,
+            email: values.email
+          }
+        });
         setSubmitting(false);
         setEditingStatus(false);
       })
