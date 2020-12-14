@@ -75,6 +75,13 @@ const Tenant = () => {
 
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
+
+    if (_nothingHasChanged(values, state.tenant)) {
+      setSubmitting(false);
+      setEditingStatus(false);
+      return;
+    }
+
     axios
       .put(`/api/tenants/` + id, values, makeAuthHeaders(context))
       .then((response) => {
@@ -95,6 +102,14 @@ const Tenant = () => {
         Toast(error.message, "error");
         console.log(error);
       });
+  };
+
+  const _nothingHasChanged = (newValues, oldValues) => {
+    return (
+      newValues.firstName === oldValues.firstName &&
+      newValues.lastName === oldValues.lastName &&
+      newValues.phone === oldValues.phone
+    );
   };
 
   /**
