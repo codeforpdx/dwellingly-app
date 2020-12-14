@@ -34,10 +34,10 @@ const validationSchema = Yup.object().shape({
 
 const formHandler = (data, context) => {
   axios.post('/api/properties', data, { headers: { 'Authorization': `Bearer ${context.user.accessJwt}` } })
-    .then(function(response) {
+    .then(function (response) {
       Toast('Property Added!', 'success');
     })
-    .catch(function(error) {
+    .catch(function (error) {
       Toast(error, 'error');
     });
 };
@@ -60,7 +60,7 @@ export class AddProperty extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.state.managerSearch === prevState.managerSearch) return;
+    if (this.state.managerSearch === prevState.managerSearch) return;
 
     let choices = this.state.managerOptions.filter(
       manager => manager.description.toLowerCase().includes(this.state.managerSearch.toLowerCase())
@@ -87,7 +87,7 @@ export class AddProperty extends Component {
 
   handleSearchChange = ({ target }) => {
     let managerSearch = target.value;
-    if(!managerSearch || managerSearch.length === 0) managerSearch = '';
+    if (!managerSearch || managerSearch.length === 0) managerSearch = '';
     this.setState({ managerSearch });
   };
 
@@ -215,6 +215,7 @@ export class AddProperty extends Component {
                               selectedChoices={this.state.assignedPropertyManagers}
                               value={this.state.managerSearch}
                               variant={SearchPanelVariant.checkbox}
+                              width={250}
                             />
                           </div>
                         </div>
