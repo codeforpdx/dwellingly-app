@@ -113,6 +113,7 @@ const Tenant = () => {
   const getTenant = async () => {
     const tenantResponse = await client.get(`/api/tenants/${id}`);
     const tenant = tenantResponse.data;
+    console.log(tenant.propertyName)
     const propertyUrl = `/api/properties/${tenant.propertyName}`;
     const propertyResponse = await client.get(propertyUrl);
     const property = propertyResponse.data;

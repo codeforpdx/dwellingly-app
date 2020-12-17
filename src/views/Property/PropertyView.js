@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import Toast from '../../utils/toast';
+import UserContext from '../../UserContext';
 
 
 
 const Property = () => {
+  const userContext = useContext(UserContext);
 
   const { id } = useParams();
+  const propertyName = id;
 
   const initialState = {
     property: null,
@@ -40,9 +43,8 @@ const Property = () => {
 
   const getProperty = async () => {
 
-    const propertyResponse = await client.get(`/api/properties/`);
-    const property = propertyResponse.data;
-    setState({ property });
+    const propertyResponse = await axios.get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyName}`, { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
+
   }
 
   useEffect(() => {
