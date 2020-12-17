@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import Toast from '../../utils/toast';
 import UserContext from '../../UserContext';
+import Tenant from "../Tenant";
 
 
 
@@ -44,6 +45,9 @@ const Property = () => {
   const getProperty = async () => {
 
     const propertyResponse = await axios.get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyName}`, { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
+    const property = propertyResponse.data;
+
+    setState({ property })
 
   }
 
@@ -51,12 +55,67 @@ const Property = () => {
     getProperty();
   }, []);
 
+  const getTableData = () => [
+    {
+      key: "propertyName",
+      label: "Name",
+      value: property.name,
+      inputType: "text",
+    },
+    {
+      key: "propertyAddress",
+      label: "Address",
+      value: `${property.address}, ${property.city}, ${property.state}, ${property.zipcode}`,
+      inputType: "text",
+      comp: <div />,
+    },
+    {
+      key: "propertyUnits",
+      label: "Units",
+      value: property.units,
+      inputType: "text",
+    }
+  ]
+
+
   const { property } = state;
 
   return (
-    <div>
-      <p>HELLO!</p>
+    <div className='main-container'>
+      <div>
+        {property && (
+          <div>
+            <div className="title__container">
+              <h2>
+                {property.name}
+              </h2>
+              <button
+                className={`rounded${isEditing ? "--is-editing" : ""}`}
+                onClick={handleEditToggle}
+                disabled={isEditing}
+              >
+                <i className="fas fa-pen icon" />
+              </button>
+            </div>
+            <div className="section-container">
+              <h2 className="section-title">PROPERTY INFORMATION</h2>
+            </div>
+            <ToggleEditTable
+              tableData={getTableData()}
+              validationSchema={validationSchema}
+              isEditing={isEditing}
+              submitHandler={onFormikSubmit}
+              cancelHandler={onCancelClick}
+              calendarState={calendarState}
+            />
+          </div>
+        )}
+
+      </div>
+
+
     </div>
+
   )
 
 
