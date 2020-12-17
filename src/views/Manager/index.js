@@ -6,6 +6,7 @@ import * as axios from "axios";
 import UserContext from '../../UserContext';
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 import Toast from '../../utils/toast';
+import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 
 import './manager.scss';
 
@@ -55,6 +56,7 @@ const Manager = () => {
   }, []);
 
   const { isEditing, setEditingStatus } = useEditingStatus()
+  const calendarState = useCalendarState()
 
   const tableData = managerData && [
     {
@@ -132,6 +134,7 @@ const updateManager = (payload) => {
             isEditing={isEditing}
             submitHandler={onFormikSubmit}
             cancelHandler={onCancelClick}
+            calendarState={calendarState}
           />
         </div>
       </div>
