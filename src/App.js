@@ -9,6 +9,7 @@ import { NavMenu } from "./views/NavigationMenu/navigationMenu.js";
 import { Dashboard } from "./views/dashboard/dashboard";
 import { RequestAccess } from "./views/requestAccess/requestAccess";
 import { Properties } from "./views/properties/properties";
+import Property from "./views/Property/PropertyView.js"
 import { Tenants } from "./views/tenants/tenants";
 import { Terms } from "./views/terms/terms";
 import { Tickets } from "./views/tickets/tickets";
@@ -44,7 +45,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
 
-    if(checkForStoredAccessToken()) {
+    if (checkForStoredAccessToken()) {
       let parsedJwt = parseJwt(window.localStorage['dwellinglyAccess']);
       this.state = {
         userSession: {
@@ -76,7 +77,7 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    if(checkForStoredAccessToken()) {
+    if (checkForStoredAccessToken()) {
       let parsedJwt = parseJwt(window.localStorage['dwellinglyAccess']);
       this.setState(
         {
@@ -95,7 +96,7 @@ export class App extends React.Component {
           this.refreshJwtPeriodically();
         }
       );
-    } else if(checkForStoredRefreshToken()) {
+    } else if (checkForStoredRefreshToken()) {
       this.refreshJwtPeriodically();
     }
   }
@@ -107,7 +108,7 @@ export class App extends React.Component {
   login = (email, password) => {
     auth.authenticate(email, password)
       .then(response => {
-        if(response) {
+        if (response) {
           window.localStorage['dwellinglyAccess'] = response.data.access_token;
           window.localStorage['dwellinglyRefresh'] = response.data.refresh_token;
           let parsedJwt = parseJwt(response.data.access_token);
@@ -213,6 +214,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
               <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
               <PrivateRoute exact path='/manage/properties' component={Properties} />
+              <PrivateRoute exact path='/manage/properties/:id' component={Property} />
               <PrivateRoute exact path='/manage/managers' component={Managers} />
               <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
               <PrivateRoute exact path='/tickets' component={Tickets} />

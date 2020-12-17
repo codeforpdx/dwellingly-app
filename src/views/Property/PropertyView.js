@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
 import { useParams } from "react-router-dom";
 import * as axios from "axios";
-import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import ToggleEditTable from "../../components/ToggleEditTable";
-import RoleEnum from '../../Enums/RoleEnum.js';
 import Toast from '../../utils/toast';
-import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 
 
 
@@ -45,7 +40,7 @@ const Property = () => {
 
   const getProperty = async () => {
 
-    const propertyResponse = await client.get(`/api/properties/${id}`);
+    const propertyResponse = await client.get(`/api/properties/`);
     const property = propertyResponse.data;
     setState({ property });
   }
@@ -56,7 +51,16 @@ const Property = () => {
 
   const { property } = state;
 
-
+  return (
+    <div>
+      <p>HELLO!</p>
+    </div>
+  )
 
 
 }
+
+
+
+
+export default Property;
