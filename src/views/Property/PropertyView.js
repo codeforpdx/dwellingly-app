@@ -8,6 +8,7 @@ import ToggleEditTable from "../../components/ToggleEditTable";
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard.js";
 import BootstrapTable from 'react-bootstrap-table-next';
+import { Link } from "react-router-dom";
 
 
 
@@ -30,6 +31,13 @@ const validationSchema = Yup.object().shape({
 const columns = [
   {
     dataField: "fullName",
+    formatter: (cell, row, rowIndex, formatExtraData) => {
+      return (
+        <Link key={row.fullName} to={`/manage/tenants/${row.id}`}>
+          {row.fullName}
+        </Link>
+      );
+    },
     text: "Tenants",
     sort: true,
   },
