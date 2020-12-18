@@ -113,6 +113,7 @@ const Property = () => {
       )
 
       const tenantArray = tenantResponses.map(tenantResponse => {
+
         return tenantResponse.data;
       })
 
@@ -129,14 +130,18 @@ const Property = () => {
     const newValues = {
       name: values.propertyName,
       address: values.propertyAddress,
-      units: values.propertyUnits,
+      city: values.propertyCity,
+      state: values.propertyState,
+      zipcode: values.propertyZipcode,
+      unit: values.propertyUnits,
     };
     updateProperty(newValues);
   };
 
   const updateProperty = (payload) => {
+    console.log(payload)
     axios
-      .patch(`${process.env.REACT_APP_PROXY}/api/properties/${payload.name}`,
+      .put(`${process.env.REACT_APP_PROXY}/api/properties/${payload.name}`,
         payload,
         { Authorization: `Bearer ${userContext.user.accessJwt}` }
       )
@@ -145,7 +150,10 @@ const Property = () => {
           ...property,
           name: response.data.name,
           address: response.data.address,
-          units: response.data.units,
+          city: response.data.city,
+          state: response.data.state,
+          zipcode: response.data.zipcode,
+          unit: response.data.unit,
         });
         setEditingStatus(false);
         Toast("Save successful!");
@@ -166,14 +174,31 @@ const Property = () => {
     {
       key: "propertyAddress",
       label: "Address",
-      value: `${property.address}, ${property.city}, ${property.state}, ${property.zipcode}`,
+      value: property.address,
       inputType: "text",
-      comp: <div />,
+    },
+    {
+      key: "propertyCity",
+      label: "City",
+      value: property.city,
+      inputType: "text",
+    },
+    {
+      key: "propertyState",
+      label: "State",
+      value: property.state,
+      inputType: "text",
+    },
+    {
+      key: "propertyZipcode",
+      label: "Zip Code",
+      value: property.zipcode,
+      inputType: "text",
     },
     {
       key: "propertyUnits",
       label: "Units",
-      value: property.units,
+      value: property.unit,
       inputType: "text",
     }
   ]
@@ -213,20 +238,24 @@ const Property = () => {
               <h2 className="section-title">PROPERTY MANAGERS</h2>
             </div>
             <div className="property-manager-section">
-              {property.propertyManager.map(manager => {
-                return <PropertyManagerCard
-                  manager={manager}
-                />
-              })}
+              {property.propertyManager ?
+                property.propertyManager.map(manager => {
+                  return <PropertyManagerCard
+                    manager={manager}
+                    key={manager.id}
+                  />
+                })
+                : <></>}
             </div>
             <div>
               <div className="section-container">
                 <h2 className="section-title">TENANTS</h2>
               </div>
             </div>
+
             <BootstrapTable
               keyField='id'
-              data={tenantArray}
+              data={tenantArray ? tenantArray : []}
               columns={columns}
               bootstrap4={true}
               headerClasses="table-header"
