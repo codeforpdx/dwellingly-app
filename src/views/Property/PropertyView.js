@@ -35,7 +35,7 @@ const Property = () => {
 
   const [isEditing, setEditingStatus] = useState(false);
   const [property, setProperty] = useState('');
-  const [users, setUsers] = useState('');
+  const [tenantArray, setTenants] = useState('');
   const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
 
@@ -73,9 +73,24 @@ const Property = () => {
       const property = propertyResponse.data;
 
       setProperty(property)
+      return property;
+    }
+
+    const getTenants = async (property) => {
+
+      const tenantResponses = await Promise.all(property.tenantIDs.map(tenantID => axios.get(`${process.env.REACT_APP_PROXY}/api/tenants/${tenantID}`,
+        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } }))
+      )
+
+      const tenantArray = tenantResponses.map(tenantResponse => {
+        return tenantResponse.data;
+      })
+
+      setTenants(tenantArray);
     }
 
     getProperty()
+      .then(property => getTenants(property));
 
   }, []);
 
@@ -173,6 +188,11 @@ const Property = () => {
                   manager={manager}
                 />
               })}
+            </div>
+            <div>
+              <div className="section-container">
+                <h2 className="section-title">TENANTS</h2>
+              </div>
             </div>
           </div>
 
