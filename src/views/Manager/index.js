@@ -6,7 +6,7 @@ import * as axios from "axios";
 import UserContext from '../../UserContext';
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 import Toast from '../../utils/toast';
-
+import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 import './manager.scss';
 
 const validationSchema = Yup.object().shape({
@@ -52,6 +52,8 @@ const Manager = () => {
   useEffect(() => {
     getManager(userContext, id, setManager);
   }, []);
+
+  const calendarState = useCalendarState(managerData?.dateTimeStart, managerData?.dateTimeEnd)
 
   const { isEditing, setEditingStatus } = useEditingStatus()
 
@@ -131,6 +133,7 @@ const Manager = () => {
             isEditing={isEditing}
             submitHandler={onFormikSubmit}
             cancelHandler={onCancelClick}
+            calendarState={calendarState}
           />
         </div>
       </div>
