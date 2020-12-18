@@ -6,6 +6,7 @@ import UserContext from '../../UserContext';
 import * as Yup from "yup";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
+import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard.js";
 
 
 const validationSchema = Yup.object().shape({
@@ -34,6 +35,7 @@ const Property = () => {
 
   const [isEditing, setEditingStatus] = useState(false);
   const [property, setProperty] = useState('');
+  const [users, setUsers] = useState('');
   const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
 
@@ -64,14 +66,18 @@ const Property = () => {
   useEffect(() => {
     const getProperty = async () => {
 
-      const propertyResponse = await axios.get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyName}`, { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
+      const propertyResponse = await axios
+        .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyName}`,
+          { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
+
       const property = propertyResponse.data;
 
       setProperty(property)
     }
 
-    getProperty();
-  });
+    getProperty()
+
+  }, []);
 
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
@@ -158,7 +164,18 @@ const Property = () => {
               cancelHandler={onCancelClick}
               calendarState={calendarState}
             />
+            <div className="section-container">
+              <h2 className="section-title">PROPERTY MANAGERS</h2>
+            </div>
+            <div>
+              {property.propertyManager.map(manager => {
+                return <PropertyManagerCard
+                  manager={manager}
+                />
+              })}
+            </div>
           </div>
+
         )}
 
       </div>
