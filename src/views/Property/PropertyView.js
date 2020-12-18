@@ -243,6 +243,7 @@ const Property = () => {
                   return <PropertyManagerCard
                     manager={manager}
                     key={manager.id}
+                    isEditing={isEditing}
                   />
                 })
                 : <></>}
