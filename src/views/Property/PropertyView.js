@@ -10,6 +10,8 @@ import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyMa
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
 
+import './PropertyView.scss';
+
 
 
 const validationSchema = Yup.object().shape({
@@ -210,7 +212,7 @@ const Property = () => {
             <div className="section-container">
               <h2 className="section-title">PROPERTY MANAGERS</h2>
             </div>
-            <div>
+            <div className="property-manager-section">
               {property.propertyManager.map(manager => {
                 return <PropertyManagerCard
                   manager={manager}
