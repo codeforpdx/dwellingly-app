@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import Toast from '../../utils/toast';
 import UserContext from '../../UserContext';
@@ -7,6 +7,8 @@ import * as Yup from "yup";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard.js";
+import BootstrapTable from 'react-bootstrap-table-next';
+
 
 
 const validationSchema = Yup.object().shape({
@@ -27,20 +29,13 @@ const validationSchema = Yup.object().shape({
 
 const columns = [
   {
-    dataField: "Name",
-    formatter: (cell, row, rowIndex, formatExtraData) => {
-      return (
-        <Link key={row.name} to={`/manage/properties/${row.id}`}>
-          {row.name}
-        </Link>
-      );
-    },
-    text: "Name",
+    dataField: "fullName",
+    text: "Tenants",
     sort: true,
   },
   {
-    dataField: "propertyName",
-    text: "Property",
+    dataField: "unit",
+    text: "Unit",
     sort: true,
   },
   {
@@ -49,6 +44,7 @@ const columns = [
     sort: true,
   },
 ];
+
 
 const Property = () => {
   const userContext = useContext(UserContext);
@@ -218,6 +214,13 @@ const Property = () => {
                 <h2 className="section-title">TENANTS</h2>
               </div>
             </div>
+            <BootstrapTable
+              keyField='id'
+              data={tenantArray}
+              columns={columns}
+              bootstrap4={true}
+              headerClasses="table-header"
+            />
           </div>
 
         )}
