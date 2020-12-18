@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import * as axios from "axios";
 import Toast from '../../utils/toast';
 import UserContext from '../../UserContext';
@@ -25,6 +25,30 @@ const validationSchema = Yup.object().shape({
     .required("*Number of units is required"),
 });
 
+const columns = [
+  {
+    dataField: "Name",
+    formatter: (cell, row, rowIndex, formatExtraData) => {
+      return (
+        <Link key={row.name} to={`/manage/properties/${row.id}`}>
+          {row.name}
+        </Link>
+      );
+    },
+    text: "Name",
+    sort: true,
+  },
+  {
+    dataField: "propertyName",
+    text: "Property",
+    sort: true,
+  },
+  {
+    dataField: "phone",
+    text: "Phone",
+    sort: true,
+  },
+];
 
 const Property = () => {
   const userContext = useContext(UserContext);

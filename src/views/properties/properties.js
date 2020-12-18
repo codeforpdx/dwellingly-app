@@ -10,10 +10,18 @@ import './properties.scss';
 
 const columns = [{
   dataField: 'name',
+  formatter: (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <Link key={row.id} to={`/manage/properties/${row.name}`}>
+        {row.name}
+      </Link>
+    );
+  },
   text: 'Name',
   sort: true,
   headerStyle: () => {
     return { width: "20%" };
+
   }
 }, {
   dataField: 'propertyManagerNames',
