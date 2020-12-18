@@ -32,7 +32,7 @@ const validationSchema = Yup.object().shape({
 const getManager = (context, managerId, storeInState) => {
   axios
     .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
-    { Authorization: `Bearer ${context.user.accessJwt}` }
+      { Authorization: `Bearer ${context.user.accessJwt}` }
     )
     .then((response) => {
       const manager = response.data;
@@ -48,7 +48,7 @@ const Manager = () => {
   const id = pathname.match(/\d/)[0];
 
   const userContext = useContext(UserContext);
-  
+
   const [managerData, setManager] = useState();
   useEffect(() => {
     getManager(userContext, id, setManager);
@@ -83,27 +83,27 @@ const Manager = () => {
     },
   ];
 
-const updateManager = (payload) => {
-  axios
-    .patch(`${process.env.REACT_APP_PROXY}/api/user/${id}`, 
-    payload, 
-    { Authorization: `Bearer ${userContext.user.accessJwt}` }
-    )
-    .then(response => {
-      setManager({
-        ...managerData,
-        firstName: response.data.firstName,
-        lastName: response.data.lastName,
-        phone: response.data.phone,
-        email: response.data.email,
-      });
-      setEditingStatus(false);
-      Toast("Save successful!");
-    })
-    .catch((error) => {
+  const updateManager = (payload) => {
+    axios
+      .patch(`${process.env.REACT_APP_PROXY}/api/user/${id}`,
+        payload,
+        { Authorization: `Bearer ${userContext.user.accessJwt}` }
+      )
+      .then(response => {
+        setManager({
+          ...managerData,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          phone: response.data.phone,
+          email: response.data.email,
+        });
+        setEditingStatus(false);
+        Toast("Save successful!");
+      })
+      .catch((error) => {
         Toast(error.message);
-    });
-};
+      });
+  };
 
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
