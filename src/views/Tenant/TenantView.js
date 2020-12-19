@@ -190,6 +190,7 @@ const Tenant = () => {
       value: `${property.address}, ${property.city}, ${property.state}, ${property.zipcode}`,
       inputType: "text",
       comp: <div />,
+      readOnly: true,
     },
     {
       key: "unit",
@@ -197,6 +198,7 @@ const Tenant = () => {
       value: property.unit,
       inputType: "text",
       comp: <div />,
+      readOnly: true,
     },
     {
       key: "lease",
@@ -206,6 +208,7 @@ const Tenant = () => {
         dateTimeEnd: property.dateTimeEnd || new Date()
       },
       inputType: "calendar",
+      readOnly: true,
     }
   ];
 
