@@ -61,7 +61,7 @@ const Tenant = () => {
   };
 
   // Handle axios errors
-  const client = axios.create();
+  const client = axios.create(makeAuthHeaders(context));
   client.interceptors.response.use(
     success => success,
     error => axiosErrorHandler(error)
@@ -92,7 +92,6 @@ const Tenant = () => {
             firstName: response.data.firstName,
             lastName: response.data.lastName,
             phone: response.data.phone,
-            email: response.data.email
           }
         });
         setSubmitting(false);
