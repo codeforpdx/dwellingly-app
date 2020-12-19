@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import './PropertyView.scss';
 
 
-
 const validationSchema = Yup.object().shape({
   propertyName: Yup.string()
     .max(255, "Must be shorter than 255 Characters")
@@ -90,8 +89,6 @@ const Property = () => {
   const onCancelClick = () => {
     setEditingStatus(false);
   };
-
-
 
   useEffect(() => {
     const getProperty = async () => {
@@ -203,9 +200,6 @@ const Property = () => {
     }
   ]
 
-
-  // const { property } = state;
-
   return (
     <div className='main-container'>
       <div>
@@ -262,20 +256,9 @@ const Property = () => {
               headerClasses="table-header"
             />
           </div>
-
         )}
-
       </div>
-
-
     </div>
-
   )
-
-
 }
-
-
-
-
 export default Property;

@@ -4,7 +4,7 @@ import './PropertyManagerCard.scss';
 
 
 function PropertyManagerCard({ manager, isEditing }) {
-  console.log(isEditing)
+
   return (
     <div className="property-manager-box box">
 
