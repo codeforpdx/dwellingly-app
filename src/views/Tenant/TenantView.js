@@ -89,10 +89,10 @@ const Tenant = () => {
         setState({
           ...state, 
           tenant: {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            phone: values.phone,
-            email: values.email
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            phone: response.data.phone,
+            email: response.data.email
           }
         });
         setSubmitting(false);
