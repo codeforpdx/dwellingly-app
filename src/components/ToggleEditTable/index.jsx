@@ -25,7 +25,7 @@ const ToggleEditTable = ({
     return initValues;
   }, {});
 
-  const { dateTimeStart, dateTimeEnd } = calendarState
+  const { dateTimeStart, dateTimeEnd } = calendarState || {};
 
   return isEditing ? (
     <Formik

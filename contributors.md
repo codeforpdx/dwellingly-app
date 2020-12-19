@@ -11,3 +11,4 @@ CodeforPDX:
 - Anthony So
 - Yahya Hafez
 - Chris Boe
+- Colin Bassett
