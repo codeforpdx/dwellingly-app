@@ -9,6 +9,8 @@ import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard.js";
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
+import ManagerSearchPanel from '../../components/ManagerSearchPanel/ManagerSearchPanel.js';
+
 
 import './PropertyView.scss';
 
@@ -59,7 +61,7 @@ const Property = () => {
   const userContext = useContext(UserContext);
 
   const { id } = useParams();
-  const propertyName = id;
+  const propertyId = id;
 
 
   const [isEditing, setEditingStatus] = useState(false);
@@ -90,11 +92,12 @@ const Property = () => {
     setEditingStatus(false);
   };
 
+
   useEffect(() => {
     const getProperty = async () => {
 
       const propertyResponse = await axios
-        .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyName}`,
+        .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
           { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
 
       const property = propertyResponse.data;
@@ -120,7 +123,7 @@ const Property = () => {
     getProperty()
       .then(property => getTenants(property));
 
-  }, []);
+  }, [propertyId, userContext.user.accessJwt]);
 
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
@@ -136,9 +139,9 @@ const Property = () => {
   };
 
   const updateProperty = (payload) => {
-    console.log(payload)
+
     axios
-      .put(`${process.env.REACT_APP_PROXY}/api/properties/${payload.name}`,
+      .put(`${process.env.REACT_APP_PROXY}/api/properties/${payload.id}`,
         payload,
         { Authorization: `Bearer ${userContext.user.accessJwt}` }
       )
@@ -159,6 +162,61 @@ const Property = () => {
         Toast(error.message);
       });
   };
+
+
+  const removePropertyManager = (id) => {
+
+    for (let manager of property.propertyManager) {
+      if (manager.id !== id) property.propertyManagerIDs.push(manager.id);
+    }
+    console.log(property)
+    axios
+      .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
+        property,
+        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
+      .then(response => {
+        setProperty({
+          ...property,
+          propertyManager: response.data.propertyManager,
+          propertyManagerName: response.data.propertyManagerName,
+        })
+        setEditingStatus(false);
+        Toast("Save successful!");
+      })
+      .catch((error) => {
+        Toast(error.message);
+      });
+  }
+
+  const addPropertyManager = (id) => {
+
+    property.propertyManagerIDs = [id];
+
+    if (property.propertyManager)
+      for (let manager of property.propertyManager) {
+        property.propertyManagerIDs.push(manager.id);
+      }
+
+    axios
+      .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
+        property,
+        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
+      .then(response => {
+        console.log(response.data)
+        setProperty({
+          ...property,
+          propertyManager: response.data.propertyManager,
+          propertyManagerName: response.data.propertyManagerName,
+        })
+        setEditingStatus(false);
+        Toast("Save successful!");
+      })
+      .catch((error) => {
+        Toast(error.message);
+      });
+  }
+
+
 
 
   const getTableData = [
@@ -231,6 +289,15 @@ const Property = () => {
             <div className="section-container">
               <h2 className="section-title">PROPERTY MANAGERS</h2>
             </div>
+            {isEditing ?
+              <ManagerSearchPanel
+                assignedPropertyManagers={property.propertyManager ?
+                  property.propertyManager.map(manager => { return manager.id })
+                  : []}
+                addPropertyManager={addPropertyManager}
+              />
+              :
+              <></>}
             <div className="property-manager-section">
               {property.propertyManager ?
                 property.propertyManager.map(manager => {
@@ -238,6 +305,7 @@ const Property = () => {
                     manager={manager}
                     key={manager.id}
                     isEditing={isEditing}
+                    removePropertyManager={removePropertyManager}
                   />
                 })
                 : <></>}

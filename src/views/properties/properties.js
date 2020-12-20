@@ -12,7 +12,7 @@ const columns = [{
   dataField: 'name',
   formatter: (cell, row, rowIndex, formatExtraData) => {
     return (
-      <Link key={row.id} to={`/manage/properties/${row.name}`}>
+      <Link key={row.id} to={`/manage/properties/${row.id}`}>
         {row.name}
       </Link>
     );
