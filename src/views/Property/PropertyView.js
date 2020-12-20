@@ -10,6 +10,7 @@ import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyMa
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
 import ManagerSearchPanel from '../../components/ManagerSearchPanel/ManagerSearchPanel.js';
+import RemoveTenantButton from './RemoveTenantButton.js';
 
 
 import './PropertyView.scss';
@@ -31,30 +32,7 @@ const validationSchema = Yup.object().shape({
     .required("*Number of units is required"),
 });
 
-const columns = [
-  {
-    dataField: "fullName",
-    formatter: (cell, row, rowIndex, formatExtraData) => {
-      return (
-        <Link key={row.fullName} to={`/manage/tenants/${row.id}`}>
-          {row.fullName}
-        </Link>
-      );
-    },
-    text: "Tenants",
-    sort: true,
-  },
-  {
-    dataField: "unit",
-    text: "Unit",
-    sort: true,
-  },
-  {
-    dataField: "phone",
-    text: "Phone",
-    sort: true,
-  },
-];
+
 
 
 const Property = () => {
@@ -113,7 +91,6 @@ const Property = () => {
       )
 
       const tenantArray = tenantResponses.map(tenantResponse => {
-
         return tenantResponse.data;
       })
 
@@ -169,7 +146,7 @@ const Property = () => {
     for (let manager of property.propertyManager) {
       if (manager.id !== id) property.propertyManagerIDs.push(manager.id);
     }
-    console.log(property)
+
     axios
       .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
         property,
@@ -202,7 +179,7 @@ const Property = () => {
         property,
         { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
       .then(response => {
-        console.log(response.data)
+
         setProperty({
           ...property,
           propertyManager: response.data.propertyManager,
@@ -215,6 +192,27 @@ const Property = () => {
         Toast(error.message);
       });
   }
+
+  const removeTenant = (id) => {
+    if (property.tenantIDs)
+      property.tenantIDs.splice(property.tenantIDs.indexOf(id), 1);
+
+    axios
+      .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
+        property,
+        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
+      .then(response => {
+
+        setProperty(response.data)
+        setEditingStatus(false);
+        Toast("Save successful!");
+      })
+      .catch((error) => {
+        Toast(error.message);
+      });
+  }
+
+
 
 
 
@@ -257,6 +255,44 @@ const Property = () => {
       inputType: "text",
     }
   ]
+
+  const columns = [
+    {
+      dataField: "fullName",
+      formatter: (cell, row, rowIndex, formatExtraData) => {
+        return (
+          <Link key={row.fullName} to={`/manage/tenants/${row.id}`}>
+            {row.fullName}
+          </Link>
+        );
+      },
+      text: "Tenants",
+      sort: true,
+    },
+    {
+      dataField: "unit",
+      text: "Unit",
+      sort: true,
+    },
+    {
+      dataField: "phone",
+      text: "Phone",
+      sort: true,
+    },
+
+  ];
+
+  const editColumn = {
+    dataField: "remove",
+    text: "Remove",
+    sort: false,
+    formatter: (cell, row, rowIndex, formatExtraData) => {
+
+      return (
+        <RemoveTenantButton tenant={row.id} removeTenant={removeTenant} isEditing={isEditing} />
+      )
+    }
+  }
 
   return (
     <div className='main-container'>
@@ -314,15 +350,24 @@ const Property = () => {
               <div className="section-container">
                 <h2 className="section-title">TENANTS</h2>
               </div>
-            </div>
-
-            <BootstrapTable
-              keyField='id'
-              data={tenantArray ? tenantArray : []}
-              columns={columns}
-              bootstrap4={true}
-              headerClasses="table-header"
-            />
+            </div>{
+              isEditing ?
+                <BootstrapTable
+                  keyField='id'
+                  data={tenantArray ? tenantArray : []}
+                  columns={[...columns, editColumn]}
+                  bootstrap4={true}
+                  headerClasses="table-header"
+                />
+                :
+                <BootstrapTable
+                  keyField='id'
+                  data={tenantArray ? tenantArray : []}
+                  columns={columns}
+                  bootstrap4={true}
+                  headerClasses="table-header"
+                />
+            }
           </div>
         )}
       </div>
