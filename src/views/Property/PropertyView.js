@@ -116,9 +116,9 @@ const Property = () => {
   };
 
   const updateProperty = (payload) => {
-
+    console.log(payload)
     axios
-      .put(`${process.env.REACT_APP_PROXY}/api/properties/${payload.id}`,
+      .put(`${process.env.REACT_APP_PROXY}/api/properties/${property.id}`,
         payload,
         { Authorization: `Bearer ${userContext.user.accessJwt}` }
       )
@@ -142,11 +142,11 @@ const Property = () => {
 
 
   const removePropertyManager = (id) => {
-
+    property.propertyManagerIDs = []
     for (let manager of property.propertyManager) {
       if (manager.id !== id) property.propertyManagerIDs.push(manager.id);
     }
-
+    console.log(property)
     axios
       .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
         property,
