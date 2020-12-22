@@ -43,7 +43,7 @@ export const AddTenant = () => {
   const [propertyErrorText, setPropertyErrorText] = useState("");
 
   const calendarState = useCalendarState();
-  const { dateTimeStart, dateTimeEnd } = calendarState;
+  const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
   useMountEffect(() => getProperties());
 
@@ -191,6 +191,7 @@ export const AddTenant = () => {
             setStaffSearchText("");
             setStaffSelections([]);
             setPropertyErrorText("");
+            resetDates();
             setIsValidationActive(false);
             setSubmitting(false);
           }}
@@ -314,7 +315,7 @@ export const AddTenant = () => {
                       Create New Property
                     </button>
                   </div>
-                  <h1 className="section-title">UNIT</h1>
+                  <h1 className="section-title">LEASE</h1>
                   <div className="form-row form-first-row">
                     <label
                       className="column is-one-fifth"
@@ -329,7 +330,7 @@ export const AddTenant = () => {
                       name="unitNum"
                       onChange={handleChange}
                       value={values.unitNum}
-                      placeholder="Unit Number"
+                      placeholder="Unit Number (Optional)"
                     />
                     {errors.unitNum ? (
                       <div className="error-message">{errors.unitNum}</div>
@@ -349,7 +350,7 @@ export const AddTenant = () => {
                       name="occupants"
                       onChange={handleChange}
                       value={values.occupants}
-                      placeholder="Total number of unit tenants"
+                      placeholder="Total number of unit tenants (Optional)"
                     />
                     {errors.occupants ? (
                       <div className="error-message">{errors.occupants}</div>
@@ -372,7 +373,7 @@ export const AddTenant = () => {
                         ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` 
                         : ""
                       }
-                      placeholder="Lease dates (Start and End)"
+                      placeholder="Lease dates (Optional)"
                     />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
                   </div>
