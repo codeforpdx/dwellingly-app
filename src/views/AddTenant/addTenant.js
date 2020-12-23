@@ -147,7 +147,7 @@ export const AddTenant = () => {
     setIsValidationActive(true);
 
     if (dateTimeStart !== dateTimeEnd) {
-      setPropertyErrorText(dateTimeStart !== dateTimeEnd && propertySelection && propertySelection.length
+      setPropertyErrorText(dateTimeStart !== dateTimeEnd && propertySelection.length
         ? "" 
         : "*Property is a required field"
       );
@@ -175,7 +175,7 @@ export const AddTenant = () => {
               ...values,
               occupants: values.occupants || null,
               unitNum: values.unitNum || null,
-              propertyID: propertySelection[0].key,
+              propertyID: propertySelection.length ? propertySelection[0].key : null,
               staffIDs: staffSelections && staffSelections.map(staff => staff.key)
             };
             if (dateTimeStart !== dateTimeEnd) {
