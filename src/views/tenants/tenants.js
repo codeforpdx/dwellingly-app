@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 const columns = [
   {
@@ -22,6 +23,21 @@ const columns = [
   {
     dataField: "propertyName",
     text: "Property",
+    sort: true,
+  },
+  {
+    dataField: `joinStaff`,
+    formatter: (cell, row, rowIndex, formatExtraData) => {
+      return (
+        row.staff.map(staff =>
+          <p>
+            <Link key={row.id} to={`/staff`}>
+              {`${staff.firstName} ${staff.lastName}`}
+            </Link>
+          </p>
+        ))
+    },
+    text: "JOIN Staff",
     sort: true,
   },
   {
@@ -80,10 +96,24 @@ export class Tenants extends Component {
 
     this.state = {
       tenants: [],
+      filteredTenants: [],
+      isFiltered: false
     };
 
     this.getTenants = this.getTenants.bind(this);
   }
+
+  setIsFilteredTenantsFalse = async () => {
+    await this.setState({ isFiltered: false });
+  };
+
+  setOutputState = async (output, isTrue) => {
+    await this.setState({
+      filteredTenants: output,
+      isFiltered: isTrue
+    });
+
+  };
 
   componentDidMount() {
     this.getTenants(this.context);
@@ -117,17 +147,24 @@ export class Tenants extends Component {
                   <Link className="button is-primary is-rounded ml-4" to="/add/tenant">+ ADD NEW</Link>
                 </div>
                 <div className="search-section">
-                  <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
+                  <Search
+                    input={this.state.tenants}
+                    outputLocation={this.state.filteredTenants}
+                    isFilteredLocation={this.state.isFiltered}
+                    setIsFilteredStateFalse={this.setIsFilteredTenantsFalse}
+                    setOutputState={this.setOutputState}
+                    placeholderMessage="Search tenants by name, property, or JOIN staff" />
                 </div>
                 <div className="properties-list">
                   <BootstrapTable
                     keyField='id'
-                    data={this.state.tenants}
+                    data={this.state.isFiltered === true ? this.state.filteredTenants : this.state.tenants}
                     columns={columns}
                     selectRow={selectRow}
                     bootstrap4={true}
                     headerClasses="table-header"
                     classes="table-responsive"
+                    defaultSortDirection="asc"
                   />
                 </div>
               </div>
