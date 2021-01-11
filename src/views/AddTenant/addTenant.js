@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     .min(7, "*Phone Number must have at least 7 characters")
     .max(20, "*Phone Number can't be longer than 20 characters")
     .required("*Phone Number is required"),
-  unitNum: Yup.number(),
+  unitNum: Yup.string(),
   occupants: Yup.number(),
 });
 
@@ -39,11 +39,15 @@ export const AddTenant = () => {
   const [propertyOptions, setPropertyOptions] = useState([]);
   const [propertySearchResults, setPropertySearchResults] = useState([]);
   const [showAddProperty, setShowAddProperty] = useState(false);
+  const [isValidationActive, setIsValidationActive] = useState(false);
+  const [propertyErrorText, setPropertyErrorText] = useState("");
 
   const calendarState = useCalendarState();
-  const { dateTimeStart, dateTimeEnd, } = calendarState;
+  const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
   useMountEffect(() => getProperties());
+
+  useEffect(() => validateForm(), [propertySelection, dateTimeStart, dateTimeEnd]);
 
   useEffect(() => {
     axios.post("/api/users/role", {
@@ -88,13 +92,8 @@ export const AddTenant = () => {
   };
 
   const handleFormSubmit = (data) => {
-    let body = {
-      ...data,
-      propertyID: propertySelection[0].key,
-      staffIDs: staffSelections && staffSelections.map(staff => staff.key)
-    };
     axios
-      .post(`/api/tenants`, body, makeAuthHeaders(context))
+      .post(`/api/tenants`, data, makeAuthHeaders(context))
       .then((response) => {
         Toast("Tenant Created Successfully!", "success");
       })
@@ -144,6 +143,17 @@ export const AddTenant = () => {
     setStaffSelections(selectedChoices);
   };
 
+  const validateForm = (values) => {
+    setIsValidationActive(true);
+
+    if (dateTimeStart !== dateTimeEnd) {
+      setPropertyErrorText(dateTimeStart !== dateTimeEnd && propertySelection.length
+        ? "" 
+        : "*Property is a required field"
+      );
+    }
+  };    
+
   return (
     <div className='main-container'>
       <div>
@@ -158,16 +168,31 @@ export const AddTenant = () => {
             occupants: "",
           }}
           validationSchema={validationSchema}
+          validate={validateForm}
           validateOnBlur={false}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting, resetForm }) => {
             const toSubmit = {
               ...values,
-              dateTimeStart,
-              dateTimeEnd,
+              occupants: values.occupants || null,
+              unitNum: values.unitNum || null,
+              propertyID: propertySelection.length ? propertySelection[0].key : null,
+              staffIDs: staffSelections && staffSelections.map(staff => staff.key)
             };
+            if (dateTimeStart !== dateTimeEnd) {
+              toSubmit.dateTimeStart = dateTimeStart;
+              toSubmit.dateTimeEnd = dateTimeEnd;
+            }
 
             setSubmitting(true);
             handleFormSubmit(toSubmit);
+            resetForm();
+            setPropertySearchText("");
+            setPropertySelection([]);
+            setStaffSearchText("");
+            setStaffSelections([]);
+            setPropertyErrorText("");
+            resetDates();
+            setIsValidationActive(false);
             setSubmitting(false);
           }}
         >
@@ -275,18 +300,22 @@ export const AddTenant = () => {
                       onSelectionChange={setPropertySelection}
                       onChange={handlePropertySearch}
                       onClear={handlePropertySearch}
+                      preSelectedChoices={propertySelection}
                       shadow
                     />
+                    {isValidationActive && propertyErrorText ? (
+                      <div className="error-message">{propertyErrorText}</div>
+                    ) : null}
                     <button
                       className="add-property-button"
                       onClick={() => setShowAddProperty(!showAddProperty)}
                       type="button"
                     >
                       <i className="fas fa-plus-circle icon-inline-space"></i>
-                  Create New Property
-                </button>
+                      Create New Property
+                    </button>
                   </div>
-                  <h1 className="section-title">UNIT</h1>
+                  <h1 className="section-title">LEASE</h1>
                   <div className="form-row form-first-row">
                     <label
                       className="column is-one-fifth"
@@ -294,7 +323,7 @@ export const AddTenant = () => {
                       htmlFor="number"
                     >
                       Number
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
@@ -303,8 +332,8 @@ export const AddTenant = () => {
                       value={values.unitNum}
                       placeholder="Unit Number (Optional)"
                     />
-                    {errors.number ? (
-                      <div className="error-message">{errors.number}</div>
+                    {errors.unitNum ? (
+                      <div className="error-message">{errors.unitNum}</div>
                     ) : null}
                   </div>
                   <div className="form-row">
@@ -321,7 +350,7 @@ export const AddTenant = () => {
                       name="occupants"
                       onChange={handleChange}
                       value={values.occupants}
-                      placeholder="Total number of unit tenants"
+                      placeholder="Total number of unit tenants (Optional)"
                     />
                     {errors.occupants ? (
                       <div className="error-message">{errors.occupants}</div>
@@ -339,15 +368,14 @@ export const AddTenant = () => {
                       className="column form-field"
                       type="text"
                       name="lease"
-                      onChange={null}
-                      value={dateTimeEnd !== dateTimeStart ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` : ""}
-
-                      placeholder="Lease dates (Start and End)"
+                      onChange={validateForm}
+                      value={dateTimeEnd !== dateTimeStart 
+                        ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` 
+                        : ""
+                      }
+                      placeholder="Lease dates (Optional)"
                     />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
-                    {errors.lease ? (
-                      <div className="error-message">{errors.lease}</div>
-                    ) : null}
                   </div>
                   <div className="button-container">
                     <Button
