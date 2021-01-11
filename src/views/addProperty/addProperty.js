@@ -209,6 +209,9 @@ export class AddProperty extends Component {
                             <SearchPanel
                               chips
                               choices={this.state.managerSelection}
+                              small
+                              width={400}
+                              shadow
                               onChange={this.handleSearchChange}
                               onSelectionChange={this.handleSelectionChange}
                               placeholder='Search Property Managers'
@@ -219,11 +222,27 @@ export class AddProperty extends Component {
                           </div>
                         </div>
                         <div className='container-footer mt-3'>
-                          <button
-                            className='button is-primary is-rounded mr-5'
-                            type='submit'
-                            disabled={isSubmitting}>SAVE</button>
-                          <Link className='button is-dark is-rounded' to='/manage/properties'>CANCEL</Link>
+                        <button
+                          className='button is-primary is-rounded mr-5'
+                          type='submit'
+                          disabled={isSubmitting}>
+                          SAVE
+                        </button>
+                        {typeof(this.props.handleCancel) === 'function'
+                          ? <button
+                              className='button is-dark is-rounded'
+                              onClick={() => this.props.handleCancel()}
+                              type='button'
+                              >
+                              CANCEL
+                            </button>
+                          : <Link
+                            className='button is-dark is-rounded'
+                            to='/manage/properties'
+                          >
+                            CANCEL
+                          </Link>
+                        }
                         </div>
                       </Form>
 
