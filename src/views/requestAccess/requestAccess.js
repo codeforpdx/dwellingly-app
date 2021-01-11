@@ -68,9 +68,9 @@ export const RequestAccess = (props) => {
         setRoleObject(data);
         // Get Role names
         let roleArray = Object.keys(data);
-        // Removes "Pending" and "Tenant" role
-        roleArray.shift();
-        roleArray.shift();
+        // Remove "Pending" role and replace _'s with spaces where existing
+        roleArray = roleArray.filter( role => role !== "PENDING" )
+          .map( role => role.replace('_', ' '));
         // Get array of roles to map to selection options
         setSelectionOptions(roleArray);
       })
@@ -112,7 +112,7 @@ export const RequestAccess = (props) => {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      propertyID: propertySelection[0].key
+      propertyIDs: propertySelection.map(p => p.key)
     }, makeAuthHeaders(userContext))
       .then((response) => {
         Toast("User access granted!", "success");
@@ -165,7 +165,7 @@ export const RequestAccess = (props) => {
       <hr className="line" ></hr>
       <div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
       <RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler} />
-      <h1 className="section-title">PROPERTY</h1>
+      <h1 className="section-title">PROPERTIES</h1>
       <div className="typeahead-section">
         <SearchPanel
           chips
@@ -173,7 +173,7 @@ export const RequestAccess = (props) => {
           placeholder="Search Properties"
           small
           width={400}
-          variant={SearchPanelVariant.radio}
+          variant={SearchPanelVariant.checkbox}
           choices={propertySearchResults}
           value={propertySearchText}
           onSelectionChange={setPropertySelection}
