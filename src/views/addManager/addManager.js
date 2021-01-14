@@ -90,7 +90,7 @@ export const AddManager = () => {
           .put(`/api/properties/${i}`, {propertyManagerIDs: managers})  })
       })
       .then(() => {
-        Toast("Property Manager Created Successfully!", "success");
+        Toast(`Property Manager Created Successfully, an invite email has been sent.`, "success");
       })
       .catch((error) => {
         Toast(error.message, "error");
