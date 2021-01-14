@@ -30,14 +30,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const getManager = (context, managerId, storeInState) => {
-  console.log(managerId)
   axios
     .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
       { Authorization: `Bearer ${context.user.accessJwt}` }
     )
     .then((response) => {
       const manager = response.data;
-      console.log(manager)
       storeInState(manager);
     })
     .catch(error => {
@@ -48,12 +46,11 @@ const getManager = (context, managerId, storeInState) => {
 const Manager = () => {
   const { pathname } = useLocation();
   const id = pathname.match(/\d+/)[0];
-  
+
   const userContext = useContext(UserContext);
 
   const [managerData, setManager] = useState();
   useEffect(() => {
-      console.log(id)
     getManager(userContext, id, setManager);
   }, []);
 
