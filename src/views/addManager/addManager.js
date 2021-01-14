@@ -73,12 +73,23 @@ export const AddManager = () => {
       ...data,
       password: 'changeAt1stLogin!',
       confirmPassword: 'changeAt1stLogin!',
-      // role: RoleEnum.PROPERTY_MANAGER,
-      // propertyIDs: propertySelection.map(p => p.key),
+      role: "PROPERTY_MANAGER",
     };
+    
+    let properties = {
+      propertyIDs: propertySelection.map(p => p.key)
+    }
 
     axios
-      .post(`/api/register`, body, makeAuthHeaders(context))
+      .post(`/api/user/add`, body, makeAuthHeaders(context))
+      .then(response => {
+        const managers = [] //backend is expecting an array to resolve assignment
+        managers.push(response.data.id)
+        console.log(managers)
+        properties.propertyIDs.forEach(i => { 
+          axios
+          .put(`/api/properties/${i}`, {propertyManagerIDs: managers})  })
+      })
       .then(() => {
         Toast("Property Manager Created Successfully!", "success");
       })
