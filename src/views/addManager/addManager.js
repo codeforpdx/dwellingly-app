@@ -65,6 +65,9 @@ export const AddManager = () => {
         setPropertyOptions(properties);
         setPropertySearchResults(properties);
         setShowAddProperty(false);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
       });
   };
 
@@ -73,7 +76,7 @@ export const AddManager = () => {
       ...data,
       password: 'changeAt1stLogin!',
       confirmPassword: 'changeAt1stLogin!',
-      role: "PROPERTY_MANAGER",
+      role: RoleEnum.PROPERTY_MANAGER,
     };
     
     let properties = {

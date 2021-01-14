@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as axios from "axios";
 import UserContext from '../../UserContext';
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
@@ -44,8 +44,7 @@ const getManager = (context, managerId, storeInState) => {
 };
 
 const Manager = () => {
-  const { pathname } = useLocation();
-  const id = pathname.match(/\d+/)[0];
+  const { id } = useParams();
 
   const userContext = useContext(UserContext);
 
