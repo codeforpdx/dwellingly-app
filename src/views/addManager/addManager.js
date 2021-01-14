@@ -81,7 +81,7 @@ export const AddManager = () => {
     }
 
     axios
-      .post(`/api/user/add`, body, makeAuthHeaders(context))
+      .post(`/api/user/invite`, body, makeAuthHeaders(context))
       .then(response => {
         const managers = [] //backend is expecting an array to resolve assignment
         managers.push(response.data.id)
