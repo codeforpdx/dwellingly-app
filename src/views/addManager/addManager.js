@@ -85,7 +85,6 @@ export const AddManager = () => {
       .then(response => {
         const managers = [] //backend is expecting an array to resolve assignment
         managers.push(response.data.id)
-        console.log(managers)
         properties.propertyIDs.forEach(i => { 
           axios
           .put(`/api/properties/${i}`, {propertyManagerIDs: managers})  })
