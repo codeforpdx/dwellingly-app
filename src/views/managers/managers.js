@@ -112,6 +112,7 @@ const getManagers = (header, storeInState) => {
     )
     .then((response) => {
       const convertedData = convertManagersDataForTable(response.data.users);
+      console.log(convertedData)
       storeInState(convertedData);
     })
     .catch((error) => {
