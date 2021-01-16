@@ -27,7 +27,7 @@ const validationSchema = Yup.object().shape({
   state: Yup.string()
     .max(50, `*State can't be longer than 50 characters`)
     .required(`*State is required`),
-  units: Yup.string()
+  num_units: Yup.string()
     .max(50, `*Unit can't be longer than 50 characters`),
   managers: Yup.array()
 });
@@ -112,7 +112,7 @@ export class AddProperty extends Component {
                     city: '',
                     state: '',
                     zipcode: '',
-                    units: ''
+                    num_units: ''
                   }}
                   validationSchema={validationSchema}
                   onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -194,13 +194,13 @@ export class AddProperty extends Component {
                           <Field
                             className='column form-field'
                             type='text'
-                            name='units'
+                            name='num_units'
                             onChange={handleChange}
-                            value={values.units}
+                            value={values.num_units}
                             placeholder='Number of units'
-                            error={errors.units}
+                            error={errors.num_units}
                           />
-                          {errors.units ? (<div className='error-message'>{errors.units}</div>) : null}
+                          {errors.num_units ? (<div className='error-message'>{errors.num_units}</div>) : null}
                         </div>
 
                         <div className=' add-property__assign-manager-container'>
