@@ -168,9 +168,9 @@ const Tenant = () => {
       comp: <div />,
     },
     {
-      key: "unit",
-      label: "Unit",
-      value: property.unit,
+      key: "num_units",
+      label: "Total Units",
+      value: property.num_units,
       inputType: "text",
       comp: <div />,
     },
