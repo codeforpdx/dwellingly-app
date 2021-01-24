@@ -197,7 +197,7 @@ const Tenant = () => {
     },
     {
       key: "unitNum",
-      label: "Total Units",
+      label: "Unit",
       value: tenant.lease && tenant.lease.unitNum,
       inputType: "text",
       comp: <div />,
