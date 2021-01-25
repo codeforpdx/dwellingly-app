@@ -15,7 +15,7 @@ const columns = [
     dataField: "fullName",
     formatter: (cell, row) => {
       return (
-        <Link key={row.id} to={`/manage/manager/${row.id}`}>
+        <Link key={row.id} to={`/manage/managers/${row.id}`}>
           {row.fullName}
         </Link>
       );

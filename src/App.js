@@ -2,7 +2,7 @@ import React from "react";
 import 'react-toastify/dist/ReactToastify.min.css';
 import "./App.scss";
 import axios from 'axios';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { LoginForm } from "./views/login/login";
 import SignupForm from "./views/signup/signup";
 import { NavMenu } from "./views/NavigationMenu/navigationMenu.js";
@@ -203,9 +203,9 @@ export class App extends React.Component {
               <Route exact path='/terms' component={Terms} />
               <Route exact path='/privacypolicy' component={PrivacyPolicy} />
               <Route exact path='/forgot-password' component={ForgotPassword} />
-              <PrivateRoute exact path='/' component={Dashboard} />
+              <PrivateRoute exact path='/' component={() => <Redirect to="/dashboard" />} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute exact path='/home' component={Dashboard} />
+              <PrivateRoute exact path='/home' component={() => <Redirect to="/dashboard" />} />
               <PrivateRoute exact path='/add/tenant' component={AddTenant} />
               <PrivateRoute exact path='/add/property' component={AddProperty} />
               <PrivateRoute exact path='/add/manager' component={AddManager} />
@@ -215,7 +215,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
               <PrivateRoute exact path='/manage/properties' component={Properties} />
               <PrivateRoute exact path='/manage/managers' component={Managers} />
-              <PrivateRoute exact path='/manage/manager/:id' component={Manager} />
+              <PrivateRoute exact path='/manage/managers/:id' component={Manager} />
               <PrivateRoute exact path='/tickets' component={Tickets} />
               <PrivateRoute exact path='/reports' component={Dashboard} />
               <PrivateRoute exact path='/staff' component={JoinStaff} />
