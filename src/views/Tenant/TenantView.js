@@ -8,6 +8,7 @@ import ToggleEditTable from "../../components/ToggleEditTable";
 import RoleEnum from '../../Enums/RoleEnum.js';
 import Toast from '../../utils/toast';
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
+import Modal from '../../components/Modal';
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -44,6 +45,7 @@ const Tenant = () => {
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
+  const [showArchiveModal, setShowArchiveModal] = useState(false);
 
   const calendarState = useCalendarState(state.property?.dateTimeStart, state.property?.dateTimeEnd)
   const { dateTimeStart, dateTimeEnd } = calendarState
@@ -255,6 +257,24 @@ const Tenant = () => {
     setStaffSelections(selectedChoices);
   };
 
+  const toggleArchiveModal = () => {
+    setShowArchiveModal(!showArchiveModal);
+  };
+
+  const archiveTenant = () => {
+    axios
+      .delete(`/api/tenants/` + id, {}, makeAuthHeaders(context))
+      .then((response) => {
+        Toast("Tenant Archived Successfully!", "success");
+        setShowArchiveModal(false);
+        setEditingStatus(false);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error);
+      });
+  }
+
   return (
     <div className='main-container'>
       <div>
@@ -266,6 +286,15 @@ const Tenant = () => {
                 {" "}
                 {tenant.lastName}
               </h2>
+              {isEditing &&
+                <button
+                  className="button is-primary is-rounded"
+                  onClick={toggleArchiveModal}
+                  style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                  <i className="fas fa-archive icon-inline-space"></i>
+                  ARCHIVE
+                </button>
+              }
               <button
                 className={`rounded${isEditing ? "--is-editing" : ""}`}
                 onClick={handleEditToggle}
@@ -321,6 +350,21 @@ const Tenant = () => {
           </div>
         )}
       </div>
+      {showArchiveModal && 
+        <Modal
+          content={
+            <div>
+              <p>Are you sure you want to archive {tenant.firstName} {tenant.lastName}?</p>
+            </div>
+          }
+          hasButtons={true}
+          hasRedirectButton={false}
+          confirmButtonHandler={archiveTenant}
+          confirmText="Yes"
+          cancelButtonHandler={toggleArchiveModal}
+          cancelText="No"
+          closeHandler={toggleArchiveModal}
+        />}
     </div>
   );
 };
