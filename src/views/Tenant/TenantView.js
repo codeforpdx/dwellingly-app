@@ -196,9 +196,9 @@ const Tenant = () => {
       readOnly: true,
     },
     {
-      key: "unit",
+      key: "unitNum",
       label: "Unit",
-      value: property.unit,
+      value: tenant.lease && tenant.lease.unitNum,
       inputType: "text",
       comp: <div />,
       readOnly: true,
