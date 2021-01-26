@@ -33,7 +33,7 @@ export const AddTenant = () => {
   const context = useContext(UserContext);
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
-  const [staffSelections, setStaffSelections] = useState(null);
+  const [staffSelections, setStaffSelections] = useState([]);
   const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
