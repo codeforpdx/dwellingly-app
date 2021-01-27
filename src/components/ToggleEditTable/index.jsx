@@ -25,7 +25,7 @@ const ToggleEditTable = ({
     return initValues;
   }, {});
 
-  const { dateTimeStart, dateTimeEnd } = calendarState
+  const { dateTimeStart, dateTimeEnd } = calendarState || {};
 
   return isEditing ? (
     <Formik
@@ -45,6 +45,7 @@ const ToggleEditTable = ({
           <Form onSubmit={handleSubmit}>
             {Object.keys(values).map((value, index) => {
               const isCalendar = tableData[index].inputType === "calendar"
+              const readOnly = tableData[index].readOnly === true
 
               return (<div className="form__row--editing columns" key={value}>
                 <label
@@ -56,7 +57,7 @@ const ToggleEditTable = ({
                 <Field
                   type={tableData[index].inputType}
                   name={value}
-                  onChange={isCalendar ? null : handleChange}
+                  onChange={(isCalendar || readOnly) ? null : handleChange}
                   onBlur={handleBlur}
                   value={
                     isCalendar

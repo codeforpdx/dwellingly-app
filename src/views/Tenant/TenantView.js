@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
+import UserContext from "../../UserContext";
 import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
@@ -25,9 +26,12 @@ const validationSchema = Yup.object().shape({
     .required("*a valid phone number is required"),
 });
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
+
 const Tenant = () => {
   // Get input tenant id
   const { id } = useParams();
+  const context = useContext(UserContext);
 
   const initialState = {
     tenant: null,
@@ -57,7 +61,7 @@ const Tenant = () => {
   };
 
   // Handle axios errors
-  const client = axios.create();
+  const client = axios.create(makeAuthHeaders(context));
   client.interceptors.response.use(
     success => success,
     error => axiosErrorHandler(error)
@@ -67,21 +71,44 @@ const Tenant = () => {
    * Handle activating edit form
    */
   const handleEditToggle = () => setEditingStatus(!isEditing);
+
+
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
-    setState({
-      ...state,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      phone: values.phone,
-      email: values.email,
-      dateTimeStart,
-      dateTimeEnd
-    });
-    setTimeout(() => {
+
+    if (_nothingHasChanged(values, state.tenant)) {
       setSubmitting(false);
       setEditingStatus(false);
-    }, 500);
+      return;
+    }
+
+    axios
+      .put(`/api/tenants/` + id, values, makeAuthHeaders(context))
+      .then((response) => {
+        Toast("Tenant Updated Successfully!", "success");
+        setState({
+          ...state, 
+          tenant: {
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            phone: response.data.phone,
+          }
+        });
+        setSubmitting(false);
+        setEditingStatus(false);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error);
+      });
+  };
+
+  const _nothingHasChanged = (newValues, oldValues) => {
+    return (
+      newValues.firstName === oldValues.firstName &&
+      newValues.lastName === oldValues.lastName &&
+      newValues.phone === oldValues.phone
+    );
   };
 
   /**
@@ -113,9 +140,12 @@ const Tenant = () => {
   const getTenant = async () => {
     const tenantResponse = await client.get(`/api/tenants/${id}`);
     const tenant = tenantResponse.data;
-    const propertyUrl = `/api/properties/${tenant.propertyName}`;
-    const propertyResponse = await client.get(propertyUrl);
-    const property = propertyResponse.data;
+    let property;
+    if( tenant.lease ) {
+      const propertyUrl = `/api/properties/${tenant.lease.propertyID}`;
+      const propertyResponse = await client.get(propertyUrl);
+      property = propertyResponse.data;
+    }
     const ticketsResponse = await client.get(`/api/tickets?tenant=${tenant.id}`);
     const tickets = ticketsResponse.data;
     setState({ tenant, property, tickets });
@@ -163,13 +193,15 @@ const Tenant = () => {
       value: `${property.address}, ${property.city}, ${property.state}, ${property.zipcode}`,
       inputType: "text",
       comp: <div />,
+      readOnly: true,
     },
     {
-      key: "unit",
+      key: "unitNum",
       label: "Unit",
-      value: property.unit,
+      value: tenant.lease && tenant.lease.unitNum,
       inputType: "text",
       comp: <div />,
+      readOnly: true,
     },
     {
       key: "lease",
@@ -179,6 +211,7 @@ const Tenant = () => {
         dateTimeEnd: property.dateTimeEnd || new Date()
       },
       inputType: "calendar",
+      readOnly: true,
     }
   ];
 

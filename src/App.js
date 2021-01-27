@@ -33,6 +33,7 @@ import Manager from "./views/Manager";
 import { JoinStaff } from "./views/joinStaff/joinStaff";
 import { AddStaffMember } from "./views/addStaffMember/addStaffMember";
 import { AddTenant } from "./views/AddTenant/addTenant";
+import { AddManager } from './views/addManager/addManager';
 import UserContext from "./UserContext";
 import Tenant from "./views/Tenant";
 import ChangePassword from "./views/Settings/changePassword";
@@ -208,7 +209,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/home' component={Dashboard} />
               <PrivateRoute exact path='/add/tenant' component={AddTenant} />
               <PrivateRoute exact path='/add/property' component={AddProperty} />
-              <PrivateRoute exact path='/add/manager' component={Dashboard} />
+              <PrivateRoute exact path='/add/manager' component={AddManager} />
               <PrivateRoute exact path='/manage/tenants' component={Tenants} />
               <PrivateRoute exact path='/manage/tenants/:id' component={Tenant} />
               <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
