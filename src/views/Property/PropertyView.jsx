@@ -6,14 +6,15 @@ import UserContext from '../../UserContext';
 import * as Yup from "yup";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
-import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard.js";
+import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard.jsx";
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
-import ManagerSearchPanel from '../../components/ManagerSearchPanel/ManagerSearchPanel.js';
-import RemoveTenantButton from './RemoveTenantButton.js';
-
+import ManagerSearchPanel from '../../components/ManagerSearchPanel/ManagerSearchPanel.jsx';
+import RemoveTenantButton from './RemoveTenantButton.jsx';
+import Modal from '../../components/Modal/index.jsx';
 
 import './PropertyView.scss';
+
 
 
 const validationSchema = Yup.object().shape({
@@ -45,6 +46,8 @@ const Property = () => {
   const [isEditing, setEditingStatus] = useState(false);
   const [property, setProperty] = useState('');
   const [tenantArray, setTenants] = useState('');
+  const [confirmChange, setConfirmChange] = useState(false);
+  const [inputValues, setInputValues] = useState()
   const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
 
@@ -67,34 +70,25 @@ const Property = () => {
   const handleEditToggle = () => setEditingStatus(!isEditing);
 
   const onCancelClick = () => {
+    setConfirmChange(false)
     setEditingStatus(false);
+    getProperty()
   };
 
 
   useEffect(() => {
-    const getProperty = async () => {
-
-      const propertyResponse = await axios
-        .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
-          { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
-
-      const property = propertyResponse.data;
-
-      setProperty(property)
-      return property;
-    }
-
     const getTenants = async (property) => {
+      if (property.lease) {
+        const tenantResponses = await Promise.all(property.lease.map(lease => axios.get(`${process.env.REACT_APP_PROXY}/api/tenants/${lease.tenantID}`,
+          { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } }))
+        )
 
-      const tenantResponses = await Promise.all(property.tenantIDs.map(tenantID => axios.get(`${process.env.REACT_APP_PROXY}/api/tenants/${tenantID}`,
-        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } }))
-      )
+        const tenantArray = tenantResponses.map(tenantResponse => {
+          return tenantResponse.data;
+        })
 
-      const tenantArray = tenantResponses.map(tenantResponse => {
-        return tenantResponse.data;
-      })
-
-      setTenants(tenantArray);
+        setTenants(tenantArray);
+      }
     }
 
     getProperty()
@@ -102,21 +96,45 @@ const Property = () => {
 
   }, [propertyId, userContext.user.accessJwt]);
 
+  const getProperty = async () => {
+
+    const propertyResponse = await axios
+      .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
+        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
+
+    const property = propertyResponse.data;
+
+    setProperty(property)
+    setInputValues(property)
+    return property;
+  }
+
+  const handleConfirmButton = async () => {
+
+    await updateProperty(inputValues);
+    getProperty();
+    setConfirmChange(false);
+  }
+
   const onFormikSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true);
+
     const newValues = {
       name: values.propertyName,
       address: values.propertyAddress,
       city: values.propertyCity,
       state: values.propertyState,
       zipcode: values.propertyZipcode,
-      unit: values.propertyUnits,
+      num_units: values.propertyUnits,
     };
-    updateProperty(newValues);
+    setSubmitting(true);
+    setInputValues({ ...inputValues, ...newValues })
+
+    setConfirmChange(true);
+
   };
 
   const updateProperty = (payload) => {
-    console.log(payload)
+
     axios
       .put(`${process.env.REACT_APP_PROXY}/api/properties/${property.id}`,
         payload,
@@ -130,7 +148,8 @@ const Property = () => {
           city: response.data.city,
           state: response.data.state,
           zipcode: response.data.zipcode,
-          unit: response.data.unit,
+          num_units: response.data.num_units,
+          propertyManager: response.data.propertyManager
         });
         setEditingStatus(false);
         Toast("Save successful!");
@@ -142,31 +161,22 @@ const Property = () => {
 
 
   const removePropertyManager = (id) => {
-    property.propertyManagerIDs = []
+    let propertyManagerIDs = []
+    let propertyManager = []
+
     for (let manager of property.propertyManager) {
-      if (manager.id !== id) property.propertyManagerIDs.push(manager.id);
+      if (manager.id !== id) {
+        propertyManagerIDs.push(manager.id)
+      }
+      else {
+        propertyManager = property.propertyManager.filter(manager => manager.id !== id)
+      }
     }
-    console.log(property)
-    axios
-      .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
-        property,
-        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
-      .then(response => {
-        setProperty({
-          ...property,
-          propertyManager: response.data.propertyManager,
-          propertyManagerName: response.data.propertyManagerName,
-        })
-        setEditingStatus(false);
-        Toast("Save successful!");
-      })
-      .catch((error) => {
-        Toast(error.message);
-      });
+    setProperty({ ...property, propertyManager })
+    setInputValues({ ...property, propertyManager, propertyManagerIDs })
   }
 
   const addPropertyManager = (id) => {
-
     property.propertyManagerIDs = [id];
 
     if (property.propertyManager)
@@ -179,7 +189,6 @@ const Property = () => {
         property,
         { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
       .then(response => {
-
         setProperty({
           ...property,
           propertyManager: response.data.propertyManager,
@@ -194,27 +203,25 @@ const Property = () => {
   }
 
   const removeTenant = (id) => {
-    if (property.tenantIDs)
-      property.tenantIDs.splice(property.tenantIDs.indexOf(id), 1);
+    // if (property.lease) {
+    //   const tenantToDelete = tenantArray.find(tenant => tenant.id === id);
 
-    axios
-      .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
-        property,
-        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
-      .then(response => {
+    //   const leaseId = tenantToDelete.lease.id;
 
-        setProperty(response.data)
-        setEditingStatus(false);
-        Toast("Save successful!");
-      })
-      .catch((error) => {
-        Toast(error.message);
-      });
+    //   axios
+    //     .delete(`${process.env.REACT_APP_PROXY}/api/lease/${leaseId}`,
+    //       property,
+    //       { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
+    //     .then(() => {
+    //       setEditingStatus(false);
+    //       Toast("Tenant removed");
+    //     })
+    //     .catch((error) => {
+    //       Toast(error.message);
+    //     });
+    // }
+    getProperty()
   }
-
-
-
-
 
 
   const getTableData = [
@@ -251,7 +258,7 @@ const Property = () => {
     {
       key: "propertyUnits",
       label: "Units",
-      value: property.unit,
+      value: property.num_units,
       inputType: "text",
     }
   ]
@@ -270,7 +277,7 @@ const Property = () => {
       sort: true,
     },
     {
-      dataField: "unit",
+      dataField: "lease.unitNum",
       text: "Unit",
       sort: true,
     },
@@ -287,7 +294,6 @@ const Property = () => {
     text: "Remove",
     sort: false,
     formatter: (cell, row, rowIndex, formatExtraData) => {
-
       return (
         <RemoveTenantButton tenant={row.id} removeTenant={removeTenant} isEditing={isEditing} />
       )
@@ -370,6 +376,22 @@ const Property = () => {
             }
           </div>
         )}
+        {confirmChange &&
+          <Modal
+            content={<p>Are you sure you want to save these changes?</p>}
+            hasButtons={true}
+            confirmButtonHandler={handleConfirmButton}
+            closeHandler={() => {
+              setConfirmChange(false)
+              getProperty()
+            }}
+            cancelButtonHandler={() => {
+              onCancelClick()
+            }}
+            confirmText={"YES"}
+            cancelText={"NO"}
+          />
+        }
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import './PropertyManagerCard.scss';
-import '../../components/ManagerSearchPanel/ManagerSearchPanel.js';
+import '../ManagerSearchPanel/ManagerSearchPanel.jsx';
 import Icon from '../icon/Icon';
 
 
