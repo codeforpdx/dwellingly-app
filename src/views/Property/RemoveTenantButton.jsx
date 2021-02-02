@@ -18,4 +18,4 @@ function RemoveTenantButton({ tenant, removeTenant, isEditing }) {
   )
 }
 
-export default RemoveTenantButton;
+export default RemoveTenantButton; 
