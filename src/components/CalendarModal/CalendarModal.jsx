@@ -79,6 +79,10 @@ const today = new Date()
 export function useCalendarState(startDateInit = today, endDateInit = today) {
   const [dateTimeStart, setStart] = useState(startDateInit)
   const [dateTimeEnd, setEnd] = useState(endDateInit)
+  const resetDates = () => {
+    setStart(startDateInit);
+    setEnd(startDateInit);
+  };
 
-  return { dateTimeStart, dateTimeEnd, setStart, setEnd }
+  return { dateTimeStart, dateTimeEnd, setStart, setEnd, resetDates }
 }
