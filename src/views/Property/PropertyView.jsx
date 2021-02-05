@@ -15,7 +15,7 @@ import Modal from '../../components/Modal/index.jsx';
 
 import './PropertyView.scss';
 
-
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const validationSchema = Yup.object().shape({
   propertyName: Yup.string()
@@ -79,8 +79,8 @@ const Property = () => {
   useEffect(() => {
     const getTenants = async (property) => {
       if (property.lease) {
-        const tenantResponses = await Promise.all(property.lease.map(lease => axios.get(`${process.env.REACT_APP_PROXY}/api/tenants/${lease.tenantID}`,
-          { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } }))
+        const tenantResponses = await Promise.all(property.lease.map(lease =>
+          axios.get(`${process.env.REACT_APP_PROXY}/api/tenants/${lease.tenantID}`, makeAuthHeaders(userContext)))
         )
 
         const tenantArray = tenantResponses.map(tenantResponse => {
@@ -99,8 +99,7 @@ const Property = () => {
   const getProperty = async () => {
 
     const propertyResponse = await axios
-      .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
-        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } });
+      .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`, makeAuthHeaders(userContext));
 
     const property = propertyResponse.data;
 
@@ -138,7 +137,7 @@ const Property = () => {
     axios
       .put(`${process.env.REACT_APP_PROXY}/api/properties/${property.id}`,
         payload,
-        { Authorization: `Bearer ${userContext.user.accessJwt}` }
+        makeAuthHeaders(userContext)
       )
       .then(response => {
         setProperty({
@@ -187,7 +186,7 @@ const Property = () => {
     axios
       .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
         property,
-        { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
+        makeAuthHeaders(userContext))
       .then(response => {
         setProperty({
           ...property,
@@ -203,23 +202,7 @@ const Property = () => {
   }
 
   const removeTenant = (id) => {
-    // if (property.lease) {
-    //   const tenantToDelete = tenantArray.find(tenant => tenant.id === id);
 
-    //   const leaseId = tenantToDelete.lease.id;
-
-    //   axios
-    //     .delete(`${process.env.REACT_APP_PROXY}/api/lease/${leaseId}`,
-    //       property,
-    //       { headers: { Authorization: `Bearer ${userContext.user.accessJwt}` } })
-    //     .then(() => {
-    //       setEditingStatus(false);
-    //       Toast("Tenant removed");
-    //     })
-    //     .catch((error) => {
-    //       Toast(error.message);
-    //     });
-    // }
     getProperty()
   }
 

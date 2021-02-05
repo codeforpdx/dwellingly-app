@@ -3,7 +3,7 @@ import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
 import UserContext from '../../UserContext';
 import * as axios from 'axios';
 import RoleEnum from '../../Enums/RoleEnum';
-
+import Toast from '../../utils/toast';
 
 
 function ManagerSearchPanel(props) {
@@ -46,8 +46,8 @@ function ManagerSearchPanel(props) {
           setManagerSelection(updatedManagerOptions);
         })
         .catch((error) => {
-          alert(error);
-          console.log(error);
+          Toast(error, "error");
+          return Promise.reject(error)
         });
     };
     getManagers();
@@ -68,4 +68,5 @@ function ManagerSearchPanel(props) {
     </div>
   )
 }
+
 export default ManagerSearchPanel;
