@@ -62,36 +62,45 @@ export class Properties extends Component {
 
     this.state = {
       properties: [],
-      nonArchivedProperties: [],
-      filteredProperties: [],
+      isSearchActive: false,
+      showArchived: false,
+      searchedProperties: [],
+      displayProperties: [],
       selectedProperties: [],
       checkboxRenderCount: 0,
-      isFiltered: false,
-      showArchived: false
     };
 
     this.getProperties = this.getProperties.bind(this);
   }
 
-  setIsFilteredPropertiesFalse = async () => {
-    await this.setState({ isFiltered: false });
-  };
-
-  setOutputState = async (output, isTrue) => {
-    await this.setState({
-      filteredProperties: output,
-      isFiltered: isTrue
+  getDisplayProperties = (properties, showArchived) => properties.filter(p => showArchived || !p.archived);
+  
+  disableSearch = () => {
+    this.setState({ 
+      searchedProperties: this.state.properties,
+      isSearchActive: false,
+      displayProperties: this.getDisplayProperties(this.state.properties, this.state.showArchived),
     });
   };
+  handleSearchOutput = (output, isTrue) => {
+    this.setState({
+      searchedProperties: output,
+      isSearchActive: isTrue,
+      displayProperties: this.getDisplayProperties(output, this.state.showArchived),
+    });
+  };
+  
+  handleToggleArchived = () => this.setState({ 
+    showArchived: !this.state.showArchived,
+    displayProperties: this.getDisplayProperties(this.state.searchedProperties, !this.state.showArchived),
+  });
 
   setSelectedProperties = selectedProperties => {
     this.setState({ selectedProperties });
   }
-
   addToSelectedProperties = property => {
     this.setState({ selectedProperties: [...this.state.selectedProperties, property] });
   }
-
   removeFromSelectedProperties = property => {
     this.setState({ selectedProperties: this.state.selectedProperties.filter(p => p.id !== property.id) });
   }
@@ -127,8 +136,11 @@ export class Properties extends Component {
       totalTenants: property.tenantIDs && property.tenantIDs.length,
       created_at: property.created_at
     }));
-    this.setState({ properties: propertyRows });
-    this.setState({ nonArchivedProperties: propertyRows.filter(p => !p.archived)})
+    this.setState({ 
+      properties: propertyRows,
+      searchedProperties: propertyRows,
+      displayProperties: this.getDisplayProperties(propertyRows, this.state.showArchived),
+    });
   }
 
   getProperties = (context) => {
@@ -159,8 +171,6 @@ export class Properties extends Component {
       })
   }
 
-  handleToggle = () => this.setState({ showArchived: !this.state.showArchived });
-
   render() {
     return (
       <UserContext.Consumer>
@@ -176,14 +186,14 @@ export class Properties extends Component {
                 <div className="search-and-archive-container">
                 
                   <Search
-                    input={this.state.showArchived ? this.state.properties : this.state.nonArchivedProperties}
-                    outputLocation={this.state.filteredProperties}
-                    isFilteredLocation={this.state.isFiltered}
-                    setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
-                    setOutputState={this.setOutputState}
+                    input={this.state.properties}
+                    outputLocation={this.state.searchedProperties}
+                    isFilteredLocation={this.state.isSearchActive}
+                    setIsFilteredStateFalse={this.disableSearch}
+                    setOutputState={this.handleSearchOutput}
                     placeholderMessage="Search by name, address, or property manager"
                   />
-                  <ShowHideSwitch labelText="Archived:" isShowState={this.state.showArchived} handleToggleChange={this.handleToggle}/>
+                  <ShowHideSwitch labelText="Archived:" isShowState={this.state.showArchived} handleToggleChange={this.handleToggleArchived}/>
                 </div>
                 <div className='bulk-actions-container py-3'>
                   <button 
@@ -201,10 +211,7 @@ export class Properties extends Component {
                   <BootstrapTable
                     key={`tables-of-properties--${this.state.checkboxRenderCount}`}
                     keyField='id'
-                    data={this.state.isFiltered
-                      ? this.state.filteredProperties 
-                      : (this.state.showArchived ? this.state.properties : this.state.nonArchivedProperties) 
-                    }
+                    data={this.state.displayProperties}
                     columns={columns}
                     selectRow={this.selectRow}
                     defaultSortDirection="asc"
