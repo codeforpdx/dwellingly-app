@@ -128,8 +128,6 @@ export const Properties = () => {
         const { data: { properties } } = response;
         const propertyRows = formatPropertyData(properties);
         setAllProperties(propertyRows);
-        setSearchedProperties(propertyRows);
-        setDisplayProperties(getDisplayProperties(propertyRows, showArchived));
         setSelectedProperties([]);
         setCheckboxRenderCount(checkboxRenderCount + 1);
       })
