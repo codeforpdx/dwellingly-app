@@ -17,32 +17,17 @@ import UserContext from "../../UserContext";
 
 import './navigationMenu.scss'
 
-export const MenuLink = ({ icon, isBold, name, href, passedClassName }) => {
-	// look at the href prop and find the last, most specific piece of the path
-	// this piece can be used as the id for this MenuLink
-	let leafHrefString = href.split("/").splice(-1, 1)[0];
-
+export const MenuLink = ({ icon, isBold, name, href, passedClassName, category }) => {
 	const loc = useLocation();
-	const locParts = loc.pathname.split("/");
-
-	// loop through the parts of the current location path (which are based on React Router in App)
-	// the current link is "active" if any part of the current path matches the href in our props
-	let isActiveLink = locParts.some((pathPart) => pathPart === leafHrefString);
-
-	const linkable =
-		leafHrefString === "add" || leafHrefString === "manage"
-			? "is-unselectable"
-			: "";
-	const size = leafHrefString === "home" ? "is-size-6 " : "is-size-7 ";
-	const classNameBase =
-		size + (isBold ? "has-text-weight-bold " : "") + linkable;
-	const linkDefaultColor =
-		leafHrefString === "reports" ? "has-text-grey" : "has-text-white";
-	const linkColor = isActiveLink ? "has-text-black" : linkDefaultColor;
+	let isActiveLink =
+		loc.pathname.includes(href)
+		|| (category && loc.pathname.split('/')[1].includes(category));
+  let cursorOverride = href ? "" : "default-cursor";
+	const linkColor = isActiveLink ? "has-text-black" : "has-text-white";
 
 	return (
 		<li className={passedClassName ? `pb-2 ${passedClassName}` : "pb-2"}>
-			<Link to={href} className={`${classNameBase} ${linkColor}`}>
+			<Link to={href} className={`is-size-7 ${isBold && "has-text-weight-bold"} ${linkColor} ${cursorOverride}`}>
 				{icon && (
 					<span className="icon is-small">
 						<FontAwesomeIcon icon={icon} />
@@ -90,15 +75,16 @@ export const NavMenu = () => {
 								isBold
 								icon={faColumns}
 								href="/dashboard"
+								category="dashboard"
 							/>
-							<MenuLink name="Add New" isBold icon={faPlusCircle} href="/add/tenant" />
+							<MenuLink name="Add New" isBold icon={faPlusCircle} category="add" />
 							<div className="pl-4 is-child-link">
 								<MenuLink name="Tenant" href="/add/tenant" />
 								<MenuLink name="Property" href="/add/property" />
 								<MenuLink name="Property Manager" href="/add/manager" />
 							</div>
 
-							<MenuLink name="Manage" isBold icon={faUserCog} href="/manage/tenants" />
+							<MenuLink name="Manage" isBold icon={faUserCog} category="manage" />
 							<div className="pl-4 is-child-link">
 								<MenuLink name="Tenants" href="/manage/tenants" />
 								<MenuLink name="Properties" href="/manage/properties" />
