@@ -118,7 +118,18 @@ _____
 
 ### **Name**: Modal 
 * **File path**: “src/components/Modal”
-* **Input/Props**: {titleText, contentText, hasButtons, yesButtonHandler, noButtonHandler, closeHandler}
+* **Input/Props**: {
+  titleText,
+  content,
+  hasButtons,
+  confirmButtonHandler,
+  cancelButtonHandler,
+  confirmText,
+  cancelText,
+  closeHandler,
+  hasRedirectButton,
+  redirectButtonPath,
+  redirectButtonText}
 * **Currently used in**: ForgotPassword, Dashboard
 * **Will be used in**: 
 	* Request For Access (figma pg 5)
@@ -130,7 +141,7 @@ _____
 	* and anywhere else that a Modal is needed! :)
 * **Additional info**: The only prop that is required is the closeHandler (so that users can actually close the modal!) 
 	* Note that if you set hasButtons to true, the button text is “Yes” and “No”. (see figma pg. 5 for an example) 
-	* If hasButtons is false, it will display a link stating “Return to Log In” instead. If you need different text here, you'll need to refactor this component to support changing that text.
+	* hasButtons controls the visibility of "Confirm" and "Cancel" buttons for an interactive modal, while the hasRedirectButton would just show one link that will take them to another part of the site when clicked. If hasButtons is true, hasRedirectButton will be ignored, so they can't be used together!
 
 
 ## **Name**: Toast

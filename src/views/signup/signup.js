@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import { Redirect } from "react-router";
@@ -9,10 +9,13 @@ import UserContext from "../../UserContext";
 import dwellinglyLogo from "../../assets/images/dwellingly_logo.png";
 import dwellinglyLogoMobile from "../../assets/images/dwellingly_logo_white.png";
 import Toast from '../../utils/toast';
+import Modal from '../../components/Modal';
 
 import './signup.scss'
 
 const SignupForm = ({ history }) => {
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
   const signup = async (
     firstName,
     lastName,
@@ -41,11 +44,8 @@ const SignupForm = ({ history }) => {
       return Promise.reject(error);
     }
     if (response) {
-      const success = "Account Created Successfully!";
-      console.log(success);
-      Toast(success, "success");
-      // Redirect to login using the react router history
-      history.push("/login");
+      Toast("Account Created Successfully!", "success");
+      setShowConfirmationModal(true);
     }
     return response;
   };
@@ -81,6 +81,10 @@ const SignupForm = ({ history }) => {
   const handleClick = () => {
     history.push("/login");
   };
+
+  const closeConfirmationModal = () => {
+    setShowConfirmationModal(false);
+  }
 
   return (
     <UserContext.Consumer>
@@ -120,11 +124,10 @@ const SignupForm = ({ history }) => {
                         <img className="signup__logo" src={dwellinglyLogo} alt="Dwellingly Logo" />
                         <h2 className="signup__subtitle">
                           Create an Account
-                  </h2>
+                        </h2>
                         <h2 className="section-title signup__mobile-heading">
                           Create an Account for Dwelling.ly
-                  </h2>
-
+                        </h2>
 
                         <div className="signup__form-cell-container">
                           <Field
@@ -137,7 +140,6 @@ const SignupForm = ({ history }) => {
 
                           <ErrorMessage className="form-error" name="firstName" component="div" />
                         </div>
-
 
                         <div className="signup__form-cell-container">
                           <Field
@@ -203,13 +205,13 @@ const SignupForm = ({ history }) => {
                         <div />
                         <button className="button is-rounded is-primary is-small mt-3" type="submit">
                           SIGN UP
-                  </button>
+                        </button>
                         <div className="signup__or_container">
                           <div className="signup__or">
                             <span className="signup__divider" />
                             <span className="signup__or_text">
                               OR
-                      </span>
+                            </span>
                           </div>
                         </div>
                       </Form>
@@ -218,12 +220,33 @@ const SignupForm = ({ history }) => {
                         type="button"
                         onClick={handleClick}>
                         LOG IN
-                </button>
-                      <div className="signup__privacyPolicyWrapper"> <Link to="/privacypolicy" className="signup__privacyPolicyText">Privacy Policy</Link></div>
+                      </button>
+                      <div className="signup__privacyPolicyWrapper">
+                        <Link to="/privacypolicy" className="signup__privacyPolicyText">
+                          Privacy Policy
+                        </Link>
+                      </div>
                     </div>
                   )
                 }
               </Formik>
+              {showConfirmationModal && <Modal
+                titleText="Account Created!"
+                content={
+                  <div>
+                    <p>You have successfully made an account with Dwelling.ly.
+                      Your account must be approved by an Admin before you can use it.
+                    </p>
+                    <br/>
+                    <p>Keep your eye out for an approval email with instructions on how to access your account.</p>
+                  </div>
+                }
+                hasButtons={false}
+                hasRedirectButton={true}
+                redirectButtonPath="/login"
+                redirectButtonText="Return to Login"
+                closeHandler={closeConfirmationModal}
+              />}
             </div>
           )
       )}
