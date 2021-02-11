@@ -29,4 +29,7 @@
   .properties-list{
     margin-bottom: 20px;
   }
+  .properties-list-wrapper, table {
+    min-width: 100%;
+  }
 }
