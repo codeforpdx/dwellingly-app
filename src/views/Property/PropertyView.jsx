@@ -49,6 +49,8 @@ const Property = () => {
   const [confirmChange, setConfirmChange] = useState(false);
   const [inputValues, setInputValues] = useState();
   const [showArchiveModal, setShowArchiveModal] = useState(false);
+  const [confirmTenantRemoval, setConfirmTenantRemoval] = useState(false);
+  const [tenantToRemove, setTenantToRemove] = useState('')
   const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
 
@@ -71,31 +73,17 @@ const Property = () => {
   const handleEditToggle = () => setEditingStatus(!isEditing);
 
   const onCancelClick = () => {
-    setConfirmChange(false)
+    setConfirmChange(false);
+    setConfirmTenantRemoval(false);
     setEditingStatus(false);
     getProperty()
   };
 
 
   useEffect(() => {
-    const getTenants = async (property) => {
-      if (property.lease) {
-        const tenantResponses = await Promise.all(property.lease.map(lease =>
-          axios.get(`${process.env.REACT_APP_PROXY}/api/tenants/${lease.tenantID}`, makeAuthHeaders(userContext)))
-        )
-
-        const tenantArray = tenantResponses.map(tenantResponse => {
-          return tenantResponse.data;
-        })
-
-        setTenants(tenantArray);
-      }
-    }
-
     getProperty()
-      .then(property => getTenants(property));
+  }, []);
 
-  }, [propertyId, userContext.user.accessJwt]);
 
   const getProperty = async () => {
 
@@ -106,7 +94,7 @@ const Property = () => {
 
     setProperty(property)
     setInputValues(property)
-    return property;
+    setTenants(property.tenants)
   }
 
   const handleConfirmButton = async () => {
@@ -202,9 +190,20 @@ const Property = () => {
       });
   }
 
-  const removeTenant = (id) => {
+  const removeTenant = (tenant) => {
+    setTenantToRemove(tenant);
+    setConfirmTenantRemoval(true);
+  }
 
-    getProperty()
+  const handleTenantConfirmButton = () => {
+    const leaseId = tenantToRemove.lease.id;
+    axios
+      .delete(`${process.env.REACT_APP_PROXY}/api/lease/${leaseId}`)
+      .then(res => getProperty())
+      .then(setConfirmTenantRemoval(false))
+      .then(setEditingStatus(false))
+      .then(Toast("Tenant successfully removed"))
+      .catch(error => Toast(error.message))
   }
 
   const archiveProperty = () => {
@@ -298,7 +297,7 @@ const Property = () => {
     sort: false,
     formatter: (cell, row, rowIndex, formatExtraData) => {
       return (
-        <RemoveTenantButton tenant={row.id} removeTenant={removeTenant} isEditing={isEditing} />
+        <RemoveTenantButton tenant={row} removeTenant={removeTenant} isEditing={isEditing} />
       )
     }
   }
@@ -318,19 +317,19 @@ const Property = () => {
                   onClick={handleEditToggle}
                   disabled={isEditing}
                 >
-                <i className="fas fa-pen icon" />
-              </button>}
+                  <i className="fas fa-pen icon" />
+                </button>}
               {(!property.archived && isEditing) && <button
                 className="button is-primary is-rounded"
                 onClick={toggleArchiveModal}
-                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-archive icon-inline-space"></i>
                 ARCHIVE
               </button>}
               {property.archived && <button
                 className="button is-primary is-rounded"
                 onClick={toggleArchiveModal}
-                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-undo icon-inline-space"></i>
                 UNARCHIVE
               </button>}
@@ -394,6 +393,20 @@ const Property = () => {
             }
           </div>
         )}
+        {confirmTenantRemoval &&
+          <Modal
+            content={<p>{`Are you sure you want to remove ${tenantToRemove.fullName}?`}</p>}
+            hasButtons={true}
+            confirmButtonHandler={handleTenantConfirmButton}
+            closeHandler={() => {
+              setConfirmTenantRemoval(false);
+              getProperty();
+            }}
+            cancelButtonHandler={() => onCancelClick()}
+            confirmText={"YES"}
+            cancelText={"NO"}
+          />
+        }
         {confirmChange &&
           <Modal
             content={<p>Are you sure you want to save these changes?</p>}
@@ -403,15 +416,13 @@ const Property = () => {
               setConfirmChange(false)
               getProperty()
             }}
-            cancelButtonHandler={() => {
-              onCancelClick()
-            }}
+            cancelButtonHandler={() => onCancelClick()}
             confirmText={"YES"}
             cancelText={"NO"}
           />
         }
       </div>
-      {showArchiveModal && 
+      {showArchiveModal &&
         <Modal
           content={
             <div>
