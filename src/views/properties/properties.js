@@ -139,6 +139,7 @@ export class Properties extends Component {
                     data={this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties}
                     columns={columns}
                     selectRow={selectRow}
+                    defaultSortDirection="asc"
                     bootstrap4={true}
                     headerClasses="table-header"
                   />
