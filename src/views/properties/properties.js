@@ -4,6 +4,7 @@ import UserContext from '../../UserContext';
 import { Link } from "react-router-dom";
 import * as axios from 'axios';
 import Search from '../../components/Search';
+import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../utils/toast';
@@ -61,10 +62,12 @@ export class Properties extends Component {
 
     this.state = {
       properties: [],
+      nonArchivedProperties: [],
       filteredProperties: [],
       selectedProperties: [],
       archiveCallCount: 0,
-      isFiltered: false
+      isFiltered: false,
+      showArchived: false
     };
 
     this.getProperties = this.getProperties.bind(this);
@@ -120,6 +123,7 @@ export class Properties extends Component {
         const { data: { properties } } = response;
         let propertyRows = properties.map(property => ({
           id: property.id,
+          archived: property.archived,
           name: property.name,
           propertyManagerNames: property.propertyManagerName &&
             property.propertyManagerName.join(", "),
@@ -128,6 +132,7 @@ export class Properties extends Component {
           created_at: property.created_at
         }));
         this.setState({ properties: propertyRows });
+        this.setState({ nonArchivedProperties: propertyRows.filter(p => !p.archived)})
       })
       .catch((error) => {
         Toast(error.message, "error");
@@ -145,6 +150,8 @@ export class Properties extends Component {
     this.getProperties(this.context);
   }
 
+  handleToggle = () => this.setState({ showArchived: !this.state.showArchived });
+
   render() {
     return (
       <UserContext.Consumer>
@@ -157,15 +164,18 @@ export class Properties extends Component {
                   <h2 className="page-title">Properties</h2>
                   <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>
                 </div>
+                <div className="search-and-archive-container">
                 
-                <Search
-                  input={this.state.properties}
-                  outputLocation={this.state.filteredProperties}
-                  isFilteredLocation={this.state.isFiltered}
-                  setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
-                  setOutputState={this.setOutputState}
-                  placeholderMessage="Search by name, address, or property manager"
-                />
+                  <Search
+                    input={this.state.showArchived ? this.state.properties : this.state.nonArchivedProperties}
+                    outputLocation={this.state.filteredProperties}
+                    isFilteredLocation={this.state.isFiltered}
+                    setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
+                    setOutputState={this.setOutputState}
+                    placeholderMessage="Search by name, address, or property manager"
+                  />
+                  <ShowHideSwitch labelText="Archived:" isShowState={this.state.showArchived} handleToggleChange={this.handleToggle}/>
+                </div>
                 <div className='bulk-actions-container py-3'>
                   <button 
                     className={`button is-rounded is-primary ml-3 ${this.state.selectedProperties.length && 'is-active-button'}`}
@@ -182,7 +192,10 @@ export class Properties extends Component {
                   <BootstrapTable
                     key={`tables-of-properties--${this.state.archiveCallCount}`}
                     keyField='id'
-                    data={this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties}
+                    data={this.state.isFiltered
+                      ? this.state.filteredProperties 
+                      : (this.state.showArchived ? this.state.properties : this.state.nonArchivedProperties) 
+                    }
                     columns={columns}
                     selectRow={this.selectRow}
                     defaultSortDirection="asc"
