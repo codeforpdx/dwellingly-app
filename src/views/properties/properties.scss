@@ -1,21 +1,28 @@
 @import "../../scss/variables.scss";
 .properties {
-    &__container {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        padding: 45px;
-        .section-header {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
+  .section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 
-        .table-header {
-            background-color: $lightGray;
-        }
-        .properties-list{
-          margin-bottom: 20px;
-        }
+  .bulk-actions-container {
+    background-color: $lightGray;
+    margin-bottom: 10px;
+    button {
+      opacity: .25;
+      pointer-events: none;
+      transition: all 250ms ease;
+      &.is-active-button {
+        opacity: 1;
+        pointer-events: all;
+      }
     }
+  }
+  .table-header {
+    background-color: $lightGray;
+  }
+  .properties-list{
+    margin-bottom: 20px;
+  }
 }
