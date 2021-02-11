@@ -4,6 +4,8 @@ import UserContext from '../../UserContext';
 import { Link } from "react-router-dom";
 import * as axios from 'axios';
 import Search from '../../components/Search';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../utils/toast';
 
 import './properties.scss';
@@ -53,15 +55,6 @@ const columns = [{
   }
 }];
 
-const selectRow = {
-  mode: 'checkbox',
-  clickToSelect: true,
-  sort: true,
-  headerColumnStyle: () => {
-    return { width: "5%" };
-  }
-};
-
 export class Properties extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +62,8 @@ export class Properties extends Component {
     this.state = {
       properties: [],
       filteredProperties: [],
+      selectedProperties: [],
+      archiveCallCount: 0,
       isFiltered: false
     };
 
@@ -86,6 +81,35 @@ export class Properties extends Component {
     });
   };
 
+  setSelectedProperties = selectedProperties => {
+    this.setState({ selectedProperties });
+  }
+
+  addToSelectedProperties = property => {
+    this.setState({ selectedProperties: [...this.state.selectedProperties, property] });
+  }
+
+  removeFromSelectedProperties = property => {
+    this.setState({ selectedProperties: this.state.selectedProperties.filter(p => p.id !== property.id) });
+  }
+
+  selectRow = {
+    mode: 'checkbox',
+    clickToSelect: true,
+    onSelect: (row, isSelect) => isSelect
+      ? this.addToSelectedProperties(row) 
+      : this.removeFromSelectedProperties(row)
+    ,
+    onSelectAll: (isSelect, rows) => isSelect
+      ? this.setSelectedProperties(rows)
+      : this.setSelectedProperties([]) 
+    ,
+    sort: true,
+    headerColumnStyle: () => {
+      return { width: "5%" };
+    }
+  }
+  
   componentDidMount() {
     this.getProperties(this.context);
   }
@@ -111,6 +135,16 @@ export class Properties extends Component {
       });
   };
 
+  archiveProperties = () => {
+    console.log(this.state.selectedProperties)
+    Toast(`WIP: Archiving ${this.state.selectedProperties.length} Properties.`)
+    this.setState({
+      selectedProperties: [],
+      archiveCallCount: this.state.archiveCallCount + 1
+    });
+    this.getProperties(this.context);
+  }
+
   render() {
     return (
       <UserContext.Consumer>
@@ -118,27 +152,39 @@ export class Properties extends Component {
           this.context = session;
           return (
             <div className='main-container'>
-              <div>
+              <div className="properties">
                 <div className="section-header">
                   <h2 className="page-title">Properties</h2>
                   <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>
                 </div>
-
+                
                 <Search
                   input={this.state.properties}
                   outputLocation={this.state.filteredProperties}
                   isFilteredLocation={this.state.isFiltered}
                   setIsFilteredStateFalse={this.setIsFilteredPropertiesFalse}
                   setOutputState={this.setOutputState}
-                  placeholderMessage="Search properties by name, address, or property manager"
+                  placeholderMessage="Search by name, address, or property manager"
                 />
-
+                <div className='bulk-actions-container py-3'>
+                  <button 
+                    className={`button is-rounded is-primary ml-3 ${this.state.selectedProperties.length && 'is-active-button'}`}
+                    onClick={this.archiveProperties}
+                  >
+                    <FontAwesomeIcon
+                      className="mr-3"
+                      icon={faArchive}
+                    />
+                    Archive Properties
+                  </button>
+                </div>
                 <div className="properties-list">
                   <BootstrapTable
+                    key={`tables-of-properties--${this.state.archiveCallCount}`}
                     keyField='id'
                     data={this.state.isFiltered === true ? this.state.filteredProperties : this.state.properties}
                     columns={columns}
-                    selectRow={selectRow}
+                    selectRow={this.selectRow}
                     defaultSortDirection="asc"
                     bootstrap4={true}
                     headerClasses="table-header"
