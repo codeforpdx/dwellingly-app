@@ -65,7 +65,7 @@ export class Properties extends Component {
       nonArchivedProperties: [],
       filteredProperties: [],
       selectedProperties: [],
-      archiveCallCount: 0,
+      checkboxRenderCount: 0,
       isFiltered: false,
       showArchived: false
     };
@@ -117,37 +117,46 @@ export class Properties extends Component {
     this.getProperties(this.context);
   }
 
+  setTableDataFromProperties = (properties) => {
+    const propertyRows = properties.map(property => ({
+      id: property.id,
+      archived: property.archived,
+      name: property.name,
+      propertyManagerNames: property.propertyManagerName && property.propertyManagerName.join(", "),
+      address: property.address,
+      totalTenants: property.tenantIDs && property.tenantIDs.length,
+      created_at: property.created_at
+    }));
+    this.setState({ properties: propertyRows });
+    this.setState({ nonArchivedProperties: propertyRows.filter(p => !p.archived)})
+  }
+
   getProperties = (context) => {
     axios.get("/api/properties", { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
       .then((response) => {
         const { data: { properties } } = response;
-        let propertyRows = properties.map(property => ({
-          id: property.id,
-          archived: property.archived,
-          name: property.name,
-          propertyManagerNames: property.propertyManagerName &&
-            property.propertyManagerName.join(", "),
-          address: property.address,
-          totalTenants: property.tenantIDs && property.tenantIDs.length,
-          created_at: property.created_at
-        }));
-        this.setState({ properties: propertyRows });
-        this.setState({ nonArchivedProperties: propertyRows.filter(p => !p.archived)})
+        this.setTableDataFromProperties(properties)
       })
       .catch((error) => {
         Toast(error.message, "error");
-        console.log(error);
-      });
-  };
+      })
+  }
 
   archiveProperties = () => {
-    console.log(this.state.selectedProperties)
-    Toast(`WIP: Archiving ${this.state.selectedProperties.length} Properties.`)
-    this.setState({
-      selectedProperties: [],
-      archiveCallCount: this.state.archiveCallCount + 1
-    });
-    this.getProperties(this.context);
+    const propertyIds = this.state.selectedProperties.map(p => p.id);
+    axios.patch(`/api/properties/archive`, { ids: propertyIds }, { headers: { "Authorization": `Bearer ${this.context.user.accessJwt}` } })
+      .then((response) => {
+        Toast(`Property Archived.`);
+        const { data: { properties } } = response;
+        this.setTableDataFromProperties(properties)
+        this.setState({ 
+          selectedProperties: [],
+          checkboxRenderCount: this.state.checkboxRenderCount + 1
+        });
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+      })
   }
 
   handleToggle = () => this.setState({ showArchived: !this.state.showArchived });
@@ -190,7 +199,7 @@ export class Properties extends Component {
                 </div>
                 <div className="properties-list">
                   <BootstrapTable
-                    key={`tables-of-properties--${this.state.archiveCallCount}`}
+                    key={`tables-of-properties--${this.state.checkboxRenderCount}`}
                     keyField='id'
                     data={this.state.isFiltered
                       ? this.state.filteredProperties 
