@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import './PropertyManagerCard.scss';
 import '../ManagerSearchPanel/ManagerSearchPanel';
 import Icon from '../icon/Icon';
@@ -19,9 +21,11 @@ function PropertyManagerCard({ manager, isEditing, removePropertyManager }) {
         <p className="information">{manager.email}</p>
       </div>
       {isEditing ?
-        <button onClick={() => removePropertyManager(manager.id)}>
-          <Icon id="close-icon" icon="close" />
-        </button> :
+        <FontAwesomeIcon
+          icon={faTimesCircle}
+          onClick={() => removePropertyManager(manager.id)}
+        />
+        :
         <></>}
     </div >
   )
