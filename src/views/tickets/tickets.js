@@ -210,6 +210,7 @@ export class Tickets extends Component {
                       data={this.state.isFiltered === true ? this.state.filteredTickets : this.state.tickets}
                       columns={this.columns}
                       pagination={paginationFactory(options)}
+                      defaultSortDirection="asc"
                       bootstrap4={true}
                       headerClasses="table-header"
                       classes="full-size-table"
