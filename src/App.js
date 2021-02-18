@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { LoginForm } from "./views/login/login";
 import SignupForm from "./views/signup/signup";
-import { NavMenu } from "./views/NavigationMenu/navigationMenu.js";
+import { NavMenu } from "./views/NavigationMenu/navigationMenu";
 import { Dashboard } from "./views/dashboard/dashboard";
 import { RequestAccess } from "./views/requestAccess/requestAccess";
 import { Properties } from "./views/properties/properties";
