@@ -6,12 +6,12 @@ import UserContext from '../../UserContext';
 import * as Yup from "yup";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
-import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard.jsx";
+import PropertyManagerCard from "../../components/PropertyManagerCard/PropertyManagerCard";
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
-import ManagerSearchPanel from '../../components/ManagerSearchPanel/ManagerSearchPanel.jsx';
-import RemoveTenantButton from './RemoveTenantButton.jsx';
-import Modal from '../../components/Modal/index.jsx';
+import ManagerSearchPanel from '../../components/ManagerSearchPanel/ManagerSearchPanel';
+import RemoveTenantButton from './RemoveTenantButton';
+import Modal from '../../components/Modal/index';
 
 import './PropertyView.scss';
 

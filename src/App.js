@@ -5,11 +5,11 @@ import axios from 'axios';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { LoginForm } from "./views/login/login";
 import SignupForm from "./views/signup/signup";
-import { NavMenu } from "./views/NavigationMenu/navigationMenu.js";
+import { NavMenu } from "./views/NavigationMenu/navigationMenu";
 import { Dashboard } from "./views/dashboard/dashboard";
 import { RequestAccess } from "./views/requestAccess/requestAccess";
 import { Properties } from "./views/properties/properties";
-import Property from "./views/Property/PropertyView.jsx"
+import Property from "./views/Property/PropertyView"
 import { Tenants } from "./views/tenants/tenants";
 import { Terms } from "./views/terms/terms";
 import { Tickets } from "./views/tickets/tickets";
