@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import { AddProperty } from '../addProperty/addProperty';
 import Modal from '../../components/Modal';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import RoleEnum from '../../Enums/RoleEnum.js';
+import RoleEnum from '../../Enums/RoleEnum';
 import './_addTenant.scss';
 import Toast from '../../utils/toast';
 import useMountEffect from '../../utils/useMountEffect';

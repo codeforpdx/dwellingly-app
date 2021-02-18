@@ -5,7 +5,7 @@ import UserContext from "../../UserContext";
 import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
-import RoleEnum from '../../Enums/RoleEnum.js';
+import RoleEnum from '../../Enums/RoleEnum';
 import Toast from '../../utils/toast';
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 import Modal from '../../components/Modal';
