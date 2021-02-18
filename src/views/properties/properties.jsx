@@ -84,7 +84,7 @@ export const Properties = () => {
   const [selectedProperties, setSelectedProperties] = useState([]);
   const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
 
-  const handleToggleArchived = () => { 
+  const handleToggleArchived = () => {
     const newShowArchived = !showArchived
     setShowArchived(newShowArchived);
     setDisplayProperties(getDisplayProperties(searchedProperties, newShowArchived));
@@ -153,10 +153,10 @@ export const Properties = () => {
             setOutputState={handleSearchOutput}
             placeholderMessage="Search by name, address, or property manager"
           />
-          <ShowHideSwitch labelText="Archived:" isShowState={showArchived} handleToggleChange={handleToggleArchived}/>
+          <ShowHideSwitch labelText="Archived:" isShowState={showArchived} handleToggleChange={handleToggleArchived} />
         </div>
         <div className='bulk-actions-container py-3'>
-          <button 
+          <button
             className={`button is-rounded is-primary ml-3 ${selectedProperties.length && 'is-active-button'}`}
             onClick={archiveProperties}
           >
@@ -177,8 +177,8 @@ export const Properties = () => {
             selectRow={({
               mode: 'checkbox',
               clickToSelect: true,
-              onSelect: (row, isSelect) => isSelect? handleSelectRow(row) : handleDeselectRow(row),
-              onSelectAll: (isSelect, rows) => isSelect? handleSelectAll(rows) : handleDeselectAll(rows),
+              onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
+              onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
               sort: true,
               headerColumnStyle: () => ({ width: "5%" }),
             })}
