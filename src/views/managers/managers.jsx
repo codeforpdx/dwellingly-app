@@ -82,7 +82,7 @@ const selectRow = {
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
-    
+
     if (manager.lastActive || !manager.archived) {
       manager.status = "Active";
     } else if (manager.archived) {
@@ -106,9 +106,9 @@ const makeHeader = (context) => {
 
 const getManagers = (header, storeInState) => {
   axios
-    .post(`${process.env.REACT_APP_PROXY}/api/users/role`, 
-    payload, 
-    header
+    .post(`${process.env.REACT_APP_PROXY}/api/users/role`,
+      payload,
+      header
     )
     .then((response) => {
       const convertedData = convertManagersDataForTable(response.data.users);
@@ -125,9 +125,9 @@ const Managers = () => {
 
   const retrievedUserContext = useContext(UserContext);
   const axiosHeader = makeHeader(retrievedUserContext);
-  
+
   useEffect(() => getManagers(axiosHeader, setManagersData), []);
-  
+
   return (
     <div className="managers main-container">
       <div className="section-header">

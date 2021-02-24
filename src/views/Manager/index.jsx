@@ -122,51 +122,63 @@ const Manager = () => {
     setEditingStatus(false);
   };
 
-  return managerData ? (
-    <div className="manager__container">
-      <TitleAndPen title={`${managerData.firstName} ${managerData.lastName}`} isEditing={isEditing} setEditingStatus={setEditingStatus} />
-      <div className="manager__contact">
-        <h1 className="secondary-title">CONTACT</h1>
-        <div className="contact-details">
-          <ToggleEditTable
-            tableData={tableData}
-            validationSchema={validationSchema}
-            isEditing={isEditing}
-            submitHandler={onFormikSubmit}
-            cancelHandler={onCancelClick}
-          />
-        </div>
-      </div>
-      <div className="manager__properties">
-        <h1 className="secondary-title">PROPERTIES</h1>
-        <div className="manager__properties__container">
-          {managerData.properties.map((property) => (
-            <div key={property.id} className="manager__property__tile">
-              <h3 className="manager__property__name">
-                {property.name}
-              </h3>
-              <div className="manager__property__address">
-                {property.streetAddress}
+  return (
+    <div className='main-container'>
+      <div>
+        {managerData ? (
+          <div>
+            <TitleAndPen
+              title={`${managerData.firstName} ${managerData.lastName}`}
+              isEditing={isEditing}
+              setEditingStatus={setEditingStatus}
+            />
+            <div className="section-container">
+              <h2 className="secondary-title">CONTACT</h2>
+            </div>
+            <ToggleEditTable
+              tableData={tableData}
+              validationSchema={validationSchema}
+              isEditing={isEditing}
+              submitHandler={onFormikSubmit}
+              cancelHandler={onCancelClick}
+            />
+            <div className="section-container">
+              <h2 className="secondary-title">PROPERTIES</h2>
+              <div className="manager__properties__container">
+                {managerData.properties.map((property) => (
+                  <div key={property.id} className="manager__property__tile">
+                    <h3 className="manager__property__name">
+                      {property.name}
+                    </h3>
+                    <div className="manager__property__address">
+                      {property.address}
+                      <br />
+                      {`${property.city}, ${property.state}`}
+                      <br />
+                      {property.zipcode}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="manager__tenants">
-        <h1 className="section-title">TENANTS</h1>
-        {managerData.tenants.map((tenant) =>
-          <div key={tenant.id} className="columns tenant__form-row">
-            <div className="column is-one-quarter bold tenant__name">
-              {tenant.fullName}
+            <div className="manager__tenants">
+              <h1 className="section-title">TENANTS</h1>
+              {managerData.tenants.map((tenant) =>
+                <div key={tenant.id} className="columns tenant__form-row">
+                  <div className="column is-one-quarter bold tenant__name">
+                    {tenant.fullName}
+                  </div>
+                  <div className="column is-one-quarter">{tenant.propertyName}</div>
+                  <div className="column is-one-quarter">Unit #{tenant.unitNum}</div>
+                  <div className="column is-one-quarter">{tenant.phone}</div>
+                </div>
+              )}
             </div>
-            <div className="column is-one-quarter">{tenant.propertyName}</div>
-            <div className="column is-one-quarter">Unit #{tenant.unitNum}</div>
-            <div className="column is-one-quarter">{tenant.phone}</div>
           </div>
-        )}
+        ) : null}
       </div>
-    </div>
-  ) : null;
+    </div >
+  )
 };
 
 export default Manager;
