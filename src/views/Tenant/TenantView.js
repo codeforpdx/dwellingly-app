@@ -87,7 +87,7 @@ const Tenant = () => {
       .then((response) => {
         Toast("Tenant Updated Successfully!", "success");
         setState({
-          ...state, 
+          ...state,
           tenant: {
             firstName: response.data.firstName,
             lastName: response.data.lastName,
@@ -140,19 +140,12 @@ const Tenant = () => {
   const getTenant = async () => {
     const tenantResponse = await client.get(`/api/tenants/${id}`);
     const tenant = tenantResponse.data;
-<<<<<<< HEAD
-    console.log(tenant.propertyName)
-    const propertyUrl = `/api/properties/${tenant.propertyName}`;
-    const propertyResponse = await client.get(propertyUrl);
-    const property = propertyResponse.data;
-=======
     let property;
-    if( tenant.lease ) {
+    if (tenant.lease) {
       const propertyUrl = `/api/properties/${tenant.lease.propertyID}`;
       const propertyResponse = await client.get(propertyUrl);
       property = propertyResponse.data;
     }
->>>>>>> 8c42d99d62a56bcf2cb2825c8de42fd4e533955d
     const ticketsResponse = await client.get(`/api/tickets?tenant=${tenant.id}`);
     const tickets = ticketsResponse.data;
     setState({ tenant, property, tickets });
