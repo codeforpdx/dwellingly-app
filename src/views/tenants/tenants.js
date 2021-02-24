@@ -22,15 +22,21 @@ const columns = [
   },
   {
     dataField: "propertyName",
-    text: "Property",
+    formatter: (cell, row, rowIndex, formatExtraData) => {
+      return (
+        <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
+          {row.propertyName}
+        </Link>
+      )
+    },
     sort: true,
   },
   {
     dataField: `joinStaff`,
     formatter: (cell, row, rowIndex, formatExtraData) => {
       return (
-        row.staff.map(staff =>
-          <p>
+        row.staff.map((staff, index) =>
+          <p key={index}>
             <Link key={row.id} to={`/staff`}>
               {`${staff.firstName} ${staff.lastName}`}
             </Link>
@@ -119,19 +125,33 @@ export class Tenants extends Component {
     this.getTenants(this.context);
   }
 
-  getTenants = (context) => {
-    axios
-      .get(`/api/tenants`, {
-        headers: { Authorization: `Bearer ${context.user.accessJwt}` },
-      })
-      .then((response) => {
-        const tenants = response.data.tenants;
-        this.setState({ tenants });
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
-      });
+  getTenants = async (context) => {
+
+    let propertyResponse = await axios.get(`/api/properties`, {
+      headers: { Authorization: `Bearer ${context.user.accessJwt} ` }
+    })
+    const properties = propertyResponse.data.properties
+
+    let tenantResponse = await axios.get(`/api/tenants`, {
+      headers: { Authorization: `Bearer ${context.user.accessJwt}` },
+    })
+
+    const tenants = tenantResponse.data.tenants.map(tenant => {
+      if (tenant.lease) {
+        const propertyIndex = properties.findIndex(property => property.id === tenant.lease.propertyID)
+        tenant.propertyName = properties[propertyIndex].name
+      }
+      return tenant
+    })
+
+    this.setState({ tenants })
+
+
+    // .catch((error) => {
+    //   Toast(error.message, "error");
+    //   console.log(error);
+    // });
+
   };
 
   render() {

@@ -87,7 +87,7 @@ const Tenant = () => {
       .then((response) => {
         Toast("Tenant Updated Successfully!", "success");
         setState({
-          ...state, 
+          ...state,
           tenant: {
             firstName: response.data.firstName,
             lastName: response.data.lastName,
@@ -141,7 +141,7 @@ const Tenant = () => {
     const tenantResponse = await client.get(`/api/tenants/${id}`);
     const tenant = tenantResponse.data;
     let property;
-    if( tenant.lease ) {
+    if (tenant.lease) {
       const propertyUrl = `/api/properties/${tenant.lease.propertyID}`;
       const propertyResponse = await client.get(propertyUrl);
       property = propertyResponse.data;
