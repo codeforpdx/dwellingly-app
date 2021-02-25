@@ -1,5 +1,4 @@
 @import '../../scss/variables.scss';
-
 .dashboard {
     &__module {
         padding: 20px 20px 50px 20px;
@@ -64,5 +63,24 @@
     &__module_subtext {
         font-size: 14px;
         display: block;
+    }
+}
+
+@media screen and (max-width:600px){
+    .dashboard__modules_container {
+        display:block !important;
+        width: 100%;
+
+        .dashboard {
+            &__module {
+                padding: 20px 20px 50px 20px;
+                width: 100%;
+                position: relative;
+                display: block;
+                flex-basis: 100%;
+                flex-grow: 0;
+                color: $white;
+            }
+        }
     }
 }
