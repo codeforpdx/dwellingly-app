@@ -6,7 +6,6 @@ import * as axios from "axios";
 import UserContext from '../../UserContext';
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 import Toast from '../../utils/toast';
-
 import './manager.scss';
 
 const validationSchema = Yup.object().shape({
@@ -29,10 +28,15 @@ const validationSchema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
-const getManager = (context, managerId, storeInState) => {
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
+
+
+
+const getManager = (userContext, managerId, storeInState) => {
+
   axios
     .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
-      { Authorization: `Bearer ${context.user.accessJwt}` }
+      makeAuthHeaders(userContext)
     )
     .then((response) => {
       const manager = response.data;
@@ -44,9 +48,9 @@ const getManager = (context, managerId, storeInState) => {
 };
 
 const Manager = () => {
-  const { id } = useParams();
 
   const userContext = useContext(UserContext);
+  const { id } = useParams();
 
   const [managerData, setManager] = useState();
   useEffect(() => {
@@ -85,8 +89,7 @@ const Manager = () => {
   const updateManager = (payload) => {
     axios
       .patch(`${process.env.REACT_APP_PROXY}/api/user/${id}`,
-        payload,
-        { Authorization: `Bearer ${userContext.user.accessJwt}` }
+        payload, makeAuthHeaders(userContext)
       )
       .then(response => {
         setManager({

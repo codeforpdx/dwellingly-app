@@ -6,6 +6,7 @@ import Toast from '../../utils/toast';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import { AddProperty } from '../addProperty/addProperty';
 import Modal from '../../components/Modal';
+import RoleEnum from '../../Enums/RoleEnum';
 
 import './requestAccess.scss';
 
@@ -48,12 +49,18 @@ export const RequestAccess = (props) => {
   // Get context for API auth header
   const userContext = useContext(UserContext);
 
-  const [roleObject, setRoleObject] = useState({});
+  const {
+    firstName,
+    lastName,
+    email,
+    id
+  } = props.location.state;
+
   const [selectionOptions, setSelectionOptions] = useState([]);
-  const [currentSelection, selectionHandler] = useState("");
-  const [fName, setFirstName] = useState("");
-  const [lName, setLastName] = useState("");
-  const [emailAddress, setEmail] = useState("");
+  const [roleSelection, selectionHandler] = useState("");
+  const [fName, setFirstName] = useState(firstName);
+  const [lName, setLastName] = useState(lastName);
+  const [emailAddress, setEmail] = useState(email);
   const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
@@ -64,8 +71,6 @@ export const RequestAccess = (props) => {
     axios.get(`/api/roles`)
       .then((response) => {
         let data = JSON.parse(response.data);
-        // Get key value object of all roles
-        setRoleObject(data);
         // Get Role names
         let roleArray = Object.keys(data);
         // Remove "Pending" role and replace _'s with spaces where existing
@@ -104,15 +109,15 @@ export const RequestAccess = (props) => {
       });
   }
 
-  const grantAccess = (role, firstName, lastName, email, id) => {
-    // Get role index from roleObject
-    let roleID = parseInt(roleObject[role]);
+  const grantAccess = () => {
     axios.patch(`/api/user/${id}`, {
-      role: roleID,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      propertyIDs: propertySelection.map(p => p.key)
+      role: RoleEnum[roleSelection.replace(' ', '_')],
+      firstName: fName,
+      lastName: lName,
+      email: emailAddress,
+      propertyIDs: roleSelection === "PROPERTY MANAGER"
+        ? propertySelection.map(p => p.key)
+        : []
     }, makeAuthHeaders(userContext))
       .then((response) => {
         Toast("User access granted!", "success");
@@ -141,19 +146,6 @@ export const RequestAccess = (props) => {
     }
   };
 
-  const {
-    firstName,
-    lastName,
-    email,
-    id
-  } = props.location.state;
-
-  useEffect((firstName, lastName, email) => {
-    setFirstName(firstName);
-    setLastName(lastName);
-    setEmail(email);
-  }, []);
-
   return (
     <div className='main-container'>
       <div className="page-title"> Request for Access </div>
@@ -165,36 +157,41 @@ export const RequestAccess = (props) => {
       <hr className="line" ></hr>
       <div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
       <RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler} />
-      <h1 className="section-title">PROPERTIES</h1>
-      <div className="typeahead-section">
-        <SearchPanel
-          chips
-          clearLabel="Clear search text"
-          placeholder="Search Properties"
-          small
-          width={400}
-          variant={SearchPanelVariant.checkbox}
-          choices={propertySearchResults}
-          value={propertySearchText}
-          onSelectionChange={setPropertySelection}
-          onChange={handlePropertySearch}
-          onClear={handlePropertySearch}
-          shadow
-        />
-        <button
-          className="add-property-button"
-          onClick={() => setShowAddProperty(!showAddProperty)}
-          type="button"
-        >
-          <i className="fas fa-plus-circle icon-inline-space"></i>
-        Create New Property
-      </button>
-      </div>
-      <div className="mt-2">
-        <button className="button is-small is-rounded is-primary mx-4" onClick={() => grantAccess(currentSelection, fName, lName, emailAddress, id)} disabled={currentSelection === ""}> GRANT ACCESS </button>
-
-          <Link className="button is-rounded is-small is-dark" to='/dashboard'> CANCEL </Link>
+      {roleSelection === "PROPERTY MANAGER" && <div>
+        <h1 className="section-title">PROPERTIES</h1>
+        <div className="typeahead-section">
+          <SearchPanel
+            chips
+            clearLabel="Clear search text"
+            placeholder="Search Properties"
+            small
+            width={400}
+            variant={SearchPanelVariant.checkbox}
+            choices={propertySearchResults}
+            value={propertySearchText}
+            onSelectionChange={setPropertySelection}
+            onChange={handlePropertySearch}
+            onClear={handlePropertySearch}
+            shadow
+          />
+          <button
+            className="add-property-button"
+            onClick={() => setShowAddProperty(!showAddProperty)}
+            type="button"
+          >
+            <i className="fas fa-plus-circle icon-inline-space"></i>
+          Create New Property
+        </button>
         </div>
+      </div>}
+      <div className="mt-2">
+        <button className="button is-small is-rounded is-primary mx-4"
+          onClick={() => grantAccess()}
+          disabled={roleSelection === ""}>
+          GRANT ACCESS
+        </button>
+        <Link className="button is-rounded is-small is-dark" to='/dashboard'> CANCEL </Link>
+      </div>
       {showAddProperty &&
         <Modal
           titleText="Create New Property"
