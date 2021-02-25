@@ -103,7 +103,9 @@ export class Tenants extends Component {
     this.state = {
       tenants: [],
       filteredTenants: [],
-      isFiltered: false
+      isFiltered: false,
+      showUnhoused: true,
+      housedTenants: []
     };
 
     this.getTenants = this.getTenants.bind(this);
@@ -126,7 +128,6 @@ export class Tenants extends Component {
   }
 
   getTenants = async (context) => {
-
     let propertyResponse = await axios.get(`/api/properties`, {
       headers: { Authorization: `Bearer ${context.user.accessJwt} ` }
     })
@@ -136,15 +137,19 @@ export class Tenants extends Component {
       headers: { Authorization: `Bearer ${context.user.accessJwt}` },
     })
 
+    let housedTenants = [];
+
     const tenants = tenantResponse.data.tenants.map(tenant => {
       if (tenant.lease) {
         const propertyIndex = properties.findIndex(property => property.id === tenant.lease.propertyID)
         tenant.propertyName = properties[propertyIndex].name
+        housedTenants.push(tenant)
       }
       return tenant
     })
+    console.log(housedTenants)
 
-    this.setState({ tenants })
+    this.setState({ tenants, housedTenants })
 
 
     // .catch((error) => {
@@ -168,12 +173,18 @@ export class Tenants extends Component {
                 </div>
                 <div className="search-section">
                   <Search
-                    input={this.state.tenants}
+                    input={this.state.showUnhoused ? this.state.tenants : this.state.housedTenants}
                     outputLocation={this.state.filteredTenants}
                     isFilteredLocation={this.state.isFiltered}
                     setIsFilteredStateFalse={this.setIsFilteredTenantsFalse}
                     setOutputState={this.setOutputState}
                     placeholderMessage="Search tenants by name, property, or JOIN staff" />
+                  <div>
+                    <label>SHOW UNHOUSED TENANTS</label>
+                    <button onClick={() => {
+                      this.setState({ showUnhoused: !this.state.showUnhoused, isFiltered: !this.state.isFiltered })
+                    }}>SHOW</button>
+                  </div>
                 </div>
                 <div className="properties-list">
                   <BootstrapTable
@@ -190,8 +201,9 @@ export class Tenants extends Component {
               </div>
             </div>
           );
-        }}
-      </UserContext.Consumer>
+        }
+        }
+      </UserContext.Consumer >
     );
   }
 }
