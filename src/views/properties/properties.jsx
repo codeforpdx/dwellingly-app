@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../../UserContext';
 import { Link } from "react-router-dom";
@@ -7,7 +7,6 @@ import Search from '../../components/Search';
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
-import useMountEffect from '../../utils/useMountEffect';
 import Toast from '../../utils/toast';
 
 import './properties.scss';
@@ -83,6 +82,7 @@ export const Properties = () => {
   const [displayProperties, setDisplayProperties] = useState([]);
   const [selectedProperties, setSelectedProperties] = useState([]);
   const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
+  const [nonSelectableRows, setNonSelectableRows] = useState([]);
 
   const handleToggleArchived = () => { 
     const newShowArchived = !showArchived
@@ -104,8 +104,7 @@ export const Properties = () => {
   const handleSelectAll = setSelectedProperties;
   const handleDeselectAll = (_) => setSelectedProperties([]);
 
-
-  useMountEffect(() => {
+  useEffect(() => {
     axios.get("/api/properties", makeAuthHeaders(userContext))
       .then((response) => {
         const { data: { properties } } = response;
@@ -113,11 +112,12 @@ export const Properties = () => {
         setAllProperties(propertyRows);
         setSearchedProperties(propertyRows);
         setDisplayProperties(getDisplayProperties(propertyRows, showArchived));
+        setNonSelectableRows(properties.filter(property => property.archived).map(archivedProperty => archivedProperty.id));
       })
       .catch((error) => {
         Toast(error.message, "error");
       });
-  });
+  }, [checkboxRenderCount]);
 
 
   const archiveProperties = () => {
@@ -125,10 +125,6 @@ export const Properties = () => {
     axios.patch(`/api/properties/archive`, { ids: propertyIds }, makeAuthHeaders(userContext))
       .then((response) => {
         Toast(`Property Archived.`);
-        const { data: { properties } } = response;
-        const propertyRows = formatPropertyData(properties);
-        setAllProperties(propertyRows);
-        setSelectedProperties([]);
         setCheckboxRenderCount(checkboxRenderCount + 1);
       })
       .catch((error) => {
@@ -181,6 +177,8 @@ export const Properties = () => {
               onSelectAll: (isSelect, rows) => isSelect? handleSelectAll(rows) : handleDeselectAll(rows),
               sort: true,
               headerColumnStyle: () => ({ width: "5%" }),
+              nonSelectable: nonSelectableRows,
+              nonSelectableStyle: () => ({color: '#999999'})
             })}
             defaultSortDirection="asc"
             bootstrap4={true}
