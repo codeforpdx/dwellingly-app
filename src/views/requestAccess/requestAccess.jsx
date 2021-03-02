@@ -73,9 +73,8 @@ export const RequestAccess = (props) => {
         let data = JSON.parse(response.data);
         // Get Role names
         let roleArray = Object.keys(data);
-        // Remove "Pending" role and replace _'s with spaces where existing
-        roleArray = roleArray.filter( role => role !== "PENDING" )
-          .map( role => role.replace('_', ' '));
+        // Replace _'s with spaces where existing
+        roleArray = roleArray.map(role => role.replace('_', ' '));
         // Get array of roles to map to selection options
         setSelectionOptions(roleArray);
       })
