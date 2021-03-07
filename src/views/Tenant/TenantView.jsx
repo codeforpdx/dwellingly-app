@@ -142,9 +142,12 @@ const Tenant = () => {
   const getTenant = async () => {
     const tenantResponse = await client.get(`/api/tenants/${id}`);
     const tenant = tenantResponse.data;
-    const propertyUrl = `/api/properties/${tenant.propertyName}`;
-    const propertyResponse = await client.get(propertyUrl);
-    const property = propertyResponse.data;
+    let property;
+    if (tenant.lease) {
+      const propertyUrl = `/api/properties/${tenant.lease.propertyID}`;
+      const propertyResponse = await client.get(propertyUrl);
+      property = propertyResponse.data;
+    }
     const ticketsResponse = await client.get(`/api/tickets?tenant=${tenant.id}`);
     const tickets = ticketsResponse.data;
     setState({ tenant, property, tickets });
@@ -287,7 +290,7 @@ const Tenant = () => {
                 <button
                   className="button is-primary is-rounded"
                   onClick={toggleArchiveModal}
-                  style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                  style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                   <i className="fas fa-archive icon-inline-space"></i>
                   ARCHIVE
                 </button>
@@ -347,7 +350,7 @@ const Tenant = () => {
           </div>
         )}
       </div>
-      {showArchiveModal && 
+      {showArchiveModal &&
         <Modal
           content={
             <div>
