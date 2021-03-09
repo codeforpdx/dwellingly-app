@@ -55,7 +55,7 @@ export const Dashboard = (props) => {
 
   const getPendingUsers = async () => {
     await axios
-      .post("/api/users/role", { "userrole": RoleEnum.PENDING }, makeAuthHeaders(userContext))
+      .get("/api/users/pending", makeAuthHeaders(userContext))
       .then(({ data }) => setUsersPending(data.users))
       .catch(error => Toast(error.message, "error"));
   };
