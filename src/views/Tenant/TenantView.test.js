@@ -14,6 +14,7 @@ const mockTenant = {
   propertyID: 69,
   propertyName: "mock1",
   staff: [],
+  archived: false
 };
 
 const mockProperty = {
