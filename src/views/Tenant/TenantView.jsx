@@ -262,10 +262,17 @@ const Tenant = () => {
   };
 
   const archiveTenant = () => {
+    let toastMessage = state.tenant.archived ? "Tenant Unarchived Successfully!" : "Tenant Archived Successfully!";
     axios
       .delete(`/api/tenants/` + id, {}, makeAuthHeaders(context))
       .then((response) => {
-        Toast("Tenant Archived Successfully!", "success");
+        Toast(toastMessage, "success");
+        setState({
+          ...state,
+          tenant: {
+            ...state.tenant,
+            archived: !state.tenant.archived
+          }});
         setShowArchiveModal(false);
         setEditingStatus(false);
       })
@@ -292,7 +299,7 @@ const Tenant = () => {
                   onClick={toggleArchiveModal}
                   style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
                   <i className="fas fa-archive icon-inline-space"></i>
-                  ARCHIVE
+                  {state.tenant.archived ? "UNARCHIVE" : "ARCHIVE"}
                 </button>
               }
               <button
@@ -354,7 +361,7 @@ const Tenant = () => {
         <Modal
           content={
             <div>
-              <p>Are you sure you want to archive {tenant.firstName} {tenant.lastName}?</p>
+              <p>Are you sure you want to {state.tenant.archived ? "unarchive" : "archive"} {tenant.firstName} {tenant.lastName}?</p>
             </div>
           }
           hasButtons={true}
