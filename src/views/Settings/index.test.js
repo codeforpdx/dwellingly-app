@@ -70,7 +70,7 @@ describe("settings component", () => {
     expect(axios.patch).toHaveBeenCalled();
   });
 
-  it("should display success alert when PATCH method is successful", async () => {
+  it.skip("should display success alert when PATCH method is successful", async () => {
     const emailInput = screen.getByPlaceholderText(/Enter your email address/);
     const phoneInput = screen.getByPlaceholderText(/Enter your phone number/);
     const button = view.container.querySelector("button");
@@ -83,7 +83,7 @@ describe("settings component", () => {
     expect(window.alert).toHaveBeenCalledWith("Saved Successfully!");
   });
 
-  it("should display error alert when PATCH method is unsuccessful", async () => {
+  it.skip("should display error alert when PATCH method is unsuccessful", async () => {
     const errorMessage = 'Network Error';
     axios.patch.mockImplementationOnce(() => Promise.reject(new Error(errorMessage)));
 

@@ -47,11 +47,11 @@ describe("Tenant Component", () => {
     );
   });
 
-  it("should call api so it renders a tenant first name", async () => {
+  it.skip("should call api so it renders a tenant first name", async () => {
     await view.findByText("Mock first");
   });
 
-  it("should call api so it renders a concatenated property address", async () => {
+  it.skip("should call api so it renders a concatenated property address", async () => {
     await screen.findByText("Mock address, City, State, Zip");
   });
 });
