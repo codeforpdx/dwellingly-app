@@ -8,6 +8,7 @@ import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../utils/toast';
+import Modal from '../../components/Modal';
 
 import './properties.scss';
 
@@ -83,6 +84,7 @@ export const Properties = () => {
   const [selectedProperties, setSelectedProperties] = useState([]);
   const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
   const [nonSelectableRows, setNonSelectableRows] = useState([]);
+  const [showArchiveModal, setShowArchiveModal] = useState(false);
 
   const handleToggleArchived = () => { 
     const newShowArchived = !showArchived
@@ -124,12 +126,17 @@ export const Properties = () => {
     const propertyIds = selectedProperties.map(p => p.id);
     axios.patch(`/api/properties/archive`, { ids: propertyIds }, makeAuthHeaders(userContext))
       .then((response) => {
-        Toast(`Property Archived.`);
+        Toast(`${propertyIds.length > 1 ? "Properties" : "Property"} Archived.`, "success");
         setCheckboxRenderCount(checkboxRenderCount + 1);
+        toggleArchiveModal();
       })
       .catch((error) => {
         Toast(error.message, "error");
       })
+  }
+
+  const toggleArchiveModal = () => {
+    setShowArchiveModal(!showArchiveModal);
   }
 
 
@@ -154,7 +161,7 @@ export const Properties = () => {
         <div className='bulk-actions-container py-3'>
           <button 
             className={`button is-rounded is-primary ml-3 ${selectedProperties.length && 'is-active-button'}`}
-            onClick={archiveProperties}
+            onClick={toggleArchiveModal}
           >
             <FontAwesomeIcon
               className="mr-3"
@@ -186,6 +193,28 @@ export const Properties = () => {
           />
         </div>
       </div>
+      {showArchiveModal && 
+        <Modal
+          content={
+            <div className="content is-small">
+              <p>You have selected the following {selectedProperties.length} properties to be archived:</p>
+              <ul className="archive-properties-list">
+              {selectedProperties.map(p => (
+                <li>{p.name}</li>
+              ))}
+              </ul>
+              <br/>
+              <p>Are you sure you want to archive these properties?</p>
+            </div>
+          }
+          hasButtons={true}
+          hasRedirectButton={false}
+          confirmButtonHandler={archiveProperties}
+          confirmText="Archive"
+          cancelButtonHandler={toggleArchiveModal}
+          cancelText="Cancel"
+          closeHandler={toggleArchiveModal}
+        />}
     </div>
   );
 }

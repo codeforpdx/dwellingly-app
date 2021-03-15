@@ -26,10 +26,16 @@
       }
     }
   }
+
   .properties-list{
     margin-bottom: 20px;
   }
+
   .properties-list-wrapper, table {
     min-width: 100%;
   }
+}
+
+ul.archive-properties-list {
+  list-style-position: inside;
 }
