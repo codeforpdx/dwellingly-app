@@ -262,11 +262,10 @@ const Tenant = () => {
   };
 
   const archiveTenant = () => {
-    let toastMessage = state.tenant.archived ? "Tenant Unarchived Successfully!" : "Tenant Archived Successfully!";
     axios
       .delete(`/api/tenants/` + id, {}, makeAuthHeaders(context))
       .then((response) => {
-        Toast(toastMessage, "success");
+        Toast(response.data.message, "success");
         setState({
           ...state,
           tenant: {
@@ -293,22 +292,27 @@ const Tenant = () => {
                 {" "}
                 {tenant.lastName}
               </h2>
-              {isEditing &&
-                <button
-                  className="button is-primary is-rounded"
-                  onClick={toggleArchiveModal}
-                  style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
-                  <i className="fas fa-archive icon-inline-space"></i>
-                  {state.tenant.archived ? "UNARCHIVE" : "ARCHIVE"}
-                </button>
-              }
-              <button
+              {!tenant.archived && <button
                 className={`rounded${isEditing ? "--is-editing" : ""}`}
                 onClick={handleEditToggle}
                 disabled={isEditing}
               >
                 <i className="fas fa-pen icon" />
-              </button>
+              </button>}
+              {(!tenant.archived && isEditing) && <button
+                className="button is-primary is-rounded"
+                onClick={toggleArchiveModal}
+                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                <i className="fas fa-archive icon-inline-space"></i>
+                ARCHIVE
+              </button>}
+              {tenant.archived && <button
+                className="button is-primary is-rounded"
+                onClick={toggleArchiveModal}
+                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                <i className="fas fa-undo icon-inline-space"></i>
+                UNARCHIVE
+              </button>}
             </div>
 
             <div className="section-container">
