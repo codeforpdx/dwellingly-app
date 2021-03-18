@@ -47,7 +47,8 @@ const Property = () => {
   const [property, setProperty] = useState('');
   const [tenantArray, setTenants] = useState('');
   const [confirmChange, setConfirmChange] = useState(false);
-  const [inputValues, setInputValues] = useState()
+  const [inputValues, setInputValues] = useState();
+  const [showArchiveModal, setShowArchiveModal] = useState(false);
   const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
 
@@ -154,7 +155,7 @@ const Property = () => {
         Toast("Save successful!");
       })
       .catch((error) => {
-        Toast(error.message);
+        Toast(error.message, "error");
       });
   };
 
@@ -194,10 +195,10 @@ const Property = () => {
           propertyManagerName: response.data.propertyManagerName,
         })
         setEditingStatus(false);
-        Toast("Save successful!");
+        Toast("Save successful!", "success");
       })
       .catch((error) => {
-        Toast(error.message);
+        Toast(error.message, "error");
       });
   }
 
@@ -206,6 +207,25 @@ const Property = () => {
     getProperty()
   }
 
+  const archiveProperty = () => {
+    axios.post(`${process.env.REACT_APP_PROXY}/api/properties/archive/${propertyId}`, {}, makeAuthHeaders(userContext))
+      .then(response => {
+        setProperty({
+          ...property,
+          archived: !property.archived
+        });
+        toggleArchiveModal();
+        setEditingStatus(false);
+        Toast(response.data.message, "success");
+      })
+      .catch(error => {
+        Toast(error.message, "error");
+      })
+  }
+
+  const toggleArchiveModal = () => {
+    setShowArchiveModal(!showArchiveModal);
+  }
 
   const getTableData = [
     {
@@ -292,13 +312,28 @@ const Property = () => {
               <h2>
                 {property.name}
               </h2>
-              <button
-                className={`rounded${isEditing ? "--is-editing" : ""}`}
-                onClick={handleEditToggle}
-                disabled={isEditing}
-              >
+              {!property.archived &&
+                <button
+                  className={`rounded${isEditing ? "--is-editing" : ""}`}
+                  onClick={handleEditToggle}
+                  disabled={isEditing}
+                >
                 <i className="fas fa-pen icon" />
-              </button>
+              </button>}
+              {(!property.archived && isEditing) && <button
+                className="button is-primary is-rounded"
+                onClick={toggleArchiveModal}
+                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                <i className="fas fa-archive icon-inline-space"></i>
+                ARCHIVE
+              </button>}
+              {property.archived && <button
+                className="button is-primary is-rounded"
+                onClick={toggleArchiveModal}
+                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                <i className="fas fa-undo icon-inline-space"></i>
+                UNARCHIVE
+              </button>}
             </div>
             <div className="section-container">
               <h2 className="section-title">PROPERTY INFORMATION</h2>
@@ -376,6 +411,21 @@ const Property = () => {
           />
         }
       </div>
+      {showArchiveModal && 
+        <Modal
+          content={
+            <div>
+              <p>Are you sure you want to {property.archived ? "unarchive" : "archive"} {property.name}?</p>
+            </div>
+          }
+          hasButtons={true}
+          hasRedirectButton={false}
+          confirmButtonHandler={archiveProperty}
+          confirmText="Yes"
+          cancelButtonHandler={toggleArchiveModal}
+          cancelText="No"
+          closeHandler={toggleArchiveModal}
+        />}
     </div>
   )
 }
