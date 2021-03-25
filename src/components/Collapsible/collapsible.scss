@@ -82,6 +82,6 @@
 
 @media screen and (max-width:600px){
   .collapsible__row {
-    flex-direction: column;
+    flex-wrap: wrap;
   }
 }
