@@ -24,6 +24,7 @@ function PropertyManagerCard({ manager, isEditing, removePropertyManager }) {
         <FontAwesomeIcon
           icon={faTimesCircle}
           onClick={() => removePropertyManager(manager.id)}
+          className={"remove-manager-button"}
         />
         :
         <></>}
