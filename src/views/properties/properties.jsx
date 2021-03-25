@@ -195,10 +195,11 @@ export const Properties = () => {
       </div>
       {showArchiveModal && 
         <Modal
+          titleText={selectedProperties.length > 1 ? "Archive Properties" : "Archive Property"}
           content={
-            <div className="content is-small">
+            <div className="content">
               <p>You have selected the following {selectedProperties.length} properties to be archived:</p>
-              <ul className="archive-properties-list">
+              <ul className="archive-properties-list has-text-weight-bold">
               {selectedProperties.map(p => (
                 <li>{p.name}</li>
               ))}
