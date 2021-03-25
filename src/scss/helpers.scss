@@ -53,6 +53,7 @@
   }
 }
 
+
 .react-bootstrap-table-pagination {
   display: flex;
   justify-content: flex-end;
@@ -66,13 +67,16 @@
 .table-responsive {
   width: 100%;
 }
+.react-bootstrap-table tbody tr {
+
+}
 
 .pagination {
   .page-item {
     & a {color: $brandBlue;}
     &.active {
       a {color: $blue;}
-    }  
+    }
   }
 }
 
@@ -91,4 +95,18 @@
 
 .icon-inline-space {
   margin-right: 5px;
+}
+
+
+@media screen and (max-width:540px){
+  .react-bootstrap-table .table {
+    th{
+      display: inline;
+      padding: 25px 0 0;
+    }
+    tbody tr{
+      display:flex;
+      flex-flow: wrap;
+    }
+  }
 }

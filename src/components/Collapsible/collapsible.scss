@@ -79,8 +79,9 @@
     transition: transform 250ms;
   }
 }
+
 @media screen and (max-width:600px){
-.collapsible__row {
-  flex-direction: column;
-}
+  .collapsible__row {
+    flex-direction: column;
+  }
 }
