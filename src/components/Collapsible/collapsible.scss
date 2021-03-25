@@ -12,7 +12,7 @@
       }
   }
   &.isDisabled {
-    .collapsible__header_title, 
+    .collapsible__header_title,
     .collapsible__toggle {
       color: $gray;
       cursor: default;
@@ -78,4 +78,9 @@
     transform: rotate(0);
     transition: transform 250ms;
   }
+}
+@media screen and (max-width:600px){
+.collapsible__row {
+  flex-direction: column;
+}
 }
