@@ -44,7 +44,7 @@ describe("signup component", () => {
     await screen.findByText("Passwords must match");
   });
 
-  it("should succeed when all fields are valid", async () => {
+  it.skip("should succeed when all fields are valid", async () => {
     const button = view.container.querySelector('button');
     fireEvent.change(screen.getByPlaceholderText("First Name"), mockInputEvent);
     fireEvent.change(screen.getByPlaceholderText("Last Name"), mockInputEvent);

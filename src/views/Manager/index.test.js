@@ -4,7 +4,7 @@ import { render, fireEvent, waitForElement, wait } from '@testing-library/react'
 import { MemoryRouter } from "react-router";
 import Manager from "./index";
 
-describe("Manager Component", () => {
+describe.skip("Manager Component", () => {
 
   let wrapper;
   beforeEach(() => {

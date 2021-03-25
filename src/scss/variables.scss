@@ -17,6 +17,8 @@ $white: #FFF;
 $black: black;
 $errorRed: red;
 
+$mobile: 600px;
+
 $breakpointMobile: 1200px;
 
 $gradient: linear-gradient(to bottom, #6f90fc 0%, #52baed 100%);
@@ -31,4 +33,3 @@ $info: $brandBlue;
 $dark: $gray;
 $button-disabled-background-color: $lightGray !important;
 $button-disabled-opacity: 1;
-
