@@ -242,10 +242,20 @@ export function Tenants() {
         <Modal
           content={
             <div>
-              <p>Are you sure you want to archive </p>
-              {selectedTenants.map(tenant => {
-                return <p key={tenant.fullName}>{tenant.fullName}</p>
-              })}
+              <p>You have selected the following {selectedTenants.length} tenants to be archived: </p>
+              <ul>
+                {selectedTenants.map(tenant => (
+                  <p
+                    key={tenant.fullName}
+                    className="archive-tenants-list has-text-weight-bold">
+                    {tenant.fullName}
+                  </p>
+                )
+
+                )}
+                <br />
+                <p>Are you sure you want to archive these properties?</p>
+              </ul>
             </div>
           }
           hasButtons={true}
