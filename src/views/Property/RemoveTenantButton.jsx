@@ -1,20 +1,26 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import "./PropertyView.scss"
 
 
 
 function RemoveTenantButton({ tenant, removeTenant, isEditing }) {
 
   return (
-    <>
+    <div className="remove-tenant-icon">
       {
         isEditing
           ?
-          < button onClick={() => removeTenant(tenant)
-          }> X</button >
+          <FontAwesomeIcon
+            icon={faTimesCircle}
+            onClick={() => removeTenant(tenant)}
+          />
+
           :
           <></>
       }
-    </>
+    </div>
   )
 }
 
