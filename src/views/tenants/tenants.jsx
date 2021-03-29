@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArchive } from '@fortawesome/free-solid-svg-icons';
 
 
 import UserContext from '../../UserContext';
@@ -9,6 +11,8 @@ import useMountEffect from '../../utils/useMountEffect';
 import Toast from '../../utils/toast';
 import Search from "../../components/Search/index";
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
+import Modal from '../../components/Modal';
+
 
 import { columns } from './tenantsFormStructure'
 import './tenants.scss'
@@ -27,11 +31,11 @@ const addPropertyNames = ((tenants, allProperties) => {
 });
 
 const formatTenantData = tenants => tenants.map(tenant => {
-  const { id, lease, phone, fullName } = tenant;
+  const { id, lease, phone, fullName, archived } = tenant;
   const staff = tenant.staff.map(staff => {
     return `${staff.firstName} ${staff.lastName}`
   })
-  return { id, lease, phone, fullName, staff }
+  return { id, lease, phone, fullName, staff, archived }
 })
 
 const sortTenantData = tenants => tenants.sort((a, b) => {
@@ -44,8 +48,10 @@ const sortTenantData = tenants => tenants.sort((a, b) => {
   return 0;
 })
 
-const getDisplayTenants = (tenants, showHoused) =>
-  tenants.filter(tenant => showHoused || tenant.lease);
+const getDisplayTenants = (tenants, showHoused, showArchived) => {
+  return tenants.filter(tenant => (showHoused || tenant.lease) && (showArchived || !tenant.archived));
+}
+
 
 export function Tenants() {
   const userContext = useContext(UserContext)
@@ -55,9 +61,17 @@ export function Tenants() {
   const [showHoused, setShowHoused] = useState(false);
   const [searchedTenants, setSearchedTenants] = useState([]);
   const [displayTenants, setDisplayTenants] = useState([]);
-  // const [defaultSort, setDefaultSort] = useState(defaultSort)
+  const [selectedTenants, setSelectedTenants] = useState([]);
+  const [nonSelectableRows, setNonSelectableRows] = useState([])
+  const [showArchived, setShowArchived] = useState(false);
+  const [checkboxRenderCount, setCheckboxRenderCount] = useState(0)
+  const [showArchiveModal, setShowArchiveModal] = useState(false)
 
   useMountEffect(() => {
+    fetchAllTenants();
+  })
+
+  const fetchAllTenants = () => {
     let allProperties;
 
     axios.get(`/api/properties`, makeAuthHeaders(userContext))
@@ -75,28 +89,80 @@ export function Tenants() {
         const sortedTenants = sortTenantData(tenantsWithProperties)
         setAllTenants(sortedTenants);
         setSearchedTenants(sortedTenants);
-        setDisplayTenants(getDisplayTenants(sortedTenants, showHoused));
+        setDisplayTenants(getDisplayTenants(sortedTenants, showHoused, showArchived));
+
+        const archivedTenants = sortedTenants.filter(tenant => tenant.archived);
+        setNonSelectableRows(archivedTenants.map(archivedTenant => archivedTenant.id))
+
       })
       .catch((error) => {
         Toast(error.message, "error")
       });
-  })
+  }
 
   const handleToggleHoused = () => {
-    setShowHoused(!showHoused)
-    setDisplayTenants(getDisplayTenants(searchedTenants, !showHoused))
+    const newShowHoused = !showHoused;
+    setShowHoused(newShowHoused)
+    setDisplayTenants(getDisplayTenants(allTenants, !showHoused, showArchived));
+    const newSelectedTentants = getDisplayTenants(selectedTenants, !showHoused, showArchived)
+    setSelectedTenants(newSelectedTentants);
   }
 
   const handleDisableSearch = () => {
     setSearchedTenants(allTenants);
     setIsSearchActive(false);
-    setDisplayTenants(getDisplayTenants(allTenants, showHoused))
+    setDisplayTenants(getDisplayTenants(allTenants, showHoused, showArchived));
+
   }
 
   const handleSearchOutput = (output, isTrue) => {
     setSearchedTenants(output);
     setIsSearchActive(isTrue);
-    setDisplayTenants(getDisplayTenants(output, showHoused))
+    setDisplayTenants(getDisplayTenants(output, showHoused, showArchived))
+
+  }
+
+  const handleToggleArchived = () => {
+    const newShowArchived = !showArchived;
+    setShowArchived(newShowArchived);
+    setDisplayTenants(getDisplayTenants(allTenants, showHoused, !showArchived));
+  }
+
+  const toggleArchiveModal = () => {
+    const newShowArchiveModal = !showArchiveModal;
+    setShowArchiveModal(newShowArchiveModal)
+  }
+
+  const handleSelectRow = (tenant) => {
+    setSelectedTenants([...selectedTenants, tenant]);
+  }
+
+  const handleDeselectRow = (tenant) => {
+    setSelectedTenants(selectedTenants.filter(sTenant => sTenant.id !== tenant.id))
+  }
+
+  const handleSelectAll = setSelectedTenants;
+
+  const handleDeselectAll = (_) => setSelectedTenants([]);
+
+
+  const archiveTenants = () => {
+    const tenantIds = selectedTenants.map(tenant => tenant.id);
+
+    Promise.all(tenantIds.map(tenantId =>
+      axios.delete(`/api/tenants/${tenantId}`, makeAuthHeaders(userContext))
+        .then((response) => {
+          Toast(response.data.message, "success")
+          setCheckboxRenderCount(checkboxRenderCount + 1);
+        })
+        .then(() => setSelectedTenants([]))
+        .catch((error) => {
+          Toast(error.message, "error");
+          console.log(error)
+        })
+    ))
+    fetchAllTenants();
+    toggleArchiveModal();
   }
 
   return (
@@ -117,18 +183,49 @@ export function Tenants() {
             setOutputState={handleSearchOutput}
             placeholderMessage="Search tenants by name, property, or JOIN staff" />
           <ShowHideSwitch
+            id="housedToggleSwitch"
             labelText="Unhoused:"
             isShowState={showHoused}
             handleToggleChange={handleToggleHoused}
           />
+
+          <ShowHideSwitch
+            id="archivedToggleSwitch"
+            labelText="Archived:"
+            isShowState={showArchived}
+            handleToggleChange={handleToggleArchived}
+          />
+
         </div>
+        <div className='bulk-actions-container py-3'>
+          <button
+            className={`button is-rounded is-primary ml-3 ${selectedTenants.length && 'is-active-button'}`}
+            onClick={toggleArchiveModal}
+          >
+            <FontAwesomeIcon
+              className="mr-3"
+              icon={faArchive}
+            />
+            Archive Tenants
+          </button>
+        </div>
+
         <div className="tenants-list">
           <BootstrapTable
-            key={`tables-of-tenants--${allTenants.length}`}
-            wrapperClasses='tenants-list-wrapper'
+            key={`tables-of-tenants--${checkboxRenderCount}`} wrapperClasses='tenants-list-wrapper'
             keyField='id'
             data={displayTenants}
             columns={columns}
+            selectRow={({
+              mode: 'checkbox',
+              clickToSelect: true,
+              onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
+              onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
+              sort: true,
+              headerColumnStyle: () => ({ width: "5%" }),
+              nonSelectable: nonSelectableRows,
+              nonSelectableStyle: () => ({ color: '#999999' })
+            })}
             defaultSorted={[
               {
                 dataField: 'propertyName',
@@ -138,7 +235,29 @@ export function Tenants() {
             headerClasses='table-header'
           />
         </div>
-      </div>
-    </div>
+
+
+      </div >
+      {showArchiveModal &&
+        <Modal
+          content={
+            <div>
+              <p>Are you sure you want to archive </p>
+              {selectedTenants.map(tenant => {
+                return <p key={tenant.fullName}>{tenant.fullName}</p>
+              })}
+            </div>
+          }
+          hasButtons={true}
+          hasRedirectButton={false}
+          confirmButtonHandler={archiveTenants}
+          confirmText="Yes"
+          cancelButtonHandler={toggleArchiveModal}
+          cancelText="No"
+          closeHandler={toggleArchiveModal}
+        />
+      }
+
+    </div >
   )
 };
