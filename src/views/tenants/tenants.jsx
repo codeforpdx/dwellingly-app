@@ -103,7 +103,12 @@ export function Tenants() {
   const handleToggleHoused = () => {
     const newShowHoused = !showHoused;
     setShowHoused(newShowHoused)
-    setDisplayTenants(getDisplayTenants(allTenants, !showHoused, showArchived));
+
+    if (isSearchActive) {
+      setDisplayTenants(getDisplayTenants(searchedTenants, !showHoused, showArchived));
+    } else {
+      setDisplayTenants(getDisplayTenants(allTenants, !showHoused, showArchived));
+    }
     const newSelectedTentants = getDisplayTenants(selectedTenants, !showHoused, showArchived)
     setSelectedTenants(newSelectedTentants);
   }
@@ -112,7 +117,6 @@ export function Tenants() {
     setSearchedTenants(allTenants);
     setIsSearchActive(false);
     setDisplayTenants(getDisplayTenants(allTenants, showHoused, showArchived));
-
   }
 
   const handleSearchOutput = (output, isTrue) => {
@@ -125,7 +129,12 @@ export function Tenants() {
   const handleToggleArchived = () => {
     const newShowArchived = !showArchived;
     setShowArchived(newShowArchived);
-    setDisplayTenants(getDisplayTenants(allTenants, showHoused, !showArchived));
+
+    if (isSearchActive) {
+      setDisplayTenants(getDisplayTenants(searchedTenants, showHoused, !showArchived));
+    } else {
+      setDisplayTenants(getDisplayTenants(allTenants, showHoused, !showArchived));
+    }
   }
 
   const toggleArchiveModal = () => {
@@ -240,21 +249,22 @@ export function Tenants() {
       </div >
       {showArchiveModal &&
         <Modal
+          titleText={selectedTenants.length > 1 ? "Archive Tenants" : "Archive Tenant"}
           content={
             <div>
               <p>You have selected the following {selectedTenants.length} tenants to be archived: </p>
               <ul>
                 {selectedTenants.map(tenant => (
-                  <p
+                  <li
                     key={tenant.fullName}
                     className="archive-tenants-list has-text-weight-bold">
                     {tenant.fullName}
-                  </p>
+                  </li>
                 )
 
                 )}
                 <br />
-                <p>Are you sure you want to archive these properties?</p>
+                <p>Are you sure you want to archive these tenants?</p>
               </ul>
             </div>
           }
