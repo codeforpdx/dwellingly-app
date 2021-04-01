@@ -2,8 +2,8 @@ version: "3.9"
 services:
   dwellingly-app:
     build:
-      context: ../../dwellingly-app
-      dockerfile: ./docker/dwellingly-app-Dockerfile
+      context: ../dwellingly-app
+      dockerfile: ./Dockerfiles/dwellingly-app-Dockerfile
     container_name: dwellingly-app
     restart: always
     ports:
@@ -15,10 +15,8 @@ services:
     tty: true
     environment:
       - NODE_ENV
-        # - REACT_APP_PROXY=localhost:5000
-        # - HOST=0.0.0.0
     volumes:
-      - ./dwellingly-app/:/app
+      - ../dwellingly-app:/app
       - /app/node_modules
     networks:
       - react-flask
@@ -28,8 +26,8 @@ services:
 
   dwellinglybackend:
     build:
-      context: ../../dwellinglybackend
-      dockerfile: ../dwellingly-app/docker/dwellinglybackend-Dockerfile
+      context: ../dwellinglybackend
+      dockerfile: ../dwellingly-app/Dockerfiles/dwellinglybackend-Dockerfile
     container_name: dwellinglybackend
     restart: always
     ports:
@@ -41,12 +39,9 @@ services:
       - react-flask
       - bridge
     volumes:
-      # - ./backend/stuff:/root/stuff
-      - ./dwellinglybackend:/root
+      - ../dwellinglybackend:/root
     environment:
       FLASK_ENV: development
 networks:
   react-flask:
   bridge:
-# volumes:
-#   backend:
