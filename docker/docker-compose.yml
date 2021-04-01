@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+  dwellingly-app:
+    build: dwellingly-app
+    container_name: dwellingly-app
+    restart: always
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+      - 5000
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV
+        # - REACT_APP_PROXY=localhost:5000
+        # - HOST=0.0.0.0
+    volumes:
+      - ./dwellingly-app/:/app
+      - /app/node_modules
+    networks:
+      - react-flask
+      - bridge 
+    depends_on:
+      - dwellinglybackend
+
+  dwellinglybackend:
+    build: dwellinglybackend
+    container_name: dwellinglybackend
+    restart: always
+    ports:
+      - 5000:5000
+    expose:
+      - 3000
+      - 5000
+    networks:
+      - react-flask
+      - bridge
+    volumes:
+      # - ./backend/stuff:/root/stuff
+      - ./dwellinglybackend:/root
+    environment:
+      FLASK_ENV: development
+networks:
+  react-flask:
+  bridge:
+# volumes:
+#   backend:
