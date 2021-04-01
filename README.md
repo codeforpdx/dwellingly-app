@@ -19,6 +19,7 @@ This serves as the Frontend Repo of the Full Stack Application for [JOIN Organiz
 
 
 #### Getting Started
+- Note: optionally, you may run this project using Docker. See instructions below
 
 Once necessary technologies are installed on your machine:
 
@@ -42,5 +43,16 @@ From terminal:
 ## Optional
 
 - Instructions to create a custom terminal command (an alias) for faster startup [here](addNewAlias.md).
+
+## Optional Docker installation instructions
+If you would prefer to work on this app without setting up a virtual environment for dwellinglybackend or a node environment for dwellingly-app, a docker image configuration is also available. Docker allows a user to run any number of interconnected services as "containers", which are isolated and reproducible (meaning that all of the dependencies will be met, no matter what machine you run the container on). This method should be faster and easier if you're just trying to get the app up and running, but you should also try to familiarize yourself with node and python, as these are very common platforms.
+
+To install this project using Docker:
+- [Download Docker's desktop app](https://docs.docker.com/get-docker/)
+- Launch the app. Feel free to close the window -- 95% of Docker's interface is through the command line
+- Assuming that you have dwellinglybackend and dwellingly-app in the same parent directory (eg /home/me/codeforpdx/dwellinglybackend and /home/me/codeforpdx/dwellingly-app), cd into dwellingly-app
+- run `docker-compose up --build`. This step will take a very long time the first time you run it, but it will only take a few seconds on subsequent runs. You can omit `--build` after this first step, unless you're changing dependencies or reconfiguring any of docker's files. 
+- That's it! The site should react to changes dynamically, and you should be able to make edits to the code in a text editor or an IDE as you normally would.
+
 
 ## Thank you for your help and happy coding!
