@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 
 const columns = [
   {
@@ -80,6 +81,7 @@ export class Tenants extends Component {
 
     this.state = {
       tenants: [],
+      loading: false
     };
 
     this.getTenants = this.getTenants.bind(this);
@@ -90,17 +92,19 @@ export class Tenants extends Component {
   }
 
   getTenants = (context) => {
+    this.setState({ loading: true });
     axios
       .get(`/api/tenants`, {
         headers: { Authorization: `Bearer ${context.user.accessJwt}` },
       })
       .then((response) => {
         const tenants = response.data.tenants;
-        this.setState({ tenants });
+        this.setState({ tenants, loading: false });
       })
       .catch((error) => {
         Toast(error.message, "error");
         console.log(error);
+        this.setState({ loading: false });
       });
   };
 
@@ -120,15 +124,18 @@ export class Tenants extends Component {
                   <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
                 </div>
                 <div className="properties-list">
-                  <BootstrapTable
-                    keyField='id'
-                    data={this.state.tenants}
-                    columns={columns}
-                    selectRow={selectRow}
-                    bootstrap4={true}
-                    headerClasses="table-header"
-                    classes="table-responsive"
-                  />
+                  {this.state.loading
+                    ? <LoadingSpinner />
+                    : <BootstrapTable
+                      keyField='id'
+                      data={this.state.tenants}
+                      columns={columns}
+                      selectRow={selectRow}
+                      bootstrap4={true}
+                      headerClasses="table-header"
+                      classes="table-responsive"
+                      />
+                  }
                 </div>
               </div>
             </div>
