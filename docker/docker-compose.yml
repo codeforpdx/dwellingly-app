@@ -1,7 +1,9 @@
-version: "3.7"
+version: "3.9"
 services:
   dwellingly-app:
-    build: dwellingly-app
+    build:
+      context: ../../dwellingly-app
+      dockerfile: ./docker/dwellingly-app-Dockerfile
     container_name: dwellingly-app
     restart: always
     ports:
@@ -25,7 +27,9 @@ services:
       - dwellinglybackend
 
   dwellinglybackend:
-    build: dwellinglybackend
+    build:
+      context: ../../dwellinglybackend
+      dockerfile: ../dwellingly-app/docker/dwellinglybackend-Dockerfile
     container_name: dwellinglybackend
     restart: always
     ports:
