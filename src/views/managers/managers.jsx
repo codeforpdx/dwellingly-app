@@ -148,15 +148,19 @@ const Managers = () => {
           Invite
         </button>
       </div>
-      {managersData && <BootstrapTable
-        keyField="id"
-        data={managersData}
-        columns={columns}
-        selectRow={selectRow}
-        bootstrap4={true}
-        headerClasses="table-header"
-        wrapperClasses="managers__table"
-      />}
+      
+      {managersData 
+        ? <BootstrapTable
+          keyField="id"
+          data={managersData}
+          columns={columns}
+          selectRow={selectRow}
+          bootstrap4={true}
+          headerClasses="table-header"
+          wrapperClasses="managers__table"
+          />
+        : <div>Loading...</div>
+      }
     </div>
   );
 };
