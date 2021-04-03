@@ -8,6 +8,7 @@ import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../utils/toast';
+import Icon from '../../components/icon/Icon';
 import Modal from '../../components/Modal';
 
 import './properties.scss';
@@ -192,7 +193,9 @@ export const Properties = () => {
               bootstrap4={true}
               headerClasses="table-header"
             />
-            : <div>Loading...</div>
+            : <Icon
+              icon="gear"
+              classNames="icon--spinner" />
           }
         </div>
       </div>

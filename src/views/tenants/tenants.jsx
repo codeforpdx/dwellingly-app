@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
+import Icon from '../../components/icon/Icon';
 // import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 
 const columns = [
@@ -125,7 +126,9 @@ export class Tenants extends Component {
                 </div>
                 <div className="properties-list">
                   {this.state.loading
-                    ? <div>Loading...</div>
+                    ? <Icon
+                      icon="gear"
+                      classNames="icon--spinner" />
                     : <BootstrapTable
                       keyField='id'
                       data={this.state.tenants}

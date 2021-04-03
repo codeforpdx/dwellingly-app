@@ -8,6 +8,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 import UserContext from '../../UserContext';
+import Icon from '../../components/icon/Icon';
 import './managers.scss';
 
 const columns = [
@@ -159,7 +160,9 @@ const Managers = () => {
           headerClasses="table-header"
           wrapperClasses="managers__table"
           />
-        : <div>Loading...</div>
+        : <Icon
+          icon="gear"
+          classNames="icon--spinner" />
       }
     </div>
   );
