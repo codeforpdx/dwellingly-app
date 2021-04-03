@@ -171,26 +171,29 @@ export const Properties = () => {
           </button>
         </div>
         <div className="properties-list">
-          <BootstrapTable
-            key={`tables-of-properties--${checkboxRenderCount}`}
-            wrapperClasses='properties-list-wrapper'
-            keyField='id'
-            data={displayProperties}
-            columns={columns}
-            selectRow={({
-              mode: 'checkbox',
-              clickToSelect: true,
-              onSelect: (row, isSelect) => isSelect? handleSelectRow(row) : handleDeselectRow(row),
-              onSelectAll: (isSelect, rows) => isSelect? handleSelectAll(rows) : handleDeselectAll(rows),
-              sort: true,
-              headerColumnStyle: () => ({ width: "5%" }),
-              nonSelectable: nonSelectableRows,
-              nonSelectableStyle: () => ({color: '#999999'})
-            })}
-            defaultSortDirection="asc"
-            bootstrap4={true}
-            headerClasses="table-header"
-          />
+          {displayProperties.length
+            ? <BootstrapTable
+              key={`tables-of-properties--${checkboxRenderCount}`}
+              wrapperClasses='properties-list-wrapper'
+              keyField='id'
+              data={displayProperties}
+              columns={columns}
+              selectRow={({
+                mode: 'checkbox',
+                clickToSelect: true,
+                onSelect: (row, isSelect) => isSelect? handleSelectRow(row) : handleDeselectRow(row),
+                onSelectAll: (isSelect, rows) => isSelect? handleSelectAll(rows) : handleDeselectAll(rows),
+                sort: true,
+                headerColumnStyle: () => ({ width: "5%" }),
+                nonSelectable: nonSelectableRows,
+                nonSelectableStyle: () => ({color: '#999999'})
+              })}
+              defaultSortDirection="asc"
+              bootstrap4={true}
+              headerClasses="table-header"
+            />
+            : <div>Loading...</div>
+          }
         </div>
       </div>
       {showArchiveModal && 
