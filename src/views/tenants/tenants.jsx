@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 import Icon from '../../components/icon/Icon';
-// import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 
 const columns = [
   {
@@ -128,7 +127,7 @@ export class Tenants extends Component {
                   {this.state.loading
                     ? <Icon
                       icon="gear"
-                      classNames="icon--spinner" />
+                      classNames="spinner" />
                     : <BootstrapTable
                       keyField='id'
                       data={this.state.tenants}

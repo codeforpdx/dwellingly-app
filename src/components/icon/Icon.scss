@@ -38,18 +38,19 @@
       width: 100%;
       height: 100%;
     }
-  
-  @keyframes spin {
-    from { transform: rotate(0deg) }
-    to { transform: rotate(360deg) }
   }
 
-  &--spinner {
+  &--gearspinner {
     animation-name: spin;
     animation-duration: 3s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+    color: $blue;
   }
-  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg) }
+  to { transform: rotate(360deg) }
 }
 /* end icons */

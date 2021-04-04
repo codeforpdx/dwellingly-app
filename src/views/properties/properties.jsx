@@ -195,7 +195,7 @@ export const Properties = () => {
             />
             : <Icon
               icon="gear"
-              classNames="icon--spinner" />
+              classNames="spinner" />
           }
         </div>
       </div>

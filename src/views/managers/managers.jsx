@@ -162,7 +162,7 @@ const Managers = () => {
           />
         : <Icon
           icon="gear"
-          classNames="icon--spinner" />
+          classNames="spinner" />
       }
     </div>
   );
