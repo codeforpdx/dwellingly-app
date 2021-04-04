@@ -86,6 +86,7 @@ export const Properties = () => {
   const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
   const [nonSelectableRows, setNonSelectableRows] = useState([]);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleArchived = () => { 
     const newShowArchived = !showArchived
@@ -108,6 +109,7 @@ export const Properties = () => {
   const handleDeselectAll = (_) => setSelectedProperties([]);
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get("/api/properties", makeAuthHeaders(userContext))
       .then((response) => {
         const { data: { properties } } = response;
@@ -116,8 +118,10 @@ export const Properties = () => {
         setSearchedProperties(propertyRows);
         setDisplayProperties(getDisplayProperties(propertyRows, showArchived));
         setNonSelectableRows(properties.filter(property => property.archived).map(archivedProperty => archivedProperty.id));
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         Toast(error.message, "error");
       });
   }, [checkboxRenderCount]);
@@ -172,8 +176,11 @@ export const Properties = () => {
           </button>
         </div>
         <div className="properties-list">
-          {displayProperties.length
-            ? <BootstrapTable
+          {isLoading
+            ? <Icon
+              icon="gear"
+              classNames="spinner" />
+            : <BootstrapTable
               key={`tables-of-properties--${checkboxRenderCount}`}
               wrapperClasses='properties-list-wrapper'
               keyField='id'
@@ -193,9 +200,6 @@ export const Properties = () => {
               bootstrap4={true}
               headerClasses="table-header"
             />
-            : <Icon
-              icon="gear"
-              classNames="spinner" />
           }
         </div>
       </div>

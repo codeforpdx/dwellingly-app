@@ -123,6 +123,7 @@ const getManagers = (header, storeInState) => {
 
 const Managers = () => {
   const [managersData, setManagersData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const retrievedUserContext = useContext(UserContext);
   const axiosHeader = makeHeader(retrievedUserContext);
