@@ -42,10 +42,14 @@
 
   &--gearspinner {
     animation-name: spin;
-    animation-duration: 3s;
+    animation-duration: 4s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
-    color: $blue;
+    color: $brandBlue;
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
