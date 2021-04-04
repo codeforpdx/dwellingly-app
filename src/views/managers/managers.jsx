@@ -172,8 +172,6 @@ const Managers = () => {
             wrapperClasses="managers-list-wrapper"
           />
           }
-          
-        
       </div>
     </div>
   );
