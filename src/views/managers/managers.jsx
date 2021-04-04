@@ -105,7 +105,7 @@ const makeHeader = (context) => {
   return { Authorization: `Bearer ${context.user.accessJwt}` };
 };
 
-const getManagers = (header, storeInState) => {
+const getManagers = (header, storeInState, updateLoading) => {
   axios
     .post(`${process.env.REACT_APP_PROXY}/api/users/role`, 
     payload, 
@@ -114,8 +114,10 @@ const getManagers = (header, storeInState) => {
     .then((response) => {
       const convertedData = convertManagersDataForTable(response.data.users);
       storeInState(convertedData);
+      updateLoading(false);
     })
     .catch((error) => {
+      updateLoading(false);
       Toast(error);
       console.log(error);
     });
@@ -128,8 +130,11 @@ const Managers = () => {
   const retrievedUserContext = useContext(UserContext);
   const axiosHeader = makeHeader(retrievedUserContext);
   
-  useEffect(() => getManagers(axiosHeader, setManagersData), []);
-  
+  useEffect(() => {
+    setIsLoading(true);
+    getManagers(axiosHeader, setManagersData, setIsLoading);
+  }, []);
+
   return (
     <div className="managers main-container">
       <div className="section-header">
@@ -151,8 +156,13 @@ const Managers = () => {
         </button>
       </div>
       <div className="managers-list">
-        {managersData 
-          ? <BootstrapTable
+        {isLoading && 
+          <Icon
+            icon="gear"
+            classNames="spinner" />}
+
+        {managersData &&
+          <BootstrapTable
             keyField="id"
             data={managersData}
             columns={columns}
@@ -160,11 +170,10 @@ const Managers = () => {
             bootstrap4={true}
             headerClasses="table-header"
             wrapperClasses="managers-list-wrapper"
-            />
-          : <Icon
-            icon="gear"
-            classNames="spinner" />
-        }
+          />
+          }
+          
+        
       </div>
     </div>
   );
