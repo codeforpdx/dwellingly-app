@@ -187,10 +187,14 @@ export class Tickets extends Component {
 
   deleteTickets = () => {
     let ticketIds = this.state.selectedTickets.map( t => t.id )
-    axios.post(`/api/tickets`, {
-      ids: ticketIds
-    }, { headers: { "Authorization": `Bearer ${this.context.user.accessJwt}` } })
-      .then((response) => {
+    axios({
+      method: 'delete',
+      url: '/api/tickets',
+      data: {
+        ids: ticketIds
+      },
+      headers: { "Authorization": `Bearer ${this.context.user.accessJwt}` }
+    }).then((response) => {
         this.setState({
           tickets: this.state.tickets.filter(t => !ticketIds.includes(t.id)),
           selectedTickets: [],
