@@ -101,8 +101,7 @@ export function Tenants() {
   }
 
   const handleToggleHoused = () => {
-    const newShowHoused = !showHoused;
-    setShowHoused(newShowHoused)
+    setShowHoused(!showHoused)
 
     if (isSearchActive) {
       setDisplayTenants(getDisplayTenants(searchedTenants, !showHoused, showArchived));
@@ -127,8 +126,7 @@ export function Tenants() {
   }
 
   const handleToggleArchived = () => {
-    const newShowArchived = !showArchived;
-    setShowArchived(newShowArchived);
+    setShowArchived(!showArchived);
 
     if (isSearchActive) {
       setDisplayTenants(getDisplayTenants(searchedTenants, showHoused, !showArchived));
@@ -138,8 +136,7 @@ export function Tenants() {
   }
 
   const toggleArchiveModal = () => {
-    const newShowArchiveModal = !showArchiveModal;
-    setShowArchiveModal(newShowArchiveModal)
+    setShowArchiveModal(!showArchiveModal)
   }
 
   const handleSelectRow = (tenant) => {
