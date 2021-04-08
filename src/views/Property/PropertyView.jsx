@@ -199,10 +199,12 @@ const Property = () => {
     const leaseId = tenantToRemove.lease.id;
     axios
       .delete(`${process.env.REACT_APP_PROXY}/api/lease/${leaseId}`)
-      .then(res => getProperty())
-      .then(setConfirmTenantRemoval(false))
-      .then(setEditingStatus(false))
-      .then(Toast("Tenant successfully removed"))
+      .then(res => {
+        getProperty()
+        setConfirmTenantRemoval(false)
+        setEditingStatus(false)
+        Toast("Tenant successfully removed")
+      })
       .catch(error => Toast(error.message))
   }
 
