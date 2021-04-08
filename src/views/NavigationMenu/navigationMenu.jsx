@@ -5,7 +5,6 @@ import {
 	faColumns,
 	faPlusCircle,
 	faUserCog,
-	faBook,
 	faUserAlt,
 	faPhoneAlt,
 	faCog,
@@ -92,7 +91,6 @@ export const NavMenu = () => {
 							</div>
 
 							<MenuLink name="Tickets" isBold icon={faTicketAlt} href="/tickets" />
-							<MenuLink name="Reports" isBold icon={faBook} href="/reports" />
 							<MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
 							<MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
 							<MenuLink name="Settings" isBold icon={faCog} href="/settings" />
