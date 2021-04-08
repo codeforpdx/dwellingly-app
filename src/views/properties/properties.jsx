@@ -8,6 +8,7 @@ import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../utils/toast';
+import Icon from '../../components/icon/Icon';
 import Modal from '../../components/Modal';
 
 import './properties.scss';
@@ -85,6 +86,7 @@ export const Properties = () => {
   const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
   const [nonSelectableRows, setNonSelectableRows] = useState([]);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleArchived = () => { 
     const newShowArchived = !showArchived
@@ -107,6 +109,7 @@ export const Properties = () => {
   const handleDeselectAll = (_) => setSelectedProperties([]);
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get("/api/properties", makeAuthHeaders(userContext))
       .then((response) => {
         const { data: { properties } } = response;
@@ -115,8 +118,10 @@ export const Properties = () => {
         setSearchedProperties(propertyRows);
         setDisplayProperties(getDisplayProperties(propertyRows, showArchived));
         setNonSelectableRows(properties.filter(property => property.archived).map(archivedProperty => archivedProperty.id));
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         Toast(error.message, "error");
       });
   }, [checkboxRenderCount]);
@@ -171,26 +176,31 @@ export const Properties = () => {
           </button>
         </div>
         <div className="properties-list">
-          <BootstrapTable
-            key={`tables-of-properties--${checkboxRenderCount}`}
-            wrapperClasses='properties-list-wrapper'
-            keyField='id'
-            data={displayProperties}
-            columns={columns}
-            selectRow={({
-              mode: 'checkbox',
-              clickToSelect: true,
-              onSelect: (row, isSelect) => isSelect? handleSelectRow(row) : handleDeselectRow(row),
-              onSelectAll: (isSelect, rows) => isSelect? handleSelectAll(rows) : handleDeselectAll(rows),
-              sort: true,
-              headerColumnStyle: () => ({ width: "5%" }),
-              nonSelectable: nonSelectableRows,
-              nonSelectableStyle: () => ({color: '#999999'})
-            })}
-            defaultSortDirection="asc"
-            bootstrap4={true}
-            headerClasses="table-header"
-          />
+          {isLoading
+            ? <Icon
+              icon="gear"
+              classNames="spinner" />
+            : <BootstrapTable
+              key={`tables-of-properties--${checkboxRenderCount}`}
+              wrapperClasses='properties-list-wrapper'
+              keyField='id'
+              data={displayProperties}
+              columns={columns}
+              selectRow={({
+                mode: 'checkbox',
+                clickToSelect: true,
+                onSelect: (row, isSelect) => isSelect? handleSelectRow(row) : handleDeselectRow(row),
+                onSelectAll: (isSelect, rows) => isSelect? handleSelectAll(rows) : handleDeselectAll(rows),
+                sort: true,
+                headerColumnStyle: () => ({ width: "5%" }),
+                nonSelectable: nonSelectableRows,
+                nonSelectableStyle: () => ({color: '#999999'})
+              })}
+              defaultSortDirection="asc"
+              bootstrap4={true}
+              headerClasses="table-header"
+            />
+          }
         </div>
       </div>
       {showArchiveModal && 
