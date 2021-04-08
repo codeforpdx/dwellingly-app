@@ -219,7 +219,6 @@ export class App extends React.Component {
               <PrivateRoute exact path='/manage/managers' component={Managers} />
               <PrivateRoute exact path='/manage/managers/:id' component={Manager} />
               <PrivateRoute exact path='/tickets' component={Tickets} />
-              <PrivateRoute exact path='/reports' component={Dashboard} />
               <PrivateRoute exact path='/staff' component={JoinStaff} />
               <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
               <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
