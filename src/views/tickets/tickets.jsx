@@ -10,6 +10,7 @@ import Toast from '../../utils/toast';
 
 import './tickets.scss';
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const pageButtonRenderer = ({
   page,
@@ -22,21 +23,21 @@ const pageButtonRenderer = ({
     e.preventDefault();
     onPageChange(page);
   };
-  if(title === 'previous page') {
+  if (title === 'previous page') {
     return (
       <li key={title} className="page-item">
         <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
-  if(title === 'next page') {
+  if (title === 'next page') {
     return (
       <li key={title} className="page-item">
         <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
-  if(active) {
+  if (active) {
     return (
       <li key={page} className="active page-item">
         <a href="#" onClick={handleClick} title={title}>{page}</a>
@@ -134,7 +135,7 @@ export class Tickets extends Component {
   }];
 
   getTickets = (context) => {
-    axios.get(`/api/tickets`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
+    axios.get(`/api/tickets`, makeAuthHeaders(context))
       .then((response) => {
         this.setState({ tickets: response.data.tickets });
       })
@@ -154,6 +155,23 @@ export class Tickets extends Component {
       isFiltered: isTrue
     });
   };
+
+  handleAddNote = (noteText, ticketID) => {
+    const newNote = {
+      note: noteText,
+      authorID: this.context.user.identity
+    }
+
+    axios.put(`/api/tickets/${ticketID}`, newNote, makeAuthHeaders(this.context))
+      .then(({ data }) => {
+        this.setState({ selectedTicket: data })
+        this.getTickets(this.context);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error)
+      })
+  }
 
   render() {
     return (
@@ -220,8 +238,9 @@ export class Tickets extends Component {
                 <TicketModal
                   show={this.state.selectedTicket}
                   onClose={this.toggleTicketModal}
-                  ticket={this.state.selectedTicket}>
-                </TicketModal>
+                  ticket={this.state.selectedTicket}
+                  handleAddNote={this.handleAddNote}
+                />
               </div>
             </div>
           );

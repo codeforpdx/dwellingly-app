@@ -74,6 +74,9 @@
   font-weight: bold;
   color: $darkGray;
   padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .ticket-card-note {

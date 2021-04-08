@@ -1,0 +1,28 @@
+@import "../../scss/variables.scss";
+@import "../card/Card.scss";
+
+.add-note-container{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+
+}
+
+.add-note-input{
+  font-weight: normal;
+  padding: 1em .3em 1em 1em;
+  border-radius: $border-radius--card;
+  display: flex;
+  outline: none;
+  width: 100%;
+  color: $darkBlue;
+  background-color: $lightGray;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+
+.add-note-add-button-div{
+  display: flex;
+  justify-content: flex-end;
+}
