@@ -1,149 +1,282 @@
-import React, { Component } from 'react';
+import React, { useContext, useState } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import UserContext from '../../UserContext';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Search from "../../components/Search/index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArchive } from '@fortawesome/free-solid-svg-icons';
+import UserContext from '../../UserContext';
+import useMountEffect from '../../utils/useMountEffect';
 import Toast from '../../utils/toast';
 import Icon from '../../components/icon/Icon';
+import Search from "../../components/Search/index";
+import { ShowHideSwitch } from '../../components/ShowHideSwitch';
+import Modal from '../../components/Modal';
+import { columns } from './tenantsFormStructure';
+import './tenants.scss';
 
-const columns = [
-  {
-    dataField: "fullName",
-    formatter: (cell, row, rowIndex, formatExtraData) => {
-      return (
-        <Link key={row.id} to={`/manage/tenants/${row.id}`}>
-          {row.fullName}
-        </Link>
-      );
-    },
-    text: "Name",
-    sort: true,
-  },
-  {
-    dataField: "propertyName",
-    text: "Property",
-    sort: true,
-  },
-  {
-    dataField: "phone",
-    text: "Phone",
-    sort: true,
-  },
-];
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
-const selectRow = {
-  mode: "checkbox",
-  clickToSelect: true,
-  sort: true,
-  headerColumnStyle: () => {
-    return { width: "5%" };
-  },
+const addPropertyNames = ((tenants, allProperties) => {
+  return tenants.map(tenant => {
+    if (tenant.lease) {
+      const propertyIndex = allProperties.findIndex(property =>
+        property.id === tenant.lease.propertyID);
+      tenant.propertyName = allProperties[propertyIndex].name
+    }
+    return tenant;
+  });
+});
+
+const formatTenantData = tenants => tenants.map(tenant => {
+  const { id, lease, phone, fullName, archived } = tenant;
+  const staff = tenant.staff.map(staff => {
+    return `${staff.firstName} ${staff.lastName}`
+  });
+  return { id, lease, phone, fullName, staff, archived };
+})
+
+const sortTenantData = tenants => tenants.sort((a, b) => {
+  if (a.fullName < b.fullName) {
+    return -1;
+  }
+  if (a.fullName > b.fullName) {
+    return 1;
+  }
+  return 0;
+});
+
+const getDisplayTenants = (tenants, showHoused, showArchived) => {
+  return tenants.filter(tenant => (showHoused || tenant.lease) && (showArchived || !tenant.archived));
 };
 
-// const pageButtonRenderer = ({
-//   page,
-//   active,
-//   disable,
-//   title,
-//   onPageChange
-// }) => {
-//   const handleClick = (e) => {
-//     e.preventDefault();
-//     onPageChange(page);
-//   };
-//   const activeStyle = {};
-//   if (active) {
-//     activeStyle.backgroundColor = 'black';
-//     activeStyle.color = 'white';
-//   } else {
-//     activeStyle.backgroundColor = 'gray';
-//     activeStyle.color = 'black';
-//   }
-//   if (typeof page === 'string') {
-//     activeStyle.backgroundColor = 'white';
-//     activeStyle.color = 'black';
-//   }
-//   return (
-//     <li className="page-item">
-//       <a href="#" onClick={ handleClick } style={ activeStyle }>{ page }</a>
-//     </li>
-//   );
-// };
+export function Tenants() {
+  const userContext = useContext(UserContext);
 
-// const options = {
-//   pageButtonRenderer
-// };
+  const [allTenants, setAllTenants] = useState([]);
+  const [isSearchActive, setIsSearchActive] = useState([]);
+  const [showHoused, setShowHoused] = useState(false);
+  const [searchedTenants, setSearchedTenants] = useState([]);
+  const [displayTenants, setDisplayTenants] = useState([]);
+  const [selectedTenants, setSelectedTenants] = useState([]);
+  const [nonSelectableRows, setNonSelectableRows] = useState([]);
+  const [showArchived, setShowArchived] = useState(false);
+  const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
+  const [showArchiveModal, setShowArchiveModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-export class Tenants extends Component {
-  constructor(props) {
-    super(props);
+  useMountEffect(() => {
+    fetchAllTenants();
+  });
 
-    this.state = {
-      tenants: [],
-      loading: false
-    };
-
-    this.getTenants = this.getTenants.bind(this);
-  }
-
-  componentDidMount() {
-    this.getTenants(this.context);
-  }
-
-  getTenants = (context) => {
-    this.setState({ loading: true });
-    axios
-      .get(`/api/tenants`, {
-        headers: { Authorization: `Bearer ${context.user.accessJwt}` },
+  const fetchAllTenants = () => {
+    let allProperties;
+    setIsLoading(true);
+    axios.get(`/api/properties`, makeAuthHeaders(userContext))
+      .then(propertyResponse => {
+        const { data: { properties } } = propertyResponse;
+        allProperties = properties;
       })
+      .then(() =>
+        axios.get("/api/tenants", makeAuthHeaders(userContext))
+      )
       .then((response) => {
-        const tenants = response.data.tenants;
-        this.setState({ tenants, loading: false });
+        const { data: { tenants } } = response;
+        const tenantRows = formatTenantData(tenants);
+        const tenantsWithProperties = addPropertyNames(tenantRows, allProperties);
+        const sortedTenants = sortTenantData(tenantsWithProperties);
+        setAllTenants(sortedTenants);
+        setSearchedTenants(sortedTenants);
+        setDisplayTenants(getDisplayTenants(sortedTenants, showHoused, showArchived));
+
+        const archivedTenants = sortedTenants.filter(tenant => tenant.archived);
+        setNonSelectableRows(archivedTenants.map(archivedTenant => archivedTenant.id));
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         Toast(error.message, "error");
-        console.log(error);
-        this.setState({ loading: false });
       });
-  };
-
-  render() {
-    return (
-      <UserContext.Consumer>
-        {session => {
-          this.context = session;
-          return (
-            <div className='main-container'>
-              <div>
-                <div className="section-header">
-                  <h2 className="page-title">Tenants</h2>
-                  <Link className="button is-primary is-rounded ml-4" to="/add/tenant">+ ADD NEW</Link>
-                </div>
-                <div className="search-section">
-                  <Search placeholderMessage="Search tenants by name, property, or JOIN staff" />
-                </div>
-                <div className="properties-list">
-                  {this.state.loading
-                    ? <Icon
-                      icon="gear"
-                      classNames="spinner" />
-                    : <BootstrapTable
-                      keyField='id'
-                      data={this.state.tenants}
-                      columns={columns}
-                      selectRow={selectRow}
-                      bootstrap4={true}
-                      headerClasses="table-header"
-                      classes="table-responsive"
-                      />
-                  }
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      </UserContext.Consumer>
-    );
   }
-}
+
+  const handleToggleHoused = () => {
+    setShowHoused(!showHoused);
+
+    if (isSearchActive) {
+      setDisplayTenants(getDisplayTenants(searchedTenants, !showHoused, showArchived));
+    } else {
+      setDisplayTenants(getDisplayTenants(allTenants, !showHoused, showArchived));
+    }
+    const newSelectedTentants = getDisplayTenants(selectedTenants, !showHoused, showArchived);
+    setSelectedTenants(newSelectedTentants);
+  }
+
+  const handleDisableSearch = () => {
+    setSearchedTenants(allTenants);
+    setIsSearchActive(false);
+    setDisplayTenants(getDisplayTenants(allTenants, showHoused, showArchived));
+  }
+
+  const handleSearchOutput = (output, isTrue) => {
+    setSearchedTenants(output);
+    setIsSearchActive(isTrue);
+    setDisplayTenants(getDisplayTenants(output, showHoused, showArchived));
+  }
+
+  const handleToggleArchived = () => {
+    setShowArchived(!showArchived);
+
+    if (isSearchActive) {
+      setDisplayTenants(getDisplayTenants(searchedTenants, showHoused, !showArchived));
+    } else {
+      setDisplayTenants(getDisplayTenants(allTenants, showHoused, !showArchived));
+    }
+  }
+
+  const toggleArchiveModal = () => {
+    setShowArchiveModal(!showArchiveModal);
+  }
+
+  const handleSelectRow = (tenant) => {
+    setSelectedTenants([...selectedTenants, tenant]);
+  }
+
+  const handleDeselectRow = (tenant) => {
+    setSelectedTenants(selectedTenants.filter(sTenant => sTenant.id !== tenant.id));
+  }
+
+  const handleSelectAll = setSelectedTenants;
+
+  const handleDeselectAll = (_) => setSelectedTenants([]);
+
+
+  const archiveTenants = () => {
+    const tenantIds = selectedTenants.map(tenant => tenant.id);
+
+    Promise.all(tenantIds.map(tenantId =>
+      axios.delete(`/api/tenants/${tenantId}`, makeAuthHeaders(userContext))
+        .then((response) => {
+          Toast(response.data.message, "success");
+          setCheckboxRenderCount(checkboxRenderCount + 1);
+        })
+        .then(() => setSelectedTenants([]))
+        .catch((error) => {
+          Toast(error.message, "error");
+          console.log(error);
+        })
+    ));
+    fetchAllTenants();
+    toggleArchiveModal();
+  }
+
+  return (
+    <div className='main-container'>
+      <div className='tenants'>
+        <div className='section-header'>
+          <h2 className='page-title'>Tenants</h2>
+          <Link
+            className='button is-primary is-rounded ml-4'
+            to='/add/tenant'>+ ADD NEW</Link>
+        </div>
+        <div className='search-and-archive-container'>
+          <Search
+            input={allTenants}
+            outputLocation={searchedTenants}
+            isFilteredLocation={isSearchActive}
+            setIsFilteredStateFalse={handleDisableSearch}
+            setOutputState={handleSearchOutput}
+            placeholderMessage="Search tenants by name, property, or JOIN staff" />
+          <ShowHideSwitch
+            id="housedToggleSwitch"
+            labelText="Unhoused:"
+            isShowState={showHoused}
+            handleToggleChange={handleToggleHoused}
+          />
+
+          <ShowHideSwitch
+            id="archivedToggleSwitch"
+            labelText="Archived:"
+            isShowState={showArchived}
+            handleToggleChange={handleToggleArchived}
+          />
+
+        </div>
+        <div className='bulk-actions-container py-3'>
+          <button
+            className={`button is-rounded is-primary ml-3 ${selectedTenants.length && 'is-active-button'}`}
+            onClick={toggleArchiveModal}
+          >
+            <FontAwesomeIcon
+              className="mr-3"
+              icon={faArchive}
+            />
+            Archive Tenants
+          </button>
+        </div>
+
+        <div className="tenants-list">
+          { isLoading
+            ? <Icon
+              icon="gear"
+              classNames="spinner" />
+            : <BootstrapTable
+              key={`tables-of-tenants--${checkboxRenderCount}`} wrapperClasses='tenants-list-wrapper'
+              keyField='id'
+              data={displayTenants}
+              columns={columns}
+              selectRow={({
+                mode: 'checkbox',
+                clickToSelect: true,
+                onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
+                onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
+                sort: true,
+                headerColumnStyle: () => ({ width: "5%" }),
+                nonSelectable: nonSelectableRows,
+                nonSelectableStyle: () => ({ color: '#999999' })
+              })}
+              defaultSorted={[
+                {
+                  dataField: 'propertyName',
+                  order: 'asc'
+                }]}
+              bootstrap4={true}
+              headerClasses='table-header'
+            />
+          }
+        </div>
+
+
+      </div >
+      {showArchiveModal &&
+        <Modal
+          titleText={selectedTenants.length > 1 ? "Archive Tenants" : "Archive Tenant"}
+          content={
+            <div>
+              <p>You have selected the following {selectedTenants.length} tenants to be archived: </p>
+              <ul>
+                {selectedTenants.map(tenant => (
+                  <li
+                    key={tenant.fullName}
+                    className="archive-tenants-list has-text-weight-bold">
+                    {tenant.fullName}
+                  </li>
+                )
+
+                )}
+                <br />
+                <p>Are you sure you want to archive these tenants?</p>
+              </ul>
+            </div>
+          }
+          hasButtons={true}
+          hasRedirectButton={false}
+          confirmButtonHandler={archiveTenants}
+          confirmText="Yes"
+          cancelButtonHandler={toggleArchiveModal}
+          cancelText="No"
+          closeHandler={toggleArchiveModal}
+        />
+      }
+
+    </div >
+  )
+};
