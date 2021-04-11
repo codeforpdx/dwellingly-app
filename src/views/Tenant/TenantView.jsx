@@ -209,8 +209,8 @@ const Tenant = () => {
       key: "lease",
       label: "Lease",
       value: {
-        dateTimeStart: property.dateTimeStart || new Date(),
-        dateTimeEnd: property.dateTimeEnd || new Date()
+        dateTimeStart: new Date(tenant.lease.dateTimeStart) || new Date(),
+        dateTimeEnd: new Date(tenant.lease.dateTimeEnd) || new Date()
       },
       inputType: "calendar",
       readOnly: true,
