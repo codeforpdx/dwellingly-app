@@ -1,24 +1,30 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Card from "../card/Card";
 import { CARD_TYPES } from "../../constants";
 import Icon from "../icon/Icon";
 import "./TicketModal.scss";
+import TicketModalDetails from "./TicketModalDetails";
+import EditTicketModalDetails from "./EditTicketModalDetails";
 
 export const TicketModal = (props) => {
+  const [editDetails, setEditDetails] = useState(false);
   if (!props.show || !props.ticket) {
     return null;
   }
   const {
-    assigned,
     issue,
-    created_at,
-    sender,
     status,
-    tenant,
-    updated_at,
-    urgency,
     notes,
   } = props.ticket;
+
+  const handleEditDetails = () => {
+    setEditDetails(!editDetails)
+  }
+
+  const handleClose = () => {
+    setEditDetails(false);
+    props.onClose();
+  }
 
   return (
     <div className="ticket-window-modal">
@@ -28,49 +34,34 @@ export const TicketModal = (props) => {
             <Card.Content>
               <div className="card__summary">
                 <div className="close-icon-container">
-                  <button type="button" onClick={props.onClose}>
+                  <button type="button" onClick={handleClose}>
                     <Icon id="close-icon" icon="close" />
                   </button>
                 </div>
                 <div className="ticket-modal-title-container">
-                  <Icon icon="comment" />
                   <h3 id="ticket-modal-title" className="subtitle">
                     {status.toUpperCase()}
                   </h3>
+                  <div
+                    id="ticket-modal-icon-pencil"
+                    onClick={handleEditDetails}>
+                    <Icon icon="pencil" />
+                  </div>
                 </div>
                 <h5 id="ticket-modal-issue" className="meta">
                   {issue}
                 </h5>
                 <hr />
-                <div>
-                  <div style={{ float: "left" }}>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">SENDER</p>
-                      <p>{sender}</p>
-                    </div>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">TENANT</p>
-                      <p>{tenant}</p>
-                    </div>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">ASSIGNEE</p>
-                      <p>{assigned}</p>
-                    </div>
-                  </div>
-                  <div
-                    className="ticket-details-section"
-                    style={{ float: "right", textAlign: "right" }}
-                  >
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">URGENCY</p>
-                      <p>{urgency.toUpperCase()}</p>
-                    </div>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">SENT</p>
-                      <p>{created_at}</p>
-                    </div>
-                  </div>
-                </div>
+                {editDetails ?
+                  <EditTicketModalDetails
+                    ticket={props.ticket}
+                    handleEditDetails={handleEditDetails}
+                    getTickets={props.getTickets}
+                    updateSelectedTicket={props.updateSelectedTicket}
+                  />
+                  :
+                  <TicketModalDetails ticket={props.ticket} />
+                }
               </div>
             </Card.Content>
           </Card.Top>
@@ -82,7 +73,7 @@ export const TicketModal = (props) => {
               {notes ? (
                 notes.map((note) => {
                   return (
-                    <>
+                    <div key={`note_${note.id}`}>
                       <div className="ticket-card-note-header-row">
                         <p
                           style={{ float: "left" }}
@@ -100,7 +91,7 @@ export const TicketModal = (props) => {
                       <div className="ticket-card-note">
                         <p>{note.text}</p>
                       </div>
-                    </>
+                    </div>
                   );
                 })
               ) : (

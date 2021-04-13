@@ -22,21 +22,21 @@ const pageButtonRenderer = ({
     e.preventDefault();
     onPageChange(page);
   };
-  if(title === 'previous page') {
+  if (title === 'previous page') {
     return (
       <li key={title} className="page-item">
         <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
-  if(title === 'next page') {
+  if (title === 'next page') {
     return (
       <li key={title} className="page-item">
         <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
-  if(active) {
+  if (active) {
     return (
       <li key={page} className="active page-item">
         <a href="#" onClick={handleClick} title={title}>{page}</a>
@@ -155,6 +155,10 @@ export class Tickets extends Component {
     });
   };
 
+  updateSelectedTicket = (updatedTicket) => {
+    this.setState({ selectedTicket: updatedTicket });
+  }
+
   render() {
     return (
       <UserContext.Consumer>
@@ -220,7 +224,10 @@ export class Tickets extends Component {
                 <TicketModal
                   show={this.state.selectedTicket}
                   onClose={this.toggleTicketModal}
-                  ticket={this.state.selectedTicket}>
+                  ticket={this.state.selectedTicket}
+                  getTickets={this.getTickets}
+                  updateSelectedTicket={this.updateSelectedTicket}
+                >
                 </TicketModal>
               </div>
             </div>
