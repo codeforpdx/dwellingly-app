@@ -22,9 +22,9 @@ export const JoinStaff = () => {
         .then(res => {
           setStaff(...staff, res.data.users);
         })
-        .catch(err => {
-          Toast(err, "error");
-          console.log(err);
+        .catch(error => {
+          Toast(error.message, 'error');
+          console.log(error);
         });
     };
     Promise.all(URLs.map(url => fetchData(url)));
