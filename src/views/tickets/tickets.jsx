@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
+import { Form, Field, Formik } from "formik";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import UserContext from "../../UserContext";
 import Accordion from "../../components/Accordion";
@@ -7,6 +8,9 @@ import { TicketModal } from "../../components/TicketModal";
 import * as axios from "axios";
 import Search from "../../components/Search/index";
 import Toast from "../../utils/toast";
+import CalendarModal, {
+  useCalendarState,
+} from "../../components/CalendarModal/CalendarModal";
 
 import "./tickets.scss";
 
@@ -74,7 +78,22 @@ export function Tickets(props) {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
+
+  const [status, setStatus] = useState(null);
+  const [statusIsFiltered, setStatusIsFiltered] = useState(false);
+  const [filteredStatusTickets, setFilteredStatusTickets] = useState([]);
+
+  console.log(isFiltered);
+  console.log(statusIsFiltered);
+  console.log(tickets);
+  console.log(filteredTickets);
+  console.log(filteredStatusTickets);
+  // const [filteredDates, setFilteredDates] = useState();
+
   const userContext = useContext(UserContext);
+
+  const calendarState = useCalendarState();
+  const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
   const toggleTicketModal = (ticket) => {
     setSelectedTicket((prevState) => (prevState ? null : ticket));
@@ -163,9 +182,26 @@ export function Tickets(props) {
     setIsFiltered(isTrue);
   };
 
+  const updateFilteredStatus = (e) => {
+    if (!statusIsFiltered) {
+      setStatusIsFiltered(true); // create if/else to avoid repetition
+    }
+    setStatus(e.target.innerHTML);
+  };
+
+  const setFilteredOutputState = () => {
+    let filteredSet = tickets.filter((ticket) => ticket.status === status);
+    console.log(filteredSet);
+    setFilteredStatusTickets(filteredSet);
+  };
+
   useEffect(() => {
     getTickets(userContext);
-  }, [userContext]);
+    console.log(status);
+    if (statusIsFiltered && status) {
+      setFilteredOutputState();
+    }
+  }, [userContext, status, statusIsFiltered]);
 
   return (
     <div className="main-container">
@@ -174,48 +210,87 @@ export function Tickets(props) {
           <div className="section-header">
             <h2 className="page-title">Tickets</h2>
           </div>
-          <Search
-            input={tickets}
-            outputLocation={filteredTickets}
-            isFilteredLocation={isFiltered}
-            setIsFilteredStateFalse={setIsFilteredTicketsFalse}
-            setOutputState={setOutputState}
-            placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
-          />
-          <Accordion icon={<i className="fas fa-filter"></i>} header="Filters">
-            <div className="section-row">
-              <div className="filter-control">
-                <label>Opened From</label>
-                <input className="input is-rounded"></input>
-              </div>
-              <div className="filter-control">
-                <label>Category</label>
-                <div className="select is-rounded">
-                  <select>
-                    <option>All</option>
-                    <option>Complaints</option>
-                    <option>Maintenance</option>
-                  </select>
-                </div>
-              </div>
-              <div className="filter-control">
-                <label>Status</label>
-                <div className="buttons has-addons">
-                  <button className="button is-rounded btn-group">New </button>
-                  <button className="button is-rounded btn-group">
-                    In Progress
-                  </button>
-                  <button className="button is-rounded btn-group">
-                    Closed
-                  </button>
-                </div>
-              </div>
-            </div>
-          </Accordion>
+          <Formik>
+            {() => (
+              <>
+                <Search
+                  input={tickets}
+                  outputLocation={filteredTickets}
+                  isFilteredLocation={isFiltered}
+                  setIsFilteredStateFalse={setIsFilteredTicketsFalse}
+                  setOutputState={setOutputState}
+                  setFilteredTickets={setFilteredTickets}
+                  filteredTickets={filteredTickets}
+                  placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
+                />
+                <Accordion
+                  icon={<i className="fas fa-filter"></i>}
+                  header="Filters"
+                >
+                  <div className="section-row">
+                    <div className="filter-control opened-from-container">
+                      <label>Opened From</label>
+
+                      <div className="input is-rounded opened-from-input-container">
+                        <Field
+                          className="form-field opened-from-input"
+                          value={
+                            dateTimeEnd !== dateTimeStart
+                              ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
+                              : ""
+                          }
+                        />
+                        <CalendarModal calendarState={calendarState} />
+                      </div>
+                    </div>
+                    <div className="filter-control">
+                      <label>Category</label>
+                      <div className="select is-rounded">
+                        <select>
+                          <option>All</option>
+                          <option>Complaints</option>
+                          <option>Maintenance</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="filter-control">
+                      <label>Status</label>
+                      <div className="buttons has-addons">
+                        <button
+                          className="button is-rounded btn-group"
+                          onClick={updateFilteredStatus}
+                        >
+                          New
+                        </button>
+                        <button
+                          className="button is-rounded btn-group"
+                          onClick={updateFilteredStatus}
+                        >
+                          In Progress
+                        </button>
+                        <button
+                          className="button is-rounded btn-group"
+                          onClick={updateFilteredStatus}
+                        >
+                          Closed
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Accordion>
+              </>
+            )}
+          </Formik>
           <div>
             <BootstrapTable
               keyField="id"
-              data={isFiltered === true ? filteredTickets : tickets}
+              data={
+                isFiltered
+                  ? filteredTickets
+                  : statusIsFiltered
+                  ? filteredStatusTickets
+                  : tickets
+              }
               columns={columns}
               pagination={paginationFactory(options)}
               defaultSortDirection="asc"

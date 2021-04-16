@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import './search.scss';
+import "./search.scss";
 
 //Necessary for <Search> to work:
 
@@ -24,57 +24,71 @@ import './search.scss';
 //Search is designed to not include the ID as a searchable paramater.
 
 function Search(props) {
-    const { input, placeholderMessage } = props;
-
-    let timerId
-    const throttleFunction = (func, delay) => {
-      if(timerId) {
-        return
-      }
-      timerId = setTimeout(() => {
-        func()
-        timerId = undefined
-      }, delay)
+  const { input, placeholderMessage } = props;
+  let timerId;
+  const throttleFunction = (func, delay) => {
+    if (timerId) {
+      return;
     }
-
-    const onChangeHandler = () => {
-      throttleFunction(searchInput, 800)
-    };
-
-    const clearSearch = () => {
-      props.setIsFilteredStateFalse();
-      document.getElementById("searchQueryComponent").value = "";
-
-    };
-
-    const searchInput = () => {
-      let allData = input;
-      let output = [];
-      let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
-
-       if(searchQuery.length > 0){
-          for (var i=0;i < allData.length; i++) {
-              let dataPoint = Object.assign({}, allData[i]);
-              delete dataPoint.id;
-              if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
-                  output.push(allData[i]);
-            }
-          };
-      props.setOutputState(output, true)
-      } else {
-        props.setIsFilteredStateFalse();
-      }
+    timerId = setTimeout(() => {
+      func();
+      timerId = undefined;
+    }, delay);
   };
 
+  const onChangeHandler = () => {
+    throttleFunction(searchInput, 800);
+  };
 
-    return (
-      <div className="search-section">
-        <span className="search-icon_span">
-          <FontAwesomeIcon icon={faSearch} className="search-icon_svg" />
-        </span>
-        <input className="input search is-rounded" id="searchQueryComponent" type="search" onChange={onChangeHandler} placeholder={placeholderMessage}></input>
-      </div>
-    );
-};
+  const clearSearch = () => {
+    props.setIsFilteredStateFalse();
+    document.getElementById("searchQueryComponent").value = "";
+  };
+
+  const searchInput = () => {
+    let allData = input;
+    let output = [];
+    let searchQuery = document
+      .getElementById("searchQueryComponent")
+      .value.toLowerCase()
+      .trim();
+
+    if (searchQuery.length > 0) {
+      for (var i = 0; i < allData.length; i++) {
+        let dataPoint = Object.assign({}, allData[i]);
+        delete dataPoint.id;
+        if (
+          Object.values(dataPoint)
+            .toString()
+            .toLowerCase()
+            .includes(searchQuery)
+        ) {
+          output.push(allData[i]);
+        }
+      }
+      props.setOutputState(output, true);
+    } else if (props.filteredTickets) {
+      props.setFilteredTickets([]);
+      props.setIsFilteredStateFalse();
+    } else {
+      props.setIsFilteredStateFalse();
+    }
+  };
+
+  return (
+    <div className="search-section">
+      <span className="search-icon_span">
+        <FontAwesomeIcon icon={faSearch} className="search-icon_svg" />
+      </span>
+      <input
+        className="input search is-rounded"
+        id="searchQueryComponent"
+        type="search"
+        onChange={onChangeHandler}
+        placeholder={placeholderMessage}
+      ></input>
+    </div>
+  );
+}
 
 export default Search;

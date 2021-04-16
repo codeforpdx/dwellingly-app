@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@import "../../scss/variables";
 
 .cell-header {
   font-weight: bold;
@@ -14,4 +14,21 @@
 
 .full-size-table {
   width: 100%;
+}
+
+.opened-from-container {
+  flex: 0.5 0 auto;
+
+  .opened-from-input-container {
+    justify-content: space-between;
+
+    .opened-from-input {
+      width: 100%;
+      padding-right: 5%;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }
