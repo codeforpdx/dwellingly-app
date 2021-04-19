@@ -54,10 +54,10 @@ export class App extends React.Component {
           accessJwt: window.localStorage["dwellinglyAccess"],
           refreshJwt: window.localStorage["dwellinglyRefresh"],
           identity: parsedJwt.identity,
-          firstName: parsedJwt.user_claims.firstName,
-          lastName: parsedJwt.user_claims.lastName,
-          email: parsedJwt.user_claims.email,
-          phone: parsedJwt.user_claims.phone
+          firstName: parsedJwt.firstName,
+          lastName: parsedJwt.lastName,
+          email: parsedJwt.email,
+          phone: parsedJwt.phone
         }
       };
     }
@@ -87,10 +87,10 @@ export class App extends React.Component {
             accessJwt: window.localStorage["dwellinglyAccess"],
             refreshJwt: window.localStorage["dwellinglyRefresh"],
             identity: parsedJwt.identity,
-            firstName: parsedJwt.user_claims.firstName,
-            lastName: parsedJwt.user_claims.lastName,
-            email: parsedJwt.user_claims.email,
-            phone: parsedJwt.user_claims.phone
+            firstName: parsedJwt.firstName,
+            lastName: parsedJwt.lastName,
+            email: parsedJwt.email,
+            phone: parsedJwt.phone
           },
         },
         () => {
@@ -119,10 +119,10 @@ export class App extends React.Component {
               accessJwt: response.data.access_token,
               refreshJwt: response.data.refresh_token,
               identity: parsedJwt.identity,
-              firstName: parsedJwt.user_claims.firstName,
-              lastName: parsedJwt.user_claims.lastName,
-              email: parsedJwt.user_claims.email,
-              phone: parsedJwt.user_claims.phone
+              firstName: parsedJwt.firstName,
+              lastName: parsedJwt.lastName,
+              email: parsedJwt.email,
+              phone: parsedJwt.phone
             }
           }, () => {
             // Call to refresh the access token 3 minutes later
