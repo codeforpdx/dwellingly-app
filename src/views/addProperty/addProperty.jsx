@@ -38,7 +38,7 @@ const formHandler = (data, context) => {
       Toast('Property Added!', 'success');
     })
     .catch(function(error) {
-      Toast(error, 'error');
+      Toast(error.message, 'error');
     });
 };
 
@@ -80,7 +80,7 @@ export class AddProperty extends Component {
         this.setState({ managerOptions, managerSelection: managerOptions });
       })
       .catch((error) => {
-        alert(error);
+        Toast(error.message, 'error');
         console.log(error);
       });
   };

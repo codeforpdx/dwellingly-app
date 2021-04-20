@@ -118,7 +118,7 @@ const getManagers = (header, storeInState, updateLoading) => {
     })
     .catch((error) => {
       updateLoading(false);
-      Toast(error);
+      Toast(error.message, "error");
       console.log(error);
     });
 };
