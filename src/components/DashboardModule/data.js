@@ -24,26 +24,6 @@ const MODULE_DATA = {
             ]
         ]
     },
-    reports: {
-        title: 'Reports',
-        link: '#',
-        stats: [
-            [ //rows
-                {
-                    stat: 4,
-                    desc: 'Compliments',
-                    subtext: 'in the last week'
-                },
-            ],
-            [
-                {
-                    stat: 12,
-                    desc: "Closed tickets",
-                    subtext: 'in the last week'
-                }
-            ]
-        ]
-    },
     managers: {
         title: 'New Property Managers',
         link: '#',

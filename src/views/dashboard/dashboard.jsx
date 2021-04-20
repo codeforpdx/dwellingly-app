@@ -137,9 +137,6 @@ export const Dashboard = (props) => {
               data={widgetData.opentickets}
             />
             <DashboardModule
-              data={widgetData.reports}
-            />
-            <DashboardModule
               data={widgetData.managers}
             />
           </div>

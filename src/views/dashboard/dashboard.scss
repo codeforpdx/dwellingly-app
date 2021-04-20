@@ -2,7 +2,7 @@
 .dashboard {
 	&__modules_container {
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-evenly;
 		margin: 25px 0;
 	}
 	&__assignments_container {
