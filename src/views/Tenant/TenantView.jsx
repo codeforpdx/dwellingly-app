@@ -192,7 +192,10 @@ const Tenant = () => {
     {
       key: "address",
       label: "Property",
-      value: `${property.address}, ${property.city}, ${property.state}, ${property.zipcode}`,
+      value: (property) ? 
+	`${property.address}, ${property.city},` + 
+	` ${property.state}, ${property.zipcode}` : 
+	"Unhoused Tenant",
       inputType: "text",
       comp: <div />,
       readOnly: true,
@@ -200,7 +203,8 @@ const Tenant = () => {
     {
       key: "unitNum",
       label: "Unit",
-      value: tenant.lease && tenant.lease.unitNum,
+      value: (tenant.lease.unitNum) ? 
+	tenant.lease.unitNum : "Not Applicable",
       inputType: "text",
       comp: <div />,
       readOnly: true,
@@ -208,11 +212,13 @@ const Tenant = () => {
     {
       key: "lease",
       label: "Lease",
-      value: {
-        dateTimeStart: property.dateTimeStart || new Date(),
-        dateTimeEnd: property.dateTimeEnd || new Date()
-      },
-      inputType: "calendar",
+      value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd) ? 
+	{
+          dateTimeStart: new Date(tenant.lease.dateTimeStart), 
+          dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
+        } : 
+	"Not Applicable",
+      inputType: (tenant.lease) ? "calendar" : "text",
       readOnly: true,
     }
   ];
