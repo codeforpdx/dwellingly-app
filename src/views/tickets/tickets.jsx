@@ -7,6 +7,9 @@ import { TicketModal } from '../../components/TicketModal';
 import * as axios from 'axios';
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
+import Modal from '../../components/Modal';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import './tickets.scss';
 
@@ -64,9 +67,11 @@ export class Tickets extends Component {
 
     this.state = {
       tickets: [],
-      selectedTicket: null,
+      viewedTicket: null,
       filteredTickets: [],
-      isFiltered: false
+      isFiltered: false,
+      selectedTickets: [],
+      showDeleteModal: false
     };
 
     this.getTickets = this.getTickets.bind(this);
@@ -79,7 +84,7 @@ export class Tickets extends Component {
 
   toggleTicketModal(ticket) {
     this.setState(prevState => ({
-      selectedTicket: prevState.selectedTicket ? null : ticket
+      viewedTicket: prevState.viewedTicket ? null : ticket
     }));
   }
 
@@ -155,6 +160,53 @@ export class Tickets extends Component {
     });
   };
 
+  handleSelectRow = (ticket) =>
+    this.setState({
+      selectedTickets: [...this.state.selectedTickets, ticket]
+    });
+
+  handleDeselectRow = (ticket) =>
+    this.setState({
+      selectedTickets: this.state.selectedTickets.filter(t => t.id !== ticket.id)
+    });
+
+  handleSelectAll = (tickets) =>
+    this.setState({
+      selectedTickets: tickets
+    });
+
+  handleDeselectAll = (_) =>
+    this.setState({
+      selectedTickets: []
+    });
+
+  toggleDeleteModal = () =>
+    this.setState({
+      showDeleteModal: !this.state.showDeleteModal
+    });
+
+  deleteTickets = () => {
+    let ticketIds = this.state.selectedTickets.map( t => t.id )
+    axios({
+      method: 'delete',
+      url: '/api/tickets',
+      data: {
+        ids: ticketIds
+      },
+      headers: { "Authorization": `Bearer ${this.context.user.accessJwt}` }
+    }).then((response) => {
+        this.setState({
+          tickets: this.state.tickets.filter(t => !ticketIds.includes(t.id)),
+          selectedTickets: [],
+          showDeleteModal: false
+        });
+        Toast(response.data.message, "success");
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+      });
+  }
+
   render() {
     return (
       <UserContext.Consumer>
@@ -204,6 +256,18 @@ export class Tickets extends Component {
                       </div>
                     </div>
                   </Accordion>
+                  <div className='bulk-actions-container py-3'>
+                    <button
+                      className={`button is-rounded is-primary ml-3 ${this.state.selectedTickets.length && 'is-active-button'}`}
+                      onClick={this.toggleDeleteModal}
+                    >
+                      <FontAwesomeIcon
+                        className="mr-3"
+                        icon={faTrash}
+                      />
+                      Delete Tickets
+                    </button>
+                  </div>
                   <div>
                     <BootstrapTable
                       keyField="id"
@@ -214,15 +278,47 @@ export class Tickets extends Component {
                       bootstrap4={true}
                       headerClasses="table-header"
                       classes="full-size-table"
+                      selectRow={({
+                        mode: 'checkbox',
+                        clickToSelect: true,
+                        onSelect: (row, isSelect) => isSelect ? this.handleSelectRow(row) : this.handleDeselectRow(row),
+                        onSelectAll: (isSelect, rows) => isSelect ? this.handleSelectAll(rows) : this.handleDeselectAll(rows),
+                        sort: true,
+                        headerColumnStyle: () => ({ width: "5%" }),
+                        nonSelectableStyle: () => ({color: '#999999'})
+                      })}
                     />
                   </div>
                 </div>
                 <TicketModal
-                  show={this.state.selectedTicket}
+                  show={this.state.viewedTicket}
                   onClose={this.toggleTicketModal}
-                  ticket={this.state.selectedTicket}>
+                  ticket={this.state.viewedTicket}>
                 </TicketModal>
               </div>
+              {this.state.showDeleteModal &&
+                <Modal
+                  titleText={this.state.selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
+                  content={
+                    <div className="content">
+                      <p>You have selected the following {this.state.selectedTickets.length} tickets to be deleted:</p>
+                      <ul className="archive-tickets-list has-text-weight-bold">
+                      {this.state.selectedTickets.map(t => (
+                        <li>{t.tenant}: {t.issue}</li>
+                      ))}
+                      </ul>
+                      <br/>
+                      <p>Are you sure you want to delete these tickets? This cannot be undone.</p>
+                    </div>
+                  }
+                  hasButtons={true}
+                  hasRedirectButton={false}
+                  confirmButtonHandler={this.deleteTickets}
+                  confirmText="Delete"
+                  cancelButtonHandler={this.toggleDeleteModal}
+                  cancelText="Cancel"
+                  closeHandler={this.toggleDeleteModal}
+              />}
             </div>
           );
         }}
