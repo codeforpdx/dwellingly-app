@@ -137,7 +137,7 @@ const Property = () => {
           state: response.data.state,
           zipcode: response.data.zipcode,
           num_units: response.data.num_units,
-          propertyManager: response.data.propertyManager
+          propertyManagers: response.data.propertyManagers
         });
         setEditingStatus(false);
         Toast("Save successful!");
@@ -150,25 +150,25 @@ const Property = () => {
 
   const removePropertyManager = (id) => {
     let propertyManagerIDs = []
-    let propertyManager = []
+    let propertyManagers = []
 
-    for (let manager of property.propertyManager) {
+    for (let manager of property.propertyManagers) {
       if (manager.id !== id) {
         propertyManagerIDs.push(manager.id)
       }
       else {
-        propertyManager = property.propertyManager.filter(manager => manager.id !== id)
+        propertyManagers = property.propertyManagers.filter(manager => manager.id !== id)
       }
     }
-    setProperty({ ...property, propertyManager })
-    setInputValues({ ...property, propertyManager, propertyManagerIDs })
+    setProperty({ ...property, propertyManagers })
+    setInputValues({ ...property, propertyManagers, propertyManagerIDs })
   }
 
   const addPropertyManager = (id) => {
     property.propertyManagerIDs = [id];
 
-    if (property.propertyManager)
-      for (let manager of property.propertyManager) {
+    if (property.propertyManagers)
+      for (let manager of property.propertyManagers) {
         property.propertyManagerIDs.push(manager.id);
       }
 
@@ -179,8 +179,7 @@ const Property = () => {
       .then(response => {
         setProperty({
           ...property,
-          propertyManager: response.data.propertyManager,
-          propertyManagerName: response.data.propertyManagerName,
+          propertyManagers: response.data.propertyManagers,
         })
         setEditingStatus(false);
         Toast("Save successful!", "success");
@@ -352,16 +351,16 @@ const Property = () => {
             </div>
             {isEditing ?
               <ManagerSearchPanel
-                assignedPropertyManagers={property.propertyManager ?
-                  property.propertyManager.map(manager => { return manager.id })
+                assignedPropertyManagers={property.propertyManagers ?
+                  property.propertyManagers.map(manager => { return manager.id })
                   : []}
                 addPropertyManager={addPropertyManager}
               />
               :
               <></>}
             <div className="property-manager-section">
-              {property.propertyManager ?
-                property.propertyManager.map(manager => {
+              {property.propertyManagers ?
+                property.propertyManagers.map(manager => {
                   return <PropertyManagerCard
                     manager={manager}
                     key={manager.id}
