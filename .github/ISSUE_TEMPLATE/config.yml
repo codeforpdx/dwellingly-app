@@ -8,7 +8,7 @@ contact_links:
     url: https://github.com/codeforpdx/dwellingly-app/issues/new?template=feature_request.md&labels=FRONTEND&projects=codeforpdx/dwellingly-app/4
   - name: 'Backend: Bug report'
     about: Create a report to help us improve
-    url: https://github.com/codeforpdx/dwellingly-app/issues/new?template=bug_report.md&labels=bug,BACKEND&projects=codeforpdx/dwellingly-app/4
+    url: https://github.com/codeforpdx/dwellingly-app/issues/new?template=bug_report.md&labels=bug,BACKEND&projects=codeforpdx/dwellingly-app/5
   - name: 'Backend: Feature request'
     about: Suggest an idea for this project
-    url: https://github.com/codeforpdx/dwellingly-app/issues/new?template=feature_request.md&labels=BACKEND&projects=codeforpdx/dwellingly-app/4
+    url: https://github.com/codeforpdx/dwellingly-app/issues/new?template=feature_request.md&labels=BACKEND&projects=codeforpdx/dwellingly-app/5
