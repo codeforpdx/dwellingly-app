@@ -15,3 +15,20 @@
 .full-size-table {
   width: 100%;
 }
+
+ul.archive-tickets-list {
+  list-style-position: inside;
+}
+
+.bulk-actions-container {
+  margin-bottom: 10px;
+  button {
+    opacity: .25;
+    pointer-events: none;
+    transition: all 250ms ease;
+    &.is-active-button {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+}

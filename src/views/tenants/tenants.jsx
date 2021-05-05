@@ -4,18 +4,15 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
-
-
 import UserContext from '../../UserContext';
 import useMountEffect from '../../utils/useMountEffect';
 import Toast from '../../utils/toast';
+import Icon from '../../components/icon/Icon';
 import Search from "../../components/Search/index";
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import Modal from '../../components/Modal';
-
-
-import { columns } from './tenantsFormStructure'
-import './tenants.scss'
+import { columns } from './tenantsFormStructure';
+import './tenants.scss';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -23,10 +20,10 @@ const addPropertyNames = ((tenants, allProperties) => {
   return tenants.map(tenant => {
     if (tenant.lease) {
       const propertyIndex = allProperties.findIndex(property =>
-        property.id === tenant.lease.propertyID)
+        property.id === tenant.lease.propertyID);
       tenant.propertyName = allProperties[propertyIndex].name
     }
-    return tenant
+    return tenant;
   });
 });
 
@@ -34,8 +31,8 @@ const formatTenantData = tenants => tenants.map(tenant => {
   const { id, lease, phone, fullName, archived } = tenant;
   const staff = tenant.staff.map(staff => {
     return `${staff.firstName} ${staff.lastName}`
-  })
-  return { id, lease, phone, fullName, staff, archived }
+  });
+  return { id, lease, phone, fullName, staff, archived };
 })
 
 const sortTenantData = tenants => tenants.sort((a, b) => {
@@ -46,15 +43,14 @@ const sortTenantData = tenants => tenants.sort((a, b) => {
     return 1;
   }
   return 0;
-})
+});
 
 const getDisplayTenants = (tenants, showHoused, showArchived) => {
   return tenants.filter(tenant => (showHoused || tenant.lease) && (showArchived || !tenant.archived));
-}
-
+};
 
 export function Tenants() {
-  const userContext = useContext(UserContext)
+  const userContext = useContext(UserContext);
 
   const [allTenants, setAllTenants] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState([]);
@@ -62,18 +58,19 @@ export function Tenants() {
   const [searchedTenants, setSearchedTenants] = useState([]);
   const [displayTenants, setDisplayTenants] = useState([]);
   const [selectedTenants, setSelectedTenants] = useState([]);
-  const [nonSelectableRows, setNonSelectableRows] = useState([])
+  const [nonSelectableRows, setNonSelectableRows] = useState([]);
   const [showArchived, setShowArchived] = useState(false);
-  const [checkboxRenderCount, setCheckboxRenderCount] = useState(0)
-  const [showArchiveModal, setShowArchiveModal] = useState(false)
+  const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
+  const [showArchiveModal, setShowArchiveModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useMountEffect(() => {
     fetchAllTenants();
-  })
+  });
 
   const fetchAllTenants = () => {
     let allProperties;
-
+    setIsLoading(true);
     axios.get(`/api/properties`, makeAuthHeaders(userContext))
       .then(propertyResponse => {
         const { data: { properties } } = propertyResponse;
@@ -84,31 +81,32 @@ export function Tenants() {
       )
       .then((response) => {
         const { data: { tenants } } = response;
-        const tenantRows = formatTenantData(tenants)
-        const tenantsWithProperties = addPropertyNames(tenantRows, allProperties)
-        const sortedTenants = sortTenantData(tenantsWithProperties)
+        const tenantRows = formatTenantData(tenants);
+        const tenantsWithProperties = addPropertyNames(tenantRows, allProperties);
+        const sortedTenants = sortTenantData(tenantsWithProperties);
         setAllTenants(sortedTenants);
         setSearchedTenants(sortedTenants);
         setDisplayTenants(getDisplayTenants(sortedTenants, showHoused, showArchived));
 
         const archivedTenants = sortedTenants.filter(tenant => tenant.archived);
-        setNonSelectableRows(archivedTenants.map(archivedTenant => archivedTenant.id))
-
+        setNonSelectableRows(archivedTenants.map(archivedTenant => archivedTenant.id));
+        setIsLoading(false);
       })
       .catch((error) => {
-        Toast(error.message, "error")
+        setIsLoading(false);
+        Toast(error.message, "error");
       });
   }
 
   const handleToggleHoused = () => {
-    setShowHoused(!showHoused)
+    setShowHoused(!showHoused);
 
     if (isSearchActive) {
       setDisplayTenants(getDisplayTenants(searchedTenants, !showHoused, showArchived));
     } else {
       setDisplayTenants(getDisplayTenants(allTenants, !showHoused, showArchived));
     }
-    const newSelectedTentants = getDisplayTenants(selectedTenants, !showHoused, showArchived)
+    const newSelectedTentants = getDisplayTenants(selectedTenants, !showHoused, showArchived);
     setSelectedTenants(newSelectedTentants);
   }
 
@@ -121,8 +119,7 @@ export function Tenants() {
   const handleSearchOutput = (output, isTrue) => {
     setSearchedTenants(output);
     setIsSearchActive(isTrue);
-    setDisplayTenants(getDisplayTenants(output, showHoused, showArchived))
-
+    setDisplayTenants(getDisplayTenants(output, showHoused, showArchived));
   }
 
   const handleToggleArchived = () => {
@@ -136,7 +133,7 @@ export function Tenants() {
   }
 
   const toggleArchiveModal = () => {
-    setShowArchiveModal(!showArchiveModal)
+    setShowArchiveModal(!showArchiveModal);
   }
 
   const handleSelectRow = (tenant) => {
@@ -144,7 +141,7 @@ export function Tenants() {
   }
 
   const handleDeselectRow = (tenant) => {
-    setSelectedTenants(selectedTenants.filter(sTenant => sTenant.id !== tenant.id))
+    setSelectedTenants(selectedTenants.filter(sTenant => sTenant.id !== tenant.id));
   }
 
   const handleSelectAll = setSelectedTenants;
@@ -158,15 +155,15 @@ export function Tenants() {
     Promise.all(tenantIds.map(tenantId =>
       axios.delete(`/api/tenants/${tenantId}`, makeAuthHeaders(userContext))
         .then((response) => {
-          Toast(response.data.message, "success")
+          Toast(response.data.message, "success");
           setCheckboxRenderCount(checkboxRenderCount + 1);
         })
         .then(() => setSelectedTenants([]))
         .catch((error) => {
           Toast(error.message, "error");
-          console.log(error)
+          console.log(error);
         })
-    ))
+    ));
     fetchAllTenants();
     toggleArchiveModal();
   }
@@ -217,29 +214,34 @@ export function Tenants() {
         </div>
 
         <div className="tenants-list">
-          <BootstrapTable
-            key={`tables-of-tenants--${checkboxRenderCount}`} wrapperClasses='tenants-list-wrapper'
-            keyField='id'
-            data={displayTenants}
-            columns={columns}
-            selectRow={({
-              mode: 'checkbox',
-              clickToSelect: true,
-              onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
-              onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
-              sort: true,
-              headerColumnStyle: () => ({ width: "5%" }),
-              nonSelectable: nonSelectableRows,
-              nonSelectableStyle: () => ({ color: '#999999' })
-            })}
-            defaultSorted={[
-              {
-                dataField: 'propertyName',
-                order: 'asc'
-              }]}
-            bootstrap4={true}
-            headerClasses='table-header'
-          />
+          { isLoading
+            ? <Icon
+              icon="gear"
+              classNames="spinner" />
+            : <BootstrapTable
+              key={`tables-of-tenants--${checkboxRenderCount}`} wrapperClasses='tenants-list-wrapper'
+              keyField='id'
+              data={displayTenants}
+              columns={columns}
+              selectRow={({
+                mode: 'checkbox',
+                clickToSelect: true,
+                onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
+                onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
+                sort: true,
+                headerColumnStyle: () => ({ width: "5%" }),
+                nonSelectable: nonSelectableRows,
+                nonSelectableStyle: () => ({ color: '#999999' })
+              })}
+              defaultSorted={[
+                {
+                  dataField: 'propertyName',
+                  order: 'asc'
+                }]}
+              bootstrap4={true}
+              headerClasses='table-header'
+            />
+          }
         </div>
 
 

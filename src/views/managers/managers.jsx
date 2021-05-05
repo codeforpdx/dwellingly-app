@@ -8,6 +8,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 import UserContext from '../../UserContext';
+import Icon from '../../components/icon/Icon';
 import './managers.scss';
 
 const columns = [
@@ -104,7 +105,7 @@ const makeHeader = (context) => {
   return { Authorization: `Bearer ${context.user.accessJwt}` };
 };
 
-const getManagers = (header, storeInState) => {
+const getManagers = (header, storeInState, updateLoading) => {
   axios
     .post(`${process.env.REACT_APP_PROXY}/api/users/role`, 
     payload, 
@@ -113,21 +114,27 @@ const getManagers = (header, storeInState) => {
     .then((response) => {
       const convertedData = convertManagersDataForTable(response.data.users);
       storeInState(convertedData);
+      updateLoading(false);
     })
     .catch((error) => {
-      Toast(error);
+      updateLoading(false);
+      Toast(error.message, "error");
       console.log(error);
     });
 };
 
 const Managers = () => {
   const [managersData, setManagersData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const retrievedUserContext = useContext(UserContext);
   const axiosHeader = makeHeader(retrievedUserContext);
   
-  useEffect(() => getManagers(axiosHeader, setManagersData), []);
-  
+  useEffect(() => {
+    setIsLoading(true);
+    getManagers(axiosHeader, setManagersData, setIsLoading);
+  }, []);
+
   return (
     <div className="managers main-container">
       <div className="section-header">
@@ -148,15 +155,24 @@ const Managers = () => {
           Invite
         </button>
       </div>
-      {managersData && <BootstrapTable
-        keyField="id"
-        data={managersData}
-        columns={columns}
-        selectRow={selectRow}
-        bootstrap4={true}
-        headerClasses="table-header"
-        wrapperClasses="managers__table"
-      />}
+      <div className="managers-list">
+        {isLoading && 
+          <Icon
+            icon="gear"
+            classNames="spinner" />}
+
+        {managersData &&
+          <BootstrapTable
+            keyField="id"
+            data={managersData}
+            columns={columns}
+            selectRow={selectRow}
+            bootstrap4={true}
+            headerClasses="table-header"
+            wrapperClasses="managers-list-wrapper"
+          />
+          }
+      </div>
     </div>
   );
 };

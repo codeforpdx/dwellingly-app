@@ -13,7 +13,7 @@ function PropertyManagerCard({ manager, isEditing, removePropertyManager }) {
   return (
     <div className="property-manager-box box">
       <div>
-        <Link key={manager.id} to={`/manage/manager/${manager.id}`}>
+        <Link key={manager.id} to={`/manage/managers/${manager.id}`}>
           <p className="bold">{`${manager.firstName} ${manager.lastName}`}</p>
         </Link>
 

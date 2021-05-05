@@ -27,8 +27,11 @@
     }
   }
 
-  .properties-list{
+  .properties-list {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .properties-list-wrapper, table {
