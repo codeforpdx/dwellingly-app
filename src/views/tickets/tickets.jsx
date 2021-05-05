@@ -163,8 +163,7 @@ export class Tickets extends Component {
 
   handleAddNote = (noteText, ticketID) => {
     const newNote = {
-      text: noteText,
-      authorID: this.context.user.identity
+      text: noteText
     }
 
     axios.post(`/api/tickets/${ticketID}/notes`, newNote, makeAuthHeaders(this.context))
