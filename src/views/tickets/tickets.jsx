@@ -162,11 +162,8 @@ export class Tickets extends Component {
   };
 
   handleAddNote = (noteText, ticketID) => {
-    const newNote = {
-      text: noteText
-    }
 
-    axios.post(`/api/tickets/${ticketID}/notes`, newNote, makeAuthHeaders(this.context))
+    axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(this.context))
       .then(({ data }) => {
         const updatedSelectedTicket = this.state.selectedTicket;
         updatedSelectedTicket.notes.push(data)
