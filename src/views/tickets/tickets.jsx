@@ -163,13 +163,15 @@ export class Tickets extends Component {
 
   handleAddNote = (noteText, ticketID) => {
     const newNote = {
-      note: noteText,
+      text: noteText,
       authorID: this.context.user.identity
     }
 
-    axios.put(`/api/tickets/${ticketID}`, newNote, makeAuthHeaders(this.context))
+    axios.post(`/api/tickets/${ticketID}/notes`, newNote, makeAuthHeaders(this.context))
       .then(({ data }) => {
-        this.setState({ selectedTicket: data })
+        const updatedSelectedTicket = this.state.selectedTicket;
+        updatedSelectedTicket.notes.push(data)
+        this.setState({ selectedTicket: updatedSelectedTicket })
         this.getTickets(this.context);
       })
       .catch((error) => {
