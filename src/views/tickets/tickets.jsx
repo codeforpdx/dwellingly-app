@@ -13,6 +13,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import './tickets.scss';
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const pageButtonRenderer = ({
   page,
@@ -25,21 +26,21 @@ const pageButtonRenderer = ({
     e.preventDefault();
     onPageChange(page);
   };
-  if(title === 'previous page') {
+  if (title === 'previous page') {
     return (
       <li key={title} className="page-item">
         <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Prev</a>
       </li>
     );
   }
-  if(title === 'next page') {
+  if (title === 'next page') {
     return (
       <li key={title} className="page-item">
         <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Next</a>
       </li>
     );
   }
-  if(active) {
+  if (active) {
     return (
       <li key={page} className="active page-item">
         <a href="#" onClick={handleClick} title={title}>{page}</a>
@@ -139,7 +140,7 @@ export class Tickets extends Component {
   }];
 
   getTickets = (context) => {
-    axios.get(`/api/tickets`, { headers: { "Authorization": `Bearer ${context.user.accessJwt}` } })
+    axios.get(`/api/tickets`, axios.get(`/api/tickets`, makeAuthHeaders(context)))
       .then((response) => {
         this.setState({ tickets: response.data.tickets });
       })
@@ -159,6 +160,20 @@ export class Tickets extends Component {
       isFiltered: isTrue
     });
   };
+
+  handleAddNote = (noteText, ticketID) => {
+    axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(this.context))
+      .then(({ data }) => {
+        const updatedSelectedTicket = this.state.selectedTicket;
+        updatedSelectedTicket.notes.push(data)
+        this.setState({ selectedTicket: updatedSelectedTicket })
+        this.getTickets(this.context);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error)
+      })
+  }
 
   handleSelectRow = (ticket) =>
     this.setState({
@@ -186,7 +201,7 @@ export class Tickets extends Component {
     });
 
   deleteTickets = () => {
-    let ticketIds = this.state.selectedTickets.map( t => t.id )
+    let ticketIds = this.state.selectedTickets.map(t => t.id)
     axios({
       method: 'delete',
       url: '/api/tickets',
@@ -195,13 +210,13 @@ export class Tickets extends Component {
       },
       headers: { "Authorization": `Bearer ${this.context.user.accessJwt}` }
     }).then((response) => {
-        this.setState({
-          tickets: this.state.tickets.filter(t => !ticketIds.includes(t.id)),
-          selectedTickets: [],
-          showDeleteModal: false
-        });
-        Toast(response.data.message, "success");
-      })
+      this.setState({
+        tickets: this.state.tickets.filter(t => !ticketIds.includes(t.id)),
+        selectedTickets: [],
+        showDeleteModal: false
+      });
+      Toast(response.data.message, "success");
+    })
       .catch((error) => {
         Toast(error.message, "error");
       });
@@ -285,7 +300,7 @@ export class Tickets extends Component {
                         onSelectAll: (isSelect, rows) => isSelect ? this.handleSelectAll(rows) : this.handleDeselectAll(rows),
                         sort: true,
                         headerColumnStyle: () => ({ width: "5%" }),
-                        nonSelectableStyle: () => ({color: '#999999'})
+                        nonSelectableStyle: () => ({ color: '#999999' })
                       })}
                     />
                   </div>
@@ -293,8 +308,9 @@ export class Tickets extends Component {
                 <TicketModal
                   show={this.state.viewedTicket}
                   onClose={this.toggleTicketModal}
-                  ticket={this.state.viewedTicket}>
-                </TicketModal>
+                  ticket={this.state.selectedTicket}
+                  handleAddNote={this.handleAddNote}
+                />
               </div>
               {this.state.showDeleteModal &&
                 <Modal
@@ -303,11 +319,11 @@ export class Tickets extends Component {
                     <div className="content">
                       <p>You have selected the following {this.state.selectedTickets.length} tickets to be deleted:</p>
                       <ul className="archive-tickets-list has-text-weight-bold">
-                      {this.state.selectedTickets.map(t => (
-                        <li>{t.tenant}: {t.issue}</li>
-                      ))}
+                        {this.state.selectedTickets.map(t => (
+                          <li>{t.tenant}: {t.issue}</li>
+                        ))}
                       </ul>
-                      <br/>
+                      <br />
                       <p>Are you sure you want to delete these tickets? This cannot be undone.</p>
                     </div>
                   }
@@ -318,7 +334,7 @@ export class Tickets extends Component {
                   cancelButtonHandler={this.toggleDeleteModal}
                   cancelText="Cancel"
                   closeHandler={this.toggleDeleteModal}
-              />}
+                />}
             </div>
           );
         }}

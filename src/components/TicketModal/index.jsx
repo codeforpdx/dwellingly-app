@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import Card from "../card/Card";
+import AddNote from "../AddNote/AddNote"
 import { CARD_TYPES } from "../../constants";
 import Icon from "../icon/Icon";
 import "./TicketModal.scss";
 
 export const TicketModal = (props) => {
+  const [showAddNote, setShowAddNote] = useState(false)
   if (!props.show || !props.ticket) {
     return null;
   }
@@ -18,7 +20,17 @@ export const TicketModal = (props) => {
     updated_at,
     urgency,
     notes,
+    id
   } = props.ticket;
+
+  const toggleShowAddNote = () => {
+    setShowAddNote(!showAddNote)
+  }
+
+  const handleCloseTicket = () => {
+    setShowAddNote(false)
+    props.onClose();
+  }
 
   return (
     <div className="ticket-window-modal">
@@ -28,7 +40,7 @@ export const TicketModal = (props) => {
             <Card.Content>
               <div className="card__summary">
                 <div className="close-icon-container">
-                  <button type="button" onClick={props.onClose}>
+                  <button type="button" onClick={props.handleCloseTicket}>
                     <Icon id="close-icon" icon="close" />
                   </button>
                 </div>
@@ -78,7 +90,17 @@ export const TicketModal = (props) => {
             <Card.Content>
               <div className="ticket-card-bottom-header">
                 NOTES {notes ? notes.length : 0}
+                <div onClick={toggleShowAddNote}>
+                  <i className="fas fa-plus-circle icon-inline-space" />
+                </div>
               </div>
+              {showAddNote ?
+                <AddNote
+                  handleAddNote={props.handleAddNote}
+                  toggleShowAddNote={toggleShowAddNote}
+                  ticketID={id}
+                />
+                : null}
               {notes ? (
                 notes.map((note) => {
                   return (
