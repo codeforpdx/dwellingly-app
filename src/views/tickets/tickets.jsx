@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../../UserContext';
@@ -218,6 +219,7 @@ export function Tickets(props) {
               <div>
                 <div className="section-header">
                   <h2 className="page-title">Tickets</h2>
+                  <Link className="button is-primary is-rounded ml-4" to="/add/ticket">+ ADD NEW</Link>
                 </div>
                 <Search
                   input={tickets}
