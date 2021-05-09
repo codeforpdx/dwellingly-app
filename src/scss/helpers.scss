@@ -35,7 +35,7 @@
   padding: 10px;
   color: $blue;
   .fa-filter {
-      margin-right: 10px;
+    margin-right: 10px;
   }
 }
 
@@ -51,6 +51,12 @@
       margin-bottom: 10px;
     }
   }
+}
+
+.section-row-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .react-bootstrap-table-pagination {
@@ -69,10 +75,14 @@
 
 .pagination {
   .page-item {
-    & a {color: $brandBlue;}
+    & a {
+      color: $brandBlue;
+    }
     &.active {
-      a {color: $blue;}
-    }  
+      a {
+        color: $blue;
+      }
+    }
   }
 }
 

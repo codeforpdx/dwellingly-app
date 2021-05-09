@@ -12,6 +12,8 @@ import CalendarModal, {
   useCalendarState,
 } from "../../components/CalendarModal/CalendarModal";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./tickets.scss";
 
 const pageButtonRenderer = ({ page, active, disable, title, onPageChange }) => {
@@ -83,11 +85,8 @@ export function Tickets(props) {
   const [statusIsFiltered, setStatusIsFiltered] = useState(false);
   const [filteredStatusTickets, setFilteredStatusTickets] = useState([]);
 
-  console.log(isFiltered);
-  console.log(statusIsFiltered);
-  console.log(tickets);
-  console.log(filteredTickets);
-  console.log(filteredStatusTickets);
+  const [combinedTickets, setCombinedTickets] = useState([]);
+
   // const [filteredDates, setFilteredDates] = useState();
 
   const userContext = useContext(UserContext);
@@ -189,19 +188,52 @@ export function Tickets(props) {
     setStatus(e.target.innerHTML);
   };
 
-  const setFilteredOutputState = () => {
+  const updateFilteredOutputState = () => {
     let filteredSet = tickets.filter((ticket) => ticket.status === status);
-    console.log(filteredSet);
     setFilteredStatusTickets(filteredSet);
+  };
+
+  const combineSearchFilters = () => {
+    let filteredArray = [];
+
+    for (let i = 0; i < filteredStatusTickets.length; i++) {
+      filteredTickets.filter((item) => {
+        if (filteredStatusTickets[i].id === item.id) {
+          filteredArray.push(item);
+        }
+      });
+    }
+    setCombinedTickets(filteredArray);
+  };
+
+  const clearStatusFilter = () => {
+    setStatus(null);
+    setStatusIsFiltered(false);
+    setFilteredStatusTickets([]);
+  };
+
+  const showData = () => {
+    if (combinedTickets.length > 0) {
+      return combinedTickets;
+    } else if (filteredTickets.length > 0) {
+      return filteredTickets;
+    } else if (filteredStatusTickets.length > 0) {
+      return filteredStatusTickets;
+    } else {
+      return tickets;
+    }
   };
 
   useEffect(() => {
     getTickets(userContext);
-    console.log(status);
     if (statusIsFiltered && status) {
-      setFilteredOutputState();
+      updateFilteredOutputState();
     }
   }, [userContext, status, statusIsFiltered]);
+
+  useEffect(() => {
+    combineSearchFilters();
+  }, [filteredTickets, filteredStatusTickets]);
 
   return (
     <div className="main-container">
@@ -254,7 +286,15 @@ export function Tickets(props) {
                       </div>
                     </div>
                     <div className="filter-control">
-                      <label>Status</label>
+                      <div className="section-row-status">
+                        <label>Status</label>
+                        {statusIsFiltered ? (
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            onClick={clearStatusFilter}
+                          />
+                        ) : null}
+                      </div>
                       <div className="buttons has-addons">
                         <button
                           className="button is-rounded btn-group"
@@ -284,13 +324,7 @@ export function Tickets(props) {
           <div>
             <BootstrapTable
               keyField="id"
-              data={
-                isFiltered
-                  ? filteredTickets
-                  : statusIsFiltered
-                  ? filteredStatusTickets
-                  : tickets
-              }
+              data={showData()}
               columns={columns}
               pagination={paginationFactory(options)}
               defaultSortDirection="asc"
