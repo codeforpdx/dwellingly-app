@@ -101,35 +101,37 @@ export const TicketModal = (props) => {
                   ticketID={id}
                 />
                 : null}
-              {notes ? (
-                notes.map((note) => {
-                  return (
-                    <>
-                      <div className="ticket-card-note-header-row">
-                        <p
-                          style={{ float: "left" }}
-                          className="ticket-card-note-header"
-                        >
-                          {note.user}
-                        </p>
-                        <p
-                          style={{ float: "right" }}
-                          className="ticket-card-note-header"
-                        >
-                          {note.created_at}
-                        </p>
+              <div id="scroll-container">
+                {notes ? (
+                  notes.map((note) => {
+                    return (
+                      <div className="ticket-card-note-container">
+                        <div className="ticket-card-note-header-row">
+                          <p
+                            style={{ float: "left" }}
+                            className="ticket-card-note-header"
+                          >
+                            {note.user}
+                          </p>
+                          <p
+                            style={{ float: "right" }}
+                            className="ticket-card-note-header"
+                          >
+                            {note.created_at}
+                          </p>
+                        </div>
+                        <div className="ticket-card-note">
+                          <p>{note.text}</p>
+                        </div>
                       </div>
-                      <div className="ticket-card-note">
-                        <p>{note.text}</p>
-                      </div>
-                    </>
-                  );
-                })
-              ) : (
-                <div className="ticket-card-note">
-                  <p>No Notes found</p>
-                </div>
-              )}
+                    );
+                  })
+                ) : (
+                  <div className="ticket-card-note">
+                    <p>No Notes found</p>
+                  </div>
+                )}
+              </div>
             </Card.Content>
           </Card.Bottom>
         </Card>
