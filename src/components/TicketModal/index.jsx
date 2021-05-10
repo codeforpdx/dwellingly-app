@@ -40,7 +40,7 @@ export const TicketModal = (props) => {
             <Card.Content>
               <div className="card__summary">
                 <div className="close-icon-container">
-                  <button type="button" onClick={props.handleCloseTicket}>
+                  <button type="button" onClick={handleCloseTicket}>
                     <Icon id="close-icon" icon="close" />
                   </button>
                 </div>

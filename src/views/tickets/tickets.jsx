@@ -140,7 +140,7 @@ export class Tickets extends Component {
   }];
 
   getTickets = (context) => {
-    axios.get(`/api/tickets`, axios.get(`/api/tickets`, makeAuthHeaders(context)))
+    axios.get(`/api/tickets`, makeAuthHeaders(context))
       .then((response) => {
         this.setState({ tickets: response.data.tickets });
       })
@@ -164,9 +164,8 @@ export class Tickets extends Component {
   handleAddNote = (noteText, ticketID) => {
     axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(this.context))
       .then(({ data }) => {
-        const updatedSelectedTicket = this.state.selectedTicket;
-        updatedSelectedTicket.notes.push(data)
-        this.setState({ selectedTicket: updatedSelectedTicket })
+
+        this.state.viewedTicket.notes.push(data);
         this.getTickets(this.context);
       })
       .catch((error) => {
@@ -207,16 +206,16 @@ export class Tickets extends Component {
       url: '/api/tickets',
       data: {
         ids: ticketIds
-      },
-      headers: { "Authorization": `Bearer ${this.context.user.accessJwt}` }
-    }).then((response) => {
-      this.setState({
-        tickets: this.state.tickets.filter(t => !ticketIds.includes(t.id)),
-        selectedTickets: [],
-        showDeleteModal: false
-      });
-      Toast(response.data.message, "success");
-    })
+      }
+    }, makeAuthHeaders(this.context))
+      .then((response) => {
+        this.setState({
+          tickets: this.state.tickets.filter(t => !ticketIds.includes(t.id)),
+          selectedTickets: [],
+          showDeleteModal: false
+        });
+        Toast(response.data.message, "success");
+      })
       .catch((error) => {
         Toast(error.message, "error");
       });
@@ -308,7 +307,7 @@ export class Tickets extends Component {
                 <TicketModal
                   show={this.state.viewedTicket}
                   onClose={this.toggleTicketModal}
-                  ticket={this.state.selectedTicket}
+                  ticket={this.state.viewedTicket}
                   handleAddNote={this.handleAddNote}
                 />
               </div>
