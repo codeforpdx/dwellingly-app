@@ -62,7 +62,7 @@
 }
 
 #scroll-container {
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -74,10 +74,15 @@
   font-weight: bold;
   color: $darkGray;
   padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .ticket-card-note {
   font-weight: normal;
+  width: 100%;
+  max-height: 50px;
   padding: 1em .3em 1em 1em;
   border-radius: $border-radius--card;
   background-color: $lightGray;
@@ -103,9 +108,16 @@
   font-weight: normal;
 }
 
+.ticket-card-note-container {
+  max-height: 85px;
+  width: 98%;
+  margin-top: 5px;
+}
+
 .ticket-card-note-header-row {
   padding-bottom: 30px;
   font-size: 14px;
+  width: 100%;
 }
 
 .ticket-card-note-header {
