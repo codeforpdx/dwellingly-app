@@ -37,6 +37,10 @@
   }
 }
 
+#ticket-modal-icon-pencil {
+  margin-left: 15px;
+}
+
 #ticket-modal-title {
   margin: 0;
   font-size: 1rem;
@@ -127,4 +131,8 @@
 
 #in-progress {
   color: $orange;
+}
+
+.ticket-details-save {
+  margin-top: 25px;
 }
