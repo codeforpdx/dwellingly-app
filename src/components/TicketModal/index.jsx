@@ -89,7 +89,7 @@ export const TicketModal = (props) => {
           <Card.Bottom>
             <Card.Content>
               <div className="ticket-card-bottom-header">
-                NOTES {notes ? notes.length : 0}
+                {` NOTES (${notes ? notes.length : 0})`}
                 <div onClick={toggleShowAddNote}>
                   <i className="fas fa-plus-circle icon-inline-space" />
                 </div>

@@ -62,7 +62,7 @@
 }
 
 #scroll-container {
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -110,7 +110,7 @@
 
 .ticket-card-note-container {
   max-height: 85px;
-  width: 100%;
+  width: 98%;
   margin-top: 5px;
 }
 
