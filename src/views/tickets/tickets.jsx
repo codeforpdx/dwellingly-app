@@ -85,14 +85,19 @@ export function Tickets(props) {
   const [statusIsFiltered, setStatusIsFiltered] = useState(false);
   const [filteredStatusTickets, setFilteredStatusTickets] = useState([]);
 
+  const [filtersOn, setFiltersOn] = useState(false);
   const [combinedTickets, setCombinedTickets] = useState([]);
 
-  // const [filteredDates, setFilteredDates] = useState();
+  console.log(combinedTickets);
+
+  const [filteredDates, setFilteredDates] = useState([]);
+  const [datesInput, setDatesInput] = useState("");
+  const [dateIsFiltered, setDateIsFiltered] = useState(false);
 
   const userContext = useContext(UserContext);
 
   const calendarState = useCalendarState();
-  const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
+  const { dateTimeStart, dateTimeEnd } = calendarState;
 
   const toggleTicketModal = (ticket) => {
     setSelectedTicket((prevState) => (prevState ? null : ticket));
@@ -193,17 +198,89 @@ export function Tickets(props) {
     setFilteredStatusTickets(filteredSet);
   };
 
-  const combineSearchFilters = () => {
-    let filteredArray = [];
+  const updateSearchDates = () => {
+    let filteredSet = [];
+    for (let i = 0; i < tickets.length; i++) {
+      let createdAt = new Date(tickets[i].created_at);
+      let updatedAt = new Date(tickets[i].updated_at);
 
-    for (let i = 0; i < filteredStatusTickets.length; i++) {
-      filteredTickets.filter((item) => {
-        if (filteredStatusTickets[i].id === item.id) {
-          filteredArray.push(item);
-        }
-      });
+      if (
+        (createdAt >= dateTimeStart && createdAt <= dateTimeEnd) ||
+        (updatedAt >= dateTimeStart && updatedAt <= dateTimeEnd)
+      ) {
+        filteredSet.push(tickets[i]);
+      }
     }
-    setCombinedTickets(filteredArray);
+
+    console.log(filteredSet);
+    setFilteredDates(filteredSet);
+  };
+
+  const combineSearchAndStatusFilters = () => {
+    let searchStatusFiltered = [];
+
+    if (filteredTickets.length > 0 && filteredStatusTickets.length > 0) {
+      for (let i = 0; i < filteredStatusTickets.length; i++) {
+        filteredTickets.forEach((item) => {
+          if (filteredStatusTickets[i].id === item.id) {
+            searchStatusFiltered.push(item);
+          }
+        });
+      }
+      console.log(searchStatusFiltered);
+      return searchStatusFiltered;
+    } else if (isFiltered && statusIsFiltered) {
+      console.log(searchStatusFiltered);
+      return searchStatusFiltered;
+    } else if (isFiltered) {
+      console.log(filteredTickets);
+      return filteredTickets;
+    } else if (statusIsFiltered) {
+      console.log(filteredStatusTickets);
+      return filteredStatusTickets;
+    } else {
+      console.log(searchStatusFiltered);
+      return searchStatusFiltered;
+    }
+  };
+
+  const combineDatesFinalFilter = (searchStatusArray) => {
+    let finalFilteredArray = [];
+
+    console.log(filteredDates);
+    if (searchStatusArray.length > 0 && filteredDates.length > 0) {
+      for (let i = 0; i < filteredDates.length; i++) {
+        searchStatusArray.forEach((item) => {
+          if (filteredDates[i].id === item.id) {
+            finalFilteredArray.push(item);
+          }
+        });
+      }
+      console.log(finalFilteredArray);
+      setCombinedTickets(finalFilteredArray);
+    } else if (searchStatusArray.length > 0 && !dateIsFiltered) {
+      setCombinedTickets(searchStatusArray);
+    } else if (searchStatusArray.length > 0 && filteredDates.length === 0) {
+      setCombinedTickets([]);
+    } else if ((isFiltered || statusIsFiltered) && dateIsFiltered) {
+      setCombinedTickets([]);
+    } else if (searchStatusArray.length === 0) {
+      setCombinedTickets(filteredDates);
+    }
+    setFiltersOn(true);
+  };
+
+  const updateDates = () => {
+    if (dateTimeEnd !== dateTimeStart) {
+      setDateIsFiltered(true);
+      setDatesInput(
+        `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
+      );
+      updateSearchDates();
+    } else {
+      setDateIsFiltered(false);
+      setDatesInput("");
+    }
   };
 
   const clearStatusFilter = () => {
@@ -213,12 +290,14 @@ export function Tickets(props) {
   };
 
   const showData = () => {
-    if (combinedTickets.length > 0) {
+    if (filtersOn) {
       return combinedTickets;
-    } else if (filteredTickets.length > 0) {
+    } else if (isFiltered) {
       return filteredTickets;
-    } else if (filteredStatusTickets.length > 0) {
+    } else if (statusIsFiltered) {
       return filteredStatusTickets;
+    } else if (dateIsFiltered) {
+      return filteredDates;
     } else {
       return tickets;
     }
@@ -232,8 +311,28 @@ export function Tickets(props) {
   }, [userContext, status, statusIsFiltered]);
 
   useEffect(() => {
-    combineSearchFilters();
-  }, [filteredTickets, filteredStatusTickets]);
+    // updateSearchDates();
+    updateDates();
+    // updateSearchDates();
+  }, [dateTimeStart, dateTimeEnd]);
+
+  useEffect(() => {
+    if (isFiltered || statusIsFiltered || dateIsFiltered) {
+      combineDatesFinalFilter(combineSearchAndStatusFilters());
+      console.log("hello");
+    } else {
+      setFiltersOn(false);
+    }
+    // setFiltersOn()
+  }, [
+    filteredTickets,
+    filteredStatusTickets,
+    filteredDates,
+    isFiltered,
+    statusIsFiltered,
+    dateIsFiltered,
+    // combinedTickets,
+  ]);
 
   return (
     <div className="main-container">
@@ -266,11 +365,9 @@ export function Tickets(props) {
                       <div className="input is-rounded opened-from-input-container">
                         <Field
                           className="form-field opened-from-input"
-                          value={
-                            dateTimeEnd !== dateTimeStart
-                              ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
-                              : ""
-                          }
+                          value={datesInput}
+                          // value={props.values.dates}
+                          // name="dates"
                         />
                         <CalendarModal calendarState={calendarState} />
                       </div>
