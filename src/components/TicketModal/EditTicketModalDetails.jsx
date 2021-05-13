@@ -35,10 +35,16 @@ export default function TicketModalDetails({ ticket, handleEditDetails, getTicke
     if (sender !== ticket.sender) update.senderID = sender;
 
     if (update !== {}) {
+
       updateTicket(userContext.user, update, ticket.id)
         .then(data => {
           updateSelectedTicket(data)
           getTickets(userContext);
+          Toast("Ticket updated successfully", "success")
+        })
+        .catch((error) => {
+          Toast(error.message, "error");
+          console.log(error)
         })
     }
 
