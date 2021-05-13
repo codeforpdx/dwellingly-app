@@ -9,7 +9,6 @@ export default function TicketModalDetails({ ticket, handleEditDetails, getTicke
   const { created_at, sender } = ticket;
   const userContext = useContext(UserContext);
 
-
   const [tenant, setTenant] = useState(ticket.tenant);
   const [assigned, setAssigned] = useState(ticket.assigned);
   const [urgency, setUrgency] = useState(ticket.urgency.toUpperCase());
@@ -29,23 +28,17 @@ export default function TicketModalDetails({ ticket, handleEditDetails, getTicke
 
 
   const handleSubmit = () => {
-
-    handleEditDetails();
     let update = {};
     if (tenant !== ticket.tenant) update.tenantID = tenant;
     if (assigned !== ticket.assigned) update.assignedUserID = assigned;
     if (urgency !== ticket.urgency) update.urgency = urgency;
+    if (sender !== ticket.sender) update.senderID = sender;
 
     if (update !== {}) {
       updateTicket(userContext.user, update, ticket.id)
         .then(data => {
           updateSelectedTicket(data)
-
           getTickets(userContext);
-        })
-        .catch((error) => {
-          Toast(error.message, "error");
-          console.log(error)
         })
     }
 
