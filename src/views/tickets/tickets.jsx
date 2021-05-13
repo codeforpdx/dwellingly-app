@@ -317,7 +317,8 @@ export class Tickets extends Component {
                   updateSelectedTicket={this.updateSelectedTicket}
                 />
               </div>
-              {this.state.showDeleteModal &&
+              {
+                this.state.showDeleteModal &&
                 <Modal
                   titleText={this.state.selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
                   content={
@@ -339,11 +340,13 @@ export class Tickets extends Component {
                   cancelButtonHandler={this.toggleDeleteModal}
                   cancelText="Cancel"
                   closeHandler={this.toggleDeleteModal}
-                />}
+                />
+              }
             </div>
           );
-        }}
-      </UserContext.Consumer>
+        }
+        }
+      </UserContext.Consumer >
     );
   }
 }
