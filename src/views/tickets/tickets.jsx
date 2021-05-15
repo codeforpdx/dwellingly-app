@@ -162,6 +162,47 @@ export function Tickets(props) {
   const handleSelectRow = (ticket) => {
     setSelectedTickets([...selectedTickets, ticket])
   };
+  handleDeleteNote = (note) => {
+    console.log("🚀 ~ file: tickets.jsx ~ line 180 ~ Tickets ~ handleDeleteNote ~ note", note)
+
+    this.setState({
+      selectedNote: note,
+      deleteNoteModal: true
+    })
+  }
+
+
+  deleteNote = () => {
+    const { id, ticketid } = this.state.selectedNote;
+
+    axios.delete(`/api/tickets/${ticketid}/notes/${id}`, makeAuthHeaders(this.context))
+      .then(() => {
+
+        const filteredNotes = this.state.viewedTicket.notes.filter(note => note.id !== id);
+        this.setState({
+          viewedTicket: { ...this.state.viewedTicket, notes: filteredNotes }
+        });
+
+        this.getTickets(this.context);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error)
+      })
+
+    this.toggleDeleteNote();
+  }
+
+  toggleDeleteNote = () => {
+    this.setState({
+      deleteNoteModal: false
+    })
+  }
+
+  handleSelectRow = (ticket) =>
+    this.setState({
+      selectedTickets: [...this.state.selectedTickets, ticket]
+    });
 
   const handleDeselectRow = (ticket) => {
     console.log(selectedTickets)
@@ -174,9 +215,9 @@ export function Tickets(props) {
     setSelectedTickets(tickets)
   };
 
- const handleDeselectAll = (_) => {
-  setSelectedTickets([])
- };
+  const handleDeselectAll = (_) => {
+    setSelectedTickets([])
+  };
 
   const toggleDeleteModal = () => {
     setShowDeleteModal(!showDeleteModal)
@@ -213,126 +254,126 @@ export function Tickets(props) {
     getTickets(userContext);
   }, [userContext])
 
-    return (
-      <UserContext.Consumer>
-        {session => {
-          userContext = session;
-          return (
-            <div className='main-container'>
+  return (
+    <UserContext.Consumer>
+      {session => {
+        userContext = session;
+        return (
+          <div className='main-container'>
+            <div>
               <div>
-                <div>
-                  <div className="section-header">
-                    <h2 className="page-title">Tickets</h2>
-                  </div>
-                  <Search
-                    input={tickets}
-                    outputLocation={filteredTickets}
-                    isFilteredLocation={isFiltered}
-                    setIsFilteredStateFalse={setIsFilteredTicketsFalse}
-                    setOutputState={setOutputState}
-                    placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
-                  />
-                  <Accordion
-                    icon={<i className="fas fa-filter"></i>}
-                    header="Filters"
-                  >
-                    <div className="section-row">
-                      <div className="filter-control">
-                        <label>Opened From</label>
-                        <input className="input is-rounded"></input>
-                      </div>
-                      <div className="filter-control">
-                        <label>Category</label>
-                        <div className="select is-rounded">
-                          <select>
-                            <option>All</option>
-                            <option>Complaints</option>
-                            <option>Maintenance</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="filter-control">
-                        <label>Status</label>
-                        <div className="buttons has-addons">
-                          <button className="button is-rounded btn-group">New </button>
-                          <button className="button is-rounded btn-group">In Progress</button>
-                          <button className="button is-rounded btn-group">Closed</button>
-                        </div>
-                      </div>
-                    </div>
-                  </Accordion>
-                  <div className='bulk-actions-container py-3'>
-                    <button
-                      className={`button is-rounded is-primary ml-3 ${selectedTickets.length && 'is-active-button'}`}
-                      onClick={toggleDeleteModal}
-                    >
-                      <FontAwesomeIcon
-                        className="mr-3"
-                        icon={faTrash}
-                      />
-                      Delete Tickets
-                    </button>
-                  </div>
-                  <div>
-                    <BootstrapTable
-                      keyField="id"
-                      data={isFiltered === true ? filteredTickets : tickets}
-                      columns={columns}
-                      pagination={paginationFactory(options)}
-                      defaultSortDirection="asc"
-                      bootstrap4={true}
-                      headerClasses="table-header"
-                      classes="full-size-table"
-                      selectRow={({
-                        mode: 'checkbox',
-                        clickToSelect: true,
-                        onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
-                        onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
-                        sort: true,
-                        headerColumnStyle: () => ({ width: "5%" }),
-                        nonSelectableStyle: () => ({ color: '#999999' })
-                      })}
-                    />
-                  </div>
+                <div className="section-header">
+                  <h2 className="page-title">Tickets</h2>
                 </div>
-                <TicketModal
-                  show={viewedTicket}
-                  onClose={toggleTicketModal}
-                  ticket={viewedTicket}
-                  handleAddNote={handleAddNote}
-                  getTickets={getTickets}
-                  updateSelectedTicket={updateSelectedTicket}
+                <Search
+                  input={tickets}
+                  outputLocation={filteredTickets}
+                  isFilteredLocation={isFiltered}
+                  setIsFilteredStateFalse={setIsFilteredTicketsFalse}
+                  setOutputState={setOutputState}
+                  placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
                 />
-              </div>
-              {
-                showDeleteModal &&
-                <Modal
-                  titleText={selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
-                  content={
-                    <div className="content">
-                      <p>You have selected the following {selectedTickets.length} tickets to be deleted:</p>
-                      <ul className="archive-tickets-list has-text-weight-bold">
-                        {selectedTickets.map(t => (
-                          <li>{t.tenant}: {t.issue}</li>
-                        ))}
-                      </ul>
-                      <br />
-                      <p>Are you sure you want to delete these tickets? This cannot be undone.</p>
+                <Accordion
+                  icon={<i className="fas fa-filter"></i>}
+                  header="Filters"
+                >
+                  <div className="section-row">
+                    <div className="filter-control">
+                      <label>Opened From</label>
+                      <input className="input is-rounded"></input>
                     </div>
-                  }
-                  hasButtons={true}
-                  hasRedirectButton={false}
-                  confirmButtonHandler={deleteTickets}
-                  confirmText="Delete"
-                  cancelButtonHandler={toggleDeleteModal}
-                  cancelText="Cancel"
-                  closeHandler={toggleDeleteModal}
-                />
-              }
+                    <div className="filter-control">
+                      <label>Category</label>
+                      <div className="select is-rounded">
+                        <select>
+                          <option>All</option>
+                          <option>Complaints</option>
+                          <option>Maintenance</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="filter-control">
+                      <label>Status</label>
+                      <div className="buttons has-addons">
+                        <button className="button is-rounded btn-group">New </button>
+                        <button className="button is-rounded btn-group">In Progress</button>
+                        <button className="button is-rounded btn-group">Closed</button>
+                      </div>
+                    </div>
+                  </div>
+                </Accordion>
+                <div className='bulk-actions-container py-3'>
+                  <button
+                    className={`button is-rounded is-primary ml-3 ${selectedTickets.length && 'is-active-button'}`}
+                    onClick={toggleDeleteModal}
+                  >
+                    <FontAwesomeIcon
+                      className="mr-3"
+                      icon={faTrash}
+                    />
+                    Delete Tickets
+                  </button>
+                </div>
+                <div>
+                  <BootstrapTable
+                    keyField="id"
+                    data={isFiltered === true ? filteredTickets : tickets}
+                    columns={columns}
+                    pagination={paginationFactory(options)}
+                    defaultSortDirection="asc"
+                    bootstrap4={true}
+                    headerClasses="table-header"
+                    classes="full-size-table"
+                    selectRow={({
+                      mode: 'checkbox',
+                      clickToSelect: true,
+                      onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
+                      onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
+                      sort: true,
+                      headerColumnStyle: () => ({ width: "5%" }),
+                      nonSelectableStyle: () => ({ color: '#999999' })
+                    })}
+                  />
+                </div>
+              </div>
+              <TicketModal
+                show={viewedTicket}
+                onClose={toggleTicketModal}
+                ticket={viewedTicket}
+                handleAddNote={handleAddNote}
+                getTickets={getTickets}
+                updateSelectedTicket={updateSelectedTicket}
+              />
             </div>
-          );
-        }
-        }
-      </UserContext.Consumer>
-    );
+            {
+              showDeleteModal &&
+              <Modal
+                titleText={selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
+                content={
+                  <div className="content">
+                    <p>You have selected the following {selectedTickets.length} tickets to be deleted:</p>
+                    <ul className="archive-tickets-list has-text-weight-bold">
+                      {selectedTickets.map(t => (
+                        <li>{t.tenant}: {t.issue}</li>
+                      ))}
+                    </ul>
+                    <br />
+                    <p>Are you sure you want to delete these tickets? This cannot be undone.</p>
+                  </div>
+                }
+                hasButtons={true}
+                hasRedirectButton={false}
+                confirmButtonHandler={deleteTickets}
+                confirmText="Delete"
+                cancelButtonHandler={toggleDeleteModal}
+                cancelText="Cancel"
+                closeHandler={toggleDeleteModal}
+              />
+            }
+          </div>
+        );
+      }
+      }
+    </UserContext.Consumer>
+  );
 }

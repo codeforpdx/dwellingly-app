@@ -9,12 +9,13 @@ import EditTicketModalDetails from "./EditTicketModalDetails";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 
 
-export const TicketModal = (props) => {
+
+export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onClose, getTickets, updateSelectedTicket }) => {
   const [showAddNote, setShowAddNote] = useState(false)
-  // const [isEditing, setEditingStatus] = useState(false);
+  const [editNotes, setEditNotes] = useState(false);
   const { isEditing, setEditingStatus } = useEditingStatus()
 
-  if (!props.show || !props.ticket) {
+  if (!show || !ticket) {
     return null;
   }
   const {
@@ -22,7 +23,7 @@ export const TicketModal = (props) => {
     status,
     notes,
     id
-  } = props.ticket;
+  } = ticket;
 
   const toggleShowAddNote = () => {
     setShowAddNote(!showAddNote)
@@ -35,7 +36,17 @@ export const TicketModal = (props) => {
   const handleCloseTicket = () => {
     setEditingStatus(false);
     setShowAddNote(false)
-    props.onClose();
+    setEditNotes(false)
+    onClose();
+  }
+
+  const handleEditNotes = () => {
+    setEditNotes(!editNotes);
+  }
+
+  const localDeleteNote = (note) => {
+    setEditNotes(false);
+    handleDeleteNote(note);
   }
 
   return (
@@ -64,13 +75,13 @@ export const TicketModal = (props) => {
                 <hr />
                 {isEditing ?
                   <EditTicketModalDetails
-                    ticket={props.ticket}
+                    ticket={ticket}
                     handleIsEditing={handleIsEditing}
-                    getTickets={props.getTickets}
-                    updateSelectedTicket={props.updateSelectedTicket}
+                    getTickets={getTickets}
+                    updateSelectedTicket={updateSelectedTicket}
                   />
                   :
-                  <TicketModalDetails ticket={props.ticket} />
+                  <TicketModalDetails ticket={ticket} />
                 }
               </div>
             </Card.Content>
@@ -79,13 +90,20 @@ export const TicketModal = (props) => {
             <Card.Content>
               <div className="ticket-card-bottom-header">
                 {` NOTES (${notes ? notes.length : 0})`}
-                <div onClick={toggleShowAddNote}>
-                  <i className="fas fa-plus-circle icon-inline-space" />
+                <div className="ticket-note-button-container">
+                  <div onClick={toggleShowAddNote}>
+                    <i className="fas fa-plus-circle icon-inline-space" />
+                  </div>
+                  <div
+                    id="ticket-modal-icon-pencil"
+                    onClick={handleEditNotes}>
+                    <Icon icon="pencil" />
+                  </div>
                 </div>
               </div>
               {showAddNote ?
                 <AddNote
-                  handleAddNote={props.handleAddNote}
+                  handleAddNote={handleAddNote}
                   toggleShowAddNote={toggleShowAddNote}
                   ticketID={id}
                 />
@@ -96,18 +114,25 @@ export const TicketModal = (props) => {
                     return (
                       <div className="ticket-card-note-container">
                         <div className="ticket-card-note-header-row">
-                          <p
-                            style={{ float: "left" }}
-                            className="ticket-card-note-header"
-                          >
-                            {note.user}
-                          </p>
-                          <p
+                          <div className="ticket-card-note-header-row-left">
+                            {editNotes ?
+                              <div onClick={() => localDeleteNote(note)}>
+                                <i className="fas fa-minus-circle icon-inline-space" />
+                              </div>
+                              : null
+                            }
+                            <div
+                              className="ticket-card-note-header"
+                            >
+                              {note.user}
+                            </div>
+                          </div>
+                          <div
                             style={{ float: "right" }}
                             className="ticket-card-note-header"
                           >
                             {note.created_at}
-                          </p>
+                          </div>
                         </div>
                         <div className="ticket-card-note">
                           <p>{note.text}</p>
