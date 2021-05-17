@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import { Form, Field, Formik } from "formik";
+import { Field, Formik } from "formik";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import UserContext from "../../UserContext";
 import Accordion from "../../components/Accordion";
@@ -13,7 +13,7 @@ import CalendarModal, {
 } from "../../components/CalendarModal/CalendarModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import "./tickets.scss";
 
 const pageButtonRenderer = ({ page, active, disable, title, onPageChange }) => {
@@ -85,19 +85,17 @@ export function Tickets(props) {
   const [statusIsFiltered, setStatusIsFiltered] = useState(false);
   const [filteredStatusTickets, setFilteredStatusTickets] = useState([]);
 
-  const [filtersOn, setFiltersOn] = useState(false);
-  const [combinedTickets, setCombinedTickets] = useState([]);
-
-  console.log(combinedTickets);
-
   const [filteredDates, setFilteredDates] = useState([]);
   const [datesInput, setDatesInput] = useState("");
   const [dateIsFiltered, setDateIsFiltered] = useState(false);
 
+  const [filtersOn, setFiltersOn] = useState(false);
+  const [combinedTickets, setCombinedTickets] = useState([]);
+
   const userContext = useContext(UserContext);
 
   const calendarState = useCalendarState();
-  const { dateTimeStart, dateTimeEnd } = calendarState;
+  const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
   const toggleTicketModal = (ticket) => {
     setSelectedTicket((prevState) => (prevState ? null : ticket));
@@ -188,7 +186,7 @@ export function Tickets(props) {
 
   const updateFilteredStatus = (e) => {
     if (!statusIsFiltered) {
-      setStatusIsFiltered(true); // create if/else to avoid repetition
+      setStatusIsFiltered(true);
     }
     setStatus(e.target.innerHTML);
   };
@@ -212,7 +210,6 @@ export function Tickets(props) {
       }
     }
 
-    console.log(filteredSet);
     setFilteredDates(filteredSet);
   };
 
@@ -227,19 +224,14 @@ export function Tickets(props) {
           }
         });
       }
-      console.log(searchStatusFiltered);
       return searchStatusFiltered;
     } else if (isFiltered && statusIsFiltered) {
-      console.log(searchStatusFiltered);
       return searchStatusFiltered;
     } else if (isFiltered) {
-      console.log(filteredTickets);
       return filteredTickets;
     } else if (statusIsFiltered) {
-      console.log(filteredStatusTickets);
       return filteredStatusTickets;
     } else {
-      console.log(searchStatusFiltered);
       return searchStatusFiltered;
     }
   };
@@ -247,7 +239,6 @@ export function Tickets(props) {
   const combineDatesFinalFilter = (searchStatusArray) => {
     let finalFilteredArray = [];
 
-    console.log(filteredDates);
     if (searchStatusArray.length > 0 && filteredDates.length > 0) {
       for (let i = 0; i < filteredDates.length; i++) {
         searchStatusArray.forEach((item) => {
@@ -256,7 +247,6 @@ export function Tickets(props) {
           }
         });
       }
-      console.log(finalFilteredArray);
       setCombinedTickets(finalFilteredArray);
     } else if (searchStatusArray.length > 0 && !dateIsFiltered) {
       setCombinedTickets(searchStatusArray);
@@ -311,19 +301,15 @@ export function Tickets(props) {
   }, [userContext, status, statusIsFiltered]);
 
   useEffect(() => {
-    // updateSearchDates();
     updateDates();
-    // updateSearchDates();
   }, [dateTimeStart, dateTimeEnd]);
 
   useEffect(() => {
     if (isFiltered || statusIsFiltered || dateIsFiltered) {
       combineDatesFinalFilter(combineSearchAndStatusFilters());
-      console.log("hello");
     } else {
       setFiltersOn(false);
     }
-    // setFiltersOn()
   }, [
     filteredTickets,
     filteredStatusTickets,
@@ -331,7 +317,6 @@ export function Tickets(props) {
     isFiltered,
     statusIsFiltered,
     dateIsFiltered,
-    // combinedTickets,
   ]);
 
   return (
@@ -340,6 +325,9 @@ export function Tickets(props) {
         <div>
           <div className="section-header">
             <h2 className="page-title">Tickets</h2>
+            {isFiltered || statusIsFiltered || dateIsFiltered ? (
+              <FontAwesomeIcon icon={faToggleOn} />
+            ) : null}
           </div>
           <Formik>
             {() => (
@@ -360,26 +348,21 @@ export function Tickets(props) {
                 >
                   <div className="section-row">
                     <div className="filter-control opened-from-container">
-                      <label>Opened From</label>
-
+                      <div className="section-row-status">
+                        <label>Opened From</label>
+                        {dateIsFiltered ? (
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            onClick={resetDates}
+                          />
+                        ) : null}
+                      </div>
                       <div className="input is-rounded opened-from-input-container">
                         <Field
                           className="form-field opened-from-input"
                           value={datesInput}
-                          // value={props.values.dates}
-                          // name="dates"
                         />
                         <CalendarModal calendarState={calendarState} />
-                      </div>
-                    </div>
-                    <div className="filter-control">
-                      <label>Category</label>
-                      <div className="select is-rounded">
-                        <select>
-                          <option>All</option>
-                          <option>Complaints</option>
-                          <option>Maintenance</option>
-                        </select>
                       </div>
                     </div>
                     <div className="filter-control">
