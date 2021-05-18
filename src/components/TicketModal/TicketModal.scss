@@ -12,7 +12,7 @@
 }
 
 .ticket-modal-container {
-  width: 20%;
+  width: 25%;
   min-width: 300px;
   top: 50%;
   left: 50%;
@@ -23,7 +23,7 @@
 
 .ticket-modal-title-container {
   display: flex;
-  margin-left: 1em;
+  align-items: flex-end;
 }
 
 .close-icon-container {
@@ -38,7 +38,8 @@
 }
 
 #ticket-modal-icon-pencil {
-  margin-left: 15px;
+  margin-left: 5px;
+  margin-bottom: 15px;
 }
 
 #ticket-modal-title {
@@ -49,12 +50,12 @@
 }
 
 #ticket-modal-issue {
-  margin-left: 1.5em;
-  width: 60%;
   margin-bottom: 1em;
+  padding-top: 1em;
   color: $darkBlue;
   font-weight: bold;
   line-height: normal;
+  text-align: left;
 }
 
 .ticket-details-section {

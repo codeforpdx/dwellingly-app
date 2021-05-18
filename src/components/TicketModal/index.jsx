@@ -6,10 +6,14 @@ import Icon from "../icon/Icon";
 import "./TicketModal.scss";
 import TicketModalDetails from "./TicketModalDetails";
 import EditTicketModalDetails from "./EditTicketModalDetails";
+import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
+
 
 export const TicketModal = (props) => {
   const [showAddNote, setShowAddNote] = useState(false)
-  const [editDetails, setEditDetails] = useState(false);
+  // const [isEditing, setEditingStatus] = useState(false);
+  const { isEditing, setEditingStatus } = useEditingStatus()
+
   if (!props.show || !props.ticket) {
     return null;
   }
@@ -24,12 +28,12 @@ export const TicketModal = (props) => {
     setShowAddNote(!showAddNote)
   }
 
-  const handleEditDetails = () => {
-    setEditDetails(!editDetails)
+  const handleIsEditing = (input = !isEditing) => {
+    setEditingStatus(input)
   }
 
   const handleCloseTicket = () => {
-    setEditDetails(false);
+    setEditingStatus(false);
     setShowAddNote(false)
     props.onClose();
   }
@@ -46,24 +50,22 @@ export const TicketModal = (props) => {
                     <Icon id="close-icon" icon="close" />
                   </button>
                 </div>
+                <h3 id="ticket-modal-title" className="subtitle">
+                  {status.toUpperCase()}
+                </h3>
                 <div className="ticket-modal-title-container">
-                  <h3 id="ticket-modal-title" className="subtitle">
-                    {status.toUpperCase()}
-                  </h3>
-                  <div
-                    id="ticket-modal-icon-pencil"
-                    onClick={handleEditDetails}>
-                    <Icon icon="pencil" />
-                  </div>
+                  <TitleAndPen
+                    title={issue}
+                    isEditing={isEditing}
+                    setEditingStatus={setEditingStatus}
+                  />
                 </div>
-                <h5 id="ticket-modal-issue" className="meta">
-                  {issue}
-                </h5>
+
                 <hr />
-                {editDetails ?
+                {isEditing ?
                   <EditTicketModalDetails
                     ticket={props.ticket}
-                    handleEditDetails={handleEditDetails}
+                    handleIsEditing={handleIsEditing}
                     getTickets={props.getTickets}
                     updateSelectedTicket={props.updateSelectedTicket}
                   />

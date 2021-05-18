@@ -5,7 +5,8 @@ import "./TicketModal.scss";
 import SearchableDropDown from "../../components/SearchableDropDown/SearchableDropDown"
 import { updateTicket, fetchAllTenants, fetchAllManagers } from './EditTicketModalFetches';
 
-export default function TicketModalDetails({ ticket, handleEditDetails, getTickets, updateSelectedTicket }) {
+
+export default function TicketModalDetails({ ticket, handleIsEditing, getTickets, updateSelectedTicket }) {
   const { created_at, sender } = ticket;
   const userContext = useContext(UserContext);
 
@@ -25,6 +26,10 @@ export default function TicketModalDetails({ ticket, handleEditDetails, getTicke
       .then(mArray => setManagerArray(mArray));
 
   }, [])
+
+  const handleCancel = () => {
+    handleIsEditing(false);
+  }
 
 
   const handleSubmit = () => {
@@ -47,7 +52,7 @@ export default function TicketModalDetails({ ticket, handleEditDetails, getTicke
         })
     }
 
-    handleEditDetails();
+    handleIsEditing(false);
   }
 
 
@@ -77,7 +82,7 @@ export default function TicketModalDetails({ ticket, handleEditDetails, getTicke
       </div>
       <div
         className="ticket-details-section"
-        style={{ float: "right", textAlign: "right" }}
+        style={{ float: "right", textAlign: "right", position: "relative" }}
       >
         <div className="ticket-details-section">
           <p className="ticket-detail-label">URGENCY</p>
@@ -96,8 +101,13 @@ export default function TicketModalDetails({ ticket, handleEditDetails, getTicke
         </div>
         <div className="ticket-details-save">
           <button
+            className="button is-secondary is-rounded ml-4 is-small"
+            onClick={handleCancel}>
+            Cancel
+        </button>
+          <button
             className="button is-primary is-rounded ml-4 is-small"
-            onClick={() => handleSubmit()}>
+            onClick={handleSubmit}>
             SAVE
         </button>
         </div>
