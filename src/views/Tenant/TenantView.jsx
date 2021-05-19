@@ -148,7 +148,7 @@ const Tenant = () => {
       const propertyResponse = await client.get(propertyUrl);
       property = propertyResponse.data;
     }
-    const ticketsResponse = await client.get(`/api/tickets?tenant=${tenant.id}`);
+    const ticketsResponse = await client.get(`/api/tickets?tenant_id=${tenant.id}`);
     const tickets = ticketsResponse.data;
     setState({ tenant, property, tickets });
 

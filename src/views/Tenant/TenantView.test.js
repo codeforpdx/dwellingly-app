@@ -28,7 +28,7 @@ const mockProperty = {
 const server = setupServer(
   rest.get("/api/tenants/42", (req, res, ctx) => res(ctx.json(mockTenant))),
   rest.get("/api/properties/mock1", (req, res, ctx) => res(ctx.json(mockProperty))),
-  rest.get("/api/tickets?tenant=42", (req, res, ctx) => res(ctx.json({}))),
+  rest.get("/api/tickets?tenant_id=42", (req, res, ctx) => res(ctx.json({}))),
   rest.post("/api/users/role", (req, res, ctx) => res(ctx.json([]))),
 );
 
