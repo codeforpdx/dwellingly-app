@@ -1,24 +1,25 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import Card from "../card/Card";
 import AddNote from "../AddNote/AddNote"
 import { CARD_TYPES } from "../../constants";
 import Icon from "../icon/Icon";
 import "./TicketModal.scss";
+import TicketModalDetails from "./TicketModalDetails";
+import EditTicketModalDetails from "./EditTicketModalDetails";
+import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
+
 
 export const TicketModal = (props) => {
   const [showAddNote, setShowAddNote] = useState(false)
+  // const [isEditing, setEditingStatus] = useState(false);
+  const { isEditing, setEditingStatus } = useEditingStatus()
+
   if (!props.show || !props.ticket) {
     return null;
   }
   const {
-    assigned,
     issue,
-    created_at,
-    sender,
     status,
-    tenant,
-    updated_at,
-    urgency,
     notes,
     id
   } = props.ticket;
@@ -27,7 +28,12 @@ export const TicketModal = (props) => {
     setShowAddNote(!showAddNote)
   }
 
+  const handleIsEditing = (input = !isEditing) => {
+    setEditingStatus(input)
+  }
+
   const handleCloseTicket = () => {
+    setEditingStatus(false);
     setShowAddNote(false)
     props.onClose();
   }
@@ -44,45 +50,28 @@ export const TicketModal = (props) => {
                     <Icon id="close-icon" icon="close" />
                   </button>
                 </div>
+                <h3 id="ticket-modal-title" className="subtitle">
+                  {status.toUpperCase()}
+                </h3>
                 <div className="ticket-modal-title-container">
-                  <Icon icon="comment" />
-                  <h3 id="ticket-modal-title" className="subtitle">
-                    {status.toUpperCase()}
-                  </h3>
+                  <TitleAndPen
+                    title={issue}
+                    isEditing={isEditing}
+                    setEditingStatus={setEditingStatus}
+                  />
                 </div>
-                <h5 id="ticket-modal-issue" className="meta">
-                  {issue}
-                </h5>
+
                 <hr />
-                <div>
-                  <div style={{ float: "left" }}>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">SENDER</p>
-                      <p>{sender}</p>
-                    </div>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">TENANT</p>
-                      <p>{tenant}</p>
-                    </div>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">ASSIGNEE</p>
-                      <p>{assigned}</p>
-                    </div>
-                  </div>
-                  <div
-                    className="ticket-details-section"
-                    style={{ float: "right", textAlign: "right" }}
-                  >
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">URGENCY</p>
-                      <p>{urgency.toUpperCase()}</p>
-                    </div>
-                    <div className="ticket-details-section">
-                      <p className="ticket-detail-label">SENT</p>
-                      <p>{created_at}</p>
-                    </div>
-                  </div>
-                </div>
+                {isEditing ?
+                  <EditTicketModalDetails
+                    ticket={props.ticket}
+                    handleIsEditing={handleIsEditing}
+                    getTickets={props.getTickets}
+                    updateSelectedTicket={props.updateSelectedTicket}
+                  />
+                  :
+                  <TicketModalDetails ticket={props.ticket} />
+                }
               </div>
             </Card.Content>
           </Card.Top>

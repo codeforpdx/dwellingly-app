@@ -221,6 +221,10 @@ export class Tickets extends Component {
       });
   }
 
+  updateSelectedTicket = (updatedTicket) => {
+    this.setState({ viewedTicket: updatedTicket });
+  }
+
   render() {
     return (
       <UserContext.Consumer>
@@ -309,9 +313,12 @@ export class Tickets extends Component {
                   onClose={this.toggleTicketModal}
                   ticket={this.state.viewedTicket}
                   handleAddNote={this.handleAddNote}
+                  getTickets={this.getTickets}
+                  updateSelectedTicket={this.updateSelectedTicket}
                 />
               </div>
-              {this.state.showDeleteModal &&
+              {
+                this.state.showDeleteModal &&
                 <Modal
                   titleText={this.state.selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
                   content={
@@ -333,11 +340,13 @@ export class Tickets extends Component {
                   cancelButtonHandler={this.toggleDeleteModal}
                   cancelText="Cancel"
                   closeHandler={this.toggleDeleteModal}
-                />}
+                />
+              }
             </div>
           );
-        }}
-      </UserContext.Consumer>
+        }
+        }
+      </UserContext.Consumer >
     );
   }
 }
