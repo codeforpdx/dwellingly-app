@@ -8,12 +8,18 @@ import TicketModalDetails from "./TicketModalDetails";
 import EditTicketModalDetails from "./EditTicketModalDetails";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 
+const sortNotes = (noteA, noteB) => {
+  if (noteA.created_at > noteB.created_at) return -1;
+  return 1;
+}
 
 
 export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onClose, getTickets, updateSelectedTicket }) => {
+
   const [showAddNote, setShowAddNote] = useState(false)
   const [editNotes, setEditNotes] = useState(false);
-  const { isEditing, setEditingStatus } = useEditingStatus()
+  const sortedNotes = ticket ? ticket.notes.sort(sortNotes) : null;
+  const { isEditing, setEditingStatus } = useEditingStatus();
 
   if (!show || !ticket) {
     return null;
@@ -112,8 +118,8 @@ export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onC
                 />
                 : null}
               <div id="scroll-container">
-                {notes ? (
-                  notes.map((note) => {
+                {sortedNotes ? (
+                  sortedNotes.map((note) => {
                     return (
                       <div className="ticket-card-note-container">
                         <div className="ticket-card-note-header-row">
