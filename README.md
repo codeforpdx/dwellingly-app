@@ -14,9 +14,8 @@ This serves as the Frontend Repo of the Full Stack Application for [JOIN Organiz
 
 #### Prerequisite Technologies
 
-- [Node && npm](https://nodejs.org/en/download/)
+- [Node && npm](https://nodejs.org/en/download/) (node version 14.16.1, npm version 6.14.12)
 - [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03)
-
 
 #### Getting Started
 
@@ -25,15 +24,15 @@ Once necessary technologies are installed on your machine:
 From Terminal:
 
 - Navigate to your desired directory from the command line:
-    example:`cd Desktop/CodeForPDX/Dwellingly`
+  example:`cd Desktop/CodeForPDX/Dwellingly`
 - Clone Project - `git clone https://github.com/codeforpdx/dwellingly-app.git`
 - Create your own working branch:
-    example: `git checkout -b add-new-component`
-
+  example: `git checkout -b add-new-component`
 
 #### Installing
 
 From terminal:
+
 - Navigate to app's directory: `cd dwellingly-app`
 - Install: `npm install`
 - Launch: `npm start`
