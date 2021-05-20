@@ -14,7 +14,8 @@ This serves as the Frontend Repo of the Full Stack Application for [JOIN Organiz
 
 #### Prerequisite Technologies
 
-- [Node && npm](https://nodejs.org/en/download/) (node version 14.16.1, npm version 6.14.12)
+- [Node && npm](https://nodejs.org/en/download/)
+  (Last tested with node version 14.16.1, npm version 6.14.12)
 - [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03)
 
 #### Getting Started
