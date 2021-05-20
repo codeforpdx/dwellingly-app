@@ -91,14 +91,17 @@ export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onC
               <div className="ticket-card-bottom-header">
                 {` NOTES (${notes ? notes.length : 0})`}
                 <div className="ticket-note-button-container">
-                  <div onClick={toggleShowAddNote}>
-                    <i className="fas fa-plus-circle icon-inline-space" />
-                  </div>
-                  <div
-                    id="ticket-modal-icon-pencil"
-                    onClick={handleEditNotes}>
-                    <Icon icon="pencil" />
-                  </div>
+                  <button
+                    onClick={toggleShowAddNote}
+                    className={`rounded${showAddNote ? "--is-editing" : ""}`} >
+                    <i className={`fas fa-plus icon`} />
+                  </button>
+                  <button
+                    className={`rounded${editNotes ? "--is-editing" : ""}`}
+                    onClick={handleEditNotes}
+                  >
+                    <i className="fas fa-pen icon"></i>
+                  </button>
                 </div>
               </div>
               {showAddNote ?
@@ -150,6 +153,6 @@ export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onC
           </Card.Bottom>
         </Card>
       </div>
-    </div>
+    </div >
   );
 };

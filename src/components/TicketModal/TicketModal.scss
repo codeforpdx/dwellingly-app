@@ -145,3 +145,31 @@
 .ticket-details-save {
   margin-top: 25px;
 }
+
+.rounded {
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 22px;
+  height: 22px;
+  border: $darkGray;
+  border-radius: 50%;
+  background-color: $darkGray;
+  cursor: pointer;
+  .icon {
+    font-size: 12px;
+    color: $white;
+  }
+}
+
+.rounded--is-editing {
+  @extend .rounded;
+  border: $blue;
+  background-color: $blue;
+  cursor: pointer;
+  .icon {
+    font-size: 12px;
+    color: $white;
+  }
+}
