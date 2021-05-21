@@ -36,7 +36,10 @@ export const AddStaffMember = () => {
   const context = useContext(UserContext);
 
   const handleSave = (data) => {
-    axios.post("/api/user/invite", data, makeAuthHeaders(context))
+    axios.post("/api/user/invite", {
+      ...data,
+      role: data.makeAdmin ? RoleEnum.ADMIN : RoleEnum.STAFF
+    }, makeAuthHeaders(context))
       .then(function(response) {
         Toast("User created! An invite email has been sent.", "success");
       })
