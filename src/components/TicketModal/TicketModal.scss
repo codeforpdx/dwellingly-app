@@ -86,21 +86,6 @@
   display: flex;
 }
 
-.ticket-card-note {
-  font-weight: normal;
-  width: 100%;
-  max-height: 50px;
-  padding: 1em .3em 1em 1em;
-  border-radius: $border-radius--card;
-  background-color: $lightGray;
-  display: flex;
-  text-align: right;
-  p {
-    color: $darkBlue;
-    font-weight: normal;
-    font-size: 14px;
-  }
-}
 
 .ticket-card-notes-list {
   list-style: none;
@@ -115,28 +100,6 @@
   font-weight: normal;
 }
 
-.ticket-card-note-container {
-  max-height: 85px;
-  width: 98%;
-  margin-top: 5px;
-}
-
-.ticket-card-note-header-row {
-  padding-bottom: 5px;
-  font-size: 14px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.ticket-card-note-header-row-left {
-  display: flex;
-}
-
-.ticket-card-note-header {
-  color: $mediumGray;
-  font-weight: normal;
-}
 
 #in-progress {
   color: $orange;

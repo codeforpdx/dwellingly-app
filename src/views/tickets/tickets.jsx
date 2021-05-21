@@ -163,12 +163,45 @@ export function Tickets(props) {
     setSelectedTickets([...selectedTickets, ticket])
   };
   handleDeleteNote = (note) => {
-    console.log("🚀 ~ file: tickets.jsx ~ line 180 ~ Tickets ~ handleDeleteNote ~ note", note)
-
     this.setState({
       selectedNote: note,
       deleteNoteModal: true
     })
+  }
+
+  handleEditNoteText = (note) => {
+    this.setState({
+      selectedNote: note,
+      editNoteModal: true
+    })
+  }
+
+
+  editNote = () => {
+    const ticketID = this.state.viewedTicket.id;
+    const { selectedNote } = this.state;
+
+    axios.patch(
+      `/api/tickets/${ticketID}/notes/${selectedNote.id}`,
+      { text: selectedNote.text },
+      makeAuthHeaders(this.context))
+      .then(({ data }) => {
+
+        this.setState({
+          viewedTicket: {
+            ...this.state.viewedTicket,
+            notes: this.state.viewedTicket.notes.map(note => {
+              if (note.id === data.id) note.text = data.text;
+              return note;
+            })
+          },
+          editNoteModal: false
+        })
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error)
+      })
   }
 
 
@@ -190,12 +223,13 @@ export function Tickets(props) {
         console.log(error)
       })
 
-    this.toggleDeleteNote();
+    this.toggleNoteModal();
   }
 
-  toggleDeleteNote = () => {
+  toggleNoteModal = () => {
     this.setState({
-      deleteNoteModal: false
+      deleteNoteModal: false,
+      editNoteModal: false
     })
   }
 

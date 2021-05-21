@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../card/Card";
 import AddNote from "../AddNote/AddNote"
 import { CARD_TYPES } from "../../constants";
@@ -7,6 +7,7 @@ import "./TicketModal.scss";
 import TicketModalDetails from "./TicketModalDetails";
 import EditTicketModalDetails from "./EditTicketModalDetails";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
+import NoteListItem from "../NoteListItem/NoteListItem";
 
 const sortNotes = (noteA, noteB) => {
   if (noteA.created_at > noteB.created_at) return -1;
@@ -14,12 +15,16 @@ const sortNotes = (noteA, noteB) => {
 }
 
 
-export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onClose, getTickets, updateSelectedTicket }) => {
+export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onClose, getTickets, updateSelectedTicket, handleEditNoteText, editNoteModal }) => {
 
   const [showAddNote, setShowAddNote] = useState(false)
   const [editNotes, setEditNotes] = useState(false);
   const sortedNotes = ticket ? ticket.notes.sort(sortNotes) : null;
   const { isEditing, setEditingStatus } = useEditingStatus();
+
+  useEffect(() => {
+    if (!editNoteModal) setEditNotes(false);
+  }, [editNoteModal])
 
   if (!show || !ticket) {
     return null;
@@ -30,6 +35,9 @@ export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onC
     notes,
     id
   } = ticket;
+
+
+
 
   const toggleShowAddNote = () => {
     setShowAddNote(!showAddNote)
@@ -77,7 +85,6 @@ export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onC
                     setEditingStatus={setEditingStatus}
                   />
                 </div>
-
                 <hr />
                 {isEditing ?
                   <EditTicketModalDetails
@@ -119,36 +126,14 @@ export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onC
                 : null}
               <div id="scroll-container">
                 {sortedNotes ? (
-                  sortedNotes.map((note) => {
-                    return (
-                      <div className="ticket-card-note-container">
-                        <div className="ticket-card-note-header-row">
-                          <div className="ticket-card-note-header-row-left">
-                            {editNotes ?
-                              <div onClick={() => localDeleteNote(note)}>
-                                <i className="fas fa-minus-circle icon-inline-space" />
-                              </div>
-                              : null
-                            }
-                            <div
-                              className="ticket-card-note-header"
-                            >
-                              {note.user}
-                            </div>
-                          </div>
-                          <div
-                            style={{ float: "right" }}
-                            className="ticket-card-note-header"
-                          >
-                            {note.created_at}
-                          </div>
-                        </div>
-                        <div className="ticket-card-note">
-                          <p>{note.text}</p>
-                        </div>
-                      </div>
-                    );
-                  })
+                  sortedNotes.map(note =>
+                    <NoteListItem key={note.created_at}
+                      note={note}
+                      editNotes={editNotes}
+                      localDeleteNote={localDeleteNote}
+                      handleEditNoteText={handleEditNoteText}
+                    />
+                  )
                 ) : (
                   <div className="ticket-card-note">
                     <p>No Notes found</p>
