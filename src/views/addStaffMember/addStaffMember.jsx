@@ -1,55 +1,44 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { Form, Field, Formik } from "formik";
+import * as Yup from "yup";
 import * as axios from 'axios';
+import UserContext from "../../UserContext";
 import RoleEnum from "../../Enums/RoleEnum";
 import Toast from '../../utils/toast';
+import Button from "../../components/Button";
 
 import './addStaffMember.scss';
 
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .max(255, "Must be shorter than 255 Characters")
+    .required("Must enter a First Name"),
+  lastName: Yup.string()
+    .max(255, "Must be shorter than 255 Characters")
+    .required("Must enter a Last Name"),
+  phone: Yup.string()
+    .min(
+      5,
+      "*Number must contain at least 5 digits to be a valid phone/text number"
+    )
+    .max(20, "*Numbers can't be longer than 20 digits")
+    .required("Must enter a valid phone number"),
+  email: Yup.string()
+    .email("Must be a valid email address")
+    .max(255, "Must be shorter than 255")
+    .required("Must enter an email"),
+});
 
-
-export const InfoField = ({ label, info }) => {
-  const infoField = "has-text-weight-bold placeholder " + ((label === "Phone") ? "phone-field" : (label === "Email" ? "email-field" : "name-field"));
-  return (
-    <div>
-      <hr className="line" ></hr>
-      <span className="input-field"> {label}
-        <p className={infoField} contentEditable required>
-
-        </p>
-      </span>
-    </div>
-  );
-};
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 export const AddStaffMember = () => {
+  const context = useContext(UserContext);
 
-  // delete this once form is redone
-  const dummyData = {
-    firstName: "John",
-    lastName: "Souza",
-    phone: "5555555555",
-    email: "emails@email.com",
-    password: "1234",
-    role: RoleEnum.STAFF
-  };
-
-  const handleSave = () => {
-
-    // TODO:
-    // 1. Change dummy data to actual data
-    // 2. Create new API endpoint. Currently routes to register. Needs to go to an
-    // endpoint that is JWT authorized and sends an email to the new email to set their password.
-
-    // NOTE: The newly created user will not appear in the users page. The users page is currently
-    // linked to static json data, not the database.
-
-    const data = dummyData;
-
-    axios.post("/api/register", data, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } })
+  const handleSave = (data) => {
+    axios.post("/api/user/invite", data, makeAuthHeaders(context))
       .then(function(response) {
-        Toast("Staff Added!", "success");
-        console.log(response);
+        Toast("User created! An invite email has been sent.", "success");
       })
       .catch(function(error) {
         Toast(error.message, "error");
@@ -59,27 +48,150 @@ export const AddStaffMember = () => {
   return (
     <>
       <div className='main-container'>
-        <div className="add-staff-page-spacing" >
-          <div className="page-title page-title-spacing" > Add a New Staff Member </div>
-          <InfoField label="First Name" />
-          <InfoField label="Last Name" />
-          <InfoField label="Phone" />
-          <InfoField label="Email" />
-          <hr className="line" ></hr>
-          <label className="checkbox staff-make-admin-padding">
-            <span className="admin-check-padding make-admin-font">
-              Make Admin
-					</span>
-            <input type="checkbox"></input>
-          </label>
-          <div className="add-staff-page-length">
-            <br />
-
-            <button className="button is-rounded is-primary mx-2" onClick={handleSave} > SAVE </button>
-
-            <Link className="button is-rounded is-dark ml-3" to='/staff'> CANCEL </Link>
-          </div>
-        </div>
+        <h2 className='page-title'>Add a New Staff Member</h2>
+        <Formik
+          initialValues={{
+            firstName: "",
+            lastName: "",
+            phone: "",
+            email: "",
+            makeAdmin: false
+          }}
+          validationSchema={validationSchema}
+          validateOnBlur={false}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            setSubmitting(true);
+            handleSave(values);
+            resetForm();
+            setSubmitting(false);
+          }}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            values,
+            errors,
+            touched,
+            isValid,
+            isSubmitting,
+          }) => (
+              <div className="add-staff__main_container">
+                <h1 className="section-title">CONTACT INFORMATION</h1>
+                <Form className="add-staff__form-container" onSubmit={handleSubmit}>
+                  <div className="form-row form-first-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="firstName"
+                      htmlFor="firstName"
+                    >
+                      First Name
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="firstName"
+                      onChange={handleChange}
+                      value={values.firstName}
+                      placeholder="First Name"
+                    />
+                    {errors.firstName ? (
+                      <div className="error-message">{errors.firstName}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="lastName"
+                      htmlFor="lastName"
+                    >
+                      Last Name
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="lastName"
+                      onChange={handleChange}
+                      value={values.lastName}
+                      placeholder="Last Name"
+                    />
+                    {errors.lastName ? (
+                      <div className="error-message">{errors.lastName}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="phone"
+                      htmlFor="phone"
+                    >
+                      Phone
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="phone"
+                      onChange={handleChange}
+                      value={values.phone}
+                      placeholder="Phone Number"
+                    />
+                    {errors.phone ? (
+                      <div className="error-message">{errors.phone}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row" style={{ marginBottom: "20px" }}>
+                    <label
+                      className="column is-one-fifth"
+                      id="email"
+                      htmlFor="email"
+                    >
+                      Email
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="email"
+                      onChange={handleChange}
+                      value={values.email}
+                      placeholder="Email address"
+                    />
+                    {errors.email ? (
+                      <div className="error-message">{errors.email}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row" style={{ marginBottom: "20px" }}>
+                    <label
+                      className="column is-one-fifth"
+                      id="makeAdmin"
+                      htmlFor="makeAdmin"
+                    >
+                      Make Admin
+                    </label>
+                    <Field
+                      className="form-field"
+                      type="checkbox"
+                      name="makeAdmin"
+                    />
+                  </div>
+                  <div className="button-container">
+                    <Button
+                      isCancelButton={false}
+                      type="submit"
+                      disabledFlag={isSubmitting}
+                      isValidFlag={isValid}
+                    >
+                      SAVE
+                    </Button>
+                    <Link
+                      className="button is-dark is-rounded"
+                      to="/staff"
+                    >
+                      CANCEL
+                    </Link>
+                  </div>
+                </Form>
+              </div>
+            )}
+        </Formik>
       </div>
     </>
   );
