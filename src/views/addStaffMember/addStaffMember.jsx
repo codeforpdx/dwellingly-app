@@ -138,7 +138,7 @@ export const AddStaffMember = () => {
                       <div className="error-message">{errors.phone}</div>
                     ) : null}
                   </div>
-                  <div className="form-row" style={{ marginBottom: "20px" }}>
+                  <div className="form-row">
                     <label
                       className="column is-one-fifth"
                       id="email"
@@ -167,7 +167,7 @@ export const AddStaffMember = () => {
                       Make Admin
                     </label>
                     <Field
-                      className="form-field"
+                      className="form-field checkbox-row"
                       type="checkbox"
                       name="makeAdmin"
                     />
