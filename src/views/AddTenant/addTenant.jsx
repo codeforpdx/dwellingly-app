@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Form, Field, Formik } from "formik";
+import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import * as axios from "axios";
 import UserContext from "../../UserContext";
@@ -20,8 +20,8 @@ const validationSchema = Yup.object().shape({
   lastName: Yup.string()
     .required("*Last Name is required"),
   phone: Yup.string()
-    .min(7, "*Phone Number must have at least 7 characters")
-    .max(20, "*Phone Number can't be longer than 20 characters")
+    .min(10, "*Phone Number must have at least 10 characters")
+    .max(30, "*Phone Number can't be longer than 30 characters")
     .required("*Phone Number is required"),
   unitNum: Yup.string(),
   occupants: Yup.number(),
@@ -39,15 +39,11 @@ export const AddTenant = () => {
   const [propertyOptions, setPropertyOptions] = useState([]);
   const [propertySearchResults, setPropertySearchResults] = useState([]);
   const [showAddProperty, setShowAddProperty] = useState(false);
-  const [isValidationActive, setIsValidationActive] = useState(false);
-  const [propertyErrorText, setPropertyErrorText] = useState("");
 
   const calendarState = useCalendarState();
   const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
   useMountEffect(() => getProperties());
-
-  useEffect(() => validateForm(), [propertySelection, dateTimeStart, dateTimeEnd]);
 
   useEffect(() => {
     axios.post("/api/users/role", {
@@ -99,7 +95,6 @@ export const AddTenant = () => {
       })
       .catch((error) => {
         Toast(error.message, "error");
-        console.log(error);
       });
   };
 
@@ -143,16 +138,27 @@ export const AddTenant = () => {
     setStaffSelections(selectedChoices);
   };
 
-  const validateForm = (values) => {
-    setIsValidationActive(true);
-
-    if (dateTimeStart !== dateTimeEnd) {
-      setPropertyErrorText(dateTimeStart !== dateTimeEnd && propertySelection.length
-        ? "" 
-        : "*Property is a required field"
-      );
+  /**
+   * Validate the property selection and lease dates
+   */
+  const validateForm = () => {
+    const errors = {}
+    if (propertySelection.length) {
+      if (dateTimeStart === dateTimeEnd){
+        errors.lease = "Lease dates required when a property is selected"
+      }
     }
-  };    
+    if (dateTimeStart !== dateTimeEnd) {
+      if (!propertySelection.length) {
+        errors.propertySelection = "Property is required when lease dates are slected"
+      }
+    }
+
+    return errors
+  }
+
+  const renderErrorMsg = msg => 
+    <div className="error-message">{msg}</div>
 
   return (
     <div className='main-container'>
@@ -166,13 +172,17 @@ export const AddTenant = () => {
             phone: "",
             unitNum: "",
             occupants: "",
+            propertySelection: null,
+            lease: null,
           }}
           validationSchema={validationSchema}
           validate={validateForm}
           validateOnBlur={false}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             const toSubmit = {
-              ...values,
+              firstName: values.firstName,
+              lastName: values.lastName,
+              phone: values.phone,
               occupants: values.occupants || null,
               unitNum: values.unitNum || null,
               propertyID: propertySelection.length ? propertySelection[0].key : null,
@@ -190,9 +200,7 @@ export const AddTenant = () => {
             setPropertySelection([]);
             setStaffSearchText("");
             setStaffSelections([]);
-            setPropertyErrorText("");
             resetDates();
-            setIsValidationActive(false);
             setSubmitting(false);
           }}
         >
@@ -200,9 +208,6 @@ export const AddTenant = () => {
             handleSubmit,
             handleChange,
             values,
-            errors,
-            touched,
-            isValid,
             isSubmitting,
           }) => (
               <div className="add-tenant__main_container">
@@ -215,7 +220,7 @@ export const AddTenant = () => {
                       htmlFor="firstName"
                     >
                       First Name
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
@@ -224,10 +229,12 @@ export const AddTenant = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    {errors.firstName ? (
-                      <div className="error-message">{errors.firstName}</div>
-                    ) : null}
+                    <ErrorMessage 
+                      name="firstName"
+                      render={renderErrorMsg}
+                    />
                   </div>
+
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -235,7 +242,7 @@ export const AddTenant = () => {
                       htmlFor="lastName"
                     >
                       Last Name
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
@@ -244,10 +251,12 @@ export const AddTenant = () => {
                       value={values.lastName}
                       placeholder="Last Name"
                     />
-                    {errors.lastName ? (
-                      <div className="error-message">{errors.lastName}</div>
-                    ) : null}
+                    <ErrorMessage
+                      name="lastName"
+                      render={renderErrorMsg}
+                    />
                   </div>
+
                   <div className="form-row" style={{ marginBottom: "20px" }}>
                     <label
                       className="column is-one-fifth"
@@ -255,7 +264,7 @@ export const AddTenant = () => {
                       htmlFor="phone"
                     >
                       Phone
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
@@ -264,10 +273,12 @@ export const AddTenant = () => {
                       value={values.phone}
                       placeholder="Phone Number"
                     />
-                    {errors.phone ? (
-                      <div className="error-message">{errors.phone}</div>
-                    ) : null}
+                    <ErrorMessage
+                      name="phone"
+                      render={renderErrorMsg}
+                    />
                   </div>
+
                   <h1 className="section-title">ASSIGN JOIN STAFF</h1>
                   <div className="typeahead-section">
                     <SearchPanel
@@ -286,6 +297,7 @@ export const AddTenant = () => {
                       shadow
                     />
                   </div>
+            
                   <h1 className="section-title">PROPERTY</h1>
                   <div className="typeahead-section">
                     <SearchPanel
@@ -303,9 +315,10 @@ export const AddTenant = () => {
                       preSelectedChoices={propertySelection}
                       shadow
                     />
-                    {isValidationActive && propertyErrorText ? (
-                      <div className="error-message">{propertyErrorText}</div>
-                    ) : null}
+                    <ErrorMessage
+                      name="propertySelection"
+                      render={renderErrorMsg}
+                    />
                     <button
                       className="add-property-button"
                       onClick={() => setShowAddProperty(!showAddProperty)}
@@ -315,6 +328,7 @@ export const AddTenant = () => {
                       Create New Property
                     </button>
                   </div>
+
                   <h1 className="section-title">LEASE</h1>
                   <div className="form-row form-first-row">
                     <label
@@ -332,10 +346,12 @@ export const AddTenant = () => {
                       value={values.unitNum}
                       placeholder="Unit Number (Optional)"
                     />
-                    {errors.unitNum ? (
-                      <div className="error-message">{errors.unitNum}</div>
-                    ) : null}
+                    <ErrorMessage 
+                      name="unitNum"
+                      render={renderErrorMsg}
+                    />
                   </div>
+            
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -343,7 +359,7 @@ export const AddTenant = () => {
                       htmlFor="occupants"
                     >
                       Occupants
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
@@ -352,10 +368,12 @@ export const AddTenant = () => {
                       value={values.occupants}
                       placeholder="Total number of unit tenants (Optional)"
                     />
-                    {errors.occupants ? (
-                      <div className="error-message">{errors.occupants}</div>
-                    ) : null}
+                    <ErrorMessage
+                      name="occupants"
+                      render={renderErrorMsg}
+                    />
                   </div>
+            
                   <div className="form-row" >
                     <label
                       className="column is-one-fifth"
@@ -363,35 +381,38 @@ export const AddTenant = () => {
                       htmlFor="lease"
                     >
                       Lease
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
                       name="lease"
-                      onChange={validateForm}
                       value={dateTimeEnd !== dateTimeStart 
                         ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` 
                         : ""
                       }
                       placeholder="Lease dates (Optional)"
                     />
+                    <ErrorMessage
+                      name="lease"
+                      render={renderErrorMsg}
+                    />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
                   </div>
+            
                   <div className="button-container">
                     <Button
                       isCancelButton={false}
                       type="submit"
-                      disabledFlag={isSubmitting}
-                      isValidFlag={isValid}
+                      disabledFlag={ isSubmitting }
                     >
                       SAVE
-                </Button>
+                    </Button>
                     <Link
                       className="button is-dark is-rounded"
                       to="/manage/tenants"
                     >
                       CANCEL
-                </Link>
+                    </Link>
                   </div>
                 </Form>
               </div>
