@@ -141,7 +141,7 @@ export const AddTenant = () => {
   /**
    * Validate the property selection and lease dates
    */
-  const validateForm = () => {
+  const validateForm = (values) => {
     const errors = {}
     if (propertySelection.length) {
       if (dateTimeStart === dateTimeEnd){
@@ -151,6 +151,14 @@ export const AddTenant = () => {
     if (dateTimeStart !== dateTimeEnd) {
       if (!propertySelection.length) {
         errors.propertySelection = "Property is required when lease dates are slected"
+      }
+    }
+    if (values.unitNum || values.occupants) {
+      if (!propertySelection.length) {
+        errors.propertySelection = "Property is required when creating a lease"
+      }
+      if (dateTimeStart === dateTimeEnd) {
+        errors.lease = "Lease dates required when creating a lease"
       }
     }
 
