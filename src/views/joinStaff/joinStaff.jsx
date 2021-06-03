@@ -15,32 +15,39 @@ export const JoinStaff = () => {
   const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` } };
 
   useEffect(() => {
-    const URLs = ['/api/user?r=3', '/api/user?r=4'];
-    const fetchData = URL => {
-      return axios
-        .get(URL, auth_headers)
+    const fetchData = () => {
+      axios
+        .get('/api/user?r=3', auth_headers)
         .then(res => {
-          setStaff(...staff, res.data.users);
+          var joinStaff = res.data.users;
+          axios
+            .get('/api/user?r=4', auth_headers)
+            .then(res2 => {
+              var admins = res2.data.users;
+
+              setStaff(joinStaff.concat(admins));
+            })
         })
         .catch(error => {
           Toast(error.message, 'error');
-          console.log(error);
         });
     };
-    Promise.all(URLs.map(url => fetchData(url)));
+    fetchData();
   }, []);
 
   const staffCard = (user) => {
-    return (
-      <JoinStaffCard
-        key={user.id}
-        name={`${user.firstName} ${user.lastName}`}
-        phoneNumber={user.phone}
-        email={user.email}
-        tickets={user.tickets}
-        tenants={user.tenants}
-        admin={user.role == RoleEnum.ADMIN} />
-    );
+    return user ?
+      (
+        <JoinStaffCard
+          key={user.id}
+          name={`${user.firstName} ${user.lastName}`}
+          phoneNumber={user.phone}
+          email={user.email}
+          tickets={user.tickets ? user.tickets.length : 0}
+          tenants={user.tenants ? user.tenants.length : 0}
+          admin={user.role == RoleEnum.ADMIN} />
+      )
+      : <></>
   };
 
   return (
@@ -62,7 +69,6 @@ export const JoinStaff = () => {
               {staff.slice(thirdColumnStart).map((user, index) => { return staffCard(user); })}
             </div>
           </div>
-
           : <></>
         }
       </div>
