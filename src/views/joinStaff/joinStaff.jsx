@@ -43,8 +43,8 @@ export const JoinStaff = () => {
           name={`${user.firstName} ${user.lastName}`}
           phoneNumber={user.phone}
           email={user.email}
-          tickets={user.tickets}
-          tenants={user.tenants}
+          tickets={user.tickets ? user.tickets.length : 0}
+          tenants={user.tenants ? user.tenants.length : 0}
           admin={user.role == RoleEnum.ADMIN} />
       )
       : <></>
