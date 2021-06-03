@@ -267,17 +267,35 @@ const Tenant = () => {
     setShowArchiveModal(!showArchiveModal);
   };
 
+  const toggleArchiveState = () => {
+    tenant.archived ? unarchiveTenant() : archiveTenant();
+  }
+
   const archiveTenant = () => {
     axios
-      .delete(`/api/tenants/` + id, {}, makeAuthHeaders(context))
+      .put(`/api/tenants/` + id, { archived: true}, makeAuthHeaders(context))
       .then((response) => {
-        Toast(response.data.message, "success");
+        Toast("Tenant Archived Successfully", "success");
         setState({
-          ...state,
-          tenant: {
-            ...state.tenant,
-            archived: !state.tenant.archived
-          }});
+          tenant: response.data
+        });
+        setShowArchiveModal(false);
+        setEditingStatus(false);
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error);
+      });
+  }
+
+  const unarchiveTenant = () => {
+    axios
+      .put(`/api/tenants/` + id, { archived: false}, makeAuthHeaders(context))
+      .then((response) => {
+        Toast("Tenant Unarchived Successfully", "success");
+        setState({
+          tenant: response.data
+        });
         setShowArchiveModal(false);
         setEditingStatus(false);
       })
@@ -371,12 +389,12 @@ const Tenant = () => {
         <Modal
           content={
             <div>
-              <p>Are you sure you want to {state.tenant.archived ? "unarchive" : "archive"} {tenant.firstName} {tenant.lastName}?</p>
+              <p>Are you sure you want to {tenant.archived ? "unarchive" : "archive"} {tenant.firstName} {tenant.lastName}?</p>
             </div>
           }
           hasButtons={true}
           hasRedirectButton={false}
-          confirmButtonHandler={archiveTenant}
+          confirmButtonHandler={toggleArchiveState}
           confirmText="Yes"
           cancelButtonHandler={toggleArchiveModal}
           cancelText="No"

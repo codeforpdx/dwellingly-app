@@ -153,9 +153,8 @@ export function Tenants() {
     const tenantIds = selectedTenants.map(tenant => tenant.id);
 
     Promise.all(tenantIds.map(tenantId =>
-      axios.delete(`/api/tenants/${tenantId}`, makeAuthHeaders(userContext))
+      axios.put(`/api/tenants/${tenantId}`, { archived: true }, makeAuthHeaders(userContext))
         .then((response) => {
-          Toast(response.data.message, "success");
           setCheckboxRenderCount(checkboxRenderCount + 1);
         })
         .then(() => setSelectedTenants([]))
@@ -163,7 +162,11 @@ export function Tenants() {
           Toast(error.message, "error");
           console.log(error);
         })
-    ));
+    ))
+    .then( () => {
+      Toast(`Tenants archived successfully`, "success");
+    });
+
     fetchAllTenants();
     toggleArchiveModal();
   }
