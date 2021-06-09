@@ -41,7 +41,7 @@ export const checkForStoredRefreshToken = () => {
 export const auth = {
   isAuthenticated: false,
   async authenticate(email, password) {
-    return axios.post("/api/login", {
+    return axios("/api/login", {
       email: email,
       password: password
     })

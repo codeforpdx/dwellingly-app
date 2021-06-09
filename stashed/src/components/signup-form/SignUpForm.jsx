@@ -55,7 +55,7 @@ class SignUpForm extends React.Component {
         <h2 className="align-left">
           {intl.formatMessage(SIGNUP.CREATE_ACCOUNT_EMAIL)}
         </h2>
-        <form name="loginEmail" method="POST" onSubmit={this.handleSubmit} className="signupForm">
+        <form name="loginEmail"  onSubmit={this.handleSubmit} className="signupForm">
           <fieldset>
             <Input
               id="signup-firstName"

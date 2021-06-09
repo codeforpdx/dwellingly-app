@@ -60,7 +60,6 @@ class LoginForm extends React.Component {
         <img src={LOGO} alt="" />
         <form
           name="loginEmail"
-          method="POST"
           onSubmit={this.handleSubmit}
           className="signupForm">
           <fieldset>

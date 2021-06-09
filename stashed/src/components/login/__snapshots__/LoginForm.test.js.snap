@@ -9,7 +9,6 @@ exports[`LoginForm Component renders correctly 1`] = `
   </h2>
   <form
     className="signupForm"
-    method="POST"
     name="loginEmail"
     onSubmit={[Function]}
   >

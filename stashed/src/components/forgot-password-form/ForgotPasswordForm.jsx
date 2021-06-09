@@ -46,7 +46,6 @@ class ForgotPasswordForm extends React.Component {
       <section className="width-wrapper">
         <form
           name="forgotPasswordEmail"
-          method="POST"
           onSubmit={this.handleSubmit}
           className="forgotPasswordForm">
           <fieldset>

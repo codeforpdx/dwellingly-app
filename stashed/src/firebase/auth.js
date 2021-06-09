@@ -59,7 +59,6 @@ export function doCreateUserWithEmailAndPassword(
     .createUserWithEmailAndPassword(email, password)
     .then(response => {
       fetch(ENDPOINTS.USER, {
-        method: HTTP_METHODS.POST,
         headers: {
           'Content-Type': 'application/json',
         },
