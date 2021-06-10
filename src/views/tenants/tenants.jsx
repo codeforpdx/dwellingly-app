@@ -11,7 +11,7 @@ import Icon from '../../components/icon/Icon';
 import Search from "../../components/Search/index";
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import Modal from '../../components/Modal';
-import { columns, mobileColumns } from './tenantsFormStructure';
+import { columns, mobileColumns, expandRow } from './tenantsFormStructure';
 import { mobileWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './tenants.scss';
@@ -169,9 +169,9 @@ export function Tenants() {
           console.log(error);
         })
     ))
-    .then( () => {
-      Toast(`Tenants archived successfully`, "success");
-    });
+      .then(() => {
+        Toast(`Tenants archived successfully`, "success");
+      });
 
     fetchAllTenants();
     toggleArchiveModal();

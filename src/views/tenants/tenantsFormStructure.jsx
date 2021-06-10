@@ -36,6 +36,9 @@ export const columns = [
     },
     text: "Name",
     sort: true,
+    headerStyle: () => {
+      return { width: "25%" };
+    }
   },
   {
     dataField: "propertyName",
@@ -48,6 +51,9 @@ export const columns = [
     },
     text: "Property Name",
     sort: true,
+    headerStyle: () => {
+      return { width: "25%" };
+    }
   },
   {
     dataField: `staff`,
@@ -63,13 +69,32 @@ export const columns = [
     },
     text: "JOIN Staff",
     sort: true,
+    headerStyle: () => {
+      return { width: "25%" };
+    }
   },
   {
     dataField: "phone",
     text: "Phone",
     sort: true,
+    headerStyle: () => {
+      return { width: "20%" };
+    }
   },
 ];
+
+export const expandRow = {
+  renderer: row => (
+    <div>
+      <label for="created-at">
+        Added On
+        </label>
+      <p id="created-at">{row.created_at}</p>
+
+    </div>
+  ),
+  showExpandColumn: true
+};
 
 export const mobileColumns = [
   {
@@ -102,7 +127,7 @@ export const mobileColumns = [
     text: "Name",
     sort: true,
     headerStyle: () => {
-      return { width: "50%" };
+      return { width: "35%" };
     }
   },
   {
@@ -117,9 +142,27 @@ export const mobileColumns = [
     text: "Property Name",
     sort: true,
     headerStyle: () => {
-      return { width: "45%" };
+      return { width: "30%" };
     }
-  }
+  },
+  {
+    dataField: `staff`,
+    formatter: (cell, row, rowIndex, formatExtraData) => {
+      return (
+        row.staff.map((staff, index) =>
+          <p key={`${staff}-${index}`} >
+            <Link key={row.id} to={`/staff`}>
+              {staff}
+            </Link>
+          </p >
+        ));
+    },
+    text: "JOIN Staff",
+    sort: true,
+    headerStyle: () => {
+      return { width: "30%" };
+    }
+  },
 ];
 export const selectRow = {
   mode: "checkbox",
