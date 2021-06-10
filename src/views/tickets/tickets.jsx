@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../../UserContext';
@@ -62,39 +62,26 @@ const options = {
   pageButtonRenderer
 };
 
-export class Tickets extends Component {
-  constructor(props) {
-    super(props);
+export function Tickets(props) {
+  const [tickets, setTickets] = useState([]);
+  const [viewedTicket, setViewedTicket] = useState(null)
+  const [filteredTickets, setFilteredTickets] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [selectedTickets, setSelectedTickets] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-    this.state = {
-      tickets: [],
-      viewedTicket: null,
-      filteredTickets: [],
-      isFiltered: false,
-      selectedTickets: [],
-      showDeleteModal: false
-    };
+  let userContext = useContext(UserContext);
 
-    this.getTickets = this.getTickets.bind(this);
-    this.toggleTicketModal = this.toggleTicketModal.bind(this);
+  const toggleTicketModal = (ticket) => {
+    setViewedTicket((prevState) => (prevState ? null : ticket));
   }
 
-  componentDidMount() {
-    this.getTickets(this.context);
-  }
-
-  toggleTicketModal(ticket) {
-    this.setState(prevState => ({
-      viewedTicket: prevState.viewedTicket ? null : ticket
-    }));
-  }
-
-  columns = [{
+  const columns = [{
     dataField: 'id',
     text: 'Ticket',
     sort: true,
     formatter: (cell, row) => <button
-      onClick={() => this.toggleTicketModal(row)}
+      onClick={() => toggleTicketModal(row)}
       className="link-button cell-align-left">
       <p className="cell-header">{row.tenant}</p>
       <p className="cell-subheader">{row.issue}</p>
@@ -139,10 +126,10 @@ export class Tickets extends Component {
     }
   }];
 
-  getTickets = (context) => {
+  const getTickets = (context) => {
     axios.get(`/api/tickets`, makeAuthHeaders(context))
       .then((response) => {
-        this.setState({ tickets: response.data.tickets });
+        setTickets(response.data.tickets);
       })
       .catch((error) => {
         Toast(error.message, "error");
@@ -150,23 +137,21 @@ export class Tickets extends Component {
       });
   };
 
-  setIsFilteredTicketsFalse = async () => {
-    await this.setState({ isFiltered: false });
+  const setIsFilteredTicketsFalse = async () => {
+    await setIsFiltered(false);
   };
 
-  setOutputState = async (output, isTrue) => {
-    await this.setState({
-      filteredTickets: output,
-      isFiltered: isTrue
-    });
+  const setOutputState = async (output, isTrue) => {
+    await setFilteredTickets(output)
+    await setIsFiltered(isTrue)
   };
 
-  handleAddNote = (noteText, ticketID) => {
-    axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(this.context))
+  const handleAddNote = (noteText, ticketID) => {
+    axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(userContext))
       .then(({ data }) => {
 
-        this.state.viewedTicket.notes.push(data);
-        this.getTickets(this.context);
+        viewedTicket.notes.push(data);
+        getTickets(userContext);
       })
       .catch((error) => {
         Toast(error.message, "error");
@@ -174,46 +159,45 @@ export class Tickets extends Component {
       })
   }
 
-  handleSelectRow = (ticket) =>
-    this.setState({
-      selectedTickets: [...this.state.selectedTickets, ticket]
-    });
+  const handleSelectRow = (ticket) => {
+    setSelectedTickets([...selectedTickets, ticket])
+  };
 
-  handleDeselectRow = (ticket) =>
-    this.setState({
-      selectedTickets: this.state.selectedTickets.filter(t => t.id !== ticket.id)
-    });
+  const handleDeselectRow = (ticket) => {
+    console.log(selectedTickets)
+    let filteredSet = selectedTickets.filter((t) => t.id !== ticket.id)
+    console.log(filteredSet)
+    setSelectedTickets(filteredSet)
+  };
 
-  handleSelectAll = (tickets) =>
-    this.setState({
-      selectedTickets: tickets
-    });
+  const handleSelectAll = (tickets) => {
+    setSelectedTickets(tickets)
+  };
 
-  handleDeselectAll = (_) =>
-    this.setState({
-      selectedTickets: []
-    });
+ const handleDeselectAll = (_) => {
+  setSelectedTickets([])
+ };
 
-  toggleDeleteModal = () =>
-    this.setState({
-      showDeleteModal: !this.state.showDeleteModal
-    });
+  const toggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal)
+  };
 
-  deleteTickets = () => {
-    let ticketIds = this.state.selectedTickets.map(t => t.id)
+  const deleteTickets = () => {
+    let ticketIds = selectedTickets.map(t => t.id)
     axios({
       method: 'delete',
       url: '/api/tickets',
       data: {
         ids: ticketIds
       }
-    }, makeAuthHeaders(this.context))
+    }, makeAuthHeaders(userContext))
       .then((response) => {
-        this.setState({
-          tickets: this.state.tickets.filter(t => !ticketIds.includes(t.id)),
-          selectedTickets: [],
-          showDeleteModal: false
-        });
+        let ticketsToDelete = tickets.filter(t => !ticketIds.includes(t.id));
+
+        setTickets(ticketsToDelete);
+        setSelectedTickets([]);
+        setShowDeleteModal(false)
+
         Toast(response.data.message, "success");
       })
       .catch((error) => {
@@ -221,15 +205,18 @@ export class Tickets extends Component {
       });
   }
 
-  updateSelectedTicket = (updatedTicket) => {
-    this.setState({ viewedTicket: updatedTicket });
+  const updateSelectedTicket = (updatedTicket) => {
+    setViewedTicket(updatedTicket)
   }
 
-  render() {
+  useEffect(() => {
+    getTickets(userContext);
+  }, [userContext])
+
     return (
       <UserContext.Consumer>
         {session => {
-          this.context = session;
+          userContext = session;
           return (
             <div className='main-container'>
               <div>
@@ -238,11 +225,11 @@ export class Tickets extends Component {
                     <h2 className="page-title">Tickets</h2>
                   </div>
                   <Search
-                    input={this.state.tickets}
-                    outputLocation={this.state.filteredTickets}
-                    isFilteredLocation={this.state.isFiltered}
-                    setIsFilteredStateFalse={this.setIsFilteredTicketsFalse}
-                    setOutputState={this.setOutputState}
+                    input={tickets}
+                    outputLocation={filteredTickets}
+                    isFilteredLocation={isFiltered}
+                    setIsFilteredStateFalse={setIsFilteredTicketsFalse}
+                    setOutputState={setOutputState}
                     placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
                   />
                   <Accordion
@@ -276,8 +263,8 @@ export class Tickets extends Component {
                   </Accordion>
                   <div className='bulk-actions-container py-3'>
                     <button
-                      className={`button is-rounded is-primary ml-3 ${this.state.selectedTickets.length && 'is-active-button'}`}
-                      onClick={this.toggleDeleteModal}
+                      className={`button is-rounded is-primary ml-3 ${selectedTickets.length && 'is-active-button'}`}
+                      onClick={toggleDeleteModal}
                     >
                       <FontAwesomeIcon
                         className="mr-3"
@@ -289,8 +276,8 @@ export class Tickets extends Component {
                   <div>
                     <BootstrapTable
                       keyField="id"
-                      data={this.state.isFiltered === true ? this.state.filteredTickets : this.state.tickets}
-                      columns={this.columns}
+                      data={isFiltered === true ? filteredTickets : tickets}
+                      columns={columns}
                       pagination={paginationFactory(options)}
                       defaultSortDirection="asc"
                       bootstrap4={true}
@@ -299,8 +286,8 @@ export class Tickets extends Component {
                       selectRow={({
                         mode: 'checkbox',
                         clickToSelect: true,
-                        onSelect: (row, isSelect) => isSelect ? this.handleSelectRow(row) : this.handleDeselectRow(row),
-                        onSelectAll: (isSelect, rows) => isSelect ? this.handleSelectAll(rows) : this.handleDeselectAll(rows),
+                        onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
+                        onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
                         sort: true,
                         headerColumnStyle: () => ({ width: "5%" }),
                         nonSelectableStyle: () => ({ color: '#999999' })
@@ -309,23 +296,23 @@ export class Tickets extends Component {
                   </div>
                 </div>
                 <TicketModal
-                  show={this.state.viewedTicket}
-                  onClose={this.toggleTicketModal}
-                  ticket={this.state.viewedTicket}
-                  handleAddNote={this.handleAddNote}
-                  getTickets={this.getTickets}
-                  updateSelectedTicket={this.updateSelectedTicket}
+                  show={viewedTicket}
+                  onClose={toggleTicketModal}
+                  ticket={viewedTicket}
+                  handleAddNote={handleAddNote}
+                  getTickets={getTickets}
+                  updateSelectedTicket={updateSelectedTicket}
                 />
               </div>
               {
-                this.state.showDeleteModal &&
+                showDeleteModal &&
                 <Modal
-                  titleText={this.state.selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
+                  titleText={selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
                   content={
                     <div className="content">
-                      <p>You have selected the following {this.state.selectedTickets.length} tickets to be deleted:</p>
+                      <p>You have selected the following {selectedTickets.length} tickets to be deleted:</p>
                       <ul className="archive-tickets-list has-text-weight-bold">
-                        {this.state.selectedTickets.map(t => (
+                        {selectedTickets.map(t => (
                           <li>{t.tenant}: {t.issue}</li>
                         ))}
                       </ul>
@@ -335,18 +322,17 @@ export class Tickets extends Component {
                   }
                   hasButtons={true}
                   hasRedirectButton={false}
-                  confirmButtonHandler={this.deleteTickets}
+                  confirmButtonHandler={deleteTickets}
                   confirmText="Delete"
-                  cancelButtonHandler={this.toggleDeleteModal}
+                  cancelButtonHandler={toggleDeleteModal}
                   cancelText="Cancel"
-                  closeHandler={this.toggleDeleteModal}
+                  closeHandler={toggleDeleteModal}
                 />
               }
             </div>
           );
         }
         }
-      </UserContext.Consumer >
+      </UserContext.Consumer>
     );
-  }
 }
