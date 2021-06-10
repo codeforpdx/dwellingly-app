@@ -150,7 +150,7 @@ export const AddTenant = () => {
     }
     if (dateTimeStart !== dateTimeEnd) {
       if (!propertySelection.length) {
-        errors.propertySelection = "Property is required when lease dates are slected"
+        errors.propertySelection = "Property is required when lease dates are selected"
       }
     }
     if (values.unitNum || values.occupants) {
