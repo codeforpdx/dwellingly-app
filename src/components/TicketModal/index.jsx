@@ -15,7 +15,7 @@ const sortNotes = (noteA, noteB) => {
 }
 
 
-export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onClose, getTickets, updateSelectedTicket, handleEditNoteText, editNoteModal }) => {
+export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, updateSelectedTicket, handleDeleteNote, handleEditNoteText, editNoteModal }) => {
 
   const [showAddNote, setShowAddNote] = useState(false)
   const [editNotes, setEditNotes] = useState(false);
@@ -29,15 +29,13 @@ export const TicketModal = ({ show, ticket, handleAddNote, handleDeleteNote, onC
   if (!show || !ticket) {
     return null;
   }
+
   const {
     issue,
     status,
     notes,
     id
   } = ticket;
-
-
-
 
   const toggleShowAddNote = () => {
     setShowAddNote(!showAddNote)

@@ -68,7 +68,10 @@ export function Tickets(props) {
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [selectedTickets, setSelectedTickets] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedNote, setSelectedNote] = useState({})
+  const [deleteNoteModal, setDeleteNoteModal] = useState(false);
+  const [editNoteModal, setEditNoteModal] = useState(false);
 
   let userContext = useContext(UserContext);
 
@@ -149,7 +152,6 @@ export function Tickets(props) {
   const handleAddNote = (noteText, ticketID) => {
     axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(userContext))
       .then(({ data }) => {
-
         viewedTicket.notes.push(data);
         getTickets(userContext);
       })
@@ -162,81 +164,65 @@ export function Tickets(props) {
   const handleSelectRow = (ticket) => {
     setSelectedTickets([...selectedTickets, ticket])
   };
-  handleDeleteNote = (note) => {
-    this.setState({
-      selectedNote: note,
-      deleteNoteModal: true
-    })
+
+  const handleDeleteNote = (note) => {
+    setSelectedNote(note);
+    setDeleteNoteModal(true);
   }
 
-  handleEditNoteText = (note) => {
-    this.setState({
-      selectedNote: note,
-      editNoteModal: true
-    })
+  const handleEditNoteText = (note) => {
+    setSelectedNote(note);
+    setEditNoteModal(true)
   }
 
 
-  editNote = () => {
-    const ticketID = this.state.viewedTicket.id;
-    const { selectedNote } = this.state;
+  const editNote = () => {
+    const ticketID = viewedTicket.id;
 
     axios.patch(
       `/api/tickets/${ticketID}/notes/${selectedNote.id}`,
       { text: selectedNote.text },
-      makeAuthHeaders(this.context))
+      makeAuthHeaders(userContext))
       .then(({ data }) => {
-
-        this.setState({
-          viewedTicket: {
-            ...this.state.viewedTicket,
-            notes: this.state.viewedTicket.notes.map(note => {
-              if (note.id === data.id) note.text = data.text;
-              return note;
-            })
-          },
-          editNoteModal: false
+        setViewedTicket({
+          ...viewedTicket, notes: viewedTicket.notes.map(note => {
+            if (note.id === data.id) note.text = data.text;
+            return note;
+          })
         })
+        setEditNoteModal(false);
       })
       .catch((error) => {
         Toast(error.message, "error");
         console.log(error)
       })
+
   }
 
 
-  deleteNote = () => {
-    const { id, ticketid } = this.state.selectedNote;
+  const deleteNote = () => {
+    const { id, ticket_id } = selectedNote;
 
-    axios.delete(`/api/tickets/${ticketid}/notes/${id}`, makeAuthHeaders(this.context))
+    axios.delete(`/api/tickets/${ticket_id}/notes/${id}`, makeAuthHeaders(userContext))
       .then(() => {
 
-        const filteredNotes = this.state.viewedTicket.notes.filter(note => note.id !== id);
-        this.setState({
-          viewedTicket: { ...this.state.viewedTicket, notes: filteredNotes }
-        });
+        const filteredNotes = viewedTicket.notes.filter(note => note.id !== id);
+        setViewedTicket({ ...viewedTicket, notes: filteredNotes })
+        getTickets(userContext);
 
-        this.getTickets(this.context);
       })
       .catch((error) => {
         Toast(error.message, "error");
         console.log(error)
       })
 
-    this.toggleNoteModal();
+    closeNoteModal();
   }
 
-  toggleNoteModal = () => {
-    this.setState({
-      deleteNoteModal: false,
-      editNoteModal: false
-    })
+  const closeNoteModal = () => {
+    setDeleteNoteModal(false);
+    setEditNoteModal(false);
   }
-
-  handleSelectRow = (ticket) =>
-    this.setState({
-      selectedTickets: [...this.state.selectedTickets, ticket]
-    });
 
   const handleDeselectRow = (ticket) => {
     console.log(selectedTickets)
@@ -377,6 +363,9 @@ export function Tickets(props) {
                 handleAddNote={handleAddNote}
                 getTickets={getTickets}
                 updateSelectedTicket={updateSelectedTicket}
+                handleDeleteNote={handleDeleteNote}
+                handleEditNoteText={handleEditNoteText}
+                editNoteModal={editNoteModal}
               />
             </div>
             {
@@ -404,6 +393,61 @@ export function Tickets(props) {
                 closeHandler={toggleDeleteModal}
               />
             }
+            {deleteNoteModal &&
+              <div className="note-modal"
+              >
+                <Modal
+                  titleText={"Delete Note"}
+                  content={
+                    <div className="content">
+                      <p>
+                        You have selected the following note to be deleted:
+                      </p>
+                      <div className="selected-note-text">
+                        {selectedNote.text}
+                      </div>
+                      <br />
+                      <p>Are you sure you want to delete this note?  This cannot be undone.</p>
+                    </div>
+                  }
+                  hasButtons={true}
+                  hasRedirectButton={false}
+                  confirmButtonHandler={deleteNote}
+                  confirmText="Delete"
+                  cancelButtonHandler={closeNoteModal}
+                  cancelText="Cancel"
+                  closeHandler={closeNoteModal}
+                />
+              </div>
+            }
+            {editNoteModal &&
+              <div className="note-modal"
+              >
+                <Modal
+                  titleText={"Edit Note"}
+                  content={
+                    <div className="content">
+                      <p>
+                        You have attempted to change this note's text to:
+                      </p>
+                      <div className="selected-note-text">
+                        {selectedNote.text}
+                      </div>
+                      <br />
+                      <p>Are you sure you want to change this note?  This cannot be undone.</p>
+                    </div>
+                  }
+                  hasButtons={true}
+                  hasRedirectButton={false}
+                  confirmButtonHandler={editNote}
+                  confirmText="Change"
+                  cancelButtonHandler={closeNoteModal}
+                  cancelText="Cancel"
+                  closeHandler={closeNoteModal}
+                />
+              </div>
+            }
+
           </div>
         );
       }
