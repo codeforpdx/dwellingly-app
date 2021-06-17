@@ -108,7 +108,23 @@ const expandRow = {
 
     </div>
   ),
-  showExpandColumn: true
+  showExpandColumn: matchesAll ? true : false,
+  expandColumnRenderer: ({ expanded }) => {
+    if(expanded) {
+      return (
+        <FontAwesomeIcon
+          className="button__envelope-icon mr-3"
+          icon={faExpand}
+        />
+      );
+    }
+    return (
+      <FontAwesomeIcon
+        className="button__envelope-icon mr-3"
+        icon={faCompress}
+      />
+    );
+  }
 };
 
 const getDisplayProperties = (properties, showArchived) => properties.filter(p => showArchived || !p.archived);
@@ -137,7 +153,7 @@ export const Properties = () => {
   const [nonSelectableRows, setNonSelectableRows] = useState([]);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { matchesAll } = useMediaQueries({
+  const { matchesAll: smallScreen } = useMediaQueries({
     screen: 'screen',
     width: `(max-width: ${mobileWidth})`
   });
@@ -239,11 +255,11 @@ export const Properties = () => {
               wrapperClasses='properties-list-wrapper'
               keyField='id'
               data={displayProperties}
-              columns={matchesAll ? mobileColumns : columns}
+              columns={smallScreen ? mobileColumns : columns}
               selectRow={({
                 mode: 'checkbox',
-                clickToSelect: matchesAll ? false : true,
-                clickToExpand: matchesAll ? true : false,
+                clickToSelect: smallScreen ? false : true,
+                clickToExpand: smallScreen ? true : false,
                 onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
                 onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
                 sort: true,
@@ -254,7 +270,7 @@ export const Properties = () => {
               defaultSortDirection="asc"
               bootstrap4={true}
               headerClasses="table-header"
-              expandRow={matchesAll && expandRow}
+              expandRow={smallScreen && expandRow}
             />
           }
         </div>
