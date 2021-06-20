@@ -5,8 +5,6 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from "../../components/ToolTip/ToolTip";
 import './tenants.scss';
 
-
-
 export const columns = [
   {
     dataField: "fullName",
@@ -151,11 +149,3 @@ export const mobileColumns = [
     }
   },
 ];
-export const selectRow = {
-  mode: "checkbox",
-  clickToSelect: true,
-  sort: true,
-  headerColumnStyle: () => {
-    return { width: "5%" };
-  },
-};
