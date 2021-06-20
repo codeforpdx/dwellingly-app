@@ -52,6 +52,11 @@ const getDisplayTenants = (tenants, showHoused, showArchived) => {
   return tenants.filter(tenant => (showHoused || tenant.lease) && (showArchived || !tenant.archived));
 };
 
+const { matchesAll: isSmallScreen } = useMediaQueries({
+  screen: 'screen',
+  width: `(max-width: ${mobileWidth})`
+});
+
 const expandRow = isSmallScreen => ({
   renderer: row => (
     <div>
@@ -94,12 +99,6 @@ export function Tenants() {
   const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { matchesAll } = useMediaQueries({
-    screen: 'screen',
-    width: `(max-width: ${mobileWidth})`
-  });
-
-
 
   useMountEffect(() => {
     fetchAllTenants();
@@ -207,10 +206,6 @@ export function Tenants() {
     fetchAllTenants();
     toggleArchiveModal();
   };
-  const { matchesAll: isSmallScreen } = useMediaQueries({
-    screen: 'screen',
-    width: `(max-width: 950px)`
-  });
 
   return (
     <div className='main-container'>
@@ -266,11 +261,11 @@ export function Tenants() {
               key={`tables-of-tenants--${checkboxRenderCount}`} wrapperClasses='tenants-list-wrapper'
               keyField='id'
               data={displayTenants}
-              columns={matchesAll ? mobileColumns : columns}
+              columns={isSmallScreen ? mobileColumns : columns}
               selectRow={({
                 mode: 'checkbox',
-                clickToSelect: matchesAll ? false : true,
-                clickToExpand: matchesAll ? true : false,
+                clickToSelect: isSmallScreen ? false : true,
+                clickToExpand: isSmallScreen ? true : false,
                 onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
                 onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
                 sort: true,
