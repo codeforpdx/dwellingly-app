@@ -15,6 +15,6 @@ export const TICKET_STATUS_OPTIONS = {
 
 export const mobileWidth = '600px';
 
-export const tabletWidth= '960px'
+export const tabletWidth = '960px';
 
 export const desktopWidth = '1200px';

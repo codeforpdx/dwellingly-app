@@ -6,6 +6,7 @@ import Tooltip from "../../components/ToolTip/ToolTip";
 import './tenants.scss';
 
 
+
 export const columns = [
   {
     dataField: "fullName",
@@ -82,20 +83,6 @@ export const columns = [
     }
   },
 ];
-
-export const expandRow = {
-  renderer: row => (
-    <div>
-      <label for="created-at">
-        Added On
-        </label>
-      <p id="created-at">{row.created_at}</p>
-
-    </div>
-  ),
-  showExpandColumn: true
-};
-
 export const mobileColumns = [
   {
     dataField: "fullName",

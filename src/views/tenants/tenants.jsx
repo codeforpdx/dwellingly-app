@@ -8,13 +8,16 @@ import UserContext from '../../UserContext';
 import useMountEffect from '../../utils/useMountEffect';
 import Toast from '../../utils/toast';
 import Icon from '../../components/icon/Icon';
+import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Search from "../../components/Search/index";
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import Modal from '../../components/Modal';
-import { columns, mobileColumns, expandRow } from './tenantsFormStructure';
+import { columns, mobileColumns, selectRow } from './tenantsFormStructure';
 import { mobileWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './tenants.scss';
+
+
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -51,6 +54,34 @@ const getDisplayTenants = (tenants, showHoused, showArchived) => {
   return tenants.filter(tenant => (showHoused || tenant.lease) && (showArchived || !tenant.archived));
 };
 
+const expandRow = isSmallScreen => ({
+  renderer: row => (
+    <div>
+      <label for="created-at">
+        Added On
+      </label>
+      <p id="created-at">{row.created_at}</p>
+
+    </div>
+  ),
+  showExpandColumn: isSmallScreen ? true : false,
+  expandColumnRenderer: ({ expanded }) => {
+    if(expanded) {
+      return (
+        <FontAwesomeIcon
+          className="button__envelope-icon mr-3"
+          icon={faChevronRight}
+        />
+      );
+    }
+    return (
+      <FontAwesomeIcon
+        className="button__envelope-icon mr-3"
+        icon={faChevronDown}
+      />
+    );
+  },
+});
 export function Tenants() {
   const userContext = useContext(UserContext);
 
@@ -69,6 +100,8 @@ export function Tenants() {
     screen: 'screen',
     width: `(max-width: ${mobileWidth})`
   });
+
+
 
   useMountEffect(() => {
     fetchAllTenants();
@@ -176,6 +209,10 @@ export function Tenants() {
     fetchAllTenants();
     toggleArchiveModal();
   };
+  const { matchesAll: isSmallScreen } = useMediaQueries({
+    screen: 'screen',
+    width: `(max-width: 950px)`
+  });
 
   return (
     <div className='main-container'>
@@ -250,7 +287,7 @@ export function Tenants() {
                 }]}
               bootstrap4={true}
               headerClasses='table-header'
-              expandRow={matchesAll && expandRow}
+              expandRow={expandRow(isSmallScreen)}
             />
           }
         </div>

@@ -6,126 +6,59 @@ import * as axios from 'axios';
 import Search from '../../components/Search';
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../utils/toast';
 import Icon from '../../components/icon/Icon';
+
 import Modal from '../../components/Modal';
-import { mobileWidth } from '../../constants/index.js';
+import { columns, mobileColumns } from './propertiesFormStructure';
+
 import { useMediaQueries } from '@react-hook/media-query';
 import './properties.scss';
 
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
-
-const columns = [{
-  dataField: 'name',
-  formatter: (cell, row, rowIndex, formatExtraData) => {
-    return (
-      <Link key={row.id} to={`/manage/properties/${row.id}`}>
-        {row.name}
-      </Link>
-    );
-  },
-  text: 'Name',
-  sort: true,
-  headerStyle: () => {
-    return { width: "20%" };
-  }
-}, {
-  dataField: 'propertyManagerNames',
-  text: 'Property Managers',
-  sort: true,
-  headerStyle: () => {
-    return { width: "20%" };
-  }
-}, {
-  dataField: 'address',
-  text: 'Address',
-  sort: true,
-  headerStyle: () => {
-    return { width: "20%" };
-  }
-}, {
-  dataField: 'totalTenants',
-  text: 'Tenants',
-  sort: true,
-  headerStyle: () => {
-    return { width: "10%" };
-  }
-}, {
-  dataField: 'created_at',
-  text: 'Added On',
-  sort: true,
-  headerStyle: () => {
-    return { width: "10%" };
-  }
-}];
-
-const mobileColumns = [{
-  dataField: 'name',
-  formatter: (cell, row, rowIndex, formatExtraData) => {
-    return (
-      <Link key={row.id} to={`/manage/properties/${row.id}`}>
-        {row.name}
-      </Link>
-    );
-  },
-  text: 'Name',
-  sort: true,
-  headerStyle: () => {
-    return { width: "45%" };
-
-  }
-}, {
-  dataField: 'address',
-  text: 'Address',
-  sort: true,
-  headerStyle: () => {
-    return { width: "45%" };
-  }
-}, {
-  dataField: 'totalTenants',
-  text: 'Tenants',
-  sort: true,
-  headerStyle: () => {
-    return { width: "10%" };
-  }
-}];
-
-const expandRow = {
+const expandRow = isSmallScreen => ({
   renderer: row => (
     <div>
       <label for="property-managers">
         Property Managers
-        </label>
+      </label>
       <p id="property-managers">{row.propertyManagerNames}</p>
 
       <br />
       <label for="created-at">
         Added On
-        </label>
+      </label>
       <p id="created-at">{row.created_at}</p>
 
     </div>
   ),
-  showExpandColumn: matchesAll ? true : false,
+  showExpandColumn: isSmallScreen ? true : false,
   expandColumnRenderer: ({ expanded }) => {
     if(expanded) {
       return (
         <FontAwesomeIcon
           className="button__envelope-icon mr-3"
-          icon={faExpand}
+          icon={faChevronRight}
         />
       );
     }
     return (
       <FontAwesomeIcon
         className="button__envelope-icon mr-3"
-        icon={faCompress}
+        icon={faChevronDown}
       />
     );
   }
-};
+});
+
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
+
+
+
+
+
 
 const getDisplayProperties = (properties, showArchived) => properties.filter(p => showArchived || !p.archived);
 
@@ -153,9 +86,10 @@ export const Properties = () => {
   const [nonSelectableRows, setNonSelectableRows] = useState([]);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { matchesAll: smallScreen } = useMediaQueries({
+
+  const { matchesAll: isSmallScreen } = useMediaQueries({
     screen: 'screen',
-    width: `(max-width: ${mobileWidth})`
+    width: `(max-width: 950px)`
   });
 
   const handleToggleArchived = () => {
@@ -255,11 +189,11 @@ export const Properties = () => {
               wrapperClasses='properties-list-wrapper'
               keyField='id'
               data={displayProperties}
-              columns={smallScreen ? mobileColumns : columns}
+              columns={isSmallScreen ? mobileColumns : columns}
               selectRow={({
                 mode: 'checkbox',
-                clickToSelect: smallScreen ? false : true,
-                clickToExpand: smallScreen ? true : false,
+                clickToSelect: isSmallScreen ? false : true,
+                clickToExpand: isSmallScreen ? true : false,
                 onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
                 onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
                 sort: true,
@@ -270,7 +204,7 @@ export const Properties = () => {
               defaultSortDirection="asc"
               bootstrap4={true}
               headerClasses="table-header"
-              expandRow={smallScreen && expandRow}
+              expandRow={expandRow(isSmallScreen)}
             />
           }
         </div>
