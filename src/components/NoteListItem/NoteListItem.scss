@@ -27,12 +27,11 @@
 .ticket-card-note {
   font-weight: normal;
   width: 100%;
-  // max-height: 150px;
   padding: 1em .3em 1em 1em;
   border-radius: $border-radius--card;
   background-color: $lightGray;
   display: flex;
-  text-align: right;
+  text-align: left;
   p {
     color: $darkBlue;
     font-weight: normal;

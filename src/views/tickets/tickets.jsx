@@ -191,6 +191,9 @@ export function Tickets(props) {
           })
         })
         setEditNoteModal(false);
+
+        Toast("Note Updated", "success");
+
       })
       .catch((error) => {
         Toast(error.message, "error");
@@ -204,12 +207,13 @@ export function Tickets(props) {
     const { id, ticket_id } = selectedNote;
 
     axios.delete(`/api/tickets/${ticket_id}/notes/${id}`, makeAuthHeaders(userContext))
-      .then(() => {
+      .then(({ data }) => {
 
         const filteredNotes = viewedTicket.notes.filter(note => note.id !== id);
         setViewedTicket({ ...viewedTicket, notes: filteredNotes })
         getTickets(userContext);
 
+        Toast(data.message, "success");
       })
       .catch((error) => {
         Toast(error.message, "error");

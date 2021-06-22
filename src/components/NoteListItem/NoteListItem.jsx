@@ -35,7 +35,7 @@ export default function NoteListItem({ note, editNotes, localDeleteNote, handleE
               <button
                 className='mini-rounded'
                 onClick={() => localDeleteNote(note)}>
-                <i className="fas fa-minus icon" />
+                <i className="fas fa-trash icon" />
               </button>
               <button
                 className={`mini-rounded${editText ? "--is-editing" : ""}`}
@@ -45,9 +45,7 @@ export default function NoteListItem({ note, editNotes, localDeleteNote, handleE
             </div>
             : null
           }
-          <div
-            className="ticket-card-note-header"
-          >
+          <div className="ticket-card-note-header">
             {user}
           </div>
         </div>
@@ -73,13 +71,13 @@ export default function NoteListItem({ note, editNotes, localDeleteNote, handleE
               className="button is-secondary is-rounded ml-3 is-small"
               onClick={handleCancel}>
               Cancel
-          </button>
+            </button>
             <button
               onClick={localEditNoteText}
               className="button is-primary is-rounded ml-3 is-small"
             >
               SAVE
-        </button>
+            </button>
           </div>
         </>
         :
