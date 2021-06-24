@@ -37,20 +37,20 @@ const pageButtonRenderer = ({
   if(title === 'next page') {
     return (
       <li key={title} className="page-item">
-        <button href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Next</button>
+        <button onClick={handleClick} title={title} className='button is-rounded is-small' >Next</button>
       </li>
     );
   }
   if(active) {
     return (
       <li key={page} className="active page-item">
-        <button href="#" onClick={handleClick} title={title}>{page}</button>
+        <button onClick={handleClick} title={title}>{page}</button>
       </li>
     );
   }
   return (
     <li key={page} className="page-item">
-      <button href="#" onClick={handleClick} title={title}>{page}</button>
+      <button onClick={handleClick} title={title}>{page}</button>
     </li>
   );
 };
@@ -350,7 +350,7 @@ export function Tickets(props) {
                   <BootstrapTable
                     keyField="id"
                     data={isFiltered === true ? filteredTickets : tickets}
-                    columns={columns}
+                    columns={isSmallScreen ? mobileColumns : columns}
                     pagination={paginationFactory(options)}
                     defaultSortDirection="asc"
                     bootstrap4={true}
@@ -358,7 +358,8 @@ export function Tickets(props) {
                     classes="full-size-table"
                     selectRow={({
                       mode: 'checkbox',
-                      clickToSelect: true,
+                      clickToSelect: isSmallScreen ? false : true,
+                      clickToExpand: isSmallScreen ? true : false,
                       onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
                       onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
                       sort: true,
