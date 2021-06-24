@@ -1,41 +1,84 @@
 import React from "react";
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, waitForElement, wait } from '@testing-library/react';
-import { MemoryRouter } from "react-router";
+import { render, fireEvent, waitForElement, screen, wait } from '@testing-library/react';
+import { MemoryRouter, Route } from "react-router";
 import Manager from "./index";
+import axios from 'axios'
+import UserContext from "../../UserContext"
 
-describe.skip("Manager Component", () => {
+jest.mock('axios')
 
-  let wrapper;
-  beforeEach(() => {
-    wrapper = render(
-      <MemoryRouter initialEntries={["manage/manager/1"]}>
-        <Manager parms={{id: 1}}/>
-      </MemoryRouter>
-    );
+describe("Manager Component", () => {
+
+  let managerData = {
+    email: "user1@dwellingly.org",
+    phone: "1234567890",
+    password: "1234",
+    firstName: "user1",
+    lastName: "tester",
+    archived: "false",
+    role: "admin",
+    properties: [],
+    tenants: []
+  }
+
+  beforeEach(async () => {
+    axios.get.mockImplementation(() => {
+      return Promise.resolve({data: managerData})
+      })
+
+
+    await wait(() => {
+      render(
+      <MemoryRouter initialEntries={["manage/managers/1"]}>
+        <Route path="manage/managers/:id">
+          <UserContext.Provider value={{user: {accessJwt: "mockToken"}}}>
+            <Manager />
+          </UserContext.Provider>
+        </Route>
+      </MemoryRouter>)
+    })
+
   });
+
   it("Renders without errors", () => {
-    expect(wrapper).not.toBeNull();
+    expect(screen).not.toBeNull();
+    expect(
+      screen.getByText(`${managerData.firstName} ${managerData.lastName}`)
+    ).not.toBeNull()
   });
-  it("Show form when pen icon is clicked", () => {
-    fireEvent.click(wrapper.getByRole("button"));
-    expect(wrapper.getAllByRole("textbox")).toHaveLength(4);
+
+  it("Show form when pen icon is clicked", async () => {
+    fireEvent.click(screen.getByRole("button"));
+    await expect(screen.getAllByRole("textbox")).toHaveLength(4);
   });
+
   it("Should update contact info when Formik field is edited", async () => {    
-    fireEvent.click(wrapper.getByRole("button"));
-    const firstNameInput = await waitForElement(() => wrapper.getByDisplayValue('Jim'));
-    const submitButton = await waitForElement(() => wrapper.getAllByRole('button')[0]);
+    axios.patch.mockImplementation((url, payload) => {
+      return Promise.resolve({data: payload})
+    })
+    const updatedName = "Frank"
+
+    fireEvent.click(screen.getByRole("button"));
+    const firstNameInput = await waitForElement(
+      () => screen.getByDisplayValue(managerData.firstName)
+    );
+    const submitButton = await waitForElement(
+      () => screen.getByText('SAVE')
+    );
     fireEvent.change(firstNameInput, {
       target: {
-        value: "Frank"
+        value: updatedName
       }
     });
     
     fireEvent.click(submitButton);
 
-    wait(() => {
-      expect(wrapper.getByDisplayValue("Frank Oliver")).toHaveLength(1);
-    });
+    const firstNameOutput = await waitForElement(
+      () => screen.getByText(updatedName)
+    )
+    expect(firstNameOutput).toBeInTheDocument()
+   
   });
   // TESTS TODO
   // IT GETS MANAGER DATA?
