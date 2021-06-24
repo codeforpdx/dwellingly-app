@@ -56,7 +56,7 @@ const expandRow = isSmallScreen => ({
   renderer: row => (
     <div>
       <phone for="phone">
-Phone
+        Phone
       </phone>
       <p id="created-at">{row.phone}</p>
     </div>

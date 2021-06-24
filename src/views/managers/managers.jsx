@@ -81,14 +81,14 @@ const expandRow = isSmallScreen => ({
       return (
         <FontAwesomeIcon
           className="button__envelope-icon mr-3"
-          icon={faChevronRight}
+          icon={faChevronDown}
         />
       );
     }
     return (
       <FontAwesomeIcon
         className="button__envelope-icon mr-3"
-        icon={faChevronDown}
+        icon={faChevronRight}
       />
     );
   },
@@ -114,7 +114,7 @@ const Managers = () => {
     screen: 'screen',
     width: `(max-width: 950px)`
   });
-  
+
   useEffect(() => {
     setIsLoading(true);
     getManagers(axiosHeader, setManagersData, setIsLoading);

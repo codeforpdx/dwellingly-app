@@ -40,14 +40,14 @@ const expandRow = isSmallScreen => ({
       return (
         <FontAwesomeIcon
           className="button__envelope-icon mr-3"
-          icon={faChevronRight}
+          icon={faChevronDown}
         />
       );
     }
     return (
       <FontAwesomeIcon
         className="button__envelope-icon mr-3"
-        icon={faChevronDown}
+        icon={faChevronRight}
       />
     );
   }
