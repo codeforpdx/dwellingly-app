@@ -10,7 +10,6 @@ import Toast from '../../utils/toast';
 import Modal from '../../components/Modal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-
 import './tickets.scss';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });

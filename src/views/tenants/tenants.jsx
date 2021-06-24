@@ -52,19 +52,13 @@ const getDisplayTenants = (tenants, showHoused, showArchived) => {
   return tenants.filter(tenant => (showHoused || tenant.lease) && (showArchived || !tenant.archived));
 };
 
-const { matchesAll: isSmallScreen } = useMediaQueries({
-  screen: 'screen',
-  width: `(max-width: ${mobileWidth})`
-});
-
 const expandRow = isSmallScreen => ({
   renderer: row => (
     <div>
-      <label for="created-at">
-        Added On
-      </label>
-      <p id="created-at">{row.created_at}</p>
-
+      <phone for="phone">
+Phone
+      </phone>
+      <p id="created-at">{row.phone}</p>
     </div>
   ),
   showExpandColumn: isSmallScreen ? true : false,
@@ -73,14 +67,14 @@ const expandRow = isSmallScreen => ({
       return (
         <FontAwesomeIcon
           className="button__envelope-icon mr-3"
-          icon={faChevronRight}
+          icon={faChevronDown}
         />
       );
     }
     return (
       <FontAwesomeIcon
         className="button__envelope-icon mr-3"
-        icon={faChevronDown}
+        icon={faChevronRight}
       />
     );
   },
@@ -99,6 +93,10 @@ export function Tenants() {
   const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { matchesAll: isSmallScreen } = useMediaQueries({
+    screen: 'screen',
+    width: `(max-width: ${mobileWidth})`
+  });
 
   useMountEffect(() => {
     fetchAllTenants();
