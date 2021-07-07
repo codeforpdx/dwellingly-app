@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Icon from '../../components/icon/Icon';
 import './managers.scss';
-import { columns, mobileColumns } from './managersFormStructure';
+import { columns, mobileColumns } from './managersTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 
 

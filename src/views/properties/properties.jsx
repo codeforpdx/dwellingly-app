@@ -10,10 +10,8 @@ import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
 import Toast from '../../utils/toast';
 import Icon from '../../components/icon/Icon';
-
 import Modal from '../../components/Modal';
-import { columns, mobileColumns } from './propertiesFormStructure';
-
+import { columns, mobileColumns } from './propertiesTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 import './properties.scss';
 
@@ -69,7 +67,7 @@ const formatPropertyData = (properties) => properties.map(p => ({
 
 export const Properties = () => {
   const userContext = useContext(UserContext);
-   
+
   const [allProperties, setAllProperties] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
