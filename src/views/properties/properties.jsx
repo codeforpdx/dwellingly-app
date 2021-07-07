@@ -55,11 +55,6 @@ const expandRow = isSmallScreen => ({
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
-
-
-
-
-
 const getDisplayProperties = (properties, showArchived) => properties.filter(p => showArchived || !p.archived);
 
 const formatPropertyData = (properties) => properties.map(p => ({
@@ -72,10 +67,9 @@ const formatPropertyData = (properties) => properties.map(p => ({
   created_at: p.created_at
 }));
 
-
 export const Properties = () => {
   const userContext = useContext(UserContext);
-
+   
   const [allProperties, setAllProperties] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
