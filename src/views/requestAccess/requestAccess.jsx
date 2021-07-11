@@ -68,20 +68,11 @@ export const RequestAccess = (props) => {
   const [showAddProperty, setShowAddProperty] = useState(false);
 
   useEffect(() => {
-    axios.get(`/api/roles`)
-      .then((response) => {
-        let data = JSON.parse(response.data);
-        // Get Role names
-        let roleArray = Object.keys(data);
-        // Replace _'s with spaces where existing
-        roleArray = roleArray.map(role => role.replace('_', ' '));
-        // Get array of roles to map to selection options
-        setSelectionOptions(roleArray);
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
-      });
+    let roles = [];
+    for(var key in RoleEnum) {
+      roles.push(key);
+    }
+    setSelectionOptions(roles);
     getProperties();
   }, []);
 

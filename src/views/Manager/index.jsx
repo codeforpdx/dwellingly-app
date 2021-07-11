@@ -88,7 +88,7 @@ const Manager = () => {
 
   const updateManager = (payload) => {
     axios
-      .patch(`${process.env.REACT_APP_PROXY}/api/user/${id}`,
+      .patch(`/api/user/${id}`,
         payload, makeAuthHeaders(userContext)
       )
       .then(response => {
