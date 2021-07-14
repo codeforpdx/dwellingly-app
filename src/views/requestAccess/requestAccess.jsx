@@ -68,11 +68,7 @@ export const RequestAccess = (props) => {
   const [showAddProperty, setShowAddProperty] = useState(false);
 
   useEffect(() => {
-    let roles = [];
-    for(var key in RoleEnum) {
-      roles.push(key);
-    }
-    setSelectionOptions(roles);
+    setSelectionOptions(Object.keys(RoleEnum));
     getProperties();
   }, []);
 
