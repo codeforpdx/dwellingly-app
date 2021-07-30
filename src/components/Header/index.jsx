@@ -12,7 +12,7 @@ const Header = (props) => {
     return null;
   }
   return (
-    <header className="navbar-brand bg-gradient navbar-container">
+    <header data-testid="header" className="navbar-brand bg-gradient navbar-container">
       <Link className="navbar-item" to="/">
         <img src={dwellinglylogo} alt="dwellingly logo" />
       </Link>
