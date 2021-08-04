@@ -20,11 +20,6 @@ axios.patch.mockImplementation(() =>
   })
 );
 jest.mock("../../utils/toast")
-/*
-jest.mock("../../utils/toast", () => 
-  jest.fn(() => {}))
-const Toast = require("../../utils/toast")
-*/
 
 
 const mockSetUser = jest.fn();
@@ -90,11 +85,6 @@ describe("settings component", () => {
       expect(Toast).toHaveBeenCalledWith("Saved Successfully!", "success")
     })
     
-    /*
-    await wait( () => {
-      expect(screen.getByTest(/successful/i)).toBeTruthy()
-    })
-    */
   });
 
   it("should display error alert when PATCH method is unsuccessful", async () => {
@@ -114,11 +104,6 @@ describe("settings component", () => {
       expect(Toast).toHaveBeenCalledWith(errorMessage, "error")
     )
     
-    /*
-    await wait(() =>{
-      expect(screen.getByText(/error/i)).toBeTruthy()
-    })
-    */
   });
 
   it("should display the new input values after successful submission", async () => {
