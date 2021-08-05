@@ -13,7 +13,7 @@ import Search from "../../components/Search/index";
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import Modal from '../../components/Modal';
 import { columns, mobileColumns } from './tenantsTableComponents';
-import { mobileWidth } from '../../constants/index.js';
+import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './tenants.scss';
 
@@ -95,7 +95,7 @@ export function Tenants() {
   const [isLoading, setIsLoading] = useState(false);
   const { matchesAll: isSmallScreen } = useMediaQueries({
     screen: 'screen',
-    width: `(max-width: ${mobileWidth})`
+    width: `(max-width: ${tabletWidth})`
   });
 
   useMountEffect(() => {

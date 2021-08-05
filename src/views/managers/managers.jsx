@@ -13,8 +13,7 @@ import Icon from '../../components/icon/Icon';
 import './managers.scss';
 import { columns, mobileColumns } from './managersTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
-
-
+import { tabletWidth } from '../../constants/index.js';
 
 // transforms data from API into a format that can be used for bootstrap-table-next
 const convertManagersDataForTable = (managersArray) => {
@@ -34,19 +33,10 @@ const convertManagersDataForTable = (managersArray) => {
   return convertedManagers;
 };
 
-const payload = {
-  userrole: `${roleEnum.PROPERTY_MANAGER}`
-};
-
-const makeHeader = (context) => {
-  return { Authorization: `Bearer ${context.user.accessJwt}` };
-};
-
 const getManagers = (header, storeInState, updateLoading) => {
   axios
-    .post(`${process.env.REACT_APP_PROXY}/api/users/role`,
-      payload,
-      header
+    .get(`/api/user?r=${roleEnum.PROPERTY_MANAGER}`,
+    header
     )
     .then((response) => {
       const convertedData = convertManagersDataForTable(response.data.users);
@@ -94,16 +84,14 @@ const expandRow = isSmallScreen => ({
   },
 });
 
+const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const Managers = () => {
   const [managersData, setManagersData] = useState();
   const [selectedManagers, setSelectedManagers] = useState([]);
-  const [checkboxRenderCount, setCheckboxRenderCount] = useState(0);
-  const [nonSelectableRows, setNonSelectableRows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const retrievedUserContext = useContext(UserContext);
-  const axiosHeader = makeHeader(retrievedUserContext);
+  const context = useContext(UserContext);
 
   const handleSelectRow = (manager) => setSelectedManagers([...selectedManagers, manager]);
   const handleDeselectRow = (manager) => setSelectedManagers(selectedManagers.filter(p => p.id !== manager.id));
@@ -112,12 +100,12 @@ const Managers = () => {
 
   const { matchesAll: isSmallScreen } = useMediaQueries({
     screen: 'screen',
-    width: `(max-width: 950px)`
+    width: `(max-width: ${tabletWidth})`
   });
-
+  
   useEffect(() => {
     setIsLoading(true);
-    getManagers(axiosHeader, setManagersData, setIsLoading);
+    getManagers(makeAuthHeaders(context), setManagersData, setIsLoading);
   }, []);
 
   return (
@@ -158,9 +146,7 @@ const Managers = () => {
               onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
               onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
               sort: true,
-              headerColumnStyle: () => ({ width: "5%" }),
-              nonSelectable: nonSelectableRows,
-              nonSelectableStyle: () => ({ color: '#999999' })
+              headerColumnStyle: () => ({ width: "5%" })
             })}
             defaultSortDirection="asc"
             bootstrap4={true}

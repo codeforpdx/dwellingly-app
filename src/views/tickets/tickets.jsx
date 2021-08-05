@@ -10,9 +10,10 @@ import Toast from '../../utils/toast';
 import Modal from '../../components/Modal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { mobileWidth } from '../../constants/index.js';
+import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './tickets.scss';
+import { columns, mobileColumns } from '../tickets/ticketsTableComponents';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -111,7 +112,7 @@ export function Tickets(props) {
 
   const { matchesAll: isSmallScreen } = useMediaQueries({
     screen: 'screen',
-    width: `(max-width: ${mobileWidth})`
+    width: `(max-width: ${tabletWidth})`
   });
 
   let userContext = useContext(UserContext);
@@ -271,7 +272,7 @@ export function Tickets(props) {
                   <BootstrapTable
                     keyField="id"
                     data={isFiltered === true ? filteredTickets : tickets}
-                    columns={isSmallScreen ? mobileColumns : columns}
+                    columns={isSmallScreen ? mobileColumns(toggleTicketModal) : columns(toggleTicketModal)}
                     pagination={paginationFactory(options)}
                     defaultSortDirection="asc"
                     bootstrap4={true}

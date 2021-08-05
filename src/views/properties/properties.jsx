@@ -14,6 +14,7 @@ import Modal from '../../components/Modal';
 import { columns, mobileColumns } from './propertiesTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 import './properties.scss';
+import { tabletWidth } from '../../constants';
 
 
 const expandRow = isSmallScreen => ({
@@ -81,7 +82,7 @@ export const Properties = () => {
 
   const { matchesAll: isSmallScreen } = useMediaQueries({
     screen: 'screen',
-    width: `(max-width: 950px)`
+    width: `(max-width: ${tabletWidth})`
   });
 
   const handleToggleArchived = () => {
