@@ -11,6 +11,8 @@ import Toast from "../../utils/toast"
 const mockHistory = createMemoryHistory();
 
 jest.mock("axios");
+jest.mock("../../utils/toast")
+
 axios.patch.mockImplementation(() =>
   Promise.resolve({
     data: {
