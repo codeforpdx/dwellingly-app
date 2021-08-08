@@ -14,7 +14,7 @@ export const columns = (toggleTicketModal) => ([{
     return { width: "20%" };
   }
 }, {
-  dataField: 'sender',
+  dataField: 'author',
   text: 'Sender',
   sort: true,
   headerStyle: () => {

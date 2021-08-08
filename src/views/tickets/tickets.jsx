@@ -125,7 +125,11 @@ export function Tickets(props) {
   const getTickets = (context) => {
     axios.get(`/api/tickets`, makeAuthHeaders(context))
       .then((response) => {
-        setTickets(response.data.tickets);
+        setTickets(response.data.tickets?.map(t => {
+          return {
+          ...t,
+          assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(', ')
+          }}));
       })
       .catch((error) => {
         Toast(error.message, "error");

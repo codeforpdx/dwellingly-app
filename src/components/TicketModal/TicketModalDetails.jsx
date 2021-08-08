@@ -2,14 +2,14 @@ import React from 'react';
 import "./TicketModal.scss";
 
 export default function TicketModalDetails({ ticket }) {
-  const { sender, tenant, assigned, urgency, created_at } = ticket;
+  const { author, tenant, assigned, urgency, created_at } = ticket;
 
   return (
     <div>
       <div style={{ float: "left" }}>
         <div className="ticket-details-section">
-          <p className="ticket-detail-label">SENDER</p>
-          <p>{sender}</p>
+          <p className="ticket-detail-label">AUTHOR</p>
+          <p>{author}</p>
         </div>
         <div className="ticket-details-section">
           <p className="ticket-detail-label">TENANT</p>
