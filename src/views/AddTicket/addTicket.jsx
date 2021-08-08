@@ -97,9 +97,9 @@ export const AddTicket = () => {
       .then( () => {
         var data = {
           issue: issueText,
-          senderID: context.user.identity,
+          author_id: context.user.identity,
           status: "New",
-          tenantID: tenantSelection[0].key,
+          tenant_id: tenantSelection[0].key,
           urgency: urgency
         };
         axios.post('/api/tickets', data, makeAuthHeaders(context))
