@@ -109,6 +109,9 @@ export function Tickets(props) {
   const [isFiltered, setIsFiltered] = useState(false);
   const [selectedTickets, setSelectedTickets] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedNote, setSelectedNote] = useState({})
+  const [deleteNoteModal, setDeleteNoteModal] = useState(false);
+  const [editNoteModal, setEditNoteModal] = useState(false);
 
   const { matchesAll: isSmallScreen } = useMediaQueries({
     screen: 'screen',
@@ -144,7 +147,6 @@ export function Tickets(props) {
   const handleAddNote = (noteText, ticketID) => {
     axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(userContext))
       .then(({ data }) => {
-
         viewedTicket.notes.push(data);
         getTickets(userContext);
       })
@@ -157,6 +159,69 @@ export function Tickets(props) {
   const handleSelectRow = (ticket) => {
     setSelectedTickets([...selectedTickets, ticket]);
   };
+
+  const handleDeleteNote = (note) => {
+    setSelectedNote(note);
+    setDeleteNoteModal(true);
+  }
+
+  const handleEditNoteText = (note) => {
+    setSelectedNote(note);
+    setEditNoteModal(true)
+  }
+
+
+  const editNote = () => {
+    const ticketID = viewedTicket.id;
+
+    axios.patch(
+      `/api/tickets/${ticketID}/notes/${selectedNote.id}`,
+      { text: selectedNote.text },
+      makeAuthHeaders(userContext))
+      .then(({ data }) => {
+        setViewedTicket({
+          ...viewedTicket, notes: viewedTicket.notes.map(note => {
+            if (note.id === data.id) note.text = data.text;
+            return note;
+          })
+        })
+        setEditNoteModal(false);
+
+        Toast("Note Updated", "success");
+
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error)
+      })
+
+  }
+
+
+  const deleteNote = () => {
+    const { id, ticket_id } = selectedNote;
+
+    axios.delete(`/api/tickets/${ticket_id}/notes/${id}`, makeAuthHeaders(userContext))
+      .then(({ data }) => {
+
+        const filteredNotes = viewedTicket.notes.filter(note => note.id !== id);
+        setViewedTicket({ ...viewedTicket, notes: filteredNotes })
+        getTickets(userContext);
+
+        Toast(data.message, "success");
+      })
+      .catch((error) => {
+        Toast(error.message, "error");
+        console.log(error)
+      })
+
+    closeNoteModal();
+  }
+
+  const closeNoteModal = () => {
+    setDeleteNoteModal(false);
+    setEditNoteModal(false);
+  }
 
   const handleDeselectRow = (ticket) => {
     console.log(selectedTickets);
@@ -304,6 +369,9 @@ export function Tickets(props) {
                 handleAddNote={handleAddNote}
                 getTickets={getTickets}
                 updateSelectedTicket={updateSelectedTicket}
+                handleDeleteNote={handleDeleteNote}
+                handleEditNoteText={handleEditNoteText}
+                editNoteModal={editNoteModal}
               />
             </div>
             {
@@ -331,6 +399,61 @@ export function Tickets(props) {
                 closeHandler={toggleDeleteModal}
               />
             }
+            {deleteNoteModal &&
+              <div className="note-modal"
+              >
+                <Modal
+                  titleText={"Delete Note"}
+                  content={
+                    <div className="content">
+                      <p>
+                        You have selected the following note to be deleted:
+                      </p>
+                      <div className="selected-note-text">
+                        {selectedNote.text}
+                      </div>
+                      <br />
+                      <p>Are you sure you want to delete this note?  This cannot be undone.</p>
+                    </div>
+                  }
+                  hasButtons={true}
+                  hasRedirectButton={false}
+                  confirmButtonHandler={deleteNote}
+                  confirmText="Delete"
+                  cancelButtonHandler={closeNoteModal}
+                  cancelText="Cancel"
+                  closeHandler={closeNoteModal}
+                />
+              </div>
+            }
+            {editNoteModal &&
+              <div className="note-modal"
+              >
+                <Modal
+                  titleText={"Edit Note"}
+                  content={
+                    <div className="content">
+                      <p>
+                        You have attempted to change this note's text to:
+                      </p>
+                      <div className="selected-note-text">
+                        {selectedNote.text}
+                      </div>
+                      <br />
+                      <p>Are you sure you want to change this note?  This cannot be undone.</p>
+                    </div>
+                  }
+                  hasButtons={true}
+                  hasRedirectButton={false}
+                  confirmButtonHandler={editNote}
+                  confirmText="Change"
+                  cancelButtonHandler={closeNoteModal}
+                  cancelText="Cancel"
+                  closeHandler={closeNoteModal}
+                />
+              </div>
+            }
+
           </div>
         );
       }
