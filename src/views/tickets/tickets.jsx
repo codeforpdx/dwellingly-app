@@ -9,9 +9,11 @@ import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 import Modal from '../../components/Modal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-
+import { faChevronRight, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { tabletWidth } from '../../constants/index.js';
+import { useMediaQueries } from '@react-hook/media-query';
 import './tickets.scss';
+import { columns, mobileColumns } from '../tickets/ticketsTableComponents';
 
 const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
@@ -26,30 +28,30 @@ const pageButtonRenderer = ({
     e.preventDefault();
     onPageChange(page);
   };
-  if (title === 'previous page') {
+  if(title === 'previous page') {
     return (
       <li key={title} className="page-item">
-        <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Prev</a>
+        <button onClick={handleClick} title={title} className='button is-rounded is-small' >Prev</button>
       </li>
     );
   }
-  if (title === 'next page') {
+  if(title === 'next page') {
     return (
       <li key={title} className="page-item">
-        <a href="#" onClick={handleClick} title={title} className='button is-rounded is-small' >Next</a>
+        <button onClick={handleClick} title={title} className='button is-rounded is-small' >Next</button>
       </li>
     );
   }
-  if (active) {
+  if(active) {
     return (
       <li key={page} className="active page-item">
-        <a href="#" onClick={handleClick} title={title}>{page}</a>
+        <button onClick={handleClick} title={title}>{page}</button>
       </li>
     );
   }
   return (
     <li key={page} className="page-item">
-      <a href="#" onClick={handleClick} title={title}>{page}</a>
+      <button onClick={handleClick} title={title}>{page}</button>
     </li>
   );
 };
@@ -62,9 +64,47 @@ const options = {
   pageButtonRenderer
 };
 
+const expandRow = isSmallScreen => ({
+  renderer: row => (
+    <div>
+      <label for="assigned-to">
+        Assigned To
+      </label>
+      <p id="assigned-to">{row.assigned}</p>
+
+      <label for="created-at">
+        Created
+      </label>
+      <p id="created-at">{row.created_at}</p>
+
+      <label for="updated-at">
+        Updated
+      </label>
+      <p id="updated-at">{row.updated_at}</p>
+    </div>
+  ),
+  showExpandColumn: isSmallScreen ? true : false,
+  expandColumnRenderer: ({ expanded }) => {
+    if(expanded) {
+      return (
+        <FontAwesomeIcon
+          className="button__envelope-icon mr-3"
+          icon={faChevronDown}
+        />
+      );
+    }
+    return (
+      <FontAwesomeIcon
+        className="button__envelope-icon mr-3"
+        icon={faChevronRight}
+      />
+    );
+  },
+});
+
 export function Tickets(props) {
   const [tickets, setTickets] = useState([]);
-  const [viewedTicket, setViewedTicket] = useState(null)
+  const [viewedTicket, setViewedTicket] = useState(null);
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [selectedTickets, setSelectedTickets] = useState([]);
@@ -73,61 +113,16 @@ export function Tickets(props) {
   const [deleteNoteModal, setDeleteNoteModal] = useState(false);
   const [editNoteModal, setEditNoteModal] = useState(false);
 
+  const { matchesAll: isSmallScreen } = useMediaQueries({
+    screen: 'screen',
+    width: `(max-width: ${tabletWidth})`
+  });
+
   let userContext = useContext(UserContext);
 
   const toggleTicketModal = (ticket) => {
     setViewedTicket((prevState) => (prevState ? null : ticket));
-  }
-
-  const columns = [{
-    dataField: 'id',
-    text: 'Ticket',
-    sort: true,
-    formatter: (cell, row) => <button
-      onClick={() => toggleTicketModal(row)}
-      className="link-button cell-align-left">
-      <p className="cell-header">{row.tenant}</p>
-      <p className="cell-subheader">{row.issue}</p>
-    </button>,
-    headerStyle: () => {
-      return { width: "20%" };
-    }
-  }, {
-    dataField: 'sender',
-    text: 'Sender',
-    sort: true,
-    headerStyle: () => {
-      return { width: "20%" };
-    }
-  }, {
-    dataField: 'assigned',
-    text: 'Assigned To',
-    sort: true,
-    headerStyle: () => {
-      return { width: "20%" };
-    }
-  }, {
-    dataField: 'status',
-    text: 'Status',
-    sort: true,
-    headerStyle: () => {
-      return { width: "10%" };
-    }
-  }, {
-    dataField: 'created_at',
-    text: 'Created',
-    sort: true,
-    headerStyle: () => {
-      return { width: "15%" };
-    }
-  }, {
-    dataField: 'updated_at',
-    text: 'Updated',
-    sort: true,
-    headerStyle: () => {
-      return { width: "15%" };
-    }
-  }];
+  };
 
   const getTickets = (context) => {
     axios.get(`/api/tickets`, makeAuthHeaders(context))
@@ -145,8 +140,8 @@ export function Tickets(props) {
   };
 
   const setOutputState = async (output, isTrue) => {
-    await setFilteredTickets(output)
-    await setIsFiltered(isTrue)
+    await setFilteredTickets(output);
+    await setIsFiltered(isTrue);
   };
 
   const handleAddNote = (noteText, ticketID) => {
@@ -157,12 +152,12 @@ export function Tickets(props) {
       })
       .catch((error) => {
         Toast(error.message, "error");
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   const handleSelectRow = (ticket) => {
-    setSelectedTickets([...selectedTickets, ticket])
+    setSelectedTickets([...selectedTickets, ticket]);
   };
 
   const handleDeleteNote = (note) => {
@@ -229,26 +224,26 @@ export function Tickets(props) {
   }
 
   const handleDeselectRow = (ticket) => {
-    console.log(selectedTickets)
-    let filteredSet = selectedTickets.filter((t) => t.id !== ticket.id)
-    console.log(filteredSet)
-    setSelectedTickets(filteredSet)
+    console.log(selectedTickets);
+    let filteredSet = selectedTickets.filter((t) => t.id !== ticket.id);
+    console.log(filteredSet);
+    setSelectedTickets(filteredSet);
   };
 
   const handleSelectAll = (tickets) => {
-    setSelectedTickets(tickets)
+    setSelectedTickets(tickets);
   };
 
   const handleDeselectAll = (_) => {
-    setSelectedTickets([])
+    setSelectedTickets([]);
   };
 
   const toggleDeleteModal = () => {
-    setShowDeleteModal(!showDeleteModal)
+    setShowDeleteModal(!showDeleteModal);
   };
 
   const deleteTickets = () => {
-    let ticketIds = selectedTickets.map(t => t.id)
+    let ticketIds = selectedTickets.map(t => t.id);
     axios({
       method: 'delete',
       url: '/api/tickets',
@@ -261,22 +256,22 @@ export function Tickets(props) {
 
         setTickets(ticketsToDelete);
         setSelectedTickets([]);
-        setShowDeleteModal(false)
+        setShowDeleteModal(false);
 
         Toast(response.data.message, "success");
       })
       .catch((error) => {
         Toast(error.message, "error");
       });
-  }
+  };
 
   const updateSelectedTicket = (updatedTicket) => {
-    setViewedTicket(updatedTicket)
-  }
+    setViewedTicket(updatedTicket);
+  };
 
   useEffect(() => {
     getTickets(userContext);
-  }, [userContext])
+  }, [userContext]);
 
   return (
     <UserContext.Consumer>
@@ -342,7 +337,7 @@ export function Tickets(props) {
                   <BootstrapTable
                     keyField="id"
                     data={isFiltered === true ? filteredTickets : tickets}
-                    columns={columns}
+                    columns={isSmallScreen ? mobileColumns(toggleTicketModal) : columns(toggleTicketModal)}
                     pagination={paginationFactory(options)}
                     defaultSortDirection="asc"
                     bootstrap4={true}
@@ -350,13 +345,20 @@ export function Tickets(props) {
                     classes="full-size-table"
                     selectRow={({
                       mode: 'checkbox',
-                      clickToSelect: true,
+                      clickToSelect: isSmallScreen ? false : true,
+                      clickToExpand: isSmallScreen ? true : false,
                       onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
                       onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
                       sort: true,
                       headerColumnStyle: () => ({ width: "5%" }),
                       nonSelectableStyle: () => ({ color: '#999999' })
                     })}
+                    defaultSorted={[
+                      {
+                        dataField: 'propertyName',
+                        order: 'asc'
+                      }]}
+                    expandRow={expandRow(isSmallScreen)}
                   />
                 </div>
               </div>
