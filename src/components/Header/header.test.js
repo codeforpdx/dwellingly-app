@@ -1,45 +1,37 @@
 import React from "react";
-import { shallow } from "enzyme";
+import {render, screen} from "@testing-library/react"
+import "@testing-library/jest-dom/extend-expect"
+import {MemoryRouter} from "react-router-dom"
+import UserContext from "../../UserContext"
 import Header from "./index";
 
-import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
-
-
-jest.mock("react-router-dom", () => ({
-	...jest.requireActual("react-router-dom"),
-	useLocation: () => ({ pathname: "/manage/managers" }),
-	useParams: jest.fn(),
-}));
-
-const setUp = (props = {}) => {
-	const component = shallow(<Header {...props} />);
-	return component;
-};
+beforeEach( () => {
+  render(
+    <MemoryRouter initialEntries={["/manage/managers"]}>
+      <UserContext.Provider value={{logout: jest.fn()}}>
+        <Header />
+      </UserContext.Provider>
+    </MemoryRouter>
+  )
+});
 
 describe("Header Component", () => {
 	it("should render without errors", () => {
-		const component = setUp();
-		const wrapper = component.find("header");
-		expect(wrapper.length).toBe(1);
+    expect(screen.getByAltText("dwellingly logo")).toBeVisible()
+  });
+
+	it("should render a image/logo", () => {
+    const logo = document.querySelector("img") 
+    expect(logo.src).toContain("dwellingly_logo_white")
 	});
 
-	it.skip("should render a image/logo", () => {
-		const component = setUp();
-		const wrapper = component.find("img");
-		expect(wrapper.prop("src")).toEqual(dwellinglylogo);
-	});
-
-	it.skip("should have a gradient background", () => {
-		const component = setUp();
-		const wrapper = component.find("#header");
-		expect(wrapper.hasClass("bg-gradient")).toEqual(true);
+	it("should have a gradient background", () => {
+    expect(screen.getByTestId("header")).toHaveClass("bg-gradient")
 	});
 });
 
 describe('Logout Button', () => {
   it("should render LogOutButton", () => {
-    const component = setUp();
-    const wrapper = component.find("LogOutButton");
-    expect(wrapper.length).toBe(1);
+    expect(screen.getByText(/LOG OUT/i)).toBeVisible()
   });
 });

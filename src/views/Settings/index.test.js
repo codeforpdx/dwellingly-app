@@ -6,10 +6,13 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import Settings from "./index";
 import UserContext from "../../UserContext";
+import Toast from "../../utils/toast"
 
 const mockHistory = createMemoryHistory();
 
 jest.mock("axios");
+jest.mock("../../utils/toast")
+
 axios.patch.mockImplementation(() =>
   Promise.resolve({
     data: {
@@ -18,8 +21,8 @@ axios.patch.mockImplementation(() =>
     },
   })
 );
+jest.mock("../../utils/toast")
 
-jest.spyOn(window, "alert").mockImplementation(() => {});
 
 const mockSetUser = jest.fn();
 const mockRefreshJWT = jest.fn();
@@ -70,7 +73,7 @@ describe("settings component", () => {
     expect(axios.patch).toHaveBeenCalled();
   });
 
-  it.skip("should display success alert when PATCH method is successful", async () => {
+  it("should display success alert when PATCH method is successful", async () => {
     const emailInput = screen.getByPlaceholderText(/Enter your email address/);
     const phoneInput = screen.getByPlaceholderText(/Enter your phone number/);
     const button = view.container.querySelector("button");
@@ -79,11 +82,14 @@ describe("settings component", () => {
     fireEvent.change(phoneInput, mockInputPhoneEvent);
 
     await wait(() => fireEvent.click(button));
-
-    expect(window.alert).toHaveBeenCalledWith("Saved Successfully!");
+  
+    await wait(() => {
+      expect(Toast).toHaveBeenCalledWith("Saved Successfully!", "success")
+    })
+    
   });
 
-  it.skip("should display error alert when PATCH method is unsuccessful", async () => {
+  it("should display error alert when PATCH method is unsuccessful", async () => {
     const errorMessage = 'Network Error';
     axios.patch.mockImplementationOnce(() => Promise.reject(new Error(errorMessage)));
 
@@ -95,8 +101,11 @@ describe("settings component", () => {
     fireEvent.change(phoneInput, mockInputPhoneEvent);
 
     await wait(() => fireEvent.click(button));
-
-    expect(window.alert).toHaveBeenCalledWith(Error(errorMessage));
+    
+    await wait(() =>
+      expect(Toast).toHaveBeenCalledWith(errorMessage, "error")
+    )
+    
   });
 
   it("should display the new input values after successful submission", async () => {

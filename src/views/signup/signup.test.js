@@ -7,15 +7,17 @@ import UserContext from "../../UserContext";
 
 import { MemoryRouter } from "react-router";
 
+jest.mock('axios')
+axios.post.mockImplementation(() => Promise.resolve({}))
+
 const mockHistory = { push: jest.fn() };
-jest.spyOn(axios, 'post').mockResolvedValue({});
-jest.spyOn(window, 'alert').mockImplementation(() => { });
 
 const mockNotAuthenticatedUser = {
   isAuthenticated: false,
 };
 
 const mockInputEvent = { target: { value: "mock value" } };
+const mockPassword = { target: {value: "Mock1Password"}};
 const mockInputEmailEvent = { target: { value: "mock@mockdomain.com" } };
 
 describe("signup component", () => {
@@ -30,42 +32,41 @@ describe("signup component", () => {
       </MemoryRouter>
     );
   });
-
-  it("should display an error when phone not populated", async () => {
+it("should display an error when phone not populated", async () => {
     const button = view.container.querySelector('button');
     await wait(() => fireEvent.click(button));
-    await screen.findByText("Phone number is required");
+    expect(await screen.findByText("Phone number is required")).toBeVisible()
+
   });
 
   it("should display an error when passwords don't match", async () => {
     const button = view.container.querySelector('button');
     fireEvent.change(screen.getByPlaceholderText("Confirm Password"), mockInputEvent);
     await wait(() => fireEvent.click(button));
-    await screen.findByText("Passwords must match");
+    expect(await screen.findByText("Passwords must match")).toBeVisible();
   });
 
-  it.skip("should succeed when all fields are valid", async () => {
-    const button = view.container.querySelector('button');
+  it("should succeed when all fields are valid", async () => {
+    const button = view.getByText('SIGN UP');
     fireEvent.change(screen.getByPlaceholderText("First Name"), mockInputEvent);
     fireEvent.change(screen.getByPlaceholderText("Last Name"), mockInputEvent);
     fireEvent.change(screen.getByPlaceholderText("Email"), mockInputEmailEvent);
     fireEvent.change(screen.getByPlaceholderText("Phone"), mockInputEvent);
-    fireEvent.change(screen.getByPlaceholderText("Password"), mockInputEvent);
-    fireEvent.change(screen.getByPlaceholderText("Confirm Password"), mockInputEvent);
+    fireEvent.change(screen.getByPlaceholderText("Password"), mockPassword);
+    fireEvent.change(screen.getByPlaceholderText("Confirm Password"), mockPassword);
+
     await wait(() => fireEvent.click(button));
 
     expect(axios.post).toHaveBeenCalledWith("/api/register", {
-      confirmPassword: "mock value",
+      confirmPassword: mockPassword.target.value,
       email: "mock@mockdomain.com",
       firstName: "mock value",
       lastName: "mock value",
-      password: "mock value",
+      password: mockPassword.target.value,
       phone: "mock value",
-    });
+    })
 
-    expect(window.alert).toHaveBeenCalledWith("Account Created Successfully!");
-
-    expect(mockHistory.push).toHaveBeenCalledWith("/login");
+    expect(screen.getByText("Return to Login")).toBeVisible()
 
   });
 
