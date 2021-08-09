@@ -120,7 +120,7 @@ const Property = () => {
 
   };
 
-  const updateProperty = (payload) => {
+  const updateProperty = (payload, successMsg="Save successful!") => {
 
     axios
       .put(`${process.env.REACT_APP_PROXY}/api/properties/${property.id}`,
@@ -128,23 +128,20 @@ const Property = () => {
         makeAuthHeaders(userContext)
       )
       .then(response => {
-        setProperty({
-          ...property,
-          name: response.data.name,
-          address: response.data.address,
-          city: response.data.city,
-          state: response.data.state,
-          zipcode: response.data.zipcode,
-          num_units: response.data.num_units,
-          propertyManagers: response.data.propertyManagers
-        });
-        setEditingStatus(false);
-        Toast("Save successful!");
+        const property = response.data
+
+        setProperty(property)
+        setInputValues(property)
+        setTenants(property.tenants)
+
+        hideArchiveModal()
+        setEditingStatus(false)
+        Toast(successMsg, "success")
       })
       .catch((error) => {
-        Toast(error.message, "error");
-      });
-  };
+        Toast(error.message, "error")
+      })
+  }
 
 
   const removePropertyManager = (id) => {
@@ -206,24 +203,24 @@ const Property = () => {
       .catch(error => Toast(error.message))
   }
 
-  const archiveProperty = () => {
-    axios.post(`${process.env.REACT_APP_PROXY}/api/properties/archive/${propertyId}`, {}, makeAuthHeaders(userContext))
-      .then(response => {
-        setProperty({
-          ...property,
-          archived: !property.archived
-        });
-        toggleArchiveModal();
-        setEditingStatus(false);
-        Toast(response.data.message, "success");
-      })
-      .catch(error => {
-        Toast(error.message, "error");
-      })
+  const handleArchive = (archived) => {
+    return archived ? unarchiveProperty : archiveProperty
   }
 
-  const toggleArchiveModal = () => {
-    setShowArchiveModal(!showArchiveModal);
+  const archiveProperty = () => {
+    updateProperty({ archived: true }, "Property archived successfully")
+  }
+
+  const unarchiveProperty = () => {
+    updateProperty({ archived: false }, "Property unarchived successfully")
+  }
+
+  const displayArchiveModal = () => {
+    setShowArchiveModal(true)
+  }
+
+  const hideArchiveModal = () => {
+    setShowArchiveModal(false)
   }
 
   const getTableData = [
@@ -321,14 +318,14 @@ const Property = () => {
                 </button>}
               {(!property.archived && isEditing) && <button
                 className="button is-primary is-rounded"
-                onClick={toggleArchiveModal}
+                onClick={displayArchiveModal}
                 style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-archive icon-inline-space"></i>
                 ARCHIVE
               </button>}
               {property.archived && <button
                 className="button is-primary is-rounded"
-                onClick={toggleArchiveModal}
+                onClick={displayArchiveModal}
                 style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-undo icon-inline-space"></i>
                 UNARCHIVE
@@ -431,11 +428,11 @@ const Property = () => {
           }
           hasButtons={true}
           hasRedirectButton={false}
-          confirmButtonHandler={archiveProperty}
+          confirmButtonHandler={handleArchive(property.archived)}
           confirmText="Yes"
-          cancelButtonHandler={toggleArchiveModal}
+          cancelButtonHandler={hideArchiveModal}
           cancelText="No"
-          closeHandler={toggleArchiveModal}
+          closeHandler={hideArchiveModal}
         />}
     </div>
   )
