@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../../UserContext';
@@ -127,7 +128,11 @@ export function Tickets(props) {
   const getTickets = (context) => {
     axios.get(`/api/tickets`, makeAuthHeaders(context))
       .then((response) => {
-        setTickets(response.data.tickets);
+        setTickets(response.data.tickets?.map(t => {
+          return {
+          ...t,
+          assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(', ')
+          }}));
       })
       .catch((error) => {
         Toast(error.message, "error");
@@ -283,6 +288,7 @@ export function Tickets(props) {
               <div>
                 <div className="section-header">
                   <h2 className="page-title">Tickets</h2>
+                  <Link className="button is-primary is-rounded ml-4" to="/add/ticket">+ ADD NEW</Link>
                 </div>
                 <Search
                   input={tickets}
