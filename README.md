@@ -35,6 +35,8 @@ From Terminal:
 From terminal:
 
 - Navigate to app's directory: `cd dwellingly-app`
+- Copy `.env.example` to `.env` file. Look inside and adjust as needed.
+  - You have the option to run the backend API on the remote development server or locally.
 - Install: `npm install`
 - Launch: `npm start`
 - React will open a browser page for you and navigate to `localhost:3000`
