@@ -1,0 +1,70 @@
+name: System Test
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+env:
+  POSTGRES_HOST_AUTH_METHOD: trust
+  PGUSER: postgres
+  PGHOST: localhost
+  SECRET_KEY: dwellingly
+  TEST_DATABASE_URL: postgresql://localhost/dwellingly_test
+  FLASK_ENV: testing
+
+jobs:
+  system_test:
+
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: codeforpdx/dwellinglybackend
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9.6'
+      - run: pip install --user pipenv
+
+      - name: Install dependecies
+        run: pipenv run dev-install
+
+      - name: Create db
+        run: createdb dwellingly_test
+
+      - name: Seed db
+        run: pipenv run flask db create
+
+      - name: Start Server
+        run: pipenv run flask run &
+      - name: Just wait a sec
+        run: sleep 5s
+      - uses: actions/checkout@v2
+      - name: Bump max listeners
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+      - name: Run System tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
+          browser: chrome
+          headless: true
+          wait-on: 'http://localhost:3000/'
+          wait-on-timeout: 120
