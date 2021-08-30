@@ -100,7 +100,6 @@ const Property = () => {
   const handleConfirmButton = async () => {
 
     await updateProperty(inputValues);
-    getProperty();
     setConfirmChange(false);
   }
 
