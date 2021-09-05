@@ -50,7 +50,9 @@ jobs:
         run: createdb dwellingly_test
 
       - name: Seed db
-        run: pipenv run flask db create
+        run: |
+          pipenv run flask db create
+          pipenv run flask db seed
 
       - name: Start Server
         run: pipenv run flask run &
