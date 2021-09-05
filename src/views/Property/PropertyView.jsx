@@ -139,7 +139,7 @@ const Property = () => {
         Toast(successMsg, "success")
       })
       .catch((error) => {
-        Toast(error.message, "error")
+        Toast(Object.values(error.response.data.message).join("\n"), "error")
       })
   }
 
