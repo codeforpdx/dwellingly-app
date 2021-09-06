@@ -56,19 +56,13 @@ const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${u
 
 const getDisplayProperties = (properties, showArchived) => properties.filter(p => showArchived || !p.archived);
 
-const formatPropertyManagerNames = (propertyManagers) =>
-  propertyManagers.map(pm => `${pm.firstName} ${pm.lastName}`).join(', ');
-
-const formatTenantCount = (leases) =>
-  leases.map(l => l.occupants).reduce((sum, occupants) => sum + occupants);
-
 const formatPropertyData = (properties) => properties.map(p => ({
   id: p.id,
   archived: p.archived,
   name: p.name,
-  propertyManagerNames: p.propertyManagers && formatPropertyManagerNames(p.propertyManagers),
+  propertyManagerNames: p.propertyManagerName && p.propertyManagerName.join(", "),
   address: p.address,
-  totalTenants: p.leases && formatTenantCount(p.leases),
+  totalTenants: p.tenantIDs && p.tenantIDs.length,
   created_at: p.created_at
 }));
 
