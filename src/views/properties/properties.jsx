@@ -60,7 +60,7 @@ const formatPropertyManagerNames = (propertyManagers) =>
   propertyManagers.map(pm => `${pm.firstName} ${pm.lastName}`).join(', ');
 
 const formatTenantCount = (leases) =>
-  leases.map(l => l.occupants).reduce((sum, occupants) => sum + occupants);
+  leases.map(l => l.occupants).reduce((sum, occupants) => sum + occupants, 0);
 
 const formatPropertyData = (properties) => properties.map(p => ({
   id: p.id,
