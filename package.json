@@ -20,6 +20,7 @@
     "react-bootstrap-table2-paginator": "^2.1.2",
     "react-calendar": "^3.2.1",
     "react-dom": "^16.13.1",
+    "react-responsive": "^9.0.0-beta.4",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
