@@ -12,7 +12,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
 
   const [tenant, setTenant] = useState(ticket.tenant);
   const [assigned, setAssigned] = useState(ticket.assigned);
-  const [urgency, setUrgency] = useState(ticket.urgency.toUpperCase());
+  const [urgency, setUrgency] = useState(ticket.urgency);
   const [tenantArray, setTenantArray] = useState([]);
   const [managerArray, setManagerArray] = useState([]);
 
@@ -58,7 +58,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
 
   return (
     <div>
-      <div style={{ float: "left" }}>
+      <div className="ticket-details-left">
         <div className="ticket-details-section">
           <p className="ticket-detail-label">SENDER</p>
           <p>{sender}</p>
@@ -80,19 +80,16 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
           />
         </div>
       </div>
-      <div
-        className="ticket-details-section"
-        style={{ float: "right", textAlign: "right", position: "relative" }}
-      >
+      <div className="ticket-details-right">
         <div className="ticket-details-section">
           <p className="ticket-detail-label">URGENCY</p>
           <select
             id="urgency"
             value={urgency}
             onChange={({ target }) => setUrgency(target.value)}>
-            <option value="LOW">LOW</option>
-            <option value="MED">MED</option>
-            <option value="HIGH">HIGH</option>
+            <option value="Low">LOW</option>
+            <option value="Medium">MEDIUM</option>
+            <option value="High">HIGH</option>
           </select>
         </div>
         <div className="ticket-details-section">
