@@ -58,7 +58,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
 
   return (
     <div>
-      <div style={{ float: "left" }}>
+      <div className="ticket-details-left">
         <div className="ticket-details-section">
           <p className="ticket-detail-label">SENDER</p>
           <p>{sender}</p>
@@ -80,10 +80,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
           />
         </div>
       </div>
-      <div
-        className="ticket-details-section"
-        style={{ float: "right", textAlign: "right", position: "relative" }}
-      >
+      <div className="ticket-details-right">
         <div className="ticket-details-section">
           <p className="ticket-detail-label">URGENCY</p>
           <select
