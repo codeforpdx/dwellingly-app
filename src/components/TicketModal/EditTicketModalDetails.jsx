@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import UserContext from '../../UserContext';
-import Toast from '../../utils/toast';
 import "./TicketModal.scss";
-import SearchableDropDown from "../../components/SearchableDropDown/SearchableDropDown"
-import { updateTicket, fetchAllTenants, fetchAllManagers } from './EditTicketModalFetches';
+import SearchableDropDown from "../../components/SearchableDropDown/SearchableDropDown";
+import { fetchAllTenants } from './EditTicketModalFetches';
+import UserContext from '../../UserContext';
 
 
-export default function TicketModalDetails({ ticket, handleIsEditing, getTickets, updateSelectedTicket }) {
-  const { created_at, sender } = ticket;
+export default function TicketModalDetails({ ticket, handleIsEditing, handleSubmit }) {
+  const { created_at, author, assigned_staff } = ticket;
   const userContext = useContext(UserContext);
 
   const [tenant, setTenant] = useState(ticket.tenant);
@@ -31,28 +30,12 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
     handleIsEditing(false);
   }
 
-
-  const handleSubmit = () => {
-    let update = {};
-    if (tenant !== ticket.tenant) update.tenantID = tenant;
-    if (assigned !== ticket.assigned) update.assignedUserID = assigned;
-    if (urgency !== ticket.urgency) update.urgency = urgency;
-    if (sender !== ticket.sender) update.senderID = sender;
-
-    if (update !== {}) {
-      updateTicket(userContext.user, update, ticket.id)
-        .then(data => {
-          updateSelectedTicket(data)
-          getTickets(userContext);
-          Toast("Ticket updated successfully", "success")
-        })
-        .catch((error) => {
-          Toast(error.message, "error");
-          console.log(error)
-        })
-    }
-
-    handleIsEditing(false);
+  const handleSave = () => {
+    let data = {};
+    if (tenant !== ticket.tenant) data.tenant_id = tenant;
+    if (urgency !== ticket.urgency) data.urgency = urgency;
+    if (author !== ticket.author) data.author_id = author;
+    handleSubmit(data);
   }
 
 
@@ -104,7 +87,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
         </button>
           <button
             className="button is-primary is-rounded ml-4 is-small"
-            onClick={handleSubmit}>
+            onClick={handleSave}>
             SAVE
         </button>
         </div>

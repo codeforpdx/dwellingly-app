@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Card from "../card/Card";
 import AddNote from "../AddNote/AddNote"
 import { CARD_TYPES } from "../../constants";
@@ -8,6 +8,9 @@ import TicketModalDetails from "./TicketModalDetails";
 import EditTicketModalDetails from "./EditTicketModalDetails";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 import NoteListItem from "../NoteListItem/NoteListItem";
+import Toast from '../../utils/toast';
+import { updateTicket } from "./EditTicketModalFetches";
+import UserContext from '../../UserContext';
 
 const sortNotes = (noteA, noteB) => {
   if (noteA.created_at > noteB.created_at) return -1;
@@ -17,14 +20,22 @@ const sortNotes = (noteA, noteB) => {
 
 export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, updateSelectedTicket, handleDeleteNote, handleEditNoteText, editNoteModal }) => {
 
+  const userContext = useContext(UserContext);
   const [showAddNote, setShowAddNote] = useState(false)
   const [editNotes, setEditNotes] = useState(false);
   const sortedNotes = ticket ? ticket.notes.sort(sortNotes) : null;
   const { isEditing, setEditingStatus } = useEditingStatus();
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     if (!editNoteModal) setEditNotes(false);
   }, [editNoteModal])
+
+  useEffect(() => {
+    if(ticket) {
+      setStatus(ticket.status);
+    }
+  }, [ticket])
 
   if (!show || !ticket) {
     return null;
@@ -32,7 +43,6 @@ export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, 
 
   const {
     issue,
-    status,
     notes,
     id
   } = ticket;
@@ -61,6 +71,26 @@ export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, 
     handleDeleteNote(note);
   }
 
+  const handleSubmit = (requestBody) => {
+    if (requestBody !== {}) {
+      if(ticket.status !== status) {
+        // The backend is sending us the string representation of the enum but it expects us to send back the enum key
+        requestBody.status = status === 'In Progress' ? 'In_Progress' : status;
+      }
+      updateTicket(userContext.user, requestBody, ticket.id)
+        .then(response => {
+          updateSelectedTicket(response)
+          getTickets(userContext);
+          Toast("Ticket updated successfully", "success")
+        })
+        .catch((error) => {
+          Toast(error.message, "error");
+          console.log(error)
+        })
+    }
+    setEditingStatus(false);
+  }
+
   return (
     <div className="ticket-window-modal">
       <div className="ticket-modal-container">
@@ -73,9 +103,16 @@ export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, 
                     <Icon id="close-icon" icon="close" />
                   </button>
                 </div>
-                <h3 id="ticket-modal-title" className="subtitle">
-                  {status.toUpperCase()}
-                </h3>
+                  {isEditing
+                  ? <select
+                      id="status"
+                      value={status}
+                      onChange={({ target }) => setStatus(target.value)}>
+                      <option value="New">NEW</option>
+                      <option value="In Progress">IN PROGRESS</option>
+                      <option value="Closed">CLOSED</option>
+                    </select>
+                  : <h3 id="ticket-modal-title" className="subtitle">{status.toUpperCase()}</h3>}
                 <div className="ticket-modal-title-container">
                   <TitleAndPen
                     title={issue}
@@ -88,8 +125,7 @@ export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, 
                   <EditTicketModalDetails
                     ticket={ticket}
                     handleIsEditing={handleIsEditing}
-                    getTickets={getTickets}
-                    updateSelectedTicket={updateSelectedTicket}
+                    handleSubmit={handleSubmit}
                   />
                   :
                   <TicketModalDetails ticket={ticket} />
