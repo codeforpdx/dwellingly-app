@@ -10,20 +10,14 @@ export default function TicketModalDetails({ ticket, handleIsEditing, handleSubm
   const userContext = useContext(UserContext);
 
   const [tenant, setTenant] = useState(ticket.tenant);
-  const [assigned, setAssigned] = useState(ticket.assigned);
   const [urgency, setUrgency] = useState(ticket.urgency);
   const [tenantArray, setTenantArray] = useState([]);
-  const [managerArray, setManagerArray] = useState([]);
 
   useEffect(() => {
     const { user } = userContext;
 
     fetchAllTenants(user)
       .then(tArray => setTenantArray(tArray));
-
-    fetchAllManagers(user)
-      .then(mArray => setManagerArray(mArray));
-
   }, [])
 
   const handleCancel = () => {
@@ -38,6 +32,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, handleSubm
     handleSubmit(data);
   }
 
+  const assignees = assigned_staff.map(as => `${as.firstName} ${as.lastName}`).join(', ');
 
   return (
     <div>
@@ -55,12 +50,8 @@ export default function TicketModalDetails({ ticket, handleIsEditing, handleSubm
           />
         </div>
         <div className="ticket-details-section">
-          <p className="ticket-detail-label">ASSIGNEE</p>
-          <SearchableDropDown
-            value={assigned}
-            onChange={setAssigned}
-            array={managerArray}
-          />
+          <p className="ticket-detail-label">ASSIGNEES</p>
+          <p>{assignees}</p>
         </div>
       </div>
       <div className="ticket-details-right">
