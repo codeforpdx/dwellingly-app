@@ -38,8 +38,8 @@ export default function TicketModalDetails({ ticket, handleIsEditing, handleSubm
     <div>
       <div className="ticket-details-left">
         <div className="ticket-details-section">
-          <p className="ticket-detail-label">SENDER</p>
-          <p>{sender}</p>
+          <p className="ticket-detail-label">AUTHOR</p>
+          <p>{author}</p>
         </div>
         <div className="ticket-details-section">
           <p className="ticket-detail-label">TENANT</p>
