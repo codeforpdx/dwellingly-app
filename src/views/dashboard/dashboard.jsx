@@ -70,19 +70,23 @@ export const Dashboard = (props) => {
           },
         ]];
 
-        const managersData = [
-          ...data.managers.map((manager) => [
-            {
-              "id": manager.id,
-              "stat": manager.date,
-              "desc": `${manager.firstName} ${manager.lastName}`,
-              "subtext": manager.propertyName
-            }
-          ])
-        ]
+        var managersData = [];
+
+        if (data.managers.length > 0) {
+          managersData = [
+            ...data.managers.map((manager) => [
+              {
+                "id": manager.id,
+                "stat": manager.date,
+                "desc": `${manager.firstName} ${manager.lastName}`,
+                "subtext": manager.propertyName
+              }
+            ])
+          ]
+        }
 
         // no managers, no problem!
-        if (managersData.length === 0 || managersData[0][0].length === 0) {
+        else {
           managersData.push([{
             "id": "",
             "stat": "",
@@ -207,7 +211,7 @@ export const Dashboard = (props) => {
                   onClick={handleStaffAssignment}
                 >
                   SAVE ASSIGNMENTS
-                            </button>
+                </button>
               </div>
             </div>
           </Collapsible>
