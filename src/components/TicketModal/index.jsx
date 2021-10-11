@@ -85,7 +85,6 @@ export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, 
         })
         .catch((error) => {
           Toast(error.message, "error");
-          console.log(error)
         })
     }
     setEditingStatus(false);
