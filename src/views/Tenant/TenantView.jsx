@@ -2,14 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
 import UserContext from "../../UserContext";
-import * as axios from "axios";
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import RoleEnum from '../../Enums/RoleEnum';
-import Toast from '../../utils/toast';
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 import Modal from '../../components/Modal';
-import {TenantTickets} from './tenantTickets'
+import { TenantTickets } from './tenantTickets'
   
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -28,8 +26,6 @@ const validationSchema = Yup.object().shape({
     .required("*a valid phone number is required"),
 });
 
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
-
 const Tenant = () => {
   // Get input tenant id
   const { id } = useParams();
@@ -37,11 +33,12 @@ const Tenant = () => {
 
   const initialState = {
     tenant: null,
-    property: null,
-    //tickets: null,
+    property: null
   };
 
   const [state, setState] = useState(initialState);
+  const [tenant, setTenant] = useState(null);
+  const [property, setProperty] = useState(null);
   const [isEditing, setEditingStatus] = useState(false);
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
@@ -49,7 +46,6 @@ const Tenant = () => {
   const [showArchiveModal, setShowArchiveModal] = useState(false);
 
   const calendarState = useCalendarState(state.property?.dateTimeStart, state.property?.dateTimeEnd)
-  const { dateTimeStart, dateTimeEnd } = calendarState
 
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
@@ -58,24 +54,10 @@ const Tenant = () => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [ticketList, setTicketList] = useState();
 
-  // Error handler for axios requests
-  const axiosErrorHandler = (error) => {
-    Toast(error.message, "error");
-    return Promise.reject({ ...error });
-  };
-
-  // Handle axios errors
-  const client = axios.create(makeAuthHeaders(context));
-  client.interceptors.response.use(
-    success => success,
-    error => axiosErrorHandler(error)
-  );
-
   /**
    * Handle activating edit form
    */
   const handleEditToggle = () => setEditingStatus(!isEditing);
-
 
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
@@ -86,24 +68,16 @@ const Tenant = () => {
       return;
     }
 
-    axios
-      .put(`/api/tenants/` + id, values, makeAuthHeaders(context))
+    context.apiCall('put', `/tenants/${id}`, values, { success: 'Tenant updated successfully!' })
       .then((response) => {
-        Toast("Tenant Updated Successfully!", "success");
-        setState({
-          ...state, 
-          tenant: {
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            phone: response.data.phone,
-          }
-        });
+        setTenant({
+          ...tenant,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          phone: response.data.phone
+        })
         setSubmitting(false);
         setEditingStatus(false);
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
       });
   };
 
@@ -126,39 +100,39 @@ const Tenant = () => {
    * Convert an array of staff to an array of SearchPanelItems
    * @param {*} staffArray
    */
-  const getStaffChoices = (staffArray) => {
-    const staffChoices = [];
-    if (staffArray && Array.isArray(staffArray)) {
-      staffArray.forEach((staff) => {
-        const name = `${staff.firstName} ${staff.lastName}`;
-        const staffChoice = { key: staff.id, description: name };
-        staffChoices.push(staffChoice);
-      });
-    }
-    return staffChoices;
-  };
+  const getStaffChoices = (staffArray) =>
+    staffArray.map(staff => ({
+      key: staff.id,
+      description: `${staff.firstName} ${staff.lastName}`
+    }));
 
   /**
    * Get a tenant
    */
   const getTenant = async () => {
-    const tenantResponse = await client.get(`/api/tenants/${id}`);
-    const tenant = tenantResponse.data;
-    let property;
-    if( tenant.lease ) {
-      const propertyUrl = `/api/properties/${tenant.lease.propertyID}`;
-      const propertyResponse = await client.get(propertyUrl);
-      property = propertyResponse.data;
-    }
-    const ticketsResponse = await client.get(`/api/tickets?tenant_id=${tenant.id}`)
-
-    setTicketList(ticketsResponse.data.tickets?.map(t => {
-      return {
-        ...t,
-        assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(',\n')
-      }}))
-
-    setState({tenant, property });
+    // get the tenant info
+    context.apiCall('get', `/tenants/${id}`, {}, {})
+      .then(tenantResponse => {
+        const tenant = tenantResponse.data;
+        setTenant(tenant);
+        setStaffSelections(getStaffChoices(tenant.staff));
+        // if the tenant has a lease, get the property info for that lease
+        if( tenant.lease ) {
+          context.apiCall('get', `/properties/${tenant.lease.propertyID}`, {}, {})
+            .then(propertyResponse => {
+              setProperty(propertyResponse.data);
+            })
+        }
+        // get the list of tickets relating to the tenant
+        context.apiCall('get', `/tickets?tenant_id=${id}`, {}, {})
+          .then(ticketsResponse => {
+            setTicketList(ticketsResponse.data.tickets?.map(t => {
+              return {
+                ...t,
+                assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(',\n')
+              }}));
+          })
+      });
 
     const currentStaff = getStaffChoices(tenant.staff);
 
@@ -171,9 +145,6 @@ const Tenant = () => {
   useEffect(() => {
     getTenant();
   }, []);
-
-  const { tenant } = state;
-  const { property } = state;
 
   /**
    * Configure edit table
@@ -200,10 +171,9 @@ const Tenant = () => {
     {
       key: "address",
       label: "Property",
-      value: (property) ? 
-	`${property.address}, ${property.city},` + 
-	` ${property.state}, ${property.zipcode}` : 
-	"Unhoused Tenant",
+      value: property
+        ? `${property.address}, ${property.city},` + ` ${property.state}, ${property.zipcode}`
+        : "Unhoused Tenant",
       inputType: "text",
       comp: <div />,
       readOnly: true,
@@ -211,8 +181,9 @@ const Tenant = () => {
     {
       key: "unitNum",
       label: "Unit",
-      value: (tenant.lease.unitNum) ? 
-	tenant.lease.unitNum : "Not Applicable",
+      value: (tenant.lease.unitNum)
+        ? tenant.lease.unitNum
+        : "Not Applicable",
       inputType: "text",
       comp: <div />,
       readOnly: true,
@@ -220,13 +191,15 @@ const Tenant = () => {
     {
       key: "lease",
       label: "Lease",
-      value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd) ? 
-	{
+      value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd)
+        ? {
           dateTimeStart: new Date(tenant.lease.dateTimeStart), 
           dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
-        } : 
-	"Not Applicable",
-      inputType: (tenant.lease) ? "calendar" : "text",
+        }
+        :	"Not Applicable",
+      inputType: (tenant.lease)
+        ? "calendar"
+        : "text",
       readOnly: true,
     }
   ];
@@ -235,15 +208,10 @@ const Tenant = () => {
    * When staff search input text changes, call API to find matching users.
    */
   useEffect(() => {
-    const loadStaff = async () => {
-      const staffResponse = await client.get(`/api/user?r=${RoleEnum.STAFF}`, {
-        name: staffSearchText
-      }, makeAuthHeaders(context));
-      const foundStaff = await staffResponse.data;
-      const foundStaffChoices = getStaffChoices(foundStaff.users);
-      setStaffSearchResults(foundStaffChoices);
-    };
-    loadStaff();
+    context.apiCall('get', `/user?r=${RoleEnum.STAFF}`, { name: staffSearchText }, {})
+      .then( staffResponse => {
+        setStaffSearchResults(getStaffChoices(staffResponse.data.users));
+      })
   }, [staffSearchText]);
 
   /**
@@ -277,36 +245,20 @@ const Tenant = () => {
   }
 
   const archiveTenant = () => {
-    axios
-      .put(`/api/tenants/` + id, { archived: true}, makeAuthHeaders(context))
+    context.apiCall('put', `/tenants/${id}`, { archived: true }, { success: 'Tenant archived successfully!' })
       .then((response) => {
-        Toast("Tenant Archived Successfully", "success");
-        setState({
-          tenant: response.data
-        });
+        setTenant(response.data);
         setShowArchiveModal(false);
         setEditingStatus(false);
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
       });
   }
 
   const unarchiveTenant = () => {
-    axios
-      .put(`/api/tenants/` + id, { archived: false}, makeAuthHeaders(context))
+    context.apiCall('put', `/tenants/${id}`, { archived: false }, { success: "Tenant unarchived successfully!" }, {})
       .then((response) => {
-        Toast("Tenant Unarchived Successfully", "success");
-        setState({
-          tenant: response.data
-        });
+        setTenant(response.data);
         setShowArchiveModal(false);
         setEditingStatus(false);
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
       });
   }
 

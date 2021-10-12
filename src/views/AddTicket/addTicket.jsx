@@ -2,12 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import Toast from '../../utils/toast';
-import * as axios from "axios";
 import UserContext from "../../UserContext";
 import './addTicket.scss';
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 export const AddTicket = () => {
   const context = useContext(UserContext);
@@ -20,7 +16,7 @@ export const AddTicket = () => {
   const [urgency, setUrgency] = useState("high");
 
   useEffect(() => {
-    axios.get("/api/tenants", makeAuthHeaders(context))
+    context.apiCall('get', '/tenants', {}, {})
       .then(tenantResponse => {
         let tenants = tenantResponse.data.tenants;
         let choices = tenants
@@ -29,9 +25,6 @@ export const AddTicket = () => {
           })
           : [];
         setTenantSearchResults(choices);
-      })
-      .catch(error => {
-        Toast(error.message, "error");
       });
   }, [tenantSearchText]);
 
@@ -102,18 +95,16 @@ export const AddTicket = () => {
           tenant_id: tenantSelection[0].key,
           urgency: urgency
         };
-        axios.post('/api/tickets', data, makeAuthHeaders(context))
+        context.apiCall('post', '/tickets', data, { success: 'Ticket successfully created!' })
           .then(response => {
             setErrors([]);
             setIsSubmitting(false);
-            Toast('Ticket successfully created!', 'success');
           })
-          .catch(error => {
+          .catch(_ => {
             setIsSubmitting(false);
-            Toast(error.message, 'error');
           });
       })
-      .catch( () => {
+      .catch(() => {
         setIsSubmitting(false);
       })
   };

@@ -2,10 +2,8 @@ import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
-import Toast from '../../utils/toast';
 
 const validationSchema = Yup.object().shape({
   current: Yup.string()
@@ -27,24 +25,18 @@ const ChangePassword = () => {
 
   const handleFormSubmit = (context, data) => {
     // TODO store and send only hashed password
-    axios
-      .patch(`/api/user/${context.user.identity}`, {
+    context.apiCall('patch', `/user/${context.user.identity}`,
+      {
         current_password: data.current,
         new_password: data.new,
         confirm_password: data.confirm
-      }, {
-        headers: { Authorization: `Bearer ${context.user.accessJwt}` },
-      })
-      .then((response) => {
-        // once Toast is implemented, replace with Toast notification
-        Toast("Saved Successfully!", "success");
+      }, 
+      {
+        success: 'Password updated successfully!',
+        error: 'Error updating password, please try again later.'
       })
       .then(() => {
         history.push("/settings");
-      })
-      .catch((error) => {
-        // once Toast is implemented, replace with Toast notification
-        Toast(error.message, "error");
       });
   };
 

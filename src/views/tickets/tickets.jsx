@@ -5,7 +5,6 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import UserContext from '../../UserContext';
 import Accordion from '../../components/Accordion';
 import { TicketModal } from '../../components/TicketModal';
-import * as axios from 'axios';
 import Search from "../../components/Search/index";
 import Toast from '../../utils/toast';
 import Modal from '../../components/Modal';
@@ -15,8 +14,6 @@ import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './tickets.scss';
 import { columns, mobileColumns } from '../tickets/ticketsTableComponents';
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const pageButtonRenderer = ({
   page,
@@ -104,6 +101,7 @@ const expandRow = isSmallScreen => ({
 });
 
 export function Tickets(props) {
+  const userContext = useContext(UserContext);
   const [tickets, setTickets] = useState([]);
   const [viewedTicket, setViewedTicket] = useState(null);
   const [filteredTickets, setFilteredTickets] = useState([]);
@@ -119,25 +117,19 @@ export function Tickets(props) {
     width: `(max-width: ${tabletWidth})`
   });
 
-  let userContext = useContext(UserContext);
-
   const toggleTicketModal = (ticket) => {
     setViewedTicket((prevState) => (prevState ? null : ticket));
   };
 
   const getTickets = (context) => {
-    axios.get(`/api/tickets`, makeAuthHeaders(context))
+    userContext.apiCall('get', '/tickets', {}, {})
       .then((response) => {
         setTickets(response.data.tickets?.map(t => {
           return {
-          ...t,
-          assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(', ')
+            ...t,
+            assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(', ')
           }}));
       })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
-      });
   };
 
   const setIsFilteredTicketsFalse = async () => {
@@ -150,14 +142,10 @@ export function Tickets(props) {
   };
 
   const handleAddNote = (noteText, ticketID) => {
-    axios.post(`/api/tickets/${ticketID}/notes`, { text: noteText }, makeAuthHeaders(userContext))
+    userContext.apiCall('post', `/tickets/${ticketID}/notes`, { text: noteText }, {})
       .then(({ data }) => {
         viewedTicket.notes.push(data);
         getTickets(userContext);
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
       });
   };
 
@@ -179,10 +167,9 @@ export function Tickets(props) {
   const editNote = () => {
     const ticketID = viewedTicket.id;
 
-    axios.patch(
-      `/api/tickets/${ticketID}/notes/${selectedNote.id}`,
+    userContext.apiCall('patch', `/tickets/${ticketID}/notes/${selectedNote.id}`,
       { text: selectedNote.text },
-      makeAuthHeaders(userContext))
+      { success: 'Note updated!' })
       .then(({ data }) => {
         setViewedTicket({
           ...viewedTicket, notes: viewedTicket.notes.map(note => {
@@ -191,22 +178,13 @@ export function Tickets(props) {
           })
         })
         setEditNoteModal(false);
-
-        Toast("Note Updated", "success");
-
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error)
-      })
-
+      });
   }
 
 
   const deleteNote = () => {
     const { id, ticket_id } = selectedNote;
-
-    axios.delete(`/api/tickets/${ticket_id}/notes/${id}`, makeAuthHeaders(userContext))
+    userContext.apiCall('delete', `/tickets/${ticket_id}/notes/${id}`, {}, {})
       .then(({ data }) => {
 
         const filteredNotes = viewedTicket.notes.filter(note => note.id !== id);
@@ -214,10 +192,6 @@ export function Tickets(props) {
         getTickets(userContext);
 
         Toast(data.message, "success");
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error)
       })
 
     closeNoteModal();
@@ -249,13 +223,7 @@ export function Tickets(props) {
 
   const deleteTickets = () => {
     let ticketIds = selectedTickets.map(t => t.id);
-    axios({
-      method: 'delete',
-      url: '/api/tickets',
-      data: {
-        ids: ticketIds
-      }
-    }, makeAuthHeaders(userContext))
+    userContext.apiCall('delete', '/tickets', { ids: ticketIds }, {})
       .then((response) => {
         let ticketsToDelete = tickets.filter(t => !ticketIds.includes(t.id));
 
@@ -264,9 +232,6 @@ export function Tickets(props) {
         setShowDeleteModal(false);
 
         Toast(response.data.message, "success");
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
       });
   };
 
@@ -279,191 +244,182 @@ export function Tickets(props) {
   }, [userContext]);
 
   return (
-    <UserContext.Consumer>
-      {session => {
-        userContext = session;
-        return (
-          <div className='main-container'>
-            <div>
-              <div>
-                <div className="section-header">
-                  <h2 className="page-title">Tickets</h2>
-                  <Link className="button is-primary is-rounded ml-4" to="/add/ticket">+ ADD NEW</Link>
-                </div>
-                <Search
-                  input={tickets}
-                  outputLocation={filteredTickets}
-                  isFilteredLocation={isFiltered}
-                  setIsFilteredStateFalse={setIsFilteredTicketsFalse}
-                  setOutputState={setOutputState}
-                  placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
-                />
-                <Accordion
-                  icon={<i className="fas fa-filter"></i>}
-                  header="Filters"
-                >
-                  <div className="section-row">
-                    <div className="filter-control">
-                      <label>Opened From</label>
-                      <input className="input is-rounded"></input>
-                    </div>
-                    <div className="filter-control">
-                      <label>Category</label>
-                      <div className="select is-rounded">
-                        <select>
-                          <option>All</option>
-                          <option>Complaints</option>
-                          <option>Maintenance</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="filter-control">
-                      <label>Status</label>
-                      <div className="buttons has-addons">
-                        <button className="button is-rounded btn-group">New </button>
-                        <button className="button is-rounded btn-group">In Progress</button>
-                        <button className="button is-rounded btn-group">Closed</button>
-                      </div>
-                    </div>
-                  </div>
-                </Accordion>
-                <div className='bulk-actions-container py-3'>
-                  <button
-                    className={`button is-rounded is-primary ml-3 ${selectedTickets.length && 'is-active-button'}`}
-                    onClick={toggleDeleteModal}
-                  >
-                    <FontAwesomeIcon
-                      className="mr-3"
-                      icon={faTrash}
-                    />
-                    Delete Tickets
-                  </button>
-                </div>
-                <div>
-                  <BootstrapTable
-                    keyField="id"
-                    data={isFiltered === true ? filteredTickets : tickets}
-                    columns={isSmallScreen ? mobileColumns(toggleTicketModal) : columns(toggleTicketModal)}
-                    pagination={paginationFactory(options)}
-                    defaultSortDirection="asc"
-                    bootstrap4={true}
-                    headerClasses="table-header"
-                    classes="full-size-table"
-                    selectRow={({
-                      mode: 'checkbox',
-                      clickToSelect: isSmallScreen ? false : true,
-                      clickToExpand: isSmallScreen ? true : false,
-                      onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
-                      onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
-                      sort: true,
-                      headerColumnStyle: () => ({ width: "5%" }),
-                      nonSelectableStyle: () => ({ color: '#999999' })
-                    })}
-                    defaultSorted={[
-                      {
-                        dataField: 'propertyName',
-                        order: 'asc'
-                      }]}
-                    expandRow={expandRow(isSmallScreen)}
-                  />
-                </div>
-              </div>
-              <TicketModal
-                show={viewedTicket}
-                onClose={toggleTicketModal}
-                ticket={viewedTicket}
-                handleAddNote={handleAddNote}
-                getTickets={getTickets}
-                updateSelectedTicket={updateSelectedTicket}
-                handleDeleteNote={handleDeleteNote}
-                handleEditNoteText={handleEditNoteText}
-                editNoteModal={editNoteModal}
-              />
-            </div>
-            {
-              showDeleteModal &&
-              <Modal
-                titleText={selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
-                content={
-                  <div className="content">
-                    <p>You have selected the following {selectedTickets.length} tickets to be deleted:</p>
-                    <ul className="archive-tickets-list has-text-weight-bold">
-                      {selectedTickets.map(t => (
-                        <li>{t.tenant}: {t.issue}</li>
-                      ))}
-                    </ul>
-                    <br />
-                    <p>Are you sure you want to delete these tickets? This cannot be undone.</p>
-                  </div>
-                }
-                hasButtons={true}
-                hasRedirectButton={false}
-                confirmButtonHandler={deleteTickets}
-                confirmText="Delete"
-                cancelButtonHandler={toggleDeleteModal}
-                cancelText="Cancel"
-                closeHandler={toggleDeleteModal}
-              />
-            }
-            {deleteNoteModal &&
-              <div className="note-modal"
-              >
-                <Modal
-                  titleText={"Delete Note"}
-                  content={
-                    <div className="content">
-                      <p>
-                        You have selected the following note to be deleted:
-                      </p>
-                      <div className="selected-note-text">
-                        {selectedNote.text}
-                      </div>
-                      <br />
-                      <p>Are you sure you want to delete this note?  This cannot be undone.</p>
-                    </div>
-                  }
-                  hasButtons={true}
-                  hasRedirectButton={false}
-                  confirmButtonHandler={deleteNote}
-                  confirmText="Delete"
-                  cancelButtonHandler={closeNoteModal}
-                  cancelText="Cancel"
-                  closeHandler={closeNoteModal}
-                />
-              </div>
-            }
-            {editNoteModal &&
-              <div className="note-modal"
-              >
-                <Modal
-                  titleText={"Edit Note"}
-                  content={
-                    <div className="content">
-                      <p>
-                        You have attempted to change this note's text to:
-                      </p>
-                      <div className="selected-note-text">
-                        {selectedNote.text}
-                      </div>
-                      <br />
-                      <p>Are you sure you want to change this note?  This cannot be undone.</p>
-                    </div>
-                  }
-                  hasButtons={true}
-                  hasRedirectButton={false}
-                  confirmButtonHandler={editNote}
-                  confirmText="Change"
-                  cancelButtonHandler={closeNoteModal}
-                  cancelText="Cancel"
-                  closeHandler={closeNoteModal}
-                />
-              </div>
-            }
-
+    <div className='main-container'>
+      <div>
+        <div>
+          <div className="section-header">
+            <h2 className="page-title">Tickets</h2>
+            <Link className="button is-primary is-rounded ml-4" to="/add/ticket">+ ADD NEW</Link>
           </div>
-        );
+          <Search
+            input={tickets}
+            outputLocation={filteredTickets}
+            isFilteredLocation={isFiltered}
+            setIsFilteredStateFalse={setIsFilteredTicketsFalse}
+            setOutputState={setOutputState}
+            placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
+          />
+          <Accordion
+            icon={<i className="fas fa-filter"></i>}
+            header="Filters"
+          >
+            <div className="section-row">
+              <div className="filter-control">
+                <label>Opened From</label>
+                <input className="input is-rounded"></input>
+              </div>
+              <div className="filter-control">
+                <label>Category</label>
+                <div className="select is-rounded">
+                  <select>
+                    <option>All</option>
+                    <option>Complaints</option>
+                    <option>Maintenance</option>
+                  </select>
+                </div>
+              </div>
+              <div className="filter-control">
+                <label>Status</label>
+                <div className="buttons has-addons">
+                  <button className="button is-rounded btn-group">New </button>
+                  <button className="button is-rounded btn-group">In Progress</button>
+                  <button className="button is-rounded btn-group">Closed</button>
+                </div>
+              </div>
+            </div>
+          </Accordion>
+          <div className='bulk-actions-container py-3'>
+            <button
+              className={`button is-rounded is-primary ml-3 ${selectedTickets.length && 'is-active-button'}`}
+              onClick={toggleDeleteModal}
+            >
+              <FontAwesomeIcon
+                className="mr-3"
+                icon={faTrash}
+              />
+              Delete Tickets
+            </button>
+          </div>
+          <div>
+            <BootstrapTable
+              keyField="id"
+              data={isFiltered === true ? filteredTickets : tickets}
+              columns={isSmallScreen ? mobileColumns(toggleTicketModal) : columns(toggleTicketModal)}
+              pagination={paginationFactory(options)}
+              defaultSortDirection="asc"
+              bootstrap4={true}
+              headerClasses="table-header"
+              classes="full-size-table"
+              selectRow={({
+                mode: 'checkbox',
+                clickToSelect: isSmallScreen ? false : true,
+                clickToExpand: isSmallScreen ? true : false,
+                onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
+                onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
+                sort: true,
+                headerColumnStyle: () => ({ width: "5%" }),
+                nonSelectableStyle: () => ({ color: '#999999' })
+              })}
+              defaultSorted={[
+                {
+                  dataField: 'propertyName',
+                  order: 'asc'
+                }]}
+              expandRow={expandRow(isSmallScreen)}
+            />
+          </div>
+        </div>
+        <TicketModal
+          show={viewedTicket}
+          onClose={toggleTicketModal}
+          ticket={viewedTicket}
+          handleAddNote={handleAddNote}
+          getTickets={getTickets}
+          updateSelectedTicket={updateSelectedTicket}
+          handleDeleteNote={handleDeleteNote}
+          handleEditNoteText={handleEditNoteText}
+          editNoteModal={editNoteModal}
+        />
+      </div>
+      {
+        showDeleteModal &&
+        <Modal
+          titleText={selectedTickets.length > 1 ? "Delete Tickets" : "Delete Ticket"}
+          content={
+            <div className="content">
+              <p>You have selected the following {selectedTickets.length} tickets to be deleted:</p>
+              <ul className="archive-tickets-list has-text-weight-bold">
+                {selectedTickets.map(t => (
+                  <li>{t.tenant}: {t.issue}</li>
+                ))}
+              </ul>
+              <br />
+              <p>Are you sure you want to delete these tickets? This cannot be undone.</p>
+            </div>
+          }
+          hasButtons={true}
+          hasRedirectButton={false}
+          confirmButtonHandler={deleteTickets}
+          confirmText="Delete"
+          cancelButtonHandler={toggleDeleteModal}
+          cancelText="Cancel"
+          closeHandler={toggleDeleteModal}
+        />
       }
+      {deleteNoteModal &&
+        <div className="note-modal"
+        >
+          <Modal
+            titleText={"Delete Note"}
+            content={
+              <div className="content">
+                <p>
+                  You have selected the following note to be deleted:
+                </p>
+                <div className="selected-note-text">
+                  {selectedNote.text}
+                </div>
+                <br />
+                <p>Are you sure you want to delete this note?  This cannot be undone.</p>
+              </div>
+            }
+            hasButtons={true}
+            hasRedirectButton={false}
+            confirmButtonHandler={deleteNote}
+            confirmText="Delete"
+            cancelButtonHandler={closeNoteModal}
+            cancelText="Cancel"
+            closeHandler={closeNoteModal}
+          />
+        </div>
       }
-    </UserContext.Consumer>
+      {editNoteModal &&
+        <div className="note-modal"
+        >
+          <Modal
+            titleText={"Edit Note"}
+            content={
+              <div className="content">
+                <p>
+                  You have attempted to change this note's text to:
+                </p>
+                <div className="selected-note-text">
+                  {selectedNote.text}
+                </div>
+                <br />
+                <p>Are you sure you want to change this note?  This cannot be undone.</p>
+              </div>
+            }
+            hasButtons={true}
+            hasRedirectButton={false}
+            confirmButtonHandler={editNote}
+            confirmText="Change"
+            cancelButtonHandler={closeNoteModal}
+            cancelText="Cancel"
+            closeHandler={closeNoteModal}
+          />
+        </div>
+      }
+    </div>
   );
 }

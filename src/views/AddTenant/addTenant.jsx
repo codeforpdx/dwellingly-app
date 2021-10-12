@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
 import { AddProperty } from '../addProperty/addProperty';
@@ -10,7 +9,6 @@ import Modal from '../../components/Modal';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import RoleEnum from '../../Enums/RoleEnum';
 import './_addTenant.scss';
-import Toast from '../../utils/toast';
 import useMountEffect from '../../utils/useMountEffect';
 import CalendarModal, { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 
@@ -26,8 +24,6 @@ const validationSchema = Yup.object().shape({
   unitNum: Yup.string(),
   occupants: Yup.number(),
 });
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 export const AddTenant = () => {
   const context = useContext(UserContext);
@@ -46,9 +42,7 @@ export const AddTenant = () => {
   useMountEffect(() => getProperties());
 
   useEffect(() => {
-    axios.get(`/api/user?r=${RoleEnum.STAFF}`, {
-      name: staffSearchText
-    })
+    context.apiCall('get', `/user?r=${RoleEnum.STAFF}`, { name: staffSearchText }, {})
       .then(staffResponse => {
         let users = staffResponse.data.users;
         let choices = users
@@ -57,9 +51,6 @@ export const AddTenant = () => {
           })
           : [];
         setStaffSearchResults(choices);
-      })
-      .catch(error => {
-        Toast(error.message, "error");
       });
   }, [staffSearchText]);
 
@@ -70,7 +61,7 @@ export const AddTenant = () => {
   }, [propertySearchText, propertyOptions]);
 
   const getProperties = () => {
-    axios.get("/api/properties", makeAuthHeaders(context))
+    context.apiCall('get', '/properties', {}, {})
       .then(({ data }) => {
         let properties = data.properties && data.properties.length > 0
           ? data.properties.map(property => {
@@ -87,14 +78,7 @@ export const AddTenant = () => {
   };
 
   const handleFormSubmit = (data) => {
-    axios
-      .post(`/api/tenants`, data, makeAuthHeaders(context))
-      .then((response) => {
-        Toast("Tenant Created Successfully!", "success");
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-      });
+    context.apiCall('post', `/tenants`, data, { success: 'Tenant Created Successfully!'});
   };
 
   const handleAddPropertyCancel = () => {

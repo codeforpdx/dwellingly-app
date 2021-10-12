@@ -1,7 +1,5 @@
-import React from 'react'
-import * as axios from 'axios'
-import Toast from '../../utils/toast'
-
+import React from 'react';
+import Toast from '../../utils/toast';
 
 export const pageButtonRenderer = ({
   page, 
@@ -72,49 +70,26 @@ export const pagination_options = {
   pageButtonRenderer
 }
 
-export const makeAuthHeader = ({ user }) => (
-  {headers: 
-    {'Authorization': `Bearer ${user.accessJwt}`}
-  }
-)
-/* need to fix get tickets needs to be filtered by 
- * tenant
- * */
-export const makeGetTicketsFn = (setTicketsState, userContext, tenant_id) => {
-  return (() => {
-      axios.get(`/api/tickets?tenant_id=${tenant_id}`, 
-        makeAuthHeader(userContext))
-        .then((response) => {
-          setTicketsState(response.data.tickets?.map(t => {
-            return {
-              ...t,
-              assigned: t.assigned_staff?.map(
-                as => `${as.firstName} ${as.lastName}`
-              ).join(', ')
-            }}))
-        })
-        .catch((error) => {
-          Toast(error.message, "error")
-          console.log(error)
-        })
-  }
-  )
-}
+export const makeGetTicketsFn = (setTicketsState, userContext, tenant_id) => (
+  userContext.apiCall('get', `/tickets?tenant_id=${tenant_id}`, {}, {})
+    .then((response) => {
+      setTicketsState(response.data.tickets?.map(t => {
+        return {
+          ...t,
+          assigned: t.assigned_staff?.map(
+            as => `${as.firstName} ${as.lastName}`
+          ).join(', ')
+        }}))
+    }));
 
 export const makeHandleAddNoteFn = (viewedTicketState, getTicketsFn, userContext) => {
   return (
     (noteText, ticketID) => {
-      axios.post(`/api/tickets/${ticketID}/notes`, 
-        { text: noteText },
-        makeAuthHeader(userContext))
+      userContext.apiCall('post', `/tickets/${ticketID}/notes`, { text: noteText }, {})
         .then(({ data }) => {
           viewedTicketState.notes.push(data)
           getTicketsFn(userContext)
-        })
-        .catch((error) => {
-          Toast(error.message, "error")
-          console.log(error)
-        })
+        });
     }
   )
 }
@@ -128,17 +103,9 @@ export const makeDeleteTicketsFn = (
   setShowDeleteModalState,
   userContext
   ) => {
-
-
   return () => {
-    let ticketIds = selectedTicketsState.map(t => t.id)
-    axios( {
-      method: 'delete',
-      url: '/api/tickets',
-      data: {
-        ids: ticketIds
-      }
-    }, makeAuthHeader(userContext))
+    let ticketIds = selectedTicketsState.map(t => t.id);
+    userContext.apiCall('delete', '/tickets', { ids: ticketIds }, {})
       .then((response) => {
         let ticketsToDelete = ticketListState.filter(t => !ticketIds.includes(t.id))
         setTicketListState(ticketsToDelete)
@@ -146,10 +113,7 @@ export const makeDeleteTicketsFn = (
         setShowDeleteModalState(false)
 
         Toast(response.data.message, "success")
-      })
-      .catch((error) => {
-        Toast(error.message, "error")
-      })
+      });
   }
 }
 
@@ -160,14 +124,9 @@ export const makeEditNoteFn = (
   setEditNoteModalState,
   userContext) => {
   return () => {
-
-
     const ticketID = viewedTicketState.id
-
-    axios.patch(
-      `/api/tickets/${ticketID}/notes/${selectedNoteState.id}`,
-      { text: selectedNoteState.text },
-      makeAuthHeader(userContext))
+    userContext.apiCall('patch', `/tickets/${ticketID}/notes/${selectedNoteState.id}`,
+      { text: selectedNoteState.text }, { success: 'Note Updated' })
       .then(({ data }) => {
         setViewedTicketState( {
           ...viewedTicketState, 
@@ -175,15 +134,9 @@ export const makeEditNoteFn = (
             if (note.id === data.id) note.text = data.text
             return note
           })
-        })
-        setEditNoteModalState(false)
-
-        Toast("Note Updated", "success")
-      })
-      .catch((error) => {
-        Toast(error.message, "error")
-        console.log(error)
-      })
+        });
+        setEditNoteModalState(false);
+      });
   }
 }
 
@@ -197,24 +150,17 @@ export const makeDeleteNoteFn = (
   ) => {
 
   return () => {
-    const { id, ticket_id } = selectedNoteState
+    const { id, ticket_id } = selectedNoteState;
 
-    axios.delete(`/api/tickets/${ticket_id}/notes/${id}`,
-      makeAuthHeader(userContext))
+    userContext.apiCall('delete', `/tickets/${ticket_id}/notes/${id}`, {}, {})
       .then(({ data }) => {
         const filteredNotes = viewedTicketState.notes.filter(
           note => note.id !== id
         )
         setViewedTicketState({ ...viewedTicketState, notes: filteredNotes })
         getTicketsFn(userContext)
+      });
 
-        Toast(data.message, "success")
-      })
-      .catch((error) => {
-        Toast(error.message, "error")
-        console.log(error)
-      })
-
-    closeNoteModalFn()
+    closeNoteModalFn();
   }
 }

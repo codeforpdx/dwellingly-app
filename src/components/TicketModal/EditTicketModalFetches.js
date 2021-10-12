@@ -1,12 +1,7 @@
-import * as axios from 'axios';
-import Toast from '../../utils/toast';
 import RoleEnum from '../../Enums/RoleEnum';
 
-const makeAuthHeaders = (user) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
-
-export const fetchAllTenants = (user) => {
-  return axios
-    .get(`/api/tenants`, {}, makeAuthHeaders(user))
+export const fetchAllTenants = (context) =>
+  context.apiCall('get', `/tenants`, {}, {})
     .then(({ data }) => {
       const filteredTenants = data.tenants.filter(tenant => !tenant.archived)
       const prunedTenants = filteredTenants.map(tenant => (
@@ -14,46 +9,27 @@ export const fetchAllTenants = (user) => {
       ))
 
       return prunedTenants
-    })
-    .catch((error) => {
-      Toast(error.message, "error");
     });
-}
 
-export const fetchAllManagers = (user) => {
-
-  return axios
-    .get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, makeAuthHeaders(user))
+export const fetchAllManagers = (context) =>
+  context.apiCall('get', `/user?r=${RoleEnum.PROPERTY_MANAGER}`, {}, {})
     .then(({ data }) => {
       const prunedManagers = data.users.map(manager => (
         { key: manager.id, value: `${manager.firstName} ${manager.lastName}` }
       ))
       return prunedManagers;
-    })
-    .catch((error) => {
-      Toast(error.message, "error");
     });
-}
 
-export const fetchAllUsers = async (user) => {
+export const fetchAllUsers = async (context) => {
 
-  const URLs = ['/api/user?r=3', '/api/user?r=4'];
+  const URLs = ['/user?r=3', '/user?r=4'];
 
-  const fetchData = URL => {
-    return axios
-      .get(URL, makeAuthHeaders(user))
-      .then(({ data }) => {
-
-        return data.users
-      })
-      .catch(err => {
-        Toast(err, "error");
-      });
-  };
+  const fetchData = URL => 
+    context.apiCall('get', URL, {}, {})
+      .then(({ data }) => data.users);
 
   return Promise.all(URLs.map(url => fetchData(url)))
     .then(users => {
-      console.log(users)
       let array = [];
       users.forEach(user => {
         array = [...array, ...user]
@@ -65,14 +41,5 @@ export const fetchAllUsers = async (user) => {
     })
 }
 
-export const updateTicket = async (user, update, ticketId) => {
-
-  return axios.put(`/api/tickets/${ticketId}`, update, makeAuthHeaders(user))
-    .then(({ data }) => {
-      return data
-    })
-    .catch((error) => {
-      Toast(error.message, "error");
-      console.log(error)
-    })
-}
+export const updateTicket = (update, ticketId, context) => 
+  context.apiCall('put', `/tickets/${ticketId}`, update, {});

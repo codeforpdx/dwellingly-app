@@ -1,54 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import * as Yup from "yup";
 import UserContext from "../../UserContext";
 import dwellinglyLogo from "../../assets/images/dwellingly_logo.png";
 import dwellinglyLogoMobile from "../../assets/images/dwellingly_logo_white.png";
-import Toast from '../../utils/toast';
 import Modal from '../../components/Modal';
 
 import './signup.scss'
 
 const SignupForm = ({ history }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const context = useContext(UserContext);
 
-  const signup = async (
+  const signup = (
     firstName,
     lastName,
     email,
     phone,
     password,
     confirmPassword
-  ) => {
-    let response;
-    try {
-      response = await axios.post("/api/register", {
-        firstName,
-        lastName,
-        email,
-        phone,
-        password,
-        confirmPassword,
-      });
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.message);
-        Toast(error.response.data.message, "error");
-      } else {
-        Toast(error.message, "error");
-      }
-      return Promise.reject(error);
-    }
-    if (response) {
-      Toast("Account Created Successfully!", "success");
+  ) => (
+    context.apiCall('post', '/register', {
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      confirmPassword,
+    }, { success: 'Account Created Successfully!' })
+    .then(_ => {
       setShowConfirmationModal(true);
-    }
-    return response;
-  };
+    })
+  );
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()

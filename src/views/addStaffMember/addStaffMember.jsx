@@ -2,11 +2,9 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import * as axios from 'axios';
 import UserContext from "../../UserContext";
 import UserType from "../../Enums/UserType";
 import RoleEnum from "../../Enums/RoleEnum";
-import Toast from '../../utils/toast';
 import Button from "../../components/Button";
 
 import './addStaffMember.scss';
@@ -31,23 +29,17 @@ const validationSchema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
-
 export const AddStaffMember = () => {
   const context = useContext(UserContext);
 
   const handleSave = (data) => {
-    axios.post("/api/user/invite", {
-      ...data,
-      type: data.makeAdmin ? UserType.ADMIN : UserType.STAFF,
-      role: data.makeAdmin ? RoleEnum.ADMIN : RoleEnum.STAFF
-    }, makeAuthHeaders(context))
-      .then(function(response) {
-        Toast("User created! An invite email has been sent.", "success");
-      })
-      .catch(function(error) {
-        Toast(error.message, "error");
-      });
+    context.apiCall('post', `/user/invite`,
+      {
+        ...data, 
+        role: data.makeAdmin ? RoleEnum.ADMIN : RoleEnum.STAFF,
+        type: data.makeAdmin ? UserType.ADMIN : UserType.STAFF
+      },
+      { success: 'User created! An invite email has been sent.' });
   };
 
   return (

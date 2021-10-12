@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Field, Formik } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import * as axios from "axios";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
 import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
+import UserContext from "../../UserContext";
 
 import './forgotPassword.scss'
 
@@ -16,6 +16,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ForgotPassword = () => {
+  const context = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
     titleText: "",
@@ -25,8 +26,7 @@ const ForgotPassword = () => {
 
   const formHandler = (data) => {
     console.log(data);
-    axios
-      .post("http://localhost:5000/api/reset-password", data)
+    context.apiCall('post', '/reset-password', data, {})
       .then(response => {
         setModalContent({
           titleText: "Success!",
@@ -34,7 +34,7 @@ const ForgotPassword = () => {
         });
         setIsModalOpen(true);
       })
-      .catch(error => {
+      .catch(_ => {
         setModalContent({
           titleText: "Error!",
           contentText: "I'm sorry, there was an error attempting to reset your password."
