@@ -40,6 +40,7 @@ import ChangePassword from "./views/Settings/changePassword";
 import { ToastContainer } from 'react-toastify';
 import NoMatch from "./views/noMatch/noMatch";
 import { AddTicket } from "./views/AddTicket/addTicket";
+import Toast from "./utils/toast";
 
 var refreshTimeout;
 
@@ -128,7 +129,6 @@ export class App extends React.Component {
           }, () => {
             // Call to refresh the access token 3 minutes later
             setTimeout(this.refreshJwtPeriodically, 180000);
-            this.updateAxiosDefaults();
           });
         } else {
           this.notify('Failed to login', 'warn');
@@ -155,7 +155,6 @@ export class App extends React.Component {
           refreshTimeout && clearTimeout(refreshTimeout);
           // Call to refresh the access token 3 minutes later
           setTimeout(this.refreshJwtPeriodically, 180000);
-          this.updateAxiosDefaults();
         });
         localStorage.setItem("dwellinglyAccess", response.data.access_token);
       })
@@ -183,16 +182,36 @@ export class App extends React.Component {
       });
   };
 
-  /**
-   * Configure defaults for all axios requests in the App
-   */
-  updateAxiosDefaults = () => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.userSession.accessJwt}`;
-  };
+  apiCall = (verb, url, data, toastMessages) => (
+    axios({
+      method: verb,
+      url: `${process.env.REACT_APP_PROXY}/api${url}`,
+      data: data,
+      headers: {
+        'Authorization': `Bearer ${this.state.userSession.accessJwt}`
+      }
+    })
+    .then(response => {
+      // Display the passed in success message if provided. Otherwise, do not display success toast.
+      toastMessages.success && Toast(toastMessages.success, "success");
+      return Promise.resolve(response);
+    })
+    .catch(error => {
+      // Display the passed in error message if provided. Otherwise, display default error toast.
+      Toast(toastMessages.error ?? error.message, "error");
+      return Promise.reject(error);
+    })
+  );
 
   render() {
     return (
-      <UserContext.Provider value={{ user: { ...this.state.userSession }, handleSetUser: this.setUser, refreshJWT: this.refreshJwtPeriodically, login: this.login, logout: this.logout }} >
+      <UserContext.Provider
+        value={{ user: { ...this.state.userSession },
+        handleSetUser: this.setUser,
+        refreshJWT: this.refreshJwtPeriodically,
+        login: this.login,
+        logout: this.logout,
+        apiCall: this.apiCall }} >
         <BrowserRouter>
           <div className='App'>
             {this.state.userSession.isAuthenticated
