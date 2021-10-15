@@ -1,14 +1,23 @@
 @import "../../scss/variables.scss";
+
+
 // NavMenu
 .sidebar-menu {
 	float: left;
 	position: relative;
 	min-height: 100vh;
-	width: 250px;
+	max-width: 250px;
+	min-width: 170px;
 	padding-bottom: 99999px;
   margin-bottom: -99999px;
 	padding-top: 9px;
 	z-index: 20;
+}
+
+@media screen and (max-width:720px) {
+	.sidebar-menu {
+		position:absolute;
+	}
 }
 
 .menu-list a {
@@ -17,8 +26,8 @@
 	}
 }
 
-.is-child-link{	
-  padding-left: 15px;	
+.is-child-link{
+  padding-left: 15px;
 }
 
 .default-cursor {
