@@ -8,20 +8,21 @@ import {
 	faUserAlt,
 	faPhoneAlt,
 	faCog,
+	faBars
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import UserContext from "../../UserContext";
 
-import './navigationMenu.scss'
+import './navigationMenu.scss';
 
 export const MenuLink = ({ icon, isBold, name, href, passedClassName, category }) => {
 	const loc = useLocation();
 	let isActiveLink =
 		loc.pathname.includes(href)
 		|| (category && loc.pathname.split('/')[1].includes(category));
-  let cursorOverride = href ? "" : "default-cursor";
+	let cursorOverride = href ? "" : "default-cursor";
 	const linkColor = isActiveLink ? "has-text-black" : "has-text-white";
 
 	return (
@@ -48,7 +49,7 @@ MenuLink.propTypes = {
 
 export const NavMenu = () => {
 	const loc = useLocation();
-	if (
+	if(
 		loc.pathname === "/login" ||
 		loc.pathname === "/signup" ||
 		loc.pathname === "/terms"
@@ -59,46 +60,51 @@ export const NavMenu = () => {
 	return (
 		<UserContext.Consumer>
 			{({ user }) => (
-				<div className="is-hidden-mobile has-background-primary sidebar-menu">
-					<div className="menu">
-						<ul className="menu-list">
-							<MenuLink
-								name={`${user.firstName} ${user.lastName}`}
-								isBold
-								icon={faUserAlt}
-								href="/home"
-								passedClassName="pb-5"
-							/>
-							<MenuLink
-								name="Dashboard"
-								isBold
-								icon={faColumns}
-								href="/dashboard"
-								category="dashboard"
-							/>
-							<MenuLink name="Add New" isBold icon={faPlusCircle} category="add" />
-							<div className="pl-4 is-child-link">
-								<MenuLink name="Tenant" href="/add/tenant" />
-								<MenuLink name="Property" href="/add/property" />
-								<MenuLink name="Property Manager" href="/add/manager" />
-								<MenuLink name="Ticket" href="/add/ticket" />
-							</div>
-
-							<MenuLink name="Manage" isBold icon={faUserCog} category="manage" />
-							<div className="pl-4 is-child-link">
-								<MenuLink name="Tenants" href="/manage/tenants" />
-								<MenuLink name="Properties" href="/manage/properties" />
-								<MenuLink name="Property Managers" href="/manage/managers" />
-								<MenuLink name="Tickets" href="/manage/tickets" />
-							</div>
-
-							<MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
-							<MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
-							<MenuLink name="Settings" isBold icon={faCog} href="/settings" />
-						</ul>
+				<>
+					<div className="mobile-menu is-hidden-tablet is-hidden-desktop">
+						<button><faBars /></button>
 					</div>
-				</div>
+					<div className="is-hidden-mobile has-background-primary sidebar-menu">
+						<div className="menu">
+							<ul className="menu-list">
+								<MenuLink
+									name={`${user.firstName} ${user.lastName}`}
+									isBold
+									icon={faUserAlt}
+									href="/home"
+									passedClassName="pb-5"
+								/>
+								<MenuLink
+									name="Dashboard"
+									isBold
+									icon={faColumns}
+									href="/dashboard"
+									category="dashboard"
+								/>
+								<MenuLink name="Add New" isBold icon={faPlusCircle} category="add" />
+								<div className="pl-4 is-child-link">
+									<MenuLink name="Tenant" href="/add/tenant" />
+									<MenuLink name="Property" href="/add/property" />
+									<MenuLink name="Property Manager" href="/add/manager" />
+									<MenuLink name="Ticket" href="/add/ticket" />
+								</div>
+
+								<MenuLink name="Manage" isBold icon={faUserCog} category="manage" />
+								<div className="pl-4 is-child-link">
+									<MenuLink name="Tenants" href="/manage/tenants" />
+									<MenuLink name="Properties" href="/manage/properties" />
+									<MenuLink name="Property Managers" href="/manage/managers" />
+									<MenuLink name="Tickets" href="/manage/tickets" />
+								</div>
+
+								<MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
+								<MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
+								<MenuLink name="Settings" isBold icon={faCog} href="/settings" />
+							</ul>
+						</div>
+					</div>
+				</>
 			)}
 		</UserContext.Consumer>
 	);
-}
+};
