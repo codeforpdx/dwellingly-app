@@ -11,6 +11,7 @@ import Modal from '../../components/Modal';
 import Toast from '../../utils/toast';
 import useMountEffect from '../../utils/useMountEffect';
 import './addManager.scss';
+import UserType from '../../Enums/UserType';
 import RoleEnum from '../../Enums/RoleEnum';
 
 const validationSchema = Yup.object().shape({
@@ -76,9 +77,10 @@ export const AddManager = () => {
       ...data,
       password: 'changeAt1stLogin!',
       confirmPassword: 'changeAt1stLogin!',
+      type: UserType.PROPERTY_MANAGER,
       role: RoleEnum.PROPERTY_MANAGER,
     };
-    
+
     let properties = {
       propertyIDs: propertySelection.map(p => p.key)
     }
@@ -88,7 +90,7 @@ export const AddManager = () => {
       .then(response => {
         const managers = [] //backend is expecting an array to resolve assignment
         managers.push(response.data.id)
-        properties.propertyIDs.forEach(i => { 
+        properties.propertyIDs.forEach(i => {
           axios
           .put(`/api/properties/${i}`, {propertyManagerIDs: managers})  })
       })

@@ -23,3 +23,27 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', (email, password) => {
+  cy.request({
+    method:'POST',
+    url:'api/login',
+    body: {
+      email,
+      password,
+    }
+  })
+    .its('body')
+    .then((body) => {
+      window.localStorage.setItem('dwellinglyAccess', body.access_token);
+      window.localStorage.setItem('dwellinglyRefresh', body.refresh_token);
+    })
+})
+
+Cypress.Commands.add('deleteUser', (id) => {
+  cy.request({
+    method: 'DELETE',
+    url: `api/user/${id}`,
+    headers: { 'Authorization' : `Bearer ${localStorage.dwellinglyAccess}` },
+  })
+})

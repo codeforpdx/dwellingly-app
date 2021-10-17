@@ -52,7 +52,7 @@ jobs:
       - name: Seed db
         run: |
           pipenv run flask db create
-          pipenv run flask db seed
+          pipenv run flask db minimal_seed
 
       - name: Start Server
         run: pipenv run flask run &
