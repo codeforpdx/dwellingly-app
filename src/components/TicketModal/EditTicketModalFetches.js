@@ -42,4 +42,4 @@ export const fetchAllUsers = async (context) => {
 }
 
 export const updateTicket = (update, ticketId, context) => 
-  context.apiCall('put', `/tickets/${ticketId}`, update, {});
+  context.apiCall('put', `/tickets/${ticketId}`, update, { success: "Ticket updated!" });

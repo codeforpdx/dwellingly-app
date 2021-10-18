@@ -31,12 +31,6 @@ const Tenant = () => {
   const { id } = useParams();
   const context = useContext(UserContext);
 
-  const initialState = {
-    tenant: null,
-    property: null
-  };
-
-  const [state, setState] = useState(initialState);
   const [tenant, setTenant] = useState(null);
   const [property, setProperty] = useState(null);
   const [isEditing, setEditingStatus] = useState(false);
@@ -45,7 +39,7 @@ const Tenant = () => {
   const [staffSelections, setStaffSelections] = useState(null);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
 
-  const calendarState = useCalendarState(state.property?.dateTimeStart, state.property?.dateTimeEnd)
+  const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
@@ -62,7 +56,7 @@ const Tenant = () => {
   const onFormikSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
 
-    if (_nothingHasChanged(values, state.tenant)) {
+    if (_nothingHasChanged(values, tenant)) {
       setSubmitting(false);
       setEditingStatus(false);
       return;
@@ -109,7 +103,7 @@ const Tenant = () => {
   /**
    * Get a tenant
    */
-  const getTenant = async () => {
+  const getTenant = () => {
     // get the tenant info
     context.apiCall('get', `/tenants/${id}`, {}, {})
       .then(tenantResponse => {
@@ -133,10 +127,6 @@ const Tenant = () => {
               }}));
           })
       });
-
-    const currentStaff = getStaffChoices(tenant.staff);
-
-    setStaffSelections(currentStaff);
   };
 
   /**

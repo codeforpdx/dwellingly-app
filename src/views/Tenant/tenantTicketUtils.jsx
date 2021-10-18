@@ -71,6 +71,7 @@ export const pagination_options = {
 }
 
 export const makeGetTicketsFn = (setTicketsState, userContext, tenant_id) => (
+  () => 
   userContext.apiCall('get', `/tickets?tenant_id=${tenant_id}`, {}, {})
     .then((response) => {
       setTicketsState(response.data.tickets?.map(t => {
@@ -82,12 +83,17 @@ export const makeGetTicketsFn = (setTicketsState, userContext, tenant_id) => (
         }}))
     }));
 
-export const makeHandleAddNoteFn = (viewedTicketState, getTicketsFn, userContext) => {
+export const makeHandleAddNoteFn = (viewedTicketState, getTicketsFn, userContext, setViewedTicketState) => {
   return (
     (noteText, ticketID) => {
-      userContext.apiCall('post', `/tickets/${ticketID}/notes`, { text: noteText }, {})
+      userContext.apiCall('post', `/tickets/${ticketID}/notes`, { text: noteText }, { success: 'Note added' })
         .then(({ data }) => {
-          viewedTicketState.notes.push(data)
+          var notes = viewedTicketState.notes;
+          notes.push(data);
+          setViewedTicketState({
+            ...viewedTicketState,
+            notes: notes
+          });
           getTicketsFn(userContext)
         });
     }

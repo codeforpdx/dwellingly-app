@@ -61,7 +61,7 @@ export class AddProperty extends Component {
   }
 
   getManagers = (context) => {
-    context.apiCall('get', `/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, {}, {})
+    context.apiCall('get', `/user?r=${RoleEnum.PROPERTY_MANAGER}`, {}, {})
       .then((response) => {
         const managerOptions = response.data.users.map(({ id, firstName, lastName }) => {
           return ({

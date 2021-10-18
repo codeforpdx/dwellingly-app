@@ -85,7 +85,7 @@ export const AddManager = () => {
         const managers = [] //backend is expecting an array to resolve assignment
         managers.push(response.data.id)
         properties.propertyIDs.forEach(i => {
-          context.apiCall('put', `properties/${i}`, {propertyManagerIDs: managers}, {});
+          context.apiCall('put', `/properties/${i}`, {propertyManagerIDs: managers}, {});
       })});
   };
 

@@ -14,9 +14,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, handleSubm
   const [tenantArray, setTenantArray] = useState([]);
 
   useEffect(() => {
-    const { user } = userContext;
-
-    fetchAllTenants(user)
+    fetchAllTenants(userContext)
       .then(tArray => setTenantArray(tArray));
   }, [])
 

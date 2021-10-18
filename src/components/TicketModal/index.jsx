@@ -76,8 +76,8 @@ export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, 
         requestBody.status = status === 'In Progress' ? 'In_Progress' : status;
       }
       updateTicket(requestBody, ticket.id, userContext)
-        .then(data => {
-          updateSelectedTicket(data);
+        .then(response => {
+          updateSelectedTicket(response.data);
           getTickets(userContext);
         });
     }

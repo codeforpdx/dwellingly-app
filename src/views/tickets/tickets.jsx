@@ -142,9 +142,14 @@ export function Tickets(props) {
   };
 
   const handleAddNote = (noteText, ticketID) => {
-    userContext.apiCall('post', `/tickets/${ticketID}/notes`, { text: noteText }, {})
+    userContext.apiCall('post', `/tickets/${ticketID}/notes`, { text: noteText }, { success: 'Note added' })
       .then(({ data }) => {
-        viewedTicket.notes.push(data);
+        var notes = viewedTicket.notes;
+        notes.push(data);
+        setViewedTicket({
+          ...viewedTicket ,
+          notes: notes
+        });
         getTickets(userContext);
       });
   };
@@ -407,7 +412,7 @@ export function Tickets(props) {
                   {selectedNote.text}
                 </div>
                 <br />
-                <p>Are you sure you want to change this note?  This cannot be undone.</p>
+                <p>Are you sure you want to change this note?</p>
               </div>
             }
             hasButtons={true}
