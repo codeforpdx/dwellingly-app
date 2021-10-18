@@ -2,7 +2,8 @@ import React from 'react';
 import "./TicketModal.scss";
 
 export default function TicketModalDetails({ ticket }) {
-  const { author, tenant, assigned, urgency, created_at } = ticket;
+  const { author, tenant, assigned_staff, urgency, created_at } = ticket;
+  const assignees = assigned_staff.map(as => `${as.firstName} ${as.lastName}`).join(', ');
 
   return (
     <div>
@@ -17,7 +18,7 @@ export default function TicketModalDetails({ ticket }) {
         </div>
         <div className="ticket-details-section">
           <p className="ticket-detail-label">ASSIGNEE</p>
-          <p>{assigned}</p>
+          <p>{assignees}</p>
         </div>
       </div>
       <div
