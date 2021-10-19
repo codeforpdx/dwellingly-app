@@ -122,7 +122,7 @@ Jest is used for unit testing. These can be ran with `npm run test`
 To run the system tests both the backendend server and frontend server must be running
 The backend server must be seeded with the `minimal_seed` data file.
 
-To ensure your db is seed correctly run the following commands:
+To ensure your db is seeded correctly run the following commands:
 1. `pipenv run flask db drop`
 2. `pipenv run flask db create`
 3. `pipenv run flask db minimal_seed`
