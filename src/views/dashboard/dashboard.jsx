@@ -45,7 +45,57 @@ export const Dashboard = (props) => {
     axios
       .get("/api/widgets", makeAuthHeaders(userContext))
       .then(({ data }) => {
-        setWidgetData(data);
+        // format open tickets data
+        const newTickets = data.opentickets.new;
+        const inProgressTickets = data.opentickets.inProgress;
+        const openTicketsData = [[
+          {
+            "stat": newTickets.allNew.stat,
+            "desc": "New"
+          },
+          {
+            "stat": newTickets.unseen24Hrs.stat,
+            "desc": "Unseen for > 24 hours"
+          },
+
+        ],
+        [
+          {
+            "stat": inProgressTickets.allInProgress.stat,
+            "desc": "New"
+          },
+          {
+            "stat": inProgressTickets.inProgress1Week.stat,
+            "desc": "Unseen for > 24 hours"
+          },
+        ]];
+
+        var managersData = [];
+
+        if (data.managers.length > 0) {
+          managersData = [
+            ...data.managers.map((manager) => [
+              {
+                "id": manager.id,
+                "stat": manager.date,
+                "desc": `${manager.firstName} ${manager.lastName}`,
+                "subtext": manager.propertyName
+              }
+            ])
+          ]
+        }
+
+        // no managers, no problem!
+        else {
+          managersData.push([{
+            "id": "",
+            "stat": "",
+            "desc": "No new users",
+            "subtext": "",
+          }])
+        }
+
+        setWidgetData({ openTicketsData, managersData });
       })
       .catch(error => Toast(error.message, "error"));
 
@@ -133,10 +183,15 @@ export const Dashboard = (props) => {
           <h2 className="page-title">Admin Dashboard</h2>
           <div className="dashboard__modules_container">
             <DashboardModule
-              data={widgetData.opentickets}
+              title="Open Tickets"
+              link="/manage/tickets"
+              data={widgetData.openTicketsData}
             />
             <DashboardModule
-              data={widgetData.managers}
+              title="New Property Managers"
+              link="/manage/managers"
+              data={widgetData.managersData}
+              isDate={true}
             />
           </div>
           <Collapsible
@@ -156,7 +211,7 @@ export const Dashboard = (props) => {
                   onClick={handleStaffAssignment}
                 >
                   SAVE ASSIGNMENTS
-                            </button>
+                </button>
               </div>
             </div>
           </Collapsible>
