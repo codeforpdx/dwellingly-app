@@ -1,7 +1,8 @@
 import React from 'react';
 import './requestItem.scss';
 import Button from "../Button";
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth, desktopWidth } from '../../constants/index.js';
 
 function RequestItem(props) {
     const { data, onDeclineClick, onAddClick } = props;
@@ -11,8 +12,8 @@ function RequestItem(props) {
     // based on the logic of a traditional CSS media query.
     // From there you can conditionally render
     // based on the results.
-    const isDesktop = useMediaQuery({ minWidth: 1000 })
-    const isTablet = useMediaQuery({ minWidth: 550, maxWidth: 999 })
+    const isDesktop = useMediaQuery(`(min-width: ${desktopWidth})`);
+    const isTablet = useMediaQuery(`(min-width: ${tabletWidth}) and (max-width: ${desktopWidth})`);
 
     const Buttons = () => (
         // Leave this div - Bulma column layout relies on it
@@ -38,14 +39,14 @@ function RequestItem(props) {
 
     const MobileLayout = () => (
         <div className="collapsible__row">
-            <div className="columns">
-            <div className="collapsible__col column is-one-quarter is-mobile name-col">{firstName} {lastName}</div>
-            <div className="collapsible__col column is-mobile is-multiline">
-                <a href="#">{email}</a>
-            </div>
-            <div className="dashboard__colapsible_col collapsible__buttons is-multiline">
-                <Buttons />
-            </div>
+            <div>
+                <div className="collapsible__col column is-one-quarter is-mobile name-col">{firstName} {lastName}</div>
+                <div className="collapsible__col column is-mobile is-multiline">
+                    <a href="#">{email}</a>
+                </div>
+                <div className="dashboard__colapsible_col collapsible__buttons is-multiline">
+                    <Buttons />
+                </div>
             </div>
         </div>
     )
