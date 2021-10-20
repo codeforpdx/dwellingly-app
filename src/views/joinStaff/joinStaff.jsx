@@ -10,7 +10,7 @@ import Toast from '../../utils/toast';
 export const JoinStaff = () => {
 
   const [staff, setStaff] = useState([]);
-  const secondColumnStart = staff && Math.floor(staff.length / 3);
+  const secondColumnStart = staff && Math.ceil(staff.length / 3);
   const thirdColumnStart = staff && (staff.length - Math.floor(staff.length / 3));
   const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` } };
 
