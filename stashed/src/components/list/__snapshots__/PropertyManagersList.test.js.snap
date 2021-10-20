@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`PropertyManagersList Component renders empty div if no items exist 1`] = `
-<div
-  className="list-group"
-/>
-`;

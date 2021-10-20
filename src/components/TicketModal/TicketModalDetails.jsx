@@ -2,11 +2,12 @@ import React from 'react';
 import "./TicketModal.scss";
 
 export default function TicketModalDetails({ ticket }) {
-  const { author, tenant, assigned, urgency, created_at } = ticket;
+  const { author, tenant, assigned_staff, urgency, created_at } = ticket;
+  const assignees = assigned_staff.map(as => `${as.firstName} ${as.lastName}`).join(', ');
 
   return (
     <div>
-      <div style={{ float: "left" }}>
+      <div className="ticket-details-left">
         <div className="ticket-details-section">
           <p className="ticket-detail-label">AUTHOR</p>
           <p>{author}</p>
@@ -17,13 +18,11 @@ export default function TicketModalDetails({ ticket }) {
         </div>
         <div className="ticket-details-section">
           <p className="ticket-detail-label">ASSIGNEE</p>
-          <p>{assigned}</p>
+          <p>{assignees}</p>
         </div>
       </div>
       <div
-        className="ticket-details-section"
-        style={{ float: "right", textAlign: "right" }}
-      >
+        className="ticket-details-right">
         <div className="ticket-details-section">
           <p className="ticket-detail-label">URGENCY</p>
           <p>{urgency.toUpperCase()}</p>

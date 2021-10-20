@@ -1,67 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react';
-import UserContext from '../../UserContext';
-import Toast from '../../utils/toast';
 import "./TicketModal.scss";
-import SearchableDropDown from "../../components/SearchableDropDown/SearchableDropDown"
-import { updateTicket, fetchAllTenants, fetchAllManagers } from './EditTicketModalFetches';
+import SearchableDropDown from "../../components/SearchableDropDown/SearchableDropDown";
+import { fetchAllTenants } from './EditTicketModalFetches';
+import UserContext from '../../UserContext';
 
 
-export default function TicketModalDetails({ ticket, handleIsEditing, getTickets, updateSelectedTicket }) {
-  const { created_at, sender } = ticket;
+export default function TicketModalDetails({ ticket, handleIsEditing, handleSubmit }) {
+  const { created_at, author, assigned_staff } = ticket;
   const userContext = useContext(UserContext);
 
   const [tenant, setTenant] = useState(ticket.tenant);
-  const [assigned, setAssigned] = useState(ticket.assigned);
-  const [urgency, setUrgency] = useState(ticket.urgency.toUpperCase());
+  const [urgency, setUrgency] = useState(ticket.urgency);
   const [tenantArray, setTenantArray] = useState([]);
-  const [managerArray, setManagerArray] = useState([]);
 
   useEffect(() => {
     const { user } = userContext;
 
     fetchAllTenants(user)
       .then(tArray => setTenantArray(tArray));
-
-    fetchAllManagers(user)
-      .then(mArray => setManagerArray(mArray));
-
   }, [])
 
   const handleCancel = () => {
     handleIsEditing(false);
   }
 
-
-  const handleSubmit = () => {
-    let update = {};
-    if (tenant !== ticket.tenant) update.tenantID = tenant;
-    if (assigned !== ticket.assigned) update.assignedUserID = assigned;
-    if (urgency !== ticket.urgency) update.urgency = urgency;
-    if (sender !== ticket.sender) update.senderID = sender;
-
-    if (update !== {}) {
-      updateTicket(userContext.user, update, ticket.id)
-        .then(data => {
-          updateSelectedTicket(data)
-          getTickets(userContext);
-          Toast("Ticket updated successfully", "success")
-        })
-        .catch((error) => {
-          Toast(error.message, "error");
-          console.log(error)
-        })
-    }
-
-    handleIsEditing(false);
+  const handleSave = () => {
+    let data = {};
+    if (tenant !== ticket.tenant) data.tenant_id = tenant;
+    if (urgency !== ticket.urgency) data.urgency = urgency;
+    if (author !== ticket.author) data.author_id = author;
+    handleSubmit(data);
   }
 
+  const assignees = assigned_staff.map(as => `${as.firstName} ${as.lastName}`).join(', ');
 
   return (
     <div>
-      <div style={{ float: "left" }}>
+      <div className="ticket-details-left">
         <div className="ticket-details-section">
-          <p className="ticket-detail-label">SENDER</p>
-          <p>{sender}</p>
+          <p className="ticket-detail-label">AUTHOR</p>
+          <p>{author}</p>
         </div>
         <div className="ticket-details-section">
           <p className="ticket-detail-label">TENANT</p>
@@ -72,27 +50,20 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
           />
         </div>
         <div className="ticket-details-section">
-          <p className="ticket-detail-label">ASSIGNEE</p>
-          <SearchableDropDown
-            value={assigned}
-            onChange={setAssigned}
-            array={managerArray}
-          />
+          <p className="ticket-detail-label">ASSIGNEES</p>
+          <p>{assignees}</p>
         </div>
       </div>
-      <div
-        className="ticket-details-section"
-        style={{ float: "right", textAlign: "right", position: "relative" }}
-      >
+      <div className="ticket-details-right">
         <div className="ticket-details-section">
           <p className="ticket-detail-label">URGENCY</p>
           <select
             id="urgency"
             value={urgency}
             onChange={({ target }) => setUrgency(target.value)}>
-            <option value="LOW">LOW</option>
-            <option value="MED">MED</option>
-            <option value="HIGH">HIGH</option>
+            <option value="Low">LOW</option>
+            <option value="Medium">MEDIUM</option>
+            <option value="High">HIGH</option>
           </select>
         </div>
         <div className="ticket-details-section">
@@ -107,7 +78,7 @@ export default function TicketModalDetails({ ticket, handleIsEditing, getTickets
         </button>
           <button
             className="button is-primary is-rounded ml-4 is-small"
-            onClick={handleSubmit}>
+            onClick={handleSave}>
             SAVE
         </button>
         </div>

@@ -9,7 +9,8 @@ import RoleEnum from '../../Enums/RoleEnum';
 import Toast from '../../utils/toast';
 import { useCalendarState } from "../../components/CalendarModal/CalendarModal";
 import Modal from '../../components/Modal';
-
+import {TenantTickets} from './tenantTickets'
+  
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -37,7 +38,7 @@ const Tenant = () => {
   const initialState = {
     tenant: null,
     property: null,
-    tickets: null,
+    //tickets: null,
   };
 
   const [state, setState] = useState(initialState);
@@ -55,6 +56,7 @@ const Tenant = () => {
     { id: "Closed", label: "Closed" },
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const [ticketList, setTicketList] = useState();
 
   // Error handler for axios requests
   const axiosErrorHandler = (error) => {
@@ -148,9 +150,15 @@ const Tenant = () => {
       const propertyResponse = await client.get(propertyUrl);
       property = propertyResponse.data;
     }
-    const ticketsResponse = await client.get(`/api/tickets?tenant_id=${tenant.id}`);
-    const tickets = ticketsResponse.data;
-    setState({ tenant, property, tickets });
+    const ticketsResponse = await client.get(`/api/tickets?tenant_id=${tenant.id}`)
+
+    setTicketList(ticketsResponse.data.tickets?.map(t => {
+      return {
+        ...t,
+        assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(',\n')
+      }}))
+
+    setState({tenant, property });
 
     const currentStaff = getStaffChoices(tenant.staff);
 
@@ -228,7 +236,7 @@ const Tenant = () => {
    */
   useEffect(() => {
     const loadStaff = async () => {
-      const staffResponse = await client.post(`/api/user?r=${RoleEnum.STAFF}`, {
+      const staffResponse = await client.get(`/api/user?r=${RoleEnum.STAFF}`, {
         name: staffSearchText
       }, makeAuthHeaders(context));
       const foundStaff = await staffResponse.data;
@@ -378,6 +386,12 @@ const Tenant = () => {
                   ))}
                 </ul>
               </div>
+              <TenantTickets 
+                tenant_id={id}
+                ticketList={ticketList}
+                setTicketList={setTicketList}
+                activeTab={activeTab}
+              />
             </div>
           </div>
         )}

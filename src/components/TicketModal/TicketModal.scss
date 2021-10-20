@@ -105,6 +105,17 @@
   color: $orange;
 }
 
+.ticket-details-left {
+  float: left;
+  max-width: 50%;
+}
+
+.ticket-details-right {
+  float: right;
+  text-align: right;
+  max-width: 50%;
+}
+
 .ticket-details-save {
   margin-top: 25px;
 }

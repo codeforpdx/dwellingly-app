@@ -26,6 +26,8 @@ export default function NoteListItem({ note, editNotes, localDeleteNote, handleE
     setEditText(false);
   }
 
+  const submittedTime = new Date(created_at).toLocaleString();
+
   return (
     <div className="ticket-card-note-container">
       <div className="ticket-card-note-header-row">
@@ -53,7 +55,7 @@ export default function NoteListItem({ note, editNotes, localDeleteNote, handleE
           style={{ float: "right" }}
           className="ticket-card-note-header"
         >
-          {created_at}
+          {submittedTime}
         </div>
       </div>
       {editText && editNotes ?
