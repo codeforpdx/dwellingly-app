@@ -4,6 +4,7 @@ import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
 import * as axios from 'axios';
 import UserContext from "../../UserContext";
+import UserType from "../../Enums/UserType";
 import RoleEnum from "../../Enums/RoleEnum";
 import Toast from '../../utils/toast';
 import Button from "../../components/Button";
@@ -38,6 +39,7 @@ export const AddStaffMember = () => {
   const handleSave = (data) => {
     axios.post("/api/user/invite", {
       ...data,
+      type: data.makeAdmin ? UserType.ADMIN : UserType.STAFF,
       role: data.makeAdmin ? RoleEnum.ADMIN : RoleEnum.STAFF
     }, makeAuthHeaders(context))
       .then(function(response) {
