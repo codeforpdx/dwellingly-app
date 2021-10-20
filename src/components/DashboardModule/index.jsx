@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import './dashboardmodule.scss';
 import PropTypes from "prop-types";
 
@@ -11,14 +11,14 @@ function DashboardModule(props) {
 
     return (
       <div className="dashboard__module">
-        <a href={link || "#"}>
+        <Link to={link || "#"}>
           <div className="dashboard__module_header">
             <h3 className="dashboard__module_title h2">{title}</h3>
             <span className="icon dashboard__module_title_link">
               <i className="fas fa-chevron-right"></i>
             </span>
           </div>
-        </a>
+        </Link>
         {
           data.map((statRow, index) => {
             return (
