@@ -62,11 +62,11 @@ export const Dashboard = (props) => {
         [
           {
             "stat": inProgressTickets.allInProgress.stat,
-            "desc": "New"
+            "desc": "In Progress"
           },
           {
             "stat": inProgressTickets.inProgress1Week.stat,
-            "desc": "Unseen for > 24 hours"
+            "desc": "In progress for > 1 week"
           },
         ]];
 
