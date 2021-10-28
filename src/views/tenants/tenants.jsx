@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
@@ -105,16 +104,16 @@ export function Tenants() {
   const fetchAllTenants = () => {
     let allProperties;
     setIsLoading(true);
-    axios.get(`/api/properties`, makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/properties', {}, {})
       .then(propertyResponse => {
         const { data: { properties } } = propertyResponse;
         allProperties = properties;
       })
       .then(() =>
-        axios.get("/api/tenants", makeAuthHeaders(userContext))
+        userContext.apiCall('get', '/tenants', {}, {})
       )
-      .then((response) => {
-        const { data: { tenants } } = response;
+      .then((tenantResponse) => {
+        const { data: { tenants } } = tenantResponse;
         const tenantRows = formatTenantData(tenants);
         const tenantsWithProperties = addPropertyNames(tenantRows, allProperties);
         const sortedTenants = sortTenantData(tenantsWithProperties);
@@ -126,9 +125,8 @@ export function Tenants() {
         setNonSelectableRows(archivedTenants.map(archivedTenant => archivedTenant.id));
         setIsLoading(false);
       })
-      .catch((error) => {
+      .catch(_ => {
         setIsLoading(false);
-        Toast(error.message, "error");
       });
   };
 
@@ -187,19 +185,16 @@ export function Tenants() {
     const tenantIds = selectedTenants.map(tenant => tenant.id);
 
     Promise.all(tenantIds.map(tenantId =>
-      axios.put(`/api/tenants/${tenantId}`, { archived: true }, makeAuthHeaders(userContext))
-        .then((response) => {
-          setCheckboxRenderCount(checkboxRenderCount + 1);
-        })
-        .then(() => setSelectedTenants([]))
-        .catch((error) => {
-          Toast(error.message, "error");
-          console.log(error);
-        })
+      userContext.apiCall('put', `/tenants/${tenantId}`, { archived: true }, {})
     ))
-      .then(() => {
-        Toast(`Tenants archived successfully`, "success");
-      });
+    .then(_ => {
+      setCheckboxRenderCount(checkboxRenderCount + 1);
+      setSelectedTenants([]);
+      Toast('Tenants archived successfully!', 'success');
+    })
+    .catch(_ => {
+      Toast('Error archiving tenants, please try again later.', 'error');
+    });
 
     fetchAllTenants();
     toggleArchiveModal();

@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import ToggleEditTable from "../../components/ToggleEditTable";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
-import * as axios from "axios";
 import UserContext from '../../UserContext';
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
-import Toast from '../../utils/toast';
 import './manager.scss';
 
 const validationSchema = Yup.object().shape({
@@ -28,27 +26,15 @@ const validationSchema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
-
-
-
 const getManager = (userContext, managerId, storeInState) => {
-
-  axios
-    .get(`${process.env.REACT_APP_PROXY}/api/user/${managerId}`,
-      makeAuthHeaders(userContext)
-    )
+  userContext.apiCall('get', `/user/${managerId}`, {}, {})
     .then((response) => {
       const manager = response.data;
       storeInState(manager);
-    })
-    .catch(error => {
-      Toast(error.message);
     });
 };
 
 const Manager = () => {
-
   const userContext = useContext(UserContext);
   const { id } = useParams();
 
@@ -87,10 +73,7 @@ const Manager = () => {
   ];
 
   const updateManager = (payload) => {
-    axios
-      .patch(`/api/user/${id}`,
-        payload, makeAuthHeaders(userContext)
-      )
+    userContext.apiCall('patch', `/user/${id}`, payload, { success: "Save successful!" })
       .then(response => {
         setManager({
           ...managerData,
@@ -100,10 +83,6 @@ const Manager = () => {
           email: response.data.email,
         });
         setEditingStatus(false);
-        Toast("Save successful!");
-      })
-      .catch((error) => {
-        Toast(error.message);
       });
   };
 

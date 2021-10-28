@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import * as axios from "axios";
-import Toast from '../../utils/toast';
 import UserContext from '../../UserContext';
 import * as Yup from "yup";
 import ToggleEditTable from "../../components/ToggleEditTable";
@@ -14,8 +12,6 @@ import RemoveTenantButton from './RemoveTenantButton';
 import Modal from '../../components/Modal/index';
 
 import './PropertyView.scss';
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const validationSchema = Yup.object().shape({
   propertyName: Yup.string()
@@ -33,15 +29,11 @@ const validationSchema = Yup.object().shape({
     .required("*Number of units is required"),
 });
 
-
-
-
 const Property = () => {
   const userContext = useContext(UserContext);
 
   const { id } = useParams();
   const propertyId = id;
-
 
   const [isEditing, setEditingStatus] = useState(false);
   const [property, setProperty] = useState('');
@@ -52,20 +44,6 @@ const Property = () => {
   const [confirmTenantRemoval, setConfirmTenantRemoval] = useState(false);
   const [tenantToRemove, setTenantToRemove] = useState('')
   const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
-
-
-  // Error handler for axios requests
-  const axiosErrorHandler = (error) => {
-    Toast(error.message, "error");
-    return Promise.reject({ ...error });
-  };
-
-  // Handle axios errors
-  const client = axios.create();
-  client.interceptors.response.use(
-    success => success,
-    error => axiosErrorHandler(error)
-  );
 
   /**
    * Handle activating edit form
@@ -79,32 +57,26 @@ const Property = () => {
     getProperty()
   };
 
-
   useEffect(() => {
     getProperty()
   }, []);
 
-
-  const getProperty = async () => {
-
-    const propertyResponse = await axios
-      .get(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`, makeAuthHeaders(userContext));
-
-    const property = propertyResponse.data;
-
-    setProperty(property)
-    setInputValues(property)
-    setTenants(property.tenants)
+  const getProperty = () => {
+    userContext.apiCall('get', `/properties/${propertyId}`, {}, {})
+      .then(propertyResponse => {
+        var property = propertyResponse.data;
+        setProperty(property)
+        setInputValues(property)
+        setTenants(property.tenants)
+      });
   }
 
   const handleConfirmButton = async () => {
-
     await updateProperty(inputValues);
     setConfirmChange(false);
   }
 
   const onFormikSubmit = (values, { setSubmitting }) => {
-
     const newValues = {
       name: values.propertyName,
       address: values.propertyAddress,
@@ -121,12 +93,7 @@ const Property = () => {
   };
 
   const updateProperty = (payload, successMsg="Save successful!") => {
-
-    axios
-      .put(`${process.env.REACT_APP_PROXY}/api/properties/${property.id}`,
-        payload,
-        makeAuthHeaders(userContext)
-      )
+    userContext.apiCall('put', `/properties/${property.id}`, payload, { success: successMsg })
       .then(response => {
         const property = response.data
 
@@ -136,13 +103,8 @@ const Property = () => {
 
         hideArchiveModal()
         setEditingStatus(false)
-        Toast(successMsg, "success")
-      })
-      .catch((error) => {
-        Toast(Object.values(error.response.data.message).join("\n"), "error")
-      })
-  }
-
+      });
+  };
 
   const removePropertyManager = (id) => {
     let propertyManagerIDs = []
@@ -167,21 +129,14 @@ const Property = () => {
       for (let manager of property.propertyManagers) {
         property.propertyManagerIDs.push(manager.id);
       }
-
-    axios
-      .put(`${process.env.REACT_APP_PROXY}/api/properties/${propertyId}`,
-        property,
-        makeAuthHeaders(userContext))
+    
+    userContext.apiCall('put', `/properties/${propertyId}`, property, { success: 'Save successful!' })
       .then(response => {
         setProperty({
           ...property,
           propertyManagers: response.data.propertyManagers,
         })
         setEditingStatus(false);
-        Toast("Save successful!", "success");
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
       });
   }
 
@@ -192,15 +147,12 @@ const Property = () => {
 
   const handleTenantConfirmButton = () => {
     const leaseId = tenantToRemove.lease.id;
-    axios
-      .delete(`${process.env.REACT_APP_PROXY}/api/lease/${leaseId}`)
+    userContext.apiCall('delete', `/lease/${leaseId}`, {}, { success: 'Tenant successfully removed' })
       .then(res => {
         getProperty()
         setConfirmTenantRemoval(false)
         setEditingStatus(false)
-        Toast("Tenant successfully removed")
-      })
-      .catch(error => Toast(error.message))
+      });
   }
 
   const handleArchive = (archived) => {

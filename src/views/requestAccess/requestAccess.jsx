@@ -1,16 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import * as axios from "axios";
 import UserContext from '../../UserContext';
-import Toast from '../../utils/toast';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import { AddProperty } from '../addProperty/addProperty';
 import Modal from '../../components/Modal';
 import RoleEnum from '../../Enums/RoleEnum';
 
 import './requestAccess.scss';
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const RoleDropDown = (props) => {
   return (
@@ -46,7 +42,6 @@ export const InfoField = ({ label, info, changeHandler }) => {
 };
 
 export const RequestAccess = (props) => {
-  // Get context for API auth header
   const userContext = useContext(UserContext);
 
   const {
@@ -79,7 +74,7 @@ export const RequestAccess = (props) => {
   }, [propertySearchText, propertyOptions])
   
   const getProperties = () => {
-    axios.get("/api/properties", makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/properties', {}, {})
       .then(({ data }) => {
         let properties = data.properties && data.properties.length > 0
           ? data.properties.map(property => {
@@ -96,7 +91,7 @@ export const RequestAccess = (props) => {
   }
 
   const grantAccess = () => {
-    axios.patch(`/api/user/${id}`, {
+    userContext.apiCall('patch', `/user/${id}`, {
       role: RoleEnum[roleSelection.replace(' ', '_')],
       firstName: fName,
       lastName: lName,
@@ -104,14 +99,7 @@ export const RequestAccess = (props) => {
       propertyIDs: roleSelection === "PROPERTY MANAGER"
         ? propertySelection.map(p => p.key)
         : []
-    }, makeAuthHeaders(userContext))
-      .then((response) => {
-        Toast("User access granted!", "success");
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-        console.log(error);
-      });
+    }, { success: 'User access granted!' });
   };
 
   const handleAddPropertyCancel = () => {

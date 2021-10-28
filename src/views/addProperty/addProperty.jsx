@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../../UserContext';
-import * as axios from 'axios';
 import { Link } from 'react-router-dom';
-import Toast from '../../utils/toast';
 import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
 import RoleEnum from '../../Enums/RoleEnum';
 import './addProperty.scss';
@@ -33,13 +31,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const formHandler = (data, context) => {
-  axios.post('/api/properties', data, { headers: { 'Authorization': `Bearer ${context.user.accessJwt}` } })
-    .then(function(response) {
-      Toast('Property Added!', 'success');
-    })
-    .catch(function(error) {
-      Toast(error.message, 'error');
-    });
+  context.apiCall('post', '/properties', data, { success: 'Property Added!' });
 };
 
 export class AddProperty extends Component {
@@ -69,7 +61,7 @@ export class AddProperty extends Component {
   }
 
   getManagers = (context) => {
-    axios.get(`/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { 'Authorization': `Bearer ${context.user.accessJwt}` } })
+    context.apiCall('get', `/user?r=${RoleEnum.PROPERTY_MANAGER}`, {}, {})
       .then((response) => {
         const managerOptions = response.data.users.map(({ id, firstName, lastName }) => {
           return ({
@@ -78,10 +70,6 @@ export class AddProperty extends Component {
           });
         });
         this.setState({ managerOptions, managerSelection: managerOptions });
-      })
-      .catch((error) => {
-        Toast(error.message, 'error');
-        console.log(error);
       });
   };
 

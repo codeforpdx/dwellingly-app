@@ -1,19 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import UserContext from '../../UserContext';
 import useMountEffect from '../../utils/useMountEffect';
-import Toast from "../../utils/toast";
 import DashboardModule from '../../components/DashboardModule';
 import Collapsible from '../../components/Collapsible';
 import Modal from '../../components/Modal';
 import RequestItem from '../../components/RequestItem';
 import NewStaffItem from '../../components/NewStaffItem';
 import RoleEnum from '../../Enums/RoleEnum';
+import axios from 'axios';
 
 import './dashboard.scss';
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 export const Dashboard = (props) => {
   const [modalActive, setModalActive] = useState({
@@ -29,21 +26,17 @@ export const Dashboard = (props) => {
   const userContext = useContext(UserContext);
 
   useMountEffect(() => {
-    axios
-      .get("/api/tenants", makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/tenants', {}, {})
       .then(({ data }) => {
         const unstaffed = data.tenants.filter(tenant => !tenant.staff);
         if(!unstaffed.length) return;
 
         setUnstaffedTenants(unstaffed);
-        return axios
-          .get(`/api/user?r=${RoleEnum.ADMIN}`, makeAuthHeaders(userContext))
+        return userContext.apiCall('get', `/user?r=${RoleEnum.ADMIN}`, {}, {})
           .then(({ data }) => setStaffList(data.users));
-      })
-      .catch(error => Toast(error.message, "error"));
+      });
 
-    axios
-      .get("/api/widgets", makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/widgets', {}, {})
       .then(({ data }) => {
         // format open tickets data
         const newTickets = data.opentickets.new;
@@ -96,17 +89,14 @@ export const Dashboard = (props) => {
         }
 
         setWidgetData({ openTicketsData, managersData });
-      })
-      .catch(error => Toast(error.message, "error"));
+      });
 
     getPendingUsers();
   });
 
-  const getPendingUsers = async () => {
-    await axios
-      .get("/api/users/pending", makeAuthHeaders(userContext))
-      .then(({ data }) => setUsersPending(data.users))
-      .catch(error => Toast(error.message, "error"));
+  const getPendingUsers = () => {
+    userContext.apiCall('get', '/users/pending', {}, {})
+      .then(({ data }) => setUsersPending(data.users));
   };
 
   const handleAddClick = (id) => {
@@ -122,23 +112,16 @@ export const Dashboard = (props) => {
   };
 
   const handleDenyAccess = async (doDeny) => {
-
     //Hide modal on button click
     setModalActive({ ...modalActive, visible: false });
+    // If decline access request is confirmed, delete requesting user from the database
 
-    try {
-      // If decline access request is confirmed, delete requesting user from the database
-      if(doDeny) {
-        const requestorId = modalActive.id;
-        axios.delete(`/api/user/${requestorId}`, makeAuthHeaders(userContext))
-          .then(response => {
-            getPendingUsers();
-          });
-
-      }
-    }
-    catch(err) {
-      Toast("There was an error processing your request. Please try again later", "error");
+    if(doDeny) {
+      const requestorId = modalActive.id;
+      userContext.apiCall('delete', `/user/${requestorId}`, {}, { error: "There was an error processing your request. Please try again later" })
+        .then(response => {
+          getPendingUsers();
+        });
     }
   };
 
@@ -158,12 +141,7 @@ export const Dashboard = (props) => {
 
     const tenantUpdateReqs = unstaffedTenants
       .filter(({ staff }) => staff)
-      .map(({ id, staff }) => axios
-        .put(
-          `/api/tenants/${id}`,
-          { 'staffIDs': [staff] },
-          makeAuthHeaders(userContext)
-        ));
+      .map(({ id, staff }) => userContext.apiCall('put', `/tenants/${id}`, { 'staffIDs': [staff] }, {}));
 
     axios.all(tenantUpdateReqs)
       .then(axios.spread((...responses) => {
@@ -172,8 +150,7 @@ export const Dashboard = (props) => {
           return isTenantUnchanged;
         });
         setUnstaffedTenants(stillUnstaffed);
-      }))
-      .catch(error => Toast(error.message, "error"));
+      }));
   };
 
   return (

@@ -8,7 +8,6 @@ import TicketModalDetails from "./TicketModalDetails";
 import EditTicketModalDetails from "./EditTicketModalDetails";
 import TitleAndPen, { useEditingStatus } from "../../components/TitleAndPen";
 import NoteListItem from "../NoteListItem/NoteListItem";
-import Toast from '../../utils/toast';
 import { updateTicket } from "./EditTicketModalFetches";
 import UserContext from '../../UserContext';
 
@@ -19,7 +18,6 @@ const sortNotes = (noteA, noteB) => {
 
 
 export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, updateSelectedTicket, handleDeleteNote, handleEditNoteText, editNoteModal }) => {
-
   const userContext = useContext(UserContext);
   const [showAddNote, setShowAddNote] = useState(false)
   const [editNotes, setEditNotes] = useState(false);
@@ -77,15 +75,11 @@ export const TicketModal = ({ show, onClose, ticket, handleAddNote, getTickets, 
         // The backend is sending us the string representation of the enum but it expects us to send back the enum key
         requestBody.status = status === 'In Progress' ? 'In_Progress' : status;
       }
-      updateTicket(userContext.user, requestBody, ticket.id)
+      updateTicket(requestBody, ticket.id, userContext)
         .then(response => {
-          updateSelectedTicket(response)
+          updateSelectedTicket(response.data);
           getTickets(userContext);
-          Toast("Ticket updated successfully", "success")
-        })
-        .catch((error) => {
-          Toast(error.message, "error");
-        })
+        });
     }
     setEditingStatus(false);
   }

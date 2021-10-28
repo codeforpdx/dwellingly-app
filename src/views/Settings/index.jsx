@@ -2,10 +2,9 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import * as axios from "axios";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
-import Toast from '../../utils/toast';
+import Toast from "../../utils/toast";
 
 import './settings.scss';
 
@@ -22,9 +21,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const handleFormSubmit = (context, data) => {
-  axios
-    .patch(`/api/user/${context.user.identity}`, data, {
-      headers: { Authorization: `Bearer ${context.user.accessJwt}` },
+  context.apiCall('patch', `/user/${context.user.identity}`, data,
+    {
+      success: 'Saved Successfully!',
+      error: 'Errur updating account. Please try again later.'
     })
     .then((response) => {
       context.handleSetUser({
@@ -34,22 +34,14 @@ const handleFormSubmit = (context, data) => {
           phone: response.data.phone,
         },
       });
-
-      // once Toast is implemented, replace with Toast notification
-      Toast("Saved Successfully!", "success");
     })
     .then(() => {
       context.refreshJWT();
-    })
-    .catch((error) => {
-      // once Toast is implemented, replace with Toast notification
-      Toast(error.message, "error");
     });
 };
 
 // TODO make formCancelHandler() that resets form
 const handleFormCancel = () => {
-  // once Toast is implemented, replace with Toast notification
   Toast("Form Reset!", "success");
 };
 
