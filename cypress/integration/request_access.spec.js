@@ -7,10 +7,6 @@ describe('Grant Access', function () {
     cy.createPendingUser()
   })
 
-  afterEach(() => {
-    // cy.deletePendingUser()
-  })
-
   it('Approves user', function () {
     cy.visit('/dashboard')
     cy.contains('ADD').click()
@@ -19,6 +15,7 @@ describe('Grant Access', function () {
     cy.get('select').select('PROPERTY_MANAGER')
     cy.contains('GRANT ACCESS').click()
     cy.get('.Toastify__toast-body').should('include.text', 'User access granted')
+    cy.deletePendingUser()
   })
 
   it('Denies user access', function () {
