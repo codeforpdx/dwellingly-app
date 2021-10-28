@@ -29,7 +29,7 @@ export const TenantTickets = (
   const deleteTickets = makeDeleteTicketsFn(selectedTickets, 
     setSelectedTickets, ticketList, setTicketList, setShowDeleteModal,
     userContext) 
-const closeNoteModal = () => {
+  const closeNoteModal = () => {
     setDeleteNoteModal(false)
     setEditNoteModal(false)
   }
@@ -40,7 +40,7 @@ const closeNoteModal = () => {
   const editNote = makeEditNoteFn(viewedTicket,setViewedTicket, 
     selectedNote,setEditNoteModal,userContext)
 
-  const handleAddNote = makeHandleAddNoteFn(viewedTicket, getTickets, userContext)
+  const handleAddNote = makeHandleAddNoteFn(viewedTicket, getTickets, userContext, setViewedTicket)
 
   const handleDeleteNote = (note) => {
     setSelectedNote(note)
@@ -73,10 +73,10 @@ const closeNoteModal = () => {
   }
 
   const ticketFilter = (ticketList, tab) =>  {
-    return ticketList.filter((ticket) => 
+    return ticketList?.filter((ticket) => 
       (tab === "Closed") ? 
         ticket.status === "Closed" : 
-        ticket.status !== "Closed")
+        ticket.status !== "Closed") ?? [];
   }
 
   const toggleTicketModal = (ticket) => {

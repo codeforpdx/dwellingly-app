@@ -9,6 +9,7 @@ This document provides some overall guidelines and suggestions for how to get st
 - [Build a Feature Branch](#feature-branch)
 - [Make a Pull Request](#pull-requests)
 - [Where to Contribute](#where-to-contribute)
+- [Testing](#testing)
 
 ----
 ### First steps
@@ -39,6 +40,7 @@ This document provides some overall guidelines and suggestions for how to get st
 * Submit the issue
 * Back in the `Projects` area of the side bar, triage the issue and assign it to the `To Do` status.
 
+----
 ### Claim an Issue
 
 * All active issues are listed in the [project page for the current sprint](https://github.com/codeforpdx/dwellingly-app/projects/4)
@@ -66,6 +68,7 @@ This document provides some overall guidelines and suggestions for how to get st
 * It is best practice to keep your commits within the scope of the issue at hand. Any new (and unrelated) issues you notice along the way can be noted in a [New Issue](#create-an-issue)
 * Please keep your issue descriptions up-to-date with the work you've done. It is often the case that an issue is created without a clear understanding of the steps required to accomplish it. The steps can be appended to the `To Do` list in the issue description (per [Create an Issue](#create-an-issue)) and clarifications and questions can be added to the issues as comments.
 
+----
 ### Pull Requests
 
 * Check that your local branch of development is up-to-date before making the pull request. You can do this while having your feature branch checked out and by using `git pull --rebase origin development`. We recommend a rebase strategy to keep at a minimum the number of commits which need to be reviewed for a given PR. A full explanation can be explored [here](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)
@@ -104,3 +107,34 @@ The app is not yet deployed and this opens a whole realm of additional contribut
 The initial deployment of this app will be for desktop browser screens. Plans for mobile development are in progress. We need design and architecture help initially, followed by significant UI and frontend work. Let us know if you can help in these areas.
 
 Finally and always, there is documentation. Documentation is great not just for new contributors but to help with communication between developers and across the stack. We could use documentation on the various components of our app, frontend and backend. Remember ... if you're a bit lost looking at our project, consider the folks who might want to join next month :grinning:
+
+----
+### Testing
+
+#### Unit Tests
+
+Jest is used for unit testing. These can be ran with `npm run test`
+
+#### System Tests
+
+[Cypress](https://www.cypress.io/) is used for system testing.
+
+To run the system tests both the backendend server and frontend server must be running
+The backend server must be seeded with the `minimal_seed` data file.
+
+To ensure your db is seeded correctly run the following commands:
+1. `pipenv run flask db drop`
+2. `pipenv run flask db create`
+3. `pipenv run flask db minimal_seed`
+
+To run the system tests:
+
+1. Start up backend server: `pipenv run flask run`
+2. Start up frontend server: `npm run start`
+3. Run `npx cypress run`
+   - That should run in a headed mode. If it doesn't you can force headed mode with `npx cypress run --headed`
+   - To run in headless mode `npx cypress run --headless`
+
+Relevant docs [Cypress command line options](https://docs.cypress.io/guides/guides/command-line#cypress-run) and [API docs](https://docs.cypress.io/api/table-of-contents)
+
+The system tests can be found in the `cypress/integration` directory

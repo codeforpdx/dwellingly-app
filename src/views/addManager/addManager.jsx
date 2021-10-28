@@ -2,15 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import * as axios from "axios";
 import { AddProperty } from '../addProperty/addProperty';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import UserContext from "../../UserContext";
 import Button from "../../components/Button";
 import Modal from '../../components/Modal';
-import Toast from '../../utils/toast';
 import useMountEffect from '../../utils/useMountEffect';
 import './addManager.scss';
+import UserType from '../../Enums/UserType';
 import RoleEnum from '../../Enums/RoleEnum';
 
 const validationSchema = Yup.object().shape({
@@ -52,7 +51,7 @@ export const AddManager = () => {
   }, [propertySearchText, propertyOptions]);
 
   const getProperties = () => {
-    axios.get("/api/properties", makeAuthHeaders(context))
+    context.apiCall('get', `/properties`, {}, {})
       .then(({ data }) => {
         let properties = data.properties && data.properties.length > 0
           ? data.properties.map(property => {
@@ -65,9 +64,6 @@ export const AddManager = () => {
         setPropertyOptions(properties);
         setPropertySearchResults(properties);
         setShowAddProperty(false);
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
       });
   };
 
@@ -76,28 +72,21 @@ export const AddManager = () => {
       ...data,
       password: 'changeAt1stLogin!',
       confirmPassword: 'changeAt1stLogin!',
+      type: UserType.PROPERTY_MANAGER,
       role: RoleEnum.PROPERTY_MANAGER,
     };
-    
+
     let properties = {
       propertyIDs: propertySelection.map(p => p.key)
     }
 
-    axios
-      .post(`/api/user/invite`, body, makeAuthHeaders(context))
+    context.apiCall('post', `/user/invite`, body, { success: `Property Manager Created Successfully, an invite email has been sent.` })
       .then(response => {
         const managers = [] //backend is expecting an array to resolve assignment
         managers.push(response.data.id)
-        properties.propertyIDs.forEach(i => { 
-          axios
-          .put(`/api/properties/${i}`, {propertyManagerIDs: managers})  })
-      })
-      .then(() => {
-        Toast(`Property Manager Created Successfully, an invite email has been sent.`, "success");
-      })
-      .catch((error) => {
-        Toast(error.message, "error");
-      });
+        properties.propertyIDs.forEach(i => {
+          context.apiCall('put', `/properties/${i}`, {propertyManagerIDs: managers}, {});
+      })});
   };
 
   const handleAddPropertyCancel = () => {

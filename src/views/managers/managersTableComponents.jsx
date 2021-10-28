@@ -21,9 +21,7 @@ export const columns = [
     formatter: (cell, row) => {
       return (
         <ul>
-          {row.properties.map((property) => (
-            <li key={property.name}>{property.name}</li>
-          ))}
+          {row.propertyNames}
         </ul>
       );
     },
@@ -80,7 +78,7 @@ export const mobileColumns = [
     formatter: (cell, row) => {
       return (
         <ul>
-          {row.properties.map((property) => (
+          {row.properties?.map((property) => (
             <li key={property.name}>{property.name}</li>
           ))}
         </ul>

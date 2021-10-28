@@ -1,15 +1,11 @@
 import React, { useContext } from 'react';
-import axios from 'axios';
 import UserContext from '../../UserContext';
 import useMountEffect from '../../utils/useMountEffect';
 import { Link, useHistory } from "react-router-dom";
 import { useState } from 'react';
 import TitleAndPen, { useEditingStatus } from '../../components/TitleAndPen';
-import Toast from '../../utils/toast';
 
 import './emergencyContacts.scss';
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const EmergencyContact = ({ isEditing, handleDelete, id, name, description, contact_numbers: contactNumbers }) => {
   const history = useHistory();
@@ -51,12 +47,10 @@ const EmergencyContacts = () => {
   const { isEditing, setEditingStatus } = useEditingStatus();
 
   useMountEffect(() => {
-    axios
-      .get(`/api/emergencycontacts`, makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/emergencycontacts', {}, {})
       .then(({ data }) => {
         setApiContacts(data.emergency_contacts);
-      })
-      .catch(error => Toast(error.message, "error"));
+      });
   });
 
   const handleDoneEditing = () => {
@@ -65,12 +59,10 @@ const EmergencyContacts = () => {
   const handleDelete = id => {
     const continueDelete = window.confirm('Are you sure you want to delete the emergency contact?');
     if(!continueDelete) return;
-    axios
-      .delete(`/api/emergencycontacts/${id}`, makeAuthHeaders(userContext))
+    userContext.apiCall('delete', `/emergencycontacts/${id}`, {}, {})
       .then(() => {
         setApiContacts(apiContacts.filter(contact => contact.id !== id));
-      })
-      .catch(error => Toast(error.message, "error"));
+      });
   };
 
   return (

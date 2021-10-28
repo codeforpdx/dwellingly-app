@@ -2,13 +2,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import UserContext from '../../UserContext';
 import { Link } from "react-router-dom";
-import * as axios from 'axios';
 import Search from '../../components/Search';
 import { ShowHideSwitch } from '../../components/ShowHideSwitch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faArchive } from '@fortawesome/free-solid-svg-icons';
-import Toast from '../../utils/toast';
 import Icon from '../../components/icon/Icon';
 import Modal from '../../components/Modal';
 import { columns, mobileColumns } from './propertiesTableComponents';
@@ -113,7 +111,7 @@ export const Properties = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get("/api/properties", makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/properties', {}, {})
       .then((response) => {
         const { data: { properties } } = response;
         const propertyRows = formatPropertyData(properties);
@@ -123,30 +121,24 @@ export const Properties = () => {
         setNonSelectableRows(properties.filter(property => property.archived).map(archivedProperty => archivedProperty.id));
         setIsLoading(false);
       })
-      .catch((error) => {
+      .catch(_ => {
         setIsLoading(false);
-        Toast(error.message, "error");
       });
   }, [checkboxRenderCount]);
 
 
   const archiveProperties = () => {
     const propertyIds = selectedProperties.map(p => p.id);
-    axios.patch(`/api/properties/archive`, { ids: propertyIds }, makeAuthHeaders(userContext))
+    userContext.apiCall('patch', '/properties/archive', { ids: propertyIds }, { success: `${propertyIds.length > 1 ? "Properties" : "Property"} Archived.` })
       .then((response) => {
-        Toast(`${propertyIds.length > 1 ? "Properties" : "Property"} Archived.`, "success");
         setCheckboxRenderCount(checkboxRenderCount + 1);
         toggleArchiveModal();
       })
-      .catch((error) => {
-        Toast(error.message, "error");
-      });
   };
 
   const toggleArchiveModal = () => {
     setShowArchiveModal(!showArchiveModal);
   };
-
 
   return (
     <div className='main-container'>

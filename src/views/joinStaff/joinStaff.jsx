@@ -1,35 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../UserContext';
-import axios from 'axios';
 import { JoinStaffCard } from '../../components/JoinStaffCard';
 import { Link } from 'react-router-dom';
 import RoleEnum from '../../Enums/RoleEnum';
-import Toast from '../../utils/toast';
 
 
 export const JoinStaff = () => {
-
   const [staff, setStaff] = useState([]);
-  const secondColumnStart = staff && Math.floor(staff.length / 3);
+  const context = useContext(UserContext);
+  const secondColumnStart = staff && Math.ceil(staff.length / 3);
   const thirdColumnStart = staff && (staff.length - Math.floor(staff.length / 3));
-  const auth_headers = { headers: { 'Authorization': `Bearer ${useContext(UserContext).user.accessJwt}` } };
 
   useEffect(() => {
     const fetchData = () => {
-      axios
-        .get('/api/user?r=3', auth_headers)
+      context.apiCall('get', '/user?r=3', {}, {})
         .then(res => {
           var joinStaff = res.data.users;
-          axios
-            .get('/api/user?r=4', auth_headers)
+          context.apiCall('get', '/user?r=4', {}, {})
             .then(res2 => {
               var admins = res2.data.users;
 
               setStaff(joinStaff.concat(admins));
-            })
-        })
-        .catch(error => {
-          Toast(error.message, 'error');
+            });
         });
     };
     fetchData();

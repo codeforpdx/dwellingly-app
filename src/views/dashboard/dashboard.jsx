@@ -1,19 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import UserContext from '../../UserContext';
 import useMountEffect from '../../utils/useMountEffect';
-import Toast from "../../utils/toast";
 import DashboardModule from '../../components/DashboardModule';
 import Collapsible from '../../components/Collapsible';
 import Modal from '../../components/Modal';
 import RequestItem from '../../components/RequestItem';
 import NewStaffItem from '../../components/NewStaffItem';
 import RoleEnum from '../../Enums/RoleEnum';
+import axios from 'axios';
 
 import './dashboard.scss';
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 export const Dashboard = (props) => {
   const [modalActive, setModalActive] = useState({
@@ -29,34 +26,77 @@ export const Dashboard = (props) => {
   const userContext = useContext(UserContext);
 
   useMountEffect(() => {
-    axios
-      .get("/api/tenants", makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/tenants', {}, {})
       .then(({ data }) => {
         const unstaffed = data.tenants.filter(tenant => !tenant.staff);
         if(!unstaffed.length) return;
 
         setUnstaffedTenants(unstaffed);
-        return axios
-          .get(`/api/user?r=${RoleEnum.ADMIN}`, makeAuthHeaders(userContext))
+        return userContext.apiCall('get', `/user?r=${RoleEnum.ADMIN}`, {}, {})
           .then(({ data }) => setStaffList(data.users));
-      })
-      .catch(error => Toast(error.message, "error"));
+      });
 
-    axios
-      .get("/api/widgets", makeAuthHeaders(userContext))
+    userContext.apiCall('get', '/widgets', {}, {})
       .then(({ data }) => {
-        setWidgetData(data);
-      })
-      .catch(error => Toast(error.message, "error"));
+        // format open tickets data
+        const newTickets = data.opentickets.new;
+        const inProgressTickets = data.opentickets.inProgress;
+        const openTicketsData = [[
+          {
+            "stat": newTickets.allNew.stat,
+            "desc": "New"
+          },
+          {
+            "stat": newTickets.unseen24Hrs.stat,
+            "desc": "Unseen for > 24 hours"
+          },
+
+        ],
+        [
+          {
+            "stat": inProgressTickets.allInProgress.stat,
+            "desc": "In Progress"
+          },
+          {
+            "stat": inProgressTickets.inProgress1Week.stat,
+            "desc": "In progress for > 1 week"
+          },
+        ]];
+
+        var managersData = [];
+
+        if (data.managers.length > 0) {
+          managersData = [
+            ...data.managers.map((manager) => [
+              {
+                "id": manager.id,
+                "stat": manager.date,
+                "desc": `${manager.firstName} ${manager.lastName}`,
+                "subtext": manager.propertyName
+              }
+            ])
+          ]
+        }
+
+        // no managers, no problem!
+        else {
+          managersData.push([{
+            "id": "",
+            "stat": "",
+            "desc": "No new users",
+            "subtext": "",
+          }])
+        }
+
+        setWidgetData({ openTicketsData, managersData });
+      });
 
     getPendingUsers();
   });
 
-  const getPendingUsers = async () => {
-    await axios
-      .get("/api/users/pending", makeAuthHeaders(userContext))
-      .then(({ data }) => setUsersPending(data.users))
-      .catch(error => Toast(error.message, "error"));
+  const getPendingUsers = () => {
+    userContext.apiCall('get', '/users/pending', {}, {})
+      .then(({ data }) => setUsersPending(data.users));
   };
 
   const handleAddClick = (id) => {
@@ -72,23 +112,16 @@ export const Dashboard = (props) => {
   };
 
   const handleDenyAccess = async (doDeny) => {
-
     //Hide modal on button click
     setModalActive({ ...modalActive, visible: false });
+    // If decline access request is confirmed, delete requesting user from the database
 
-    try {
-      // If decline access request is confirmed, delete requesting user from the database
-      if(doDeny) {
-        const requestorId = modalActive.id;
-        axios.delete(`/api/user/${requestorId}`, makeAuthHeaders(userContext))
-          .then(response => {
-            getPendingUsers();
-          });
-
-      }
-    }
-    catch(err) {
-      Toast("There was an error processing your request. Please try again later", "error");
+    if(doDeny) {
+      const requestorId = modalActive.id;
+      userContext.apiCall('delete', `/user/${requestorId}`, {}, { error: "There was an error processing your request. Please try again later" })
+        .then(response => {
+          getPendingUsers();
+        });
     }
   };
 
@@ -108,12 +141,7 @@ export const Dashboard = (props) => {
 
     const tenantUpdateReqs = unstaffedTenants
       .filter(({ staff }) => staff)
-      .map(({ id, staff }) => axios
-        .put(
-          `/api/tenants/${id}`,
-          { 'staffIDs': [staff] },
-          makeAuthHeaders(userContext)
-        ));
+      .map(({ id, staff }) => userContext.apiCall('put', `/tenants/${id}`, { 'staffIDs': [staff] }, {}));
 
     axios.all(tenantUpdateReqs)
       .then(axios.spread((...responses) => {
@@ -122,8 +150,7 @@ export const Dashboard = (props) => {
           return isTenantUnchanged;
         });
         setUnstaffedTenants(stillUnstaffed);
-      }))
-      .catch(error => Toast(error.message, "error"));
+      }));
   };
 
   return (
@@ -133,10 +160,15 @@ export const Dashboard = (props) => {
           <h2 className="page-title">Admin Dashboard</h2>
           <div className="dashboard__modules_container">
             <DashboardModule
-              data={widgetData.opentickets}
+              title="Open Tickets"
+              link="/manage/tickets"
+              data={widgetData.openTicketsData}
             />
             <DashboardModule
-              data={widgetData.managers}
+              title="New Property Managers"
+              link="/manage/managers"
+              data={widgetData.managersData}
+              isDate={true}
             />
           </div>
           <Collapsible
@@ -156,7 +188,7 @@ export const Dashboard = (props) => {
                   onClick={handleStaffAssignment}
                 >
                   SAVE ASSIGNMENTS
-                            </button>
+                </button>
               </div>
             </div>
           </Collapsible>

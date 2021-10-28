@@ -1,11 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
-import * as axios from "axios";
 import roleEnum from '../../Enums/RoleEnum';
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../components/Search/index";
-import Toast from '../../utils/toast';
 import UserContext from '../../UserContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +16,9 @@ import { tabletWidth } from '../../constants/index.js';
 // transforms data from API into a format that can be used for bootstrap-table-next
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
+    // Combining data into first level fields for Search capabilities
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
+    manager.propertyNames = manager.properties?.map(property => property.name).join(', ');
 
     if(manager.lastActive || !manager.archived) {
       manager.status = "Active";
@@ -33,20 +33,16 @@ const convertManagersDataForTable = (managersArray) => {
   return convertedManagers;
 };
 
-const getManagers = (header, storeInState, updateLoading) => {
-  axios
-    .get(`/api/user?r=${roleEnum.PROPERTY_MANAGER}`,
-    header
-    )
+const getManagers = (context, storeInState, updateLoading, setSearchedManagers) => {
+  context.apiCall('get', `/user?r=${roleEnum.PROPERTY_MANAGER}`, {}, {})
     .then((response) => {
       const convertedData = convertManagersDataForTable(response.data.users);
       storeInState(convertedData);
+      setSearchedManagers(convertedData);
       updateLoading(false);
     })
-    .catch((error) => {
+    .catch(_ => {
       updateLoading(false);
-      Toast(error.message, "error");
-      console.log(error);
     });
 };
 
@@ -84,12 +80,12 @@ const expandRow = isSmallScreen => ({
   },
 });
 
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
-
 const Managers = () => {
   const [managersData, setManagersData] = useState();
   const [selectedManagers, setSelectedManagers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchedManagers, setSearchedManagers] = useState([]);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   const context = useContext(UserContext);
 
@@ -105,8 +101,18 @@ const Managers = () => {
   
   useEffect(() => {
     setIsLoading(true);
-    getManagers(makeAuthHeaders(context), setManagersData, setIsLoading);
+    getManagers(context, setManagersData, setIsLoading, setSearchedManagers);
   }, []);
+
+  const handleDisableSearch = () => {
+    setSearchedManagers(managersData);
+    setIsSearchActive(false);
+  }
+
+  const handleSearchOutput = (output, isTrue) => {
+    setSearchedManagers(output);
+    setIsSearchActive(isTrue);
+  }
 
   return (
     <div className="managers main-container">
@@ -117,7 +123,13 @@ const Managers = () => {
         </Link>
       </div>
       <div>
-        <Search placeholderMessage="Search property managers by name, property, or status" />
+        <Search
+          input={managersData}
+          outputLocation={searchedManagers}
+          isFilteredLocation={isSearchActive}
+          setIsFilteredStateFalse={handleDisableSearch}
+          setOutputState={handleSearchOutput}
+          placeholderMessage="Search property managers by name, property, or status" />
       </div>
       <div className="invite-button-container py-3">
         <button className="button is-rounded is-primary ml-3" type="submit">
@@ -137,7 +149,7 @@ const Managers = () => {
         {managersData &&
           <BootstrapTable
             keyField="id"
-            data={managersData}
+            data={searchedManagers}
             columns={isSmallScreen ? mobileColumns : columns}
             selectRow={({
               mode: 'checkbox',

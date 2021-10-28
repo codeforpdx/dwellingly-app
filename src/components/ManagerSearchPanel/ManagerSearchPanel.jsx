@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
 import UserContext from '../../UserContext';
-import * as axios from 'axios';
 import RoleEnum from '../../Enums/RoleEnum';
-import Toast from '../../utils/toast';
 
 
 function ManagerSearchPanel(props) {
@@ -30,27 +28,20 @@ function ManagerSearchPanel(props) {
   }, [managerSearch])
 
   useEffect(() => {
-    const getManagers = () => {
-      axios.get(`${process.env.REACT_APP_PROXY}/api/user?r=${RoleEnum.PROPERTY_MANAGER}`, { headers: { 'Authorization': `Bearer ${userContext.user.accessJwt}` } })
-        .then((response) => {
-          let updatedManagerOptions = response.data.users.map(({ id, firstName, lastName }) => {
-            return ({
-              key: id,
-              description: `${firstName} ${lastName}`
-            });
+    userContext.apiCall('get', `/user?r=${RoleEnum.PROPERTY_MANAGER}`, {}, {})
+      .then((response) => {
+        let updatedManagerOptions = response.data.users.map(({ id, firstName, lastName }) => {
+          return ({
+            key: id,
+            description: `${firstName} ${lastName}`
           });
-
-          updatedManagerOptions = updatedManagerOptions.filter(manager => !assignedPropertyManagers.includes(manager.key));
-
-          setManagerOptions(updatedManagerOptions)
-          setManagerSelection(updatedManagerOptions);
-        })
-        .catch((error) => {
-          Toast(error, "error");
-          return Promise.reject(error)
         });
-    };
-    getManagers();
+
+        updatedManagerOptions = updatedManagerOptions.filter(manager => !assignedPropertyManagers.includes(manager.key));
+
+        setManagerOptions(updatedManagerOptions)
+        setManagerSelection(updatedManagerOptions);
+      });
   }, [])
 
   return (

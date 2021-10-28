@@ -1,16 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import UserContext from '../../UserContext';
 import { Form, Field, Formik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import useMountEffect from '../../utils/useMountEffect';
 import { Link } from 'react-router-dom';
 import './addEmergencyContact.scss';
-import Toast from '../../utils/toast';
-
-
-const makeAuthHeaders = ({ user }) => ({ headers: { 'Authorization': `Bearer ${user.accessJwt}` } });
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -113,25 +108,22 @@ const AddEmergencyContact = (props) => {
     }
 
     setEditMode(true);
-    axios
-      .get(`/api/emergencycontacts/${id}`, makeAuthHeaders(userContext))
+    userContext.apiCall('get', `/emergencycontacts/${id}`, {}, {})
       .then(({ data }) => {
         setContactValues(data);
         setInitialized(true);
-      })
-      .catch(error => Toast(error.message, "error"));
+      });
   });
 
   const formHandler = data => {
-    const startPost = () => axios.post(`/api/emergencycontacts`, data, makeAuthHeaders(userContext));
-    const startPut = () => axios.put(`/api/emergencycontacts/${data.id}`, data, makeAuthHeaders(userContext));
+    const startPost = () => userContext.apiCall('post', `/emergencycontacts`, data, { success: 'Emergency Contact successfully added!'});
+    const startPut = () => userContext.apiCall('put', `/emergencycontacts/${data.id}`, data, { success: 'Emergency Contact successfully updated!'});
     const axiosReq = () => editMode ? startPut() : startPost();
 
     axiosReq()
       .then(() => {
         history.push('/emergency');
-      })
-      .catch(error => Toast(error.message, "error"));
+      });
     setLoading(true);
   };
 
