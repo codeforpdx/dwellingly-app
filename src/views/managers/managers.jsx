@@ -16,7 +16,9 @@ import { tabletWidth } from '../../constants/index.js';
 // transforms data from API into a format that can be used for bootstrap-table-next
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
+    // Combining data into first level fields for Search capabilities
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
+    manager.propertyNames = manager.properties?.map(property => property.name).join(', ');
 
     if(manager.lastActive || !manager.archived) {
       manager.status = "Active";
@@ -31,11 +33,12 @@ const convertManagersDataForTable = (managersArray) => {
   return convertedManagers;
 };
 
-const getManagers = (context, storeInState, updateLoading) => {
+const getManagers = (context, storeInState, updateLoading, setSearchedManagers) => {
   context.apiCall('get', `/user?r=${roleEnum.PROPERTY_MANAGER}`, {}, {})
     .then((response) => {
       const convertedData = convertManagersDataForTable(response.data.users);
       storeInState(convertedData);
+      setSearchedManagers(convertedData);
       updateLoading(false);
     })
     .catch(_ => {
@@ -81,6 +84,8 @@ const Managers = () => {
   const [managersData, setManagersData] = useState();
   const [selectedManagers, setSelectedManagers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchedManagers, setSearchedManagers] = useState([]);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   const context = useContext(UserContext);
 
@@ -96,8 +101,18 @@ const Managers = () => {
   
   useEffect(() => {
     setIsLoading(true);
-    getManagers(context, setManagersData, setIsLoading);
+    getManagers(context, setManagersData, setIsLoading, setSearchedManagers);
   }, []);
+
+  const handleDisableSearch = () => {
+    setSearchedManagers(managersData);
+    setIsSearchActive(false);
+  }
+
+  const handleSearchOutput = (output, isTrue) => {
+    setSearchedManagers(output);
+    setIsSearchActive(isTrue);
+  }
 
   return (
     <div className="managers main-container">
@@ -108,7 +123,13 @@ const Managers = () => {
         </Link>
       </div>
       <div>
-        <Search placeholderMessage="Search property managers by name, property, or status" />
+        <Search
+          input={managersData}
+          outputLocation={searchedManagers}
+          isFilteredLocation={isSearchActive}
+          setIsFilteredStateFalse={handleDisableSearch}
+          setOutputState={handleSearchOutput}
+          placeholderMessage="Search property managers by name, property, or status" />
       </div>
       <div className="invite-button-container py-3">
         <button className="button is-rounded is-primary ml-3" type="submit">
@@ -128,7 +149,7 @@ const Managers = () => {
         {managersData &&
           <BootstrapTable
             keyField="id"
-            data={managersData}
+            data={searchedManagers}
             columns={isSmallScreen ? mobileColumns : columns}
             selectRow={({
               mode: 'checkbox',

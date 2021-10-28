@@ -52,14 +52,14 @@ function Search(props) {
       let output = [];
       let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
 
-       if(searchQuery.length > 0){
-          for (var i=0;i < allData.length; i++) {
-              let dataPoint = Object.assign({}, allData[i]);
-              delete dataPoint.id;
-              if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
-                  output.push(allData[i]);
-            }
-          };
+      if(searchQuery.length > 0){
+        for (var i=0;i < allData.length; i++) {
+            let dataPoint = Object.assign({}, allData[i]);
+            delete dataPoint.id;
+            if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
+                output.push(allData[i]);
+          }
+        };
       props.setOutputState(output, true)
       } else {
         props.setIsFilteredStateFalse();
