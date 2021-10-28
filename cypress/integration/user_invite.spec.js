@@ -19,10 +19,7 @@ describe('Inviting', function () {
     cy.visit('/manage/managers')
     cy.contains('Elmer Fudd').click()
     cy.location('pathname').should('match', /^\/manage\/managers\/\d+$/)
-    cy.location('pathname').invoke('split', '/').its(3).as('elmerFuddID')
-
-    cy.get('@elmerFuddID').then(id => {
-      cy.deleteUser(id)
-    })
+    cy.location('pathname').invoke('split', '/').its(3).as('pendingUserID')
+    cy.deletePendingUser()
   })
 })

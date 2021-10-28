@@ -40,10 +40,28 @@ Cypress.Commands.add('login', (email, password) => {
     })
 })
 
-Cypress.Commands.add('deleteUser', (id) => {
+Cypress.Commands.add('createPendingUser', () => {
   cy.request({
-    method: 'DELETE',
-    url: `api/user/${id}`,
-    headers: { 'Authorization' : `Bearer ${localStorage.dwellinglyAccess}` },
+    method: 'POST',
+    url: 'api/register',
+    body: {
+      email: "pendingTestUser@example.com",
+      firstName: "Pending Test User",
+      lastName: "Pending Test User",
+      password: "12345678",
+      confirmPassword: "12345678",
+      phone: "503-555-5555"
+    },
+    failOnStatusCode: false
+  })
+})
+
+Cypress.Commands.add('deletePendingUser', () => {
+  cy.get('@pendingUserID').then(id => {
+    cy.request({
+      method: 'DELETE',
+      url: `api/user/${id}`,
+      headers: { 'Authorization' : `Bearer ${localStorage.dwellinglyAccess}` },
+    })
   })
 })
