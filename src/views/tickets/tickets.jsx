@@ -14,6 +14,7 @@ import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './tickets.scss';
 import { columns, mobileColumns } from '../tickets/ticketsTableComponents';
+import formatDate from '../../utils/formatDate';
 
 const pageButtonRenderer = ({
   page,
@@ -127,6 +128,8 @@ export function Tickets(props) {
         setTickets(response.data.tickets?.map(t => {
           return {
             ...t,
+            created_at: formatDate(t.created_at),
+            updated_at: formatDate(t.updated_at),
             assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(', ')
           }}));
       })
