@@ -13,6 +13,7 @@ import { columns, mobileColumns } from './propertiesTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 import './properties.scss';
 import { tabletWidth } from '../../constants';
+import formatDate from '../../utils/formatDate';
 
 
 const expandRow = isSmallScreen => ({
@@ -67,7 +68,7 @@ const formatPropertyData = (properties) => properties.map(p => ({
   propertyManagerNames: p.propertyManagers && formatPropertyManagerNames(p.propertyManagers),
   address: p.address,
   totalTenants: p.leases && formatTenantCount(p.leases),
-  created_at: p.created_at
+  created_at: formatDate(p.created_at)
 }));
 
 export const Properties = () => {
