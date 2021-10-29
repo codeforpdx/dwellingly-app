@@ -12,6 +12,7 @@ import './managers.scss';
 import { columns, mobileColumns } from './managersTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 import { tabletWidth } from '../../constants/index.js';
+import formatDate from "../../utils/formatDate";
 
 // transforms data from API into a format that can be used for bootstrap-table-next
 const convertManagersDataForTable = (managersArray) => {
@@ -19,6 +20,7 @@ const convertManagersDataForTable = (managersArray) => {
     // Combining data into first level fields for Search capabilities
     manager.fullName = `${manager.firstName} ${manager.lastName}`;
     manager.propertyNames = manager.properties?.map(property => property.name).join(', ');
+    manager.lastActive = formatDate(manager.lastActive);
 
     if(manager.lastActive || !manager.archived) {
       manager.status = "Active";
