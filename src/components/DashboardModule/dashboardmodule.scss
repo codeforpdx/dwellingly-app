@@ -10,9 +10,6 @@
             background-color: $orange;
         }
         &:nth-child(2) {
-            background-color: $red;
-        }
-        &:nth-child(3) {
             background-color: $blue;
         }
         a {
@@ -22,6 +19,7 @@
     &__module_header {
         border-bottom: 2px solid white;
         padding-bottom: 5px;
+        padding-left: 5px;
         display: flex;
     }
     &__module_title {
@@ -32,39 +30,37 @@
         justify-self: flex-end;
         font-weight: bold;
     }
-    &__module_row {
-        border-bottom: 1px solid white;
-        padding-bottom: 5px;
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-    &__module_stat_container {
-        display: flex;
-        justify-content: flex-start;
-        &.primary {
-            font-size: 18px;
-            .dashboard__module_stat {
-                font-weight: bold;
-            }
-        }
-    }
-    &__module_stat {
-        width: auto;
-        text-align: right;
-        margin-right: 10px;
-    }
-    &__module_date {
-        width: auto;
-        text-align: right;
-        margin-right: 10px;
-        font-weight: bold;
+    &__module_desc {
+        font-size: 18px;
+        padding-left: 5px;
     }
     &__module_subtext {
         font-size: 14px;
-        display: block;
+        padding-left: 5px;
+    }
+    &__module_stat {
+        white-space: nowrap;
+        text-align: right;
+        padding-left: 5px;
+        line-height: 28px;
+        font-weight: bold;
+    }
+    &__grid {
+        display: grid;
+        grid-template-columns: min-content auto;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        p:first-child, p:nth-child(2) {
+            margin-top: 15px;
+        }
+        p:nth-child(4n+5), p:nth-child(4n+6) {
+            border-top: 1px solid white;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
     }
 }
-
 @media screen and (max-width:920px){
     .dashboard__modules_container {
         display:block !important;

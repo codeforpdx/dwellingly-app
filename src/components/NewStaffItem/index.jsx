@@ -1,17 +1,17 @@
 import React from 'react';
 
-const NewStaffItem = ({ id, firstName, lastName, propertyName, staff, handleStaffAssignmentChange, staffList }) => (
+const NewStaffItem = ({ tenant, handleStaffAssignmentChange, staffList }) => (
     <div className="collapsible__row columns">
-        <div className="collapsible__col column">{`${firstName} ${lastName}`}</div>
+        <div className="collapsible__col column">{`${tenant.firstName} ${tenant.lastName}`}</div>
         <div className="collapsible__col column">
-            {propertyName}<br />
+            {tenant.propertyName}<br />
             <span className="subtext">Property Manager Name (fix this)</span>
         </div>
         <div className="dashboard__colapsible_col column">
             <div className="select is-rounded">
                 <select
-                    onChange={e => handleStaffAssignmentChange(e, id)}
-                    value={staff || 'default'}
+                    onChange={e => handleStaffAssignmentChange(e, tenant.id)}
+                    value={tenant.staffID || 'default'}
                 >
                     <option value='default' disabled>Staff Name</option>
                     {

@@ -24,6 +24,14 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add('setup', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?setup=true',
+    body: {},
+  })
+})
+
 Cypress.Commands.add('login', (email, password) => {
   cy.request({
     method:'POST',
@@ -55,6 +63,32 @@ Cypress.Commands.add('createPendingUser', () => {
     failOnStatusCode: false
   })
 })
+
+Cypress.Commands.add('createStaffUser', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?create_staff_user=true',
+    body: {
+      email: "staffer@example.com",
+      firstName: "Staff Test",
+      lastName: "User",
+      phone: "503-555-5555"
+    },
+  })
+})
+
+Cypress.Commands.add('createTenant', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?create_tenant=true',
+    body: {
+      firstName: "Tenant Test",
+      lastName: "Tenant",
+      phone: "503-555-5555"
+    },
+  })
+})
+
 
 Cypress.Commands.add('deletePendingUser', () => {
   cy.get('@pendingUserID').then(id => {

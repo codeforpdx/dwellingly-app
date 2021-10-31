@@ -42,11 +42,15 @@ export const columns = [
   {
     dataField: "propertyName",
     formatter: (cell, row, rowIndex, formatExtraData) => {
-      return (
-        <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
-          {row.propertyName}
-        </Link>
-      );
+      if (row.lease) {
+        return (
+          <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
+            {row.propertyName}
+          </Link>
+        )
+      } else {
+        return null
+      }
     },
     text: "Property Name",
     sort: true,
@@ -118,11 +122,15 @@ export const mobileColumns = [
   {
     dataField: "propertyName",
     formatter: (cell, row, rowIndex, formatExtraData) => {
-      return (
-        <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
-          {row.propertyName}
-        </Link>
-      );
+      if (row.lease) {
+        return (
+          <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
+            {row.propertyName}
+          </Link>
+        )
+      } else {
+        return null
+      }
     },
     text: "Property Name",
     sort: true,
