@@ -7,7 +7,6 @@ import Collapsible from '../../components/Collapsible';
 import Modal from '../../components/Modal';
 import RequestItem from '../../components/RequestItem';
 import NewStaffItem from '../../components/NewStaffItem';
-import RoleEnum from '../../Enums/RoleEnum';
 import axios from 'axios';
 
 import './dashboard.scss';
@@ -19,85 +18,77 @@ export const Dashboard = (props) => {
   });
   const [staffList, setStaffList] = useState([]);
   const [unstaffedTenants, setUnstaffedTenants] = useState([]);
-  const [widgetData, setWidgetData] = useState([]);
+  const [dashboard, setDashboard] = useState([]);
   const [areStaffAssigned, setAreStaffAssigned] = useState(false);
   const [usersPending, setUsersPending] = useState([]);
   const history = useHistory();
   const userContext = useContext(UserContext);
 
   useMountEffect(() => {
-    userContext.apiCall('get', '/tenants', {}, {})
+    userContext.apiCall('get', '/dashboard', {}, {})
       .then(({ data }) => {
-        const unstaffed = data.tenants.filter(tenant => !tenant.staff);
-        if(!unstaffed.length) return;
+        const tickets = formatTickets(data.tickets)
+        const propertyManagers = formatPropertyManagers(data.managers)
 
-        setUnstaffedTenants(unstaffed);
-        return userContext.apiCall('get', `/user?r=${RoleEnum.ADMIN}`, {}, {})
-          .then(({ data }) => setStaffList(data.users));
+        setDashboard({ tickets, propertyManagers })
+        setUsersPending(data.pending_users)
+        setStaffList(data.staff)
+        setUnstaffedTenants(data.tenants)
       });
-
-    userContext.apiCall('get', '/widgets', {}, {})
-      .then(({ data }) => {
-        // format open tickets data
-        const newTickets = data.opentickets.new;
-        const inProgressTickets = data.opentickets.inProgress;
-        const openTicketsData = [[
-          {
-            "stat": newTickets.allNew.stat,
-            "desc": "New"
-          },
-          {
-            "stat": newTickets.unseen24Hrs.stat,
-            "desc": "Unseen for > 24 hours"
-          },
-
-        ],
-        [
-          {
-            "stat": inProgressTickets.allInProgress.stat,
-            "desc": "In Progress"
-          },
-          {
-            "stat": inProgressTickets.inProgress1Week.stat,
-            "desc": "In progress for > 1 week"
-          },
-        ]];
-
-        var managersData = [];
-
-        if (data.managers.length > 0) {
-          managersData = [
-            ...data.managers.map((manager) => [
-              {
-                "id": manager.id,
-                "stat": manager.date,
-                "desc": `${manager.firstName} ${manager.lastName}`,
-                "subtext": manager.propertyName
-              }
-            ])
-          ]
-        }
-
-        // no managers, no problem!
-        else {
-          managersData.push([{
-            "id": "",
-            "stat": "",
-            "desc": "No new users",
-            "subtext": "",
-          }])
-        }
-
-        setWidgetData({ openTicketsData, managersData });
-      });
-
-    getPendingUsers();
   });
+
+  // Not sure if this is needed. But you can re-request all unstaffed tenants with one call.
+  const getUnstaffedTenants = () => {
+    userContext.apiCall('get', '/tenants?unstaffed=unstaffed', {}, {})
+      .then(({ data }) => setUnstaffedTenants(data.tenants))
+  }
 
   const getPendingUsers = () => {
     userContext.apiCall('get', '/users/pending', {}, {})
-      .then(({ data }) => setUsersPending(data.users));
-  };
+      .then(({ data }) => setUsersPending(data.users))
+  }
+
+  const formatTickets = (tickets) => {
+    return [
+      {
+        "id": 0,
+        "stat": tickets.new.total_count,
+        "desc": "New",
+        "subtextStat": tickets.new.latent_count,
+        "subtext": "Unseen for >24 hours"
+      },
+      {
+        "id": 1,
+        "stat": tickets.in_progress.total_count,
+        "desc": "In Progress",
+        "subtextStat": tickets.in_progress.latent_count,
+        "subtext": "Still in progress for >1 week"
+      },
+    ]
+  }
+
+  const formatPropertyManagers = managers => {
+    let propertyManagers = []
+
+    managers.forEach( (manager) => {
+      propertyManagers.push({
+        "id": manager.id,
+        "stat": manager.date,
+        "desc": `${manager.first_name} ${manager.last_name}`,
+        "subtext": manager.property_name
+      })
+    })
+
+    if (propertyManagers.length === 0) {
+      propertyManagers.push({
+        "id": 0,
+        "stat": "",
+        "desc": "No new users",
+        "subtext": "",
+      })
+    }
+    return propertyManagers
+  }
 
   const handleAddClick = (id) => {
     const path = '/request-access/' + id;
@@ -128,7 +119,7 @@ export const Dashboard = (props) => {
   const handleStaffAssignmentChange = ({ target }, tenantId) => {
     const updatedTenants = unstaffedTenants.map(tenant => {
       if(tenant.id === tenantId) {
-        tenant.staff = target.value;
+        tenant.staffID = target.value;
         setAreStaffAssigned(true);
       }
       return tenant;
@@ -140,8 +131,8 @@ export const Dashboard = (props) => {
     if(!areStaffAssigned) return;
 
     const tenantUpdateReqs = unstaffedTenants
-      .filter(({ staff }) => staff)
-      .map(({ id, staff }) => userContext.apiCall('put', `/tenants/${id}`, { 'staffIDs': [staff] }, {}));
+      .filter(({ staffID }) => staffID)
+      .map(({ id, staffID }) => userContext.apiCall('put', `/tenants/${id}`, { 'staffIDs': [staffID] }, {}));
 
     axios.all(tenantUpdateReqs)
       .then(axios.spread((...responses) => {
@@ -151,7 +142,7 @@ export const Dashboard = (props) => {
         });
         setUnstaffedTenants(stillUnstaffed);
       }));
-  };
+  }
 
   return (
     <>
@@ -162,13 +153,12 @@ export const Dashboard = (props) => {
             <DashboardModule
               title="Open Tickets"
               link="/manage/tickets"
-              data={widgetData.openTicketsData}
+              data={dashboard.tickets}
             />
             <DashboardModule
               title="New Property Managers"
               link="/manage/managers"
-              data={widgetData.managersData}
-              isDate={true}
+              data={dashboard.propertyManagers}
             />
           </div>
           <Collapsible
@@ -177,8 +167,13 @@ export const Dashboard = (props) => {
           >
             <div className="dashboard__assignments_container">
               {
-                unstaffedTenants.map(tenant => (
-                  <NewStaffItem key={tenant.id} {...tenant} handleStaffAssignmentChange={handleStaffAssignmentChange} staffList={staffList} />
+                unstaffedTenants.slice(0, 5).map(tenant => (
+                  <NewStaffItem
+                    key={tenant.id}
+                    tenant={tenant}
+                    handleStaffAssignmentChange={handleStaffAssignmentChange}
+                    staffList={staffList}
+                  />
                 ))
               }
               <div className="dashboard__assignments_button_container">
@@ -205,7 +200,7 @@ export const Dashboard = (props) => {
         </div>
 
         {modalActive.visible && <Modal
-          content={"Are you sure you want to decline access?"}
+          titleText={"Are you sure you want to decline access?"}
           hasButtons={true}
           confirmButtonHandler={() => handleDenyAccess(true)}
           cancelButtonHandler={() => handleDenyAccess(false)}
