@@ -51,7 +51,7 @@ Cypress.Commands.add('login', (email, password) => {
 Cypress.Commands.add('createPendingUser', () => {
   cy.request({
     method: 'POST',
-    url: 'api/register',
+    url: 'api/tests/cypress?create_pending_user=true',
     body: {
       email: "pendingTestUser@example.com",
       firstName: "Pending Test User",
@@ -60,7 +60,6 @@ Cypress.Commands.add('createPendingUser', () => {
       confirmPassword: "12345678",
       phone: "503-555-5555"
     },
-    failOnStatusCode: false
   })
 })
 
@@ -86,16 +85,5 @@ Cypress.Commands.add('createTenant', () => {
       lastName: "Tenant",
       phone: "503-555-5555"
     },
-  })
-})
-
-
-Cypress.Commands.add('deletePendingUser', () => {
-  cy.get('@pendingUserID').then(id => {
-    cy.request({
-      method: 'DELETE',
-      url: `api/user/${id}`,
-      headers: { 'Authorization' : `Bearer ${localStorage.dwellinglyAccess}` },
-    })
   })
 })

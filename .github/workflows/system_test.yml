@@ -66,8 +66,8 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           build: npm run build
-          start: npm start
+          start: npm run startTest
           browser: chrome
           headless: true
-          wait-on: 'http://localhost:3000/'
+          wait-on: 'http://localhost:3010/'
           wait-on-timeout: 120

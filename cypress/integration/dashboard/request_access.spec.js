@@ -3,6 +3,7 @@ describe('Grant Access', function () {
     const email = 'user1@dwellingly.org'
     const password = '1234'
 
+    cy.setup()
     cy.login(email, password)
     cy.createPendingUser()
   })
@@ -15,7 +16,6 @@ describe('Grant Access', function () {
     cy.get('select').select('PROPERTY_MANAGER')
     cy.contains('GRANT ACCESS').click()
     cy.get('.Toastify__toast-body').should('include.text', 'User access granted')
-    cy.deletePendingUser()
   })
 
   it('Denies user access', function () {

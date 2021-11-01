@@ -119,19 +119,15 @@ Jest is used for unit testing. These can be ran with `npm run test`
 
 [Cypress](https://www.cypress.io/) is used for system testing.
 
-To run the system tests both the backendend server and frontend server must be running
-The backend server must be seeded with the `minimal_seed` data file.
-
-To ensure your db is seeded correctly run the following commands:
-1. `pipenv run flask db drop`
-2. `pipenv run flask db create`
-3. `pipenv run flask db minimal_seed`
+To run the system tests both a backendend testing server and frontend testing server must be running.
 
 To run the system tests:
 
-1. Start up backend server: `pipenv run flask run`
-2. Start up frontend server: `npm run start`
-3. Run `npx cypress run`
+1. Start a backend testing server:
+   - From the backend repo run: `export FLASK_ENV=testing && pipenv run flask run -p 5010 --reload`
+2. Start a frontend testing server:
+   - From the front repo run: `export REACT_APP_PROXY=http://localhost:5010 && npm run startTest`
+3. Run the tests from the frontend repo: `npx cypress run`
    - That should run in a headed mode. If it doesn't you can force headed mode with `npx cypress run --headed`
    - To run in headless mode `npx cypress run --headless`
 
