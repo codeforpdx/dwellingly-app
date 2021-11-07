@@ -174,14 +174,16 @@ const AddTenant = () => {
               firstName: values.firstName,
               lastName: values.lastName,
               phone: values.phone,
-              occupants: values.occupants || null,
-              unitNum: values.unitNum || null,
-              propertyID: propertySelection.length ? propertySelection[0].key : null,
-              staffIDs: staffSelections && staffSelections.map(staff => staff.key)
+              staffIDs: staffSelections && staffSelections.map(staff => staff.key),
+              lease: {
+                occupants: values.occupants || null,
+                unitNum: values.unitNum || null,
+                propertyID: propertySelection.length ? propertySelection[0].key : null,
+              }
             };
             if (dateTimeStart !== dateTimeEnd) {
-              toSubmit.dateTimeStart = dateTimeStart;
-              toSubmit.dateTimeEnd = dateTimeEnd;
+              toSubmit.lease.dateTimeStart = dateTimeStart;
+              toSubmit.lease.dateTimeEnd = dateTimeEnd;
             }
 
             setSubmitting(true);
