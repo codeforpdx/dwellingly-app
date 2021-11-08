@@ -31,8 +31,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const formHandler = (data, context) => {
-  context.apiCall('post', '/properties', data, { success: 'Property Added!' });
-};
+  context.apiCall('post', '/properties', data, { success: 'Property Added!' })
+    // .then(({ data }) => this.props.setReturnValue(data))
+}
 
 export class AddProperty extends Component {
   constructor(props) {
@@ -106,7 +107,6 @@ export class AddProperty extends Component {
                   onSubmit={(values, { setSubmitting, resetForm }) => {
                     values.propertyManagerIDs = this.state.assignedPropertyManagers.map(manager => manager.key);
 
-                    console.log('submitting', values);
                     setSubmitting(true);
                     formHandler(values, session);
                     resetForm();

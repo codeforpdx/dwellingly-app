@@ -77,6 +77,16 @@ export const AddTenant = () => {
       });
   };
 
+  const assignProperty = () => {
+    getProperties()
+  }
+
+  const setProperty = (data) => {
+    console.log("#############################333")
+    console.log(data)
+    setPropertySelection(data.property)
+  }
+
   const handleFormSubmit = (data) => {
     context.apiCall('post', `/tenants`, data, { success: 'Tenant Created Successfully!'});
   };
@@ -148,7 +158,7 @@ export const AddTenant = () => {
     return errors
   }
 
-  const renderErrorMsg = msg => 
+  const renderErrorMsg = msg =>
     <div className="error-message">{msg}</div>
 
   return (
@@ -222,7 +232,7 @@ export const AddTenant = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    <ErrorMessage 
+                    <ErrorMessage
                       name="firstName"
                       render={renderErrorMsg}
                     />
@@ -290,7 +300,7 @@ export const AddTenant = () => {
                       shadow
                     />
                   </div>
-            
+
                   <h1 className="section-title">PROPERTY</h1>
                   <div className="typeahead-section">
                     <SearchPanel
@@ -339,12 +349,12 @@ export const AddTenant = () => {
                       value={values.unitNum}
                       placeholder="Unit Number (Optional)"
                     />
-                    <ErrorMessage 
+                    <ErrorMessage
                       name="unitNum"
                       render={renderErrorMsg}
                     />
                   </div>
-            
+
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -366,7 +376,7 @@ export const AddTenant = () => {
                       render={renderErrorMsg}
                     />
                   </div>
-            
+
                   <div className="form-row" >
                     <label
                       className="column is-one-fifth"
@@ -379,8 +389,8 @@ export const AddTenant = () => {
                       className="column form-field"
                       type="text"
                       name="lease"
-                      value={dateTimeEnd !== dateTimeStart 
-                        ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` 
+                      value={dateTimeEnd !== dateTimeStart
+                        ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
                         : ""
                       }
                       placeholder="Lease dates (Optional)"
@@ -391,7 +401,7 @@ export const AddTenant = () => {
                     />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
                   </div>
-            
+
                   <div className="button-container">
                     <Button
                       isCancelButton={false}
@@ -414,7 +424,14 @@ export const AddTenant = () => {
         {showAddProperty &&
           <Modal
             titleText="Create New Property"
-            content={<AddProperty showPageTitle={false} postOnSubmit={getProperties} handleCancel={handleAddPropertyCancel} />}
+            content={
+              <AddProperty
+                showPageTitle={false}
+                confirmButtonHandler={assignProperty}
+                handleCancel={handleAddPropertyCancel}
+                setReturnValue={setProperty}
+              />
+            }
             hasButtons={false}
             closeHandler={handleAddPropertyCancel}
           />
