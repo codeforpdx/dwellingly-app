@@ -3,21 +3,21 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import "./App.scss";
 import axios from 'axios';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { LoginForm } from "./views/login/login";
-import SignupForm from "./views/signup/signup";
-import { NavMenu } from "./views/NavigationMenu/navigationMenu";
-import { Dashboard } from "./views/dashboard/dashboard";
-import { RequestAccess } from "./views/requestAccess/requestAccess";
-import { Properties } from "./views/properties/properties";
-import Property from "./views/Property/PropertyView"
-import { Tenants } from "./views/tenants/tenants";
-import { Terms } from "./views/terms/terms";
-import { Tickets } from "./views/tickets/tickets";
+import { LoginForm } from "./views/Login";
+import SignupForm from "./views/Signup";
+import { NavMenu } from "./views/NavigationMenu";
+import { Dashboard } from "./views/Dashboard";
+import { RequestAccess } from "./views/RequestAccess";
+import Properties from "./views/PropertyList";
+import EditProperty from "./views/EditProperty";
+import Tenants from "./views/TenantList";
+import Terms from "./views/Terms";
+import TicketList from "./views/TicketList";
 import Settings from "./views/Settings";
 import ForgotPassword from "./views/ForgotPassword";
-import EmergencyContacts from "./views/emergencyContacts/emergencyContacts";
-import AddEmergencyContact from "./views/addEmergencyContact/addEmergencyContact";
-import PrivacyPolicy from "./views/privacyPolicy/privacyPolicy";
+import EmergencyContacts from "./views/EmergencyContactList";
+import AddEmergencyContact from "./views/AddEmergencyContact";
+import PrivacyPolicy from "./views/PrivacyPolicy";
 import {
   PrivateRoute,
   auth,
@@ -25,22 +25,22 @@ import {
   checkForStoredAccessToken,
   checkForStoredRefreshToken,
 } from "./Auth";
-import Header from "./components/Header/index";
-import Footer from "./components/Footer/index";
-import { AddProperty } from "./views/addProperty/addProperty";
-import Managers from "./views/managers/managers";
-import Manager from "./views/Manager";
-import { JoinStaff } from "./views/joinStaff/joinStaff";
-import { AddStaffMember } from "./views/addStaffMember/addStaffMember";
-import { AddTenant } from "./views/AddTenant/addTenant";
-import { AddManager } from './views/addManager/addManager';
-import UserContext from "./UserContext";
-import Tenant from "./views/Tenant";
-import ChangePassword from "./views/Settings/changePassword";
+import Header from "./views/Header";
+import Footer from "./views/Footer";
+import { AddProperty } from "./views/AddProperty/index";
+import EditPropertyManager from "./views/EditPropertyManager";
+import { JoinStaffList } from "./views/JoinStaffList";
+import { AddStaffMember } from "./views/AddStaffMember";
+import AddTenant from "./views/AddTenant";
+import AddPropertyManager from './views/AddPropertyManager';
+import UserContext from "./contexts/UserContext";
+import EditTenant from "./views/EditTenant";
+import ChangePassword from "./views/ChangePassword";
 import { ToastContainer } from 'react-toastify';
-import NoMatch from "./views/noMatch/noMatch";
-import { AddTicket } from "./views/AddTicket/addTicket";
+import NoMatch from "./views/NoMatch";
+import AddTicket from "./views/AddTicket";
 import Toast from "./utils/toast";
+import PropertyManagerList from "./views/PropertyManagerList";
 
 var refreshTimeout;
 
@@ -229,18 +229,18 @@ export class App extends React.Component {
               <PrivateRoute exact path='/home' component={() => <Redirect to="/dashboard" />} />
               <PrivateRoute exact path='/add/tenant' component={AddTenant} />
               <PrivateRoute exact path='/add/property' component={() => <AddProperty showPageTitle={true}/>} />
-              <PrivateRoute exact path='/add/manager' component={AddManager} />
+              <PrivateRoute exact path='/add/manager' component={AddPropertyManager} />
               <PrivateRoute exact path='/add/ticket' component={AddTicket} />
               <PrivateRoute exact path='/manage/tenants' component={Tenants} />
-              <PrivateRoute exact path='/manage/tenants/:id' component={Tenant} />
+              <PrivateRoute exact path='/manage/tenants/:id' component={EditTenant} />
               <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
               <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
               <PrivateRoute exact path='/manage/properties' component={Properties} />
-              <PrivateRoute exact path='/manage/properties/:id' component={Property} />
-              <PrivateRoute exact path='/manage/managers' component={Managers} />
-              <PrivateRoute exact path='/manage/managers/:id' component={Manager} />
-              <PrivateRoute exact path='/manage/tickets' component={Tickets} />
-              <PrivateRoute exact path='/staff' component={JoinStaff} />
+              <PrivateRoute exact path='/manage/properties/:id' component={EditProperty} />
+              <PrivateRoute exact path='/manage/managers' component={PropertyManagerList} />
+              <PrivateRoute exact path='/manage/managers/:id' component={EditPropertyManager} />
+              <PrivateRoute exact path='/manage/tickets' component={TicketList} />
+              <PrivateRoute exact path='/staff' component={JoinStaffList} />
               <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
               <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
               <PrivateRoute exact path='/settings' component={Settings} />

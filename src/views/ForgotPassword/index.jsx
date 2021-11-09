@@ -2,12 +2,12 @@ import React, { useState, useContext } from "react";
 import { Form, Field, Formik } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import Modal from "../../components/Modal";
-import Button from "../../components/Button";
+import Modal from "../components/Modal";
+import Button from "../components/Button";
 import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
-import UserContext from "../../UserContext";
+import UserContext from "../../contexts/UserContext";
 
-import './forgotPassword.scss'
+import './styles/index.scss'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
