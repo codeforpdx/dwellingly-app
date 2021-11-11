@@ -76,6 +76,19 @@ Cypress.Commands.add('createStaffUser', () => {
   })
 })
 
+Cypress.Commands.add('createPropertyManager', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?create_property_manager=true',
+    body: {
+      email: "manager@the_tenants.com",
+      firstName: "Property Manager",
+      lastName: "User",
+      phone: "503-555-5555"
+    },
+  })
+})
+
 Cypress.Commands.add('createTenant', () => {
   cy.request({
     method: 'POST',
@@ -86,4 +99,16 @@ Cypress.Commands.add('createTenant', () => {
       phone: "503-555-5555"
     },
   })
+})
+
+
+// Form commands
+
+Cypress.Commands.add('fillInPropertyForm', () => {
+  cy.get('input[name="name"]').type('The Tenants')
+  cy.get('input[name="address"]').type('11 S Main St.')
+  cy.get('input[name="city"]').type('Beaverton')
+  cy.get('input[name="state"]').type('OR')
+  cy.get('input[name="zipcode"]').type('97225')
+  cy.get('input[name="num_units"]').type('23')
 })
