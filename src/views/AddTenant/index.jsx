@@ -60,15 +60,19 @@ const AddTenant = () => {
     setPropertySearchResults(choices);
   }, [propertySearchText, propertyOptions]);
 
+  const propertyOptionFormat = (property) => {
+    return {
+      key: property.id,
+      description: `${property.name}, ${property.address}`
+    }
+  }
+
   const getProperties = () => {
     context.apiCall('get', '/properties', {}, {})
       .then(({ data }) => {
-        let properties = data.properties && data.properties.length > 0
+        const properties = data.properties && data.properties.length > 0
           ? data.properties.map(property => {
-            return {
-              key: property.id,
-              description: `${property.name}, ${property.address}`
-            };
+            return propertyOptionFormat(property)
           })
           : data.properties;
         setPropertyOptions(properties);
@@ -81,9 +85,14 @@ const AddTenant = () => {
     context.apiCall('post', `/tenants`, data, { success: 'Tenant Created Successfully!'});
   };
 
-  const handleAddPropertyCancel = () => {
+  const closePropertyModal = () => {
     setShowAddProperty(false);
-  };
+  }
+
+  const closeAndSetProperty = (property) => {
+    closePropertyModal()
+    setPropertySelection([propertyOptionFormat(property)])
+  }
 
   /**
    * Handle staff search input
@@ -148,7 +157,11 @@ const AddTenant = () => {
     return errors
   }
 
-  const renderErrorMsg = msg => 
+  const dateEntered = () => {
+    return dateTimeStart !== dateTimeEnd
+  }
+
+  const renderErrorMsg = msg =>
     <div className="error-message">{msg}</div>
 
   return (
@@ -170,7 +183,7 @@ const AddTenant = () => {
           validate={validateForm}
           validateOnBlur={false}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            const toSubmit = {
+            const payload = {
               firstName: values.firstName,
               lastName: values.lastName,
               phone: values.phone,
@@ -179,16 +192,18 @@ const AddTenant = () => {
                 occupants: values.occupants || null,
                 unitNum: values.unitNum || null,
                 propertyID: propertySelection.length ? propertySelection[0].key : null,
+                dateTimeStart: dateEntered() ? dateTimeStart : null,
+                dateTimeEnd: dateEntered() ? dateTimeEnd : null
               }
-            };
-            if (dateTimeStart !== dateTimeEnd) {
-              toSubmit.lease.dateTimeStart = dateTimeStart;
-              toSubmit.lease.dateTimeEnd = dateTimeEnd;
             }
 
-            setSubmitting(true);
-            handleFormSubmit(toSubmit);
-            resetForm();
+            if (Object.values(payload.lease).every((value) => value === null)) {
+              delete payload.lease
+            }
+
+            setSubmitting(true)
+            handleFormSubmit(payload)
+            resetForm()
             setPropertySearchText("");
             setPropertySelection([]);
             setStaffSearchText("");
@@ -222,7 +237,7 @@ const AddTenant = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    <ErrorMessage 
+                    <ErrorMessage
                       name="firstName"
                       render={renderErrorMsg}
                     />
@@ -290,7 +305,7 @@ const AddTenant = () => {
                       shadow
                     />
                   </div>
-            
+
                   <h1 className="section-title">PROPERTY</h1>
                   <div className="typeahead-section">
                     <SearchPanel
@@ -339,12 +354,12 @@ const AddTenant = () => {
                       value={values.unitNum}
                       placeholder="Unit Number (Optional)"
                     />
-                    <ErrorMessage 
+                    <ErrorMessage
                       name="unitNum"
                       render={renderErrorMsg}
                     />
                   </div>
-            
+
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -366,7 +381,7 @@ const AddTenant = () => {
                       render={renderErrorMsg}
                     />
                   </div>
-            
+
                   <div className="form-row" >
                     <label
                       className="column is-one-fifth"
@@ -379,8 +394,8 @@ const AddTenant = () => {
                       className="column form-field"
                       type="text"
                       name="lease"
-                      value={dateTimeEnd !== dateTimeStart 
-                        ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` 
+                      value={dateTimeEnd !== dateTimeStart
+                        ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
                         : ""
                       }
                       placeholder="Lease dates (Optional)"
@@ -391,7 +406,7 @@ const AddTenant = () => {
                     />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
                   </div>
-            
+
                   <div className="button-container">
                     <Button
                       isCancelButton={false}
@@ -414,9 +429,15 @@ const AddTenant = () => {
         {showAddProperty &&
           <Modal
             titleText="Create New Property"
-            content={<AddProperty showPageTitle={false} postOnSubmit={getProperties} handleCancel={handleAddPropertyCancel} />}
+            content={
+              <AddProperty
+                showPageTitle={false}
+                handleCancel={closePropertyModal}
+                afterCreate={closeAndSetProperty}
+              />
+            }
             hasButtons={false}
-            closeHandler={handleAddPropertyCancel}
+            closeHandler={closePropertyModal}
           />
         }
       </div>
