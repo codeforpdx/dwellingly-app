@@ -201,6 +201,11 @@ export class App extends React.Component {
       Toast(toastMessages.error ?? error.message, "error");
       return Promise.reject(error);
     })
+    // since we already display the erorr message. The caller does not need to catch the returned Promise.
+    // catching the rejected Promise is optional. so catch for them and return false.
+    .catch(error => {
+      return false
+    })
   );
 
   render() {
