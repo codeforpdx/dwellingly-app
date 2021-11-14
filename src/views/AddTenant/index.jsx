@@ -76,8 +76,6 @@ const AddTenant = () => {
           })
           : data.properties;
         setPropertyOptions(properties);
-        setPropertySearchResults(properties);
-        setShowAddProperty(false);
       });
   };
 
@@ -92,6 +90,7 @@ const AddTenant = () => {
   const closeAndSetProperty = (property) => {
     closePropertyModal()
     setPropertySelection([propertyOptionFormat(property)])
+    setPropertyOptions(propertyOptions.concat([propertyOptionFormat(property)]))
   }
 
   /**
