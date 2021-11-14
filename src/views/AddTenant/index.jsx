@@ -309,7 +309,7 @@ const AddTenant = () => {
                       onChange={handleStaffSearch}
                       onClear={handleStaffSearch}
                       onSelectionChange={handleChangeStaffSelections}
-                      placeholder="Search JOIN staff"
+                      placeholder="Search JOIN Staff"
                       preSelectedChoices={staffSelections}
                       small
                       value={staffSearchText}

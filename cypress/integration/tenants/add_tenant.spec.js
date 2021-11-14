@@ -4,6 +4,7 @@ describe('Add Tenant', function () {
     const password = '1234'
 
     cy.setup()
+    cy.createStaffUser()
     cy.login(email, password)
   })
 
@@ -15,7 +16,7 @@ describe('Add Tenant', function () {
     cy.visit('/manage/tenants')
     cy.wait(1000)
     cy.get('label[for="switchhousedToggleSwitch"]').click()
-    cy.contains('Billy Bob')
+    cy.contains('Billy Bob').should('exist')
   })
 
   it('creates a tenant with a lease', function () {
@@ -41,6 +42,23 @@ describe('Add Tenant', function () {
 
     cy.visit('/manage/tenants')
     cy.wait(500)
-    cy.contains('Billy Bob')
+    cy.contains('Billy Bob').should('exist')
+  })
+
+  it('creates a tenant with staff assigned', function () {
+    cy.visit('/add/tenant')
+    cy.get('input[title="Search JOIN Staff"]').first().type('S')
+    cy.get('.styles-module_resultItemLabel__rcaln:contains(Staff Test User)').click()
+
+    cy.fillInTenantForm()
+
+    cy.get('button').contains('SAVE').click()
+    cy.wait(500)
+
+    cy.visit('/manage/tenants')
+    cy.wait(1000)
+    cy.get('label[for="switchhousedToggleSwitch"]').click()
+    cy.contains('Billy Bob').should('exist')
+    cy.contains('Staff Test User').should('exist')
   })
 })
