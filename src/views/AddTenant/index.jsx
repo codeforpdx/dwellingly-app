@@ -29,6 +29,7 @@ const AddTenant = () => {
   const context = useContext(UserContext);
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
+  const [staffOptions, setStaffOptions] = useState([])
   const [staffSelections, setStaffSelections] = useState([]);
   const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
@@ -40,19 +41,13 @@ const AddTenant = () => {
   const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
   useMountEffect(() => getProperties());
+  useMountEffect(() => getStaff());
 
   useEffect(() => {
-    context.apiCall('get', `/user?r=${RoleEnum.STAFF}`, { name: staffSearchText }, {})
-      .then(staffResponse => {
-        let users = staffResponse.data.users;
-        let choices = users
-          ? users.map(u => {
-            return { key: u.id, description: `${u.firstName} ${u.lastName}` };
-          })
-          : [];
-        setStaffSearchResults(choices);
-      });
-  }, [staffSearchText]);
+    let choices = staffOptions.filter(
+      s => s.description.toLowerCase().includes(staffSearchText.toLowerCase()));
+    setStaffSearchResults(choices);
+  }, [staffSearchText, staffOptions]);
 
   useEffect(() => {
     let choices = propertyOptions.filter(
@@ -65,6 +60,25 @@ const AddTenant = () => {
       key: property.id,
       description: `${property.name}, ${property.address}`
     }
+  }
+
+  const staffOptionFormat = (staff) => {
+    return {
+      key: staff.id,
+      description: `${staff.firstName} ${staff.lastName}`
+    }
+  }
+
+  const getStaff = () => {
+    context.apiCall('get', `/user?r=${RoleEnum.STAFF}`, { name: staffSearchText }, {})
+      .then(({ data }) => {
+        const staff = data.users && data.users.length > 0
+          ? data.users.map(joinStaff => {
+            return staffOptionFormat(joinStaff)
+          })
+          : data.users
+        setStaffOptions(staff);
+      });
   }
 
   const getProperties = () => {
@@ -100,7 +114,7 @@ const AddTenant = () => {
   const handleStaffSearch = (event) => {
     const { value } = event.target;
     if(!value || value.length === 0) {
-      setStaffSearchResults([]);
+      setStaffSearchResults(staffOptions);
       setStaffSearchText("");
     } else {
       setStaffSearchText(value);
