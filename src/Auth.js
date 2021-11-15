@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import * as axios from 'axios';
-import UserContext from './UserContext';
+import UserContext from './contexts/UserContext';
 import Toast from './utils/toast';
 
 export const parseJwt = ( token ) => {
@@ -41,7 +41,7 @@ export const checkForStoredRefreshToken = () => {
 export const auth = {
   isAuthenticated: false,
   async authenticate(email, password) {
-    return axios.post("/api/login", {
+    return axios.post(`${process.env.REACT_APP_PROXY}/api/login`, {
       email: email,
       password: password
     })
@@ -74,7 +74,7 @@ export const auth = {
       })
   },
   async refreshAccess(refreshToken) {
-    return axios.post("/api/refresh", {},
+    return axios.post(`${process.env.REACT_APP_PROXY}/api/refresh`, {},
       { headers: {"Authorization" : `Bearer ${refreshToken}`} }
     )
       .then((response) => {

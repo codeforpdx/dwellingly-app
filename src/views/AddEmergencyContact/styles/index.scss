@@ -1,0 +1,41 @@
+@import "../../../scss/variables.scss";
+.add-emergency-contact {
+    &__main_container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 45px 0 25px 12px;
+    }
+    
+    &__form-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 80%;
+
+        .form-add-rows-container {
+            margin-bottom: 45px;
+            display: flex;
+        }
+        .form-add-rows {
+            text-decoration: none;
+            user-select: none;
+            visibility: hidden;
+            &.active {
+                visibility: visible;
+                cursor: pointer;
+                color: $blue;
+            }
+        }
+    }
+
+    &__loading {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        text-align: center;
+        background-color: $lighterGray;
+        padding-top: 30%;
+    }
+}

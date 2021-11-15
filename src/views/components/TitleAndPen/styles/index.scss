@@ -1,0 +1,37 @@
+@import '../../../../scss/variables.scss';
+
+.title__container {
+  display: flex;
+  align-items: center;
+  h2 {
+    font-size: 22px;
+    color: $brandBlue;
+    font-weight: bold;
+  }
+  .rounded {
+    margin-left: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    border: $darkGray;
+    border-radius: 50%;
+    background-color: $darkGray;
+    cursor: pointer;
+    .icon {
+      font-size: 12px;
+      color: $white;
+    }
+  }
+  .rounded--is-editing {
+    @extend .rounded;
+    border: $blue;
+    background-color: $blue;
+    cursor: pointer;
+    .icon {
+      font-size: 12px;
+      color: $white;
+    }
+  }
+}

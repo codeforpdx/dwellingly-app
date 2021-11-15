@@ -158,7 +158,7 @@ _____
 
 ---
 ### **Name**: CalendarModal
-* **File path**: src/components/CalendarModal/CalendarModal
+* **File path**: src/components/CalendarModal
 * **Input/Props**: calendarState, title (default is "Date Range"), resetOnClose (default is true), iconYPosition (optional),
 * **Currently in use**: TenantView, AddTenant
 * **Will be used in**: Anywhere a two date range is needed
@@ -173,7 +173,7 @@ _____
   4. The calendar state you have access to is only set once you click confirm, if you close the modal by default the state resets to the inital values, you can change this so that the temporary state stays the same even when closed
   5. Initialize with 
     ```
-    import CalendarModal, {useCalendarState} from '<filepath>/CalendarModal/CalendarModal'
+    import CalendarModal, {useCalendarState} from '<filepath>/CalendarModal'
     const calendarState = useCalendarState()
     ....
     <CalendarModal title="Lease Range" calendarState={calendarState} resetOnClose={false} iconYPosition="2rem">

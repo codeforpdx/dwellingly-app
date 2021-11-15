@@ -1,0 +1,52 @@
+@import "../../../scss/variables.scss";
+.tenants {
+  .section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .search-and-archive-container {
+    display: flex;
+    justify-content: space-between;
+    .search-section {
+      flex-grow: 1;
+    }
+  }
+
+  .bulk-actions-container {
+    margin-bottom: 10px;
+    button {
+      opacity: .25;
+      pointer-events: none;
+      transition: all 250ms ease;
+      &.is-active-button {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+  }
+  .tenants-list{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .tenants-list-wrapper, table {
+    min-width: 100%;
+  }
+  .bell-icon{
+    color: $red;
+  }
+
+  .tenant-name {
+    margin-left: 7px;
+  }
+  
+  ul.archive-properties-list {
+    list-style-position: inside;
+  }
+  
+}
+

@@ -1,0 +1,44 @@
+@import "../../../scss/variables.scss";
+.properties {
+  .section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .search-and-archive-container {
+    display: flex;
+    justify-content: space-between;
+    .search-section {
+      flex-grow: 1;
+    }
+  }
+
+  .bulk-actions-container {
+    margin-bottom: 10px;
+    button {
+      opacity: .25;
+      pointer-events: none;
+      transition: all 250ms ease;
+      &.is-active-button {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+  }
+
+  .properties-list {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .properties-list-wrapper, table {
+    min-width: 100%;
+  }
+}
+
+ul.archive-properties-list {
+  list-style-position: inside;
+}
