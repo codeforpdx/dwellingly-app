@@ -3,6 +3,7 @@ describe('Inviting', function () {
     const email = 'user1@dwellingly.org'
     const password = '1234'
 
+    cy.setup()
     cy.login(email, password)
   })
 
@@ -19,7 +20,5 @@ describe('Inviting', function () {
     cy.visit('/manage/managers')
     cy.contains('Elmer Fudd').click()
     cy.location('pathname').should('match', /^\/manage\/managers\/\d+$/)
-    cy.location('pathname').invoke('split', '/').its(3).as('pendingUserID')
-    cy.deletePendingUser()
   })
 })

@@ -1,0 +1,81 @@
+@import "../../../scss/variables.scss";
+.emergency_contacts {
+    &__container {
+        .section-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 45px;
+        }
+
+        .row_container {
+            width: 100%;
+        }
+
+        .emergencyContact{
+            &__row {
+                display: flex;
+                align-items: center;
+                padding: .6rem 0;
+
+                border-bottom: 1px solid $lightGray;
+                &:first-child {
+                    border-top: 1px solid $lightGray;
+                }
+            }
+
+            &__main_column {
+                flex-grow: 1;
+                margin-left: -.1rem;
+                font-weight: bold;
+
+                &.active {
+                    color: $blue;
+                    cursor: pointer;
+                }
+            }
+            &__contact_column {
+                text-align: right;
+                padding-right: 4.5rem;
+                font-weight: bold;
+                .number-container {
+                    display: inline-block;
+                }
+            }
+            &__contact_action {
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            &__delete_action {
+                margin-right: 1rem;
+                .icon {
+                    height: 100%;
+                    color: $red;
+                    cursor: pointer;
+                }
+            }
+        }
+          
+        .subtext {
+            font-weight: lighter;
+            color: $gray;
+            font-size: 0.8em;
+            width: 60%;
+            min-width: 2rem;
+        }      
+    }
+
+    .button {
+        margin: 10px;
+        font-weight: bold;
+        color: $lightGray;
+        background-color: $lighterGray;
+        border: 0;
+        &.active {
+            background-color: $blue;
+            color: white;
+        }
+    }
+
+}

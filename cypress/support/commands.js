@@ -24,6 +24,14 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add('setup', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?setup=true',
+    body: {},
+  })
+})
+
 Cypress.Commands.add('login', (email, password) => {
   cy.request({
     method:'POST',
@@ -43,7 +51,7 @@ Cypress.Commands.add('login', (email, password) => {
 Cypress.Commands.add('createPendingUser', () => {
   cy.request({
     method: 'POST',
-    url: 'api/register',
+    url: 'api/tests/cypress?create_pending_user=true',
     body: {
       email: "pendingTestUser@example.com",
       firstName: "Pending Test User",
@@ -52,16 +60,55 @@ Cypress.Commands.add('createPendingUser', () => {
       confirmPassword: "12345678",
       phone: "503-555-5555"
     },
-    failOnStatusCode: false
   })
 })
 
-Cypress.Commands.add('deletePendingUser', () => {
-  cy.get('@pendingUserID').then(id => {
-    cy.request({
-      method: 'DELETE',
-      url: `api/user/${id}`,
-      headers: { 'Authorization' : `Bearer ${localStorage.dwellinglyAccess}` },
-    })
+Cypress.Commands.add('createStaffUser', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?create_staff_user=true',
+    body: {
+      email: "staffer@example.com",
+      firstName: "Staff Test",
+      lastName: "User",
+      phone: "503-555-5555"
+    },
   })
+})
+
+Cypress.Commands.add('createPropertyManager', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?create_property_manager=true',
+    body: {
+      email: "manager@the_tenants.com",
+      firstName: "Property Manager",
+      lastName: "User",
+      phone: "503-555-5555"
+    },
+  })
+})
+
+Cypress.Commands.add('createTenant', () => {
+  cy.request({
+    method: 'POST',
+    url: 'api/tests/cypress?create_tenant=true',
+    body: {
+      firstName: "Tenant Test",
+      lastName: "Tenant",
+      phone: "503-555-5555"
+    },
+  })
+})
+
+
+// Form commands
+
+Cypress.Commands.add('fillInPropertyForm', () => {
+  cy.get('input[name="name"]').type('The Tenants')
+  cy.get('input[name="address"]').type('11 S Main St.')
+  cy.get('input[name="city"]').type('Beaverton')
+  cy.get('input[name="state"]').type('OR')
+  cy.get('input[name="zipcode"]').type('97225')
+  cy.get('input[name="num_units"]').type('23')
 })

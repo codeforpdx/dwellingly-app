@@ -2,6 +2,10 @@
   "name": "dwellingly",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+	"npm": "^6.14.12",
+	"node": "^14.16.1"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
@@ -29,6 +33,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "startTest": "PORT=3010 react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

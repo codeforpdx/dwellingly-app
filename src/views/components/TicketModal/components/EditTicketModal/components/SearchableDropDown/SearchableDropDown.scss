@@ -1,0 +1,34 @@
+@import "../../../../../../../scss/variables.scss";
+
+
+.dropdown-input {
+  width: 150px;
+}
+
+.dropdown-ul { 
+  z-index: 6000;
+  position: fixed; 
+  background: $white;
+  border: 2px solid $lightGray;
+  background: #dbdbdb;
+  max-height: 100px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &.empty {
+    display: none;
+  }
+}
+
+.dropdown-button {
+  width: 150px;
+  text-align: left;
+  border-radius:0;
+  border: 0;
+  padding: 5px;
+  font-family: inherit;
+}
+
+.dropdown-button:hover {
+  background: $blue;
+  color: white;
+}

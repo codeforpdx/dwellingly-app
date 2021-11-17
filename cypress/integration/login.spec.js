@@ -1,6 +1,6 @@
 describe('Login', function () {
   it('logs in the user', function () {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
 
     cy.get('input[name="email"]').type('user1@dwellingly.org')
     cy.get('input[name="password"]').type('1234')

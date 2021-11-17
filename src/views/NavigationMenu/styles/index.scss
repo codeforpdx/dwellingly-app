@@ -1,0 +1,26 @@
+@import "../../../scss/variables.scss";
+// NavMenu
+.sidebar-menu {
+	float: left;
+	position: relative;
+	min-height: 100vh;
+	width: 250px;
+	padding-bottom: 99999px;
+  margin-bottom: -99999px;
+	padding-top: 9px;
+	z-index: 20;
+}
+
+.menu-list a {
+	&:hover {
+		background: none;
+	}
+}
+
+.is-child-link{	
+  padding-left: 15px;	
+}
+
+.default-cursor {
+	cursor: default;
+}

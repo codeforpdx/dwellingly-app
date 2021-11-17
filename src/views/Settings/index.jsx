@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import UserContext from "../../UserContext";
-import Button from "../../components/Button";
+import UserContext from "../../contexts/UserContext";
+import Button from "../components/Button";
 import Toast from "../../utils/toast";
 
-import './settings.scss';
+import './styles/index.scss';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
