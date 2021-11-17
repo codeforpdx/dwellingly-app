@@ -49,7 +49,7 @@ export const RequestAccess = (props) => {
     lastName,
     email,
     id
-  } = props.location.state;
+  } = props.location.state || {};
 
   const [selectionOptions, setSelectionOptions] = useState([]);
   const [roleSelection, selectionHandler] = useState("");
