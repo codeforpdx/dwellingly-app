@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
+import useMountEffect from '../../utils/useMountEffect';
 import UserContext from "../../contexts/UserContext";
 import './styles/index.scss';
 
@@ -11,22 +12,37 @@ const AddTicket = () => {
   const [errors, setErrors] = useState([]);
   const [tenantSearchText, setTenantSearchText] = useState("");
   const [tenantSearchResults, setTenantSearchResults] = useState([]);
-  const [tenantSelection, settenantSelection] = useState();
+  const [tenantOptions, setTenantOptions] = useState([])
+  const [tenantSelection, setTenantSelection] = useState();
   const [issueText, setIssueText] = useState("");
   const [urgency, setUrgency] = useState("high");
 
+  useMountEffect(() => getTenants());
+
   useEffect(() => {
+    setTenantSearchResults(tenantOptions.filter(tenant =>
+      tenant.description.toLowerCase().includes(tenantSearchText.toLowerCase())
+    )
+  )}, [tenantSearchText, tenantOptions])
+
+  const tenantOptionFormat = (tenant) => {
+    return {
+      key: tenant.id,
+      description: `${tenant.firstName} ${tenant.lastName}`
+    }
+  }
+
+  const getTenants = () => {
     context.apiCall('get', '/tenants', {}, {})
-      .then(tenantResponse => {
-        let tenants = tenantResponse.data.tenants;
-        let choices = tenants
-          ? tenants.map(t => {
-            return { key: t.id, description: `${t.firstName} ${t.lastName}` };
+      .then(({ data }) => {
+        const tenants = data.tenants && data.tenants.length > 0
+          ? data.tenants.map(tenant => {
+            return tenantOptionFormat(tenant)
           })
-          : [];
-        setTenantSearchResults(choices);
-      });
-  }, [tenantSearchText]);
+          : []
+        setTenantOptions(tenants)
+    })
+  }
 
   /**
    * Handle tenant search input
@@ -48,7 +64,7 @@ const AddTicket = () => {
    */
   const handleChangeTenantSelection = (selectedChoice) => {
     clearError("tenant");
-    settenantSelection(selectedChoice);
+    setTenantSelection(selectedChoice);
   };
 
   const handleChangeUrgency = (e) => {
@@ -82,7 +98,7 @@ const AddTicket = () => {
       return Promise.resolve();
     }
   };
-  
+
   const submitTicket = () => {
     setIsSubmitting(true);
 
