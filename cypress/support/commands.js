@@ -127,3 +127,10 @@ Cypress.Commands.add('fillInTenantForm', () => {
   cy.get('input[name="lastName"]').type('Bob')
   cy.get('input[name="phone"]').type('555-555-5555')
 })
+
+Cypress.Commands.add('fillInPropertyManagerForm', () => {
+  cy.get('input[name="firstName"]').type('Franky')
+  cy.get('input[name="lastName"]').type('Property Manager')
+  cy.get('input[name="phone"]').type('555-555-5555')
+  cy.get('input[name="email"]').type('pm@thepowells.lake')
+})

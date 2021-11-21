@@ -18,6 +18,24 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def invite_params
-    params.require(:invitation).permit(:firstName, :lastName, :phone, :email, :type, :role)
+    params.require(:invitation).permit(shared_params + resource_params)
+  end
+
+  def shared_params
+    [:firstName, :lastName, :phone, :email, :type, :role]
+  end
+
+  def resource_params
+    case resource_class.new
+    when PropertyManager
+      [{ property_ids: [] }]
+    else
+      []
+    end
+  end
+
+  # Overwrite Devise::Invitations resource_class method
+  def resource_class
+    params.dig(:invitation, :type).constantize
   end
 end
