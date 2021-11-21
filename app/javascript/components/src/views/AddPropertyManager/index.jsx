@@ -9,8 +9,8 @@ import Button from "../components/Button";
 import Modal from '../components/Modal';
 import useMountEffect from '../../utils/useMountEffect';
 import './styles/index.scss';
-import UserType from '../../Enums/UserType';
 import RoleEnum from '../../Enums/RoleEnum';
+import UserType from '../../Enums/UserType';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -48,40 +48,45 @@ const AddPropertyManager = () => {
     setPropertySearchResults(choices);
   }, [propertySearchText, propertyOptions]);
 
+  const propertyOptionFormat = (property) => {
+    return {
+      key: property.id,
+      description: `${property.name}, ${property.address}`
+    }
+  }
+
   const getProperties = () => {
     context.apiCall('get', `/properties`, {}, {})
       .then(({ data }) => {
         let properties = data && data.length > 0
           ? data.map(property => {
-            return {
-              key: property.id,
-              description: `${property.name}, ${property.address}`
-            };
+            return propertyOptionFormat(property)
           })
-          : data;
+          : [];
         setPropertyOptions(properties);
         setPropertySearchResults(properties);
-        setShowAddProperty(false);
       });
   };
 
   const handleFormSubmit = (data) => {
-    let body = {
+    const payload = {
       ...data,
       type: UserType.PROPERTY_MANAGER,
       role: RoleEnum.PROPERTY_MANAGER,
+      property_ids: propertySelection.map(p => p.key)
     };
 
-    let properties = {
-      propertyIDs: propertySelection.map(p => p.key)
-    }
-
-    context.apiCall('post', `/users/invitation`, body, { success: `Property Manager Created Successfully, an invite email has been sent.` })
+    context.apiCall('post', `/users/invitation`, payload, { success: `Property Manager Created Successfully, an invite email has been sent.` })
   };
 
-  const handleAddPropertyCancel = () => {
-    setShowAddProperty(false);
-  };
+  const closePropertyModal = () => { setShowAddProperty(false) }
+  const openPropertyModal = () => { setShowAddProperty(true) }
+
+  const closeAndSetProperty = (property) => {
+    closePropertyModal()
+    setPropertyOptions(propertyOptions.concat([propertyOptionFormat(property)]))
+    setPropertySelection(propertySelection.concat([propertyOptionFormat(property)]))
+  }
 
   /**
    * Handle property search input
@@ -228,11 +233,12 @@ const AddPropertyManager = () => {
                       onSelectionChange={setPropertySelection}
                       onChange={handlePropertySearch}
                       onClear={handlePropertySearch}
+                      preSelectedChoices={propertySelection}
                       shadow
                     />
                     <button
                       className="add-property-button"
-                      onClick={() => setShowAddProperty(!showAddProperty)}
+                      onClick={openPropertyModal}
                       type="button"
                     >
                       <i className="fas fa-plus-circle icon-inline-space"></i>
@@ -262,9 +268,15 @@ const AddPropertyManager = () => {
         {showAddProperty &&
           <Modal
             titleText="Create New Property"
-            content={<AddProperty showPageTitle={false} postOnSubmit={getProperties} handleCancel={handleAddPropertyCancel} />}
+            content={
+              <AddProperty
+                showPageTitle={false}
+                afterCreate={closeAndSetProperty}
+                handleCancel={closePropertyModal}
+              />
+            }
             hasButtons={false}
-            closeHandler={handleAddPropertyCancel}
+            closeHandler={closePropertyModal}
           />
         }
       </div>
