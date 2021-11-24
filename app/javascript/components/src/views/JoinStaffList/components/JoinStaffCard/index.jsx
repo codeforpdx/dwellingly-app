@@ -55,10 +55,6 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 				    <p className="info-font">
 				    	{email}
 				    </p>
-				    <div className="empty-space"></div>
-				    <p className="tiny-font">
-				    	Set out of office
-				    </p>
 				    <hr className="card-divider" ></hr>
 				    {<InfoLabel type="tickets" />}
 				    {<InfoLabel type="tenants" />}
