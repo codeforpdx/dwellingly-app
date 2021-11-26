@@ -59,6 +59,7 @@ const ToggleEditForm = ({
                   name={value}
                   onChange={(isCalendar || readOnly) ? null : handleChange}
                   onBlur={handleBlur}
+                  checked={values[value]}
                   value={
                     isCalendar
                       ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
@@ -101,6 +102,7 @@ const ToggleEditForm = ({
                     type="checkbox"
                     name={dataObject.label}
                     disabled
+                    checked={dataObject.value}
                     />
                 : dataObject.value
             }</span>

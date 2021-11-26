@@ -5,11 +5,9 @@ import * as Yup from "yup";
 import ToggleEditForm from "../components/ToggleEditForm";
 import { useCalendarState } from "../components/CalendarModal";
 import PropertyManagerCard from "./components/PropertyManagerCard";
-import BootstrapTable from 'react-bootstrap-table-next';
-import { Link } from "react-router-dom";
 import ManagerSearchPanel from './components/ManagerSearchPanel';
-import RemoveTenantButton from './components/RemoveTenantButton';
 import Modal from '../components/Modal';
+import TenantListMini from "../components/TenantListMini";
 
 import './styles/index.scss';
 
@@ -41,8 +39,6 @@ const EditProperty = () => {
   const [confirmChange, setConfirmChange] = useState(false);
   const [inputValues, setInputValues] = useState();
   const [showArchiveModal, setShowArchiveModal] = useState(false);
-  const [confirmTenantRemoval, setConfirmTenantRemoval] = useState(false);
-  const [tenantToRemove, setTenantToRemove] = useState('')
   const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
   /**
@@ -52,7 +48,6 @@ const EditProperty = () => {
 
   const onCancelClick = () => {
     setConfirmChange(false);
-    setConfirmTenantRemoval(false);
     setEditingStatus(false);
     getProperty()
   };
@@ -99,7 +94,6 @@ const EditProperty = () => {
 
         setProperty(property)
         setInputValues(property)
-        setTenants(property.tenants)
 
         hideArchiveModal()
         setEditingStatus(false)
@@ -140,17 +134,11 @@ const EditProperty = () => {
       });
   }
 
-  const removeTenant = (tenant) => {
-    setTenantToRemove(tenant);
-    setConfirmTenantRemoval(true);
-  }
-
-  const handleTenantConfirmButton = () => {
+  const handleTenantConfirmButton = (tenantToRemove) => {
     const leaseId = tenantToRemove.lease.id;
     userContext.apiCall('delete', `/leases/${leaseId}`, {}, { success: 'Tenant successfully removed' })
       .then(res => {
         getProperty()
-        setConfirmTenantRemoval(false)
         setEditingStatus(false)
       });
   }
@@ -213,43 +201,6 @@ const EditProperty = () => {
       inputType: "text",
     }
   ]
-
-  const columns = [
-    {
-      dataField: "fullName",
-      formatter: (cell, row, rowIndex, formatExtraData) => {
-        return (
-          <Link key={row.fullName} to={`/manage/tenants/${row.id}`}>
-            {row.fullName}
-          </Link>
-        );
-      },
-      text: "Tenants",
-      sort: true,
-    },
-    {
-      dataField: "lease.unitNum",
-      text: "Unit",
-      sort: true,
-    },
-    {
-      dataField: "phone",
-      text: "Phone",
-      sort: true,
-    },
-
-  ];
-
-  const editColumn = {
-    dataField: "remove",
-    text: "Remove",
-    sort: false,
-    formatter: (cell, row, rowIndex, formatExtraData) => {
-      return (
-        <RemoveTenantButton tenant={row} removeTenant={removeTenant} isEditing={isEditing} />
-      )
-    }
-  }
 
   return (
     <div className='main-container'>
@@ -321,41 +272,15 @@ const EditProperty = () => {
             <div>
               <div className="section-container">
                 <h2 className="section-title">TENANTS</h2>
+                <TenantListMini
+                  isEditing={isEditing}
+                  tenantList={tenantArray}
+                  handleTenantConfirmButton={handleTenantConfirmButton}
+                />
               </div>
-            </div>{
-              isEditing ?
-                <BootstrapTable
-                  keyField='id'
-                  data={tenantArray ? tenantArray : []}
-                  columns={[...columns, editColumn]}
-                  bootstrap4={true}
-                  headerClasses="table-header"
-                />
-                :
-                <BootstrapTable
-                  keyField='id'
-                  data={tenantArray ? tenantArray : []}
-                  columns={columns}
-                  bootstrap4={true}
-                  headerClasses="table-header"
-                />
-            }
+            </div>
           </div>
         )}
-        {confirmTenantRemoval &&
-          <Modal
-            content={<p>{`Are you sure you want to remove ${tenantToRemove.fullName}?`}</p>}
-            hasButtons={true}
-            confirmButtonHandler={handleTenantConfirmButton}
-            closeHandler={() => {
-              setConfirmTenantRemoval(false);
-              getProperty();
-            }}
-            cancelButtonHandler={() => onCancelClick()}
-            confirmText={"YES"}
-            cancelText={"NO"}
-          />
-        }
         {confirmChange &&
           <Modal
             content={<p>Are you sure you want to save these changes?</p>}

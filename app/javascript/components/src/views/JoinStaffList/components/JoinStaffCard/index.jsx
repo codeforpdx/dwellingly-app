@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './styles/index.scss';
 
@@ -12,7 +13,7 @@ const CancelButton = () => {
 	);
 }
 
-export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin}) => {
+export const JoinStaffCard = ({id, name, phoneNumber, email, tickets, tenants, admin}) => {
 	
 	const InfoLabel = ({type}) => {
 		if (type === "tickets"){
@@ -42,10 +43,12 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 		<>
 			<div className="card card-length">
 				<div className="name-spacing">
-					<p className="name-font">
-				    	{name}
-				    </p>
-				    {!admin && <CancelButton />}
+					<Link to={`/manage/staff/${id}`}>
+						<p className="name-font">
+							{name}
+						</p>
+					</Link>
+					{!admin && <CancelButton />}
 				</div>
 				<div className="card-content">
 					{admin && <AdminLabel />}
@@ -58,7 +61,11 @@ export const JoinStaffCard = ({name, phoneNumber, email, tickets, tenants, admin
 				    <hr className="card-divider" ></hr>
 				    {<InfoLabel type="tickets" />}
 				    {<InfoLabel type="tenants" />}
-				    <a href='#' className={tinyLinkSpacing}> Reassign </a>
+						<Link to={`/manage/staff/${id}`}>
+							<p className={tinyLinkSpacing}>
+								Reassign
+							</p>
+						</Link>
 				</div>
 			</div>
 			<div className="card-separating-space"></div>
