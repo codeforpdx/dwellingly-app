@@ -1,0 +1,2 @@
+class UnauthorizedUser < User
+end

@@ -1,11 +1,13 @@
 describe('Add Property', function () {
   beforeEach(() => {
-    const email = 'user1@dwellingly.org'
-    const password = '1234'
+    const admin = 'admin@dwellingly.org'
 
-    cy.setup()
-    cy.createPropertyManager()
-    cy.login(email, password)
+    cy.app('clean')
+    cy.appScenario('basic')
+    cy.appFactories([
+      ['create', 'property_manager', {email: 'mgr@dwellingly.org', firstName: 'Billy', lastName: 'Bob'} ]
+    ])
+    cy.login(admin)
   })
 
   it('creates a property', function () {
@@ -23,14 +25,14 @@ describe('Add Property', function () {
   it('creates a property with a manager assigned', function () {
     cy.visit('/add/property')
     cy.wait(500)
-    cy.get('input[title="Search Property Managers"]').first().type('P')
-    cy.get('.styles-module_resultItemLabel__rcaln:contains(Property Manager User)').click()
+    cy.get('input[title="Search Property Managers"]').first().type('B')
+    cy.get('.styles-module_resultItemLabel__rcaln:contains(Billy Bob)').click()
     cy.fillInPropertyForm()
     cy.get('button').contains('SAVE').click()
     cy.wait(500)
 
     cy.visit('/manage/properties')
-    cy.contains('Property Manager User')
+    cy.contains('Billy Bob')
     cy.contains('The Tenants').click()
     cy.location('pathname').should('match', /^\/manage\/properties\/\d+$/)
   })

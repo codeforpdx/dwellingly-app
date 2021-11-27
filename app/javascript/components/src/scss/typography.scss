@@ -1,0 +1,26 @@
+@import './variables.scss';
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.page-title {
+    font-size: 22px;
+    color: $brandBlue;
+    font-weight: bold;
+}
+
+.h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.form-error {
+    font-size: 0.7em;
+    color: $errorRed;
+    padding: 0.3em;
+}

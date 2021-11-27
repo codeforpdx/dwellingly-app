@@ -32,19 +32,22 @@ Cypress.Commands.add('setup', () => {
   })
 })
 
-Cypress.Commands.add('login', (email, password) => {
+Cypress.Commands.add('login', (email) => {
   cy.request({
-    method:'POST',
-    url:'api/login',
+    method:'GET',
+    url:'/api/cypress_sign_in',
     body: {
       email,
-      password,
     }
   })
     .its('body')
     .then((body) => {
-      window.localStorage.setItem('dwellinglyAccess', body.access_token);
-      window.localStorage.setItem('dwellinglyRefresh', body.refresh_token);
+      // TODO: Long term, I'd like to remove this
+      window.localStorage.setItem('authenticated', true)
+      window.localStorage.setItem('firstName', 'Admin Fix this')
+      window.localStorage.setItem('lastName', 'Fix this')
+      window.localStorage.setItem('phone', '5555555555')
+      window.localStorage.setItem('email', email)
     })
 })
 

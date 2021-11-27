@@ -1,11 +1,13 @@
 describe('Grant Access', function () {
   beforeEach(() => {
-    const email = 'user1@dwellingly.org'
-    const password = '1234'
+    const admin = 'admin@dwellingly.org'
 
-    cy.setup()
-    cy.login(email, password)
-    cy.createPendingUser()
+    cy.app('clean')
+    cy.appScenario('basic')
+    cy.appFactories([
+      ['create', 'unauthorized_user', {email: 'user@dwellingly.org', firstName: 'Pending', lastName: 'Test User'} ]
+    ])
+    cy.login(admin)
   })
 
   it('Approves user', function () {

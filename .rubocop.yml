@@ -1,0 +1,72 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - vendor/**/*
+    - bin/*
+    - db/schema.rb
+    - db/migrate/*
+    - config/initializers/devise.rb
+    - spec/cypress/app_commands/*
+    - config/spring.rb
+    - config/puma.rb
+    - config/environments/development.rb
+    - config/environments/production.rb
+    - config/environments/production.rb
+    - cypress/app_commands/factory_bot.rb
+    - cypress/app_commands/log_fail.rb
+    - cypress/app_commands/log_fail.rb
+    - cypress/cypress_helper.rb
+    - config/routes.rb
+    - db/seeds.rb
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Metrics/MethodLength:
+  Exclude:
+    - spec/fixtures/files/seed_helper.rb
+
+Layout/HashAlignment:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ImplicitSubject:
+  Enabled: false
+
+# Legacy support
+Naming/MethodName:
+  Enabled: false

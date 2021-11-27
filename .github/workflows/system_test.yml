@@ -12,10 +12,6 @@ env:
   POSTGRES_HOST_AUTH_METHOD: trust
   PGUSER: postgres
   PGHOST: localhost
-  SECRET_KEY: dwellingly
-  TEST_DATABASE_URL: postgresql://localhost/dwellingly_test
-  FLASK_ENV: testing
-  REACT_APP_PROXY: http://localhost:5000
 
 jobs:
   system_test:
@@ -41,42 +37,35 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          repository: codeforpdx/dwellinglybackend
+          bundler-cache: true
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get -yqq install libpq-dev
+
+      - name: Create db and compile app
+        run: |
+          yarn
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+          bundle exec rails webpacker:compile
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.9.6'
-      - run: pip install --user pipenv
-
-      - name: Install dependecies
-        run: pipenv run dev-install
-
-      - name: Create db
-        run: createdb dwellingly_test
-
-      - name: Seed db
-        run: |
-          pipenv run flask db create
-          pipenv run flask db minimal_seed
 
       - name: Start Server
-        run: pipenv run flask run &
-      - name: Just wait a sec
-        run: sleep 5s
-      - uses: actions/checkout@v2
-      - name: Bump max listeners
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-
-      - name: Run System tests
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm run startTest
-          browser: chrome
-          headless: true
-          wait-on: 'http://localhost:3010/'
-          wait-on-timeout: 120
+        run: CYPRESS=1 bin/rails server -p 5017 -d
+      - name: Pause
+        run: sleep 10s
+      - name: Prepare
+        run: |
+          curl 'http://localhost:5017/'
+          sleep 30s
+      - name: Run tests
+        run: yarn cypress run

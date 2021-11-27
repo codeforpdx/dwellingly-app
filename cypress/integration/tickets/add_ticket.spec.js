@@ -1,11 +1,13 @@
 describe('Add Ticket', function () {
   beforeEach(() => {
-    const email = 'user1@dwellingly.org'
-    const password = '1234'
+    const admin = 'admin@dwellingly.org'
 
-    cy.setup()
-    cy.login(email, password)
-    cy.createTenant()
+    cy.app('clean')
+    cy.appScenario('basic')
+    cy.appFactories([
+      ['create', 'tenant', {firstName: 'Tenant', lastName: 'Test Tenant'} ]
+    ])
+    cy.login(admin)
   })
 
   it('creates a ticket', function () {
