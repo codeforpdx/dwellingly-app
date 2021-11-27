@@ -25,6 +25,13 @@ const AddTicket = () => {
     )
   )}, [tenantSearchText, tenantOptions])
 
+  const clearForm = () => {
+    setIssueText("");
+    setUrgency("high");
+    setTenantSearchText("");
+    setTenantSelection([]);
+  }
+
   const tenantOptionFormat = (tenant) => {
     return {
       key: tenant.id,
@@ -115,6 +122,7 @@ const AddTicket = () => {
           .then(response => {
             setErrors([]);
             setIsSubmitting(false);
+            clearForm();
           })
           .catch(_ => {
             setIsSubmitting(false);
