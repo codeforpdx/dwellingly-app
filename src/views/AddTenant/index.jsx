@@ -29,6 +29,7 @@ const AddTenant = () => {
   const context = useContext(UserContext);
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
+  const [staffOptions, setStaffOptions] = useState([])
   const [staffSelections, setStaffSelections] = useState([]);
   const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
@@ -40,19 +41,13 @@ const AddTenant = () => {
   const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
   useMountEffect(() => getProperties());
+  useMountEffect(() => getStaff());
 
   useEffect(() => {
-    context.apiCall('get', `/user?r=${RoleEnum.STAFF}`, { name: staffSearchText }, {})
-      .then(staffResponse => {
-        let users = staffResponse.data.users;
-        let choices = users
-          ? users.map(u => {
-            return { key: u.id, description: `${u.firstName} ${u.lastName}` };
-          })
-          : [];
-        setStaffSearchResults(choices);
-      });
-  }, [staffSearchText]);
+    let choices = staffOptions.filter(
+      s => s.description.toLowerCase().includes(staffSearchText.toLowerCase()));
+    setStaffSearchResults(choices);
+  }, [staffSearchText, staffOptions]);
 
   useEffect(() => {
     let choices = propertyOptions.filter(
@@ -60,20 +55,41 @@ const AddTenant = () => {
     setPropertySearchResults(choices);
   }, [propertySearchText, propertyOptions]);
 
+  const propertyOptionFormat = (property) => {
+    return {
+      key: property.id,
+      description: `${property.name}, ${property.address}`
+    }
+  }
+
+  const staffOptionFormat = (staff) => {
+    return {
+      key: staff.id,
+      description: `${staff.firstName} ${staff.lastName}`
+    }
+  }
+
+  const getStaff = () => {
+    context.apiCall('get', `/user?r=${RoleEnum.STAFF}`, { name: staffSearchText }, {})
+      .then(({ data }) => {
+        const staff = data.users && data.users.length > 0
+          ? data.users.map(joinStaff => {
+            return staffOptionFormat(joinStaff)
+          })
+          : data.users
+        setStaffOptions(staff);
+      });
+  }
+
   const getProperties = () => {
     context.apiCall('get', '/properties', {}, {})
       .then(({ data }) => {
-        let properties = data.properties && data.properties.length > 0
+        const properties = data.properties && data.properties.length > 0
           ? data.properties.map(property => {
-            return {
-              key: property.id,
-              description: `${property.name}, ${property.address}`
-            };
+            return propertyOptionFormat(property)
           })
           : data.properties;
         setPropertyOptions(properties);
-        setPropertySearchResults(properties);
-        setShowAddProperty(false);
       });
   };
 
@@ -81,9 +97,15 @@ const AddTenant = () => {
     context.apiCall('post', `/tenants`, data, { success: 'Tenant Created Successfully!'});
   };
 
-  const handleAddPropertyCancel = () => {
+  const closePropertyModal = () => {
     setShowAddProperty(false);
-  };
+  }
+
+  const closeAndSetProperty = (property) => {
+    closePropertyModal()
+    setPropertySelection([propertyOptionFormat(property)])
+    setPropertyOptions(propertyOptions.concat([propertyOptionFormat(property)]))
+  }
 
   /**
    * Handle staff search input
@@ -92,7 +114,7 @@ const AddTenant = () => {
   const handleStaffSearch = (event) => {
     const { value } = event.target;
     if(!value || value.length === 0) {
-      setStaffSearchResults([]);
+      setStaffSearchResults(staffOptions);
       setStaffSearchText("");
     } else {
       setStaffSearchText(value);
@@ -148,7 +170,11 @@ const AddTenant = () => {
     return errors
   }
 
-  const renderErrorMsg = msg => 
+  const dateEntered = () => {
+    return dateTimeStart !== dateTimeEnd
+  }
+
+  const renderErrorMsg = msg =>
     <div className="error-message">{msg}</div>
 
   return (
@@ -170,23 +196,27 @@ const AddTenant = () => {
           validate={validateForm}
           validateOnBlur={false}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            const toSubmit = {
+            const payload = {
               firstName: values.firstName,
               lastName: values.lastName,
               phone: values.phone,
-              occupants: values.occupants || null,
-              unitNum: values.unitNum || null,
-              propertyID: propertySelection.length ? propertySelection[0].key : null,
-              staffIDs: staffSelections && staffSelections.map(staff => staff.key)
-            };
-            if (dateTimeStart !== dateTimeEnd) {
-              toSubmit.dateTimeStart = dateTimeStart;
-              toSubmit.dateTimeEnd = dateTimeEnd;
+              staffIDs: staffSelections && staffSelections.map(staff => staff.key),
+              lease: {
+                occupants: values.occupants || null,
+                unitNum: values.unitNum || null,
+                propertyID: propertySelection.length ? propertySelection[0].key : null,
+                dateTimeStart: dateEntered() ? dateTimeStart : null,
+                dateTimeEnd: dateEntered() ? dateTimeEnd : null
+              }
             }
 
-            setSubmitting(true);
-            handleFormSubmit(toSubmit);
-            resetForm();
+            if (Object.values(payload.lease).every((value) => value === null)) {
+              delete payload.lease
+            }
+
+            setSubmitting(true)
+            handleFormSubmit(payload)
+            resetForm()
             setPropertySearchText("");
             setPropertySelection([]);
             setStaffSearchText("");
@@ -220,7 +250,7 @@ const AddTenant = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    <ErrorMessage 
+                    <ErrorMessage
                       name="firstName"
                       render={renderErrorMsg}
                     />
@@ -279,7 +309,7 @@ const AddTenant = () => {
                       onChange={handleStaffSearch}
                       onClear={handleStaffSearch}
                       onSelectionChange={handleChangeStaffSelections}
-                      placeholder="Search JOIN staff"
+                      placeholder="Search JOIN Staff"
                       preSelectedChoices={staffSelections}
                       small
                       value={staffSearchText}
@@ -288,7 +318,7 @@ const AddTenant = () => {
                       shadow
                     />
                   </div>
-            
+
                   <h1 className="section-title">PROPERTY</h1>
                   <div className="typeahead-section">
                     <SearchPanel
@@ -337,12 +367,12 @@ const AddTenant = () => {
                       value={values.unitNum}
                       placeholder="Unit Number (Optional)"
                     />
-                    <ErrorMessage 
+                    <ErrorMessage
                       name="unitNum"
                       render={renderErrorMsg}
                     />
                   </div>
-            
+
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -364,7 +394,7 @@ const AddTenant = () => {
                       render={renderErrorMsg}
                     />
                   </div>
-            
+
                   <div className="form-row" >
                     <label
                       className="column is-one-fifth"
@@ -377,8 +407,8 @@ const AddTenant = () => {
                       className="column form-field"
                       type="text"
                       name="lease"
-                      value={dateTimeEnd !== dateTimeStart 
-                        ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}` 
+                      value={dateTimeEnd !== dateTimeStart
+                        ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
                         : ""
                       }
                       placeholder="Lease dates (Optional)"
@@ -389,7 +419,7 @@ const AddTenant = () => {
                     />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
                   </div>
-            
+
                   <div className="button-container">
                     <Button
                       isCancelButton={false}
@@ -412,9 +442,15 @@ const AddTenant = () => {
         {showAddProperty &&
           <Modal
             titleText="Create New Property"
-            content={<AddProperty showPageTitle={false} postOnSubmit={getProperties} handleCancel={handleAddPropertyCancel} />}
+            content={
+              <AddProperty
+                showPageTitle={false}
+                handleCancel={closePropertyModal}
+                afterCreate={closeAndSetProperty}
+              />
+            }
             hasButtons={false}
-            closeHandler={handleAddPropertyCancel}
+            closeHandler={closePropertyModal}
           />
         }
       </div>

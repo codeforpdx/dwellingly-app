@@ -112,3 +112,9 @@ Cypress.Commands.add('fillInPropertyForm', () => {
   cy.get('input[name="zipcode"]').type('97225')
   cy.get('input[name="num_units"]').type('23')
 })
+
+Cypress.Commands.add('fillInTenantForm', () => {
+  cy.get('input[name="firstName"]').type('Billy')
+  cy.get('input[name="lastName"]').type('Bob')
+  cy.get('input[name="phone"]').type('555-555-5555')
+})

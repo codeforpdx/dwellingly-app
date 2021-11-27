@@ -38,7 +38,7 @@ export const AddProperty = (props) => {
   const [filteredManagerOptions, setFilteredManagerOptions] = useState([])
   const [managerSearch, setManagerSearch] = useState('')
   const userContext = useContext(UserContext)
-  const { showPageTitle, handleCancel } = props
+  const { showPageTitle, handleCancel, afterCreate } = props
 
   useMountEffect(() => getManagers())
 
@@ -57,7 +57,12 @@ export const AddProperty = (props) => {
   }
 
   const formHandler = (data) => {
-    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' });
+    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' })
+      .then((response) => {
+        if (afterCreate) {
+          afterCreate(response.data)
+        }
+      })
   }
 
   const handleSearchChange = ({ target }) => {
