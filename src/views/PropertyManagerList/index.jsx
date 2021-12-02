@@ -12,28 +12,7 @@ import './styles/index.scss';
 import { columns, mobileColumns } from './components/managersTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 import { tabletWidth } from '../../constants/index.js';
-import formatDate from "../../utils/formatDate";
-
-// transforms data from API into a format that can be used for bootstrap-table-next
-const convertManagersDataForTable = (managersArray) => {
-  const convertedManagers = managersArray.map(manager => {
-    // Combining data into first level fields for Search capabilities
-    manager.fullName = `${manager.firstName} ${manager.lastName}`;
-    manager.propertyNames = manager.properties?.map(property => property.name).join(', ');
-    manager.lastActive = formatDate(manager.lastActive);
-
-    if(manager.lastActive || !manager.archived) {
-      manager.status = "Active";
-    } else if(manager.archived) {
-      manager.status = "Archived";
-    } else {
-      manager.status = "Pending";
-    }
-    return manager;
-  });
-
-  return convertedManagers;
-};
+import { convertManagersDataForTable } from './util'
 
 const getManagers = (context, storeInState, updateLoading, setSearchedManagers) => {
   context.apiCall('get', `/user?r=${roleEnum.PROPERTY_MANAGER}`, {}, {})
