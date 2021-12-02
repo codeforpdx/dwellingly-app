@@ -14,7 +14,7 @@ import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './styles/index.scss';
 import { columns, mobileColumns } from './components/ticketsTableComponents';
-import formatDate from '../../utils/formatDate';
+import { formatDate } from '../../utils/date';
 
 const pageButtonRenderer = ({
   page,

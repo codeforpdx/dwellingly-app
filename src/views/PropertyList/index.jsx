@@ -13,7 +13,7 @@ import { columns, mobileColumns } from './components/propertiesTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 import './styles/index.scss';
 import { tabletWidth } from '../../constants';
-import formatDate from '../../utils/formatDate';
+import { formatDate } from '../../utils/date';
 
 
 const expandRow = isSmallScreen => ({
