@@ -23,6 +23,7 @@ password: `asdfasdf`
 
 - Rails dev environment: For info on how to install go to: [https://gorails.com/setup/](https://gorails.com/setup/)
   - Install with a postgres database, and its recommended to use Rbenv as the Ruby version manager.
+  - For an easier setup: You can optionally skip postgres installation and use sqlite3. Instructions to use sqllite3 are below.
 - [Node](https://nodejs.org/en/download/)
   (Last tested with node version 14.16.1, npm version 6.14.12)
 - [yarn](https://classic.yarnpkg.com/en/docs/install)
@@ -50,11 +51,11 @@ From terminal:
 - Navigate to app's directory: `cd dwellingly-app`
 - run `bundle`
 - run `yarn`
-- Create, migrate, and seed the database with: `rails db:setup`
-   - If you've never used postgres before then this step may give you errors
-   - Feel free to reach out for help. We're planning on getting a help doc on code for pdx repo.
-- Start server with: `rails s`
-- It may be necessary to also start a js server with: `./bin/webpack-dev-server`
+- run `cp config/application.yml.example config/application.yml`
+- If using sqlite3 then uncomment sqlite3 in the `config/application.yml` file.
+- Create, load, and seed the database with: `bin/rails db:setup`
+- Start server with: `bin/rails s`
+- For now its necessary to also start a js server with: `./bin/webpack-dev-server`
   - This will precompile javascript and reload the browser when there are javascript changes
 
 ## About Us
