@@ -1,0 +1,96 @@
+@import './variables.scss';
+
+.bg-gradient {
+  background: $gradient;
+}
+
+.bg-grey {
+  background: $gray;
+}
+
+.section-container {
+  padding-top: 25px;
+  h2 {
+    font-size: 18px;
+    color: $brandBlue;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+  .section-title {
+    padding-bottom: 10px;
+  }
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 25px;
+  button {
+    margin: 0px 0px 0px 25px;
+  }
+}
+
+.filters-container {
+  background-color: $lighterGray;
+  margin-bottom: 10px;
+  padding: 10px;
+  color: $blue;
+  .fa-filter {
+      margin-right: 10px;
+  }
+}
+
+.section-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+  .filter-control {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.react-bootstrap-table-pagination {
+  display: flex;
+  justify-content: flex-end;
+  justify-items: right;
+}
+
+.table-header {
+  background-color: $lighterGray;
+}
+
+.table-responsive {
+  width: 100%;
+}
+
+.pagination {
+  .page-item {
+    & a {color: $brandBlue;}
+    &.active {
+      a {color: $blue;}
+    }
+  }
+}
+
+.btn-group {
+  margin: 0;
+}
+
+.link-button {
+  color: $blue;
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.icon-inline-space {
+  margin-right: 5px;
+}

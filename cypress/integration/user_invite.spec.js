@@ -1,10 +1,10 @@
 describe('Inviting', function () {
   beforeEach(() => {
-    const email = 'user1@dwellingly.org'
-    const password = '1234'
+    const admin = 'admin@dwellingly.org'
 
-    cy.setup()
-    cy.login(email, password)
+    cy.app('clean')
+    cy.appScenario('basic')
+    cy.login(admin)
   })
 
   it('creates a property manager user', function () {

@@ -1,11 +1,13 @@
 describe('Add Tenant', function () {
   beforeEach(() => {
-    const email = 'user1@dwellingly.org'
-    const password = '1234'
+    const admin = 'admin@dwellingly.org'
 
-    cy.setup()
-    cy.createStaffUser()
-    cy.login(email, password)
+    cy.app('clean')
+    cy.appScenario('basic')
+    cy.appFactories([
+      ['create', 'staff', {email: 'staff@dwellingly.org', firstName: 'Franky', lastName: 'Bob'} ]
+    ])
+    cy.login(admin)
   })
 
   it('creates a tenant', function () {
@@ -47,8 +49,8 @@ describe('Add Tenant', function () {
 
   it('creates a tenant with staff assigned', function () {
     cy.visit('/add/tenant')
-    cy.get('input[title="Search JOIN Staff"]').first().type('S')
-    cy.get('.styles-module_resultItemLabel__rcaln:contains(Staff Test User)').click()
+    cy.get('input[title="Search JOIN Staff"]').first().type('F')
+    cy.get('.styles-module_resultItemLabel__rcaln:contains(Franky Bob)').click()
 
     cy.fillInTenantForm()
 
@@ -59,6 +61,6 @@ describe('Add Tenant', function () {
     cy.wait(1000)
     cy.get('label[for="switchhousedToggleSwitch"]').click()
     cy.contains('Billy Bob').should('exist')
-    cy.contains('Staff Test User').should('exist')
+    cy.contains('Franky Bob').should('exist')
   })
 })

@@ -1,0 +1,2 @@
+# Uncomment to use sqlite3 as the database
+# sqlite3: ''
