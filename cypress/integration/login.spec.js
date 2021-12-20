@@ -24,4 +24,19 @@ describe('Login', () => {
       cy.get('.Toastify__toast-body').should('include.text', 'account has been deactivated')
     })
   })
+
+  describe('un-approved users', () => {
+    beforeEach(() => {
+      cy.appFactories([
+        ['create', 'unauthorized_user', {email: 'unauthorized@dw.org'} ]
+      ])
+    })
+
+    it('does not authenticate', () => {
+      cy.submitLoginForm('unauthorized@dw.org')
+      cy.wait(500)
+      cy.location('pathname').should('eq', '/login')
+      cy.get('.Toastify__toast-body').should('include.text', 'account is not activated yet')
+    })
+  })
 })
