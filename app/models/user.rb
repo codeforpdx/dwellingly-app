@@ -12,10 +12,14 @@ class User < ApplicationRecord
     "#{firstName} #{lastName}"
   end
 
+  def approved?
+    true
+  end
+
   # Devise orverrides for authentication
   # Archived users cannot login.
   def active_for_authentication?
-    super && !archived?
+    super && !archived? && approved?
   end
 
   def inactive_message
