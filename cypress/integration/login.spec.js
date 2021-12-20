@@ -10,6 +10,15 @@ describe('Login', () => {
     cy.location('pathname').should('eq', '/dashboard')
   })
 
+  describe('invalid login credentials', () => {
+    it('does not authenticate', () => {
+      cy.submitLoginForm('admin@dwellingly.org', 'invalid_password')
+      cy.wait(500)
+      cy.location('pathname').should('eq', '/login')
+      cy.get('.Toastify__toast-body').should('include.text', 'Invalid email or password')
+    })
+  })
+
   describe('arhived users', () => {
     beforeEach(() => {
       cy.appFactories([
