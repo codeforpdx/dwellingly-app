@@ -11,4 +11,14 @@ class User < ApplicationRecord
   def full_name
     "#{firstName} #{lastName}"
   end
+
+  # Devise orverrides for authentication
+  # Archived users cannot login.
+  def active_for_authentication?
+    super && !archived?
+  end
+
+  def inactive_message
+    archived? ? :archived : super
+  end
 end

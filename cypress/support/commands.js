@@ -107,6 +107,12 @@ Cypress.Commands.add('createTenant', () => {
 
 // Form commands
 
+Cypress.Commands.add('submitLoginForm', (email, password='asdfasdf') => {
+  cy.get('input[name="email"]').type(email)
+  cy.get('input[name="password"]').type(password)
+  cy.get('button').contains('LOG IN').click()
+})
+
 Cypress.Commands.add('fillInPropertyForm', () => {
   cy.get('input[name="name"]').type('The Tenants')
   cy.get('input[name="address"]').type('11 S Main St.')
