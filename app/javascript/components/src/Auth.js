@@ -23,8 +23,8 @@ export const auth = {
         }
       })
       .catch((error) => {
-        Toast("Failure signing in", "error");
-        return Promise.reject(error);
+        Toast(error.response.data, "error");
+        return null
       });
   },
   async signout() {
