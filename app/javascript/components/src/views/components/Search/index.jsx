@@ -58,7 +58,7 @@ function Search(props) {
             let dataPoint = Object.assign({}, allData[i]);
             delete dataPoint.id;
             let dataValues = Object.values(dataPoint).toString().toLowerCase()
-            if (searchTokens.reduce((prev, cur) => prev && dataValues.includes(cur), true)){
+            if (searchTokens.every(cur => dataValues.includes(cur))){
                 output.push(allData[i]);
           }
         };
