@@ -53,10 +53,12 @@ function Search(props) {
       let searchQuery = document.getElementById("searchQueryComponent").value.toLowerCase().trim();
 
       if(searchQuery.length > 0){
+        let searchTokens = searchQuery.split(/\s+/)
         for (var i=0;i < allData.length; i++) {
             let dataPoint = Object.assign({}, allData[i]);
             delete dataPoint.id;
-            if (Object.values(dataPoint).toString().toLowerCase().includes(searchQuery)){
+            let dataValues = Object.values(dataPoint).toString().toLowerCase()
+            if (searchTokens.reduce((prev, cur) => prev && dataValues.includes(cur), true)){
                 output.push(allData[i]);
           }
         };
