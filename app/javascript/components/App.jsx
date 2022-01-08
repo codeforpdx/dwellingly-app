@@ -85,8 +85,6 @@ export class App extends React.Component {
               phone: user.phone
             }
           })
-        } else {
-          this.notify('Failed to login', 'warn');
         }
       });
   };

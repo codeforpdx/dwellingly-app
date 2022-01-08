@@ -18,6 +18,8 @@ const validationSchema = Yup.object().shape({
     .min(7, "Phone must have at least 7 characters")
     .max(20, "*Phone can't be longer than 20 characters")
     .required("*Phone Number is required"),
+  current_password: Yup.string()
+  .required("*Current Password is required"),
 });
 
 const handleFormSubmit = (context, data) => {
@@ -81,7 +83,7 @@ const Settings = () => {
                       htmlFor="email"
                     >
                       Email
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
@@ -101,7 +103,7 @@ const Settings = () => {
                       htmlFor="phone"
                     >
                       Phone
-                </label>
+                    </label>
                     <Field
                       className="column form-field"
                       type="text"
@@ -112,6 +114,26 @@ const Settings = () => {
                     />
                     {errors.phone ? (
                       <div className="error-message">{errors.phone}</div>
+                    ) : null}
+                  </div>
+                  <div className='form-row'>
+                    <label
+                      className='column is-one-fifth'
+                      id='current_password'
+                      htmlFor='current_password'
+                    >
+                      Current Password
+                    </label>
+                    <Field
+                      className='column form-field'
+                      type='password'
+                      name='current_password'
+                      onChange={handleChange}
+                      value={values.current_password || ""}
+                      placeholder='Enter your current password'
+                    />
+                    {errors.current_password ? (
+                      <div className='error-message'>{errors.current_password}</div>
                     ) : null}
                   </div>
                   <div className="button-container">

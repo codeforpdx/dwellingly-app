@@ -3,9 +3,10 @@
 class SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
-  # GET /resource/sign_in
+  # Redirects here when user has an archived or un-approved account.
+  # flash[:alert] message is set in the User#inactive_message
   def new
-    head :unauthorized
+    invalid_login_attempt
   end
 
   # POST /resource/sign_in
@@ -44,7 +45,7 @@ class SessionsController < Devise::SessionsController
   # end
 
   def invalid_login_attempt
-    set_flash_message(:alert, :invalid)
+    set_flash_message(:alert, :invalid) unless flash[:alert]
     render json: flash[:alert], status: :unauthorized
   end
 end
