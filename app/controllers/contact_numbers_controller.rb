@@ -2,7 +2,7 @@ class ContactNumbersController < ApplicationController
   before_action :contact_number, only: %i[ show edit update destroy ]
 
   def index
-    @api_contact_numbers = ContactNumber.all
+    @contact_numbers = ContactNumber.all
   end
 
   def show
@@ -16,7 +16,7 @@ class ContactNumbersController < ApplicationController
   end
 
   def create
-    @contact_number = ContactNumber.new(api_contact_number_params)
+    @contact_number = ContactNumber.new(contact_number_params)
 
     respond_to do |format|
       if @contact_number.save
@@ -31,7 +31,7 @@ class ContactNumbersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @contact_number.update(api_contact_number_params)
+      if @contact_number.update(contact_number_params)
         format.html { redirect_to @contact_number, notice: "Contact number was successfully updated." }
         format.json { render :show, status: :ok, location: @contact_number }
       else
@@ -44,7 +44,7 @@ class ContactNumbersController < ApplicationController
   def destroy
     @contact_number.destroy
     respond_to do |format|
-      format.html { redirect_to api_contact_numbers_url, notice: "Contact number was successfully destroyed." }
+      format.html { redirect_to contact_numbers_url, notice: "Contact number was successfully destroyed." }
       format.json { head :no_content }
     end
   end
