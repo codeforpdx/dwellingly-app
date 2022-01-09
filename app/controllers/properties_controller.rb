@@ -20,9 +20,9 @@ class PropertiesController < ApplicationController
 
     respond_to do |format|
       if @property.save
-        format.json { render :show, status: :created, location: @api_property }
+        format.json { render :show, status: :created, location: @property }
       else
-        format.json { render json: @api_property.errors, status: :unprocessable_entity }
+        format.json { render json: @property.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -30,11 +30,11 @@ class PropertiesController < ApplicationController
   def update
     respond_to do |format|
       if @property.update(property_params)
-        format.html { redirect_to @api_property, notice: "Property was successfully updated." }
-        format.json { render :show, status: :ok, location: @api_property }
+        format.html { redirect_to @property, notice: "Property was successfully updated." }
+        format.json { render :show, status: :ok, location: @property }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @api_property.errors, status: :unprocessable_entity }
+        format.json { render json: @property.errors, status: :unprocessable_entity }
       end
     end
   end
