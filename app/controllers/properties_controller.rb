@@ -18,32 +18,24 @@ class PropertiesController < ApplicationController
   def create
     @property = Property.new(create_params)
 
-    respond_to do |format|
-      if @property.save
-        format.json { render :show, status: :created, location: @property }
-      else
-        format.json { render json: @property.errors, status: :unprocessable_entity }
-      end
+    if @property.save
+      render :show, status: :created
+    else
+      render json: @property.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @property.update(property_params)
-        format.html { redirect_to @property, notice: "Property was successfully updated." }
-        format.json { render :show, status: :ok, location: @property }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @property.errors, status: :unprocessable_entity }
-      end
+    if @property.update(property_params)
+      render :show, status: :ok
+    else
+      render json: @property.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     @property.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private

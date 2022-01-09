@@ -18,35 +18,24 @@ class ContactNumbersController < ApplicationController
   def create
     @contact_number = ContactNumber.new(contact_number_params)
 
-    respond_to do |format|
-      if @contact_number.save
-        format.html { redirect_to @contact_number, notice: "Contact number was successfully created." }
-        format.json { render :show, status: :created, location: @contact_number }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @contact_number.errors, status: :unprocessable_entity }
-      end
+    if @contact_number.save
+      render :show, status: :created
+    else
+      render json: @contact_number.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @contact_number.update(contact_number_params)
-        format.html { redirect_to @contact_number, notice: "Contact number was successfully updated." }
-        format.json { render :show, status: :ok, location: @contact_number }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @contact_number.errors, status: :unprocessable_entity }
-      end
+    if @contact_number.update(contact_number_params)
+      render :show, status: :ok
+    else
+      render json: @contact_number.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     @contact_number.destroy
-    respond_to do |format|
-      format.html { redirect_to contact_numbers_url, notice: "Contact number was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private

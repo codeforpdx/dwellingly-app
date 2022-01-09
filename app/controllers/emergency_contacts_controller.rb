@@ -22,7 +22,7 @@ class EmergencyContactsController < ApplicationController
     if @emergency_contact.save
       render :show, status: :created
     else
-      format.json { render json: @emergency_contact.errors, status: :unprocessable_entity }
+      render json: @emergency_contact.errors, status: :unprocessable_entity
     end
   end
 
@@ -36,10 +36,7 @@ class EmergencyContactsController < ApplicationController
 
   def destroy
     @emergency_contact.destroy
-    respond_to do |format|
-      format.html { redirect_to emergency_contacts_url, notice: "Emergency contact was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private

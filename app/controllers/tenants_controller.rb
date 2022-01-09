@@ -21,7 +21,7 @@ class TenantsController < ApplicationController
     if @tenant.save
       render :show, status: :created
     else
-      format.json { render json: @tenant.errors, status: :unprocessable_entity }
+      render json: @tenant.errors, status: :unprocessable_entity
     end
   end
 
@@ -35,9 +35,7 @@ class TenantsController < ApplicationController
 
   def destroy
     @tenant.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
