@@ -124,14 +124,27 @@ export class App extends React.Component {
       if (error.response.status === 401) {
         this.logout()
       }
+
+      // If axios receives an error information in response.data
+      // then display the error information in the Toast message
+      /* 
+      const msg = JSON.stringify(error.response.data)
+      // Remove open and closed curly braces 
+      const errResponseMsg = msg ? msg.substr(1, msg.length - 2) : null
+      console.log(errResponseMsg)
+      // Display error message as Toast 
+      // Toast(toastMessages.error ?? errResponseMsg ?? error.message, "error")
+      */
       Toast(toastMessages.error ?? error.message, "error");
       return Promise.reject(error);
     })
     // since we already display the erorr message. The caller does not need to catch the returned Promise.
     // catching the rejected Promise is optional. so catch for them and return false.
+    /* Currently commented for AddProperty/index.jsx can display error 
     .catch(error => {
       return false
     })
+    */
   );
 
   render() {

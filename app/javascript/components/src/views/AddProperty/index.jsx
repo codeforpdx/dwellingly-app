@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
 import RoleEnum from '../../Enums/RoleEnum';
 import useMountEffect from '../../utils/useMountEffect';
+import Toast from "../../utils/toast";
 import './styles/index.scss';
 
 
@@ -62,6 +63,15 @@ export const AddProperty = (props) => {
         if (afterCreate) {
           afterCreate(response.data)
         }
+      })
+      .catch( error => {
+        
+        const msg = JSON.stringify(error.response.data)
+        /* Remove open and closed curly braces */
+        const errMsg = msg ? msg.substr(1, msg.length - 2) : null
+        console.log(errMsg)
+        /* Display error message as Toast */
+        Toast(errMsg ?? error.message, "error");
       })
   }
 
