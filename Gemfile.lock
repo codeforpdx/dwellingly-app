@@ -231,6 +231,8 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
+    shoulda-matchers (5.1.0)
+      activesupport (>= 5.2.0)
     spring (3.1.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -267,6 +269,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-19
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -292,6 +295,7 @@ DEPENDENCIES
   rubocop-rails (~> 2.12, >= 2.12.4)
   rubocop-rspec (~> 2.6)
   sass-rails (>= 6)
+  shoulda-matchers (~> 5.1.0)
   spring
   sqlite3 (~> 1.4, >= 1.4.2)
   turbolinks (~> 5)
