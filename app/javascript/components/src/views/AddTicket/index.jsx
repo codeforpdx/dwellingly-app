@@ -99,6 +99,13 @@ const AddTicket = () => {
     }
   };
 
+  const clearForm = () => {
+    setIssueText("");
+    setUrgency("high");
+    setTenantSearchText("");
+    setTenantSelection([]);
+  }
+
   const submitTicket = () => {
     setIsSubmitting(true);
 
@@ -114,6 +121,7 @@ const AddTicket = () => {
           .then(response => {
             setErrors([]);
             setIsSubmitting(false);
+            clearForm();
           })
           .catch(_ => {
             setIsSubmitting(false);
