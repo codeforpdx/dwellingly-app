@@ -13,8 +13,6 @@ import googleLogo from "../../../../../../../assets/images/google-dwellingly-fav
 function GoogleButton(props) {
   const { innerText } = props;
 
-
-
   return (
       <button className="login__button__google button is-primary is-rounded py-4 mt-2">
           <img
