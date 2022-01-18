@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles/index.scss';
+import googleLogo from "../../../../../../../assets/images/google-dwellingly-favicon.png";
 
 //Documentation
 
@@ -15,16 +16,15 @@ function GoogleButton(props) {
 
 
   return (
-    <button
-      className="login__button__google button is-primary is-rounded py-4 mt-2"
-    >
+      <button className="login__button__google button is-primary is-rounded py-4 mt-2">
+          <img
+              className="icon mr-3"
+              src={googleLogo}
+              alt="Dwellingly icon"
+          />
 
-      <img className="icon mr-3" src="../../../google-dwellingly-favicon.png" alt="Dwellingly icon" />
-
-      <span className="login__button__google__text">
-        {innerText}
-      </span>
-    </button>
+          <span className="login__button__google__text">{innerText}</span>
+      </button>
   );
 
 };
