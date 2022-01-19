@@ -38,7 +38,7 @@ import NoMatch from "./src/views/NoMatch";
 import AddTicket from "./src/views/AddTicket";
 import Toast from "./src/utils/toast";
 import PropertyManagerList from "./src/views/PropertyManagerList";
-import EditStaff from "./views/EditStaff";
+import EditStaff from "./src/views/EditStaff";
 
 export class App extends React.Component {
   constructor(props) {
