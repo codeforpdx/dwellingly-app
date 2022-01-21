@@ -106,7 +106,7 @@ export class App extends React.Component {
       });
   };
 
-  apiCall = (verb, url, data, toastMessages, setFieldError) => (
+  apiCall = (verb, url, data, toastMessages, setErrors) => (
     axios({
       method: verb,
       url: `/api${url}`,
@@ -128,14 +128,16 @@ export class App extends React.Component {
       // If axios receives an error information in response.data
       // then display the error information in the form itself
       // and show an error message in Toast
-      if (setFieldError) {
-        /* setFieldError is a Formik function that should be passed
+      if (setErrors) {
+        /* setErrors is a Formik function that should be passed
          * when the api is called in the component */
-        Object.entries(error.response.data).forEach(
-          ([varName, msgArr]) => {
-            setFieldError(varName, msgArr.join(", ")) 
-          }
+        const err = Object.entries(error.response.data).reduce(
+          (errorObj, [key, value]) => {
+            errorObj[key] = value.join(", ")
+            return (errorObj)
+          }, {}
         )
+        setErrors(err)
       }
       
       Toast(toastMessages.error ?? error.message, "error");

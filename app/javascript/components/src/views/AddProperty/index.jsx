@@ -57,8 +57,8 @@ export const AddProperty = (props) => {
       })
   }
 
-  const formHandler = (data, setFieldError) => {
-    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' }, setFieldError)
+  const formHandler = (data, setErrors) => {
+    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' }, setErrors)
       .then((response) => {
         if (afterCreate) {
           afterCreate(response.data)
@@ -99,11 +99,11 @@ export const AddProperty = (props) => {
             num_units: ''
           }}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting, resetForm, setFieldError }) => {
+          onSubmit={(values, { setSubmitting, resetForm, setErrors }) => {
             values.propertyManagerIDs = propertyManagers.map(manager => manager.key);
 
             setSubmitting(true);
-            if(formHandler(values, setFieldError)) {
+            if(formHandler(values, setErrors)) {
               resetForm();
             }
             setSubmitting(false);
