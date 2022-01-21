@@ -57,21 +57,15 @@ export const AddProperty = (props) => {
       })
   }
 
-  const formHandler = (data) => {
-    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' })
+  const formHandler = (data, setFieldError) => {
+    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' }, setFieldError)
       .then((response) => {
         if (afterCreate) {
           afterCreate(response.data)
         }
-      })
-      .catch( error => {
-        
-        const msg = JSON.stringify(error.response.data)
-        /* Remove open and closed curly braces */
-        const errMsg = msg ? msg.substr(1, msg.length - 2) : null
-        console.log(errMsg)
-        /* Display error message as Toast */
-        Toast(errMsg ?? error.message, "error");
+        // The api returns false if there is an error
+        // Use the input to determine if the form can be reset
+        return true 
       })
   }
 
@@ -105,12 +99,13 @@ export const AddProperty = (props) => {
             num_units: ''
           }}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
+          onSubmit={(values, { setSubmitting, resetForm, setFieldError }) => {
             values.propertyManagerIDs = propertyManagers.map(manager => manager.key);
 
             setSubmitting(true);
-            formHandler(values);
-            resetForm();
+            if(formHandler(values, setFieldError)) {
+              resetForm();
+            }
             setSubmitting(false);
           }}>
           {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
