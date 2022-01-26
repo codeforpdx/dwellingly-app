@@ -86,6 +86,11 @@ const SignupForm = ({ history }) => {
         setShowConfirmationModal(false);
     };
 
+    const closeErrorModal = () => {
+        setShowErrorModal(false);
+    };
+
+
     return (
         <UserContext.Consumer>
             {({ user }) =>
@@ -305,26 +310,18 @@ const SignupForm = ({ history }) => {
                         )}
                         {showErrorModal && (
                             <Modal
-                                titleText="Account Created!"
+                                titleText="Account Creation Failed"
                                 content={
                                     <div>
                                         <p>
-                                            You have successfully made an
-                                            account with Dwelling.ly. Your
-                                            account must be approved by an Admin
-                                            before you can use it.
-                                        </p>
-                                        <br />
-                                        <p>
-                                            Keep your eye out for an approval
-                                            email with instructions on how to
-                                            access your account.
+                                            We couldn't create your account at
+                                            this time. Please try again later.
                                         </p>
                                     </div>
                                 }
                                 hasButtons={false}
                                 hasRedirectButton={false}
-                                closeHandler={closeConfirmationModal}
+                                closeHandler={closeErrorModal}
                             />
                         )}
                     </div>
