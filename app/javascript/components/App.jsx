@@ -116,15 +116,18 @@ export class App extends React.Component {
       }
     })
     .then(response => {
+      console.log("success");
       toastMessages.success && Toast(toastMessages.success, "success");
       return Promise.resolve(response);
     })
     .catch(error => {
       // Display the passed in error message if provided. Otherwise, display default error toast.
+      console.log("errr")
       if (error.response.status === 401) {
         this.logout()
       }
       Toast(toastMessages.error ?? error.message, "error");
+      console.log(error);
       return Promise.reject(error);
     })
     // since we already display the erorr message. The caller does not need to catch the returned Promise.
