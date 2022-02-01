@@ -107,7 +107,7 @@ export class App extends React.Component {
       });
   };
 
-  apiCall = (verb, url, data, toastMessages) => (
+  apiCall = (verb, url, data, toastMessages, setErrors) => (
     axios({
       method: verb,
       url: `/api${url}`,
@@ -125,7 +125,24 @@ export class App extends React.Component {
       if (error.response.status === 401) {
         this.logout()
       }
+
+      // If axios receives an error information in response.data
+      // then display the error information in the form itself
+      // and show an error message in Toast
+      if (setErrors) {
+        /* setErrors is a Formik function that should be passed
+         * when the api is called in the component */
+        const err = Object.entries(error.response.data).reduce(
+          (errorObj, [key, value]) => {
+            errorObj[key] = value.join(", ")
+            return (errorObj)
+          }, {}
+        )
+        setErrors(err)
+      }
+      
       Toast(toastMessages.error ?? error.message, "error");
+     
       return Promise.reject(error);
     })
     // since we already display the erorr message. The caller does not need to catch the returned Promise.

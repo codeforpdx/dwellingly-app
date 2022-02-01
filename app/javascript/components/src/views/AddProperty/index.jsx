@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
 import RoleEnum from '../../Enums/RoleEnum';
 import useMountEffect from '../../utils/useMountEffect';
+import Toast from "../../utils/toast";
 import './styles/index.scss';
 
 
@@ -56,12 +57,15 @@ export const AddProperty = (props) => {
       })
   }
 
-  const formHandler = (data) => {
-    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' })
+  const formHandler = (data, setErrors) => {
+    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' }, setErrors)
       .then((response) => {
         if (afterCreate) {
           afterCreate(response.data)
         }
+        // The api returns false if there is an error
+        // Use the input to determine if the form can be reset
+        return true 
       })
   }
 
@@ -95,12 +99,13 @@ export const AddProperty = (props) => {
             num_units: ''
           }}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
+          onSubmit={(values, { setSubmitting, resetForm, setErrors }) => {
             values.propertyManagerIDs = propertyManagers.map(manager => manager.key);
 
             setSubmitting(true);
-            formHandler(values);
-            resetForm();
+            if(formHandler(values, setErrors)) {
+              resetForm();
+            }
             setSubmitting(false);
           }}>
           {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (

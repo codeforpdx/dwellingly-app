@@ -45,6 +45,7 @@ group :development, :test do
   gem 'rubocop', '~> 1.23', require: false
   gem 'rubocop-rails', '~> 2.12', '>= 2.12.4', require: false
   gem 'rubocop-rspec', '~> 2.6', require: false
+  gem 'shoulda-matchers', '~>5.1.0'
   gem 'sqlite3', '~> 1.4', '>= 1.4.2', require: false
 end
 
