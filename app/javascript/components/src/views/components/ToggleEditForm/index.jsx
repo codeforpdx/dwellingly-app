@@ -59,11 +59,14 @@ const ToggleEditForm = ({
                   name={value}
                   onChange={(isCalendar || readOnly) ? null : handleChange}
                   onBlur={handleBlur}
+                  checked={values[value]}
                   value={
                     isCalendar
                       ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
                       : values[value]}
-                  className="column is-two-quarters row-input"
+                  className={`column row-input form-field ${tableData[index].inputType === 'checkbox'
+                    ? 'checkbox-row  is-one-quarter'
+                    : 'is-one-quarter'}`}
                 />
                 {isCalendar && <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />}
                 <FieldError
@@ -93,6 +96,14 @@ const ToggleEditForm = ({
             <span className="column is-one-quarter">{
               (dataObject.inputType === "calendar")
                 ? `${dataObject.value.dateTimeStart.toDateString()} - ${dataObject.value.dateTimeEnd.toDateString()}`
+                : dataObject.inputType === "checkbox"
+                  ? <input
+                    className="form-field checkbox-row"
+                    type="checkbox"
+                    name={dataObject.label}
+                    disabled
+                    checked={dataObject.value}
+                    />
                 : dataObject.value
             }</span>
           </div>

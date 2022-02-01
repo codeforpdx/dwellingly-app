@@ -29,6 +29,7 @@ export const JoinStaffList = () => {
       (
         <JoinStaffCard
           key={user.id}
+          id={user.id}
           name={`${user.firstName} ${user.lastName}`}
           phoneNumber={user.phone}
           email={user.email}
