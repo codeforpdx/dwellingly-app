@@ -5,7 +5,7 @@ import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
-import dwellinglyLogo from "../../assets/images/dwellingly_logo.png";
+import dwellinglyLogo from "images/dwellingly_logo.png";
 import dwellinglyLogoMobile from "../../assets/images/dwellingly_logo_white.png";
 import Modal from "../components/Modal";
 
@@ -24,19 +24,16 @@ const SignupForm = ({ history }) => {
     password,
     confirmPassword
   ) =>
-    context
-      .apiCall(
-        "post",
-        "/register",
-        {
-          firstName,
-          lastName,
-          email,
-          phone,
-          password,
-          confirmPassword,
-        },
-        { success: "Account Created Successfully!" }
+  context.apiCall('post', '/users', {
+    user: {
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      confirmPassword,
+    }
+  }, { success: "Account Created Successfully!" }
       )
       .then((res) => {
         if (res === false) {
