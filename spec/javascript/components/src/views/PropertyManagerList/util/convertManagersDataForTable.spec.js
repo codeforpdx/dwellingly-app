@@ -1,4 +1,4 @@
-import { convertManagersDataForTable } from '../index'
+import { convertManagersDataForTable } from 'components/src/views/PropertyManagerList/util/index'
 
 describe("Manager list util methods", () => {
    it("should be Active status when 'archived' is false and has a valid 'lastActive'", () => {
@@ -75,8 +75,7 @@ describe("Manager list util methods", () => {
       }
     ]
     const [ result ] = convertManagersDataForTable(managersDataCopy)
-    
+
     expect(result.status).toEqual('Pending')
   });
 });
-

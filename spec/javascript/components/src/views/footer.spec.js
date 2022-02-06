@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Footer from "../index";
+import Footer from "components/src/views/Footer/index";
 
 const setUp = (props = {}) => {
 	const component = shallow(<Footer />);

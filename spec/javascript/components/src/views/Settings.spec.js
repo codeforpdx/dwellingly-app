@@ -1,31 +1,17 @@
 import React from "react";
-import axios from "axios";
 import { fireEvent, render, screen, wait } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import Settings from "../index";
-import UserContext from "../../../contexts/UserContext";
-import Toast from "../../../utils/toast"
+import Settings from "components/src/views/Settings/index";
+import UserContext from "components/src/contexts/UserContext"
 
 const mockHistory = createMemoryHistory();
 
-jest.mock("axios");
-jest.mock("../../utils/toast")
-
-axios.patch.mockImplementation(() =>
-  Promise.resolve({
-    data: {
-      email: "response@email.com",
-      phone: "541-234-5555",
-    },
-  })
-);
-jest.mock("../../utils/toast")
-
+const userParams = { email: "response@email.com", phone: "541-234-5555" }
+let apiCall = jest.fn().mockReturnValue(Promise.resolve({ data: userParams }))
 
 const mockSetUser = jest.fn();
-const mockRefreshJWT = jest.fn();
 
 const mockAuthenticatedUser = {
   isAuthenticated: true,
@@ -36,6 +22,7 @@ const mockAuthenticatedUser = {
 
 const mockInputEmailEvent = { target: { value: "new@email.com" } };
 const mockInputPhoneEvent = { target: { value: "123-456-7890" } };
+const password = { target: { value: "secret password" } };
 
 describe("settings component", () => {
   let view = null;
@@ -46,7 +33,7 @@ describe("settings component", () => {
         value={{
           user: mockAuthenticatedUser,
           handleSetUser: mockSetUser,
-          refreshJWT: mockRefreshJWT,
+          apiCall: apiCall,
         }}
       >
         <Router history={mockHistory}>
@@ -63,58 +50,28 @@ describe("settings component", () => {
   it("should make an API patch call when form is submitted", async () => {
     const emailInput = screen.getByPlaceholderText(/Enter your email address/);
     const phoneInput = screen.getByPlaceholderText(/Enter your phone number/);
+    const currentPassword = screen.getByPlaceholderText(/Enter your current password/);
+
     const button = view.container.querySelector("button");
 
     fireEvent.change(emailInput, mockInputEmailEvent);
     fireEvent.change(phoneInput, mockInputPhoneEvent);
+    fireEvent.change(currentPassword, password)
 
     await wait(() => fireEvent.click(button));
 
-    expect(axios.patch).toHaveBeenCalled();
-  });
-
-  it("should display success alert when PATCH method is successful", async () => {
-    const emailInput = screen.getByPlaceholderText(/Enter your email address/);
-    const phoneInput = screen.getByPlaceholderText(/Enter your phone number/);
-    const button = view.container.querySelector("button");
-
-    fireEvent.change(emailInput, mockInputEmailEvent);
-    fireEvent.change(phoneInput, mockInputPhoneEvent);
-
-    await wait(() => fireEvent.click(button));
-  
-    await wait(() => {
-      expect(Toast).toHaveBeenCalledWith("Saved Successfully!", "success")
-    })
-    
-  });
-
-  it("should display error alert when PATCH method is unsuccessful", async () => {
-    const errorMessage = 'Network Error';
-    axios.patch.mockImplementationOnce(() => Promise.reject(new Error(errorMessage)));
-
-    const emailInput = screen.getByPlaceholderText(/Enter your email address/);
-    const phoneInput = screen.getByPlaceholderText(/Enter your phone number/);
-    const button = view.container.querySelector("button");
-
-    fireEvent.change(emailInput, mockInputEmailEvent);
-    fireEvent.change(phoneInput, mockInputPhoneEvent);
-
-    await wait(() => fireEvent.click(button));
-    
-    await wait(() =>
-      expect(Toast).toHaveBeenCalledWith(errorMessage, "error")
-    )
-    
+    expect(apiCall).toHaveBeenCalled();
   });
 
   it("should display the new input values after successful submission", async () => {
     const emailInput = screen.getByPlaceholderText(/Enter your email address/);
     const phoneInput = screen.getByPlaceholderText(/Enter your phone number/);
+    const currentPassword = screen.getByPlaceholderText(/Enter your current password/);
     const button = view.container.querySelector("button");
 
     fireEvent.change(emailInput, mockInputEmailEvent);
     fireEvent.change(phoneInput, mockInputPhoneEvent);
+    fireEvent.change(currentPassword, password)
 
     await wait(() => fireEvent.click(button));
 
