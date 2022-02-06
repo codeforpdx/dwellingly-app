@@ -41,6 +41,10 @@
   "version": "0.1.0",
   "devDependencies": {
     "cypress": "^9.1.0",
+    "jest": "^27.4.7",
     "webpack-dev-server": "^3"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

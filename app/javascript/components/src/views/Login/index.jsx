@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Field, Formik } from 'formik';
-import dwellinglyLogo from '../../assets/images/dwellingly_logo.png';
+import dwellinglyLogo from 'images/dwellingly_logo.png';
 import UserContext from '../../contexts/UserContext';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom'

@@ -2,13 +2,12 @@ import React from "react";
 import axios from 'axios';
 import { fireEvent, render, screen, wait } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import SignupForm from "..";
-import UserContext from "../../../contexts/UserContext";
+import SignupForm from "components/src/views/Signup/index";
+import UserContext from "components/src/contexts/UserContext"
 
 import { MemoryRouter } from "react-router";
 
-jest.mock('axios')
-axios.post.mockImplementation(() => Promise.resolve({}))
+let apiCall = jest.fn().mockReturnValue(Promise.resolve({ data: "success" }))
 
 const mockHistory = { push: jest.fn() };
 
@@ -26,7 +25,7 @@ describe("signup component", () => {
   beforeEach(() => {
     view = render(
       <MemoryRouter>
-        <UserContext.Provider value={{ user: mockNotAuthenticatedUser }}>
+        <UserContext.Provider value={{ apiCall: apiCall, user: mockNotAuthenticatedUser }}>
           <SignupForm history={mockHistory} />
         </UserContext.Provider>
       </MemoryRouter>
@@ -57,13 +56,17 @@ it("should display an error when phone not populated", async () => {
 
     await wait(() => fireEvent.click(button));
 
-    expect(axios.post).toHaveBeenCalledWith("/api/register", {
-      confirmPassword: mockPassword.target.value,
-      email: "mock@mockdomain.com",
-      firstName: "mock value",
-      lastName: "mock value",
-      password: mockPassword.target.value,
-      phone: "mock value",
+    expect(apiCall).toHaveBeenCalledWith("post", "/users", {
+      user: {
+        confirmPassword: "Mock1Password",
+        email: "mock@mockdomain.com",
+        firstName: "mock value",
+        lastName: "mock value",
+        password: "Mock1Password",
+        phone: "mock value"
+      }
+    }, {
+      success: "Account Created Successfully!"
     })
 
     expect(screen.getByText("Return to Login")).toBeVisible()

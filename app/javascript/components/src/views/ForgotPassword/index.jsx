@@ -20,7 +20,7 @@ const ForgotPassword = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
     titleText: "",
-    contentText: "",
+    contentText: {},
     hasButtons: false,
   });
 
@@ -29,14 +29,14 @@ const ForgotPassword = () => {
       .then(response => {
         setModalContent({
           titleText: "Success!",
-          contentText: "Please check your email to reset your password."
+          contentText: <p>Please check your email to reset your password.</p>
         });
         setIsModalOpen(true);
       })
       .catch(_ => {
         setModalContent({
           titleText: "Error!",
-          contentText: "I'm sorry, there was an error attempting to reset your password."
+          contentText: <p>There was an error attempting to reset your password.</p>
         });
         setIsModalOpen(true);
       });
