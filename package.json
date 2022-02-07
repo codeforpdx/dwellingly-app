@@ -12,15 +12,10 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
     "@react-hook/media-query": "^1.1.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "axios": "^0.24.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bulma": "^0.9.3",
     "classnames": "^2.3.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
     "formik": "^2.2.9",
     "msw": "^0.21.1",
     "prop-types": "^15.7.2",
@@ -41,8 +36,13 @@
   "version": "0.1.0",
   "devDependencies": {
     "cypress": "^9.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "jest": "^27.4.7",
-    "webpack-dev-server": "^3"
+    "webpack-dev-server": "^3",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1"
   },
   "scripts": {
     "test": "jest"
