@@ -83,6 +83,9 @@ const AddPropertyManager = () => {
       .then((response) => {
         if(response) {
           resetForm();
+          setPropertySelection([]);
+          setPropertySearchText("");
+          setPropertySearchResults(propertyOptions);
         }
       })
       .finally(() => {
