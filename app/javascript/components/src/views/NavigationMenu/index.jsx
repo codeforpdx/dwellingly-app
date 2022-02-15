@@ -7,25 +7,24 @@ import {
 	faUserAlt,
 	faPhoneAlt,
 	faCog,
+	faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
 import UserContext from "../../contexts/UserContext";
 
 import './styles/index.scss'
 
-export const MenuLink = ({ icon, isBold, name, href, passedClassName, category }) => {
+export const MenuLink = ({isMobile, menuClose, icon, isBold, name, href, passedClassName, category }) => {
 	const loc = useLocation();
 	let isActiveLink =
 		loc.pathname.includes(href)
 		|| (category && loc.pathname.split('/')[1].includes(category));
   let cursorOverride = href ? "" : "default-cursor";
 	const linkColor = isActiveLink ? "has-text-black" : "has-text-white";
-
 	return (
 		<li className={passedClassName ? `pb-2 ${passedClassName}` : "pb-2"}>
-			<Link to={href} className={`is-size-7 ${isBold && "has-text-weight-bold"} ${linkColor} ${cursorOverride}`}>
+			<Link to={href} onClick={isMobile ? menuClose : null} className={`is-size-7 ${isBold && "has-text-weight-bold"} ${linkColor} ${cursorOverride}`}>
 				{icon && (
 					<span className="icon is-small">
 						<FontAwesomeIcon icon={icon} />
@@ -38,6 +37,8 @@ export const MenuLink = ({ icon, isBold, name, href, passedClassName, category }
 };
 
 MenuLink.propTypes = {
+	isMobile: PropTypes.bool,
+	menuClose: PropTypes.func,
 	icon: PropTypes.object,
 	isBold: PropTypes.bool,
 	name: PropTypes.string.isRequired,
@@ -45,8 +46,10 @@ MenuLink.propTypes = {
 	passedClassName: PropTypes.string
 };
 
-export const NavMenu = () => {
+export const NavMenu = (props) => {
 	const loc = useLocation();
+	const sidebar = props.isOpen ? "sidebar is-open" : "sidebar";
+	const sidebarBlock = props.isOpen ? "sidebarBlock is-open" : "sidebarBlock";
 	if (
 		loc.pathname === "/login" ||
 		loc.pathname === "/signup" ||
@@ -55,20 +58,40 @@ export const NavMenu = () => {
 		return null;
 	}
 
+
 	return (
 		<UserContext.Consumer>
 			{({ user }) => (
-				<div className="is-hidden-mobile has-background-primary sidebar-menu">
+				<div>
+				<div className = {sidebarBlock}>
+					<button onClick={props.toggle}></button>
+				</div>
+				<div className={`has-background-primary ${sidebar}`}>
+						
+					<div className="sidebar-header">
+          					<button
+            					variant="link"
+            					onClick={props.toggle}            				
+          					>
+            					<FontAwesomeIcon icon={faXmark} size="sm" />
+          					</button>
+						
+					</div>
 					<div className="menu">
 						<ul className="menu-list">
 							<MenuLink
+								isMobile={props.isMobile}
+								menuClose={props.toggle}
 								name={`${user.firstName} ${user.lastName}`}
 								isBold
 								icon={faUserAlt}
 								href="/home"
-								passedClassName="pb-5"
+								passedClassName="pb-5 pt-1"
 							/>
 							<MenuLink
+								isMobile={props.isMobile}
+								menuClose={props.toggle}
+								props
 								name="Dashboard"
 								isBold
 								icon={faColumns}
@@ -77,26 +100,28 @@ export const NavMenu = () => {
 							/>
 							<MenuLink name="Add New" isBold icon={faPlusCircle} category="add" />
 							<div className="pl-4 is-child-link">
-								<MenuLink name="Tenant" href="/add/tenant" />
-								<MenuLink name="Property" href="/add/property" />
-								<MenuLink name="Property Manager" href="/add/manager" />
-								<MenuLink name="Ticket" href="/add/ticket" />
+								<MenuLink name="Tenant" href="/add/tenant" isMobile={props.isMobile} menuClose={props.toggle}/>
+								<MenuLink name="Property" href="/add/property" isMobile={props.isMobile} menuClose={props.toggle}/>
+								<MenuLink name="Property Manager" href="/add/manager" isMobile={props.isMobile} menuClose={props.toggle}/>
+								<MenuLink name="Ticket" href="/add/ticket" isMobile={props.isMobile} menuClose={props.toggle}/>
 							</div>
 
 							<MenuLink name="Manage" isBold icon={faUserCog} category="manage" />
 							<div className="pl-4 is-child-link">
-								<MenuLink name="Tenants" href="/manage/tenants" />
-								<MenuLink name="Properties" href="/manage/properties" />
-								<MenuLink name="Property Managers" href="/manage/managers" />
-								<MenuLink name="Tickets" href="/manage/tickets" />
+								<MenuLink name="Tenants" href="/manage/tenants" isMobile={props.isMobile} menuClose={props.toggle}/>
+								<MenuLink name="Properties" href="/manage/properties" isMobile={props.isMobile} menuClose={props.toggle}/>
+								<MenuLink name="Property Managers" href="/manage/managers" isMobile={props.isMobile} menuClose={props.toggle}/>
+								<MenuLink name="Tickets" href="/manage/tickets" isMobile={props.isMobile} menuClose={props.toggle}/>
 							</div>
 
-							<MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" />
-							<MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" />
-							<MenuLink name="Settings" isBold icon={faCog} href="/settings" />
+							<MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff" isMobile={props.isMobile} menuClose={props.toggle}/>
+							<MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency" isMobile={props.isMobile} menuClose={props.toggle}/>
+							<MenuLink name="Settings" isBold icon={faCog} href="/settings" isMobile={props.isMobile} menuClose={props.toggle}/>
 						</ul>
 					</div>
 				</div>
+				</div>
+
 			)}
 		</UserContext.Consumer>
 	);
