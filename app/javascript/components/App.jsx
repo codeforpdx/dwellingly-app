@@ -84,10 +84,6 @@ export class App extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWidth.bind(this));
-  }
-
   toggle = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
