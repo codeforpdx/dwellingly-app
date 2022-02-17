@@ -47,13 +47,13 @@ export class App extends React.Component {
     this.isOpen= false;
     this.isMobile= false;
     this.previousWidth = -1;
+    this.tabletWidth = 960;
   }
 
   updateWidth() {
     const width = window.innerWidth;
-    const widthLimit = 1023;
-    const isMobile = width <= widthLimit;
-    const wasMobile = this.previousWidth <= widthLimit;
+    const isMobile = width <= this.tabletWidth;
+    const wasMobile = this.previousWidth <= this.tabletWidth;
 
     if (isMobile !== wasMobile) {
       this.setState({
@@ -80,7 +80,7 @@ export class App extends React.Component {
         phone: window.localStorage['phone'],
         email: window.localStorage['email'],
       },
-      isMobile: window.innerWidth <= 1023, 
+      isMobile: window.innerWidth <= this.tabletWidth, 
     }
   }
 

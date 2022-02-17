@@ -17,7 +17,7 @@ const Header = (props) => {
 
   return (
     <header data-testid="header" className="navbar-brand bg-gradient navbar-container">
-      <button className="is-hidden-desktop navbar-button" type="button" onClick={props.toggle}>
+      <button className="navbar-button" type="button" onClick={props.toggle}>
         <FontAwesomeIcon icon={faBars} size="lg"/>
       </button>
       <Link className="navbar-item" to="/">
