@@ -112,15 +112,6 @@ const PropertyManagerList = () => {
           setOutputState={handleSearchOutput}
           placeholderMessage="Search property managers by name, property, or status" />
       </div>
-      <div className="invite-button-container py-3">
-        <button className="button is-rounded is-primary ml-3" type="submit">
-          <FontAwesomeIcon
-            className="button__envelope-icon mr-3"
-            icon={faEnvelope}
-          />{" "}
-          Invite
-        </button>
-      </div>
       <div className="managers-list">
         {isLoading &&
           <Icon
