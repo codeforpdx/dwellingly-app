@@ -5,3 +5,20 @@
   align-items: center;
   padding: 0.5rem 1rem 0.5rem 0;
 }
+
+.navbar-button{
+  display: none;
+}
+
+@media only screen and (max-width: 960px) {
+  .navbar-button{
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    
+  }
+}

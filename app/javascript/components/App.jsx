@@ -44,10 +44,31 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = this.getCurrentState()
+    this.state = this.getCurrentState();
+    this.isOpen= false;
+    this.isMobile= false;
+    this.previousWidth = -1;
+    this.tabletWidth = 960;
+  }
+
+  updateWidth() {
+    const width = window.innerWidth;
+    const isMobile = width <= this.tabletWidth;
+    const wasMobile = this.previousWidth <= this.tabletWidth;
+
+    if (isMobile !== wasMobile) {
+      this.setState({
+        isOpen: !isMobile,
+        isMobile: isMobile
+      });
+    }
+
+    this.previousWidth = width;
   }
 
   componentDidMount() {
+    this.updateWidth();
+    window.addEventListener("resize", this.updateWidth.bind(this));
     this.setState(this.getCurrentState())
   }
 
@@ -58,10 +79,15 @@ export class App extends React.Component {
         firstName: window.localStorage['firstName'],
         lastName: window.localStorage['lastName'],
         phone: window.localStorage['phone'],
-        email: window.localStorage['email']
-      }
+        email: window.localStorage['email'],
+      },
+      isMobile: window.innerWidth <= this.tabletWidth, 
     }
   }
+
+  toggle = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
 
   setUser = (newContext) => {
     return this.setState(newContext);
@@ -163,8 +189,8 @@ export class App extends React.Component {
         <BrowserRouter>
           <div className='App'>
             {this.state.userSession.isAuthenticated
-              && <><NavMenu />
-                <Header /></>}
+              && <><NavMenu toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/>
+                <Header toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/></>}
 
             <Switch>
               <Route exact path='/login' component={LoginForm} />
