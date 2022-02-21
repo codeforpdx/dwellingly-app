@@ -68,15 +68,29 @@ const AddPropertyManager = () => {
       });
   };
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = (values, { setSubmitting, resetForm }) => {
     const payload = {
-      ...data,
+      ...values,
       type: UserType.PROPERTY_MANAGER,
       role: RoleEnum.PROPERTY_MANAGER,
       property_ids: propertySelection.map(p => p.key)
     };
 
-    context.apiCall('post', `/users/invitation`, payload, { success: `Property Manager Created Successfully, an invite email has been sent.` })
+    setSubmitting(true);
+
+    context.apiCall('post', `/users/invitation`, payload,
+      { success: `Property Manager Created Successfully, an invite email has been sent.` })
+      .then((response) => {
+        if(response) {
+          resetForm();
+          setPropertySelection([]);
+          setPropertySearchText("");
+          setPropertySearchResults(propertyOptions);
+        }
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
 
   const closePropertyModal = () => { setShowAddProperty(false) }
@@ -116,16 +130,7 @@ const AddPropertyManager = () => {
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
-            const toSubmit = {
-              ...values
-            };
-
-            setSubmitting(true);
-            handleFormSubmit(toSubmit);
-            resetForm();
-            setSubmitting(false);
-          }}
+          onSubmit={handleFormSubmit}
         >
           {({
             handleSubmit,
