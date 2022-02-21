@@ -39,7 +39,7 @@ const EditStaff = () => {
   }, []);
 
   const getStaff = (staffId) => {
-    userContext.apiCall('get', `/user/${staffId}`, {}, {})
+    userContext.apiCall('get', `/users/${staffId}`, {}, {})
       .then((response) => {
         const staff = response.data;
         setStaffMember(staff);
@@ -48,7 +48,7 @@ const EditStaff = () => {
   };
 
   const update = (payload) => {
-    userContext.apiCall('patch', `/user/${id}`, payload, { success: "Save successful!" })
+    userContext.apiCall('patch', `/users/${id}`, payload, { success: "Save successful!" })
       .then(response => {
         setStaffMember({
           ...staffMember,
