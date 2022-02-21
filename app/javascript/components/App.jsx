@@ -99,8 +99,8 @@ export class App extends React.Component {
         if (response) {
           const user = response.data
           window.localStorage['authenticated'] = true,
-          window.localStorage['firstName'] = user.first_name
-          window.localStorage['lastName'] = user.last_name
+          window.localStorage['firstName'] = user.firstName
+          window.localStorage['lastName'] = user.lastName
           window.localStorage['phone'] = user.phone
           window.localStorage['email'] = user.email
           this.setState({
