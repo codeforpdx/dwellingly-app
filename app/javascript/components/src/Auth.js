@@ -36,6 +36,7 @@ export const auth = {
         localStorage.removeItem( 'lastName' );
         localStorage.removeItem( 'phone' );
         localStorage.removeItem( 'email' );
+        localStorage.removeItem( 'id' );
         Toast("Successfully logged out", "success");
         return Promise.resolve(response);
       })
@@ -46,6 +47,7 @@ export const auth = {
         localStorage.removeItem( 'lastName' );
         localStorage.removeItem( 'phone' );
         localStorage.removeItem( 'email' );
+        localStorage.removeItem( 'id' );
         Toast("Already signed out", "error");
         return Promise.resolve(error);
       })

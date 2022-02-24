@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { LoginForm } from "./src/views/Login";
 import SignupForm from "./src/views/Signup";
 import { NavMenu } from "./src/views/NavigationMenu";
-import { Dashboard } from "./src/views/Dashboard";
+import { DashboardAdmin } from "./src/views/DashboardAdmin";
 import { RequestAccess } from "./src/views/RequestAccess";
 import Properties from "./src/views/PropertyList";
 import EditProperty from "./src/views/EditProperty";
@@ -39,6 +39,7 @@ import AddTicket from "./src/views/AddTicket";
 import Toast from "./src/utils/toast";
 import PropertyManagerList from "./src/views/PropertyManagerList";
 import EditStaff from "./src/views/EditStaff";
+import DashboardPropertyManager from "./src/views/DashboardPropertyManager/DashboardPropertyManager";
 
 export class App extends React.Component {
   constructor(props) {
@@ -80,6 +81,7 @@ export class App extends React.Component {
         lastName: window.localStorage['lastName'],
         phone: window.localStorage['phone'],
         email: window.localStorage['email'],
+        id: window.localStorage['id']
       },
       isMobile: window.innerWidth <= this.tabletWidth, 
     }
@@ -102,14 +104,16 @@ export class App extends React.Component {
           window.localStorage['firstName'] = user.firstName
           window.localStorage['lastName'] = user.lastName
           window.localStorage['phone'] = user.phone
-          window.localStorage['email'] = user.email
+          window.localStorage['email'] = user.email,
+          window.localStorage['id'] = user.id
           this.setState({
             userSession: {
               isAuthenticated: true,
               email: user.email,
               firstName: user.firstName,
               lastName: user.lastName,
-              phone: user.phone
+              phone: user.phone,
+              id: user.id
             }
           })
         }
@@ -125,7 +129,8 @@ export class App extends React.Component {
             firstName: '',
             lastName: '',
             email: '',
-            phone: ''
+            phone: '',
+            id: ''
           }
         }, () => {
           window.location.replace('/login');
@@ -199,7 +204,7 @@ export class App extends React.Component {
               <Route exact path='/privacypolicy' component={PrivacyPolicy} />
               <Route exact path='/forgot-password' component={ForgotPassword} />
               <PrivateRoute exact path='/' component={() => <Redirect to="/dashboard" />} />
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/dashboard' component={DashboardAdmin} />
               <PrivateRoute exact path='/home' component={() => <Redirect to="/dashboard" />} />
               <PrivateRoute exact path='/add/tenant' component={AddTenant} />
               <PrivateRoute exact path='/add/property' component={() => <AddProperty showPageTitle={true}/>} />
@@ -221,6 +226,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/settings' component={Settings} />
               <PrivateRoute exact path='/changePassword' component={ChangePassword} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
+              <PrivateRoute exact path='/testpm' component={DashboardPropertyManager} />
               <Route path='*' component={NoMatch} />
             </Switch>
             {this.state.userSession.isAuthenticated
