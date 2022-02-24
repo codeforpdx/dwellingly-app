@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
-import roleEnum from '../../Enums/RoleEnum';
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../components/Search";
 import UserContext from '../../contexts/UserContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
