@@ -9,12 +9,13 @@ import Search from "../components/Search/index";
 import Toast from '../../utils/toast';
 import Modal from '../components/Modal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faChevronDown, faTrash, faFilterCircleXmark, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
 import './styles/index.scss';
 import { columns, mobileColumns } from './components/ticketsTableComponents';
 import { formatDate } from '../../utils/date';
+import Filter from "./components/ticketsFilter";
 
 const pageButtonRenderer = ({
   page,
@@ -266,33 +267,21 @@ const Tickets = (props) => {
             placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
           />
           <Accordion
-            icon={<i className="fas fa-filter"></i>}
+            icon={
+              isFiltered ? 
+              <FontAwesomeIcon icon={faFilter} /> : 
+              <FontAwesomeIcon icon={faFilterCircleXmark} />
+              }
             header="Filters"
+            
           >
-            <div className="section-row">
-              <div className="filter-control">
-                <label>Opened From</label>
-                <input className="input is-rounded"></input>
-              </div>
-              <div className="filter-control">
-                <label>Category</label>
-                <div className="select is-rounded">
-                  <select>
-                    <option>All</option>
-                    <option>Complaints</option>
-                    <option>Maintenance</option>
-                  </select>
-                </div>
-              </div>
-              <div className="filter-control">
-                <label>Status</label>
-                <div className="buttons has-addons">
-                  <button className="button is-rounded btn-group">New </button>
-                  <button className="button is-rounded btn-group">In Progress</button>
-                  <button className="button is-rounded btn-group">Closed</button>
-                </div>
-              </div>
-            </div>
+          <Filter 
+            input={tickets}
+            outputLocation={filteredTickets}
+            isFilteredLocation={isFiltered}
+            setIsFilteredStateFalse={setIsFilteredTicketsFalse}
+            setOutputState={setOutputState}
+          />
           </Accordion>
           <div className='bulk-actions-container py-3'>
             <button
