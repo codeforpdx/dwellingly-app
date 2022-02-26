@@ -42,3 +42,11 @@ ul.archive-tickets-list {
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
 }
+
+.active {
+  border-color: $primary;
+  z-index: 4;
+  box-shadow: 0 0 0 0.125em rgb(81 163 252 / 25%);
+}
+
+
