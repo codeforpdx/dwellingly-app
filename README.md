@@ -54,9 +54,11 @@ From terminal:
 - run `cp config/application.yml.example config/application.yml`
 - If using sqlite3 then uncomment sqlite3 in the `config/application.yml` file.
 - Create, load, and seed the database with: `bin/rails db:setup`
-- Start server with: `bin/rails s`
-- For now its necessary to also start a js server with: `./bin/webpack-dev-server`
-  - This will precompile javascript and reload the browser when there are javascript changes
+- Start the servers
+  - Start the Rails server with: `bin/rails s`
+  - Start the weback server with: `./bin/webpack-dev-server`
+    - This will precompile javascript and reload the browser when there are javascript changes
+  - Alternatively: You can use `bin/dev` to start both servers. (May not work with Windows)
 
 ## About Us
 * [Code for PDX](https://www.codeforpdx.org/) - [Meetup Info](https://www.meetup.com/Code-for-PDX/)
