@@ -5,19 +5,19 @@ FactoryBot.define do
     lastName { Faker::Name.last_name }
     password { 'asdfasdf' }
 
-    factory :admin do
+    factory :admin, class: 'Admin' do
       type { 'Admin' }
     end
 
-    factory :staff do
+    factory :staff, class: 'Staff' do
       type { 'Staff' }
     end
 
-    factory :property_manager do
+    factory :property_manager, class: 'PropertyManager' do
       type { 'PropertyManager' }
     end
 
-    factory :unauthorized_user do
+    factory :unauthorized_user, class: 'UnauthorizedUser' do
       # Default type is unauthorized
     end
   end

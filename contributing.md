@@ -107,6 +107,8 @@ Finally and always, there is documentation. Documentation is great not just for 
 ----
 ### Testing
 
+All specs can be ran with: `bin/spec`
+
 #### Unit/Functional Tests
 
 Javascript tests can be ran with `npm run test`

@@ -10,6 +10,7 @@ class Tenant < ApplicationRecord
   scope :active, -> { where(archived: false) }
   scope :housed, -> { joins(:lease) }
   scope :unstaffed, -> { left_joins(:staff_tenant_connections).where(staff_tenant_connections: { staff_id: nil }) }
+  scope :tickets, -> { Ticket.where(tenant_id: select(:id)) }
 
   accepts_nested_attributes_for :lease
 

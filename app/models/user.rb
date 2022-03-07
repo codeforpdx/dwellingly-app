@@ -4,17 +4,18 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :tickets, dependent: :restrict_with_exception, foreign_key: :author_id, inverse_of: :author
-
   scope :active, -> { where(archived: false) }
 
   def full_name
     "#{firstName} #{lastName}"
   end
 
-  def approved?
-    true
-  end
+  def approved?() = true
+  def admin?() = is_a?(Admin)
+  def staff?() = is_a?(Staff)
+  def property_manager?() = is_a?(PropertyManager)
+  def unauthorized_user?() = is_a?(UnauthorizedUser)
+  def staff_level?() = admin? || staff?
 
   # Devise orverrides for authentication
   # Archived users cannot login.

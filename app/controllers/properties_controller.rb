@@ -1,22 +1,15 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: %i[ show edit update destroy ]
+  before_action :set_property, only: %i[ show update destroy ]
 
   def index
-    @properties = Property.includes(:property_managers, :tenants)
+    @properties = policy_scope(Property.includes(:property_managers, :tenants))
   end
 
   def show
   end
 
-  def new
-    @property = Property.new
-  end
-
-  def edit
-  end
-
   def create
-    @property = Property.new(create_params)
+    @property = authorize Property.new(create_params)
 
     if @property.save
       render :show, status: :created
@@ -41,7 +34,8 @@ class PropertiesController < ApplicationController
   private
 
   def set_property
-    @property = Property.find(params[:id])
+    skip_authorization
+    @property = policy_scope(Property).find(params[:id])
   end
 
   def property_params

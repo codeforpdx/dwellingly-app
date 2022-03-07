@@ -1,6 +1,7 @@
 class NotesController < ApplicationController
   before_action :find_ticket
   before_action :find_note, only: %i[ update destroy ]
+  after_action :verify_policy_scoped
 
   def create
     @note = @ticket.notes.new(note_params.merge(user: current_user))
@@ -28,14 +29,14 @@ class NotesController < ApplicationController
   private
 
   def find_ticket
-    @ticket = Ticket.find(params[:ticket_id])
+    @ticket = policy_scope(Ticket).find(params[:ticket_id])
   end
 
   def find_note
-    @note = @ticket.notes.find(params[:id])
+    @note = policy_scope(@ticket).notes.find(params[:id])
   end
 
   def note_params
-    params.require(:note).permit(:text, :user_id, :ticket_id)
+    params.require(:note).permit(:text, :ticket_id)
   end
 end

@@ -1,22 +1,17 @@
 class TenantsController < ApplicationController
-  before_action :set_tenant, only: %i[ show edit update destroy ]
+  before_action :find_tenant, only: %i[ show update destroy ]
+  after_action :verify_policy_scoped, except: :create
+  after_action :verify_authorized, only: %i[ create update destroy ]
 
   def index
-    @tenants = Tenant.includes(:staff, :property)
+    @tenants = policy_scope(Tenant.includes(:staff, :property))
   end
 
   def show
   end
 
-  def new
-    @tenant = Tenant.new
-  end
-
-  def edit
-  end
-
   def create
-    @tenant = Tenant.new(create_params)
+    @tenant = authorize(Tenant).new(create_params)
 
     if @tenant.save
       render :show, status: :created
@@ -26,6 +21,7 @@ class TenantsController < ApplicationController
   end
 
   def update
+    authorize @tenant
     if @tenant.update(tenant_params)
       render :show, status: :ok
     else
@@ -34,14 +30,15 @@ class TenantsController < ApplicationController
   end
 
   def destroy
+    authorize @tenant
     @tenant.destroy
     head :no_content
   end
 
   private
 
-  def set_tenant
-    @tenant = Tenant.find(params[:id])
+  def find_tenant
+    @tenant = policy_scope(Tenant).find(params[:id])
   end
 
   def tenant_params

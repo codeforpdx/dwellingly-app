@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PasswordsController < Devise::PasswordsController
+  after_action :verify_policy_scoped
+
   # GET /resource/password/new
   # def new
   #   super

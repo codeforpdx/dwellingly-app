@@ -1,6 +1,7 @@
 class EmergencyContactsController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :set_emergency_contact, only: %i[ show edit update destroy ]
+  skip_before_action :authenticate_user!, only: %i[ index show ]
+  before_action :set_emergency_contact, only: %i[ show update destroy ]
+  after_action :verify_authorized, only: %i[ create update destroy ]
 
   def index
     @emergency_contacts = EmergencyContact.includes(:contact_numbers)
@@ -9,15 +10,8 @@ class EmergencyContactsController < ApplicationController
   def show
   end
 
-  def new
-    @emergency_contact = EmergencyContact.new
-  end
-
-  def edit
-  end
-
   def create
-    @emergency_contact = EmergencyContact.new(emergency_contact_params)
+    @emergency_contact = authorize EmergencyContact.new(emergency_contact_params)
 
     if @emergency_contact.save
       render :show, status: :created
@@ -27,6 +21,7 @@ class EmergencyContactsController < ApplicationController
   end
 
   def update
+    authorize @emergency_contact
     if @emergency_contact.update(emergency_contact_params)
       render json: :ok
     else
@@ -35,6 +30,7 @@ class EmergencyContactsController < ApplicationController
   end
 
   def destroy
+    authorize @emergency_contact
     @emergency_contact.destroy
     head :no_content
   end
