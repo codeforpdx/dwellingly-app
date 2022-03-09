@@ -28,9 +28,9 @@ function ManagerSearchPanel(props) {
   }, [managerSearch])
 
   useEffect(() => {
-    userContext.apiCall('get', `/user?r=${RoleEnum.PROPERTY_MANAGER}`, {}, {})
+    userContext.apiCall('get', `/property_managers`, {}, {})
       .then((response) => {
-        let updatedManagerOptions = response.data.users.map(({ id, firstName, lastName }) => {
+        let updatedManagerOptions = response.data.map(({ id, firstName, lastName }) => {
           return ({
             key: id,
             description: `${firstName} ${lastName}`

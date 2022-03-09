@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
-import roleEnum from '../../Enums/RoleEnum';
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Search from "../components/Search";
 import UserContext from '../../contexts/UserContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -70,11 +68,6 @@ const PropertyManagerList = () => {
 
   const context = useContext(UserContext);
 
-  const handleSelectRow = (manager) => setSelectedManagers([...selectedManagers, manager]);
-  const handleDeselectRow = (manager) => setSelectedManagers(selectedManagers.filter(p => p.id !== manager.id));
-  const handleSelectAll = setSelectedManagers;
-  const handleDeselectAll = (_) => setSelectedManagers([]);
-
   const { matchesAll: isSmallScreen } = useMediaQueries({
     screen: 'screen',
     width: `(max-width: ${tabletWidth})`
@@ -123,15 +116,6 @@ const PropertyManagerList = () => {
             keyField="id"
             data={searchedManagers}
             columns={isSmallScreen ? mobileColumns : columns}
-            selectRow={({
-              mode: 'checkbox',
-              clickToSelect: isSmallScreen ? false : true,
-              clickToExpand: isSmallScreen ? true : false,
-              onSelect: (row, isSelect) => isSelect ? handleSelectRow(row) : handleDeselectRow(row),
-              onSelectAll: (isSelect, rows) => isSelect ? handleSelectAll(rows) : handleDeselectAll(rows),
-              sort: true,
-              headerColumnStyle: () => ({ width: "5%" })
-            })}
             defaultSortDirection="asc"
             bootstrap4={true}
             headerClasses="table-header"
