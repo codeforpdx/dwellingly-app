@@ -94,9 +94,8 @@ const ticketColumns = [{
   }
 }];
 
-const DashboardPropertyManager = () => {
+const DashboardStaff = () => {
   const [tenants, setTenants] = useState([]);
-  const [properties, setProperties] = useState([]);
   const [tickets, setTickets] = useState([]);
   const userContext = useContext(UserContext);
 
@@ -104,7 +103,6 @@ const DashboardPropertyManager = () => {
     userContext.apiCall('get', `/users/${userContext.user.id}`, {}, {})
       .then(({ data }) => {
         if (data) {
-          setProperties(data.properties);
           setTenants(data.tenants);
         }
       });
@@ -143,21 +141,6 @@ const DashboardPropertyManager = () => {
         </div>
         <div className="section-container">
           <Collapsible
-            title="Properties"
-            count={properties?.length ?? 0}>
-            <div>
-              <BootstrapTable
-                keyField='id'
-                data={properties}
-                columns={propertyColumns}
-                bootstrap4={true}
-                headerClasses="table-header"
-              />
-            </div>
-          </Collapsible>
-        </div>
-        <div className="section-container">
-          <Collapsible
             title="Tenants"
             count={tenants?.length ?? 0}>
             <div>
@@ -176,4 +159,4 @@ const DashboardPropertyManager = () => {
   );
 };
 
-export default DashboardPropertyManager;
+export default DashboardStaff;

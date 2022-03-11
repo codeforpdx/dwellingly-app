@@ -40,6 +40,8 @@ import Toast from "./src/utils/toast";
 import PropertyManagerList from "./src/views/PropertyManagerList";
 import EditStaff from "./src/views/EditStaff";
 import DashboardPropertyManager from "./src/views/DashboardPropertyManager/DashboardPropertyManager";
+import DashboardStaff from "./src/views/DashboardStaff/DashboardStaff";
+import DashboardPropertyManagerMobile from "./src/views/DashboardPropertyManager/DashboardPropertyManagerMobile";
 
 export class App extends React.Component {
   constructor(props) {
@@ -227,6 +229,8 @@ export class App extends React.Component {
               <PrivateRoute exact path='/changePassword' component={ChangePassword} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
               <PrivateRoute exact path='/testpm' component={DashboardPropertyManager} />
+              <PrivateRoute exact path='/teststaff' components={DashboardStaff} />
+              <PrivateRoute exact path='/m/testpm' component={DashboardPropertyManagerMobile} />
               <Route path='*' component={NoMatch} />
             </Switch>
             {this.state.userSession.isAuthenticated && !this.state.isMobile
