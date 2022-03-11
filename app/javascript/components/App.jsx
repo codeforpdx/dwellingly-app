@@ -22,7 +22,7 @@ import {
   PrivateRoute,
   auth,
 } from "./src/Auth";
-import Header from "./src/views/Header";
+import Header from "./src/views/Header/Header";
 import Footer from "./src/views/Footer";
 import { AddProperty } from "./src/views/AddProperty/index";
 import EditPropertyManager from "./src/views/EditPropertyManager";
@@ -193,8 +193,8 @@ export class App extends React.Component {
           apiCall: this.apiCall }} >
         <BrowserRouter>
           <div className='App'>
-            {this.state.userSession.isAuthenticated
-              && <><NavMenu toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/>
+            {this.state.userSession.isAuthenticated && !window.location.pathname.includes('/m/testpm') &&
+              <><NavMenu toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/>
                 <Header toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/></>}
 
             <Switch>
@@ -229,7 +229,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/testpm' component={DashboardPropertyManager} />
               <Route path='*' component={NoMatch} />
             </Switch>
-            {this.state.userSession.isAuthenticated
+            {this.state.userSession.isAuthenticated && !this.state.isMobile
               && <Footer />}
           </div>
         </BrowserRouter>
