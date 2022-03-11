@@ -15,7 +15,7 @@ import Terms from "./src/views/Terms";
 import TicketList from "./src/views/TicketList";
 import Settings from "./src/views/Settings";
 import ForgotPassword from "./src/views/ForgotPassword";
-import EmergencyContacts from "./src/views/EmergencyContactList";
+import EmergencyContacts from "./src/views/EmergencyContactList/EmergencyContactList";
 import AddEmergencyContact from "./src/views/AddEmergencyContact";
 import PrivacyPolicy from "./src/views/PrivacyPolicy";
 import {
