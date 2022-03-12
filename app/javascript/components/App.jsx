@@ -26,7 +26,7 @@ import Header from "./src/views/Header/Header";
 import Footer from "./src/views/Footer";
 import { AddProperty } from "./src/views/AddProperty/index";
 import EditPropertyManager from "./src/views/EditPropertyManager";
-import { JoinStaffList } from "./src/views/JoinStaffList";
+import { JoinStaffList } from "./src/views/JoinStaffList/JoinStaffList";
 import { AddStaffMember } from "./src/views/AddStaffMember";
 import AddTenant from "./src/views/AddTenant";
 import AddPropertyManager from './src/views/AddPropertyManager';
