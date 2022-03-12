@@ -3,7 +3,7 @@ import {render, screen} from "@testing-library/react"
 import "@testing-library/jest-dom/extend-expect"
 import {MemoryRouter} from "react-router-dom"
 import UserContext from "components/src/contexts/UserContext"
-import Header from "components/src/views/Header/index";
+import Header from "components/src/views/Header/Header";
 
 beforeEach( () => {
   render(
