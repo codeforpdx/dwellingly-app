@@ -6,6 +6,8 @@ import { useState } from 'react';
 import TitleAndPen, { useEditingStatus } from '../components/TitleAndPen';
 
 import './styles/index.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const EmergencyContactList = ({ isEditing, handleDelete, id, name, description, contact_numbers: contactNumbers }) => {
   const history = useHistory();
@@ -60,7 +62,7 @@ const EmergencyContacts = () => {
   };
   const handleDelete = id => {
     const continueDelete = window.confirm('Are you sure you want to delete the emergency contact?');
-    if(!continueDelete) return;
+    if (!continueDelete) return;
     userContext.apiCall('delete', `${url}${id}`, {}, {})
       .then(() => {
         setApiContacts(apiContacts.filter(contact => contact.id !== id));
@@ -75,7 +77,13 @@ const EmergencyContacts = () => {
 
           <Link className="is-rounded" to="/add/emergencyContact">
             <i className="fas fa-plus-circle"></i> Create Emergency Number
-                </Link>
+          </Link>
+        </div>
+        <div className="emergency_contacts__disclaimer-container">
+          <p className="emergency_contacts__disclaimer">In the event of a life-threatening emergency with your JOIN tenants, please dial 911.</p>
+            <a className="emergency_contacts__emergency-button" href={`tel:911`}>
+              <FontAwesomeIcon icon={faPhone} /> 911
+            </a>
         </div>
         <div className="table-row">
           <div className="row_container">

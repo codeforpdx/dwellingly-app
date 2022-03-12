@@ -86,6 +86,27 @@
         }      
     }
 
+    &__disclaimer-container {
+        color: $darkGray;
+        background-color: $lighterGray;
+        align-items: center;
+        text-align: center;
+        vertical-align: middle;
+        padding: 16px 0px;
+        width: 100%;
+    }
+
+    &__disclaimer {
+        padding-bottom: 12px;
+    }
+
+    &__emergency-button {
+        padding: 6px 50px;
+        border-radius: 16px;
+        background-color: red;
+        color: white;
+    }
+
     .button {
         margin: 10px;
         font-weight: bold;
