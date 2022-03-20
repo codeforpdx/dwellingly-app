@@ -39,7 +39,8 @@ export const AddProperty = (props) => {
   const [filteredManagerOptions, setFilteredManagerOptions] = useState([])
   const [managerSearch, setManagerSearch] = useState('')
   const userContext = useContext(UserContext)
-  const { showPageTitle, handleCancel, afterCreate } = props
+  const { showPageTitle, handleCancel, 
+    afterCreate, showAssignPropManagers } = props
 
   useMountEffect(() => getManagers())
 
@@ -187,6 +188,7 @@ export const AddProperty = (props) => {
                   {errors.num_units ? (<div className='error-message'>{errors.num_units}</div>) : null}
                 </div>
 
+                {showAssignPropManagers ? ( 
                 <div className=' add-property__assign-manager-container'>
                   <h3 className='section-title'>ASSIGN PROPERTY MANAGERS</h3>
                   <div className='typeahead-section'>
@@ -204,7 +206,8 @@ export const AddProperty = (props) => {
                       variant={SearchPanelVariant.checkbox}
                     />
                   </div>
-                </div>
+                </div>) : null }
+
                 <div className='container-footer mt-3'>
                 <button
                   className='button is-primary is-rounded mr-5'
