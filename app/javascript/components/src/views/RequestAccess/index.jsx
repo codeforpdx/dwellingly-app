@@ -183,6 +183,7 @@ export const RequestAccess = (props) => {
             showPageTitle={false}
             postOnSubmit={getProperties}
             handleCancel={handleAddPropertyCancel}
+            showAssignPropManagers={false}
             />}
           hasButtons={false}
           closeHandler={handleAddPropertyCancel}

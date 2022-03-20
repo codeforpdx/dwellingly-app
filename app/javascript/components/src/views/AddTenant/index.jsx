@@ -447,6 +447,7 @@ const AddTenant = () => {
                 showPageTitle={false}
                 handleCancel={closePropertyModal}
                 afterCreate={closeAndSetProperty}
+                showAssignPropManagers={true}
               />
             }
             hasButtons={false}

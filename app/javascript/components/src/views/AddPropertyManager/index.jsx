@@ -278,6 +278,7 @@ const AddPropertyManager = () => {
                 showPageTitle={false}
                 afterCreate={closeAndSetProperty}
                 handleCancel={closePropertyModal}
+                showAssignPropManagers={false}
               />
             }
             hasButtons={false}

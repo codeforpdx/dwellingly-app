@@ -212,7 +212,7 @@ export class App extends React.Component {
               <PrivateRoute exact path='/dashboard' component={DashboardAdmin} />
               <PrivateRoute exact path='/home' component={() => <Redirect to="/dashboard" />} />
               <PrivateRoute exact path='/add/tenant' component={AddTenant} />
-              <PrivateRoute exact path='/add/property' component={() => <AddProperty showPageTitle={true}/>} />
+              <PrivateRoute exact path='/add/property' component={() => <AddProperty showPageTitle={true} showAssignPropManagers={true}/>} />
               <PrivateRoute exact path='/add/manager' component={AddPropertyManager} />
               <PrivateRoute exact path='/add/ticket' component={AddTicket} />
               <PrivateRoute exact path='/manage/tenants' component={Tenants} />
