@@ -165,7 +165,7 @@ export const Dashboard = (props) => {
             title="New Staff Assignments"
             count={unstaffedTenants.length}
           >
-            <div className="dashboard__assignments_container">
+            <div>
               {
                 unstaffedTenants.slice(0, 5).map(tenant => (
                   <NewStaffItem
