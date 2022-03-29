@@ -42,6 +42,7 @@ import EditStaff from "./src/views/EditStaff";
 import DashboardPropertyManager from "./src/views/DashboardPropertyManager/DashboardPropertyManager";
 import DashboardStaff from "./src/views/DashboardStaff/DashboardStaff";
 import DashboardPropertyManagerMobile from "./src/views/DashboardPropertyManager/DashboardPropertyManagerMobile";
+import DashboardStaffMobile from "./src/views/DashboardStaff/DashboardStaffMobile";
 
 export class App extends React.Component {
   constructor(props) {
@@ -195,7 +196,8 @@ export class App extends React.Component {
           apiCall: this.apiCall }} >
         <BrowserRouter>
           <div className='App'>
-            {this.state.userSession.isAuthenticated && !window.location.pathname.includes('/m/testpm') &&
+            {this.state.userSession.isAuthenticated && !window.location.pathname.includes('/m/testpm')
+              && !window.location.pathname.includes('/m/teststaff') &&
               <><NavMenu toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/>
                 <Header toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/></>}
 
@@ -229,8 +231,9 @@ export class App extends React.Component {
               <PrivateRoute exact path='/changePassword' component={ChangePassword} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
               <PrivateRoute exact path='/testpm' component={DashboardPropertyManager} />
-              <PrivateRoute exact path='/teststaff' components={DashboardStaff} />
+              <PrivateRoute exact path='/teststaff' component={DashboardStaff} />
               <PrivateRoute exact path='/m/testpm' component={DashboardPropertyManagerMobile} />
+              <PrivateRoute exact path='/m/teststaff' component={DashboardStaffMobile} />
               <Route path='*' component={NoMatch} />
             </Switch>
             {this.state.userSession.isAuthenticated && !this.state.isMobile
