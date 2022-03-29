@@ -18,7 +18,7 @@ function NewStaffItem(props) {
                         {tenant.propertyName}<br />
                         {
                             tenant.propertyManagerNames.map((name) => (
-                                <div><span className="subtext">{name}</span><br /></div>
+                                <div key={`property-${name}`}><span className="subtext">{name}</span><br /></div>
                             ))
                         }
                     </div>

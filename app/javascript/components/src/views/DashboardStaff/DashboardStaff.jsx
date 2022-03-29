@@ -1,28 +1,8 @@
-// One top level component to make API calls, determine window size and view
-// Desktop
-
-// Collapsible list of Properties in table format - component?
-// Collapsible list of Tenants in table format - component?
-// Collapsible list of Tickets in table format - component?
-
-// Call /api/users/:id to get user info, properties, and tenants
-// Call /api/tenants/:id per tenant for tickets assigned to tenant or create a new API for tickets by Property Manager
-// -- going to have the same issue for JOIN Staff?
-
-
-// Mobile
-// Breakpoint at 960 width
-
-// 3 tabs (component) - Properties, Tenants, Tickets
-
 import React, { useState, useEffect, useContext } from 'react';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import Collapsible from '../components/Collapsible';
 import UserContext from '../../contexts/UserContext';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
-import { columns as propertyColumns, mobileColumns as propertyMobileColumns }
-  from '../PropertyList/components/propertiesTableComponents';
 import { formatDate } from '../../utils/date';
 
 const tenantColumns = [
