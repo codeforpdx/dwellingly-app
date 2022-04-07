@@ -448,6 +448,7 @@ const AddTenant = () => {
                 handleCancel={closePropertyModal}
                 afterCreate={closeAndSetProperty}
                 showAssignPropManagers={true}
+                propManagerSearchPanelWidth={200}
               />
             }
             hasButtons={false}

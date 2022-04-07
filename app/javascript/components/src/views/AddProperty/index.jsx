@@ -40,7 +40,8 @@ export const AddProperty = (props) => {
   const [managerSearch, setManagerSearch] = useState('')
   const userContext = useContext(UserContext)
   const { showPageTitle, handleCancel, 
-    afterCreate, showAssignPropManagers } = props
+    afterCreate, showAssignPropManagers, 
+    propManagerSearchPanelWidth } = props
 
   useMountEffect(() => getManagers())
 
@@ -196,7 +197,7 @@ export const AddProperty = (props) => {
                       chips
                       choices={filteredManagerOptions}
                       small
-                      width={400}
+                      width={propManagerSearchPanelWidth || 400}
                       shadow
                       onChange={handleSearchChange}
                       onSelectionChange={handleSelectionChange}
