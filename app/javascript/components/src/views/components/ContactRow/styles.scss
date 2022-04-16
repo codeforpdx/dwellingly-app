@@ -1,0 +1,65 @@
+@import "../../../scss/variables.scss";
+
+.contact{
+    &__row {
+        display: flex;
+        align-items: center;
+        padding: .6rem 0;
+
+        border-bottom: 1px solid $lightGray;
+        &:first-child {
+            border-top: 1px solid $lightGray;
+        }
+    }
+
+    &__main_column {
+        flex-grow: 1;
+        margin-left: -.1rem;
+        font-weight: bold;
+
+        &.active {
+            color: $blue;
+            cursor: pointer;
+        }
+    }
+    
+    &__subtext {
+        font-weight: lighter;
+        color: $gray;
+        font-size: 0.8em;
+        width: 60%;
+        min-width: 2rem;
+    }
+
+    @media only screen and (min-width: 961px) {
+        &__column {
+            text-align: right;
+            padding-right: 4.5rem;
+            font-weight: bold;
+            .number-container {
+                display: inline-block;
+            }
+        }
+    }
+    @media only screen and (max-width: 960px) {
+        &__column {
+            text-align: right;
+            font-weight: bold;
+            .number-container {
+                display: inline-block;
+            }
+        }
+    }
+    &__action {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    &__delete_action {
+        margin-right: 1rem;
+        .icon {
+            height: 100%;
+            color: $red;
+            cursor: pointer;
+        }
+    }
+}
