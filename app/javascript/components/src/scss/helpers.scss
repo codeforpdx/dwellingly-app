@@ -46,9 +46,7 @@
 }
 
 .section-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: block;
   margin: 20px;
   .filter-control {
     display: flex;
@@ -56,6 +54,14 @@
     label {
       margin-bottom: 10px;
     }
+  }
+}
+
+@media (min-width: $breakpointMobile) {
+  .section-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 

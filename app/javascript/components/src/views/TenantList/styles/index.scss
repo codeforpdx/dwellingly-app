@@ -6,11 +6,14 @@
     align-items: center;
   }
 
-  .search-and-archive-container {
-    display: flex;
-    justify-content: space-between;
-    .search-section {
-      flex-grow: 1;
+
+  @media (min-width: $breakpointMobile) {
+    .search-and-archive-container {
+      display: flex;
+      justify-content: space-between;
+      .search-section {
+        flex-grow: 1;
+      }
     }
   }
 
