@@ -45,6 +45,7 @@
     "@testing-library/user-event": "^7.2.1"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "watch": "./bin/webpack-dev-server"
   }
 }
