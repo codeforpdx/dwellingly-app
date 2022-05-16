@@ -1,7 +1,7 @@
-import { convertManagersDataForTable } from 'components/src/views/PropertyManagerList/util/index'
+import { convertManagersDataForTable } from "components/src/views/PropertyManagerList/util/index"
 
 describe("Manager list util methods", () => {
-   it("should be Active status when 'archived' is false and has a valid 'lastActive'", () => {
+  it("should be Active status when 'archived' is false and has a valid 'lastActive'", () => {
     const managersDataCopy = [
       {
         email: "user1@dwellingly.org",
@@ -18,8 +18,8 @@ describe("Manager list util methods", () => {
     ]
     const [ result ] = convertManagersDataForTable(managersDataCopy)
 
-    expect(result.status).toEqual('Active')
-  });
+    expect(result.status).toEqual("Active")
+  })
 
   it("should be Archived status when 'archived' is true and has a valid 'lastActive'", () => {
     const managersDataCopy = [
@@ -38,8 +38,8 @@ describe("Manager list util methods", () => {
     ]
     const [ result ] = convertManagersDataForTable(managersDataCopy)
 
-    expect(result.status).toEqual('Archived')
-  });
+    expect(result.status).toEqual("Archived")
+  })
 
   it("should be Archived status when 'archived' is true and 'lastActive' is undefined", () => {
     const managersDataCopy = [
@@ -57,8 +57,8 @@ describe("Manager list util methods", () => {
     ]
     const [ result ] = convertManagersDataForTable(managersDataCopy)
 
-    expect(result.status).toEqual('Archived')
-  });
+    expect(result.status).toEqual("Archived")
+  })
 
   it("should be Pending status when 'archived' is false and 'lastActive' is undefined", () => {
     const managersDataCopy = [
@@ -76,6 +76,6 @@ describe("Manager list util methods", () => {
     ]
     const [ result ] = convertManagersDataForTable(managersDataCopy)
 
-    expect(result.status).toEqual('Pending')
-  });
-});
+    expect(result.status).toEqual("Pending")
+  })
+})

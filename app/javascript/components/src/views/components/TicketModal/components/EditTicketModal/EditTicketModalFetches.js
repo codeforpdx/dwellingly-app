@@ -1,5 +1,5 @@
 export const fetchAllTenants = (context) =>
-  context.apiCall('get', `/tenants`, {}, {})
+  context.apiCall("get", "/tenants", {}, {})
     .then(({ data }) => {
       const filteredTenants = data.tenants.filter(tenant => !tenant.archived)
       const prunedTenants = filteredTenants.map(tenant => (
@@ -7,7 +7,7 @@ export const fetchAllTenants = (context) =>
       ))
 
       return prunedTenants
-    });
+    })
 
 export const updateTicket = (update, ticketId, context) => 
-  context.apiCall('put', `/tickets/${ticketId}`, update, { success: "Ticket updated!" });
+  context.apiCall("put", `/tickets/${ticketId}`, update, { success: "Ticket updated!" })

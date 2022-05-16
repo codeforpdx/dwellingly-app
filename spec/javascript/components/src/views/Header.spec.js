@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 import {render, screen} from "@testing-library/react"
 import "@testing-library/jest-dom/extend-expect"
 import {MemoryRouter} from "react-router-dom"
 import UserContext from "components/src/contexts/UserContext"
-import Header from "components/src/views/Header/Header";
+import Header from "components/src/views/Header/Header"
 
 beforeEach( () => {
   render(
@@ -13,20 +13,20 @@ beforeEach( () => {
       </UserContext.Provider>
     </MemoryRouter>
   )
-});
+})
 
 describe("Header Component", () => {
-	it("should render without errors", () => {
+  it("should render without errors", () => {
     expect(screen.getByAltText("dwellingly logo")).toBeVisible()
-  });
+  })
 
-	it("should have a gradient background", () => {
+  it("should have a gradient background", () => {
     expect(screen.getByTestId("header")).toHaveClass("bg-gradient")
-	});
-});
+  })
+})
 
-describe('Logout Button', () => {
+describe("Logout Button", () => {
   it("should render LogOutButton", () => {
     expect(screen.getByText(/LOG OUT/i)).toBeVisible()
-  });
-});
+  })
+})
