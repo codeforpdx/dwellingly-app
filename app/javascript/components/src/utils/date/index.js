@@ -1,15 +1,15 @@
 export const formatDateTime = dateString => {
   if(isValidDate(dateString))
     return new Date(dateString).toLocaleString()
-   else 
+  else 
     return null
-};
+}
 
 export const formatDate = dateString => {
   if(isValidDate(dateString))
-    return new Date(dateString).toLocaleDateString();
+    return new Date(dateString).toLocaleDateString()
   else
-    return null;
+    return null
 }
 
 export const isValidDate = d => isNaN(Date.parse(d)) === false

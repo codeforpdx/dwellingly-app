@@ -1,24 +1,24 @@
-import { formatDate } from "../../../utils/date";
+import { formatDate } from "../../../utils/date"
 
 const convertManagersDataForTable = (managersArray) => {
   const convertedManagers = managersArray.map(manager => {
     // Combining data into first level fields for Search capabilities
-    manager.fullName = `${manager.firstName} ${manager.lastName}`;
-    manager.propertyNames = manager.properties?.map(property => property.name).join(', ');
-    manager.lastActive = formatDate(manager.lastActive);
+    manager.fullName = `${manager.firstName} ${manager.lastName}`
+    manager.propertyNames = manager.properties?.map(property => property.name).join(", ")
+    manager.lastActive = formatDate(manager.lastActive)
 
     if(manager.lastActive && !manager.archived) {
-      manager.status = "Active";
+      manager.status = "Active"
     } else if(manager.archived) {
-      manager.status = "Archived";
+      manager.status = "Archived"
     } else {
-      manager.status = "Pending";
+      manager.status = "Pending"
     }
 
-    return manager;
-  });
+    return manager
+  })
 
-  return convertedManagers;
-};
+  return convertedManagers
+}
 
 export {convertManagersDataForTable}
