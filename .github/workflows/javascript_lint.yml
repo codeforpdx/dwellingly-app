@@ -1,0 +1,27 @@
+name: JS Lint
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+
+jobs:
+  js_test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Yarn install
+        run: yarn
+
+      - name: Analyze JS Files
+        run: yarn run lint

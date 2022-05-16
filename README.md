@@ -25,7 +25,7 @@ password: `asdfasdf`
   - Install with a postgres database, and its recommended to use Rbenv as the Ruby version manager.
   - For an easier setup: You can optionally skip postgres installation and use sqlite3. Instructions to use sqllite3 are below.
 - [Node](https://nodejs.org/en/download/)
-  (Last tested with node version 14.16.1, npm version 6.14.12)
+  (use node version ^14.17.0)
 - [yarn](https://classic.yarnpkg.com/en/docs/install)
 - [Git](https://gist.github.com/derhuerst/1b15ff4652a867391f03)
 

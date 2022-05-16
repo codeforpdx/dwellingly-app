@@ -1,0 +1,3 @@
+node_modules
+app/javascript/components/src/serviceWorker.js
+app/javascript/components/src/views/EditPropertyManager/__mocks__/react-router-dom.js
