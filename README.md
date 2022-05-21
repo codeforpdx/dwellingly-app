@@ -2,7 +2,7 @@
 
 ## Description
 
-The nonprofit Join is currently working to help transition people out of homelessness. However, their current system for staying in touch with landlords is currently inadequate.  Code for PDX is building the Dwellingly app in conjuntion with [Join Organization](https://joinpdx.org/). Dwellingly will aid property managers in communicating with social workers, and will eventually aid in supporting both tenants and landlords with a more streamlined rental property process.
+The nonprofit Join is currently working to help transition people out of homelessness. However, their current system for staying in touch with landlords is currently inadequate.  Code for PDX is building the Dwellingly app in conjunction with [Join Organization](https://joinpdx.org/). Dwellingly will aid property managers in communicating with social workers, and will eventually aid in supporting both tenants and landlords with a more streamlined rental property process.
 
 This app aims to replace the current system with a robust ticketing system to ensure the staff at Join can connect with their landlords and clients seamlessly. This will allow Join to provide support and improve success in transitioning people out of homelessness.
 
