@@ -238,7 +238,8 @@ export class App extends React.Component {
               <PrivateRoute exact path='/m/teststaff' component={DashboardStaffMobile} />
               <Route path='*' component={NoMatch} />
             </Switch>
-            {this.state.userSession.isAuthenticated
+            {this.state.userSession.isAuthenticated && !window.location.pathname.includes('/m/testpm')
+              && !window.location.pathname.includes('/m/teststaff')
               && <Footer />}
           </div>
         </BrowserRouter>
