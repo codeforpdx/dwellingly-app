@@ -13,7 +13,8 @@ const MobileHeader = (props) => {
     return null;
   }
 
-  return (
+  return !window.location.pathname.includes('/m/testpm')
+  && !window.location.pathname.includes('/m/teststaff') && (
     <header data-testid="header" className="navbar-brand bg-gradient navbar-container mobile-header">
       <Link className="navbar-item" to="/m/testpm">
         <FontAwesomeIcon icon={faChevronLeft} size="lg"/>

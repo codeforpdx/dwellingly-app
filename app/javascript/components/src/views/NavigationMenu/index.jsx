@@ -59,7 +59,8 @@ export const NavMenu = (props) => {
   }
 
 
-  return (
+  return !window.location.pathname.includes('/m/testpm')
+  && !window.location.pathname.includes('/m/teststaff') && (
     <UserContext.Consumer>
       {({ user }) => (
         <div>

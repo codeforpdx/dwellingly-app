@@ -197,8 +197,7 @@ export class App extends React.Component {
           apiCall: this.apiCall }} >
         <BrowserRouter>
           <div className='App'>
-            {this.state.userSession.isAuthenticated && !window.location.pathname.includes('/m/testpm')
-              && !window.location.pathname.includes('/m/teststaff') &&
+            {this.state.userSession.isAuthenticated &&
               <><NavMenu toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/>
                 <Header toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/></>}
 
