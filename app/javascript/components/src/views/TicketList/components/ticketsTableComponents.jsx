@@ -15,7 +15,7 @@ export const columns = (toggleTicketModal) => ([{
   }
 }, {
   dataField: 'author',
-  text: 'Sender',
+  text: 'Author',
   sort: true,
   headerStyle: () => {
     return { width: "20%" };
@@ -61,20 +61,13 @@ export const mobileColumns = (toggleTicketModal) => ([{
     <p className="cell-subheader">{row.issue}</p>
   </button>,
   headerStyle: () => {
-    return { width: "40%" };
-  }
-}, {
-  dataField: 'sender',
-  text: 'Sender',
-  sort: true,
-  headerStyle: () => {
-    return { width: "40%" };
+    return { width: "60%" };
   }
 }, {
   dataField: 'status',
   text: 'Status',
   sort: true,
   headerStyle: () => {
-    return { width: "20%" };
+    return { width: "40%" };
   }
 }]);

@@ -72,11 +72,19 @@ const expandRow = isSmallScreen => ({
       </label>
       <p id="assigned-to">{row.assigned}</p>
 
+      <br />
+      <label for="author">
+        Author
+      </label>
+      <p id="author">{row.author}</p>
+
+      <br />
       <label for="created-at">
         Created
       </label>
       <p id="created-at">{row.created_at}</p>
 
+      <br />
       <label for="updated-at">
         Updated
       </label>
@@ -264,7 +272,7 @@ const Tickets = (props) => {
             isFilteredLocation={isFiltered}
             setIsFilteredStateFalse={setIsFilteredTicketsFalse}
             setOutputState={setOutputState}
-            placeholderMessage="Search by Ticket, Sender, Assignee, Status, or Date"
+            placeholderMessage="Search by Ticket, Author, Assignee, Status, or Date"
           />
           <Accordion
             icon={

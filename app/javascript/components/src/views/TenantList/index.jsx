@@ -52,10 +52,19 @@ const getDisplayTenants = (tenants, showHoused, showArchived) => {
 const expandRow = isSmallScreen => ({
   renderer: row => (
     <div>
-      <phone for="phone">
-        Phone
-      </phone>
-      <p id="created-at">{row.phone}</p>
+      <label for="phone">Phone</label>
+      <br />
+      <phone id="created-at">{row.phone}</phone>
+      
+      <br />
+      <label for="property-name">
+        Property
+      </label>
+      <p id="property-name">
+        {row.lease && <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
+          {row.propertyName}
+        </Link>}
+      </p>
     </div>
   ),
   showExpandColumn: isSmallScreen ? true : false,

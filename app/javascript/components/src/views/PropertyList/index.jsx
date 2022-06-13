@@ -25,11 +25,16 @@ const expandRow = isSmallScreen => ({
       <p id="property-managers">{row.propertyManagerNames}</p>
 
       <br />
+      <label for="address">
+        Address
+      </label>
+      <p id="address">{row.address}</p>
+
+      <br />
       <label for="created-at">
         Added On
       </label>
       <p id="created-at">{row.created_at}</p>
-
     </div>
   ),
   showExpandColumn: isSmallScreen ? true : false,

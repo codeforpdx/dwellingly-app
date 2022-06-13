@@ -120,25 +120,6 @@ export const mobileColumns = [
     }
   },
   {
-    dataField: "propertyName",
-    formatter: (cell, row, rowIndex, formatExtraData) => {
-      if (row.lease) {
-        return (
-          <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
-            {row.propertyName}
-          </Link>
-        )
-      } else {
-        return null
-      }
-    },
-    text: "Property Name",
-    sort: true,
-    headerStyle: () => {
-      return { width: "30%" };
-    }
-  },
-  {
     dataField: `staff`,
     formatter: (cell, row, rowIndex, formatExtraData) => {
       return (

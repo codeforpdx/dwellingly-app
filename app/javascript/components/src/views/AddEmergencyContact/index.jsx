@@ -200,10 +200,10 @@ const AddEmergencyContact = (props) => {
                       );
                     }}
                   />
-                  <div>
+                  <div className="button-container">
                     <button className="button is-primary is-rounded mr-5" type="submit" disabled={isSubmitting}>
-                      {editMode ? 'UPDATE' : 'ADD'} EMERGENCY NUMBER
-                                    </button>
+                      SAVE
+                    </button>
                     <Link className="button is-dark is-rounded" to='/emergency'>
                       CANCEL
                     </Link>
