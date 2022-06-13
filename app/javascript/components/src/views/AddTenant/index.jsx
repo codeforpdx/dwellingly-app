@@ -7,10 +7,11 @@ import Button from "../components/Button";
 import { AddProperty } from '../AddProperty';
 import Modal from '../components/Modal';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import UserType from '../../Enums/UserType';
 import './styles/index.scss';
 import useMountEffect from '../../utils/useMountEffect';
 import CalendarModal, { useCalendarState } from "../components/CalendarModal";
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth } from "../../constants";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -27,6 +28,7 @@ const validationSchema = Yup.object().shape({
 
 const AddTenant = () => {
   const context = useContext(UserContext);
+  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffOptions, setStaffOptions] = useState([])
@@ -314,7 +316,7 @@ const AddTenant = () => {
                       small
                       value={staffSearchText}
                       variant={SearchPanelVariant.checkbox}
-                      width={400}
+                      width={isMobile ? 300 : 400}
                       shadow
                     />
                   </div>
@@ -326,7 +328,7 @@ const AddTenant = () => {
                       clearLabel="Clear search text"
                       placeholder="Search Properties"
                       small
-                      width={400}
+                      width={isMobile ? 300 : 400}
                       variant={SearchPanelVariant.radio}
                       choices={propertySearchResults}
                       value={propertySearchText}

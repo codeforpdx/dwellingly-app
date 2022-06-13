@@ -5,9 +5,12 @@ import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import useMountEffect from '../../utils/useMountEffect';
 import UserContext from "../../contexts/UserContext";
 import './styles/index.scss';
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth } from '../../constants';
 
 const AddTicket = () => {
   const context = useContext(UserContext);
+  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState([]);
   const [tenantSearchText, setTenantSearchText] = useState("");
@@ -194,7 +197,7 @@ const AddTicket = () => {
                 small
                 value={tenantSearchText}
                 variant={SearchPanelVariant.radio}
-                width={400}
+                width={isMobile ? 300 : 400}
                 shadow
               />
             </div>

@@ -116,7 +116,7 @@ export const mobileColumns = [
     text: "Name",
     sort: true,
     headerStyle: () => {
-      return { width: "35%" };
+      return { width: "50%" };
     }
   },
   {
@@ -134,7 +134,7 @@ export const mobileColumns = [
     text: "JOIN Staff",
     sort: true,
     headerStyle: () => {
-      return { width: "30%" };
+      return { width: "50%" };
     }
   },
 ];

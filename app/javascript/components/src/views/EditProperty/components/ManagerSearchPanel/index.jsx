@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
 import UserContext from '../../../../contexts/UserContext';
-import RoleEnum from '../../../../Enums/RoleEnum';
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth } from '../../../../constants';
 
 
 function ManagerSearchPanel(props) {
   const userContext = useContext(UserContext);
+  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
   const [managerOptions, setManagerOptions] = useState([]);
   const [managerSelection, setManagerSelection] = useState([]);
   const [managerSearch, setManagerSearch] = useState('');
@@ -55,6 +57,7 @@ function ManagerSearchPanel(props) {
         selectedChoices={assignedPropertyManagers}
         value={managerSearch}
         variant={SearchPanelVariant.link}
+        width={isMobile ? 300 : 400}
       />
     </div>
   )

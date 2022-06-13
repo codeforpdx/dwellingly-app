@@ -11,6 +11,8 @@ import useMountEffect from '../../utils/useMountEffect';
 import './styles/index.scss';
 import RoleEnum from '../../Enums/RoleEnum';
 import UserType from '../../Enums/UserType';
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth } from "../../constants";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -39,6 +41,7 @@ const AddPropertyManager = () => {
   const [propertyOptions, setPropertyOptions] = useState([]);
   const [propertySearchResults, setPropertySearchResults] = useState([]);
   const [showAddProperty, setShowAddProperty] = useState(false);
+  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
 
   useMountEffect(() => getProperties());
 
@@ -231,7 +234,7 @@ const AddPropertyManager = () => {
                       clearLabel="Clear search text"
                       placeholder="Search Properties"
                       small
-                      width={400}
+                      width={isMobile ? 300 : 400}
                       variant={SearchPanelVariant.checkbox}
                       choices={propertySearchResults}
                       value={propertySearchText}

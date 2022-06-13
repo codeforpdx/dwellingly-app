@@ -4,10 +4,10 @@ import * as Yup from 'yup';
 import UserContext from '../../contexts/UserContext';
 import { Link } from 'react-router-dom';
 import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
-import RoleEnum from '../../Enums/RoleEnum';
 import useMountEffect from '../../utils/useMountEffect';
-import Toast from "../../utils/toast";
 import './styles/index.scss';
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth } from '../../constants';
 
 
 const validationSchema = Yup.object().shape({
@@ -40,8 +40,8 @@ export const AddProperty = (props) => {
   const [managerSearch, setManagerSearch] = useState('')
   const userContext = useContext(UserContext)
   const { showPageTitle, handleCancel, 
-    afterCreate, showAssignPropManagers, 
-    propManagerSearchPanelWidth } = props
+    afterCreate, showAssignPropManagers } = props;
+  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
 
   useMountEffect(() => getManagers())
 
@@ -197,7 +197,7 @@ export const AddProperty = (props) => {
                       chips
                       choices={filteredManagerOptions}
                       small
-                      width={propManagerSearchPanelWidth || 400}
+                      width={isMobile ? 300 : 400}
                       shadow
                       onChange={handleSearchChange}
                       onSelectionChange={handleSelectionChange}
