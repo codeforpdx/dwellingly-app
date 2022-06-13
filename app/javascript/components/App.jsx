@@ -43,7 +43,7 @@ import DashboardPropertyManager from "./src/views/DashboardPropertyManager/Dashb
 import DashboardStaff from "./src/views/DashboardStaff/DashboardStaff";
 import DashboardPropertyManagerMobile from "./src/views/DashboardPropertyManager/DashboardPropertyManagerMobile";
 import DashboardStaffMobile from "./src/views/DashboardStaff/DashboardStaffMobile";
-import JoinStaffListMobile from "./src/views/JoinStaffList/JoinStaffListMobile";
+
 
 export class App extends React.Component {
   constructor(props) {
@@ -224,7 +224,6 @@ export class App extends React.Component {
               <PrivateRoute exact path='/manage/managers/:id' component={EditPropertyManager} />
               <PrivateRoute exact path='/manage/tickets' component={TicketList} />
               <PrivateRoute exact path='/staff' component={JoinStaffList} />
-              <PrivateRoute exact path='/m/staff' component={JoinStaffListMobile} />
               <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
               <PrivateRoute exact path='/manage/staff/:id' component={EditStaff} />
               <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
