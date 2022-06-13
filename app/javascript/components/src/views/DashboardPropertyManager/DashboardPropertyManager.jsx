@@ -59,7 +59,7 @@ const ticketColumns = [{
   }
 }, {
   dataField: 'author',
-  text: 'Sender',
+  text: 'Author',
   sort: true,
   headerStyle: () => {
     return { width: "20%" };

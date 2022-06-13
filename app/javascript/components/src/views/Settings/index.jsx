@@ -19,11 +19,11 @@ const validationSchema = Yup.object().shape({
     .max(20, "*Phone can't be longer than 20 characters")
     .required("*Phone Number is required"),
   current_password: Yup.string()
-  .required("*Current Password is required"),
+    .required("*Current Password is required"),
 });
 
 const handleFormSubmit = (context, data) => {
-  context.apiCall('patch', '/users', {user: {...data}},
+  context.apiCall('patch', '/users', { user: { ...data } },
     {
       success: 'Saved Successfully!',
       error: 'Error updating account. Please try again later.'
@@ -73,93 +73,93 @@ const Settings = () => {
             isValid,
             isSubmitting,
           }) => (
-              <div className="settings__main_container">
-                <h1 className="section-title">UPDATE CONTACT INFORMATION</h1>
-                <Form className="settings__form-container" onSubmit={handleSubmit}>
-                  <div className="form-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="email"
-                      htmlFor="email"
-                    >
-                      Email
-                    </label>
-                    <Field
-                      className="column form-field"
-                      type="text"
-                      name="email"
-                      onChange={handleChange}
-                      value={values.email}
-                      placeholder="Enter your email address"
-                    />
-                    {errors.email ? (
-                      <div className="error-message">{errors.email}</div>
-                    ) : null}
-                  </div>
-                  <div className="form-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="phone"
-                      htmlFor="phone"
-                    >
-                      Phone
-                    </label>
-                    <Field
-                      className="column form-field"
-                      type="text"
-                      name="phone"
-                      onChange={handleChange}
-                      value={values.phone}
-                      placeholder="Enter your phone number"
-                    />
-                    {errors.phone ? (
-                      <div className="error-message">{errors.phone}</div>
-                    ) : null}
-                  </div>
-                  <div className='form-row'>
-                    <label
-                      className='column is-one-fifth'
-                      id='current_password'
-                      htmlFor='current_password'
-                    >
-                      Current Password
-                    </label>
-                    <Field
-                      className='column form-field'
-                      type='password'
-                      name='current_password'
-                      onChange={handleChange}
-                      value={values.current_password || ""}
-                      placeholder='Enter your current password'
-                    />
-                    {errors.current_password ? (
-                      <div className='error-message'>{errors.current_password}</div>
-                    ) : null}
-                  </div>
-                  <div className="button-container">
-                    <Button
-                      isCancelButton={false}
-                      type={"submit"}
-                      disabledFlag={isSubmitting}
-                      isValidFlag={isValid}
-                    >
-                      SAVE
-                </Button>
-                    <Button
-                      isCancelButton={true}
-                      type={"reset"}
-                      onClick={handleFormCancel}
-                    >
-                      CANCEL
-                </Button>
-                  </div>
-                </Form>
-              </div>
-            )}
+            <div className="settings__main_container">
+              <h1 className="section-title">UPDATE CONTACT INFORMATION</h1>
+              <Form className="settings__form-container" onSubmit={handleSubmit}>
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="email"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="text"
+                    name="email"
+                    onChange={handleChange}
+                    value={values.email}
+                    placeholder="Enter your email address"
+                  />
+                  {errors.email ? (
+                    <div className="error-message">{errors.email}</div>
+                  ) : null}
+                </div>
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="phone"
+                    htmlFor="phone"
+                  >
+                    Phone
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="text"
+                    name="phone"
+                    onChange={handleChange}
+                    value={values.phone}
+                    placeholder="Enter your phone number"
+                  />
+                  {errors.phone ? (
+                    <div className="error-message">{errors.phone}</div>
+                  ) : null}
+                </div>
+                <div className='form-row'>
+                  <label
+                    className='column is-one-fifth'
+                    id='current_password'
+                    htmlFor='current_password'
+                  >
+                    Current Password
+                  </label>
+                  <Field
+                    className='column form-field'
+                    type='password'
+                    name='current_password'
+                    onChange={handleChange}
+                    value={values.current_password || ""}
+                    placeholder='Enter your current password'
+                  />
+                  {errors.current_password ? (
+                    <div className='error-message'>{errors.current_password}</div>
+                  ) : null}
+                </div>
+                <div className="button-container">
+                  <Button
+                    isCancelButton={false}
+                    type={"submit"}
+                    disabledFlag={isSubmitting}
+                    isValidFlag={isValid}
+                  >
+                    SAVE
+                  </Button>
+                  <Button
+                    isCancelButton={true}
+                    type={"reset"}
+                    onClick={handleFormCancel}
+                  >
+                    CANCEL
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          )}
         </Formik>
         <Link exact="true" to="/changePassword">
           Change Password
-      </Link>
+        </Link>
       </div>
     </div>
   );

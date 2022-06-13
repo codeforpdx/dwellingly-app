@@ -28,11 +28,11 @@ const ChangePassword = () => {
     context.apiCall('patch', '/users',
       {
         user:
-          {
-            current_password: data.current,
-            password: data.new,
-            password_confirmation: data.confirm
-          }
+        {
+          current_password: data.current,
+          password: data.new,
+          password_confirmation: data.confirm
+        }
       },
       {
         success: 'Password updated successfully!',
@@ -70,88 +70,88 @@ const ChangePassword = () => {
             isValid,
             isSubmitting,
           }) => (
-              <div style={{ marginTop: "15px" }} >
-                {/*This is an extension of the settings page, so we can just reuse its styles*/}
-                <Form className="settings__form-container" onSubmit={handleSubmit}>
-                  <div className="form-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="current"
-                      htmlFor="current"
-                    >
-                      Current Password
-                </label>
-                    <Field
-                      className="column form-field"
-                      type="password"
-                      name="current"
-                      onChange={handleChange}
-                      value={values.current}
-                      placeholder="Enter your current password"
-                    />
-                    {errors.current ? (
-                      <div className="error-message">{errors.current}</div>
-                    ) : null}
-                  </div>
-                  <div className="form-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="new"
-                      htmlFor="new"
-                    >
-                      New Password
-                </label>
-                    <Field
-                      className="column form-field"
-                      type="password"
-                      name="new"
-                      onChange={handleChange}
-                      value={values.new}
-                      placeholder="Enter your new password"
-                    />
-                    {errors.new ? (
-                      <div className="error-message">{errors.new}</div>
-                    ) : null}
-                  </div>
-                  <div className="form-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="confirm"
-                      htmlFor="confirm"
-                    >
-                      Confirm Password
-                </label>
-                    <Field
-                      className="column form-field"
-                      type="password"
-                      name="confirm"
-                      onChange={handleChange}
-                      value={values.confirm}
-                      placeholder="Confirm your new password"
-                    />
-                    {errors.confirm ? (
-                      <div className="error-message">{errors.confirm}</div>
-                    ) : null}
-                  </div>
-                  <div className="button-container">
-                    <Button
-                      isCancelButton={false}
-                      type={"submit"}
-                      disabledFlag={isSubmitting}
-                      isValidFlag={isValid}
-                    >
-                      SAVE
-                </Button>
-                    <Link
-                      className="styled-button__cancel styled-button"
-                      to="/settings"
-                    >
-                      CANCEL
-                </Link>
-                  </div>
-                </Form>
-              </div>
-            )}
+            <div style={{ marginTop: "15px" }} >
+              {/*This is an extension of the settings page, so we can just reuse its styles*/}
+              <Form className="settings__form-container" onSubmit={handleSubmit}>
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="current"
+                    htmlFor="current"
+                  >
+                    Current Password
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="password"
+                    name="current"
+                    onChange={handleChange}
+                    value={values.current}
+                    placeholder="Enter your current password"
+                  />
+                  {errors.current ? (
+                    <div className="error-message">{errors.current}</div>
+                  ) : null}
+                </div>
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="new"
+                    htmlFor="new"
+                  >
+                    New Password
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="password"
+                    name="new"
+                    onChange={handleChange}
+                    value={values.new}
+                    placeholder="Enter your new password"
+                  />
+                  {errors.new ? (
+                    <div className="error-message">{errors.new}</div>
+                  ) : null}
+                </div>
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="confirm"
+                    htmlFor="confirm"
+                  >
+                    Confirm Password
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="password"
+                    name="confirm"
+                    onChange={handleChange}
+                    value={values.confirm}
+                    placeholder="Confirm your new password"
+                  />
+                  {errors.confirm ? (
+                    <div className="error-message">{errors.confirm}</div>
+                  ) : null}
+                </div>
+                <div className="button-container">
+                  <Button
+                    isCancelButton={false}
+                    type={"submit"}
+                    disabledFlag={isSubmitting}
+                    isValidFlag={isValid}
+                  >
+                    SAVE
+                  </Button>
+                  <Link
+                    className="button is-dark is-rounded"
+                    to="/settings"
+                  >
+                    CANCEL
+                  </Link>
+                </div>
+              </Form>
+            </div>
+          )}
         </Formik>
       </div>
     </div>
