@@ -47,7 +47,7 @@ const ToggleEditForm = ({
             const isCalendar = tableData[index].inputType === "calendar"
             const readOnly = tableData[index].readOnly === true
 
-            return (<><div className="form__row--editing columns" key={value}>
+            return (<div key={value}><div className="form__row--editing columns">
               <label
                 className="form__label column is-one-quarter"
                 htmlFor={value}
@@ -73,7 +73,7 @@ const ToggleEditForm = ({
               <FieldError
                 error={errors[value]}
                 className="column is-one-quarter"
-              /></>)
+              /></div>)
           })}
           <div className="form__button-container">
             <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>

@@ -33,7 +33,7 @@ describe("signup component", () => {
   it("should display an error when phone not populated", async () => {
     const button = view.container.querySelector("button")
     await wait(() => fireEvent.click(button))
-    expect(await screen.findByText("Phone number is required")).toBeVisible()
+    expect(await screen.findByText("*Phone number is required")).toBeVisible()
 
   })
 
@@ -41,7 +41,7 @@ describe("signup component", () => {
     const button = view.container.querySelector("button")
     fireEvent.change(screen.getByPlaceholderText("Confirm Password"), mockInputEvent)
     await wait(() => fireEvent.click(button))
-    expect(await screen.findByText("Passwords must match")).toBeVisible()
+    expect(await screen.findByText("*Passwords must match")).toBeVisible()
   })
 
   it("should succeed when all fields are valid", async () => {
