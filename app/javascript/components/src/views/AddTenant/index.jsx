@@ -252,11 +252,12 @@ const AddTenant = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    <ErrorMessage
-                      name="firstName"
-                      render={renderErrorMsg}
-                    />
                   </div>
+
+                  <ErrorMessage
+                    name="firstName"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="form-row">
                     <label
@@ -274,13 +275,14 @@ const AddTenant = () => {
                       value={values.lastName}
                       placeholder="Last Name"
                     />
-                    <ErrorMessage
-                      name="lastName"
-                      render={renderErrorMsg}
-                    />
                   </div>
 
-                  <div className="form-row" style={{ marginBottom: "20px" }}>
+                  <ErrorMessage
+                    name="lastName"
+                    render={renderErrorMsg}
+                  />
+
+                  <div className="form-row">
                     <label
                       className="column is-one-fifth"
                       id="phone"
@@ -296,13 +298,14 @@ const AddTenant = () => {
                       value={values.phone}
                       placeholder="Phone Number"
                     />
-                    <ErrorMessage
-                      name="phone"
-                      render={renderErrorMsg}
-                    />
                   </div>
 
-                  <h1 className="section-title">ASSIGN JOIN STAFF</h1>
+                  <ErrorMessage
+                    name="phone"
+                    render={renderErrorMsg}
+                  />
+
+                  <h1 className="section-title" style={{ marginTop: "20px" }}>ASSIGN JOIN STAFF</h1>
                   <div className="typeahead-section">
                     <SearchPanel
                       chips
@@ -369,11 +372,12 @@ const AddTenant = () => {
                       value={values.unitNum}
                       placeholder="Unit Number (Optional)"
                     />
-                    <ErrorMessage
-                      name="unitNum"
-                      render={renderErrorMsg}
-                    />
                   </div>
+
+                  <ErrorMessage
+                    name="unitNum"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="form-row">
                     <label
@@ -391,11 +395,12 @@ const AddTenant = () => {
                       value={values.occupants}
                       placeholder="Total number of unit tenants (Optional)"
                     />
-                    <ErrorMessage
-                      name="occupants"
-                      render={renderErrorMsg}
-                    />
                   </div>
+
+                  <ErrorMessage
+                    name="occupants"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="form-row" >
                     <label
@@ -415,12 +420,13 @@ const AddTenant = () => {
                       }
                       placeholder="Lease dates (Optional)"
                     />
-                    <ErrorMessage
-                      name="lease"
-                      render={renderErrorMsg}
-                    />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
                   </div>
+
+                  <ErrorMessage
+                    name="lease"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="button-container">
                     <Button

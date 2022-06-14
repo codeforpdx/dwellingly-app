@@ -3,20 +3,26 @@
 .calendarModal {
   .calendar {
     &__icon {
-      position: relative;    
+      position: relative;
       float: right;
       color: $gray;
-      &:hover, &:focus, &:active {
+
+      &:hover,
+      &:focus,
+      &:active {
         cursor: pointer;
-        color: $blue
+        color: $blue;
       }
+
       &.open {
-        color: $blue
+        color: $blue;
       }
     }
+
     &__input {
       margin: 0 0.5rem;
     }
+
     &__container {
       display: flex;
       justify-content: center;
@@ -26,30 +32,34 @@
   .error-message {
     position: absolute;
     top: 3.5rem;
-
+    z-index: 2;
     font-style: italic;
   }
-  
+
   .modal {
     &__container {
       padding: 1rem;
       width: 770px;
     }
   }
-  
+
   @media screen and (max-width: 770px) {
     .calendar {
       &__input {
-        margin: 0.5rem
+        margin: 0.5rem;
       }
+
       &__container {
         flex-direction: column;
         align-items: center;
       }
     }
+
     .error-message {
-      top: 2.5rem
+      top: 2.5rem;
+      z-index: 2;
     }
+
     .modal {
       &__container {
         width: 400px;

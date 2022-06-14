@@ -8,16 +8,16 @@ import './styles/index.scss';
 
 const validationSchema = Yup.object().shape({
   current: Yup.string()
-    .required("Current Password is required"),
+    .required("*Current Password is required"),
   new: Yup.string()
-    .required("New Password is required")
-    .min(8, "Minimum Length is 8 characters")
-    .matches(/[a-z]/, 'Password must contain at least one lowercase character')
-    .matches(/[A-Z]/, 'Password must contain one uppercase character')
-    .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, 'Password must contain at least 1 number or special char (@,!,#, etc)'),
+    .required("*New Password is required")
+    .min(8, "*Minimum Length is 8 characters")
+    .matches(/[a-z]/, '*Password must contain at least one lowercase character')
+    .matches(/[A-Z]/, '*Password must contain one uppercase character')
+    .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, '*Password must contain at least 1 number or special char (@,!,#, etc)'),
   confirm: Yup.string()
-    .required("New Passwords must match")
-    .oneOf([Yup.ref("new"), null], "New Passwords must match"),
+    .required("*New Passwords must match")
+    .oneOf([Yup.ref("new"), null], "*New Passwords must match"),
 });
 
 const ChangePassword = () => {
@@ -89,10 +89,10 @@ const ChangePassword = () => {
                     value={values.current}
                     placeholder="Enter your current password"
                   />
-                  {errors.current ? (
-                    <div className="error-message">{errors.current}</div>
-                  ) : null}
                 </div>
+                {errors.current ? (
+                  <div className="error-message">{errors.current}</div>
+                ) : null}
                 <div className="form-row">
                   <label
                     className="column is-one-fifth"
@@ -109,10 +109,10 @@ const ChangePassword = () => {
                     value={values.new}
                     placeholder="Enter your new password"
                   />
-                  {errors.new ? (
-                    <div className="error-message">{errors.new}</div>
-                  ) : null}
                 </div>
+                {errors.new ? (
+                  <div className="error-message">{errors.new}</div>
+                ) : null}
                 <div className="form-row">
                   <label
                     className="column is-one-fifth"
@@ -129,10 +129,10 @@ const ChangePassword = () => {
                     value={values.confirm}
                     placeholder="Confirm your new password"
                   />
-                  {errors.confirm ? (
-                    <div className="error-message">{errors.confirm}</div>
-                  ) : null}
                 </div>
+                {errors.confirm ? (
+                  <div className="error-message">{errors.confirm}</div>
+                ) : null}
                 <div className="button-container">
                   <Button
                     isCancelButton={false}

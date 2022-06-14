@@ -42,74 +42,74 @@ const ToggleEditForm = ({
         isSubmitting,
         isValid,
       }) => (
-          <Form onSubmit={handleSubmit}>
-            {Object.keys(values).map((value, index) => {
-              const isCalendar = tableData[index].inputType === "calendar"
-              const readOnly = tableData[index].readOnly === true
+        <Form onSubmit={handleSubmit}>
+          {Object.keys(values).map((value, index) => {
+            const isCalendar = tableData[index].inputType === "calendar"
+            const readOnly = tableData[index].readOnly === true
 
-              return (<div className="form__row--editing columns" key={value}>
-                <label
-                  className="form__label column is-one-quarter"
-                  htmlFor={value}
-                >
-                  {tableData[index].label}
-                </label>
-                <Field
-                  type={tableData[index].inputType}
-                  name={value}
-                  onChange={(isCalendar || readOnly) ? null : handleChange}
-                  onBlur={handleBlur}
-                  checked={values[value]}
-                  value={
-                    isCalendar
-                      ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
-                      : values[value]}
-                  className={`column row-input form-field ${tableData[index].inputType === 'checkbox'
-                    ? 'checkbox-row  is-one-quarter'
-                    : 'is-one-quarter'}`}
-                />
-                {isCalendar && <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />}
-                <FieldError
-                  error={errors[value]}
-                  className="column is-one-quarter"
-                />
-              </div>)
-            })}
-            <div className="form__button-container">
-              <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>
-                SAVE
-            </Button>
-              <Button isCancelButton={true} onClick={cancelHandler}>
-                CANCEL
-            </Button>
+            return (<><div className="form__row--editing columns" key={value}>
+              <label
+                className="form__label column is-one-quarter"
+                htmlFor={value}
+              >
+                {tableData[index].label}
+              </label>
+              <Field
+                type={tableData[index].inputType}
+                name={value}
+                onChange={(isCalendar || readOnly) ? null : handleChange}
+                onBlur={handleBlur}
+                checked={values[value]}
+                value={
+                  isCalendar
+                    ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
+                    : values[value]}
+                className={`column row-input form-field ${tableData[index].inputType === 'checkbox'
+                  ? 'checkbox-row  is-one-quarter'
+                  : 'is-one-quarter'}`}
+              />
+              {isCalendar && <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />}
             </div>
-          </Form>
-        )}
+              <FieldError
+                error={errors[value]}
+                className="column is-one-quarter"
+              /></>)
+          })}
+          <div className="form__button-container">
+            <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>
+              SAVE
+            </Button>
+            <Button isCancelButton={true} onClick={cancelHandler}>
+              CANCEL
+            </Button>
+          </div>
+        </Form>
+      )}
     </Formik>
   ) : (
-      <>
-        {tableData.map((dataObject) => (
-          <div key={dataObject.label} className="form__row--not-editing columns">
-            <span className="form__label column is-one-quarter">
-              {dataObject.label}
-            </span>
-            <span className="column is-one-quarter">{
-              (dataObject.inputType === "calendar")
-                ? `${dataObject.value.dateTimeStart.toDateString()} - ${dataObject.value.dateTimeEnd.toDateString()}`
-                : dataObject.inputType === "checkbox"
-                  ? <input
-                    className="form-field checkbox-row"
-                    type="checkbox"
-                    name={dataObject.label}
-                    disabled
-                    checked={dataObject.value}
-                    />
+    <>
+      {tableData.map((dataObject) => (
+        <div key={dataObject.label} className="form__row--not-editing columns">
+          <span className="form__label column is-one-quarter">
+            {dataObject.label}
+          </span>
+          <span className="column is-one-quarter">{
+            (dataObject.inputType === "calendar")
+              ? `${dataObject.value.dateTimeStart.toDateString()} - ${dataObject.value.dateTimeEnd.toDateString()}`
+              : dataObject.inputType === "checkbox"
+                ? <input
+                  className="form-field checkbox-row"
+                  type="checkbox"
+                  name={dataObject.label}
+                  disabled
+                  checked={dataObject.value}
+                />
                 : dataObject.value
-            }</span>
-          </div>
-        ))}
-      </>
-    );
+          }</span>
+        </div>
+      ))}
+    </>
+  );
 };
 
 ToggleEditForm.propTypes = {

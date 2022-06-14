@@ -39,7 +39,7 @@ export const AddProperty = (props) => {
   const [filteredManagerOptions, setFilteredManagerOptions] = useState([])
   const [managerSearch, setManagerSearch] = useState('')
   const userContext = useContext(UserContext)
-  const { showPageTitle, handleCancel, 
+  const { showPageTitle, handleCancel,
     afterCreate, showAssignPropManagers } = props;
   const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
 
@@ -67,13 +67,13 @@ export const AddProperty = (props) => {
         }
         // The api returns false if there is an error
         // Use the input to determine if the form can be reset
-        return true 
+        return true
       })
   }
 
   const handleSearchChange = ({ target }) => {
     let managerSearch = target.value
-    if(!managerSearch || managerSearch.length === 0) managerSearch = ''
+    if (!managerSearch || managerSearch.length === 0) managerSearch = ''
     setManagerSearch(managerSearch)
 
     const choices = managerOptions.filter(
@@ -87,7 +87,7 @@ export const AddProperty = (props) => {
   }
 
   return (
-    <div className={`${showPageTitle ? 'main-container' :  ''}`}>
+    <div className={`${showPageTitle ? 'main-container' : ''}`}>
       <div>
         {showPageTitle && <h2 className='page-title'>Add a New Property</h2>}
 
@@ -105,7 +105,7 @@ export const AddProperty = (props) => {
             values.propertyManagerIDs = propertyManagers.map(manager => manager.key);
 
             setSubmitting(true);
-            if(formHandler(values, setErrors)) {
+            if (formHandler(values, setErrors)) {
               resetForm();
             }
             setSubmitting(false);
@@ -124,8 +124,8 @@ export const AddProperty = (props) => {
                     value={values.name}
                     placeholder='Example Estate'
                   />
-                  {errors.name ? (<div className='error-message'>{errors.name}</div>) : null}
                 </div>
+                {errors.name ? (<div className='error-message'>{errors.name}</div>) : null}
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='address'>Address</label>
                   <Field
@@ -137,8 +137,8 @@ export const AddProperty = (props) => {
                     placeholder='123 Main St'
                     error={errors.address}
                   />
-                  {errors.address ? (<div className='error-message'>{errors.address}</div>) : null}
                 </div>
+                {errors.address ? (<div className='error-message'>{errors.address}</div>) : null}
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='city'>City</label>
                   <Field
@@ -149,8 +149,8 @@ export const AddProperty = (props) => {
                     value={values.city}
                     placeholder='Portland'
                   />
-                  {errors.city ? (<div className='error-message'>{errors.city}</div>) : null}
                 </div>
+                {errors.city ? (<div className='error-message'>{errors.city}</div>) : null}
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='state'>State</label>
                   <Field
@@ -161,8 +161,8 @@ export const AddProperty = (props) => {
                     value={values.state}
                     placeholder='OR'
                   />
-                  {errors.state ? (<div className='error-message'>{errors.state}</div>) : null}
                 </div>
+                {errors.state ? (<div className='error-message'>{errors.state}</div>) : null}
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='zipcode'>Zipcode</label>
                   <Field
@@ -173,8 +173,8 @@ export const AddProperty = (props) => {
                     value={values.zipcode}
                     placeholder='97217'
                   />
-                  {errors.zipcode ? (<div className='error-message'>{errors.zipcode}</div>) : null}
                 </div>
+                {errors.zipcode ? (<div className='error-message'>{errors.zipcode}</div>) : null}
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='units'>Units</label>
                   <Field
@@ -186,51 +186,51 @@ export const AddProperty = (props) => {
                     placeholder='Number of units'
                     error={errors.num_units}
                   />
-                  {errors.num_units ? (<div className='error-message'>{errors.num_units}</div>) : null}
                 </div>
+                {errors.num_units ? (<div className='error-message'>{errors.num_units}</div>) : null}
 
-                {showAssignPropManagers ? ( 
-                <div className=' add-property__assign-manager-container'>
-                  <h3 className='section-title'>ASSIGN PROPERTY MANAGERS</h3>
-                  <div className='typeahead-section'>
-                    <SearchPanel
-                      chips
-                      choices={filteredManagerOptions}
-                      small
-                      width={isMobile ? 300 : 400}
-                      shadow
-                      onChange={handleSearchChange}
-                      onSelectionChange={handleSelectionChange}
-                      placeholder='Search Property Managers'
-                      selectedChoices={propertyManagers}
-                      value={managerSearch}
-                      variant={SearchPanelVariant.checkbox}
-                    />
-                  </div>
-                </div>) : null }
+                {showAssignPropManagers ? (
+                  <div className=' add-property__assign-manager-container'>
+                    <h3 className='section-title'>ASSIGN PROPERTY MANAGERS</h3>
+                    <div className='typeahead-section'>
+                      <SearchPanel
+                        chips
+                        choices={filteredManagerOptions}
+                        small
+                        width={isMobile ? 300 : 400}
+                        shadow
+                        onChange={handleSearchChange}
+                        onSelectionChange={handleSelectionChange}
+                        placeholder='Search Property Managers'
+                        selectedChoices={propertyManagers}
+                        value={managerSearch}
+                        variant={SearchPanelVariant.checkbox}
+                      />
+                    </div>
+                  </div>) : null}
 
                 <div className='container-footer mt-3'>
-                <button
-                  className='button is-primary is-rounded mr-5'
-                  type='submit'
-                  disabled={isSubmitting}>
-                  SAVE
-                </button>
-                {typeof(handleCancel) === 'function'
-                  ? <button
+                  <button
+                    className='button is-primary is-rounded mr-5'
+                    type='submit'
+                    disabled={isSubmitting}>
+                    SAVE
+                  </button>
+                  {typeof (handleCancel) === 'function'
+                    ? <button
                       className='button is-dark is-rounded'
                       onClick={() => handleCancel()}
                       type='button'
-                      >
+                    >
                       CANCEL
                     </button>
-                  : <Link
-                    className='button is-dark is-rounded'
-                    to='/manage/properties'
-                  >
-                    CANCEL
-                  </Link>
-                }
+                    : <Link
+                      className='button is-dark is-rounded'
+                      to='/manage/properties'
+                    >
+                      CANCEL
+                    </Link>
+                  }
                 </div>
               </Form>
 

@@ -11,22 +11,22 @@ import './styles/index.scss';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Must enter a First Name"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Must enter a First Name"),
   lastName: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Must enter a Last Name"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Must enter a Last Name"),
   phone: Yup.string()
     .min(
       5,
       "*Number must contain at least 5 digits to be a valid phone/text number"
     )
     .max(20, "*Numbers can't be longer than 20 digits")
-    .required("Must enter a valid phone number"),
+    .required("*A valid phone number is required"),
   email: Yup.string()
-    .email("Must be a valid email address")
-    .max(255, "Must be shorter than 255")
-    .required("Must enter an email"),
+    .email("*Must be a valid email address")
+    .max(255, "*Must be shorter than 255")
+    .required("*Must enter an email"),
 });
 
 export const AddStaffMember = () => {
@@ -91,10 +91,10 @@ export const AddStaffMember = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    {errors.firstName ? (
-                      <div className="error-message">{errors.firstName}</div>
-                    ) : null}
                   </div>
+                  {errors.firstName ? (
+                    <div className="error-message">{errors.firstName}</div>
+                  ) : null}
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -111,10 +111,10 @@ export const AddStaffMember = () => {
                       value={values.lastName}
                       placeholder="Last Name"
                     />
-                    {errors.lastName ? (
-                      <div className="error-message">{errors.lastName}</div>
-                    ) : null}
                   </div>
+                  {errors.lastName ? (
+                    <div className="error-message">{errors.lastName}</div>
+                  ) : null}
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -131,10 +131,10 @@ export const AddStaffMember = () => {
                       value={values.phone}
                       placeholder="Phone Number"
                     />
-                    {errors.phone ? (
-                      <div className="error-message">{errors.phone}</div>
-                    ) : null}
                   </div>
+                  {errors.phone ? (
+                    <div className="error-message">{errors.phone}</div>
+                  ) : null}
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -151,10 +151,10 @@ export const AddStaffMember = () => {
                       value={values.email}
                       placeholder="Email address"
                     />
-                    {errors.email ? (
-                      <div className="error-message">{errors.email}</div>
-                    ) : null}
                   </div>
+                  {errors.email ? (
+                    <div className="error-message">{errors.email}</div>
+                  ) : null}
                   <div className="form-row" style={{ marginBottom: "20px" }}>
                     <label
                       className="column is-one-fifth"

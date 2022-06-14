@@ -16,22 +16,22 @@ import { tabletWidth } from "../../constants";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Must enter a First Name"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Must enter a First Name"),
   lastName: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Must enter a Last Name"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Must enter a Last Name"),
   phone: Yup.string()
     .min(
       5,
       "*Number must contain at least 5 digits to be a valid phone/text number"
     )
     .max(20, "*Numbers can't be longer than 20 digits")
-    .required("*a valid phone number is required"),
+    .required("*A valid phone number is required"),
   email: Yup.string()
-    .email("Must be a valid email address")
-    .max(255, "Must be shorter than 255")
-    .required("Must enter an email"),
+    .email("*Must be a valid email address")
+    .max(255, "*Must be shorter than 255")
+    .required("*Must enter an email"),
 });
 
 const AddPropertyManager = () => {
@@ -84,7 +84,7 @@ const AddPropertyManager = () => {
     context.apiCall('post', `/users/invitation`, payload,
       { success: `Property Manager Created Successfully, an invite email has been sent.` })
       .then((response) => {
-        if(response) {
+        if (response) {
           resetForm();
           setPropertySelection([]);
           setPropertySearchText("");
@@ -111,7 +111,7 @@ const AddPropertyManager = () => {
    */
   const handlePropertySearch = (event) => {
     const { value } = event.target;
-    if(!value || value.length === 0) {
+    if (!value || value.length === 0) {
       setPropertySearchResults(propertyOptions);
       setPropertySearchText("");
     } else {
@@ -144,134 +144,134 @@ const AddPropertyManager = () => {
             isValid,
             isSubmitting,
           }) => (
-              <div className="add-manager__main_container">
-                <h1 className="section-title">CONTACT INFORMATION</h1>
-                <Form className="add-manager__form-container" onSubmit={handleSubmit}>
-                  <div className="form-row form-first-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="firstName"
-                      htmlFor="firstName"
-                    >
-                      First Name
-                    </label>
-                    <Field
-                      className="column form-field"
-                      type="text"
-                      name="firstName"
-                      onChange={handleChange}
-                      value={values.firstName}
-                      placeholder="First Name"
-                    />
-                    {errors.firstName ? (
-                      <div className="error-message">{errors.firstName}</div>
-                    ) : null}
-                  </div>
-                  <div className="form-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="lastName"
-                      htmlFor="lastName"
-                    >
-                      Last Name
-                    </label>
-                    <Field
-                      className="column form-field"
-                      type="text"
-                      name="lastName"
-                      onChange={handleChange}
-                      value={values.lastName}
-                      placeholder="Last Name"
-                    />
-                    {errors.lastName ? (
-                      <div className="error-message">{errors.lastName}</div>
-                    ) : null}
-                  </div>
-                  <div className="form-row">
-                    <label
-                      className="column is-one-fifth"
-                      id="phone"
-                      htmlFor="phone"
-                    >
-                      Phone
-                    </label>
-                    <Field
-                      className="column form-field"
-                      type="text"
-                      name="phone"
-                      onChange={handleChange}
-                      value={values.phone}
-                      placeholder="Phone Number"
-                    />
-                    {errors.phone ? (
-                      <div className="error-message">{errors.phone}</div>
-                    ) : null}
-                  </div>
-                  <div className="form-row" style={{ marginBottom: "20px" }}>
-                    <label
-                      className="column is-one-fifth"
-                      id="email"
-                      htmlFor="email"
-                    >
-                      Email
-                    </label>
-                    <Field
-                      className="column form-field"
-                      type="text"
-                      name="email"
-                      onChange={handleChange}
-                      value={values.email}
-                      placeholder="Enter your email address"
-                    />
-                    {errors.email ? (
-                      <div className="error-message">{errors.email}</div>
-                    ) : null}
-                  </div>
-                  <h1 className="section-title">ASSIGN PROPERTIES</h1>
-                  <div className="typeahead-section">
-                    <SearchPanel
-                      chips
-                      clearLabel="Clear search text"
-                      placeholder="Search Properties"
-                      small
-                      width={isMobile ? 300 : 400}
-                      variant={SearchPanelVariant.checkbox}
-                      choices={propertySearchResults}
-                      value={propertySearchText}
-                      onSelectionChange={setPropertySelection}
-                      onChange={handlePropertySearch}
-                      onClear={handlePropertySearch}
-                      preSelectedChoices={propertySelection}
-                      shadow
-                    />
-                    <button
-                      className="add-property-button"
-                      onClick={openPropertyModal}
-                      type="button"
-                    >
-                      <i className="fas fa-plus-circle icon-inline-space"></i>
-                      Create New Property
-                    </button>
-                  </div>
-                  <div className="button-container">
-                    <Button
-                      isCancelButton={false}
-                      type="submit"
-                      disabledFlag={isSubmitting}
-                      isValidFlag={isValid}
-                    >
-                      SAVE
-                    </Button>
-                    <Link
-                      className="button is-dark is-rounded"
-                      to="/manage/managers"
-                    >
-                      CANCEL
-                    </Link>
-                  </div>
-                </Form>
-              </div>
-            )}
+            <div className="add-manager__main_container">
+              <h1 className="section-title">CONTACT INFORMATION</h1>
+              <Form className="add-manager__form-container" onSubmit={handleSubmit}>
+                <div className="form-row form-first-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="firstName"
+                    htmlFor="firstName"
+                  >
+                    First Name
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="text"
+                    name="firstName"
+                    onChange={handleChange}
+                    value={values.firstName}
+                    placeholder="First Name"
+                  />
+                </div>
+                {errors.firstName ? (
+                  <div className="error-message">{errors.firstName}</div>
+                ) : null}
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="lastName"
+                    htmlFor="lastName"
+                  >
+                    Last Name
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="text"
+                    name="lastName"
+                    onChange={handleChange}
+                    value={values.lastName}
+                    placeholder="Last Name"
+                  />
+                </div>
+                {errors.lastName ? (
+                  <div className="error-message">{errors.lastName}</div>
+                ) : null}
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="phone"
+                    htmlFor="phone"
+                  >
+                    Phone
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="text"
+                    name="phone"
+                    onChange={handleChange}
+                    value={values.phone}
+                    placeholder="Phone Number"
+                  />
+                </div>
+                {errors.phone ? (
+                  <div className="error-message">{errors.phone}</div>
+                ) : null}
+                <div className="form-row">
+                  <label
+                    className="column is-one-fifth"
+                    id="email"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <Field
+                    className="column form-field"
+                    type="text"
+                    name="email"
+                    onChange={handleChange}
+                    value={values.email}
+                    placeholder="Enter your email address"
+                  />
+                </div>
+                {errors.email ? (
+                  <div className="error-message">{errors.email}</div>
+                ) : null}
+                <h1 className="section-title" style={{ marginTop: "20px" }}>ASSIGN PROPERTIES</h1>
+                <div className="typeahead-section">
+                  <SearchPanel
+                    chips
+                    clearLabel="Clear search text"
+                    placeholder="Search Properties"
+                    small
+                    width={isMobile ? 300 : 400}
+                    variant={SearchPanelVariant.checkbox}
+                    choices={propertySearchResults}
+                    value={propertySearchText}
+                    onSelectionChange={setPropertySelection}
+                    onChange={handlePropertySearch}
+                    onClear={handlePropertySearch}
+                    preSelectedChoices={propertySelection}
+                    shadow
+                  />
+                  <button
+                    className="add-property-button"
+                    onClick={openPropertyModal}
+                    type="button"
+                  >
+                    <i className="fas fa-plus-circle icon-inline-space"></i>
+                    Create New Property
+                  </button>
+                </div>
+                <div className="button-container">
+                  <Button
+                    isCancelButton={false}
+                    type="submit"
+                    disabledFlag={isSubmitting}
+                    isValidFlag={isValid}
+                  >
+                    SAVE
+                  </Button>
+                  <Link
+                    className="button is-dark is-rounded"
+                    to="/manage/managers"
+                  >
+                    CANCEL
+                  </Link>
+                </div>
+              </Form>
+            </div>
+          )}
         </Formik>
         {showAddProperty &&
           <Modal

@@ -30,6 +30,7 @@
       }
       &__error-message {
         color: red;
+        z-index: 2;
       }
       &__button-container {
         margin: 5px 0 10px -5px;

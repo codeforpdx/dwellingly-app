@@ -22,7 +22,7 @@ $tooltip-arrow-size: 6px;
   background: $tooltip-background-color;
   font-size: 14px;
   line-height: 1;
-  z-index: 100;
+  z-index: 2;
   white-space: nowrap;
 
   &:before {

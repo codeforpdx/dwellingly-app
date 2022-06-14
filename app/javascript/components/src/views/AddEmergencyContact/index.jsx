@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
       number: Yup.string()
         .min(5, "*Number must contain at least 5 digits to be a valid phone/text number")
         .max(20, "*Numbers can't be longer than 20 digits")
-        .required("*a valid phone number is required"),
+        .required("*A valid phone number is required"),
       numtype: Yup.string()
         .max(30, "*Number type can't be longer than 30 characters"),
       extension: Yup.string().nullable()
@@ -52,8 +52,8 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           value={values.contact_numbers[i].number}
           placeholder="Phone Number"
         />
-        {subFormErrors && <FieldError error={subFormErrors.number} />}
       </div>
+      {subFormErrors && <FieldError error={subFormErrors.number} />}
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].numtype`}>Phone Number Type</label>
         <Field
@@ -64,8 +64,8 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           value={values.contact_numbers[i].numtype}
           placeholder="Phone Number Type (Opional)"
         />
-        {subFormErrors && <FieldError error={subFormErrors.numtype} />}
       </div>
+      {subFormErrors && <FieldError error={subFormErrors.numtype} />}
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].extension`}>Extension</label>
         <Field
@@ -76,8 +76,8 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           value={values.contact_numbers[i].extension}
           placeholder="Extension (Optional)"
         />
-        {subFormErrors && <FieldError error={subFormErrors.extension} />}
       </div>
+      {subFormErrors && <FieldError error={subFormErrors.extension} />}
     </>
   );
 };
@@ -164,8 +164,8 @@ const AddEmergencyContact = (props) => {
                       value={values.name}
                       placeholder="Name or Organization"
                     />
-                    <FieldError error={errors.name} />
                   </div>
+                  <FieldError error={errors.name} />
                   <div className="form-row columns">
                     <label className="column is-one-quarter" htmlFor="description">Organization Description</label>
                     <Field
@@ -177,8 +177,8 @@ const AddEmergencyContact = (props) => {
                       placeholder="Description text (Optional)"
                       error={errors.description}
                     />
-                    <FieldError error={errors.description} />
                   </div>
+                  <FieldError error={errors.description} />
                   <FieldArray
                     name="contact_numbers"
                     render={numbersArrayFields => {

@@ -92,10 +92,10 @@ const Settings = () => {
                     value={values.email}
                     placeholder="Enter your email address"
                   />
-                  {errors.email ? (
-                    <div className="error-message">{errors.email}</div>
-                  ) : null}
                 </div>
+                {errors.email ? (
+                  <div className="error-message">{errors.email}</div>
+                ) : null}
                 <div className="form-row">
                   <label
                     className="column is-one-fifth"
@@ -112,10 +112,10 @@ const Settings = () => {
                     value={values.phone}
                     placeholder="Enter your phone number"
                   />
-                  {errors.phone ? (
-                    <div className="error-message">{errors.phone}</div>
-                  ) : null}
                 </div>
+                {errors.phone ? (
+                  <div className="error-message">{errors.phone}</div>
+                ) : null}
                 <div className='form-row'>
                   <label
                     className='column is-one-fifth'
@@ -132,10 +132,10 @@ const Settings = () => {
                     value={values.current_password || ""}
                     placeholder='Enter your current password'
                   />
-                  {errors.current_password ? (
-                    <div className='error-message'>{errors.current_password}</div>
-                  ) : null}
                 </div>
+                {errors.current_password ? (
+                  <div className='error-message'>{errors.current_password}</div>
+                ) : null}
                 <div className="button-container">
                   <Button
                     isCancelButton={false}
