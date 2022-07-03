@@ -4,7 +4,7 @@ import UserContext from '../../contexts/UserContext';
 import * as Yup from "yup";
 import ToggleEditForm from "../components/ToggleEditForm";
 import { useCalendarState } from "../components/CalendarModal";
-import PropertyManagerCard from "./components/PropertyManagerCard";
+import ContactCard from "../components/ContactCard";
 import ManagerSearchPanel from './components/ManagerSearchPanel';
 import Modal from '../components/Modal';
 import TenantListMini from "../components/TenantListMini";
@@ -260,11 +260,12 @@ const EditProperty = () => {
             <div className="property-manager-section">
               {property.propertyManagers ?
                 property.propertyManagers.map(manager => {
-                  return <PropertyManagerCard
-                    manager={manager}
+                  return <ContactCard
+                    contact={manager}
                     key={manager.id}
                     isEditing={isEditing}
-                    removePropertyManager={removePropertyManager}
+                    removeContact={removePropertyManager}
+                    linkUrl='/manage/managers'
                   />
                 })
                 : <></>}

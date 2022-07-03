@@ -1,6 +1,6 @@
-@import "../../../../../scss/variables.scss";
+@import "../../../../scss/variables.scss";
 
-.property-manager-box{
+.contact-card-box{
     width: 50%;
     max-width: 400px;
     height: 120px;
@@ -11,6 +11,6 @@
   }
 }
 
-.remove-manager-button:hover {
+.remove-contact-button:hover {
   cursor: pointer
 }
