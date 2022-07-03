@@ -60,25 +60,20 @@ const TenantListMini = (props) => {
     }
   }
 
+  const noDataDisplay = (
+    <p>Add tenants to this property by <Link to="/manage/tenants">editing a tenant's lease</Link>.</p>
+  )
+
   return (
     <div>
-      {isEditing ?
-        <BootstrapTable
-          keyField='id'
-          data={tenantList}
-          columns={[...columns, editColumn]}
-          bootstrap4={true}
-          headerClasses="table-header"
-        />
-        :
-        <BootstrapTable
-          keyField='id'
-          data={tenantList}
-          columns={columns}
-          bootstrap4={true}
-          headerClasses="table-header"
-        />
-      }
+      <BootstrapTable
+        keyField='id'
+        data={tenantList}
+        columns={isEditing ? [...columns, editColumn] : columns}
+        bootstrap4={true}
+        headerClasses="table-header"
+        noDataIndication={noDataDisplay}
+      />
       {confirmTenantRemoval &&
         <Modal
           content={<p>{`Are you sure you want to remove ${tenantToRemove.fullName}?`}</p>}
