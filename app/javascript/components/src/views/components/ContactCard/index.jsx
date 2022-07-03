@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import './styles/index.scss';
-import '../../EditProperty/components/ManagerSearchPanel';
 
 function ContactCard({ contact, isEditing, removeContact, linkUrl }) {
 
