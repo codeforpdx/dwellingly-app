@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
-import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditForm from "../components/ToggleEditForm";
 import { useCalendarState } from "../components/CalendarModal";
 import Modal from '../components/Modal';
 import { TenantTickets } from './components/tenantTickets'
 import PropertySearchPanel from "../components/PropertySearchPanel";
+import JoinStaffSearchPanel from "../components/JoinStaffSearchPanel";
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -34,8 +34,6 @@ const EditTenant = () => {
   const [tenant, setTenant] = useState(null);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isEditing, setEditingStatus] = useState(false);
-  const [staffSearchText, setStaffSearchText] = useState("");
-  const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const calendarState = useCalendarState(tenant?.lease?.dateTimeStart, tenant?.lease?.dateTimeEnd)
@@ -88,16 +86,6 @@ const EditTenant = () => {
   const onCancelClick = () => {
     setEditingStatus(false);
   };
-
-  /**
-   * Convert an array of staff to an array of SearchPanelItems
-   * @param {*} staffArray
-   */
-  const getStaffChoices = (staffArray) =>
-    staffArray.map(staff => ({
-      key: staff.id,
-      description: `${staff.firstName} ${staff.lastName}`
-    }));
 
   /**
    * Get a tenant
@@ -175,39 +163,6 @@ const EditTenant = () => {
     //     : "text",
     // }
   ];
-
-  /**
-   * When staff search input text changes, call API to find matching users.
-   */
-  useEffect(() => {
-    // TODO: AFAIK We've never had search implemented in the backend. Not sure why this is here
-    context.apiCall('get', '/staff_members', { name: staffSearchText }, {})
-      .then(({ data }) => {
-        setStaffSearchResults(getStaffChoices(data.joinStaff.concat(data.admins)));
-      })
-  }, [staffSearchText]);
-
-  /**
-   * Handle staff search input
-   * @param {*} event
-   */
-  const handleChangeStaffSearch = (event) => {
-    const { value } = event.target;
-    if (!value || value.length === 0) {
-      setStaffSearchResults([]);
-      setStaffSearchText("");
-    } else {
-      setStaffSearchText(value);
-    }
-  };
-
-  /**
-   * Handle change in staff selections of search panel
-   * @param {*} selectedChoices
-   */
-  const handleChangeStaffSelections = (selectedChoices) => {
-    setStaffSelections(selectedChoices);
-  };
 
   const toggleArchiveModal = () => {
     setShowArchiveModal(!showArchiveModal);
@@ -291,20 +246,12 @@ const EditTenant = () => {
                 </div>
                 <div className="section-container">
                   <h2>JOIN STAFF</h2>
-                  {isEditing && <SearchPanel
-                    chips
-                    choices={staffSearchResults}
-                    clearLabel="Clear search text"
-                    maximumHeight={200}
-                    onChange={handleChangeStaffSearch}
-                    onClear={handleChangeStaffSearch}
-                    onSelectionChange={handleChangeStaffSelections}
-                    placeholder="Search JOIN staff"
-                    preSelectedChoices={getStaffChoices(tenant.staff)}
-                    small
-                    value={staffSearchText}
-                    variant={SearchPanelVariant.checkbox}
-                    width={400}
+                  {isEditing &&
+                  <JoinStaffSearchPanel
+                    initialStaffIds={tenant.staff}
+                    staffSelections={staffSelections}
+                    setStaffSelections={setStaffSelections}
+                    multiSelect={true}
                   />}
                 </div>
               </ToggleEditForm>

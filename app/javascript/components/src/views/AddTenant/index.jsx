@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import './styles/index.scss';
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
-import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import './styles/index.scss';
-import useMountEffect from '../../utils/useMountEffect';
 import CalendarModal, { useCalendarState } from "../components/CalendarModal";
 import PropertySearchPanel from "../components/PropertySearchPanel";
+import JoinStaffSearchPanel from "../components/JoinStaffSearchPanel";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -25,67 +24,14 @@ const validationSchema = Yup.object().shape({
 
 const AddTenant = () => {
   const context = useContext(UserContext);
-  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
-  const [staffSearchText, setStaffSearchText] = useState("");
-  const [staffSearchResults, setStaffSearchResults] = useState([]);
-  const [staffOptions, setStaffOptions] = useState([])
   const [staffSelections, setStaffSelections] = useState([]);
   const [propertySelection, setPropertySelection] = useState([]);
 
   const calendarState = useCalendarState();
   const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
-  useMountEffect(() => getStaff());
-
-  useEffect(() => {
-    let choices = staffOptions.filter(
-      s => s.description.toLowerCase().includes(staffSearchText.toLowerCase()));
-    setStaffSearchResults(choices);
-    }, [staffSearchText, staffOptions]);
-
-  const staffOptionFormat = (staff) => {
-    return {
-      key: staff.id,
-      description: `${staff.firstName} ${staff.lastName}`
-    }
-  }
-
-  const getStaff = () => {
-    context.apiCall('get', '/staff', { name: staffSearchText }, {})
-      .then(({ data }) => {
-        const staff = data && data.length > 0
-          ? data.map(joinStaff => {
-            return staffOptionFormat(joinStaff)
-          })
-          : data
-        setStaffOptions(staff);
-      });
-  }
-
   const handleFormSubmit = (data) => {
     context.apiCall('post', `/tenants`, data, { success: 'Tenant Created Successfully!'});
-  };
-
-  /**
-   * Handle staff search input
-   * @param {*} event
-   */
-  const handleStaffSearch = (event) => {
-    const { value } = event.target;
-    if(!value || value.length === 0) {
-      setStaffSearchResults(staffOptions);
-      setStaffSearchText("");
-    } else {
-      setStaffSearchText(value);
-    }
-  };
-
-  /**
-   * Handle change in staff selections of search panel
-   * @param {*} selectedChoices
-   */
-  const handleChangeStaffSelections = (selectedChoices) => {
-    setStaffSelections(selectedChoices);
   };
 
   /**
@@ -135,6 +81,7 @@ const AddTenant = () => {
             unitNum: "",
             occupants: "",
             propertySelection: null,
+            staffSelections: [],
             lease: null,
           }}
           validationSchema={validationSchema}
@@ -163,7 +110,6 @@ const AddTenant = () => {
             handleFormSubmit(payload)
             resetForm()
             setPropertySelection([]);
-            setStaffSearchText("");
             setStaffSelections([]);
             resetDates();
             setSubmitting(false);
@@ -249,20 +195,11 @@ const AddTenant = () => {
 
                   <h1 className="section-title" style={{ marginTop: "20px" }}>ASSIGN JOIN STAFF</h1>
                   <div className="typeahead-section">
-                    <SearchPanel
-                      chips
-                      choices={staffSearchResults}
-                      clearLabel="Clear search text"
-                      onChange={handleStaffSearch}
-                      onClear={handleStaffSearch}
-                      onSelectionChange={handleChangeStaffSelections}
-                      placeholder="Search JOIN Staff"
-                      preSelectedChoices={staffSelections}
-                      small
-                      value={staffSearchText}
-                      variant={SearchPanelVariant.checkbox}
-                      width={isMobile ? 300 : 400}
-                      shadow
+                    <JoinStaffSearchPanel
+                      initialStaffIds={[]}
+                      staffSelections={staffSelections}
+                      setStaffSelections={setStaffSelections}
+                      multiSelect={true}
                     />
                   </div>
 
