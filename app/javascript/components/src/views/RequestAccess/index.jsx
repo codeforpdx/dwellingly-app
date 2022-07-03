@@ -1,14 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
-import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import { AddProperty } from '../AddProperty';
-import Modal from '../components/Modal';
 import UserType from '../../Enums/UserType';
-import { useMediaQuery } from '@react-hook/media-query';
-import { tabletWidth } from "../../constants";
 
 import './styles/index.scss';
+import PropertySearchPanel from "../components/PropertySearchPanel";
 
 const RoleDropDown = (props) => {
   return (
@@ -45,7 +41,6 @@ export const InfoField = ({ label, info, changeHandler }) => {
 
 export const RequestAccess = (props) => {
   const userContext = useContext(UserContext);
-  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
 
   const {
     firstName,
@@ -59,39 +54,11 @@ export const RequestAccess = (props) => {
   const [fName, setFirstName] = useState(firstName);
   const [lName, setLastName] = useState(lastName);
   const [emailAddress, setEmail] = useState(email);
-  const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
-  const [propertyOptions, setPropertyOptions] = useState([]);
-  const [propertySearchResults, setPropertySearchResults] = useState([]);
-  const [showAddProperty, setShowAddProperty] = useState(false);
 
   useEffect(() => {
     setSelectionOptions(Object.keys(UserType));
-    getProperties();
   }, []);
-
-  useEffect(() => {
-    let choices = propertyOptions.filter(
-      p => p.description.toLowerCase().includes(propertySearchText.toLowerCase()))
-    setPropertySearchResults(choices);
-  }, [propertySearchText, propertyOptions])
-
-  const getProperties = () => {
-    userContext.apiCall('get', '/properties', {}, {})
-      .then(({ data }) => {
-        let properties = data && data.length > 0
-          ? data.map(property => {
-            return {
-              key: property.id,
-              description: `${property.name}, ${property.address}`
-            }
-          })
-          : data
-        setPropertyOptions(properties);
-        setPropertySearchResults(properties);
-        setShowAddProperty(false);
-      });
-  }
 
   const selectionMapping = () => {
     return {
@@ -108,28 +75,10 @@ export const RequestAccess = (props) => {
       firstName: fName,
       lastName: lName,
       email: emailAddress,
-      property_ids: roleSelection === "PROPERTY MANAGER"
+      property_ids: roleSelection === "PROPERTY_MANAGER"
         ? propertySelection.map(p => p.key)
         : []
     }, { success: 'User access granted!' });
-  };
-
-  const handleAddPropertyCancel = () => {
-    setShowAddProperty(false);
-  }
-
-  /**
-   * Handle property search input
-   * @param {*} event
-   */
-  const handlePropertySearch = (event) => {
-    const { value } = event.target;
-    if (!value || value.length === 0) {
-      setPropertySearchResults(propertyOptions);
-      setPropertySearchText("");
-    } else {
-      setPropertySearchText(value);
-    }
   };
 
   return (
@@ -143,31 +92,15 @@ export const RequestAccess = (props) => {
       <hr className="line" ></hr>
       <div className="sub-title sub-title-padding"> ASSIGN ROLE </div>
       <RoleDropDown selectionOptions={selectionOptions} selectionHandler={selectionHandler} />
-      {roleSelection === "PROPERTY MANAGER" && <div>
+      {roleSelection === "PROPERTY_MANAGER" && <div>
         <h1 className="section-title">PROPERTIES</h1>
         <div className="typeahead-section">
-          <SearchPanel
-            chips
-            clearLabel="Clear search text"
-            placeholder="Search Properties"
-            small
-            width={isMobile ? 300 : 400}
-            variant={SearchPanelVariant.checkbox}
-            choices={propertySearchResults}
-            value={propertySearchText}
-            onSelectionChange={setPropertySelection}
-            onChange={handlePropertySearch}
-            onClear={handlePropertySearch}
-            shadow
+          <PropertySearchPanel
+            initialPropertyIds={[propertySelection]}
+            setPropertySelection={setPropertySelection}
+            multiSelect={true}
+            showAddPropertyButton={true}
           />
-          <button
-            className="add-property-button"
-            onClick={() => setShowAddProperty(!showAddProperty)}
-            type="button"
-          >
-            <i className="fas fa-plus-circle icon-inline-space"></i>
-          Create New Property
-        </button>
         </div>
       </div>}
       <div className="mt-2">
@@ -178,19 +111,6 @@ export const RequestAccess = (props) => {
         </button>
         <Link className="button is-rounded is-small is-dark" to='/dashboard'> CANCEL </Link>
       </div>
-      {showAddProperty &&
-        <Modal
-          titleText="Create New Property"
-          content={<AddProperty
-            showPageTitle={false}
-            postOnSubmit={getProperties}
-            handleCancel={handleAddPropertyCancel}
-            showAssignPropManagers={false}
-            />}
-          hasButtons={false}
-          closeHandler={handleAddPropertyCancel}
-        />
-      }
     </div>
   );
 };

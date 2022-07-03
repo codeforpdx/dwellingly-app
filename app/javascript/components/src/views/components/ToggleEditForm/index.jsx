@@ -16,7 +16,8 @@ const ToggleEditForm = ({
   submitHandler,
   cancelHandler,
   validationSchema,
-  calendarState
+  calendarState,
+  children
 }) => {
 
   // create initialValues for Formik
@@ -47,7 +48,7 @@ const ToggleEditForm = ({
             const isCalendar = tableData[index].inputType === "calendar"
             const readOnly = tableData[index].readOnly === true
 
-            return (<div key={value}><div className="form__row--editing columns">
+            return (<div className="form__row--editing columns" key={value}>
               <label
                 className="form__label column is-one-quarter"
                 htmlFor={value}
@@ -69,12 +70,13 @@ const ToggleEditForm = ({
                   : 'is-one-quarter'}`}
               />
               {isCalendar && <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />}
-            </div>
               <FieldError
                 error={errors[value]}
                 className="column is-one-quarter"
-              /></div>)
+              />
+            </div>)
           })}
+          {children}
           <div className="form__button-container">
             <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>
               SAVE
@@ -87,7 +89,7 @@ const ToggleEditForm = ({
       )}
     </Formik>
   ) : (
-    <>
+    <div>
       {tableData.map((dataObject) => (
         <div key={dataObject.label} className="form__row--not-editing columns">
           <span className="form__label column is-one-quarter">
@@ -108,7 +110,8 @@ const ToggleEditForm = ({
           }</span>
         </div>
       ))}
-    </>
+      {children}
+    </div>
   );
 };
 

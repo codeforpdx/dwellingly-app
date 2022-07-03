@@ -4,14 +4,11 @@ import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
-import { AddProperty } from '../AddProperty';
-import Modal from '../components/Modal';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import './styles/index.scss';
 import useMountEffect from '../../utils/useMountEffect';
 import CalendarModal, { useCalendarState } from "../components/CalendarModal";
-import { useMediaQuery } from '@react-hook/media-query';
-import { tabletWidth } from "../../constants";
+import PropertySearchPanel from "../components/PropertySearchPanel";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -33,16 +30,11 @@ const AddTenant = () => {
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffOptions, setStaffOptions] = useState([])
   const [staffSelections, setStaffSelections] = useState([]);
-  const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
-  const [propertyOptions, setPropertyOptions] = useState([]);
-  const [propertySearchResults, setPropertySearchResults] = useState([]);
-  const [showAddProperty, setShowAddProperty] = useState(false);
 
   const calendarState = useCalendarState();
   const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
-  useMountEffect(() => getProperties());
   useMountEffect(() => getStaff());
 
   useEffect(() => {
@@ -50,19 +42,6 @@ const AddTenant = () => {
       s => s.description.toLowerCase().includes(staffSearchText.toLowerCase()));
     setStaffSearchResults(choices);
     }, [staffSearchText, staffOptions]);
-
-  useEffect(() => {
-    let choices = propertyOptions.filter(
-      p => p.description.toLowerCase().includes(propertySearchText.toLowerCase()));
-    setPropertySearchResults(choices);
-  }, [propertySearchText, propertyOptions]);
-
-  const propertyOptionFormat = (property) => {
-    return {
-      key: property.id,
-      description: `${property.name}, ${property.address}`
-    }
-  }
 
   const staffOptionFormat = (staff) => {
     return {
@@ -83,31 +62,9 @@ const AddTenant = () => {
       });
   }
 
-  const getProperties = () => {
-    context.apiCall('get', '/properties', {}, {})
-      .then(({ data }) => {
-        const properties = data && data.length > 0
-          ? data.map(property => {
-            return propertyOptionFormat(property)
-          })
-          : data;
-        setPropertyOptions(properties);
-      });
-  };
-
   const handleFormSubmit = (data) => {
     context.apiCall('post', `/tenants`, data, { success: 'Tenant Created Successfully!'});
   };
-
-  const closePropertyModal = () => {
-    setShowAddProperty(false);
-  }
-
-  const closeAndSetProperty = (property) => {
-    closePropertyModal()
-    setPropertySelection([propertyOptionFormat(property)])
-    setPropertyOptions(propertyOptions.concat([propertyOptionFormat(property)]))
-  }
 
   /**
    * Handle staff search input
@@ -124,20 +81,6 @@ const AddTenant = () => {
   };
 
   /**
-   * Handle property search input
-   * @param {*} event
-   */
-  const handlePropertySearch = (event) => {
-    const { value } = event.target;
-    if(!value || value.length === 0) {
-      setPropertySearchResults(propertyOptions);
-      setPropertySearchText("");
-    } else {
-      setPropertySearchText(value);
-    }
-  };
-
-  /**
    * Handle change in staff selections of search panel
    * @param {*} selectedChoices
    */
@@ -150,18 +93,18 @@ const AddTenant = () => {
    */
   const validateForm = (values) => {
     const errors = {}
-    if (propertySelection.length) {
+    if (propertySelection?.length) {
       if (dateTimeStart === dateTimeEnd){
         errors.lease = "Lease dates required when a property is selected"
       }
     }
     if (dateTimeStart !== dateTimeEnd) {
-      if (!propertySelection.length) {
+      if (propertySelection?.length === 0) {
         errors.propertySelection = "Property is required when lease dates are selected"
       }
     }
     if (values.unitNum || values.occupants) {
-      if (!propertySelection.length) {
+      if (propertySelection?.length === 0) {
         errors.propertySelection = "Property is required when creating a lease"
       }
       if (dateTimeStart === dateTimeEnd) {
@@ -219,7 +162,6 @@ const AddTenant = () => {
             setSubmitting(true)
             handleFormSubmit(payload)
             resetForm()
-            setPropertySearchText("");
             setPropertySelection([]);
             setStaffSearchText("");
             setStaffSelections([]);
@@ -326,33 +268,16 @@ const AddTenant = () => {
 
                   <h1 className="section-title">PROPERTY</h1>
                   <div className="typeahead-section">
-                    <SearchPanel
-                      chips
-                      clearLabel="Clear search text"
-                      placeholder="Search Properties"
-                      small
-                      width={isMobile ? 300 : 400}
-                      variant={SearchPanelVariant.radio}
-                      choices={propertySearchResults}
-                      value={propertySearchText}
-                      onSelectionChange={setPropertySelection}
-                      onChange={handlePropertySearch}
-                      onClear={handlePropertySearch}
-                      preSelectedChoices={propertySelection}
-                      shadow
+                    <PropertySearchPanel
+                      initialPropertyIds={[]}
+                      setPropertySelection={setPropertySelection}
+                      multiSelect={false}
+                      showAddPropertyButton={false}
                     />
                     <ErrorMessage
                       name="propertySelection"
                       render={renderErrorMsg}
                     />
-                    <button
-                      className="add-property-button"
-                      onClick={() => setShowAddProperty(!showAddProperty)}
-                      type="button"
-                    >
-                      <i className="fas fa-plus-circle icon-inline-space"></i>
-                      Create New Property
-                    </button>
                   </div>
 
                   <h1 className="section-title">LEASE</h1>
@@ -447,21 +372,6 @@ const AddTenant = () => {
               </div>
             )}
         </Formik>
-        {showAddProperty &&
-          <Modal
-            titleText="Create New Property"
-            content={
-              <AddProperty
-                showPageTitle={false}
-                handleCancel={closePropertyModal}
-                afterCreate={closeAndSetProperty}
-                showAssignPropManagers={false}
-              />
-            }
-            hasButtons={false}
-            closeHandler={closePropertyModal}
-          />
-        }
       </div>
     </div>
   );

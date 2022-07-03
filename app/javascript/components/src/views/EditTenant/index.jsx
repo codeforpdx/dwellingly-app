@@ -7,6 +7,7 @@ import ToggleEditForm from "../components/ToggleEditForm";
 import { useCalendarState } from "../components/CalendarModal";
 import Modal from '../components/Modal';
 import { TenantTickets } from './components/tenantTickets'
+import PropertySearchPanel from "../components/PropertySearchPanel";
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -31,14 +32,13 @@ const EditTenant = () => {
   const context = useContext(UserContext);
 
   const [tenant, setTenant] = useState(null);
-  const [property, setProperty] = useState(null);
+  const [selectedProperty, setSelectedProperty] = useState(null);
   const [isEditing, setEditingStatus] = useState(false);
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
-
-  const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
+  const calendarState = useCalendarState(tenant?.lease?.dateTimeStart, tenant?.lease?.dateTimeEnd)
 
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
@@ -68,7 +68,7 @@ const EditTenant = () => {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           phone: response.data.phone
-        })
+        });
         setSubmitting(false);
         setEditingStatus(false);
       });
@@ -104,15 +104,14 @@ const EditTenant = () => {
    */
   const getTenant = () => {
     context.apiCall('get', `/tenants/${id}`, {}, {})
-      .then(({data}) => {
+      .then(({ data }) => {
         setTenant(data);
-        setStaffSelections(getStaffChoices(data.staff));
-        setProperty(data.property);
         setTicketList(data.tickets?.map(t => {
           return {
             ...t,
             assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(',\n')
-          }}));
+          }
+        }));
       });
   };
 
@@ -145,40 +144,36 @@ const EditTenant = () => {
       value: tenant.phone,
       inputType: "text",
     },
-    {
-      key: "address",
-      label: "Property",
-      value: property
-        ? `${property.address}, ${property.city},` + ` ${property.state}, ${property.zipcode}`
-        : "Unhoused Tenant",
-      inputType: "text",
-      comp: <div />,
-      readOnly: true,
-    },
-    {
-      key: "unitNum",
-      label: "Unit",
-      value: (tenant.lease.unitNum)
-        ? tenant.lease.unitNum
-        : "Not Applicable",
-      inputType: "text",
-      comp: <div />,
-      readOnly: true,
-    },
-    {
-      key: "lease",
-      label: "Lease",
-      value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd)
-        ? {
-          dateTimeStart: new Date(tenant.lease.dateTimeStart),
-          dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
-        }
-        :	"Not Applicable",
-      inputType: (tenant.lease)
-        ? "calendar"
-        : "text",
-      readOnly: true,
-    }
+    // {
+    //   key: "address",
+    //   label: "Property",
+    //   value: property
+    //     ? `${property.address}, ${property.city},` + ` ${property.state}, ${property.zipcode}`
+    //     : "Unhoused Tenant",
+    //   inputType: "text",
+    //   readOnly: true,
+    // },
+    // {
+    //   key: "unitNum",
+    //   label: "Unit",
+    //   value: (tenant.lease)
+    //     ? tenant.lease.unitNum
+    //     : "",
+    //   inputType: "text",
+    // },
+    // {
+    //   key: "lease",
+    //   label: "Lease",
+    //   value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd)
+    //     ? {
+    //       dateTimeStart: new Date(tenant.lease.dateTimeStart),
+    //       dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
+    //     }
+    //     :	"Not Applicable",
+    //   inputType: (tenant.lease)
+    //     ? "calendar"
+    //     : "text",
+    // }
   ];
 
   /**
@@ -187,7 +182,7 @@ const EditTenant = () => {
   useEffect(() => {
     // TODO: AFAIK We've never had search implemented in the backend. Not sure why this is here
     context.apiCall('get', '/staff_members', { name: staffSearchText }, {})
-      .then( ({data}) => {
+      .then(({ data }) => {
         setStaffSearchResults(getStaffChoices(data.joinStaff.concat(data.admins)));
       })
   }, [staffSearchText]);
@@ -196,7 +191,7 @@ const EditTenant = () => {
    * Handle staff search input
    * @param {*} event
    */
-  const handleChangeSearch = (event) => {
+  const handleChangeStaffSearch = (event) => {
     const { value } = event.target;
     if (!value || value.length === 0) {
       setStaffSearchResults([]);
@@ -261,14 +256,14 @@ const EditTenant = () => {
               {(!tenant.archived && isEditing) && <button
                 className="button is-primary is-rounded"
                 onClick={toggleArchiveModal}
-                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-archive icon-inline-space"></i>
                 ARCHIVE
               </button>}
               {tenant.archived && <button
                 className="button is-primary is-rounded"
                 onClick={toggleArchiveModal}
-                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-undo icon-inline-space"></i>
                 UNARCHIVE
               </button>}
@@ -283,26 +278,36 @@ const EditTenant = () => {
                 submitHandler={onFormikSubmit}
                 cancelHandler={onCancelClick}
                 calendarState={calendarState}
-              />
-            </div>
-
-            <div className="section-container">
-              <h2>JOIN STAFF</h2>
-              <SearchPanel
-                chips
-                choices={staffSearchResults}
-                clearLabel="Clear search text"
-                maximumHeight={200}
-                onChange={handleChangeSearch}
-                onClear={handleChangeSearch}
-                onSelectionChange={handleChangeStaffSelections}
-                placeholder="Search JOIN staff"
-                preSelectedChoices={staffSelections}
-                small
-                value={staffSearchText}
-                variant={SearchPanelVariant.checkbox}
-                width={400}
-              />
+              >
+                <div className="section-container">
+                  <h2>PROPERTY</h2>
+                  {isEditing && <PropertySearchPanel
+                    initialPropertyIds={[tenant?.lease?.property_id]}
+                    propertySelections={selectedProperty}
+                    setPropertySelection={setSelectedProperty}
+                    multiSelect={false}
+                    showAddPropertyButton={false}
+                    />}
+                </div>
+                <div className="section-container">
+                  <h2>JOIN STAFF</h2>
+                  {isEditing && <SearchPanel
+                    chips
+                    choices={staffSearchResults}
+                    clearLabel="Clear search text"
+                    maximumHeight={200}
+                    onChange={handleChangeStaffSearch}
+                    onClear={handleChangeStaffSearch}
+                    onSelectionChange={handleChangeStaffSelections}
+                    placeholder="Search JOIN staff"
+                    preSelectedChoices={getStaffChoices(tenant.staff)}
+                    small
+                    value={staffSearchText}
+                    variant={SearchPanelVariant.checkbox}
+                    width={400}
+                  />}
+                </div>
+              </ToggleEditForm>
             </div>
 
             <div className="section-container">

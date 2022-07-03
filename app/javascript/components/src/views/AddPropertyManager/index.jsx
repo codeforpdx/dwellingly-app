@@ -1,17 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import { AddProperty } from '../AddProperty';
-import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
-import Modal from '../components/Modal';
-import useMountEffect from '../../utils/useMountEffect';
 import './styles/index.scss';
 import UserType from '../../Enums/UserType';
-import { useMediaQuery } from '@react-hook/media-query';
-import { tabletWidth } from "../../constants";
+import PropertySearchPanel from "../components/PropertySearchPanel";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -35,40 +30,7 @@ const validationSchema = Yup.object().shape({
 
 const AddPropertyManager = () => {
   const context = useContext(UserContext);
-  const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
-  const [propertyOptions, setPropertyOptions] = useState([]);
-  const [propertySearchResults, setPropertySearchResults] = useState([]);
-  const [showAddProperty, setShowAddProperty] = useState(false);
-  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
-
-  useMountEffect(() => getProperties());
-
-  useEffect(() => {
-    let choices = propertyOptions.filter(
-      p => p.description.toLowerCase().includes(propertySearchText.toLowerCase()));
-    setPropertySearchResults(choices);
-  }, [propertySearchText, propertyOptions]);
-
-  const propertyOptionFormat = (property) => {
-    return {
-      key: property.id,
-      description: `${property.name}, ${property.address}`
-    }
-  }
-
-  const getProperties = () => {
-    context.apiCall('get', `/properties`, {}, {})
-      .then(({ data }) => {
-        let properties = data && data.length > 0
-          ? data.map(property => {
-            return propertyOptionFormat(property)
-          })
-          : [];
-        setPropertyOptions(properties);
-        setPropertySearchResults(properties);
-      });
-  };
 
   const handleFormSubmit = (values, { setSubmitting, resetForm }) => {
     const payload = {
@@ -85,36 +47,11 @@ const AddPropertyManager = () => {
         if (response) {
           resetForm();
           setPropertySelection([]);
-          setPropertySearchText("");
-          setPropertySearchResults(propertyOptions);
         }
       })
       .finally(() => {
         setSubmitting(false);
       });
-  };
-
-  const closePropertyModal = () => { setShowAddProperty(false) }
-  const openPropertyModal = () => { setShowAddProperty(true) }
-
-  const closeAndSetProperty = (property) => {
-    closePropertyModal()
-    setPropertyOptions(propertyOptions.concat([propertyOptionFormat(property)]))
-    setPropertySelection(propertySelection.concat([propertyOptionFormat(property)]))
-  }
-
-  /**
-   * Handle property search input
-   * @param {*} event
-   */
-  const handlePropertySearch = (event) => {
-    const { value } = event.target;
-    if (!value || value.length === 0) {
-      setPropertySearchResults(propertyOptions);
-      setPropertySearchText("");
-    } else {
-      setPropertySearchText(value);
-    }
   };
 
   return (
@@ -142,150 +79,118 @@ const AddPropertyManager = () => {
             isValid,
             isSubmitting,
           }) => (
-            <div className="add-manager__main_container">
-              <h1 className="section-title">CONTACT INFORMATION</h1>
-              <Form className="add-manager__form-container" onSubmit={handleSubmit}>
-                <div className="form-row form-first-row">
-                  <label
-                    className="column is-one-fifth"
-                    id="firstName"
-                    htmlFor="firstName"
-                  >
-                    First Name
-                  </label>
-                  <Field
-                    className="column form-field"
-                    type="text"
-                    name="firstName"
-                    onChange={handleChange}
-                    value={values.firstName}
-                    placeholder="First Name"
-                  />
-                </div>
-                {errors.firstName ? (
-                  <div className="error-message">{errors.firstName}</div>
-                ) : null}
-                <div className="form-row">
-                  <label
-                    className="column is-one-fifth"
-                    id="lastName"
-                    htmlFor="lastName"
-                  >
-                    Last Name
-                  </label>
-                  <Field
-                    className="column form-field"
-                    type="text"
-                    name="lastName"
-                    onChange={handleChange}
-                    value={values.lastName}
-                    placeholder="Last Name"
-                  />
-                </div>
-                {errors.lastName ? (
-                  <div className="error-message">{errors.lastName}</div>
-                ) : null}
-                <div className="form-row">
-                  <label
-                    className="column is-one-fifth"
-                    id="phone"
-                    htmlFor="phone"
-                  >
-                    Phone
-                  </label>
-                  <Field
-                    className="column form-field"
-                    type="text"
-                    name="phone"
-                    onChange={handleChange}
-                    value={values.phone}
-                    placeholder="Phone Number"
-                  />
-                </div>
-                {errors.phone ? (
-                  <div className="error-message">{errors.phone}</div>
-                ) : null}
-                <div className="form-row">
-                  <label
-                    className="column is-one-fifth"
-                    id="email"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <Field
-                    className="column form-field"
-                    type="text"
-                    name="email"
-                    onChange={handleChange}
-                    value={values.email}
-                    placeholder="Enter your email address"
-                  />
-                </div>
-                {errors.email ? (
-                  <div className="error-message">{errors.email}</div>
-                ) : null}
-                <h1 className="section-title" style={{ marginTop: "20px" }}>ASSIGN PROPERTIES</h1>
-                <div className="typeahead-section">
-                  <SearchPanel
-                    chips
-                    clearLabel="Clear search text"
-                    placeholder="Search Properties"
-                    small
-                    width={isMobile ? 300 : 400}
-                    variant={SearchPanelVariant.checkbox}
-                    choices={propertySearchResults}
-                    value={propertySearchText}
-                    onSelectionChange={setPropertySelection}
-                    onChange={handlePropertySearch}
-                    onClear={handlePropertySearch}
-                    preSelectedChoices={propertySelection}
-                    shadow
-                  />
-                  <button
-                    className="add-property-button"
-                    onClick={openPropertyModal}
-                    type="button"
-                  >
-                    <i className="fas fa-plus-circle icon-inline-space"></i>
-                    Create New Property
-                  </button>
-                </div>
-                <div className="button-container">
-                  <Button
-                    isCancelButton={false}
-                    type="submit"
-                    disabledFlag={isSubmitting}
-                    isValidFlag={isValid}
-                  >
-                    SAVE
-                  </Button>
-                  <Link
-                    className="button is-dark is-rounded"
-                    to="/manage/managers"
-                  >
-                    CANCEL
-                  </Link>
-                </div>
-              </Form>
-            </div>
-          )}
+              <div className="add-manager__main_container">
+                <h1 className="section-title">CONTACT INFORMATION</h1>
+                <Form className="add-manager__form-container" onSubmit={handleSubmit}>
+                  <div className="form-row form-first-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="firstName"
+                      htmlFor="firstName"
+                    >
+                      First Name
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="firstName"
+                      onChange={handleChange}
+                      value={values.firstName}
+                      placeholder="First Name"
+                    />
+                    {errors.firstName ? (
+                      <div className="error-message">{errors.firstName}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="lastName"
+                      htmlFor="lastName"
+                    >
+                      Last Name
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="lastName"
+                      onChange={handleChange}
+                      value={values.lastName}
+                      placeholder="Last Name"
+                    />
+                    {errors.lastName ? (
+                      <div className="error-message">{errors.lastName}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row">
+                    <label
+                      className="column is-one-fifth"
+                      id="phone"
+                      htmlFor="phone"
+                    >
+                      Phone
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="phone"
+                      onChange={handleChange}
+                      value={values.phone}
+                      placeholder="Phone Number"
+                    />
+                    {errors.phone ? (
+                      <div className="error-message">{errors.phone}</div>
+                    ) : null}
+                  </div>
+                  <div className="form-row" style={{ marginBottom: "20px" }}>
+                    <label
+                      className="column is-one-fifth"
+                      id="email"
+                      htmlFor="email"
+                    >
+                      Email
+                    </label>
+                    <Field
+                      className="column form-field"
+                      type="text"
+                      name="email"
+                      onChange={handleChange}
+                      value={values.email}
+                      placeholder="Enter your email address"
+                    />
+                    {errors.email ? (
+                      <div className="error-message">{errors.email}</div>
+                    ) : null}
+                  </div>
+                  <h1 className="section-title">ASSIGN PROPERTIES</h1>
+                  <div className="typeahead-section">
+                    <PropertySearchPanel
+                      initialPropertyIds={[]}
+                      setPropertySelection={setPropertySelection}
+                      multiSelect={true}
+                      showAddPropertyButton={true}
+                    />
+                  </div>
+                  <div className="button-container">
+                    <Button
+                      isCancelButton={false}
+                      type="submit"
+                      disabledFlag={isSubmitting}
+                      isValidFlag={isValid}
+                    >
+                      SAVE
+                    </Button>
+                    <Link
+                      className="button is-dark is-rounded"
+                      to="/manage/managers"
+                    >
+                      CANCEL
+                    </Link>
+                  </div>
+                </Form>
+              </div>
+            )}
         </Formik>
-        {showAddProperty &&
-          <Modal
-            titleText="Create New Property"
-            content={
-              <AddProperty
-                showPageTitle={false}
-                afterCreate={closeAndSetProperty}
-                handleCancel={closePropertyModal}
-                showAssignPropManagers={false}
-              />
-            }
-            hasButtons={false}
-            closeHandler={closePropertyModal}
-          />
-        }
       </div>
     </div>
   );
