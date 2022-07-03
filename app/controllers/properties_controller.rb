@@ -9,7 +9,7 @@ class PropertiesController < ApplicationController
   end
 
   def create
-    @property = authorize Property.new(create_params)
+    @property = authorize Property.new(property_params)
 
     if @property.save
       render :show, status: :created
@@ -39,12 +39,10 @@ class PropertiesController < ApplicationController
   end
 
   def property_params
-    params.require(:property).permit(:name, :address, :num_units, :city, :state, :zipcode, :archived)
-  end
-
-  def create_params
-    property_params.merge(
-      { property_manager_ids: params.fetch(:propertyManagerIDs, []) }
-    )
+    params.require(:property)
+      .permit(:name, :address, :num_units, :city, :state, :zipcode, :archived)
+      .merge(
+        { property_manager_ids: params.fetch(:propertyManagerIDs, []) }
+      )
   end
 end
