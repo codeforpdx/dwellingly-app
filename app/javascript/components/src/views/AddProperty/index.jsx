@@ -3,11 +3,8 @@ import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../../contexts/UserContext';
 import { Link } from 'react-router-dom';
-import { SearchPanel, SearchPanelVariant } from 'react-search-panel';
-import useMountEffect from '../../utils/useMountEffect';
 import './styles/index.scss';
-import { useMediaQuery } from '@react-hook/media-query';
-import { tabletWidth } from '../../constants';
+import PropertyManagerSearchPanel from '../components/PropertyManagerSearchPanel';
 
 
 const validationSchema = Yup.object().shape({
@@ -34,56 +31,19 @@ const validationSchema = Yup.object().shape({
 
 
 export const AddProperty = (props) => {
-  const [propertyManagers, setPropertyManagers] = useState([])
-  const [managerOptions, setManagerOptions] = useState([])
-  const [filteredManagerOptions, setFilteredManagerOptions] = useState([])
-  const [managerSearch, setManagerSearch] = useState('')
-  const userContext = useContext(UserContext)
-  const { showPageTitle, handleCancel,
+  const [propertyManagers, setPropertyManagers] = useState([]);
+  const userContext = useContext(UserContext);
+  const { showPageTitle, handleCancel, 
     afterCreate, showAssignPropManagers } = props;
-  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
 
-  useMountEffect(() => getManagers())
-
-  const getManagers = () => {
-    userContext.apiCall('get', '/property_managers', {}, {})
-      .then(({ data }) => {
-        const managerOptions = data.map(({ id, firstName, lastName }) => {
-          return ({
-            key: id,
-            description: `${firstName} ${lastName}`
-          })
-        })
-        setManagerOptions(managerOptions)
-        setFilteredManagerOptions(managerOptions)
-      })
-  }
-
-  const formHandler = (data, setErrors) => {
+  const handleSubmit = (data, setErrors, resetForm) => {
     userContext.apiCall('post', '/properties', data, { success: 'Property Added!' }, setErrors)
       .then((response) => {
         if (afterCreate) {
-          afterCreate(response.data)
+          afterCreate(response.data);
         }
-        // The api returns false if there is an error
-        // Use the input to determine if the form can be reset
-        return true
+        resetForm();
       })
-  }
-
-  const handleSearchChange = ({ target }) => {
-    let managerSearch = target.value
-    if (!managerSearch || managerSearch.length === 0) managerSearch = ''
-    setManagerSearch(managerSearch)
-
-    const choices = managerOptions.filter(
-      manager => manager.description.toLowerCase().includes(managerSearch.toLowerCase())
-    )
-    setFilteredManagerOptions(choices)
-  }
-
-  const handleSelectionChange = (propertyManagers) => {
-    setPropertyManagers(propertyManagers)
   }
 
   return (
@@ -105,9 +65,7 @@ export const AddProperty = (props) => {
             values.propertyManagerIDs = propertyManagers.map(manager => manager.key);
 
             setSubmitting(true);
-            if (formHandler(values, setErrors)) {
-              resetForm();
-            }
+            handleSubmit(values, setErrors, resetForm);
             setSubmitting(false);
           }}>
           {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
@@ -187,27 +145,19 @@ export const AddProperty = (props) => {
                     error={errors.num_units}
                   />
                 </div>
-                {errors.num_units ? (<div className='error-message'>{errors.num_units}</div>) : null}
 
-                {showAssignPropManagers ? (
-                  <div className=' add-property__assign-manager-container'>
-                    <h3 className='section-title'>ASSIGN PROPERTY MANAGERS</h3>
-                    <div className='typeahead-section'>
-                      <SearchPanel
-                        chips
-                        choices={filteredManagerOptions}
-                        small
-                        width={isMobile ? 300 : 400}
-                        shadow
-                        onChange={handleSearchChange}
-                        onSelectionChange={handleSelectionChange}
-                        placeholder='Search Property Managers'
-                        selectedChoices={propertyManagers}
-                        value={managerSearch}
-                        variant={SearchPanelVariant.checkbox}
-                      />
-                    </div>
-                  </div>) : null}
+                {showAssignPropManagers ? ( 
+                <div className=' add-property__assign-manager-container'>
+                  <h3 className='section-title'>ASSIGN PROPERTY MANAGERS</h3>
+                  <div className='typeahead-section'>
+                    <PropertyManagerSearchPanel
+                      initialManagerIds={[]}
+                      managerSelections={propertyManagers}
+                      setManagerSelections={setPropertyManagers}
+                      multiSelect={true}
+                    />
+                  </div>
+                </div>) : null }
 
                 <div className='container-footer mt-3'>
                   <button
