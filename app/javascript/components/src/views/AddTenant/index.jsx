@@ -208,6 +208,7 @@ const AddTenant = () => {
                     <PropertySearchPanel
                       initialPropertyIds={[]}
                       setPropertySelection={setPropertySelection}
+                      propertySelections={propertySelection}
                       multiSelect={false}
                       showAddPropertyButton={false}
                     />

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import ToggleEditForm from "../components/ToggleEditForm";
 import { useCalendarState } from "../components/CalendarModal";
@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 import { TenantTickets } from './components/tenantTickets'
 import PropertySearchPanel from "../components/PropertySearchPanel";
 import JoinStaffSearchPanel from "../components/JoinStaffSearchPanel";
+import ContactCard from "../components/ContactCard";
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -51,22 +52,30 @@ const EditTenant = () => {
   const handleEditToggle = () => setEditingStatus(!isEditing);
 
   const onFormikSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true);
-
     if (_nothingHasChanged(values, tenant)) {
       setSubmitting(false);
       setEditingStatus(false);
       return;
     }
 
-    context.apiCall('put', `/tenants/${id}`, values, { success: 'Tenant updated successfully!' })
+    setSubmitting(true);
+    let payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.phone,
+      staff_ids: staffSelections?.map(staff => staff.key),
+      lease_attributes: {
+        unitNum: values.unitNum,
+        dateTimeStart: values.lease?.dateTimeStart,
+        dateTimeEnd: values.lease?.dateTimeEnd,
+        occupants: values.occupants,
+        property_id: selectedProperty[0]?.key
+      }
+    }
+
+    context.apiCall('put', `/tenants/${id}`, payload, { success: 'Tenant updated successfully!' })
       .then((response) => {
-        setTenant({
-          ...tenant,
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          phone: response.data.phone
-        });
+        setTenant(response.data);
         setSubmitting(false);
         setEditingStatus(false);
       });
@@ -76,7 +85,11 @@ const EditTenant = () => {
     return (
       newValues.firstName === oldValues.firstName &&
       newValues.lastName === oldValues.lastName &&
-      newValues.phone === oldValues.phone
+      newValues.phone === oldValues.phone &&
+      newValues.unitNum === oldValues.unitNum &&
+      newValues.dateTimeStart === oldValues.dateTimeStart &&
+      newValues.dateTimeEnd === oldValues.dateTimeEnd &&
+      newValues.occupants === oldValues.occupants
     );
   };
 
@@ -132,36 +145,35 @@ const EditTenant = () => {
       value: tenant.phone,
       inputType: "text",
     },
-    // {
-    //   key: "address",
-    //   label: "Property",
-    //   value: property
-    //     ? `${property.address}, ${property.city},` + ` ${property.state}, ${property.zipcode}`
-    //     : "Unhoused Tenant",
-    //   inputType: "text",
-    //   readOnly: true,
-    // },
-    // {
-    //   key: "unitNum",
-    //   label: "Unit",
-    //   value: (tenant.lease)
-    //     ? tenant.lease.unitNum
-    //     : "",
-    //   inputType: "text",
-    // },
-    // {
-    //   key: "lease",
-    //   label: "Lease",
-    //   value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd)
-    //     ? {
-    //       dateTimeStart: new Date(tenant.lease.dateTimeStart),
-    //       dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
-    //     }
-    //     :	"Not Applicable",
-    //   inputType: (tenant.lease)
-    //     ? "calendar"
-    //     : "text",
-    // }
+    {
+      key: "unitNum",
+      label: "Unit",
+      value: (tenant.lease)
+        ? tenant.lease.unitNum
+        : "",
+      inputType: "text",
+    },
+    {
+      key: "occupants",
+      label: "Occupants",
+      value: (tenant.lease)
+        ? tenant.lease.occupants
+        : "",
+      inputType: "text"
+    },
+    {
+      key: "lease",
+      label: "Lease",
+      value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd)
+        ? {
+          dateTimeStart: new Date(tenant.lease.dateTimeStart),
+          dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
+        }
+        :	"Not Applicable",
+      inputType: (tenant.lease)
+        ? "calendar"
+        : "text",
+    }
   ];
 
   const toggleArchiveModal = () => {
@@ -188,6 +200,11 @@ const EditTenant = () => {
         setShowArchiveModal(false);
         setEditingStatus(false);
       });
+  }
+
+  const removeLease = () => {
+    context.apiCall('delete', `/leases/${id}`,
+      {}, { success: 'Lease successfully removed' });
   }
 
   return (
@@ -236,23 +253,41 @@ const EditTenant = () => {
               >
                 <div className="section-container">
                   <h2>PROPERTY</h2>
-                  {isEditing && <PropertySearchPanel
-                    initialPropertyIds={[tenant?.lease?.property_id]}
-                    propertySelections={selectedProperty}
-                    setPropertySelection={setSelectedProperty}
-                    multiSelect={false}
-                    showAddPropertyButton={false}
-                    />}
+                  {isEditing
+                    ? <PropertySearchPanel
+                      initialPropertyIds={[tenant?.lease?.property_id]}
+                      propertySelections={selectedProperty}
+                      setPropertySelection={setSelectedProperty}
+                      multiSelect={false}
+                      showAddPropertyButton={false}
+                      />
+                    : <div className="contact-card-box box">
+                        <div>
+                          <Link key={tenant?.property?.id} to={`/manage/properties/${tenant?.property?.id}`}>
+                            <p className="bold">{`${tenant?.property?.name}`}</p>
+                          </Link>
+                          <p className="information">{tenant?.property?.address}</p>
+                          <p className="information">{tenant?.property?.city} {tenant?.property?.state}</p>
+                        </div>
+                      </div>}
                 </div>
                 <div className="section-container">
                   <h2>JOIN STAFF</h2>
-                  {isEditing &&
-                  <JoinStaffSearchPanel
-                    initialStaffIds={tenant.staff}
-                    staffSelections={staffSelections}
-                    setStaffSelections={setStaffSelections}
-                    multiSelect={true}
-                  />}
+                  {isEditing
+                    ? <JoinStaffSearchPanel
+                      initialStaffIds={tenant?.staff}
+                      staffSelections={staffSelections}
+                      setStaffSelections={setStaffSelections}
+                      multiSelect={true}
+                    />
+                    : tenant?.staff?.map(staff => (
+                        <ContactCard
+                          contact={staff}
+                          key={staff.id}
+                          isEditing={isEditing}
+                          linkUrl={`/manage/staff/${staff.id}`}
+                        />
+                        ))}
                 </div>
               </ToggleEditForm>
             </div>
