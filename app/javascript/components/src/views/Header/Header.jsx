@@ -15,7 +15,8 @@ const Header = (props) => {
     return null;
   }
 
-  return (
+  return !window.location.pathname.includes('/m/testpm')
+  && !window.location.pathname.includes('/m/teststaff') && (
     <header data-testid="header" className="navbar-brand bg-gradient navbar-container">
       <button className="navbar-button" type="button" onClick={props.toggle}>
         <FontAwesomeIcon icon={faBars} size="lg"/>

@@ -13,11 +13,11 @@ import './styles/index.scss';
 
 const validationSchema = Yup.object().shape({
   propertyName: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Must enter Property Name"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Must enter Property Name"),
   propertyAddress: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Address is required"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Address is required"),
   propertyUnits: Yup.string()
     .min(
       0,

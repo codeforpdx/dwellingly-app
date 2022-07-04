@@ -20,7 +20,7 @@
     margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    max-width: 80%;
+    max-width: 90%;
     .form-row {
       display: flex;
       border-bottom: 1px solid $lightGray;
@@ -43,6 +43,7 @@
       }
       .error-message{
         color: red;
+        z-index: 2;
       }
       label {
         color: $gray;

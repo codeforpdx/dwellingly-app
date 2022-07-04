@@ -59,13 +59,6 @@ export const mobileColumns = [{
     return { width: "45%" };
   }
 }, {
-  dataField: 'address',
-  text: 'Address',
-  sort: true,
-  headerStyle: () => {
-    return { width: "45%" };
-  }
-}, {
   dataField: 'totalTenants',
   text: 'Tenants',
   sort: true,

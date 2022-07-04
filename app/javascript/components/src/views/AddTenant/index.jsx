@@ -7,10 +7,11 @@ import Button from "../components/Button";
 import { AddProperty } from '../AddProperty';
 import Modal from '../components/Modal';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import UserType from '../../Enums/UserType';
 import './styles/index.scss';
 import useMountEffect from '../../utils/useMountEffect';
 import CalendarModal, { useCalendarState } from "../components/CalendarModal";
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth } from "../../constants";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -27,6 +28,7 @@ const validationSchema = Yup.object().shape({
 
 const AddTenant = () => {
   const context = useContext(UserContext);
+  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
   const [staffSearchText, setStaffSearchText] = useState("");
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffOptions, setStaffOptions] = useState([])
@@ -250,11 +252,12 @@ const AddTenant = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    <ErrorMessage
-                      name="firstName"
-                      render={renderErrorMsg}
-                    />
                   </div>
+
+                  <ErrorMessage
+                    name="firstName"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="form-row">
                     <label
@@ -272,13 +275,14 @@ const AddTenant = () => {
                       value={values.lastName}
                       placeholder="Last Name"
                     />
-                    <ErrorMessage
-                      name="lastName"
-                      render={renderErrorMsg}
-                    />
                   </div>
 
-                  <div className="form-row" style={{ marginBottom: "20px" }}>
+                  <ErrorMessage
+                    name="lastName"
+                    render={renderErrorMsg}
+                  />
+
+                  <div className="form-row">
                     <label
                       className="column is-one-fifth"
                       id="phone"
@@ -294,13 +298,14 @@ const AddTenant = () => {
                       value={values.phone}
                       placeholder="Phone Number"
                     />
-                    <ErrorMessage
-                      name="phone"
-                      render={renderErrorMsg}
-                    />
                   </div>
 
-                  <h1 className="section-title">ASSIGN JOIN STAFF</h1>
+                  <ErrorMessage
+                    name="phone"
+                    render={renderErrorMsg}
+                  />
+
+                  <h1 className="section-title" style={{ marginTop: "20px" }}>ASSIGN JOIN STAFF</h1>
                   <div className="typeahead-section">
                     <SearchPanel
                       chips
@@ -314,7 +319,7 @@ const AddTenant = () => {
                       small
                       value={staffSearchText}
                       variant={SearchPanelVariant.checkbox}
-                      width={400}
+                      width={isMobile ? 300 : 400}
                       shadow
                     />
                   </div>
@@ -326,7 +331,7 @@ const AddTenant = () => {
                       clearLabel="Clear search text"
                       placeholder="Search Properties"
                       small
-                      width={400}
+                      width={isMobile ? 300 : 400}
                       variant={SearchPanelVariant.radio}
                       choices={propertySearchResults}
                       value={propertySearchText}
@@ -367,11 +372,12 @@ const AddTenant = () => {
                       value={values.unitNum}
                       placeholder="Unit Number (Optional)"
                     />
-                    <ErrorMessage
-                      name="unitNum"
-                      render={renderErrorMsg}
-                    />
                   </div>
+
+                  <ErrorMessage
+                    name="unitNum"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="form-row">
                     <label
@@ -389,11 +395,12 @@ const AddTenant = () => {
                       value={values.occupants}
                       placeholder="Total number of unit tenants (Optional)"
                     />
-                    <ErrorMessage
-                      name="occupants"
-                      render={renderErrorMsg}
-                    />
                   </div>
+
+                  <ErrorMessage
+                    name="occupants"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="form-row" >
                     <label
@@ -413,12 +420,13 @@ const AddTenant = () => {
                       }
                       placeholder="Lease dates (Optional)"
                     />
-                    <ErrorMessage
-                      name="lease"
-                      render={renderErrorMsg}
-                    />
                     <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />
                   </div>
+
+                  <ErrorMessage
+                    name="lease"
+                    render={renderErrorMsg}
+                  />
 
                   <div className="button-container">
                     <Button

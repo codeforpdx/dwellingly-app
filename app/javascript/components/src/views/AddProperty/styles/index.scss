@@ -3,7 +3,7 @@
     &__form-container {
         display: flex;
         flex-direction: column;
-        max-width: 80%;
+        max-width: 90%;
         margin: .75rem 0 0 .75rem;
       }
 
@@ -57,6 +57,7 @@
 
 .error-message {
     color: $errorRed;
+    z-index: 2;
 }
 
 Label {

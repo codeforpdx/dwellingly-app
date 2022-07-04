@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
       number: Yup.string()
         .min(5, "*Number must contain at least 5 digits to be a valid phone/text number")
         .max(20, "*Numbers can't be longer than 20 digits")
-        .required("*a valid phone number is required"),
+        .required("*A valid phone number is required"),
       numtype: Yup.string()
         .max(30, "*Number type can't be longer than 30 characters"),
       extension: Yup.string().nullable()
@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const FieldError = ({ error }) => {
-  if(!error) return null;
+  if (!error) return null;
   return (
     <div className="error-message">
       {error}
@@ -52,8 +52,8 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           value={values.contact_numbers[i].number}
           placeholder="Phone Number"
         />
-        {subFormErrors && <FieldError error={subFormErrors.number} />}
       </div>
+      {subFormErrors && <FieldError error={subFormErrors.number} />}
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].numtype`}>Phone Number Type</label>
         <Field
@@ -64,8 +64,8 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           value={values.contact_numbers[i].numtype}
           placeholder="Phone Number Type (Opional)"
         />
-        {subFormErrors && <FieldError error={subFormErrors.numtype} />}
       </div>
+      {subFormErrors && <FieldError error={subFormErrors.numtype} />}
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].extension`}>Extension</label>
         <Field
@@ -76,8 +76,8 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           value={values.contact_numbers[i].extension}
           placeholder="Extension (Optional)"
         />
-        {subFormErrors && <FieldError error={subFormErrors.extension} />}
       </div>
+      {subFormErrors && <FieldError error={subFormErrors.extension} />}
     </>
   );
 };
@@ -104,7 +104,7 @@ const AddEmergencyContact = (props) => {
 
   useMountEffect(() => {
     const id = props.match.params.id;
-    if(!id && id !== 0) {
+    if (!id && id !== 0) {
       setInitialized(true);
       return;
     }
@@ -123,8 +123,8 @@ const AddEmergencyContact = (props) => {
   }
 
   const formHandler = data => {
-    const startPost = () => userContext.apiCall('post', url, formatData(data), { success: 'Emergency Contact successfully added!'});
-    const startPut = () => userContext.apiCall('put', `${url}${data.id}`, formatData(data), { success: 'Emergency Contact successfully updated!'});
+    const startPost = () => userContext.apiCall('post', url, formatData(data), { success: 'Emergency Contact successfully added!' });
+    const startPut = () => userContext.apiCall('put', `${url}${data.id}`, formatData(data), { success: 'Emergency Contact successfully updated!' });
     const axiosReq = () => editMode ? startPut() : startPost();
 
     axiosReq()
@@ -152,7 +152,7 @@ const AddEmergencyContact = (props) => {
               setSubmitting(false);
             }}>
             {({ handleSubmit, handleChange, values, errors, isValid, isSubmitting }) => (
-              <div className="form-container add-emergency-contact__main_container">
+              <div className="add-emergency-contact__main_container">
                 <Form className="add-emergency-contact__form-container" onSubmit={handleSubmit}>
                   <div className="form-row columns">
                     <label className="column is-one-quarter" htmlFor="name">Contact Name</label>
@@ -164,8 +164,8 @@ const AddEmergencyContact = (props) => {
                       value={values.name}
                       placeholder="Name or Organization"
                     />
-                    <FieldError error={errors.name} />
                   </div>
+                  <FieldError error={errors.name} />
                   <div className="form-row columns">
                     <label className="column is-one-quarter" htmlFor="description">Organization Description</label>
                     <Field
@@ -177,8 +177,8 @@ const AddEmergencyContact = (props) => {
                       placeholder="Description text (Optional)"
                       error={errors.description}
                     />
-                    <FieldError error={errors.description} />
                   </div>
+                  <FieldError error={errors.description} />
                   <FieldArray
                     name="contact_numbers"
                     render={numbersArrayFields => {
@@ -190,22 +190,23 @@ const AddEmergencyContact = (props) => {
                           {values.contact_numbers.map((_, i) => (
                             <NumberSubForm key={i} i={i} values={values} errors={errors} handleChange={handleChange} />
                           ))}
-                          <div className="form-add-rows-container">
-                            <span className={`${addRowValid ? "active" : ""} is-rounded form-add-rows`} onClick={addRow}>
+                          {addRowValid && <div className="form-add-rows-container">
+                            <span className="is-rounded form-add-rows" onClick={addRow}>
                               <i className="fas fa-plus-circle"></i> Add New Phone Number
-                                                    </span>
+                            </span>
                           </div>
+                          }
                         </>
                       );
                     }}
                   />
-                  <div>
+                  <div className="button-container">
                     <button className="button is-primary is-rounded mr-5" type="submit" disabled={isSubmitting}>
-                      {editMode ? 'UPDATE' : 'ADD'} EMERGENCY NUMBER
-                                    </button>
+                      SAVE
+                    </button>
                     <Link className="button is-dark is-rounded" to='/emergency'>
                       CANCEL
-                                    </Link>
+                    </Link>
                   </div>
                 </Form>
               </div>

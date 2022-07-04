@@ -2,12 +2,13 @@
 
 .add-ticket {
   .form-container {
-    max-width: 80%;
+    max-width: 90%;
   }
 
   .error-message {
     font-size: .8em;
     font-weight: 400;
+    z-index: 2;
   }
 
   .button-container {

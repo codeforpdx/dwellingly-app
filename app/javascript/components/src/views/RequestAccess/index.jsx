@@ -6,6 +6,8 @@ import { AddProperty } from '../AddProperty';
 import Modal from '../components/Modal';
 import RoleEnum from '../../Enums/RoleEnum';
 import UserType from '../../Enums/UserType';
+import { useMediaQuery } from '@react-hook/media-query';
+import { tabletWidth } from "../../constants";
 
 import './styles/index.scss';
 
@@ -44,6 +46,7 @@ export const InfoField = ({ label, info, changeHandler }) => {
 
 export const RequestAccess = (props) => {
   const userContext = useContext(UserContext);
+  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
 
   const {
     firstName,
@@ -149,7 +152,7 @@ export const RequestAccess = (props) => {
             clearLabel="Clear search text"
             placeholder="Search Properties"
             small
-            width={400}
+            width={isMobile ? 300 : 400}
             variant={SearchPanelVariant.checkbox}
             choices={propertySearchResults}
             value={propertySearchText}

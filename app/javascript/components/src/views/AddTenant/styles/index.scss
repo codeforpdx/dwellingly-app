@@ -20,7 +20,7 @@
     margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    max-width: 80%;
+    max-width: 90%;
     .form-row {
       display: flex;
       border-bottom: 1px solid $lightGray;
@@ -43,6 +43,7 @@
       }
       .error-message{
         color: red;
+        z-index: 2;
       }
       label {
         color: $gray;
@@ -73,7 +74,7 @@
 }
 
 .add-property-button {
-  padding: 30px 0 0 10px;
+  padding: 30px 0 15px 10px;
   color: #51a3fc;
   background: none;
   border: none;

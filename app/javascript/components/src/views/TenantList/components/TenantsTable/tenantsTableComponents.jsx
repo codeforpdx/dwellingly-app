@@ -116,26 +116,7 @@ export const mobileColumns = [
     text: "Name",
     sort: true,
     headerStyle: () => {
-      return { width: "35%" };
-    }
-  },
-  {
-    dataField: "propertyName",
-    formatter: (cell, row, rowIndex, formatExtraData) => {
-      if (row.lease) {
-        return (
-          <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
-            {row.propertyName}
-          </Link>
-        )
-      } else {
-        return null
-      }
-    },
-    text: "Property Name",
-    sort: true,
-    headerStyle: () => {
-      return { width: "30%" };
+      return { width: "50%" };
     }
   },
   {
@@ -153,7 +134,7 @@ export const mobileColumns = [
     text: "JOIN Staff",
     sort: true,
     headerStyle: () => {
-      return { width: "30%" };
+      return { width: "50%" };
     }
   },
 ];

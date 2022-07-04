@@ -24,17 +24,17 @@ const SignupForm = ({ history }) => {
     password,
     confirmPassword
   ) =>
-  context.apiCall('post', '/users', {
-    user: {
-      firstName,
-      lastName,
-      email,
-      phone,
-      password,
-      confirmPassword,
-    }
-  }, { success: "Account Created Successfully!" }
-      )
+    context.apiCall('post', '/users', {
+      user: {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        confirmPassword,
+      }
+    }, { success: "Account Created Successfully!" }
+    )
       .then((res) => {
         if (res === false) {
           setShowErrorModal(true);
@@ -45,34 +45,34 @@ const SignupForm = ({ history }) => {
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
-      .max(80, "Maximum length is 80 characters")
-      .required("First name is required"),
+      .max(80, "*Maximum length is 80 characters")
+      .required("*First name is required"),
     lastName: Yup.string()
-      .max(80, "Maximum length is 80 characters")
-      .required("Last name is required"),
+      .max(80, "*Maximum length is 80 characters")
+      .required("*Last name is required"),
     phone: Yup.string()
-      .min(5, "Minimum length is 5 digits")
-      .max(25, "Maximum length is 25 digits")
-      .required("Phone number is required"),
+      .min(5, "*Minimum length is 5 digits")
+      .max(25, "*Maximum length is 25 digits")
+      .required("*Phone number is required"),
     email: Yup.string()
-      .email("Must be a valid email address")
-      .max(100, "Maximum length is 100 characters")
-      .required("Email is required"),
+      .email("*Must be a valid email address")
+      .max(100, "*Maximum length is 100 characters")
+      .required("*Email is required"),
     password: Yup.string()
-      .required("Password is required")
-      .min(8, "Minimum Length is 8 characters")
+      .required("*Password is required")
+      .min(8, "*Minimum Length is 8 characters")
       .matches(
         /[a-z]/,
-        "Password must contain at least one lowercase character"
+        "*Password must contain at least one lowercase character"
       )
-      .matches(/[A-Z]/, "Password must contain one uppercase character")
+      .matches(/[A-Z]/, "*Password must contain one uppercase character")
       .matches(
         /[a-zA-Z]+[^a-zA-Z\s]+/,
-        "Password must contain at least 1 number or special char (@,!,#, etc)"
+        "*Password must contain at least 1 number or special char (@,!,#, etc)"
       ),
     confirmPassword: Yup.string()
-      .required("Password confirmation is required")
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+      .required("*Password confirmation is required")
+      .oneOf([Yup.ref("password"), null], "*Passwords must match"),
   });
 
   const handleClick = () => {
@@ -150,14 +150,12 @@ const SignupForm = ({ history }) => {
                         placeholder="First Name"
                         required
                       />
-
-                      <ErrorMessage
-                        className="form-error"
-                        name="firstName"
-                        component="div"
-                      />
                     </div>
-
+                    <ErrorMessage
+                      className="form-error"
+                      name="firstName"
+                      component="div"
+                    />
                     <div className="signup__form-cell-container">
                       <Field
                         className="form-field signup__form-field"
@@ -166,14 +164,12 @@ const SignupForm = ({ history }) => {
                         placeholder="Last Name"
                         required
                       />
-
-                      <ErrorMessage
-                        className="form-error"
-                        name="lastName"
-                        component="div"
-                      />
                     </div>
-
+                    <ErrorMessage
+                      className="form-error"
+                      name="lastName"
+                      component="div"
+                    />
                     <div className="signup__form-cell-container">
                       <Field
                         className="form-field signup__form-field"
@@ -182,14 +178,12 @@ const SignupForm = ({ history }) => {
                         placeholder="Email"
                         required
                       />
-
-                      <ErrorMessage
-                        className="form-error"
-                        name="email"
-                        component="div"
-                      />
                     </div>
-
+                    <ErrorMessage
+                      className="form-error"
+                      name="email"
+                      component="div"
+                    />
                     <div className="signup__form-cell-container">
                       <Field
                         className="form-field signup__form-field"
@@ -199,14 +193,12 @@ const SignupForm = ({ history }) => {
                         placeholder="Phone"
                         required
                       />
-
-                      <ErrorMessage
-                        className="form-error"
-                        name="phone"
-                        component="div"
-                      />
                     </div>
-
+                    <ErrorMessage
+                      className="form-error"
+                      name="phone"
+                      component="div"
+                    />
                     <div className="signup__form-cell-container">
                       <Field
                         className="form-field signup__form-field"
@@ -215,14 +207,12 @@ const SignupForm = ({ history }) => {
                         placeholder="Password"
                         required
                       />
-
-                      <ErrorMessage
-                        className="form-error"
-                        name="password"
-                        component="div"
-                      />
                     </div>
-
+                    <ErrorMessage
+                      className="form-error"
+                      name="password"
+                      component="div"
+                    />
                     <div className="signup__form-cell-container">
                       <Field
                         className="form-field signup__form-field"
@@ -231,14 +221,12 @@ const SignupForm = ({ history }) => {
                         placeholder="Confirm Password"
                         required
                       />
-
-                      <ErrorMessage
-                        className="form-error"
-                        name="confirmPassword"
-                        component="div"
-                      />
                     </div>
-
+                    <ErrorMessage
+                      className="form-error"
+                      name="confirmPassword"
+                      component="div"
+                    />
                     <div />
                     <button
                       className="button is-rounded is-primary is-small mt-3"

@@ -90,13 +90,5 @@ export const mobileColumns = [
     headerStyle: () => {
       return { width: "45%" };
     },
-  },
-  {
-    dataField: "status",
-    text: "Status",
-    sort: true,
-    headerStyle: () => {
-      return { width: "10%" };
-    },
-  },
+  }
 ];

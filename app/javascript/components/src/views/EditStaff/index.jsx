@@ -10,19 +10,19 @@ import TenantListMini from '../components/TenantListMini';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Must enter a First Name"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Must enter a First Name"),
   lastName: Yup.string()
-    .max(255, "Must be shorter than 255 Characters")
-    .required("Must enter a Last Name"),
+    .max(255, "*Must be shorter than 255 Characters")
+    .required("*Must enter a Last Name"),
   phone: Yup.string()
     .min(5, "*Number must contain at least 5 digits to be a valid phone/text number")
     .max(20, "*Numbers can't be longer than 20 digits")
-    .required("Must enter a valid phone number"),
+    .required("*A valid phone number is required"),
   email: Yup.string()
-    .email("Must be a valid email address")
-    .max(255, "Must be shorter than 255")
-    .required("Must enter an email"),
+    .email("*Must be a valid email address")
+    .max(255, "*Must be shorter than 255")
+    .required("*Must enter an email"),
 });
 
 const EditStaff = () => {
