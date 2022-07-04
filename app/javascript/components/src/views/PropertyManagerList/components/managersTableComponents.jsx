@@ -50,7 +50,7 @@ export const columns = [
   },
   {
     dataField: "lastActive",
-    text: "Last Usage",
+    text: "Last Active",
     sort: true,
     headerStyle: () => {
       return { width: "10%" };

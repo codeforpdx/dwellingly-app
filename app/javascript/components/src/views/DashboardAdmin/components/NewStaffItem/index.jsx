@@ -9,8 +9,7 @@ function NewStaffItem(props) {
     const isTablet = useMediaQuery(`(min-width: ${tabletWidth}) and (max-width: ${desktopWidth})`);
 
     const MobileLayout = () => (
-
-        <div className="collapsible__row">
+        <div key={`mob-${tenant.id}`} className="collapsible__row">
             <div>
                 <div className={`collapsible__col column is-one-quarter is-mobile  name-col`}>{`${tenant.firstName} ${tenant.lastName}`}</div>
                 {tenant.propertyName ?
@@ -18,7 +17,7 @@ function NewStaffItem(props) {
                         {tenant.propertyName}<br />
                         {
                             tenant.propertyManagerNames.map((name) => (
-                                <div key={`property-${name}`}><span className="subtext">{name}</span><br /></div>
+                                <div key={`${tenant.id}-pm-${name}`}><span className="subtext">{name}</span><br /></div>
                             ))
                         }
                     </div>
@@ -43,14 +42,14 @@ function NewStaffItem(props) {
     );
 
     const TabletLayout = () => (
-        <div className="collapsible__row">
+        <div key={`tab-${tenant.id}`} className="collapsible__row">
             <div>
                 <div className={`collapsible__col column is-one-quarter name-col`}>{`${tenant.firstName} ${tenant.lastName}`}</div>
                 <div className="collapsible__col column is-multiline">
                     {tenant.propertyName}<br />
                     {
                         tenant.propertyManagerNames.map((name) => (
-                            <div><span className="subtext">{name}</span><br /></div>
+                            <div key={`${tenant.id}-pm-${name}`}><span className="subtext">{name}</span><br /></div>
                         ))
                     }
                 </div>
@@ -71,16 +70,16 @@ function NewStaffItem(props) {
                 </div>
             </div>
         </div>
-    )
-    const DesktopLayout = () => (
+    );
 
-        <div className="collapsible__row columns">
+    const DesktopLayout = () => (
+        <div key={`desktop-${tenant.id}`} className="collapsible__row columns">
             <div className={`collapsible__col column `}>{`${tenant.firstName} ${tenant.lastName}`}</div>
             <div className="collapsible__col column">
                 {tenant.propertyName}<br />
                 {
                     tenant.propertyManagerNames.map((name) => (
-                        <div><span className="subtext">{name}</span><br /></div>
+                        <div key={`${tenant.id}-pm-${name}`}><span className="subtext">{name}</span><br /></div>
                     ))
                 }
             </div>
@@ -100,7 +99,7 @@ function NewStaffItem(props) {
                 </div>
             </div>
         </div>
-    )
+    );
 
     return isDesktop ? <DesktopLayout /> : isTablet ? <TabletLayout /> : <MobileLayout />
 }

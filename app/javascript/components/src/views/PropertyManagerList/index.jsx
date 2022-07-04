@@ -36,7 +36,7 @@ const expandRow = isSmallScreen => ({
       <p id="status">{row.status}</p>
       <br />
 
-      <label for="last-active">Last Usage</label>
+      <label for="last-active">Last Active</label>
       <p id="last-active">{row.lastActive}</p>
     </div>
   ),

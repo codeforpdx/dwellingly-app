@@ -63,6 +63,18 @@ const PropertySearchPanel = (props) => {
       });
   };
 
+  const assignCreatedProperty = (property) => {
+    getProperties().then(properties => {
+      if(!property || !properties) return null;
+      let matchedProperty = properties.find(p => p.key == property.id);
+      if(propertySelections && propertySelections.length > 0) {
+        setPropertySelection(propertySelections?.concat(matchedProperty));
+      } else {
+        setPropertySelection([matchedProperty]);
+      }
+    });
+  };
+
   const handlePropertySearch = (event) => {
     const { value } = event.target;
     if(!value || value.length === 0) {
@@ -107,7 +119,7 @@ const PropertySearchPanel = (props) => {
           titleText="Create New Property"
           content={<AddProperty
             showPageTitle={false}
-            afterCreate={getProperties}
+            afterCreate={assignCreatedProperty}
             handleCancel={handleAddPropertyCancel}
             showAssignPropManagers={false}
             />}

@@ -39,10 +39,8 @@ class PropertiesController < ApplicationController
   end
 
   def property_params
-    params.require(:property)
-      .permit(:name, :address, :num_units, :city, :state, :zipcode, :archived)
-      .merge(
-        { property_manager_ids: params.fetch(:propertyManagerIDs, []) }
-      )
+    params.require(:property).permit(:name, :address, :num_units, :city, :state, :zipcode, :archived).merge(
+      { property_manager_ids: params.fetch(:propertyManagerIDs, []) }
+    )
   end
 end

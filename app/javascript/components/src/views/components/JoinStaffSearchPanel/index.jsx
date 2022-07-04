@@ -40,7 +40,7 @@ const JoinStaffSearchPanel = (props) => {
   const staffOptionFormat = (staff) => {
     return {
       key: staff.id,
-      description: `${staff.firstName}, ${staff.lastName}`
+      description: `${staff.firstName} ${staff.lastName}`
     }
   };
 

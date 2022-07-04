@@ -36,14 +36,19 @@ export const AddProperty = (props) => {
   const { showPageTitle, handleCancel, 
     afterCreate, showAssignPropManagers } = props;
 
-  const handleSubmit = (data, setErrors, resetForm) => {
-    userContext.apiCall('post', '/properties', data, { success: 'Property Added!' }, setErrors)
+  const handleFormSubmit = (values, { resetForm, setSubmitting }) => {
+    setSubmitting(true);
+    values.propertyManagerIDs = propertyManagers?.map(manager => manager.key);
+    userContext.apiCall('post', '/properties', values, { success: 'Property Added!' })
       .then((response) => {
         if (afterCreate) {
           afterCreate(response.data);
         }
         resetForm();
       })
+      .finally(() => {
+        setSubmitting(false);
+      });
   }
 
   return (
@@ -61,13 +66,7 @@ export const AddProperty = (props) => {
             num_units: ''
           }}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting, resetForm, setErrors }) => {
-            values.propertyManagerIDs = propertyManagers.map(manager => manager.key);
-
-            setSubmitting(true);
-            handleSubmit(values, setErrors, resetForm);
-            setSubmitting(false);
-          }}>
+          onSubmit={handleFormSubmit}>
           {({ handleSubmit, handleChange, values, errors, touched, isValid, isSubmitting }) => (
             <div className='form-container add-property__main_container'>
               <h1 className='section-title'>PROPERTY INFORMATION</h1>
@@ -146,7 +145,7 @@ export const AddProperty = (props) => {
                   />
                 </div>
 
-                {showAssignPropManagers ? ( 
+                {showAssignPropManagers &&
                 <div className=' add-property__assign-manager-container'>
                   <h3 className='section-title'>ASSIGN PROPERTY MANAGERS</h3>
                   <div className='typeahead-section'>
@@ -157,13 +156,14 @@ export const AddProperty = (props) => {
                       multiSelect={true}
                     />
                   </div>
-                </div>) : null }
+                </div>}
 
                 <div className='container-footer mt-3'>
                   <button
                     className='button is-primary is-rounded mr-5'
-                    type='submit'
-                    disabled={isSubmitting}>
+                    type="submit"
+                    disabled={isSubmitting}
+                    onClick={handleSubmit}>
                     SAVE
                   </button>
                   {typeof (handleCancel) === 'function'

@@ -17,7 +17,7 @@ const matchManagers = (ids, managerList) => {
 const managerOptionFormat = (manager) => {
   return {
     key: manager.id,
-    description: `${manager.firstName}, ${manager.lastName}`
+    description: `${manager.firstName} ${manager.lastName}`
   }
 };
 

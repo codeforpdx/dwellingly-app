@@ -159,6 +159,7 @@ const AddPropertyManager = () => {
                   <div className="typeahead-section">
                     <PropertySearchPanel
                       initialPropertyIds={[]}
+                      propertySelections={propertySelection}
                       setPropertySelection={setPropertySelection}
                       multiSelect={true}
                       showAddPropertyButton={true}
