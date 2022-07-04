@@ -38,3 +38,10 @@ html {
 .Toastify__toast-body {
   white-space: pre-line;
 }
+
+.typeahead-section {
+  padding-bottom: 16px;
+  fieldset {
+    overflow: auto;
+  }
+}
