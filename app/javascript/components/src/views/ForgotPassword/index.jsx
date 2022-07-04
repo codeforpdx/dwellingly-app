@@ -6,6 +6,7 @@ import Modal from "../components/Modal";
 import Button from "../components/Button";
 import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
 import UserContext from "../../contexts/UserContext";
+import FieldError from "../components/FieldError";
 
 import './styles/index.scss'
 
@@ -111,11 +112,7 @@ const ForgotPassword = () => {
                     placeholder="Please enter your email address"
                   />
                 </div>
-                {errors.name ? (
-                  <div className="form-container__error-message">
-                    {errors.name}
-                  </div>
-                ) : null}
+                <FieldError error={errors.name} />
                 <div className={"form-container__button-container"}>
                   <Button
                     type={"submit"}

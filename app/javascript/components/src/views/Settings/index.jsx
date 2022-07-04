@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
 import Toast from "../../utils/toast";
+import FieldError from "../components/FieldError";
 
 import './styles/index.scss';
 
@@ -93,9 +94,7 @@ const Settings = () => {
                     placeholder="Enter your email address"
                   />
                 </div>
-                {errors.email ? (
-                  <div className="error-message">{errors.email}</div>
-                ) : null}
+                <FieldError error={errors.email} />
                 <div className="form-row">
                   <label
                     className="column is-one-fifth"
@@ -113,9 +112,7 @@ const Settings = () => {
                     placeholder="Enter your phone number"
                   />
                 </div>
-                {errors.phone ? (
-                  <div className="error-message">{errors.phone}</div>
-                ) : null}
+                <FieldError error={errors.phone} />
                 <div className='form-row'>
                   <label
                     className='column is-one-fifth'
@@ -133,9 +130,7 @@ const Settings = () => {
                     placeholder='Enter your current password'
                   />
                 </div>
-                {errors.current_password ? (
-                  <div className='error-message'>{errors.current_password}</div>
-                ) : null}
+                <FieldError error={errors.current_password} />
                 <div className="button-container">
                   <Button
                     isCancelButton={false}

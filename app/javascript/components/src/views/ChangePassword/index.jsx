@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
 import './styles/index.scss';
+import FieldError from "../components/FieldError";
 
 const validationSchema = Yup.object().shape({
   current: Yup.string()
@@ -90,9 +91,7 @@ const ChangePassword = () => {
                     placeholder="Enter your current password"
                   />
                 </div>
-                {errors.current ? (
-                  <div className="error-message">{errors.current}</div>
-                ) : null}
+                <FieldError error={errors.current} />
                 <div className="form-row">
                   <label
                     className="column is-one-fifth"
@@ -110,9 +109,7 @@ const ChangePassword = () => {
                     placeholder="Enter your new password"
                   />
                 </div>
-                {errors.new ? (
-                  <div className="error-message">{errors.new}</div>
-                ) : null}
+                <FieldError error={errors.new} />
                 <div className="form-row">
                   <label
                     className="column is-one-fifth"
@@ -130,9 +127,7 @@ const ChangePassword = () => {
                     placeholder="Confirm your new password"
                   />
                 </div>
-                {errors.confirm ? (
-                  <div className="error-message">{errors.confirm}</div>
-                ) : null}
+                <FieldError error={errors.confirm} />
                 <div className="button-container">
                   <Button
                     isCancelButton={false}

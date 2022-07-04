@@ -41,20 +41,20 @@ const AddTenant = () => {
     const errors = {}
     if (propertySelection?.length) {
       if (dateTimeStart === dateTimeEnd){
-        errors.lease = "Lease dates required when a property is selected"
+        errors.lease = "* Lease dates required when a property is selected"
       }
     }
     if (dateTimeStart !== dateTimeEnd) {
       if (propertySelection?.length === 0) {
-        errors.propertySelection = "Property is required when lease dates are selected"
+        errors.propertySelection = "* Property is required when lease dates are selected"
       }
     }
     if (values.unitNum || values.occupants) {
       if (propertySelection?.length === 0) {
-        errors.propertySelection = "Property is required when creating a lease"
+        errors.propertySelection = "* Property is required when creating a lease"
       }
       if (dateTimeStart === dateTimeEnd) {
-        errors.lease = "Lease dates required when creating a lease"
+        errors.lease = "* Lease dates required when creating a lease"
       }
     }
 

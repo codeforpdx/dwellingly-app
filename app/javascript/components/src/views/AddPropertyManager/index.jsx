@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import './styles/index.scss';
 import UserType from '../../Enums/UserType';
 import PropertySearchPanel from "../components/PropertySearchPanel";
+import FieldError from "../components/FieldError";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -98,10 +99,8 @@ const AddPropertyManager = () => {
                       value={values.firstName}
                       placeholder="First Name"
                     />
-                    {errors.firstName ? (
-                      <div className="error-message">{errors.firstName}</div>
-                    ) : null}
                   </div>
+                  <FieldError error={errors.firstName} />
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -118,10 +117,8 @@ const AddPropertyManager = () => {
                       value={values.lastName}
                       placeholder="Last Name"
                     />
-                    {errors.lastName ? (
-                      <div className="error-message">{errors.lastName}</div>
-                    ) : null}
                   </div>
+                  <FieldError error={errors.lastName} />
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -138,10 +135,8 @@ const AddPropertyManager = () => {
                       value={values.phone}
                       placeholder="Phone Number"
                     />
-                    {errors.phone ? (
-                      <div className="error-message">{errors.phone}</div>
-                    ) : null}
                   </div>
+                  <FieldError error={errors.phone} />
                   <div className="form-row" style={{ marginBottom: "20px" }}>
                     <label
                       className="column is-one-fifth"
@@ -158,10 +153,8 @@ const AddPropertyManager = () => {
                       value={values.email}
                       placeholder="Enter your email address"
                     />
-                    {errors.email ? (
-                      <div className="error-message">{errors.email}</div>
-                    ) : null}
                   </div>
+                  <FieldError error={errors.email} />
                   <h1 className="section-title">ASSIGN PROPERTIES</h1>
                   <div className="typeahead-section">
                     <PropertySearchPanel

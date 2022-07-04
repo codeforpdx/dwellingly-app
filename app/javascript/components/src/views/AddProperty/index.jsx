@@ -5,7 +5,7 @@ import UserContext from '../../contexts/UserContext';
 import { Link } from 'react-router-dom';
 import './styles/index.scss';
 import PropertyManagerSearchPanel from '../components/PropertyManagerSearchPanel';
-
+import FieldError from '../components/FieldError';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -83,7 +83,7 @@ export const AddProperty = (props) => {
                     placeholder='Example Estate'
                   />
                 </div>
-                {errors.name ? (<div className='error-message'>{errors.name}</div>) : null}
+                <FieldError error={errors.name} />
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='address'>Address</label>
                   <Field
@@ -96,7 +96,7 @@ export const AddProperty = (props) => {
                     error={errors.address}
                   />
                 </div>
-                {errors.address ? (<div className='error-message'>{errors.address}</div>) : null}
+                <FieldError error={errors.address} />
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='city'>City</label>
                   <Field
@@ -108,7 +108,7 @@ export const AddProperty = (props) => {
                     placeholder='Portland'
                   />
                 </div>
-                {errors.city ? (<div className='error-message'>{errors.city}</div>) : null}
+                <FieldError error={errors.city} />
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='state'>State</label>
                   <Field
@@ -120,7 +120,7 @@ export const AddProperty = (props) => {
                     placeholder='OR'
                   />
                 </div>
-                {errors.state ? (<div className='error-message'>{errors.state}</div>) : null}
+                <FieldError error={errors.state} />
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='zipcode'>Zipcode</label>
                   <Field
@@ -132,7 +132,7 @@ export const AddProperty = (props) => {
                     placeholder='97217'
                   />
                 </div>
-                {errors.zipcode ? (<div className='error-message'>{errors.zipcode}</div>) : null}
+                <FieldError error={errors.zipcode} />
                 <div className='form-row columns'>
                   <label className='column is-one-fifth' htmlFor='units'>Units</label>
                   <Field

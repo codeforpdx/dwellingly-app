@@ -4,11 +4,7 @@ import { Formik, Form, Field } from "formik";
 import Button from "../Button";
 import "./styles/index.scss";
 import CalendarModal from "../CalendarModal";
-
-const FieldError = ({ error }) => {
-  if (!error) return null;
-  return <div className="form__field-error__message">{error}</div>;
-};
+import FieldError from "../FieldError";
 
 const ToggleEditForm = ({
   isEditing,
@@ -70,10 +66,7 @@ const ToggleEditForm = ({
                   : 'is-one-quarter'}`}
               />
               {isCalendar && <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />}
-              <FieldError
-                error={errors[value]}
-                className="column is-one-quarter"
-              />
+              <FieldError error={errors[value]} />
             </div>)
           })}
           {children}
