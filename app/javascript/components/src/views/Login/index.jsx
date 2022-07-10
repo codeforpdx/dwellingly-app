@@ -1,16 +1,22 @@
-import React from 'react';
-import { Form, Field, Formik } from 'formik';
-import dwellinglyLogo from 'images/dwellingly_logo.png';
-import UserContext from '../../contexts/UserContext';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom'
-import GoogleButton from './components/GoogleButton';
+import React from "react"
+import { Form, Field, Formik } from "formik"
+import dwellinglyLogo from "images/dwellingly_logo.png"
+import UserContext from "../../contexts/UserContext"
+import { Redirect } from "react-router"
+import { Link } from "react-router-dom"
+import GoogleButton from "./components/GoogleButton"
+import Toast from "../../utils/toast"
 
-import './styles/index.scss'
+import "./styles/index.scss"
 
 export class LoginForm extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
+
+    // eslint-disable-next-line react/prop-types
+    if (props.location.search === "?error=invalid_invitation_token") {
+      Toast("Invalid invitation token", "error")
+    }
 
     this.state = {
       email: undefined,
