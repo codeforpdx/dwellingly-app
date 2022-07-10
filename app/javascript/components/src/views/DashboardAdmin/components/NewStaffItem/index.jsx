@@ -5,6 +5,8 @@ import { tabletWidth, desktopWidth } from '../../../../constants';
 function NewStaffItem(props) {
     const { tenant, handleStaffAssignmentChange, staffList } = props;
 
+    const selectedValue = tenant.staff_ids ? tenant.staff_ids[0] : 'default';
+
     const isDesktop = useMediaQuery(`(min-width: ${desktopWidth})`);
     const isTablet = useMediaQuery(`(min-width: ${tabletWidth}) and (max-width: ${desktopWidth})`);
 
@@ -26,7 +28,7 @@ function NewStaffItem(props) {
                     <div className="select is-rounded">
                         <select
                             onChange={e => handleStaffAssignmentChange(e, tenant.id)}
-                            value={tenant.staffID || 'default'}
+                            value={selectedValue}
                         >
                             <option value='default' disabled>Staff Name</option>
                             {
@@ -57,7 +59,7 @@ function NewStaffItem(props) {
                     <div className="select is-rounded">
                         <select
                             onChange={e => handleStaffAssignmentChange(e, tenant.id)}
-                            value={tenant.staffID || 'default'}
+                            value={selectedValue}
                         >
                             <option value='default' disabled>Staff Name</option>
                             {
@@ -87,7 +89,7 @@ function NewStaffItem(props) {
                 <div className="select is-rounded">
                     <select
                         onChange={e => handleStaffAssignmentChange(e, tenant.id)}
-                        value={tenant.staffID || 'default'}
+                        value={selectedValue}
                     >
                         <option value='default' disabled>Staff Name</option>
                         {
