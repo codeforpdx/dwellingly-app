@@ -61,7 +61,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
       return <Route {...rest} render={(props) => (
         context.user.isAuthenticated
           ? <Component {...props} />
-          : <Redirect to='/login' />
+          : <Redirect   to={{pathname: "/login", search: props.location.search}} />
       )} />
     }}
   </UserContext.Consumer>
