@@ -94,15 +94,11 @@ This document provides some overall guidelines and suggestions for how to get st
 ----
 ### Where to Contribute
 
-Always, always, start at the beginning. Make sure you are able to start the backend and run the frontend so the two can talk to each other. Run the test suite for the backend. Carefully read the README files and take note of any issues you encounter that are not already documented. Open a Pull Request with your README changes so that future onboarding can be smoother.
+Always, always, start at the beginning. Make sure you are able to start the server and login to the app. And be able to run the tests. Please reach out if something is not documented well, and needs clarification. Carefully read the README files and take note of any issues you encounter that are not already documented. Open a Pull Request with your README changes so that future onboarding can be smoother.
 
 If you're wondering where to go next, the answer may best depend on what skills you want to use and/or develop:
 
 For frontend development, there are several core app components that are still missing or in progress. We're using React for page rendering and React's useContext is used to manage the app. Many of us are quite new to these tools and we're learning as we go!
-
-Python is used on the backend to expose our API. We utilize Flask and SQLAlchemy to manage our relational database tables and to specify the CRUD routes that handle requests from the frontend. Much of the basic CRUD has been established, however, the expanding functionalities on the frontend continue to drive evolution of the backend tables and routes. Prior Python experience is not required to contribute here. 
-
-The app is not yet deployed and this opens a whole realm of additional contribution possibilities including (but not limited to) tasks for Continuous Integration and Continuous Delivery.
 
 The initial deployment of this app will be for desktop browser screens. Plans for mobile development are in progress. We need design and architecture help initially, followed by significant UI and frontend work. Let us know if you can help in these areas.
 
@@ -119,17 +115,15 @@ Jest is used for unit testing. These can be ran with `npm run test`
 
 [Cypress](https://www.cypress.io/) is used for system testing.
 
-To run the system tests both a backendend testing server and frontend testing server must be running.
-
 To run the system tests:
 
-1. Start a backend testing server:
-   - From the backend repo run: `export FLASK_ENV=testing && pipenv run flask run -p 5010 --reload`
-2. Start a frontend testing server:
-   - From the front repo run: `export REACT_APP_PROXY=http://localhost:5010 && npm run startTest`
-3. Run the tests from the frontend repo: `npx cypress run`
+0. Stop your development server (ctrl-c) if it is running.
+1. Start a backend testing server: `CYPRESS=1 bin/rails server -p 5017`
+3. Run the tests with: `npx cypress run`
    - That should run in a headed mode. If it doesn't you can force headed mode with `npx cypress run --headed`
    - To run in headless mode `npx cypress run --headless`
+
+All of the system tests can be found in: `cypress/integration/`
 
 Relevant docs [Cypress command line options](https://docs.cypress.io/guides/guides/command-line#cypress-run) and [API docs](https://docs.cypress.io/api/table-of-contents)
 
