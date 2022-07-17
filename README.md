@@ -49,16 +49,24 @@ From terminal:
   example:`cd Desktop/CodeForPDX/`
 - Clone Project - `git clone https://github.com/codeforpdx/dwellingly-app.git`
 - Navigate to app's directory: `cd dwellingly-app`
-- run `bundle`
-- run `yarn`
-- run `cp config/application.yml.example config/application.yml`
+- Copy the config file: run `cp config/application.yml.example config/application.yml`
 - If using sqlite3 then uncomment sqlite3 in the `config/application.yml` file.
-- Create, load, and seed the database with: `bin/rails db:setup`
+- run `bin/setup`
+  - bin/setup will install dependencies, create the databases, and seed the database.
+  - alternatively you can run each step manually with the following commands:
+    - `bundle`
+    - `yarn`
+    - `bin/rails db:create`
+    - `rails db:schema:load`
+    - `rails db:seed`
 - Start the servers
   - Start the Rails server with: `bin/rails s`
   - Start the weback server with: `./bin/webpack-dev-server`
     - This will precompile javascript and reload the browser when there are javascript changes
   - Alternatively: You can use `bin/dev` to start both servers. (May not work with Windows)
+    - This will use [overmind](https://github.com/DarthSim/overmind) if it is installed; otherwise
+      it uses [Foreman](https://github.com/ddollar/foreman).
+- See the [testing](contributing.md#testing) section on how to run the tests.
 
 ## About Us
 * [Code for PDX](https://www.codeforpdx.org/) - [Meetup Info](https://www.meetup.com/Code-for-PDX/)
