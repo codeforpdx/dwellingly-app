@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "Starting Test Environment..."
+overmind start --procfile Procfile.test --socket tmp/sockets/.overmind.sock

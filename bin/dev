@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
-if ! command -v foreman &> /dev/null
+if command -v overmind &> /dev/null
 then
-  echo "Installing foreman..."
-  gem install foreman
+  echo "Starting DEV Environment..."
+  overmind start --procfile Procfile.dev --socket tmp/sockets/.overmind.sock
+else
+  if ! command -v foreman &> /dev/null
+  then
+    echo "Installing foreman..."
+    gem install foreman
+  fi
+  echo "Starting foreman..."
+  foreman start -f Procfile.dev
 fi
-
-foreman start -f Procfile.dev

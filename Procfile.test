@@ -1,0 +1,2 @@
+test_server: CYPRESS=1 bin/rails server -p 5017
+webpack: bin/webpack-dev-server

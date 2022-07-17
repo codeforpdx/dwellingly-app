@@ -107,9 +107,10 @@ Finally and always, there is documentation. Documentation is great not just for 
 ----
 ### Testing
 
-#### Unit Tests
+#### Unit/Functional Tests
 
-Jest is used for unit testing. These can be ran with `npm run test`
+Javascript tests can be ran with `npm run test`
+Rails tests can be ran with `bin/rspec`
 
 #### System Tests
 
@@ -119,6 +120,7 @@ To run the system tests:
 
 0. Stop your development server (ctrl-c) if it is running.
 1. Start a backend testing server: `CYPRESS=1 bin/rails server -p 5017`
+   - Optionally you can run `bin/test` to start test server. [Overmind](https://github.com/DarthSim/overmind) is required.
 3. Run the tests with: `npx cypress run`
    - That should run in a headed mode. If it doesn't you can force headed mode with `npx cypress run --headed`
    - To run in headless mode `npx cypress run --headless`
