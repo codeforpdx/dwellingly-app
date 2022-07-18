@@ -30,7 +30,6 @@ const EditStaff = () => {
   const [staffMember, setStaffMember] = useState(null);
   const { id } = useParams();
   const { isEditing, setEditingStatus } = useEditingStatus();
-  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if(id) {
@@ -43,7 +42,6 @@ const EditStaff = () => {
       .then((response) => {
         const staff = response.data;
         setStaffMember(staff);
-        setIsAdmin(staff.type === UserType.ADMIN);
       });
   };
 
@@ -58,7 +56,6 @@ const EditStaff = () => {
           email: response.data.email,
           type: response.data.type
         });
-        setIsAdmin(response.data.type === UserType.ADMIN);
         setEditingStatus(false);
       });
   };
@@ -98,7 +95,7 @@ const EditStaff = () => {
     {
       key: "isAdmin",
       label: "Make Admin",
-      value: isAdmin,
+      value: staffMember.admin,
       inputType: "checkbox"
     }
   ];
@@ -139,14 +136,16 @@ const EditStaff = () => {
               submitHandler={onFormikSubmit}
               cancelHandler={onCancelClick}
             />
-            <div className="staff-member__tenants">
-              <h1 className="section-title">TENANTS</h1>
-              <TenantListMini
-                tenantList={staffMember.tenants}
-                handleTenantConfirmButton={handleTenantConfirmButton}
-                isEditing={isEditing}
-              />
-            </div>
+            {staffMember.admin ? null : (
+              <div className="staff-member__tenants">
+                <h1 className="section-title">TENANTS</h1>
+                <TenantListMini
+                  tenantList={staffMember.tenants}
+                  handleTenantConfirmButton={handleTenantConfirmButton}
+                  isEditing={isEditing}
+                />
+              </div>
+            )}
           </div>
         ) : null}
       </div>

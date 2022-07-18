@@ -16,6 +16,8 @@ class User < ApplicationRecord
     true
   end
 
+  def admin?() = is_a?(Admin)
+
   # Devise orverrides for authentication
   # Archived users cannot login.
   def active_for_authentication?
