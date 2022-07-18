@@ -17,6 +17,8 @@ class User < ApplicationRecord
   def unauthorized_user?() = is_a?(UnauthorizedUser)
   def staff_level?() = admin? || staff?
 
+  def admin?() = is_a?(Admin)
+
   # Devise orverrides for authentication
   # Archived users cannot login.
   def active_for_authentication?
