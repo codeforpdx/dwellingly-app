@@ -33,9 +33,9 @@ export const AddStaffMember = () => {
   const context = useContext(UserContext);
 
   const handleSave = (data) => {
-    context.apiCall('post', `/user/invite`,
+    context.apiCall('post', `/users/invitation`,
       {
-        ...data, 
+        ...data,
         role: data.makeAdmin ? RoleEnum.ADMIN : RoleEnum.STAFF,
         type: data.makeAdmin ? UserType.ADMIN : UserType.STAFF
       },
