@@ -9,7 +9,6 @@ import Button from "../components/Button";
 import Modal from '../components/Modal';
 import useMountEffect from '../../utils/useMountEffect';
 import './styles/index.scss';
-import RoleEnum from '../../Enums/RoleEnum';
 import UserType from '../../Enums/UserType';
 import { useMediaQuery } from '@react-hook/media-query';
 import { tabletWidth } from "../../constants";
@@ -75,7 +74,6 @@ const AddPropertyManager = () => {
     const payload = {
       ...values,
       type: UserType.PROPERTY_MANAGER,
-      role: RoleEnum.PROPERTY_MANAGER,
       property_ids: propertySelection.map(p => p.key)
     };
 

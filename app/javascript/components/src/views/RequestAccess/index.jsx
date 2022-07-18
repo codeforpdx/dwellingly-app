@@ -4,7 +4,6 @@ import UserContext from '../../contexts/UserContext';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import { AddProperty } from '../AddProperty';
 import Modal from '../components/Modal';
-import RoleEnum from '../../Enums/RoleEnum';
 import UserType from '../../Enums/UserType';
 import { useMediaQuery } from '@react-hook/media-query';
 import { tabletWidth } from "../../constants";
@@ -67,7 +66,7 @@ export const RequestAccess = (props) => {
   const [showAddProperty, setShowAddProperty] = useState(false);
 
   useEffect(() => {
-    setSelectionOptions(Object.keys(RoleEnum));
+    setSelectionOptions(Object.keys(UserType));
     getProperties();
   }, []);
 
@@ -104,7 +103,7 @@ export const RequestAccess = (props) => {
 
   const grantAccess = () => {
     userContext.apiCall('patch', `/users/${id}/authorize`, {
-      role: RoleEnum[roleSelection.replace(' ', '_')],
+      role: UserType[roleSelection.replace(' ', '_')],
       type: selectionMapping()[roleSelection],
       firstName: fName,
       lastName: lName,

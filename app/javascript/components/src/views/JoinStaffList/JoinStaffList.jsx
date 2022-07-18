@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../contexts/UserContext';
 import { JoinStaffCard } from './components/JoinStaffCard';
 import { Link, useHistory } from 'react-router-dom';
-import RoleEnum from '../../Enums/RoleEnum';
 import { useMediaQuery } from '@react-hook/media-query';
 import ContactRow from '../components/ContactRow/ContactRow';
 import { tabletWidth } from '../../constants';
@@ -39,7 +38,7 @@ export const JoinStaffList = () => {
           email={user.email}
           tickets={user.tickets ? user.tickets.length : 0}
           tenants={user.tenants ? user.tenants.length : 0}
-          admin={user.role == RoleEnum.ADMIN} />
+          admin={user.admin} />
       )
       : <></>
   };
