@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import './styles/index.scss';
 import TitleAndPen, { useEditingStatus } from "../components/TitleAndPen";
 import UserContext from '../../contexts/UserContext';
-import RoleEnum from '../../Enums/RoleEnum';
+import UserType from "../../Enums/UserType";
 import TenantListMini from '../components/TenantListMini';
 
 const validationSchema = Yup.object().shape({
@@ -43,7 +43,7 @@ const EditStaff = () => {
       .then((response) => {
         const staff = response.data;
         setStaffMember(staff);
-        setIsAdmin(staff.role === RoleEnum.ADMIN);
+        setIsAdmin(staff.type === UserType.ADMIN);
       });
   };
 
@@ -56,9 +56,9 @@ const EditStaff = () => {
           lastName: response.data.lastName,
           phone: response.data.phone,
           email: response.data.email,
-          role: response.data.role
+          type: response.data.type
         });
-        setIsAdmin(response.data.role === RoleEnum.ADMIN);
+        setIsAdmin(response.data.type === UserType.ADMIN);
         setEditingStatus(false);
       });
   };
@@ -110,7 +110,7 @@ const EditStaff = () => {
       lastName: values.lastName,
       phone: values.phone,
       email: values.email,
-      role: values.isAdmin ? RoleEnum.ADMIN : RoleEnum.STAFF
+      type: values.isAdmin ? UserType.ADMIN : UserType.STAFF
     };
     update(newValues);
   };
