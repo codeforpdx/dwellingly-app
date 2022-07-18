@@ -4,7 +4,6 @@ import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
 import UserType from "../../Enums/UserType";
-import RoleEnum from "../../Enums/RoleEnum";
 import Button from "../components/Button";
 
 import './styles/index.scss';
@@ -36,7 +35,6 @@ export const AddStaffMember = () => {
     context.apiCall('post', `/users/invitation`,
       {
         ...data,
-        role: data.makeAdmin ? RoleEnum.ADMIN : RoleEnum.STAFF,
         type: data.makeAdmin ? UserType.ADMIN : UserType.STAFF
       },
       { success: 'User created! An invite email has been sent.' });
