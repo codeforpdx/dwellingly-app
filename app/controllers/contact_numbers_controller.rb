@@ -1,5 +1,7 @@
 class ContactNumbersController < ApplicationController
-  before_action :contact_number, only: %i[ show edit update destroy ]
+  skip_before_action :authenticate_user!, only: %i[ index show ]
+  before_action :contact_number, only: %i[ show update destroy ]
+  after_action :verify_authorized, only: %i[ create update destroy ]
 
   def index
     @contact_numbers = ContactNumber.all
@@ -8,15 +10,8 @@ class ContactNumbersController < ApplicationController
   def show
   end
 
-  def new
-    @contact_number = ContactNumber.new
-  end
-
-  def edit
-  end
-
   def create
-    @contact_number = ContactNumber.new(contact_number_params)
+    @contact_number = authorize ContactNumber.new(contact_number_params)
 
     if @contact_number.save
       render :show, status: :created
@@ -26,6 +21,7 @@ class ContactNumbersController < ApplicationController
   end
 
   def update
+    authorize @contact_number
     if @contact_number.update(contact_number_params)
       render :show, status: :ok
     else
@@ -34,6 +30,7 @@ class ContactNumbersController < ApplicationController
   end
 
   def destroy
+    authorize @contact_number
     @contact_number.destroy
     head :no_content
   end

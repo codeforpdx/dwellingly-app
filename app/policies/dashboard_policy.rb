@@ -1,0 +1,2 @@
+class DashboardPolicy < ApplicationPolicy
+end

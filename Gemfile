@@ -11,6 +11,7 @@ gem 'devise', '~> 4.8'
 gem 'devise_invitable', '~> 2.0', '>= 2.0.5'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
+gem 'pundit', '~> 2.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -57,6 +58,10 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+end
+
+group :test do
+  gem 'pundit-matchers', '~>1.7.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

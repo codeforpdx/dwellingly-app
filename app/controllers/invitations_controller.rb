@@ -1,4 +1,7 @@
 class InvitationsController < Devise::InvitationsController
+  before_action :authorize_user
+  after_action :verify_authorized
+
   def create
     self.resource = invite_resource
 
@@ -12,6 +15,10 @@ class InvitationsController < Devise::InvitationsController
   end
 
   protected
+
+  def authorize_user
+    authorize User, policy_class: ApplicationPolicy # Admins only
+  end
 
   def after_invite_path_for(_resource)
     root_path

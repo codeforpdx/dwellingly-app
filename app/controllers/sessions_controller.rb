@@ -45,7 +45,7 @@ class SessionsController < Devise::SessionsController
   # end
 
   def invalid_login_attempt
-    set_flash_message(:alert, :invalid) unless flash[:alert]
-    render json: flash[:alert], status: :unauthorized
+    error_message = flash[:alert].presence || t('devise.sessions.user.invalid')
+    render json: { error: error_message }, status: :unauthorized
   end
 end

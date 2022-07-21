@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+npm run test
+bin/rspec
+npx cypress run --headless

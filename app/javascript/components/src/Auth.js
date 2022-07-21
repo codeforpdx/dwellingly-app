@@ -23,7 +23,7 @@ export const auth = {
         }
       })
       .catch((error) => {
-        Toast(error.response.data, "error")
+        Toast(error.response.data.error, "error")
         return null
       })
   },

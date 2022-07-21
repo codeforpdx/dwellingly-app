@@ -1,22 +1,17 @@
 class LeasesController < ApplicationController
-  before_action :set_lease, only: %i[ show edit update destroy ]
+  before_action :set_lease, only: %i[ show update destroy ]
+  after_action :verify_authorized
 
   def index
-    @leases = Lease.all
+    @leases = authorize Lease.all
   end
 
   def show
-  end
-
-  def new
-    @lease = Lease.new
-  end
-
-  def edit
+    authorize Lease
   end
 
   def create
-    @lease = Lease.new(lease_params)
+    @lease = authorize Lease.new(lease_params)
 
     if @lease.save
       render :show, status: :created
@@ -26,6 +21,7 @@ class LeasesController < ApplicationController
   end
 
   def update
+    authorize @lease
     if @lease.update(lease_params)
       render :show, status: :ok
     else
@@ -34,6 +30,7 @@ class LeasesController < ApplicationController
   end
 
   def destroy
+    authorize @lease
     @lease.destroy
     head :no_content
   end

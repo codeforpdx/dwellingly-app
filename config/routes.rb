@@ -8,20 +8,20 @@ Rails.application.routes.draw do
     }
 
     resource :dashboard, only: :show
-    resources :emergency_contacts
-    resources :contact_numbers
-    resources :tenants
-    resources :properties
+    resources :emergency_contacts, except: [:new, :edit]
+    resources :contact_numbers, except: [:new, :edit]
+    resources :tenants, except: [:new, :edit]
+    resources :properties, except: [:new, :edit]
     resources :staff, only: :index, controller: :staffs
     resources :unauthorized_users, only: [:index, :destroy]
-    resources :leases
+    resources :leases, except: [:new, :edit]
     delete 'tickets/bulk_delete', to: 'tickets#bulk_delete'
-    resources :tickets do
+    resources :tickets, except: [:new, :edit] do
       resources :notes, only: [:create, :update, :destroy]
     end
     resources :property_managers, only: :index
     resources :users, only: [:show, :update] do
-      patch '/authorize', to: 'users#authorize'
+      patch '/authorize', to: 'users#update_role'
     end
     get 'staff_members', to: 'users#staff_members'
   end

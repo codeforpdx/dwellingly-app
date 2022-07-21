@@ -7,4 +7,11 @@ class Property < ApplicationRecord
   has_many :tenants, through: :leases
   has_many :properties_property_managers, dependent: :destroy
   has_many :property_managers, through: :properties_property_managers
+
+  scope :property_managers, lambda {
+    PropertyManager.where(
+      id: PropertiesPropertyManager.where(property_id: select(:id))
+                                   .select(:property_manager_id)
+    ).distinct
+  }
 end

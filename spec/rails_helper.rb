@@ -70,4 +70,12 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+
+  config.before do |example|
+    if example.metadata[:type] == :policy
+      def all_actions
+        [:index, :show, :create, :update, :destroy]
+      end
+    end
+  end
 end

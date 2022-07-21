@@ -1,0 +1,2 @@
+class UnauthorizedUserPolicy < ApplicationPolicy
+end
