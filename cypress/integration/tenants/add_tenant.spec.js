@@ -5,7 +5,8 @@ describe('Add Tenant', function () {
     cy.app('clean')
     cy.appScenario('basic')
     cy.appFactories([
-      ['create', 'staff', {email: 'staff@dwellingly.org', firstName: 'Franky', lastName: 'Bob'} ]
+      ['create', 'staff', {email: 'staff@dwellingly.org', firstName: 'Franky', lastName: 'Bob'} ],
+      ['create', 'property', {name: 'The Tenants', address: 'address' } ]
     ])
     cy.login(admin)
   })
@@ -22,12 +23,6 @@ describe('Add Tenant', function () {
   })
 
   it('creates a tenant with a lease', function () {
-    cy.visit('add/property')
-    cy.wait(500)
-    cy.fillInPropertyForm()
-    cy.get('button').contains('SAVE').click()
-    cy.wait(500)
-
     cy.visit('/add/tenant')
     cy.fillInTenantForm()
 
