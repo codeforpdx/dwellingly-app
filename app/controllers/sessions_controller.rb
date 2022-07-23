@@ -16,6 +16,7 @@ class SessionsController < Devise::SessionsController
 
     if resource.valid_password?(params[:password])
       sign_in :user, resource
+      resource.update!(lastActive: Time.current)
       return render json: resource.to_json
     end
 
