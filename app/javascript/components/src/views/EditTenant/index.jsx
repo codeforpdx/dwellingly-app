@@ -8,7 +8,8 @@ import Modal from '../components/Modal';
 import { TenantTickets } from './components/tenantTickets'
 import PropertySearchPanel from "../components/PropertySearchPanel";
 import JoinStaffSearchPanel from "../components/JoinStaffSearchPanel";
-import ContactCard from "../components/ContactCard";
+import InfoCard from "../components/InfoCard";
+import FieldError from "../components/FieldError";
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -37,7 +38,8 @@ const EditTenant = () => {
   const [isEditing, setEditingStatus] = useState(false);
   const [staffSelections, setStaffSelections] = useState(null);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
-  const calendarState = useCalendarState(tenant?.lease?.dateTimeStart, tenant?.lease?.dateTimeEnd)
+  const calendarState = useCalendarState(tenant?.lease?.dateTimeStart, tenant?.lease?.dateTimeEnd);
+  const [missingPropertyError, setMissingPropertyError] = useState(null);
 
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
@@ -52,6 +54,13 @@ const EditTenant = () => {
   const handleEditToggle = () => setEditingStatus(!isEditing);
 
   const onFormikSubmit = (values, { setSubmitting }) => {
+    if((!selectedProperty || !selectedProperty[0])
+      && (values.unitNum || values.occupants
+      || calendarState.dateTimeStart !== calendarState.dateTimeEnd)) {
+      setMissingPropertyError("* Property is required when creating a lease");
+      return;
+    }
+
     if (_nothingHasChanged(values, tenant)) {
       setSubmitting(false);
       setEditingStatus(false);
@@ -64,12 +73,18 @@ const EditTenant = () => {
       lastName: values.lastName,
       phone: values.phone,
       staff_ids: staffSelections?.map(staff => staff.key),
-      lease_attributes: {
-        unitNum: values.unitNum,
-        dateTimeStart: values.lease?.dateTimeStart,
-        dateTimeEnd: values.lease?.dateTimeEnd,
-        occupants: values.occupants,
-        property_id: selectedProperty[0]?.key
+    }
+
+    if(selectedProperty && selectedProperty[0]) {
+      payload = {
+        ...payload,
+        lease_attributes: {
+          unitNum: values.unitNum,
+          dateTimeStart: calendarState?.dateTimeStart,
+          dateTimeEnd: calendarState?.dateTimeEnd,
+          occupants: values.occupants,
+          property_id: selectedProperty[0].key
+        }
       }
     }
 
@@ -92,6 +107,33 @@ const EditTenant = () => {
       newValues.occupants === oldValues.occupants
     );
   };
+
+  /**
+   * Validate the property selection and lease dates
+   */
+  const validateForm = (values) => {
+    const errors = {}
+    if (selectedProperty?.length) {
+      if (calendarState.dateTimeStart === calendarState.dateTimeEnd){
+        errors.lease = "* Valid lease dates required when a property is selected"
+      }
+    }
+    if (calendarState.dateTimeStart !== calendarState.dateTimeEnd) {
+      if (selectedProperty?.length === 0) {
+        errors.selectedProperty = "* Property is required when lease dates are selected"
+      }
+    }
+    if (values.unitNum || values.occupants) {
+      if (selectedProperty?.length === 0) {
+        errors.selectedProperty = "* Property is required when creating a lease"
+      }
+      if (calendarState.dateTimeStart === calendarState.dateTimeEnd) {
+        errors.lease = "* Valid lease dates required when creating a lease"
+      }
+    }
+
+    return errors
+  }
 
   /**
    * Handle press cancel button
@@ -148,9 +190,7 @@ const EditTenant = () => {
     {
       key: "unitNum",
       label: "Unit",
-      value: (tenant.lease)
-        ? tenant.lease.unitNum
-        : "",
+      value: tenant.lease?.unitNum,
       inputType: "text",
     },
     {
@@ -164,15 +204,13 @@ const EditTenant = () => {
     {
       key: "lease",
       label: "Lease",
-      value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd)
+      value: tenant.lease
         ? {
-          dateTimeStart: new Date(tenant.lease.dateTimeStart),
-          dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
+          dateTimeStart: calendarState.dateTimeStart,
+          dateTimeEnd: calendarState.dateTimeEnd,
         }
         :	"Not Applicable",
-      inputType: (tenant.lease)
-        ? "calendar"
-        : "text",
+      inputType: "calendar",
     }
   ];
 
@@ -246,6 +284,7 @@ const EditTenant = () => {
               <ToggleEditForm
                 tableData={getTableData()}
                 validationSchema={validationSchema}
+                validateMethod={validateForm}
                 isEditing={isEditing}
                 submitHandler={onFormikSubmit}
                 cancelHandler={onCancelClick}
@@ -253,42 +292,48 @@ const EditTenant = () => {
               >
                 <div className="section-container">
                   <h2>PROPERTY</h2>
-                  {isEditing
-                    ? <PropertySearchPanel
-                      initialPropertyIds={[tenant?.lease?.property_id]}
-                      propertySelections={selectedProperty}
-                      setPropertySelection={setSelectedProperty}
-                      multiSelect={false}
-                      showAddPropertyButton={false}
-                      />
-                    : <div className="contact-card-box box">
-                        <div>
-                          <Link key={tenant?.property?.id} to={`/manage/properties/${tenant?.property?.id}`}>
-                            <p className="bold">{`${tenant?.property?.name}`}</p>
-                          </Link>
-                          <p className="information">{tenant?.property?.address}</p>
-                          <p className="information">{tenant?.property?.city} {tenant?.property?.state}</p>
-                        </div>
-                      </div>}
                 </div>
+                  {isEditing
+                    ? <>
+                        <FieldError error={missingPropertyError} />
+                        <PropertySearchPanel
+                          initialPropertyIds={tenant?.lease ? [tenant.lease.property_id] : []}
+                          propertySelections={selectedProperty}
+                          setPropertySelection={setSelectedProperty}
+                          multiSelect={false}
+                          showAddPropertyButton={false}
+                          />
+                      </>
+                    : tenant?.lease && <div className="info-card-section">
+                        <InfoCard
+                          link={`/manage/properties/${tenant?.property?.id}`}
+                          title={tenant?.property?.name}
+                          descriptionOne={tenant?.property?.address}
+                          descriptionTwo={`${tenant?.property?.city} ${tenant?.property?.state}`}
+                        />
+                      </div>}
                 <div className="section-container">
                   <h2>JOIN STAFF</h2>
-                  {isEditing
-                    ? <JoinStaffSearchPanel
-                      initialStaffIds={tenant?.staff}
-                      staffSelections={staffSelections}
-                      setStaffSelections={setStaffSelections}
-                      multiSelect={true}
-                    />
-                    : tenant?.staff?.map(staff => (
-                        <ContactCard
-                          contact={staff}
-                          key={staff.id}
-                          isEditing={isEditing}
-                          linkUrl={`/manage/staff/${staff.id}`}
-                        />
-                        ))}
                 </div>
+                {isEditing
+                  ? <JoinStaffSearchPanel
+                    initialStaffIds={tenant?.staff?.map(s => s.id)}
+                    staffSelections={staffSelections}
+                    setStaffSelections={setStaffSelections}
+                    multiSelect={true}
+                  />
+                  : 
+                  <div className="info-card-section">
+                    {tenant?.staff?.map(staff => (
+                      <InfoCard
+                        title={`${staff.firstName} ${staff.lastName}`}
+                        descriptionOne={staff.phone}
+                        descriptionTwo={staff.email}
+                        link={`/manage/staff/${staff.id}`}
+                      />
+                      ))}
+                  </div>
+                }
               </ToggleEditForm>
             </div>
 

@@ -13,7 +13,8 @@ const ToggleEditForm = ({
   cancelHandler,
   validationSchema,
   calendarState,
-  children
+  children,
+  validateMethod
 }) => {
 
   // create initialValues for Formik
@@ -29,6 +30,7 @@ const ToggleEditForm = ({
       initialValues={initValuesFromTableData}
       onSubmit={submitHandler}
       validationSchema={validationSchema}
+      validate={validateMethod}
     >
       {({
         values,
@@ -41,8 +43,9 @@ const ToggleEditForm = ({
       }) => (
         <Form onSubmit={handleSubmit}>
           {Object.keys(values).map((value, index) => {
-            const isCalendar = tableData[index].inputType === "calendar"
-            const readOnly = tableData[index].readOnly === true
+            const isCalendar = tableData[index].inputType === "calendar";
+            const isCheckbox = tableData[index].inputType === 'checkbox';
+            const readOnly = tableData[index].readOnly === true;
 
             return (<div className="form__row--editing columns" key={value}>
               <label
@@ -56,12 +59,12 @@ const ToggleEditForm = ({
                 name={value}
                 onChange={(isCalendar || readOnly) ? null : handleChange}
                 onBlur={handleBlur}
-                checked={values[value]}
+                checked={isCheckbox ? values[value] : null}
                 value={
-                  isCalendar
-                    ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
+                  (isCalendar && dateTimeStart && dateTimeEnd)
+                    ? `${dateTimeStart?.toDateString()} - ${dateTimeEnd?.toDateString()}`
                     : values[value]}
-                className={`column row-input form-field ${tableData[index].inputType === 'checkbox'
+                className={`column row-input form-field ${isCheckbox
                   ? 'checkbox-row  is-one-quarter'
                   : 'is-one-quarter'}`}
               />
@@ -90,7 +93,9 @@ const ToggleEditForm = ({
           </span>
           <span className="column is-one-quarter">{
             (dataObject.inputType === "calendar")
-              ? `${dataObject.value.dateTimeStart.toDateString()} - ${dataObject.value.dateTimeEnd.toDateString()}`
+              ? (dataObject.value.dateTimeStart !== undefined && dataObject.value.dateTimeStart !== undefined)
+                ? `${dataObject.value.dateTimeStart?.toDateString()} - ${dataObject.value.dateTimeEnd?.toDateString()}`
+                : "Not applicable"
               : dataObject.inputType === "checkbox"
                 ? <input
                   className="form-field checkbox-row"

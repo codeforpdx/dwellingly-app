@@ -6,7 +6,7 @@ import { useMediaQuery } from '@react-hook/media-query';
 
 const matchStaff = (ids, staffList) => {
   if (ids && ids.length > 0 && staffList && staffList.length > 0) {
-    return ids?.map(id => ({
+    return ids.map(id => ({
       key: id,
       description: staffList.find(staff => staff.key == id)?.description
         ?? "Unknown staff"

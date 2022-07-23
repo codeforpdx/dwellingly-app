@@ -41,7 +41,7 @@ const AddTenant = () => {
     const errors = {}
     if (propertySelection?.length) {
       if (dateTimeStart === dateTimeEnd){
-        errors.lease = "* Lease dates required when a property is selected"
+        errors.lease = "* Valid lease dates required when a property is selected"
       }
     }
     if (dateTimeStart !== dateTimeEnd) {
@@ -54,7 +54,7 @@ const AddTenant = () => {
         errors.propertySelection = "* Property is required when creating a lease"
       }
       if (dateTimeStart === dateTimeEnd) {
-        errors.lease = "* Lease dates required when creating a lease"
+        errors.lease = "* Valid lease dates required when creating a lease"
       }
     }
 

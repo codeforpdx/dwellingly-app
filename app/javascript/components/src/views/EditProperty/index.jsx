@@ -3,12 +3,9 @@ import { useParams } from "react-router-dom";
 import UserContext from '../../contexts/UserContext';
 import * as Yup from "yup";
 import ToggleEditForm from "../components/ToggleEditForm";
-import { useCalendarState } from "../components/CalendarModal";
-import ContactCard from "../components/ContactCard";
+import InfoCard from "../components/InfoCard";
 import Modal from '../components/Modal';
 import TenantListMini from "../components/TenantListMini";
-
-import './styles/index.scss';
 import PropertyManagerSearchPanel from "../components/PropertyManagerSearchPanel";
 
 const validationSchema = Yup.object().shape({
@@ -38,7 +35,6 @@ const EditProperty = () => {
   const [inputValues, setInputValues] = useState();
   const [showArchiveModal, setShowArchiveModal] = useState(false);
   const [propertyManagerSelections, setPropertyManagerSelections] = useState([]);
-  const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
 
   const handleEditToggle = () => setEditingStatus(!isEditing);
 
@@ -85,22 +81,6 @@ const EditProperty = () => {
       });
     setConfirmChange(true);
   };
-
-  const removePropertyManager = (id) => {
-    let propertyManagerIDs = []
-    let propertyManagers = []
-
-    for (let manager of property.propertyManagers) {
-      if (manager.id !== id) {
-        propertyManagerIDs.push(manager.id)
-      }
-      else {
-        propertyManagers = property.propertyManagers.filter(manager => manager.id !== id)
-      }
-    }
-    setProperty({ ...property, propertyManagers })
-    setInputValues({ ...property, propertyManagers, propertyManagerIDs })
-  }
 
   const handleTenantRemoveButton = (tenantToRemove) => {
     const leaseId = tenantToRemove.lease.id;
@@ -208,7 +188,6 @@ const EditProperty = () => {
               isEditing={isEditing}
               submitHandler={onFormikSubmit}
               cancelHandler={onCancelClick}
-              calendarState={calendarState}
             >
               <div className="section-container">
                 <h2 className="section-title">PROPERTY MANAGERS</h2>
@@ -222,15 +201,14 @@ const EditProperty = () => {
                   setManagerSelections={setPropertyManagerSelections}
                   multiSelect={true}
                 />}
-              <div className="property-manager-section">
+              <div className="info-card-section">
                 {property.propertyManagers && !isEditing &&
                   property.propertyManagers.map(manager => {
-                    return <ContactCard
-                      contact={manager}
-                      key={manager.id}
-                      isEditing={isEditing}
-                      removeContact={removePropertyManager}
-                      linkUrl='/manage/managers'
+                    return <InfoCard
+                      title={`${manager.firstName} ${manager.lastName}`}
+                      descriptionOne={manager.phone}
+                      descriptionTwo={manager.email}
+                      link='/manage/managers'
                     />
                   })}
               </div>
