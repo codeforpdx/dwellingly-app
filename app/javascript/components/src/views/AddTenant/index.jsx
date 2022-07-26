@@ -96,7 +96,7 @@ const AddTenant = () => {
               lease_attributes: {
                 occupants: values.occupants || null,
                 unitNum: values.unitNum || null,
-                property_id: propertySelection.length ? propertySelection[0].key : null,
+                property_id: propertySelection?.length ? propertySelection[0].key : null,
                 dateTimeStart: dateEntered() ? dateTimeStart : null,
                 dateTimeEnd: dateEntered() ? dateTimeEnd : null
               }
