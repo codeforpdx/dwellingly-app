@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import ToggleEditForm from "../components/ToggleEditForm";
 import { useCalendarState } from "../components/CalendarModal";
@@ -304,7 +304,7 @@ const EditTenant = () => {
                           showAddPropertyButton={false}
                           />
                       </>
-                    : tenant?.lease && <div className="info-card-section">
+                    : tenant?.lease && <div>
                         <InfoCard
                           link={`/manage/properties/${tenant?.property?.id}`}
                           title={tenant?.property?.name}
@@ -323,7 +323,7 @@ const EditTenant = () => {
                     multiSelect={true}
                   />
                   : 
-                  <div className="info-card-section">
+                  <div>
                     {tenant?.staff?.map(staff => (
                       <InfoCard
                         title={`${staff.firstName} ${staff.lastName}`}

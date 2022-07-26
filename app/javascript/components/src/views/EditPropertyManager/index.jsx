@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useParams } from "react-router-dom";
 import UserContext from '../../contexts/UserContext';
 import TitleAndPen, { useEditingStatus } from "../components/TitleAndPen";
+import InfoCard from "../components/InfoCard";
 import './styles/index.scss';
 
 const validationSchema = Yup.object().shape({
@@ -123,26 +124,18 @@ const EditPropertyManager = () => {
             />
             <div className="section-container">
               <h2 className="secondary-title">PROPERTIES</h2>
-              <div className="manager__properties__container">
-                {managerData.properties?.map((property) => (
-                  <div key={property.id} className="manager__property__tile">
-                    <h3 className="manager__property__name">
-                      {property.name}
-                    </h3>
-                    <div className="manager__property__address">
-                      {property.address}
-                      <br />
-                      {`${property.city}, ${property.state}`}
-                      <br />
-                      {property.zipcode}
-                    </div>
-                  </div>
-                ))}
+              <div>
+              {managerData.properties && managerData.properties.map(p => <InfoCard
+                link={`/manage/properties/${p.id}`}
+                title={p.name}
+                descriptionOne={p.address}
+                descriptionTwo={`${p.city} ${p.state}`}
+              />)}
               </div>
             </div>
             <div className="manager__tenants">
               <h1 className="section-title">TENANTS</h1>
-              {managerData.tenants?.map((tenant) =>
+              {managerData.tenants && managerData.tenants.map((tenant) =>
                 <div key={tenant.id} className="columns tenant__form-row">
                   <div className="column is-one-quarter bold tenant__name">
                     {tenant.fullName}

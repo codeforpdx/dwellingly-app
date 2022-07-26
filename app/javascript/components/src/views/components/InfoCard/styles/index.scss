@@ -1,16 +1,8 @@
 @import "../../../../scss/variables.scss";
 
-.info-card-section {
-  display:flex;
-  flex-direction: row;
-  width: 65%;
-  justify-content: space-evenly;
-}
-
 .info-card-box {
     height: 120px;
-    display: flex;
-    justify-content: space-between;
+    max-width: 325px;
   .name {
     color: $primary;
   }

@@ -201,14 +201,14 @@ const EditProperty = () => {
                   setManagerSelections={setPropertyManagerSelections}
                   multiSelect={true}
                 />}
-              <div className="info-card-section">
+              <div>
                 {property.propertyManagers && !isEditing &&
                   property.propertyManagers.map(manager => {
                     return <InfoCard
                       title={`${manager.firstName} ${manager.lastName}`}
                       descriptionOne={manager.phone}
                       descriptionTwo={manager.email}
-                      link='/manage/managers'
+                      link={`/manage/managers/${manager.id}`}
                     />
                   })}
               </div>
