@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../../../../../../scss/variables.scss";
 
 
@@ -15,7 +16,7 @@ $width__wrapper: 800px;
 
 /* F U N C T I O N S */
 @function emify($target, $context) {
-  @return ($target/$context) * 1em;
+  @return math.div($target, $context) * 1em;
 }
 /* end functions */
 
@@ -384,7 +385,7 @@ button .card {
         display: block;
         height: $ticket__cutout-size--height;
         width: $ticket__cutout-size--width;
-        
+
         overflow: hidden;
         position: absolute;
 
