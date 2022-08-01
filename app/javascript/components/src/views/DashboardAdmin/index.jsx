@@ -119,7 +119,7 @@ export const DashboardAdmin = (props) => {
   const handleStaffAssignmentChange = ({ target }, tenantId) => {
     const updatedTenants = unstaffedTenants.map(tenant => {
       if(tenant.id === tenantId) {
-        tenant.staffID = target.value;
+        tenant.staff_ids = [target.value];
         setAreStaffAssigned(true);
       }
       return tenant;
@@ -131,8 +131,13 @@ export const DashboardAdmin = (props) => {
     if(!areStaffAssigned) return;
 
     const tenantUpdateReqs = unstaffedTenants
-      .filter(({ staffID }) => staffID)
-      .map(({ id, staffID }) => userContext.apiCall('patch', `/tenants/${id}`, { 'tenant': { 'staff_ids': [staffID] } }, {}));
+      .filter(({ staff_ids }) => staff_ids)
+      .map(tenant => userContext.apiCall(
+        'put',
+        `/tenants/${tenant.id}`,
+        tenant,
+        { success: "Update successful!" }
+      ));
 
     axios.all(tenantUpdateReqs)
       .then(axios.spread((...responses) => {

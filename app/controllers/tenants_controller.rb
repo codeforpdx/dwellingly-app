@@ -11,7 +11,7 @@ class TenantsController < ApplicationController
   end
 
   def create
-    @tenant = authorize(Tenant).new(create_params)
+    @tenant = authorize(Tenant).new(tenant_params)
 
     if @tenant.save
       render :show, status: :created
@@ -45,10 +45,6 @@ class TenantsController < ApplicationController
     params.require(:tenant).permit(
       :firstName, :lastName, :phone, :archived,
       staff_ids: [], lease_attributes: [:occupants, :unitNum, :property_id, :dateTimeStart, :dateTimeEnd]
-    )
-  end
-
-  def create_params
-    tenant_params.merge({ staff_ids: params[:staff_ids] })
+    ).merge({ staff_ids: params[:staff_ids] })
   end
 end

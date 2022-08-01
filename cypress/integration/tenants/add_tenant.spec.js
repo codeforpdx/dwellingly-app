@@ -5,7 +5,8 @@ describe('Add Tenant', function () {
     cy.app('clean')
     cy.appScenario('basic')
     cy.appFactories([
-      ['create', 'staff', {email: 'staff@dwellingly.org', firstName: 'Franky', lastName: 'Bob'} ]
+      ['create', 'staff', {email: 'staff@dwellingly.org', firstName: 'Franky', lastName: 'Bob'} ],
+      ['create', 'property', {name: 'The Tenants', address: 'address' } ]
     ])
     cy.login(admin)
   })
@@ -24,11 +25,9 @@ describe('Add Tenant', function () {
   it('creates a tenant with a lease', function () {
     cy.visit('/add/tenant')
     cy.fillInTenantForm()
-    cy.contains('Create New Property').click()
-    cy.fillInPropertyForm()
-    cy.get('form.add-property__form-container').contains('SAVE').click()
-    cy.get('form.add-property__form-container').should('not.exist')
-    cy.contains('The Tenants').should('exist')
+
+    cy.get('input[title="Search Properties"]').first().type('The')
+    cy.get('.styles-module_resultItemLabel__rcaln:contains(The Tenants)').click()
 
     cy.get('input[name="unitNum"]').type('d23')
     cy.get('input[name="occupants"]').type('3')
@@ -49,7 +48,7 @@ describe('Add Tenant', function () {
 
   it('creates a tenant with staff assigned', function () {
     cy.visit('/add/tenant')
-    cy.get('input[title="Search JOIN Staff"]').first().type('F')
+    cy.get('input[title="Search Staff Members"]').first().type('F')
     cy.get('.styles-module_resultItemLabel__rcaln:contains(Franky Bob)').click()
 
     cy.fillInTenantForm()

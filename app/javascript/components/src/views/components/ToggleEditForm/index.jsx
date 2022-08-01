@@ -4,11 +4,7 @@ import { Formik, Form, Field } from "formik";
 import Button from "../Button";
 import "./styles/index.scss";
 import CalendarModal from "../CalendarModal";
-
-const FieldError = ({ error }) => {
-  if (!error) return null;
-  return <div className="form__field-error__message">{error}</div>;
-};
+import FieldError from "../FieldError";
 
 const ToggleEditForm = ({
   isEditing,
@@ -16,7 +12,9 @@ const ToggleEditForm = ({
   submitHandler,
   cancelHandler,
   validationSchema,
-  calendarState
+  calendarState,
+  children,
+  validateMethod
 }) => {
 
   // create initialValues for Formik
@@ -32,6 +30,7 @@ const ToggleEditForm = ({
       initialValues={initValuesFromTableData}
       onSubmit={submitHandler}
       validationSchema={validationSchema}
+      validate={validateMethod}
     >
       {({
         values,
@@ -44,10 +43,11 @@ const ToggleEditForm = ({
       }) => (
         <Form onSubmit={handleSubmit}>
           {Object.keys(values).map((value, index) => {
-            const isCalendar = tableData[index].inputType === "calendar"
-            const readOnly = tableData[index].readOnly === true
+            const isCalendar = tableData[index].inputType === "calendar";
+            const isCheckbox = tableData[index].inputType === 'checkbox';
+            const readOnly = tableData[index].readOnly === true;
 
-            return (<div key={value}><div className="form__row--editing columns">
+            return (<div className="form__row--editing columns" key={value}>
               <label
                 className="form__label column is-one-quarter"
                 htmlFor={value}
@@ -59,22 +59,20 @@ const ToggleEditForm = ({
                 name={value}
                 onChange={(isCalendar || readOnly) ? null : handleChange}
                 onBlur={handleBlur}
-                checked={values[value]}
+                checked={isCheckbox ? values[value] : null}
                 value={
-                  isCalendar
-                    ? `${dateTimeStart.toDateString()} - ${dateTimeEnd.toDateString()}`
+                  (isCalendar && dateTimeStart && dateTimeEnd)
+                    ? `${dateTimeStart?.toDateString()} - ${dateTimeEnd?.toDateString()}`
                     : values[value]}
-                className={`column row-input form-field ${tableData[index].inputType === 'checkbox'
+                className={`column row-input form-field ${isCheckbox
                   ? 'checkbox-row  is-one-quarter'
                   : 'is-one-quarter'}`}
               />
               {isCalendar && <CalendarModal title="Lease Range" calendarState={calendarState} iconYPosition="0.8rem" />}
-            </div>
-              <FieldError
-                error={errors[value]}
-                className="column is-one-quarter"
-              /></div>)
+              <FieldError error={errors[value]} />
+            </div>)
           })}
+          {children}
           <div className="form__button-container">
             <Button type="submit" disabled={isSubmitting} isValidFlag={isValid}>
               SAVE
@@ -87,7 +85,7 @@ const ToggleEditForm = ({
       )}
     </Formik>
   ) : (
-    <>
+    <div>
       {tableData.map((dataObject) => (
         <div key={dataObject.label} className="form__row--not-editing columns">
           <span className="form__label column is-one-quarter">
@@ -95,7 +93,9 @@ const ToggleEditForm = ({
           </span>
           <span className="column is-one-quarter">{
             (dataObject.inputType === "calendar")
-              ? `${dataObject.value.dateTimeStart.toDateString()} - ${dataObject.value.dateTimeEnd.toDateString()}`
+              ? (dataObject.value.dateTimeStart !== undefined && dataObject.value.dateTimeStart !== undefined)
+                ? `${dataObject.value.dateTimeStart?.toDateString()} - ${dataObject.value.dateTimeEnd?.toDateString()}`
+                : "Not applicable"
               : dataObject.inputType === "checkbox"
                 ? <input
                   className="form-field checkbox-row"
@@ -108,7 +108,8 @@ const ToggleEditForm = ({
           }</span>
         </div>
       ))}
-    </>
+      {children}
+    </div>
   );
 };
 

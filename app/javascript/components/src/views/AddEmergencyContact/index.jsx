@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import useMountEffect from '../../utils/useMountEffect';
 import { Link } from 'react-router-dom';
 import './styles/index.scss';
+import FieldError from '../components/FieldError';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -29,15 +30,6 @@ const validationSchema = Yup.object().shape({
   )
 });
 
-const FieldError = ({ error }) => {
-  if (!error) return null;
-  return (
-    <div className="error-message">
-      {error}
-    </div>
-  );
-};
-
 const NumberSubForm = ({ i, values, errors, handleChange }) => {
   const subFormErrors = errors.contact_numbers && errors.contact_numbers[i] ? errors.contact_numbers[i] : null;
   return (
@@ -53,7 +45,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           placeholder="Phone Number"
         />
       </div>
-      {subFormErrors && <FieldError error={subFormErrors.number} />}
+      <FieldError error={subFormErrors.number} />
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].numtype`}>Phone Number Type</label>
         <Field
@@ -65,7 +57,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           placeholder="Phone Number Type (Opional)"
         />
       </div>
-      {subFormErrors && <FieldError error={subFormErrors.numtype} />}
+      <FieldError error={subFormErrors.numtype} />
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].extension`}>Extension</label>
         <Field
@@ -77,7 +69,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           placeholder="Extension (Optional)"
         />
       </div>
-      {subFormErrors && <FieldError error={subFormErrors.extension} />}
+      <FieldError error={subFormErrors.extension} />
     </>
   );
 };

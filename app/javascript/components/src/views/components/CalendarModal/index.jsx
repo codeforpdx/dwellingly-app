@@ -1,13 +1,13 @@
 import 'react-calendar/dist/Calendar.css'
 import Calendar from "react-calendar";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import './styles/index.scss'
 import Modal from '../Modal';
 
-export default function CalendarModal({ calendarState, title = "Date Range", iconYPosition = "", resetOnClose = true }) {
+export default function CalendarModal({ calendarState, handleCalendarConfirm, title = "Date Range", iconYPosition = "", resetOnClose = true }) {
   const { dateTimeStart, dateTimeEnd, setStart, setEnd } = calendarState
 
   const [isOpen, setIsOpen] = useState(false)
@@ -16,6 +16,11 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
   const [tempEnd, setTempEnd] = useState(dateTimeEnd)
 
   const validRange = tempStart < tempEnd
+
+  useEffect(() => {
+    setTempStart(typeof dateTimeStart === "string" ? new Date(dateTimeStart) : dateTimeStart);
+    setTempEnd(typeof dateTimeEnd === "string" ? new Date(dateTimeEnd) : dateTimeEnd);
+  }, [dateTimeStart, dateTimeEnd]);
 
   const handleConfirm = () => {
     if (validRange) {
@@ -75,14 +80,23 @@ export default function CalendarModal({ calendarState, title = "Date Range", ico
   </div >)
 }
 
-const today = new Date()
+const today = new Date();
+
 export function useCalendarState(startDateInit = today, endDateInit = today) {
   const [dateTimeStart, setStart] = useState(startDateInit)
   const [dateTimeEnd, setEnd] = useState(endDateInit)
   const resetDates = () => {
-    setStart(startDateInit);
-    setEnd(startDateInit);
+    setStart(typeof startDateInit === "string" ? new Date(startDateInit) : startDateInit);
+    setEnd(typeof endDateInit === "string" ? new Date(endDateInit) : endDateInit);
   };
+
+  useEffect(() => {
+    setStart(typeof startDateInit === "string" ? new Date(startDateInit) : startDateInit);
+  }, [startDateInit]);
+
+  useEffect(() => {
+    setEnd(typeof endDateInit === "string" ? new Date(endDateInit) : endDateInit);
+  }, [endDateInit]);
 
   return { dateTimeStart, dateTimeEnd, setStart, setEnd, resetDates }
 }

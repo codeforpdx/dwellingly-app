@@ -3,13 +3,10 @@ import { useParams } from "react-router-dom";
 import UserContext from '../../contexts/UserContext';
 import * as Yup from "yup";
 import ToggleEditForm from "../components/ToggleEditForm";
-import { useCalendarState } from "../components/CalendarModal";
-import PropertyManagerCard from "./components/PropertyManagerCard";
-import ManagerSearchPanel from './components/ManagerSearchPanel';
+import InfoCard from "../components/InfoCard";
 import Modal from '../components/Modal';
 import TenantListMini from "../components/TenantListMini";
-
-import './styles/index.scss';
+import PropertyManagerSearchPanel from "../components/PropertyManagerSearchPanel";
 
 const validationSchema = Yup.object().shape({
   propertyName: Yup.string()
@@ -35,21 +32,15 @@ const EditProperty = () => {
 
   const [isEditing, setEditingStatus] = useState(false);
   const [property, setProperty] = useState('');
-  const [tenantArray, setTenants] = useState('');
-  const [confirmChange, setConfirmChange] = useState(false);
   const [inputValues, setInputValues] = useState();
   const [showArchiveModal, setShowArchiveModal] = useState(false);
-  const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
+  const [propertyManagerSelections, setPropertyManagerSelections] = useState([]);
 
-  /**
-   * Handle activating edit form
-   */
   const handleEditToggle = () => setEditingStatus(!isEditing);
 
   const onCancelClick = () => {
-    setConfirmChange(false);
     setEditingStatus(false);
-    getProperty()
+    getProperty();
   };
 
   useEffect(() => {
@@ -62,13 +53,7 @@ const EditProperty = () => {
         var property = propertyResponse.data;
         setProperty(property)
         setInputValues(property)
-        setTenants(property.tenants)
       });
-  }
-
-  const handleConfirmButton = async () => {
-    await updateProperty(inputValues);
-    setConfirmChange(false);
   }
 
   const onFormikSubmit = (values, { setSubmitting }) => {
@@ -80,67 +65,27 @@ const EditProperty = () => {
       zipcode: values.propertyZipcode,
       num_units: values.propertyUnits,
     };
+    let payload = {
+      ...newValues,
+      propertyManagerIDs: propertyManagerSelections.map(pm => pm.key)
+    };
     setSubmitting(true);
-    setInputValues({ ...inputValues, ...newValues })
-
-    setConfirmChange(true);
-
-  };
-
-  const updateProperty = (payload, successMsg="Save successful!") => {
-    userContext.apiCall('put', `/properties/${property.id}`, payload, { success: successMsg })
+    userContext.apiCall('put', `/properties/${property.id}`, payload, { success: "Save successful!" })
       .then(response => {
-        const property = response.data
+        const property = response.data;
 
-        setProperty(property)
-        setInputValues(property)
-
-        hideArchiveModal()
-        setEditingStatus(false)
-      });
-  };
-
-  const removePropertyManager = (id) => {
-    let propertyManagerIDs = []
-    let propertyManagers = []
-
-    for (let manager of property.propertyManagers) {
-      if (manager.id !== id) {
-        propertyManagerIDs.push(manager.id)
-      }
-      else {
-        propertyManagers = property.propertyManagers.filter(manager => manager.id !== id)
-      }
-    }
-    setProperty({ ...property, propertyManagers })
-    setInputValues({ ...property, propertyManagers, propertyManagerIDs })
-  }
-
-  const addPropertyManager = (id) => {
-    property.propertyManagerIDs = [id];
-
-    if (property.propertyManagers)
-      for (let manager of property.propertyManagers) {
-        property.propertyManagerIDs.push(manager.id);
-      }
-
-    userContext.apiCall('put', `/properties/${propertyId}`, property, { success: 'Save successful!' })
-      .then(response => {
-        setProperty({
-          ...property,
-          propertyManagers: response.data.propertyManagers,
-        })
+        setProperty(property);
+        setInputValues(property);
         setEditingStatus(false);
+        setSubmitting(false);
       });
-  }
+    setConfirmChange(true);
+  };
 
-  const handleTenantConfirmButton = (tenantToRemove) => {
+  const handleTenantRemoveButton = (tenantToRemove) => {
     const leaseId = tenantToRemove.lease.id;
-    userContext.apiCall('delete', `/leases/${leaseId}`, {}, { success: 'Tenant successfully removed' })
-      .then(res => {
-        getProperty()
-        setEditingStatus(false)
-      });
+    userContext.apiCall('delete', `/leases/${leaseId}`,
+      {}, { success: 'Tenant successfully removed' });
   }
 
   const handleArchive = (archived) => {
@@ -243,58 +188,44 @@ const EditProperty = () => {
               isEditing={isEditing}
               submitHandler={onFormikSubmit}
               cancelHandler={onCancelClick}
-              calendarState={calendarState}
-            />
-            <div className="section-container">
-              <h2 className="section-title">PROPERTY MANAGERS</h2>
-            </div>
-            {isEditing ?
-              <ManagerSearchPanel
-                assignedPropertyManagers={property.propertyManagers ?
-                  property.propertyManagers.map(manager => { return manager.id })
-                  : []}
-                addPropertyManager={addPropertyManager}
-              />
-              :
-              <></>}
-            <div className="property-manager-section">
-              {property.propertyManagers ?
-                property.propertyManagers.map(manager => {
-                  return <PropertyManagerCard
-                    manager={manager}
-                    key={manager.id}
-                    isEditing={isEditing}
-                    removePropertyManager={removePropertyManager}
-                  />
-                })
-                : <></>}
-            </div>
+            >
+              <div className="section-container">
+                <h2 className="section-title">PROPERTY MANAGERS</h2>
+              </div>
+              {isEditing &&
+                <PropertyManagerSearchPanel
+                  initialManagerIds={property.propertyManagers ?
+                    property.propertyManagers.map(manager => { return manager.id })
+                    : []}
+                  managerSelections={propertyManagerSelections}
+                  setManagerSelections={setPropertyManagerSelections}
+                  multiSelect={true}
+                />}
+              <div>
+                {property.propertyManagers && !isEditing &&
+                  property.propertyManagers.map(manager => {
+                    return <InfoCard
+                      title={`${manager.firstName} ${manager.lastName}`}
+                      descriptionOne={manager.phone}
+                      descriptionTwo={manager.email}
+                      link={`/manage/managers/${manager.id}`}
+                    />
+                  })}
+              </div>
+            </ToggleEditForm>
+
             <div>
               <div className="section-container">
                 <h2 className="section-title">TENANTS</h2>
                 <TenantListMini
                   isEditing={isEditing}
-                  tenantList={tenantArray}
-                  handleTenantConfirmButton={handleTenantConfirmButton}
+                  tenantList={property?.tenants}
+                  handleTenantConfirmButton={handleTenantRemoveButton}
                 />
               </div>
             </div>
           </div>
         )}
-        {confirmChange &&
-          <Modal
-            content={<p>Are you sure you want to save these changes?</p>}
-            hasButtons={true}
-            confirmButtonHandler={handleConfirmButton}
-            closeHandler={() => {
-              setConfirmChange(false)
-              getProperty()
-            }}
-            cancelButtonHandler={() => onCancelClick()}
-            confirmText={"YES"}
-            cancelText={"NO"}
-          />
-        }
       </div>
       {showArchiveModal &&
         <Modal

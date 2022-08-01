@@ -1,17 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import './styles/index.scss';
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
-import { AddProperty } from '../AddProperty';
-import Modal from '../components/Modal';
-import { SearchPanel, SearchPanelVariant } from "react-search-panel";
-import './styles/index.scss';
-import useMountEffect from '../../utils/useMountEffect';
 import CalendarModal, { useCalendarState } from "../components/CalendarModal";
-import { useMediaQuery } from '@react-hook/media-query';
-import { tabletWidth } from "../../constants";
+import PropertySearchPanel from "../components/PropertySearchPanel";
+import JoinStaffSearchPanel from "../components/JoinStaffSearchPanel";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -28,121 +24,14 @@ const validationSchema = Yup.object().shape({
 
 const AddTenant = () => {
   const context = useContext(UserContext);
-  const isMobile = useMediaQuery(`(max-width: ${tabletWidth})`);
-  const [staffSearchText, setStaffSearchText] = useState("");
-  const [staffSearchResults, setStaffSearchResults] = useState([]);
-  const [staffOptions, setStaffOptions] = useState([])
   const [staffSelections, setStaffSelections] = useState([]);
-  const [propertySearchText, setPropertySearchText] = useState("");
   const [propertySelection, setPropertySelection] = useState([]);
-  const [propertyOptions, setPropertyOptions] = useState([]);
-  const [propertySearchResults, setPropertySearchResults] = useState([]);
-  const [showAddProperty, setShowAddProperty] = useState(false);
 
   const calendarState = useCalendarState();
   const { dateTimeStart, dateTimeEnd, resetDates } = calendarState;
 
-  useMountEffect(() => getProperties());
-  useMountEffect(() => getStaff());
-
-  useEffect(() => {
-    let choices = staffOptions.filter(
-      s => s.description.toLowerCase().includes(staffSearchText.toLowerCase()));
-    setStaffSearchResults(choices);
-    }, [staffSearchText, staffOptions]);
-
-  useEffect(() => {
-    let choices = propertyOptions.filter(
-      p => p.description.toLowerCase().includes(propertySearchText.toLowerCase()));
-    setPropertySearchResults(choices);
-  }, [propertySearchText, propertyOptions]);
-
-  const propertyOptionFormat = (property) => {
-    return {
-      key: property.id,
-      description: `${property.name}, ${property.address}`
-    }
-  }
-
-  const staffOptionFormat = (staff) => {
-    return {
-      key: staff.id,
-      description: `${staff.firstName} ${staff.lastName}`
-    }
-  }
-
-  const getStaff = () => {
-    context.apiCall('get', '/staff', { name: staffSearchText }, {})
-      .then(({ data }) => {
-        const staff = data && data.length > 0
-          ? data.map(joinStaff => {
-            return staffOptionFormat(joinStaff)
-          })
-          : data
-        setStaffOptions(staff);
-      });
-  }
-
-  const getProperties = () => {
-    context.apiCall('get', '/properties', {}, {})
-      .then(({ data }) => {
-        const properties = data && data.length > 0
-          ? data.map(property => {
-            return propertyOptionFormat(property)
-          })
-          : data;
-        setPropertyOptions(properties);
-      });
-  };
-
   const handleFormSubmit = (data) => {
     context.apiCall('post', `/tenants`, data, { success: 'Tenant Created Successfully!'});
-  };
-
-  const closePropertyModal = () => {
-    setShowAddProperty(false);
-  }
-
-  const closeAndSetProperty = (property) => {
-    closePropertyModal()
-    setPropertySelection([propertyOptionFormat(property)])
-    setPropertyOptions(propertyOptions.concat([propertyOptionFormat(property)]))
-  }
-
-  /**
-   * Handle staff search input
-   * @param {*} event
-   */
-  const handleStaffSearch = (event) => {
-    const { value } = event.target;
-    if(!value || value.length === 0) {
-      setStaffSearchResults(staffOptions);
-      setStaffSearchText("");
-    } else {
-      setStaffSearchText(value);
-    }
-  };
-
-  /**
-   * Handle property search input
-   * @param {*} event
-   */
-  const handlePropertySearch = (event) => {
-    const { value } = event.target;
-    if(!value || value.length === 0) {
-      setPropertySearchResults(propertyOptions);
-      setPropertySearchText("");
-    } else {
-      setPropertySearchText(value);
-    }
-  };
-
-  /**
-   * Handle change in staff selections of search panel
-   * @param {*} selectedChoices
-   */
-  const handleChangeStaffSelections = (selectedChoices) => {
-    setStaffSelections(selectedChoices);
   };
 
   /**
@@ -150,22 +39,22 @@ const AddTenant = () => {
    */
   const validateForm = (values) => {
     const errors = {}
-    if (propertySelection.length) {
+    if (propertySelection?.length) {
       if (dateTimeStart === dateTimeEnd){
-        errors.lease = "Lease dates required when a property is selected"
+        errors.lease = "* Valid lease dates required when a property is selected"
       }
     }
     if (dateTimeStart !== dateTimeEnd) {
-      if (!propertySelection.length) {
-        errors.propertySelection = "Property is required when lease dates are selected"
+      if (propertySelection?.length === 0) {
+        errors.propertySelection = "* Property is required when lease dates are selected"
       }
     }
     if (values.unitNum || values.occupants) {
-      if (!propertySelection.length) {
-        errors.propertySelection = "Property is required when creating a lease"
+      if (propertySelection?.length === 0) {
+        errors.propertySelection = "* Property is required when creating a lease"
       }
       if (dateTimeStart === dateTimeEnd) {
-        errors.lease = "Lease dates required when creating a lease"
+        errors.lease = "* Valid lease dates required when creating a lease"
       }
     }
 
@@ -192,6 +81,7 @@ const AddTenant = () => {
             unitNum: "",
             occupants: "",
             propertySelection: null,
+            staffSelections: [],
             lease: null,
           }}
           validationSchema={validationSchema}
@@ -206,7 +96,7 @@ const AddTenant = () => {
               lease_attributes: {
                 occupants: values.occupants || null,
                 unitNum: values.unitNum || null,
-                property_id: propertySelection.length ? propertySelection[0].key : null,
+                property_id: propertySelection?.length ? propertySelection[0].key : null,
                 dateTimeStart: dateEntered() ? dateTimeStart : null,
                 dateTimeEnd: dateEntered() ? dateTimeEnd : null
               }
@@ -219,9 +109,7 @@ const AddTenant = () => {
             setSubmitting(true)
             handleFormSubmit(payload)
             resetForm()
-            setPropertySearchText("");
             setPropertySelection([]);
-            setStaffSearchText("");
             setStaffSelections([]);
             resetDates();
             setSubmitting(false);
@@ -307,52 +195,27 @@ const AddTenant = () => {
 
                   <h1 className="section-title" style={{ marginTop: "20px" }}>ASSIGN JOIN STAFF</h1>
                   <div className="typeahead-section">
-                    <SearchPanel
-                      chips
-                      choices={staffSearchResults}
-                      clearLabel="Clear search text"
-                      onChange={handleStaffSearch}
-                      onClear={handleStaffSearch}
-                      onSelectionChange={handleChangeStaffSelections}
-                      placeholder="Search JOIN Staff"
-                      preSelectedChoices={staffSelections}
-                      small
-                      value={staffSearchText}
-                      variant={SearchPanelVariant.checkbox}
-                      width={isMobile ? 300 : 400}
-                      shadow
+                    <JoinStaffSearchPanel
+                      initialStaffIds={[]}
+                      staffSelections={staffSelections}
+                      setStaffSelections={setStaffSelections}
+                      multiSelect={true}
                     />
                   </div>
 
                   <h1 className="section-title">PROPERTY</h1>
                   <div className="typeahead-section">
-                    <SearchPanel
-                      chips
-                      clearLabel="Clear search text"
-                      placeholder="Search Properties"
-                      small
-                      width={isMobile ? 300 : 400}
-                      variant={SearchPanelVariant.radio}
-                      choices={propertySearchResults}
-                      value={propertySearchText}
-                      onSelectionChange={setPropertySelection}
-                      onChange={handlePropertySearch}
-                      onClear={handlePropertySearch}
-                      preSelectedChoices={propertySelection}
-                      shadow
+                    <PropertySearchPanel
+                      initialPropertyIds={[]}
+                      setPropertySelection={setPropertySelection}
+                      propertySelections={propertySelection}
+                      multiSelect={false}
+                      showAddPropertyButton={false}
                     />
                     <ErrorMessage
                       name="propertySelection"
                       render={renderErrorMsg}
                     />
-                    <button
-                      className="add-property-button"
-                      onClick={() => setShowAddProperty(!showAddProperty)}
-                      type="button"
-                    >
-                      <i className="fas fa-plus-circle icon-inline-space"></i>
-                      Create New Property
-                    </button>
                   </div>
 
                   <h1 className="section-title">LEASE</h1>
@@ -447,21 +310,6 @@ const AddTenant = () => {
               </div>
             )}
         </Formik>
-        {showAddProperty &&
-          <Modal
-            titleText="Create New Property"
-            content={
-              <AddProperty
-                showPageTitle={false}
-                handleCancel={closePropertyModal}
-                afterCreate={closeAndSetProperty}
-                showAssignPropManagers={false}
-              />
-            }
-            hasButtons={false}
-            closeHandler={closePropertyModal}
-          />
-        }
       </div>
     </div>
   );

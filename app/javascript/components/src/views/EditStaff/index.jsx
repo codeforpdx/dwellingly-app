@@ -33,11 +33,11 @@ const EditStaff = () => {
 
   useEffect(() => {
     if(id) {
-      getStaff(id);
+      getStaffMember(id);
     }
   }, []);
 
-  const getStaff = (staffId) => {
+  const getStaffMember = (staffId) => {
     userContext.apiCall('get', `/users/${staffId}`, {}, {})
       .then((response) => {
         const staff = response.data;

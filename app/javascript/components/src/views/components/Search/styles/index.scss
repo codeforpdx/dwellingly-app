@@ -5,10 +5,15 @@
   position: relative;
 
   .search {
-    width: 80%;
     text-indent: 30px;
     background-color: transparent;
     text-overflow: ellipsis;
+  }
+
+  @media (min-width: $breakpointMobile) {
+    .search {
+      width: 80%;
+    }
   }
 
   .search-icon_span {

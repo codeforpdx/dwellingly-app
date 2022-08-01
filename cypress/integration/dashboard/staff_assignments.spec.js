@@ -11,7 +11,7 @@ describe('Staff Assignments', function () {
     cy.login(admin)
   })
 
-  it('assigns staff to a unhoused tenant', function () {
+  it('assigns staff to an unhoused tenant', function () {
     cy.visit('/dashboard')
     cy.contains('Tenant Test Tenant')
     cy.get('select').select('Staff Test User')

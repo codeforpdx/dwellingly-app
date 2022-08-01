@@ -41,10 +41,6 @@
           outline: 0;
         }
       }
-      .error-message{
-        color: red;
-        z-index: 2;
-      }
       label {
         color: $gray;
         padding-left: 0;
@@ -60,12 +56,6 @@
       margin-left: -5px;
       padding: 0;
     }
-  }
-}
-
-.typeahead-section {
-  fieldset {
-    overflow: auto;
   }
 }
 

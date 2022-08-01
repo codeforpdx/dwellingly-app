@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
 import UserType from "../../Enums/UserType";
 import Button from "../components/Button";
+import FieldError from "../components/FieldError";
 
 import './styles/index.scss';
 
@@ -90,9 +91,7 @@ export const AddStaffMember = () => {
                       placeholder="First Name"
                     />
                   </div>
-                  {errors.firstName ? (
-                    <div className="error-message">{errors.firstName}</div>
-                  ) : null}
+                  <FieldError error={errors.firstName} />
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -110,9 +109,7 @@ export const AddStaffMember = () => {
                       placeholder="Last Name"
                     />
                   </div>
-                  {errors.lastName ? (
-                    <div className="error-message">{errors.lastName}</div>
-                  ) : null}
+                  <FieldError error={errors.lastName} />
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -130,9 +127,7 @@ export const AddStaffMember = () => {
                       placeholder="Phone Number"
                     />
                   </div>
-                  {errors.phone ? (
-                    <div className="error-message">{errors.phone}</div>
-                  ) : null}
+                  <FieldError error={errors.phone} />
                   <div className="form-row">
                     <label
                       className="column is-one-fifth"
@@ -150,9 +145,7 @@ export const AddStaffMember = () => {
                       placeholder="Email address"
                     />
                   </div>
-                  {errors.email ? (
-                    <div className="error-message">{errors.email}</div>
-                  ) : null}
+                  <FieldError error={errors.email} />
                   <div className="form-row" style={{ marginBottom: "20px" }}>
                     <label
                       className="column is-one-fifth"

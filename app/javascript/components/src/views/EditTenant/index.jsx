@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
-import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import ToggleEditForm from "../components/ToggleEditForm";
 import { useCalendarState } from "../components/CalendarModal";
 import Modal from '../components/Modal';
 import { TenantTickets } from './components/tenantTickets'
+import PropertySearchPanel from "../components/PropertySearchPanel";
+import JoinStaffSearchPanel from "../components/JoinStaffSearchPanel";
+import InfoCard from "../components/InfoCard";
+import FieldError from "../components/FieldError";
 
 // Configure validation schema for edit form
 const validationSchema = Yup.object().shape({
@@ -31,14 +34,12 @@ const EditTenant = () => {
   const context = useContext(UserContext);
 
   const [tenant, setTenant] = useState(null);
-  const [property, setProperty] = useState(null);
+  const [selectedProperty, setSelectedProperty] = useState(null);
   const [isEditing, setEditingStatus] = useState(false);
-  const [staffSearchText, setStaffSearchText] = useState("");
-  const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [staffSelections, setStaffSelections] = useState(null);
   const [showArchiveModal, setShowArchiveModal] = useState(false);
-
-  const calendarState = useCalendarState(property?.dateTimeStart, property?.dateTimeEnd)
+  const calendarState = useCalendarState(tenant?.lease?.dateTimeStart, tenant?.lease?.dateTimeEnd);
+  const [missingPropertyError, setMissingPropertyError] = useState(null);
 
   const tabs = [
     { id: "Ongoing", label: "Ongoing" },
@@ -53,7 +54,12 @@ const EditTenant = () => {
   const handleEditToggle = () => setEditingStatus(!isEditing);
 
   const onFormikSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true);
+    if((!selectedProperty || !selectedProperty[0])
+      && (values.unitNum || values.occupants
+      || calendarState.dateTimeStart !== calendarState.dateTimeEnd)) {
+      setMissingPropertyError("* Property is required when creating a lease");
+      return;
+    }
 
     if (_nothingHasChanged(values, tenant)) {
       setSubmitting(false);
@@ -61,14 +67,30 @@ const EditTenant = () => {
       return;
     }
 
-    context.apiCall('put', `/tenants/${id}`, values, { success: 'Tenant updated successfully!' })
+    setSubmitting(true);
+    let payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.phone,
+      staff_ids: staffSelections?.map(staff => staff.key),
+    }
+
+    if(selectedProperty && selectedProperty[0]) {
+      payload = {
+        ...payload,
+        lease_attributes: {
+          unitNum: values.unitNum,
+          dateTimeStart: calendarState?.dateTimeStart,
+          dateTimeEnd: calendarState?.dateTimeEnd,
+          occupants: values.occupants,
+          property_id: selectedProperty[0].key
+        }
+      }
+    }
+
+    context.apiCall('put', `/tenants/${id}`, payload, { success: 'Tenant updated successfully!' })
       .then((response) => {
-        setTenant({
-          ...tenant,
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          phone: response.data.phone
-        })
+        setTenant(response.data);
         setSubmitting(false);
         setEditingStatus(false);
       });
@@ -78,9 +100,40 @@ const EditTenant = () => {
     return (
       newValues.firstName === oldValues.firstName &&
       newValues.lastName === oldValues.lastName &&
-      newValues.phone === oldValues.phone
+      newValues.phone === oldValues.phone &&
+      newValues.unitNum === oldValues.unitNum &&
+      newValues.dateTimeStart === oldValues.dateTimeStart &&
+      newValues.dateTimeEnd === oldValues.dateTimeEnd &&
+      newValues.occupants === oldValues.occupants
     );
   };
+
+  /**
+   * Validate the property selection and lease dates
+   */
+  const validateForm = (values) => {
+    const errors = {}
+    if (selectedProperty?.length) {
+      if (calendarState.dateTimeStart === calendarState.dateTimeEnd){
+        errors.lease = "* Valid lease dates required when a property is selected"
+      }
+    }
+    if (calendarState.dateTimeStart !== calendarState.dateTimeEnd) {
+      if (selectedProperty?.length === 0) {
+        errors.selectedProperty = "* Property is required when lease dates are selected"
+      }
+    }
+    if (values.unitNum || values.occupants) {
+      if (selectedProperty?.length === 0) {
+        errors.selectedProperty = "* Property is required when creating a lease"
+      }
+      if (calendarState.dateTimeStart === calendarState.dateTimeEnd) {
+        errors.lease = "* Valid lease dates required when creating a lease"
+      }
+    }
+
+    return errors
+  }
 
   /**
    * Handle press cancel button
@@ -90,29 +143,18 @@ const EditTenant = () => {
   };
 
   /**
-   * Convert an array of staff to an array of SearchPanelItems
-   * @param {*} staffArray
-   */
-  const getStaffChoices = (staffArray) =>
-    staffArray.map(staff => ({
-      key: staff.id,
-      description: `${staff.firstName} ${staff.lastName}`
-    }));
-
-  /**
    * Get a tenant
    */
   const getTenant = () => {
     context.apiCall('get', `/tenants/${id}`, {}, {})
-      .then(({data}) => {
+      .then(({ data }) => {
         setTenant(data);
-        setStaffSelections(getStaffChoices(data.staff));
-        setProperty(data.property);
         setTicketList(data.tickets?.map(t => {
           return {
             ...t,
             assigned: t.assigned_staff?.map(as => `${as.firstName} ${as.lastName}`).join(',\n')
-          }}));
+          }
+        }));
       });
   };
 
@@ -146,73 +188,31 @@ const EditTenant = () => {
       inputType: "text",
     },
     {
-      key: "address",
-      label: "Property",
-      value: property
-        ? `${property.address}, ${property.city},` + ` ${property.state}, ${property.zipcode}`
-        : "Unhoused Tenant",
-      inputType: "text",
-      comp: <div />,
-      readOnly: true,
-    },
-    {
       key: "unitNum",
       label: "Unit",
-      value: (tenant.lease.unitNum)
-        ? tenant.lease.unitNum
-        : "Not Applicable",
+      value: tenant.lease?.unitNum,
       inputType: "text",
-      comp: <div />,
-      readOnly: true,
+    },
+    {
+      key: "occupants",
+      label: "Occupants",
+      value: (tenant.lease)
+        ? tenant.lease.occupants
+        : "",
+      inputType: "text"
     },
     {
       key: "lease",
       label: "Lease",
-      value: (tenant.lease.dateTimeStart && tenant.lease.dateTimeEnd)
+      value: tenant.lease
         ? {
-          dateTimeStart: new Date(tenant.lease.dateTimeStart),
-          dateTimeEnd: new Date(tenant.lease.dateTimeEnd),
+          dateTimeStart: calendarState.dateTimeStart,
+          dateTimeEnd: calendarState.dateTimeEnd,
         }
         :	"Not Applicable",
-      inputType: (tenant.lease)
-        ? "calendar"
-        : "text",
-      readOnly: true,
+      inputType: "calendar",
     }
   ];
-
-  /**
-   * When staff search input text changes, call API to find matching users.
-   */
-  useEffect(() => {
-    // TODO: AFAIK We've never had search implemented in the backend. Not sure why this is here
-    context.apiCall('get', '/staff_members', { name: staffSearchText }, {})
-      .then( ({data}) => {
-        setStaffSearchResults(getStaffChoices(data.joinStaff.concat(data.admins)));
-      })
-  }, [staffSearchText]);
-
-  /**
-   * Handle staff search input
-   * @param {*} event
-   */
-  const handleChangeSearch = (event) => {
-    const { value } = event.target;
-    if (!value || value.length === 0) {
-      setStaffSearchResults([]);
-      setStaffSearchText("");
-    } else {
-      setStaffSearchText(value);
-    }
-  };
-
-  /**
-   * Handle change in staff selections of search panel
-   * @param {*} selectedChoices
-   */
-  const handleChangeStaffSelections = (selectedChoices) => {
-    setStaffSelections(selectedChoices);
-  };
 
   const toggleArchiveModal = () => {
     setShowArchiveModal(!showArchiveModal);
@@ -240,6 +240,11 @@ const EditTenant = () => {
       });
   }
 
+  const removeLease = () => {
+    context.apiCall('delete', `/leases/${id}`,
+      {}, { success: 'Lease successfully removed' });
+  }
+
   return (
     <div className='main-container'>
       <div>
@@ -261,14 +266,14 @@ const EditTenant = () => {
               {(!tenant.archived && isEditing) && <button
                 className="button is-primary is-rounded"
                 onClick={toggleArchiveModal}
-                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-archive icon-inline-space"></i>
                 ARCHIVE
               </button>}
               {tenant.archived && <button
                 className="button is-primary is-rounded"
                 onClick={toggleArchiveModal}
-                style={{padding: "1em", marginLeft: "14px", fontSize: "12px"}}>
+                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
                 <i className="fas fa-undo icon-inline-space"></i>
                 UNARCHIVE
               </button>}
@@ -279,30 +284,57 @@ const EditTenant = () => {
               <ToggleEditForm
                 tableData={getTableData()}
                 validationSchema={validationSchema}
+                validateMethod={validateForm}
                 isEditing={isEditing}
                 submitHandler={onFormikSubmit}
                 cancelHandler={onCancelClick}
                 calendarState={calendarState}
-              />
-            </div>
-
-            <div className="section-container">
-              <h2>JOIN STAFF</h2>
-              <SearchPanel
-                chips
-                choices={staffSearchResults}
-                clearLabel="Clear search text"
-                maximumHeight={200}
-                onChange={handleChangeSearch}
-                onClear={handleChangeSearch}
-                onSelectionChange={handleChangeStaffSelections}
-                placeholder="Search JOIN staff"
-                preSelectedChoices={staffSelections}
-                small
-                value={staffSearchText}
-                variant={SearchPanelVariant.checkbox}
-                width={400}
-              />
+              >
+                <div className="section-container">
+                  <h2>PROPERTY</h2>
+                </div>
+                  {isEditing
+                    ? <>
+                        <FieldError error={missingPropertyError} />
+                        <PropertySearchPanel
+                          initialPropertyIds={tenant?.lease ? [tenant.lease.property_id] : []}
+                          propertySelections={selectedProperty}
+                          setPropertySelection={setSelectedProperty}
+                          multiSelect={false}
+                          showAddPropertyButton={false}
+                          />
+                      </>
+                    : tenant?.lease && <div>
+                        <InfoCard
+                          link={`/manage/properties/${tenant?.property?.id}`}
+                          title={tenant?.property?.name}
+                          descriptionOne={tenant?.property?.address}
+                          descriptionTwo={`${tenant?.property?.city} ${tenant?.property?.state}`}
+                        />
+                      </div>}
+                <div className="section-container">
+                  <h2>JOIN STAFF</h2>
+                </div>
+                {isEditing
+                  ? <JoinStaffSearchPanel
+                    initialStaffIds={tenant?.staff?.map(s => s.id)}
+                    staffSelections={staffSelections}
+                    setStaffSelections={setStaffSelections}
+                    multiSelect={true}
+                  />
+                  : 
+                  <div>
+                    {tenant?.staff?.map(staff => (
+                      <InfoCard
+                        title={`${staff.firstName} ${staff.lastName}`}
+                        descriptionOne={staff.phone}
+                        descriptionTwo={staff.email}
+                        link={`/manage/staff/${staff.id}`}
+                      />
+                      ))}
+                  </div>
+                }
+              </ToggleEditForm>
             </div>
 
             <div className="section-container">
