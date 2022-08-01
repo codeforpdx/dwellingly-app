@@ -44,7 +44,6 @@ import DashboardStaff from "./src/views/DashboardStaff/DashboardStaff";
 import DashboardPropertyManagerMobile from "./src/views/DashboardPropertyManager/DashboardPropertyManagerMobile";
 import DashboardStaffMobile from "./src/views/DashboardStaff/DashboardStaffMobile";
 
-
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +86,7 @@ export class App extends React.Component {
         email: window.localStorage['email'],
         id: window.localStorage['id']
       },
-      isMobile: window.innerWidth <= this.tabletWidth, 
+      isMobile: window.innerWidth <= this.tabletWidth,
     }
   }
 
@@ -175,9 +174,9 @@ export class App extends React.Component {
         )
         setErrors(err)
       }
-      
+
       Toast(toastMessages.error ?? error.message, "error");
-     
+
       return Promise.reject(error);
     })
     // since we already display the erorr message. The caller does not need to catch the returned Promise.

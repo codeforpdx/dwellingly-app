@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
+    get 'account/invitation/accept', to: 'invitations#edit', as: 'accept_account_invitation'
+    put 'account/invitation', to: 'invitations#update', as: 'account_invitation'
+
     get 'api/cypress_sign_in' => 'sessions#cypress_sign_in' if Rails.env.development?
   end
 

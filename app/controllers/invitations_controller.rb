@@ -1,6 +1,5 @@
 class InvitationsController < Devise::InvitationsController
-  before_action :authorize_user
-  after_action :verify_authorized
+  before_action :authorize_user, except: [:edit, :update] # rubocop:disable Rails/LexicallyScopedActionFilter
 
   def create
     self.resource = invite_resource
@@ -41,8 +40,28 @@ class InvitationsController < Devise::InvitationsController
     end
   end
 
-  # Overwrite Devise::Invitations resource_class method
+  # Overwrite Devise::Invitations resource_class method so that we can create the correct UserType.
+  # Alternatively we could update our routes so that we have a different route for each type of
+  # user. This will also require frontend updates to use the new routes, rather than sending
+  # the type parameter in the payload.
   def resource_class
-    params.dig(:invitation, :type).constantize
+    return params.dig(:invitation, :type).constantize if params.dig(:invitation, :type).present?
+
+    super
   end
+
+  # This method is called to validate the token. It redirects on an invalid or blank token.
+  # rubocop:disable Layout/MultilineOperationIndentation
+  # rubocop:disable Lint/AssignmentInCondition
+  # rubocop:disable Rails/DynamicFindBy
+  def resource_from_invitation_token
+    unless params[:invitation_token] &&
+      self.resource = resource_class.find_by_invitation_token(params[:invitation_token], true)
+
+      redirect_to root_path(error: :invalid_invitation_token)
+    end
+  end
+  # rubocop:enable Layout/MultilineOperationIndentation
+  # rubocop:enable Lint/AssignmentInCondition
+  # rubocop:enable Rails/DynamicFindBy
 end
