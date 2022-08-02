@@ -80,15 +80,14 @@ export const NavMenu = (props) => {
             </div>
             <div className="menu">
               <ul className="menu-list">
-                <MenuLink
-                  isMobile={props.isMobile}
-                  menuClose={props.toggle}
-                  name={`${user.firstName} ${user.lastName}`}
-                  isBold
-                  icon={faUserAlt}
-                  href="/home"
-                  passedClassName="pb-5 pt-1"
-                />
+                <li className="pb-3 pt-3">
+                  <Link to="/home" onClick={props.isMobile ? props.toggle : null} className="is-size-6 has-text-weight-bold has-text-white">
+                    <span className="icon is-small">
+                      <FontAwesomeIcon icon={faUserAlt} />
+                    </span>
+                    <span className="pl-1">{`${user.firstName} ${user.lastName}`}</span>
+                  </Link>
+                </li>
                 <MenuLink
                   isMobile={props.isMobile}
                   menuClose={props.toggle}
