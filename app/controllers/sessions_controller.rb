@@ -11,16 +11,11 @@ class SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    resource = User.find_for_database_authentication(email: params[:email])
-    return invalid_login_attempt unless resource
+    @resource = User.find_for_database_authentication(email: params[:email])
+    return invalid_login_attempt unless @resource&.valid_password?(params[:password])
 
-    if resource.valid_password?(params[:password])
-      sign_in :user, resource
-      resource.update_column(:lastActive, Time.current) # rubocop:disable Rails/SkipsModelValidations
-      return render json: resource.to_json
-    end
-
-    invalid_login_attempt
+    sign_in :user, @resource
+    @resource.update_column(:lastActive, Time.current) # rubocop:disable Rails/SkipsModelValidations
   end
 
   # DELETE /resource/sign_out
