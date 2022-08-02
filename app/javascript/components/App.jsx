@@ -79,12 +79,17 @@ export class App extends React.Component {
   getCurrentState = () => {
     return {
       userSession: {
-        isAuthenticated: window.localStorage['authenticated'],
-        firstName: window.localStorage['firstName'],
-        lastName: window.localStorage['lastName'],
-        phone: window.localStorage['phone'],
-        email: window.localStorage['email'],
-        id: window.localStorage['id']
+        isAuthenticated: window.localStorage["authenticated"],
+        firstName: window.localStorage["firstName"],
+        lastName: window.localStorage["lastName"],
+        phone: window.localStorage["phone"],
+        email: window.localStorage["email"],
+        id: window.localStorage["id"],
+        type: window.localStorage["type"],
+        admin: window.localStorage["admin"],
+        staff: window.localStorage["staff"],
+        staffLevel: window.localStorage["staff_level"],
+        propertyManager: window.localStorage["property_manager"]
       },
       isMobile: window.innerWidth <= this.tabletWidth,
     }
@@ -103,12 +108,17 @@ export class App extends React.Component {
       .then(response => {
         if (response) {
           const user = response.data
-          window.localStorage['authenticated'] = true,
-          window.localStorage['firstName'] = user.firstName
-          window.localStorage['lastName'] = user.lastName
-          window.localStorage['phone'] = user.phone
-          window.localStorage['email'] = user.email,
-          window.localStorage['id'] = user.id
+          window.localStorage["authenticated"] = true,
+          window.localStorage["firstName"] = user.firstName
+          window.localStorage["lastName"] = user.lastName
+          window.localStorage["phone"] = user.phone
+          window.localStorage["email"] = user.email,
+          window.localStorage["id"] = user.id,
+          window.localStorage["type"] = user.type,
+          window.localStorage["admin"] = user.admin,
+          window.localStorage["staff"] = user.staff,
+          window.localStorage["staff_level"] = user.staff_level,
+          window.localStorage["property_manager"] = user.property_manager
           this.setState({
             userSession: {
               isAuthenticated: true,
@@ -116,7 +126,12 @@ export class App extends React.Component {
               firstName: user.firstName,
               lastName: user.lastName,
               phone: user.phone,
-              id: user.id
+              id: user.id,
+              type: user.type,
+              admin: user.admin,
+              staff: user.staff,
+              staffLevel: user.staff_level,
+              propertyManager: user.property_manager
             }
           })
         }
@@ -129,17 +144,22 @@ export class App extends React.Component {
         this.setState({
           userSession: {
             isAuthenticated: false,
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: '',
-            id: ''
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            id: "",
+            type: "",
+            admin: "",
+            staff: "",
+            staffLevel: "",
+            propertyManager: ""
           }
         }, () => {
-          window.location.replace('/login');
-        });
-      });
-  };
+          window.location.replace("/login")
+        })
+      })
+  }
 
   apiCall = (verb, url, data, toastMessages, setErrors) => (
     axios({
