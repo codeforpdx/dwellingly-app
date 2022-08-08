@@ -127,20 +127,12 @@ const ForgotPassword = () => {
             </div>
           )}
         </Formik>
-        <div className="forgot-password__google-users">
-          <h1 className="forgot-password__section-title">
-            GOOGLE ACCOUNT USERS
-          </h1>
-          <a href="https://accounts.google.com/signin/recovery">
-            Recover your Google account
-          </a>
-        </div>
         <Link to="/login">
           Return to log in
         </Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ForgotPassword;
+export default ForgotPassword
