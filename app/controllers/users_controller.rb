@@ -12,11 +12,19 @@ class UsersController < ApplicationController
     render :show
   end
 
+  # rubocop:disable Metrics/AbcSize
   def update_role
     authorize User
-    User.where(id: params[:user_id]).find_each { |user| user.update(type: params[:type]) }
+    User.where(id: params[:user_id]).find_each do |user|
+      user.update!(type: params[:type])
+      if params[:type].constantize == PropertyManager
+        updated_user = User.find(user.id)
+        updated_user.property_ids = params[:property_ids]
+      end
+    end
     head :no_content
   end
+  # rubocop:enable Metrics/AbcSize
 
   def staff_members
     authorize User
