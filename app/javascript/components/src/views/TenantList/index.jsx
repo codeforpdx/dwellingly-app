@@ -61,7 +61,7 @@ const expandRow = isSmallScreen => ({
         Property
       </label>
       <p id="property-name">
-        {row.lease && <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
+        {row.lease && <Link key={row.lease.id} to={`/manage/properties/${row.lease.property_id}`}>
           {row.propertyName}
         </Link>}
       </p>
