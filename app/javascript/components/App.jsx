@@ -232,7 +232,7 @@ export class App extends React.Component {
               <StaffRoute exact path='/add/manager' component={AddPropertyManager} />
               <PropertyManagerRoute exact path='/add/ticket' component={AddTicket} />
               <PropertyManagerRoute exact path='/manage/tenants' component={Tenants} />
-              <StaffRoute exact path='/manage/tenants/:id' component={EditTenant} />
+              <PropertyManagerRoute exact path='/manage/tenants/:id' component={EditTenant} />
               <StaffRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
               <StaffRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
               <PropertyManagerRoute exact path='/manage/properties' component={Properties} />

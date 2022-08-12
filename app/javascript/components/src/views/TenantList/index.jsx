@@ -238,7 +238,7 @@ const Tenants = () => {
           />
 
         </div>
-        <div className='bulk-actions-container py-3'>
+        {userContext.user.staff_level && <div className='bulk-actions-container py-3'>
           <button
             className={`button is-rounded is-primary ml-3 ${selectedTenants.length && 'is-active-button'}`}
             onClick={toggleArchiveModal}
@@ -249,7 +249,7 @@ const Tenants = () => {
             />
             Archive Tenants
           </button>
-        </div>
+        </div>}
 
         <div className="tenants-list">
           {isLoading
