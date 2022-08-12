@@ -45,7 +45,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           placeholder="Phone Number"
         />
       </div>
-      <FieldError error={subFormErrors.number} />
+      <FieldError error={subFormErrors?.number} />
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].numtype`}>Phone Number Type</label>
         <Field
@@ -57,7 +57,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           placeholder="Phone Number Type (Opional)"
         />
       </div>
-      <FieldError error={subFormErrors.numtype} />
+      <FieldError error={subFormErrors?.numtype} />
       <div className="form-row columns">
         <label className="column is-one-quarter" htmlFor={`contact_numbers[${i}].extension`}>Extension</label>
         <Field
@@ -69,7 +69,7 @@ const NumberSubForm = ({ i, values, errors, handleChange }) => {
           placeholder="Extension (Optional)"
         />
       </div>
-      <FieldError error={subFormErrors.extension} />
+      <FieldError error={subFormErrors?.extension} />
     </>
   );
 };
@@ -174,12 +174,12 @@ const AddEmergencyContact = (props) => {
                   <FieldArray
                     name="contact_numbers"
                     render={numbersArrayFields => {
-                      const addRowValid = (values.contact_numbers[0].number !== "") && (!errors.contact_numbers || !errors.contact_numbers[values.contact_numbers.length - 1].number);
+                      const addRowValid = (values?.contact_numbers[0]?.number !== "") && (!errors.contact_numbers || !errors.contact_numbers[values?.contact_numbers?.length - 1]?.number);
                       const addRow = () => addRowValid && numbersArrayFields.push({ number: "", numtype: "", extension: "" });
 
                       return (
                         <>
-                          {values.contact_numbers.map((_, i) => (
+                          {values?.contact_numbers?.map((_, i) => (
                             <NumberSubForm key={i} i={i} values={values} errors={errors} handleChange={handleChange} />
                           ))}
                           {addRowValid && <div className="form-add-rows-container">

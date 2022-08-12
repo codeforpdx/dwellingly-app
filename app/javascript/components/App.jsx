@@ -6,7 +6,6 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { LoginForm } from "./src/views/Login";
 import SignupForm from "./src/views/Signup";
 import { NavMenu } from "./src/views/NavigationMenu";
-import { DashboardAdmin } from "./src/views/DashboardAdmin";
 import { RequestAccess } from "./src/views/RequestAccess";
 import Properties from "./src/views/PropertyList";
 import EditProperty from "./src/views/EditProperty";
@@ -19,6 +18,9 @@ import EmergencyContacts from "./src/views/EmergencyContactList/EmergencyContact
 import AddEmergencyContact from "./src/views/AddEmergencyContact";
 import PrivacyPolicy from "./src/views/PrivacyPolicy";
 import {
+  AdminRoute,
+  StaffRoute,
+  PropertyManagerRoute,
   PrivateRoute,
   auth,
 } from "./src/Auth";
@@ -39,10 +41,7 @@ import AddTicket from "./src/views/AddTicket";
 import Toast from "./src/utils/toast";
 import PropertyManagerList from "./src/views/PropertyManagerList";
 import EditStaff from "./src/views/EditStaff";
-import DashboardPropertyManager from "./src/views/DashboardPropertyManager/DashboardPropertyManager";
-import DashboardStaff from "./src/views/DashboardStaff/DashboardStaff";
-import DashboardPropertyManagerMobile from "./src/views/DashboardPropertyManager/DashboardPropertyManagerMobile";
-import DashboardStaffMobile from "./src/views/DashboardStaff/DashboardStaffMobile";
+import Dashboard from "./src/views/Dashboard/Dashboard";
 
 export class App extends React.Component {
   constructor(props) {
@@ -86,10 +85,10 @@ export class App extends React.Component {
         email: window.localStorage["email"],
         id: window.localStorage["id"],
         type: window.localStorage["type"],
-        admin: window.localStorage["admin"],
-        staff: window.localStorage["staff"],
-        staffLevel: window.localStorage["staff_level"],
-        propertyManager: window.localStorage["property_manager"]
+        admin: window.localStorage["admin"] === "true",
+        staff: window.localStorage["staff"] === "true",
+        staff_level: window.localStorage["staff_level"] === "true",
+        property_manager: window.localStorage["property_manager"] === "true"
       },
       isMobile: window.innerWidth <= this.tabletWidth,
     }
@@ -130,8 +129,8 @@ export class App extends React.Component {
               type: user.type,
               admin: user.admin,
               staff: user.staff,
-              staffLevel: user.staff_level,
-              propertyManager: user.property_manager
+              staff_level: user.staff_level,
+              property_manager: user.property_manager
             }
           })
         }
@@ -150,10 +149,10 @@ export class App extends React.Component {
             phone: "",
             id: "",
             type: "",
-            admin: "",
-            staff: "",
-            staffLevel: "",
-            propertyManager: ""
+            admin: false,
+            staff: false,
+            staff_level: false,
+            property_manager: false
           }
         }, () => {
           window.location.replace("/login")
@@ -216,9 +215,8 @@ export class App extends React.Component {
           apiCall: this.apiCall }} >
         <BrowserRouter>
           <div className='App'>
-            {this.state.userSession.isAuthenticated &&
-              <><NavMenu toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/>
-                <Header toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile}/></>}
+            <><NavMenu toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile} />
+              <Header toggle={this.toggle} isOpen={this.state.isOpen} isMobile={this.state.isMobile} /></>
 
             <Switch>
               <Route exact path='/login' component={LoginForm} />
@@ -227,37 +225,31 @@ export class App extends React.Component {
               <Route exact path='/privacypolicy' component={PrivacyPolicy} />
               <Route exact path='/forgot-password' component={ForgotPassword} />
               <PrivateRoute exact path='/' component={() => <Redirect to="/dashboard" />} />
-              <PrivateRoute exact path='/dashboard' component={DashboardAdmin} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/home' component={() => <Redirect to="/dashboard" />} />
-              <PrivateRoute exact path='/add/tenant' component={AddTenant} />
-              <PrivateRoute exact path='/add/property' component={() => <AddProperty showPageTitle={true} showAssignPropManagers={true}/>} />
-              <PrivateRoute exact path='/add/manager' component={AddPropertyManager} />
-              <PrivateRoute exact path='/add/ticket' component={AddTicket} />
-              <PrivateRoute exact path='/manage/tenants' component={Tenants} />
-              <PrivateRoute exact path='/manage/tenants/:id' component={EditTenant} />
-              <PrivateRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
-              <PrivateRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
-              <PrivateRoute exact path='/manage/properties' component={Properties} />
-              <PrivateRoute exact path='/manage/properties/:id' component={EditProperty} />
-              <PrivateRoute exact path='/manage/managers' component={PropertyManagerList} />
-              <PrivateRoute exact path='/manage/managers/:id' component={EditPropertyManager} />
-              <PrivateRoute exact path='/manage/tickets' component={TicketList} />
-              <PrivateRoute exact path='/staff' component={JoinStaffList} />
-              <PrivateRoute exact path='/staff/add' component={AddStaffMember} />
-              <PrivateRoute exact path='/manage/staff/:id' component={EditStaff} />
-              <PrivateRoute exact path='/emergency' component={EmergencyContacts} />
+              <StaffRoute exact path='/add/tenant' component={AddTenant} />
+              <StaffRoute exact path='/add/property' component={() => <AddProperty showPageTitle={true} showAssignPropManagers={true}/>} />
+              <StaffRoute exact path='/add/manager' component={AddPropertyManager} />
+              <PropertyManagerRoute exact path='/add/ticket' component={AddTicket} />
+              <PropertyManagerRoute exact path='/manage/tenants' component={Tenants} />
+              <StaffRoute exact path='/manage/tenants/:id' component={EditTenant} />
+              <StaffRoute exact path='/add/emergencycontact' component={AddEmergencyContact} />
+              <StaffRoute exact path='/edit/emergencycontact/:id' component={AddEmergencyContact} />
+              <PropertyManagerRoute exact path='/manage/properties' component={Properties} />
+              <PropertyManagerRoute exact path='/manage/properties/:id' component={EditProperty} />
+              <StaffRoute exact path='/manage/managers' component={PropertyManagerList} />
+              <StaffRoute exact path='/manage/managers/:id' component={EditPropertyManager} />
+              <PropertyManagerRoute exact path='/manage/tickets' component={TicketList} />
+              <StaffRoute exact path='/staff' component={JoinStaffList} />
+              <StaffRoute exact path='/staff/add' component={AddStaffMember} />
+              <StaffRoute exact path='/manage/staff/:id' component={EditStaff} />
+              <PropertyManagerRoute exact path='/emergency' component={EmergencyContacts} />
               <PrivateRoute exact path='/settings' component={Settings} />
               <PrivateRoute exact path='/changePassword' component={ChangePassword} />
               <PrivateRoute exact path='/request-access/:id' component={RequestAccess} />
-              <PrivateRoute exact path='/testpm' component={DashboardPropertyManager} />
-              <PrivateRoute exact path='/teststaff' component={DashboardStaff} />
-              <PrivateRoute exact path='/m/testpm' component={DashboardPropertyManagerMobile} />
-              <PrivateRoute exact path='/m/teststaff' component={DashboardStaffMobile} />
               <Route path='*' component={NoMatch} />
             </Switch>
-            {this.state.userSession.isAuthenticated && !window.location.pathname.includes('/m/testpm')
-              && !window.location.pathname.includes('/m/teststaff')
-              && <Footer />}
+            <Footer isMobile={this.state.isMobile} />
           </div>
         </BrowserRouter>
         <ToastContainer

@@ -211,9 +211,9 @@ const Tenants = () => {
       <div className='tenants'>
         <div className='section-header'>
           <h2 className='page-title'>Tenants</h2>
-          <Link
+          {userContext.user.staff_level && <Link
             className='button is-primary is-rounded ml-4'
-            to='/add/tenant'>+ ADD NEW</Link>
+            to='/add/tenant'>+ ADD NEW</Link>}
         </div>
         <div className='search-and-archive-container'>
           <Search

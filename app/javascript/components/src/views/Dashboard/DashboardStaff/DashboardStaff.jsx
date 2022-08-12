@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Collapsible from '../components/Collapsible';
-import UserContext from '../../contexts/UserContext';
+import Collapsible from '../../components/Collapsible';
+import UserContext from '../../../contexts/UserContext';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
-import { formatDate } from '../../utils/date';
+import { formatDate } from '../../../utils/date';
 
 const tenantColumns = [
   {
