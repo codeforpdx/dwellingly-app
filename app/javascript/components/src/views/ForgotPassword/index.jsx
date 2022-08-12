@@ -8,7 +8,7 @@ import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
 import UserContext from "../../contexts/UserContext";
 import FieldError from "../components/FieldError";
 
-import './styles/index.scss'
+import "./styles/index.scss"
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -26,22 +26,22 @@ const ForgotPassword = () => {
   });
 
   const formHandler = (data) => {
-    context.apiCall('post', '/reset-password', data, {})
-      .then(response => {
+    context.apiCall("post", "/users/password", data, {})
+      .then(() => {
         setModalContent({
           titleText: "Success!",
           contentText: <p>Please check your email to reset your password.</p>
-        });
-        setIsModalOpen(true);
+        })
+        setIsModalOpen(true)
       })
-      .catch(_ => {
+      .catch(() => {
         setModalContent({
           titleText: "Error!",
           contentText: <p>There was an error attempting to reset your password.</p>
-        });
-        setIsModalOpen(true);
-      });
-  };
+        })
+        setIsModalOpen(true)
+      })
+  }
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -75,10 +75,10 @@ const ForgotPassword = () => {
           }}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            setSubmitting(true);
-            formHandler(values);
-            resetForm();
-            setSubmitting(false);
+            setSubmitting(true)
+            formHandler({user: values})
+            resetForm()
+            setSubmitting(false)
           }}
         >
           {({
@@ -127,20 +127,12 @@ const ForgotPassword = () => {
             </div>
           )}
         </Formik>
-        <div className="forgot-password__google-users">
-          <h1 className="forgot-password__section-title">
-            GOOGLE ACCOUNT USERS
-          </h1>
-          <a href="https://accounts.google.com/signin/recovery">
-            Recover your Google account
-          </a>
-        </div>
         <Link to="/login">
           Return to log in
         </Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ForgotPassword;
+export default ForgotPassword

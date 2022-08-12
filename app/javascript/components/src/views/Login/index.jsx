@@ -4,7 +4,6 @@ import dwellinglyLogo from "images/dwellingly_logo.png"
 import UserContext from "../../contexts/UserContext"
 import { Redirect } from "react-router"
 import { Link } from "react-router-dom"
-import GoogleButton from "./components/GoogleButton"
 import Toast from "../../utils/toast"
 
 import "./styles/index.scss"
@@ -65,13 +64,6 @@ export class LoginForm extends React.Component {
                           />
                           <div></div>
                           <button className="button is-rounded is-primary mt-4 is-small has-text-weight-bold py-4" type="submit">LOG IN</button>
-                          <div className="login__or_container">
-                            <div className="login__or">
-                              <span className="login__divider"></span>
-                              <span className="login__or_text">OR</span>
-                            </div>
-                          </div>
-                          <GoogleButton innerText={"LOG IN WITH GOOGLE"} />
                           <div className="login__account_container">
                             <Link to="/forgot-password" className="login__text_link login__account_forgot_password">Forgot Password</Link>
                             <Link to="/signup" className="login__text_link login__account_create">Create an Account</Link>
@@ -79,7 +71,7 @@ export class LoginForm extends React.Component {
 
                         </Form>
                       </>
-                    );
+                    )
                   }
                 }
               />
