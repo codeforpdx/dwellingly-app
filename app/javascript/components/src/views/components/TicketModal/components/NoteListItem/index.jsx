@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import UserContext from '../../../../../contexts/UserContext';
 import "./styles/index.scss";
 
 export default function NoteListItem({ note, editNotes, localDeleteNote, handleEditNoteText }) {
-
-  const { user, created_at, text } = note;
+  const userContext = useContext(UserContext);
+  const { user, created_at, text, user_id } = note;
   const [editText, setEditText] = useState(false);
   const [inputText, setInputText] = useState(text);
 
@@ -32,7 +33,7 @@ export default function NoteListItem({ note, editNotes, localDeleteNote, handleE
     <div className="ticket-card-note-container">
       <div className="ticket-card-note-header-row">
         <div className="ticket-card-note-header-row-left">
-          {editNotes ?
+          {editNotes && (userContext.staff_level || userContext.user.id == user_id) ?
             <div className="ticket-card-note-header-buttons">
               <button
                 className='mini-rounded'
