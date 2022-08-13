@@ -256,27 +256,29 @@ const EditTenant = () => {
                 {" "}
                 {tenant.lastName}
               </h2>
-              {!tenant.archived && <button
-                className={`rounded${isEditing ? "--is-editing" : ""}`}
-                onClick={handleEditToggle}
-                disabled={isEditing}
-              >
-                <i className="fas fa-pen icon" />
-              </button>}
-              {(!tenant.archived && isEditing) && <button
-                className="button is-primary is-rounded"
-                onClick={toggleArchiveModal}
-                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
-                <i className="fas fa-archive icon-inline-space"></i>
-                ARCHIVE
-              </button>}
-              {tenant.archived && <button
-                className="button is-primary is-rounded"
-                onClick={toggleArchiveModal}
-                style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
-                <i className="fas fa-undo icon-inline-space"></i>
-                UNARCHIVE
-              </button>}
+              {context.user.staff_level && <>
+                {!tenant.archived && <button
+                  className={`rounded${isEditing ? "--is-editing" : ""}`}
+                  onClick={handleEditToggle}
+                  disabled={isEditing}
+                >
+                  <i className="fas fa-pen icon" />
+                </button>}
+                {(!tenant.archived && isEditing) && <button
+                  className="button is-primary is-rounded"
+                  onClick={toggleArchiveModal}
+                  style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
+                  <i className="fas fa-archive icon-inline-space"></i>
+                  ARCHIVE
+                </button>}
+                {tenant.archived && <button
+                  className="button is-primary is-rounded"
+                  onClick={toggleArchiveModal}
+                  style={{ padding: "1em", marginLeft: "14px", fontSize: "12px" }}>
+                  <i className="fas fa-undo icon-inline-space"></i>
+                  UNARCHIVE
+                </button>}
+              </>}
             </div>
 
             <div className="section-container">

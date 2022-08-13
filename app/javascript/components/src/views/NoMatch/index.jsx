@@ -2,7 +2,7 @@ import React from 'react';
 
 import './styles/index.scss';
 
-const noMatch = () => {
+const NoMatch = () => {
   return (
     <div className='main-container'>
       <div className="noMatch__container">
@@ -13,4 +13,4 @@ const noMatch = () => {
   );
 };
 
-export default noMatch;
+export default NoMatch;

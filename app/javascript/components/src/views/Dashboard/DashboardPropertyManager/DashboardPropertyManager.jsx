@@ -16,14 +16,13 @@
 // 3 tabs (component) - Properties, Tenants, Tickets
 
 import React, { useState, useEffect, useContext } from 'react';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import Collapsible from '../components/Collapsible';
-import UserContext from '../../contexts/UserContext';
+import Collapsible from '../../components/Collapsible';
+import UserContext from '../../../contexts/UserContext';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { Link } from "react-router-dom";
 import { columns as propertyColumns, mobileColumns as propertyMobileColumns }
-  from '../PropertyList/components/propertiesTableComponents';
-import { formatDate } from '../../utils/date';
+  from '../../PropertyList/components/propertiesTableComponents';
+import { formatDate } from '../../../utils/date';
 
 const tenantColumns = [
   {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import UserContext from '../../contexts/UserContext';
+import UserContext from '../../../contexts/UserContext';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAsterisk, faUserGroup, faGear, faHouseUser, faBuilding, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faAsterisk, faUserGroup, faGear, faHouseUser, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import './styles.scss';
 
 const pmDashTabs = [
@@ -11,19 +11,14 @@ const pmDashTabs = [
     text: "Tenants"
   },
   {
-    icon: faBuilding,
-    text: "Properties"
-  },
-  {
     icon: faCircleExclamation,
     text: "Tickets"
   }
 ];
 
 
-const DashboardPropertyManagerMobile = () => {
+const DashboardStaffMobile = () => {
   const [tenants, setTenants] = useState([]);
-  const [properties, setProperties] = useState([]);
   const [tickets, setTickets] = useState([]);
   const userContext = useContext(UserContext);
 
@@ -32,7 +27,6 @@ const DashboardPropertyManagerMobile = () => {
       .then(({ data }) => {
         if (data) {
           mapTenants(data.tenants);
-          mapProperties(data.properties);
         }
       });
 
@@ -48,15 +42,6 @@ const DashboardPropertyManagerMobile = () => {
         header: t.fullName,
         detail: t.propertyName,
         link: `/manage/tenants/${t.id}`
-      }
-    )));
-
-  const mapProperties = (properties) =>
-    setProperties(properties.map(p => (
-      {
-        header: p.name,
-        detail: p.address,
-        link: `/manage/properties/${p.id}`
       }
     )));
 
@@ -95,7 +80,7 @@ const DashboardPropertyManagerMobile = () => {
           </Link>
         </div>
       </div>
-      <MobileTabSection tabSections={pmDashTabs} tabData={[tenants, properties, tickets]} />
+      <MobileTabSection tabSections={pmDashTabs} tabData={[tenants, tickets]} />
     </div>
   );
 };
@@ -132,4 +117,4 @@ export const MobileTabSection = (props) => {
   )
 }
 
-export default DashboardPropertyManagerMobile;
+export default DashboardStaffMobile;

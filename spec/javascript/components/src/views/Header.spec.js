@@ -1,14 +1,21 @@
 import React from "react"
-import {render, screen} from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import "@testing-library/jest-dom/extend-expect"
-import {MemoryRouter} from "react-router-dom"
+import { MemoryRouter } from "react-router-dom"
 import UserContext from "components/src/contexts/UserContext"
 import Header from "components/src/views/Header/Header"
 
-beforeEach( () => {
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    pathname: "/dashboard"
+  })
+}))
+
+beforeEach(() => {
   render(
     <MemoryRouter initialEntries={["/manage/managers"]}>
-      <UserContext.Provider value={{logout: jest.fn()}}>
+      <UserContext.Provider value={{ logout: jest.fn(), user: { isAuthenticated: true } }}>
         <Header />
       </UserContext.Provider>
     </MemoryRouter>
