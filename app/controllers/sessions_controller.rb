@@ -44,4 +44,8 @@ class SessionsController < Devise::SessionsController
     error_message = flash[:alert].presence || t('devise.sessions.user.invalid')
     render json: { error: error_message }, status: :unauthorized
   end
+
+  def respond_to_on_destroy
+    head :no_content
+  end
 end
