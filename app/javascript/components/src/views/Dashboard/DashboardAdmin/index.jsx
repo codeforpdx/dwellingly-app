@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserContext from '../../contexts/UserContext';
-import useMountEffect from '../../utils/useMountEffect';
+import UserContext from '../../../contexts/UserContext';
+import useMountEffect from '../../../utils/useMountEffect';
 import DashboardModule from './components/DashboardModule';
-import Collapsible from '../components/Collapsible';
-import Modal from '../components/Modal';
+import Collapsible from '../../components/Collapsible';
+import Modal from '../../components/Modal';
 import RequestItem from './components/RequestItem';
 import NewStaffItem from './components/NewStaffItem';
 import axios from 'axios';

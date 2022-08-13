@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMediaQuery } from '@react-hook/media-query';
-import { tabletWidth, desktopWidth } from '../../../../constants';
+import { tabletWidth, desktopWidth } from '../../../../../constants';
 
 function NewStaffItem(props) {
     const { tenant, handleStaffAssignmentChange, staffList } = props;

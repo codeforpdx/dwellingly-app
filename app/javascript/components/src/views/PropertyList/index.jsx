@@ -149,7 +149,8 @@ const Properties = () => {
       <div className="properties">
         <div className="section-header">
           <h2 className="page-title">Properties</h2>
-          <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>
+          {userContext.user.staff_level &&
+            <Link className="button is-primary is-rounded ml-4" to="/add/property">+ ADD NEW</Link>}
         </div>
         <div className="search-and-archive-container">
           <Search

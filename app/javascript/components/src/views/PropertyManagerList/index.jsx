@@ -61,7 +61,6 @@ const expandRow = isSmallScreen => ({
 
 const PropertyManagerList = () => {
   const [managersData, setManagersData] = useState();
-  const [selectedManagers, setSelectedManagers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchedManagers, setSearchedManagers] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
@@ -92,9 +91,9 @@ const PropertyManagerList = () => {
     <div className="managers main-container">
       <div className="section-header">
         <h2 className="page-title">Property Managers</h2>
-        <Link className="button is-rounded is-primary ml-4" to="/add/manager">
+        {context.user.staff_level && <Link className="button is-rounded is-primary ml-4" to="/add/manager">
           + ADD NEW
-        </Link>
+        </Link>}
       </div>
       <div>
         <Search
