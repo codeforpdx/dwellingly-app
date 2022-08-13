@@ -74,7 +74,7 @@ export const makeGetTicketsFn = (setTicketsState, userContext, tenant_id) => (
   () =>
   userContext.apiCall('get', `/tickets?tenant_id=${tenant_id}`, {}, {})
     .then((response) => {
-      setTicketsState(response.data.tickets?.map(t => {
+      setTicketsState(response.data?.map(t => {
         return {
           ...t,
           assigned: t.assigned_staff?.map(
