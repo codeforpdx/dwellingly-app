@@ -85,7 +85,10 @@ const EditProperty = () => {
   const handleTenantRemoveButton = (tenantToRemove) => {
     const leaseId = tenantToRemove.lease.id;
     userContext.apiCall('delete', `/leases/${leaseId}`,
-      {}, { success: 'Tenant successfully removed' });
+      {}, { success: 'Tenant successfully removed' })
+      .then(() => {
+        getProperty();
+      });
   }
 
   const handleArchive = (archived) => {
