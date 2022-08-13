@@ -48,6 +48,10 @@ Cypress.Commands.add('login', (email) => {
       window.localStorage.setItem('lastName', 'Fix this')
       window.localStorage.setItem('phone', '5555555555')
       window.localStorage.setItem('email', email)
+      window.localStorage.setItem('admin', true)
+      window.localStorage.setItem('staff_level', true)
+      window.localStorage.setItem('staff', false)
+      window.localStorage.setItem('property_manager', false)
     })
 })
 

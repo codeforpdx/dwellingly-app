@@ -30,7 +30,7 @@ const Footer = (props) => {
   return (
       <footer className="dwellingly-footer">
         <p>
-          <span className="bold">
+          <span className="bold" data-testid="footer-text">
             Made with love by {renderAnchor(amplifiedUrl, "Amplified By Design")}{" "}
             and {renderAnchor(codeforpdxUrl, "Code For PDX")}. Copyright ©{" "}
             {currYear}
