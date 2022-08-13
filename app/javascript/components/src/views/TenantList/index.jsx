@@ -61,7 +61,7 @@ const expandRow = isSmallScreen => ({
         Property
       </label>
       <p id="property-name">
-        {row.lease && <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
+        {row.lease && <Link key={row.lease.id} to={`/manage/properties/${row.lease.property_id}`}>
           {row.propertyName}
         </Link>}
       </p>
@@ -211,9 +211,9 @@ const Tenants = () => {
       <div className='tenants'>
         <div className='section-header'>
           <h2 className='page-title'>Tenants</h2>
-          <Link
+          {userContext.user.staff_level && <Link
             className='button is-primary is-rounded ml-4'
-            to='/add/tenant'>+ ADD NEW</Link>
+            to='/add/tenant'>+ ADD NEW</Link>}
         </div>
         <div className='search-and-archive-container'>
           <Search
@@ -238,7 +238,7 @@ const Tenants = () => {
           />
 
         </div>
-        <div className='bulk-actions-container py-3'>
+        {userContext.user.staff_level && <div className='bulk-actions-container py-3'>
           <button
             className={`button is-rounded is-primary ml-3 ${selectedTenants.length && 'is-active-button'}`}
             onClick={toggleArchiveModal}
@@ -249,7 +249,7 @@ const Tenants = () => {
             />
             Archive Tenants
           </button>
-        </div>
+        </div>}
 
         <div className="tenants-list">
           {isLoading

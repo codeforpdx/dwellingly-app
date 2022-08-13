@@ -1,8 +1,8 @@
 import React from 'react';
 import './styles/index.scss';
-import Button from "../../../components/Button";
+import Button from "../../../../components/Button";
 import { useMediaQuery } from '@react-hook/media-query';
-import { tabletWidth, desktopWidth } from '../../../../constants';
+import { tabletWidth, desktopWidth } from '../../../../../constants';
 
 function RequestItem(props) {
     const { data, onDeclineClick, onAddClick } = props;

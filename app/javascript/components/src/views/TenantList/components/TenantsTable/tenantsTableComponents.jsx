@@ -44,7 +44,7 @@ export const columns = [
     formatter: (cell, row, rowIndex, formatExtraData) => {
       if (row.lease) {
         return (
-          <Link key={row.lease.id} to={`/manage/properties/${row.lease.propertyID}`}>
+          <Link key={row.lease.id} to={`/manage/properties/${row.lease.property_id}`}>
             {row.propertyName}
           </Link>
         )

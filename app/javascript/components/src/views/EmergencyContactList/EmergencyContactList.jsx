@@ -51,9 +51,9 @@ const EmergencyContacts = () => {
         <div className="section-header">
           <TitleAndPen title="Emergency Numbers" isEditing={isEditing} setEditingStatus={setEditingStatus} />
 
-          <Link className="is-rounded" to="/add/emergencyContact">
+          {userContext.user.staff_level && <Link className="is-rounded" to="/add/emergencyContact">
             <i className="fas fa-plus-circle"></i> Create Emergency Number
-          </Link>
+          </Link>}
         </div>
         <div className="contacts__disclaimer-container">
           <p className="contacts__disclaimer">In the event of a life-threatening emergency with your JOIN tenants, please dial 911.</p>

@@ -40,8 +40,8 @@ export const auth = {
         localStorage.removeItem( "type" )
         localStorage.removeItem( "admin" )
         localStorage.removeItem( "staff" )
-        localStorage.removeItem( "staffLevel" )
-        localStorage.removeItem( "propertyManager" )
+        localStorage.removeItem( "staff_level" )
+        localStorage.removeItem( "property_manager" )
         Toast("Successfully logged out", "success")
         return Promise.resolve(response)
       })
@@ -56,8 +56,8 @@ export const auth = {
         localStorage.removeItem( "type" )
         localStorage.removeItem( "admin" )
         localStorage.removeItem( "staff" )
-        localStorage.removeItem( "staffLevel" )
-        localStorage.removeItem( "propertyManager" )
+        localStorage.removeItem( "staff_level" )
+        localStorage.removeItem( "property_manager" )
         Toast("Already signed out", "error")
         return Promise.resolve(error)
       })
@@ -65,13 +65,53 @@ export const auth = {
 }
 
 /* eslint-disable react/prop-types */
+// User just has to be logged in to be able to hit this page
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <UserContext.Consumer>
     { context => {
       return <Route {...rest} render={(props) => (
         context.user.isAuthenticated
           ? <Component {...props} />
-          : <Redirect   to={{pathname: "/login", search: props.location.search}} />
+          : <Redirect to={{pathname: "/login", search: props.location.search}} />
+      )} />
+    }}
+  </UserContext.Consumer>
+)
+
+// User has to be admin to be able to hit this page
+export const AdminRoute = ({ component: Component, ...rest }) => (
+  <UserContext.Consumer>
+    { context => {
+      return <Route {...rest} render={(props) => (
+        context.user.isAuthenticated && context.user.admin
+          ? <Component {...props} />
+          : <Redirect to={{pathname: "/dashboard", search: props.location.search}} />
+      )} />
+    }}
+  </UserContext.Consumer>
+)
+
+// User has to be staff or admin to be able to hit this page
+export const StaffRoute = ({ component: Component, ...rest }) => (
+  <UserContext.Consumer>
+    { context => {
+      return <Route {...rest} render={(props) => (
+        context.user.isAuthenticated && context.user.staff_level
+          ? <Component {...props} />
+          : <Redirect to={{pathname: "/dashboard", search: props.location.search}} />
+      )} />
+    }}
+  </UserContext.Consumer>
+)
+
+// User has to be property manager or staff or admin to be able to hit this page
+export const PropertyManagerRoute = ({ component: Component, ...rest }) => (
+  <UserContext.Consumer>
+    { context => {
+      return <Route {...rest} render={(props) => (
+        context.user.isAuthenticated && (context.user.staff_level || context.user.property_manager)
+          ? <Component {...props} />
+          : <Redirect to={{pathname: "/dashboard", search: props.location.search}} />
       )} />
     }}
   </UserContext.Consumer>
