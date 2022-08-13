@@ -9,7 +9,7 @@ class NotePolicy < ApplicationPolicy
       if user.staff_level?
         scope.all
       else
-        user.properties.property_managers
+        scope.where(user: user)
       end
     end
 
