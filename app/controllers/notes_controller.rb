@@ -33,7 +33,7 @@ class NotesController < ApplicationController
   end
 
   def find_note
-    @note = policy_scope(@ticket).notes.find(params[:id])
+    @note = policy_scope(@ticket.notes).find(params[:id])
   end
 
   def note_params
