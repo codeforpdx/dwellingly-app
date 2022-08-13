@@ -60,6 +60,10 @@ class ApplicationPolicy
     user.admin?
   end
 
+  def staff?
+    user.staff?
+  end
+
   class Scope
     def initialize(user, scope)
       raise Pundit::NotAuthorizedError if user.nil? || user.unauthorized_user?

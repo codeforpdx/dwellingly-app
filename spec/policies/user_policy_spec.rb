@@ -11,7 +11,7 @@ RSpec.describe UserPolicy, type: :policy do
   context 'when Staff' do
     let(:user) { build(:staff) }
 
-    it { is_expected.to forbid_actions(all_actions) }
+    it { is_expected.to forbid_actions(super + [:update_role]) }
 
     context 'when current user is accessing their own record' do
       let(:other_user) { user }

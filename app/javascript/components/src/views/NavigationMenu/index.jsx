@@ -124,7 +124,7 @@ export const NavMenu = (props) => {
             </div>
 
             <MenuLink name="JOIN Staff" isBold icon={faUserAlt} href="/staff"
-              isMobile={props.isMobile} menuClose={props.toggle} isVisible={context.user.admin} />
+              isMobile={props.isMobile} menuClose={props.toggle} isVisible={context.user.staff_level} />
             <MenuLink name="Emergency Numbers" isBold icon={faPhoneAlt} href="/emergency"
               isMobile={props.isMobile} menuClose={props.toggle} isVisible={context.user.property_manager || context.user.staff_level} />
             <MenuLink name="Settings" isBold icon={faCog} href="/settings"
