@@ -20,7 +20,7 @@ class UserPolicy < ApplicationPolicy
   def staff_members?
     raise Pundit::NotAuthorizedError if not_authorized?
 
-    admin?
+    admin? || staff?
   end
 
   class Scope

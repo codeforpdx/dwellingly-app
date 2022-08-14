@@ -241,8 +241,8 @@ export class App extends React.Component {
               <StaffRoute exact path='/manage/managers/:id' component={EditPropertyManager} />
               <PropertyManagerRoute exact path='/manage/tickets' component={TicketList} />
               <StaffRoute exact path='/staff' component={JoinStaffList} />
-              <StaffRoute exact path='/staff/add' component={AddStaffMember} />
-              <StaffRoute exact path='/manage/staff/:id' component={EditStaff} />
+              <AdminRoute exact path='/staff/add' component={AddStaffMember} />
+              <AdminRoute exact path='/manage/staff/:id' component={EditStaff} />
               <PropertyManagerRoute exact path='/emergency' component={EmergencyContacts} />
               <PrivateRoute exact path='/settings' component={Settings} />
               <PrivateRoute exact path='/changePassword' component={ChangePassword} />

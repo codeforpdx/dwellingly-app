@@ -3,16 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './styles/index.scss';
 
-const CancelButton = () => {
-  return (
-    <a href="#" className="cancel-button" >
-      <span className="icon has-text-grey">
-        <i className="fas fa-minus-circle"></i>
-      </span>
-    </a>
-  );
-}
-
 export const JoinStaffCard = ({ id, name, phoneNumber, email, tickets, tenants, admin }) => {
 
   const InfoLabel = ({ type }) => {
@@ -48,7 +38,6 @@ export const JoinStaffCard = ({ id, name, phoneNumber, email, tickets, tenants, 
               {name}
             </p>
           </Link>
-          {!admin && <CancelButton />}
         </div>
         <div className="card-content">
           {admin && <AdminLabel />}

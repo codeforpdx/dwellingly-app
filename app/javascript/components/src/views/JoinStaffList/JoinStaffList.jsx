@@ -58,7 +58,8 @@ export const JoinStaffList = () => {
       <div className='main-container'>
         <div className="section-header">
           <h2 className="page-title">JOIN Staff</h2>
-          <Link className="button is-rounded is-primary ml-4" to='/staff/add'> + ADD NEW </Link>
+          {context.user.admin &&
+            <Link className="button is-rounded is-primary ml-4" to='/staff/add'> + ADD NEW </Link>}
         </div>
         {staff ?
           isMobile ?
