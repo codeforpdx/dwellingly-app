@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
+import dwellinglylogo from "images/dwellingly_logo_white.png";
 
 const Terms = () => {
   return (

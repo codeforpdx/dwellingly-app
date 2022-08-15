@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles.scss';
 
 const FieldError = (props) => {
   if (!props.error) return null;

@@ -14,7 +14,6 @@ import Modal from '../components/Modal';
 import { columns, mobileColumns } from './components/TenantsTable/tenantsTableComponents';
 import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
-import './styles/index.scss';
 
 const addPropertyNames = ((tenants, allProperties) => {
   return tenants.map(tenant => {
@@ -55,7 +54,7 @@ const expandRow = isSmallScreen => ({
       <label for="phone">Phone</label>
       <br />
       <phone id="created-at">{row.phone}</phone>
-      
+
       <br />
       <label for="property-name">
         Property

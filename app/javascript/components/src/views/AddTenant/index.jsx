@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import './styles/index.scss';
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
 import CalendarModal, { useCalendarState } from "../components/CalendarModal";

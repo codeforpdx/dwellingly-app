@@ -6,7 +6,6 @@ import { useState } from 'react';
 import TitleAndPen, { useEditingStatus } from '../components/TitleAndPen';
 import ContactRow from '../components/ContactRow/ContactRow';
 
-import './styles/index.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 

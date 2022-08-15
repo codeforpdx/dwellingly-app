@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './styles/index.scss'
 
 export default function AddNote({ handleAddNote, toggleShowAddNote, ticketID }) {
   const [noteText, setNoteText] = useState('')

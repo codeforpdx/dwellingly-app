@@ -5,7 +5,6 @@ import { Form, Field, Formik, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import useMountEffect from '../../utils/useMountEffect';
 import { Link } from 'react-router-dom';
-import './styles/index.scss';
 import FieldError from '../components/FieldError';
 
 const validationSchema = Yup.object().shape({

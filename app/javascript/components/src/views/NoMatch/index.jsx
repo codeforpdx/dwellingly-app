@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './styles/index.scss';
-
 const NoMatch = () => {
   return (
     <div className='main-container'>

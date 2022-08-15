@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import "../../styles/index.scss";
 import SearchableDropDown from "./components/SearchableDropDown/SearchableDropDown";
 import { fetchAllTenants } from './EditTicketModalFetches';
 import UserContext from '../../../../../contexts/UserContext';

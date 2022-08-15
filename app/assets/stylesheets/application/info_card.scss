@@ -1,0 +1,11 @@
+.info-card-box {
+    height: 120px;
+    max-width: 325px;
+  .name {
+    color: $primary;
+  }
+}
+
+.remove-contact-button:hover {
+  cursor: pointer
+}

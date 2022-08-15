@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import './styles/index.scss';
 
 export const JoinStaffCard = ({ id, name, phoneNumber, email, tickets, tenants, admin }) => {
 

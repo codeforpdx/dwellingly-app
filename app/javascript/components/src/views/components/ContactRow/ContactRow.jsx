@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles.scss';
 
 const ContactRow = ({ isEditing, handleDelete, handleClick, id, name, description, contactNumbers, email }) => {
 
@@ -9,7 +8,7 @@ const ContactRow = ({ isEditing, handleDelete, handleClick, id, name, descriptio
     };
 
     const handleContactClick = () => handleClick(id);
-  
+
     return (
       <div className="contact__row">
         {isEditing &&

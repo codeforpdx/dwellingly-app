@@ -6,10 +6,8 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
 import dwellinglyLogo from "images/dwellingly_logo.png";
-import dwellinglyLogoMobile from "../../assets/images/dwellingly_logo_white.png";
+import dwellinglyLogoMobile from "images/dwellingly_logo_white.png";
 import Modal from "../components/Modal";
-
-import "./styles/index.scss";
 
 const SignupForm = ({ history }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);

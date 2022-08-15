@@ -1,0 +1,88 @@
+// NavMenu
+.sidebar {
+	float: left;
+	position: relative;
+	padding-bottom: 99999px;
+  	margin-bottom: -99999px;
+	z-index: 20;
+	min-width: 250px;
+	max-width: 250px;
+	margin-left: -250px;
+}
+
+.sidebar.is-open {
+	margin-left: 0;
+}
+
+.sidebar-header > button {
+	display: none;
+  }
+
+.sidebarBlock button{
+	display: none;
+}
+
+.menu-list a {
+	&:hover {
+		background: none;
+	}
+}
+
+.is-child-link{
+  padding-left: 15px;
+}
+
+.default-cursor {
+	cursor: default;
+}
+
+@media only screen and (max-width: 960px) {
+
+	.menu {
+		position:relative;
+		padding-top: 20px;
+	}
+
+	.sidebarBlock button{
+		display: none;
+		border: none;
+		outline: none;
+	}
+
+	.sidebarBlock.is-open button{
+		display: block;
+		height: 100%;
+		position: fixed;
+		min-width: 100%;
+		max-width: 100%;
+		right: 0;
+		background-color: transparent;
+		backdrop-filter: blur(3px);
+		z-index: 20;
+		transition: all 0.5s, height 0s;
+	}
+
+	.sidebar.is-open{
+		position: fixed;
+		min-width: 60%;
+		max-width: 60%;
+		margin-left: 0;
+		transition: all 0.5s, height 0s;
+	}
+
+	.sidebar.is-open > .sidebar-header button {
+	  display: block;
+	  position: relative;
+	  float: right;
+	  margin: .5em;
+	  font-size: 2rem;
+	  cursor: pointer;
+
+	  background-color: transparent;
+	  outline: none;
+	  border: none;
+	  z-index: 21;
+	  margin-top: 8px;
+	}
+
+  }

@@ -1,6 +1,5 @@
 import React from "react";
 import 'react-toastify/dist/ReactToastify.min.css';
-import "./src/App.scss";
 import axios from 'axios';
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { LoginForm } from "./src/views/Login";

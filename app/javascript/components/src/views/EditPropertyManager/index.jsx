@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import UserContext from '../../contexts/UserContext';
 import TitleAndPen, { useEditingStatus } from "../components/TitleAndPen";
 import InfoCard from "../components/InfoCard";
-import './styles/index.scss';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()

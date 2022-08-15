@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
-import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
+import dwellinglylogo from "images/dwellingly_logo_white.png";
 import UserContext from "../../contexts/UserContext";
 import FieldError from "../components/FieldError";
-
-import "./styles/index.scss"
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()

@@ -7,8 +7,6 @@ import Button from "../components/Button";
 import Toast from "../../utils/toast";
 import FieldError from "../components/FieldError";
 
-import './styles/index.scss';
-
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Must be a valid email")

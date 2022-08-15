@@ -7,8 +7,6 @@ import UserType from "../../Enums/UserType";
 import Button from "../components/Button";
 import FieldError from "../components/FieldError";
 
-import './styles/index.scss';
-
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(255, "*Must be shorter than 255 Characters")

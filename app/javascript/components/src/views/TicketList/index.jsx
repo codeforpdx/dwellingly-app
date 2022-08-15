@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown, faTrash, faFilterCircleXmark, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { tabletWidth } from '../../constants/index.js';
 import { useMediaQueries } from '@react-hook/media-query';
-import './styles/index.scss';
 import { columns, mobileColumns } from './components/ticketsTableComponents';
 import { formatDate } from '../../utils/date';
 import Filter from "./components/ticketsFilter";
@@ -276,14 +275,14 @@ const Tickets = (props) => {
           />
           <Accordion
             icon={
-              isFiltered ? 
-              <FontAwesomeIcon icon={faFilter} /> : 
+              isFiltered ?
+              <FontAwesomeIcon icon={faFilter} /> :
               <FontAwesomeIcon icon={faFilterCircleXmark} />
               }
             header="Filters"
-            
+
           >
-          <Filter 
+          <Filter
             input={tickets}
             outputLocation={filteredTickets}
             isFilteredLocation={isFiltered}

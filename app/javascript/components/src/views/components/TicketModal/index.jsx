@@ -3,7 +3,6 @@ import Card from "./components/Card";
 import AddNote from "./components/AddNote"
 import { CARD_TYPES } from "../../../constants";
 import Icon from "../icon/Icon";
-import "./styles/index.scss";
 import TicketModalDetails from "./components/TicketModalDetails";
 import EditTicketModalDetails from "./components/EditTicketModal/EditTicketModalDetails";
 import TitleAndPen, { useEditingStatus } from "../TitleAndPen";

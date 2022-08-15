@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import dwellinglylogo from "../../assets/images/dwellingly_logo_white.png";
+import dwellinglylogo from "images/dwellingly_logo_white.png";
 import LogOutButton from "./components/LogOutButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserContext from "../../contexts/UserContext";
 
 import {faBars} from "@fortawesome/free-solid-svg-icons";
-
-import './styles/index.scss'
 
 const Header = (props) => {
   const loc = useLocation();

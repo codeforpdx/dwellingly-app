@@ -1,0 +1,94 @@
+.mobile-dash-header {
+  display: block;
+  text-align: center;
+  height: 175px;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  position: fixed;
+  width: 100%;
+
+  .dashboard-link {
+    background: none;
+    border: none;
+    width: 33%;
+    color: white;
+    font-size: 18px;
+  }
+
+  .user-name-header {
+    width: 100%;
+    padding-top: 1.25rem;
+    font-size: 24px;
+    font-style: bold;
+  }
+
+  .mobile-header-nav-container {
+    width: 100%;
+    display: flex;
+  }
+}
+
+.mobile-tabs-container {
+  text-align: center;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background: none;
+    border: none;
+    width: 33%;
+    color: $gray;
+    padding-bottom: 1rem;
+
+    &.selected {
+      color: $lighterBlue;
+      border-bottom: $lighterBlue 2px solid;
+    }
+  }
+
+  hr {
+    width: 100%;
+    color: $darkGray;
+  }
+}
+
+.mobile-tabs {
+  padding-top: 1rem;
+  border-bottom: $lightGray 1px solid;
+  position: fixed;
+  width: 100%;
+  top: 175px;
+
+  span {
+    padding-left: 10px;
+  }
+}
+
+.mobile-tab-content {
+  width: 100%;
+  position: fixed;
+  top: 232px;
+  bottom: 0px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  .row-item {
+    display: block;
+    width: 100%;
+    border-bottom: $lightGray 1px solid;
+    padding: 0.5rem 0.25rem 0.5rem 1.5rem;
+    text-align: left;
+    color: $gray;
+
+    .row-item-header {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .row-item-detail {
+      font-size: 14px;
+    }
+  }
+}

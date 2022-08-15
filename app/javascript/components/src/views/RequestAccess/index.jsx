@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
 import UserType from '../../Enums/UserType';
 
-import './styles/index.scss';
 import PropertySearchPanel from "../components/PropertySearchPanel";
 
 const RoleDropDown = (props) => {

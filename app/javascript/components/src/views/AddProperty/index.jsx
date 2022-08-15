@@ -3,7 +3,6 @@ import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import UserContext from '../../contexts/UserContext';
 import { Link } from 'react-router-dom';
-import './styles/index.scss';
 import PropertyManagerSearchPanel from '../components/PropertyManagerSearchPanel';
 import FieldError from '../components/FieldError';
 
@@ -33,7 +32,7 @@ const validationSchema = Yup.object().shape({
 export const AddProperty = (props) => {
   const [propertyManagers, setPropertyManagers] = useState([]);
   const userContext = useContext(UserContext);
-  const { showPageTitle, handleCancel, 
+  const { showPageTitle, handleCancel,
     afterCreate, showAssignPropManagers } = props;
 
   const handleFormSubmit = (values, { resetForm, setSubmitting }) => {
