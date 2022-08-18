@@ -36,7 +36,7 @@ const AddPropertyManager = () => {
     const payload = {
       ...values,
       type: UserType.PROPERTY_MANAGER,
-      property_ids: propertySelection.map(p => p.key)
+      property_ids: propertySelection?.map(p => p.key)
     };
 
     setSubmitting(true);
