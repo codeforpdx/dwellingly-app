@@ -27,7 +27,7 @@ describe("ForgotPassword component", () => {
 
   it("should render without errors", async () => {
     expect(
-      screen.getByText("REQUEST EMAIL PASSWORD RESET")
+      screen.getByText("RESET PASSWORD")
     ).toBeInTheDocument()
   })
 

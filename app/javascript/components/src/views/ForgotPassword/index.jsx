@@ -90,8 +90,7 @@ const ForgotPassword = () => {
           }) => (
             <div className="forgot-password__main_container">
               <p className="forgot-password__para-text">
-                Forgot your password? It happens to all of us. To recover your
-                password, follow the instructions that relate to your account.
+                Forgot your password? Please enter your email below to request a reset password email.
               </p>
               <h1 className="forgot-password__section-title">
                 EMAIL/PASSWORD USERS
@@ -118,7 +117,7 @@ const ForgotPassword = () => {
                     isValidFlag={isValid}
                     disabledFlag={isSubmitting}
                   >
-                    REQUEST EMAIL PASSWORD RESET
+                    RESET PASSWORD
                   </Button>
                 </div>
               </Form>
