@@ -11,7 +11,6 @@ import Icon from '../components/icon/Icon';
 import Modal from '../components/Modal';
 import { columns, mobileColumns } from './components/propertiesTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
-import './styles/index.scss';
 import { tabletWidth } from '../../constants';
 import { formatDate } from '../../utils/date';
 

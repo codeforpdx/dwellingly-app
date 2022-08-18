@@ -1,0 +1,27 @@
+// Styles for the Header component
+.navbar-container {
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem 0.5rem 0;
+}
+
+.navbar-button {
+  display: none;
+}
+
+.mobile-header a, .mobile-header h1 {
+  color: white;
+}
+
+@media only screen and (max-width: 960px) {
+  .navbar-button{
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+  }
+}

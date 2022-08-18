@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 import { useLocation } from "react-router-dom";
-import './styles/index.scss'
 
 const Footer = (props) => {
 	const context = useContext(UserContext);

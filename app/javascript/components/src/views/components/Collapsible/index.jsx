@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './styles/index.scss';
 
 function Collapsible(props) {
     const { children, title, count } = props;
@@ -15,7 +14,7 @@ function Collapsible(props) {
                 <h3 className="collapsible__header_title" onClick={toggleCollapsed}>
                     {title}<span className="count"> ({countAsNumber})</span>
                 </h3>
-                <button 
+                <button
                     className='collapsible__toggle'
                     onClick={toggleCollapsed}
                 >

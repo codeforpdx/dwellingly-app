@@ -6,8 +6,6 @@ import { Redirect } from "react-router"
 import { Link } from "react-router-dom"
 import Toast from "../../utils/toast"
 
-import "./styles/index.scss"
-
 export class LoginForm extends React.Component {
   constructor(props) {
     super(props)

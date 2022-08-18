@@ -6,7 +6,6 @@ import UserContext from '../../contexts/UserContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Icon from '../components/icon/Icon';
-import './styles/index.scss';
 import { columns, mobileColumns } from './components/managersTableComponents';
 import { useMediaQueries } from '@react-hook/media-query';
 import { tabletWidth } from '../../constants/index.js';

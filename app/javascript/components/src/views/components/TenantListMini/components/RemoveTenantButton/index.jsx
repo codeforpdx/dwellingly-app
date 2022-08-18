@@ -1,7 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import "./styles/index.scss"
 
 function RemoveTenantButton({ tenant, removeTenant, isEditing }) {
 
@@ -22,4 +21,4 @@ function RemoveTenantButton({ tenant, removeTenant, isEditing }) {
   )
 }
 
-export default RemoveTenantButton; 
+export default RemoveTenantButton;

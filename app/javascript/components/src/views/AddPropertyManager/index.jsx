@@ -4,7 +4,6 @@ import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
 import UserContext from "../../contexts/UserContext";
 import Button from "../components/Button";
-import './styles/index.scss';
 import UserType from '../../Enums/UserType';
 import PropertySearchPanel from "../components/PropertySearchPanel";
 import FieldError from "../components/FieldError";

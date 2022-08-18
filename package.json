@@ -14,7 +14,6 @@
     "@react-hook/media-query": "^1.1.1",
     "axios": "^0.24.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "bulma": "^0.9.3",
     "classnames": "^2.3.1",
     "formik": "^2.2.9",
     "msw": "^0.21.1",

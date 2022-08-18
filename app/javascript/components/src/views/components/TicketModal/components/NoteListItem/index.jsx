@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../../../../../contexts/UserContext';
-import "./styles/index.scss";
 
 export default function NoteListItem({ note, editNotes, localDeleteNote, handleEditNoteText }) {
   const userContext = useContext(UserContext);

@@ -1,5 +1,4 @@
 import React from 'react';
-import "../styles/index.scss";
 
 export default function TicketModalDetails({ ticket }) {
   const { author, tenant, assigned_staff, urgency, created_at } = ticket;

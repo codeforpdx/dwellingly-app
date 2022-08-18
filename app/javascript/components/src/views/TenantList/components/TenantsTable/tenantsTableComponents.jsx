@@ -3,7 +3,6 @@ import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from "./components/ToolTip/ToolTip";
-import '../../styles/index.scss';
 
 export const columns = [
   {

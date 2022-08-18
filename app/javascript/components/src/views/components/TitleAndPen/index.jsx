@@ -1,7 +1,5 @@
 import React, { useState } from "react"
 
-import './styles/index.scss';
-
 export function useEditingStatus() {
   const [isEditing, setEditingStatus] = useState(false)
   return { isEditing, setEditingStatus }

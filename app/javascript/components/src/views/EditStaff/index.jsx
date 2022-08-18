@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import ToggleEditTable from "../components/ToggleEditForm";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
-import './styles/index.scss';
 import TitleAndPen, { useEditingStatus } from "../components/TitleAndPen";
 import UserContext from '../../contexts/UserContext';
 import UserType from "../../Enums/UserType";

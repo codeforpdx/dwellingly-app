@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import "./ToolTip.scss";
 
 const Tooltip = ({ delay, children, direction, content }) => {
   let timeout;

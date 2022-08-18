@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import Button from "../Button";
-import "./styles/index.scss";
 import CalendarModal from "../CalendarModal";
 import FieldError from "../FieldError";
 

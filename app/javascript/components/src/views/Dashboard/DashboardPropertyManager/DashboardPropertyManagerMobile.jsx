@@ -3,7 +3,6 @@ import UserContext from '../../../contexts/UserContext';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAsterisk, faUserGroup, faGear, faHouseUser, faBuilding, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
-import './styles.scss';
 
 const pmDashTabs = [
   {

@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/index.scss';
 
 export const ShowHideSwitch = ({ id, labelText, isShowState, handleToggleChange }) => (
   <div key={id} className="showHideSwitch">

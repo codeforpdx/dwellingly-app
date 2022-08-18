@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './styles/index.scss';
 
 function Accordion(props) {
     const { children, header, icon } = props;

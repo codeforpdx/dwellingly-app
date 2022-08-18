@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import "./SearchableDropDown.scss";
 
 export default function SearchableDropDown({ value, onChange, array }) {
 

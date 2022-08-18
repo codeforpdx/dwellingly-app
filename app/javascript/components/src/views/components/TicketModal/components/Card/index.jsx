@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CARD_TYPES, TICKET_STATUS_OPTIONS } from '../../../../../constants';
 import Icon from '../../../icon/Icon';
-import './styles/index.scss';
 
 /**
  * =======================================

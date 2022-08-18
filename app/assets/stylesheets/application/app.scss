@@ -1,0 +1,45 @@
+html {
+  overflow-y: auto !important;
+}
+
+.App {
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  min-height: calc(100vh - 150px);
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: white;
+  margin-bottom: 40px;
+  padding: 25px;
+}
+
+.subtitle {
+	color: $brandBlue;
+	font-size: 1.25rem;
+	font-weight: bold;
+	line-height: 1.25;
+}
+
+.toast {
+  border-radius: 7px;
+  box-shadow: 0 2px 6px -2px black;
+}
+
+.indented-sub-section {
+  margin: 10px 0 10px 30px;
+}
+
+.Toastify__toast-body {
+  white-space: pre-line;
+}
+
+.typeahead-section {
+  padding-bottom: 16px;
+  fieldset {
+    overflow: auto;
+  }
+}

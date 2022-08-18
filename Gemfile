@@ -7,6 +7,7 @@ ruby '3.0.1'
 gem 'rails', '~> 6.1.4'
 
 gem "bugsnag", "~> 6.24"
+gem "bulma-rails", "~> 0.9.3"
 gem 'devise', '~> 4.8'
 gem 'devise_invitable', '~> 2.0', '>= 2.0.5'
 gem 'pg', '~> 1.1'

@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/index.scss';
 import Button from "../../../../components/Button";
 import { useMediaQuery } from '@react-hook/media-query';
 import { tabletWidth, desktopWidth } from '../../../../../constants';
@@ -26,7 +25,7 @@ function RequestItem(props) {
                 onClick={() => { onAddClick(id) }}
             >
                 ADD
-            </Button> 
+            </Button>
             <Button
                 isCancelButton={true}
                 type={"reset"}
@@ -73,7 +72,7 @@ function RequestItem(props) {
         </div>
     )
 
-    return isDesktop ? <DesktopLayout /> : isTablet ? <TabletLayout /> : <MobileLayout />    
+    return isDesktop ? <DesktopLayout /> : isTablet ? <TabletLayout /> : <MobileLayout />
 }
 
 export default RequestItem;

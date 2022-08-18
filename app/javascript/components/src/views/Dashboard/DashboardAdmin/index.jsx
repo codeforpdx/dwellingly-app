@@ -9,7 +9,6 @@ import RequestItem from './components/RequestItem';
 import NewStaffItem from './components/NewStaffItem';
 import axios from 'axios';
 
-import './styles/index.scss';
 
 export const DashboardAdmin = (props) => {
   const [modalActive, setModalActive] = useState({

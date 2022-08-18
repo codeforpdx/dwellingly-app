@@ -13,8 +13,6 @@ import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import UserContext from "../../contexts/UserContext";
 
-import './styles/index.scss'
-
 export const MenuLink = ({ isMobile, menuClose, icon, isBold, name, href, passedClassName, category, isVisible = true }) => {
   const loc = useLocation();
   let isActiveLink =

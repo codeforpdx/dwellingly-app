@@ -4,7 +4,6 @@ import Button from '../components/Button';
 import { SearchPanel, SearchPanelVariant } from "react-search-panel";
 import useMountEffect from '../../utils/useMountEffect';
 import UserContext from "../../contexts/UserContext";
-import './styles/index.scss';
 import { useMediaQuery } from '@react-hook/media-query';
 import { tabletWidth } from '../../constants';
 
