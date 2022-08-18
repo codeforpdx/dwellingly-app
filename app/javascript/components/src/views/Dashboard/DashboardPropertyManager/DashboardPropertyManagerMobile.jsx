@@ -80,12 +80,12 @@ const DashboardPropertyManagerMobile = () => {
             <FontAwesomeIcon size={"lg"} icon={faAsterisk} />
             <p>Emergency</p>
           </Link>
-          <Link
+          {userContext.user?.staff_level && <Link
             to="/staff"
             className="dashboard-link">
             <FontAwesomeIcon size={"lg"} icon={faUserGroup} />
             <p>JOIN</p>
-          </Link>
+          </Link>}
           <Link
             to="/settings"
             className="dashboard-link">
