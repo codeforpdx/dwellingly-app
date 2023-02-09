@@ -66,6 +66,7 @@ From terminal:
   - Alternatively: You can use `bin/dev` to start both servers. (May not work with Windows)
     - This will use [overmind](https://github.com/DarthSim/overmind) if it is installed; otherwise
       it uses [Foreman](https://github.com/ddollar/foreman).
+- View the app at `localhost:3000`
 - See the [testing](contributing.md#testing) section on how to run the tests.
 
 ## About Us
